@@ -84,6 +84,14 @@ as implemented by a placeholder directory or a golden expectation.
 - Validated uniqueness, coverage, reference existence, safety precedence,
   explicit memory consent and fact/inference annotation structure.
 - Acceptance: [Phase 1 report](PHASE_1_ACCEPTANCE.md).
+- On 2026-09-26, completed the narrower Phase 1A behavior-contract audit
+  against the frozen upstream. Expanded the contract with 18 source-backed
+  scenarios, 9 fact/inference/unknown examples, all 43 reference names,
+  response and memory rules, safety priority, 18 anti-patterns and explicit
+  source/script ambiguities. Added three document acceptance tests. The
+  existing Golden dataset was not changed or re-scored in this subphase;
+  a later explicit Phase 1B instruction can rebaseline it against the
+  expanded contract. See [Phase 1A report](PHASE_1A_ACCEPTANCE.md).
 
 ## Dependency policy
 
