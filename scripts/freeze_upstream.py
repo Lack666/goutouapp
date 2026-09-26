@@ -8,8 +8,8 @@ import json
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-SNAPSHOT = ROOT / "upstream" / "goutoujunshi"
-MANIFEST = ROOT / "upstream" / "manifest.json"
+SNAPSHOT = ROOT / "knowledge" / "goutoujunshi"
+MANIFEST = ROOT / "knowledge" / "upstream-manifest.json"
 
 
 def main() -> None:

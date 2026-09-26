@@ -1,6 +1,6 @@
 # 项目总纲与工程规则
 
-本仓库要把 `goutoujunshi` Skill 重构为可独立运行的 AI Agent Runtime，最终交付前后端分离的 React Native 手机 App。Agent 必须脱离 Codex、Claude Code、DeepSeek Harness 等宿主独立运行。`upstream/goutoujunshi` 是行为规范的冻结快照；解释与实现写在本仓库的合同、代码和 ADR 中，不擅改上游。同步上游时记录 commit、更新哈希清单，并保留原 MIT 许可与署名。
+本仓库要把 `goutoujunshi` Skill 重构为可独立运行的 AI Agent Runtime，最终交付前后端分离的 React Native 手机 App。Agent 必须脱离 Codex、Claude Code、DeepSeek Harness 等宿主独立运行。`knowledge/goutoujunshi` 是行为规范的冻结快照；解释与实现写在本仓库的合同、代码和 ADR 中，不擅改上游。同步上游时记录 commit、更新哈希清单，并保留原 MIT 许可与署名。
 
 ## 每次工作开始前
 

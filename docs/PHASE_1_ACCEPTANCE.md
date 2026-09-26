@@ -16,6 +16,9 @@ TESTS: `make verify` through the Windows `make.cmd` shim and
 upstream validation passed. `python evals/validate.py` passed with 55 cases,
 21 categories, 13 high-risk cases and 60 distinct assertion labels.
 
+The Phase 0 directory alignment was revalidated later with five unit tests;
+the Golden Case count and upstream file hashes remain unchanged.
+
 ACCEPTANCE: `python evals/validate.py` is the runnable Phase 1 demo. It checks
 data shape, IDs, breadth, real upstream reference paths, safety-first routing,
 zero high-risk memory writes, consent for positive memory writes, and evidence

@@ -1,23 +1,41 @@
-# 狗头军师 App Runtime
+# 狗头军师 App
 
-This monorepo is the independent server and mobile implementation of the
-[goutoujunshi Skill](https://github.com/shengjidaguai-china/goutoujunshi).
-The original specification is preserved unchanged under `upstream/goutoujunshi/`.
-Its source revision and file hashes are recorded in `upstream/manifest.json`.
+这是将 [goutoujunshi Skill](https://github.com/shengjidaguai-china/goutoujunshi)
+改造成独立 AI Agent 与 React Native 手机 App 的 Monorepo。目标架构为
+React Native + Expo 客户端、FastAPI + PostgreSQL 服务端，以及可脱离任何
+Agent Harness 独立运行的 LangGraph Agent。手机端不直接调用模型 API。
 
-Current milestone: **Phase 1, contract and golden evaluation data**. The API,
-agent runtime, and mobile app are future phases; this repository does not yet
-claim to run relationship advice independently.
+## 当前状态
 
-Use `make doctor`, `make test`, `make eval`, and `make verify` on systems with
-GNU Make. On Windows without GNU Make, `make.cmd` exposes the same targets;
-invoke `./make.cmd verify` from PowerShell or add the repository to `PATH` for
-`make verify`. `python scripts/verify.py doctor|test|eval|verify` is equivalent.
-The verifier reports which phase gates are active and which are deferred.
+Phase 0 仓库基础结构和 Phase 1 Skill Contract / Golden Cases 已完成。
+`apps/mobile`、`apps/server` 等目录目前只是后续开发边界；后端、Agent 和
+手机 App 尚未实现，不能运行实际关系分析。阶段状态以代码和验收结果为准，
+参见 [Master Plan](docs/MASTER_PLAN.md)。
 
-See [the master plan](docs/MASTER_PLAN.md) and [architecture](docs/ARCHITECTURE.md).
+## 目录
 
-## Attribution
+- `apps/mobile`：未来的 Expo 手机客户端。
+- `apps/server`：未来的 FastAPI 服务端。
+- `knowledge/goutoujunshi`：未修改的上游 Skill 内容。
+- `knowledge/upstream-manifest.json`：上游仓库、commit、License 和文件哈希。
+- `docs`：架构方向、Skill Contract、ADR 与阶段验收。
+- `evals`：匿名合成 Golden Cases 和标注验证器。
+- `scripts`：仓库验证脚本。
 
-The upstream snapshot is MIT licensed, copyright (c) 2026 powerycy. Its
-original [license](upstream/goutoujunshi/LICENSE) is retained with the snapshot.
+## 本地开发入口
+
+需要 Python 3.12+、uv、Node.js、pnpm 和 Git；Docker 从服务端阶段开始使用。
+在有 GNU Make 的系统运行 `make doctor`，在 Windows PowerShell 运行
+`.\make.cmd doctor`。当前阶段的完整回归命令是 `make verify` 或
+`.\make.cmd verify`。`doctor` 命令会报告 Docker 是否可用；在 Phase 0/1 缺少
+Docker 不会被误报成已完成服务端验证。
+
+配置模板见 [.env.example](.env.example)。只在服务端使用真实密钥；本地
+`.env` 已被 Git 忽略，不提交。当前没有必须安装的应用运行时依赖。
+
+## 上游署名
+
+使用的上游仓库为 `https://github.com/shengjidaguai-china/goutoujunshi`，
+commit 为 `6db7354a4002dc7c448a9c87ffdad8132570c9d3`。上游采用 MIT
+License，Copyright (c) 2026 powerycy。原版 [LICENSE](knowledge/goutoujunshi/LICENSE)
+随 Skill 一起保留；更新上游需重新审阅并更新 manifest。

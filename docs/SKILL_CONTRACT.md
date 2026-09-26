@@ -4,7 +4,7 @@ This is a behavioral interpretation of the immutable upstream snapshot at
 commit `6db7354a4002dc7c448a9c87ffdad8132570c9d3`. The upstream
 `SKILL.md`, `documentation/`, `references/`, and `scripts/` remain authoritative
 where this contract is silent. Traceability points to paths within
-`upstream/goutoujunshi/`. Product and runtime behavior added here is tested by
+`knowledge/goutoujunshi/`. Product and runtime behavior added here is tested by
 the synthetic cases in `evals/golden_cases.jsonl`.
 
 ## Core result
@@ -50,7 +50,7 @@ The Phase 4 router must be deterministic and choose only 1–3 directly relevant
 reference files for an ordinary request. The first file is the subject entry;
 one or two additional files are allowed for a real evidence, risk or technique
 need. A high-risk request goes to safety response before normal routing. All
-paths below are relative to `upstream/goutoujunshi/`.
+paths below are relative to `knowledge/goutoujunshi/`.
 
 | Scenario | Primary reference |
 | --- | --- |

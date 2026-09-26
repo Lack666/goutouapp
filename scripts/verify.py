@@ -26,15 +26,21 @@ def doctor() -> None:
         location = shutil.which(name)
         if not location:
             raise RuntimeError(f"Required tool missing: {name}")
-        print(f"{name}: {location}")
-    for name in ("make", "docker"):
-        print(f"{name}: {shutil.which(name) or 'optional until its phase'}")
+        version = subprocess.run([location, "--version"], capture_output=True, text=True, check=True).stdout.strip()
+        print(f"{name}: {version} ({location})")
+    print(f"make: {shutil.which('make') or 'use make.cmd on Windows'}")
+    docker = shutil.which("docker")
+    if docker:
+        version = subprocess.run([docker, "--version"], capture_output=True, text=True, check=True).stdout.strip()
+        print(f"docker: {version} ({docker})")
+    else:
+        print("docker: MISSING (required for Phase 2 PostgreSQL demo)")
     print(f"Completed phase: {PHASE}")
 
 
 def tests() -> None:
     run([sys.executable, "-m", "unittest", "discover", "-s", "tests", "-v"])
-    run([sys.executable, "upstream/goutoujunshi/scripts/validate_skill.py"])
+    run([sys.executable, "knowledge/goutoujunshi/scripts/validate_skill.py"])
 
 
 def evals() -> None:
@@ -45,9 +51,23 @@ def evals() -> None:
 
 
 def repository_checks() -> None:
-    forbidden = [p for p in ROOT.rglob("*") if p.is_file() and p.name.startswith(".env") and p.name != ".env.example"]
+    safe_directory = f"safe.directory={ROOT.as_posix()}"
+    tracked = subprocess.run(
+        ["git", "-c", safe_directory, "ls-files", "-z"],
+        cwd=ROOT, capture_output=True, check=True,
+    ).stdout.decode("utf-8", errors="surrogateescape").split("\0")
+    forbidden = [name for name in tracked if Path(name).name.startswith(".env") and Path(name).name != ".env.example"]
     if forbidden:
-        raise RuntimeError("Unignored environment secret file found: " + ", ".join(str(p) for p in forbidden))
+        raise RuntimeError("Tracked environment secret file found: " + ", ".join(forbidden))
+    if not (ROOT / ".env.example").is_file():
+        raise RuntimeError("Missing .env.example")
+    for name in (".env", ".env.local"):
+        ignored = subprocess.run(
+            ["git", "-c", safe_directory, "check-ignore", "-q", "--", name],
+            cwd=ROOT, check=False,
+        )
+        if ignored.returncode != 0:
+            raise RuntimeError(f"Git does not ignore {name}")
     mobile = ROOT / "apps" / "mobile"
     if mobile.exists():
         for path in mobile.rglob("*"):

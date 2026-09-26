@@ -18,4 +18,4 @@ coverage/
 *.sqlite3-wal
 *.sqlite3-shm
 *.log
-!upstream/goutoujunshi/assets/reference-library-135.png
+!knowledge/goutoujunshi/assets/reference-library-135.png

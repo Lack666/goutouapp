@@ -2,7 +2,7 @@
 
 Status: accepted, Phase 0.
 
-The monorepo separates `apps/api`, `apps/mobile`, `packages/agent`,
+The monorepo separates `apps/server`, `apps/mobile`, `packages/agent`,
 `packages/knowledge`, and `packages/chat_import`. FastAPI is a transport around
 the independent Agent. Phase-aware verification reports future stages as
 deferred while still running every available gate and the upstream validator.

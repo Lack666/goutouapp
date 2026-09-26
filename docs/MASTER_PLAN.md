@@ -1,8 +1,8 @@
 # Master plan
 
-Source specification: `upstream/goutoujunshi`, commit
+Source specification: `knowledge/goutoujunshi`, commit
 `6db7354a4002dc7c448a9c87ffdad8132570c9d3`. The snapshot is MIT
-licensed and its content hashes are frozen in `upstream/manifest.json`.
+licensed and its content hashes are frozen in `knowledge/upstream-manifest.json`.
 
 ## Phase gate
 
@@ -62,11 +62,16 @@ as implemented by a placeholder directory or a golden expectation.
 
 ### Phase 0
 
-- Copied all 63 upstream files, including 20 knowledge and 23 practical
-  references, scripts, documentation and MIT license, into an immutable snapshot.
+- Copied 63 upstream Skill files, including 20 knowledge and 23 practical
+  references, scripts, documentation and MIT license, into an immutable snapshot
+  at `knowledge/goutoujunshi`. The source checkout matches the recorded commit.
 - Recorded the exact source commit and SHA-256 inventory.
-- Created the monorepo boundaries, `AGENTS.md`, `Makefile`, `pyproject.toml`,
-  pnpm workspace, architecture and ADRs, plus phase-aware verification.
+- Created `apps/mobile`, `apps/server`, `knowledge/goutoujunshi`, `docs`,
+  `evals` and `scripts`, plus `AGENTS.md`, `.env.example`, `README.md`,
+  `Makefile`, `pyproject.toml`, pnpm workspace and phase-aware verification.
+- Rechecked this structure against the explicit Phase 0 acceptance list on
+  2026-09-26. Simplified `ARCHITECTURE.md` to the confirmed system boundaries;
+  moved the snapshot without changing source file contents. See ADR 0004.
 - Acceptance: [Phase 0 report](PHASE_0_ACCEPTANCE.md).
 - Commit: `eccc633` (`chore: bootstrap standalone runtime monorepo and freeze upstream`).
 

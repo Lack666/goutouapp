@@ -50,7 +50,7 @@ def validate() -> dict[str, int]:
             errors.append(f"{case_id}: 1–3 distinct reference aliases required")
         for alias in refs:
             path = REFERENCES.get(alias)
-            if not path or not (ROOT / "upstream" / "goutoujunshi" / path).is_file():
+            if not path or not (ROOT / "knowledge" / "goutoujunshi" / path).is_file():
                 errors.append(f"{case_id}: unknown or missing reference {alias}")
         safety = expected.get("safety")
         route = expected.get("route")

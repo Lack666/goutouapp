@@ -3,8 +3,10 @@
 Status: accepted, Phase 0.
 
 The local checkout of `shengjidaguai-china/goutoujunshi` at
-`6db7354a4002dc7c448a9c87ffdad8132570c9d3` is copied in full under
-`upstream/goutoujunshi`. `upstream/manifest.json` records every file's SHA-256.
+`6db7354a4002dc7c448a9c87ffdad8132570c9d3` is copied under
+`knowledge/goutoujunshi`. `knowledge/upstream-manifest.json` records every
+preserved Skill file's SHA-256. Upstream repository automation metadata is not
+part of this knowledge snapshot.
 The original MIT license and attribution remain inside that directory.
 
 Reason: behavior, reference routes, safety boundaries and the local memory

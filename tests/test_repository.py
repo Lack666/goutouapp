@@ -4,12 +4,13 @@ from __future__ import annotations
 
 import hashlib
 import json
+import subprocess
 import unittest
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-SNAPSHOT = ROOT / "upstream" / "goutoujunshi"
-MANIFEST = json.loads((ROOT / "upstream" / "manifest.json").read_text(encoding="utf-8"))
+SNAPSHOT = ROOT / "knowledge" / "goutoujunshi"
+MANIFEST = json.loads((ROOT / "knowledge" / "upstream-manifest.json").read_text(encoding="utf-8"))
 
 
 class RepositoryTests(unittest.TestCase):
@@ -20,7 +21,9 @@ class RepositoryTests(unittest.TestCase):
             if p.is_file() and "__pycache__" not in p.parts
         }
         self.assertEqual(MANIFEST["files"], actual)
+        self.assertEqual(MANIFEST["source_url"], "https://github.com/shengjidaguai-china/goutoujunshi")
         self.assertEqual(MANIFEST["commit"], "6db7354a4002dc7c448a9c87ffdad8132570c9d3")
+        self.assertEqual(MANIFEST["license"], "MIT")
         self.assertEqual(len(actual), 63)
 
     def test_license_and_reference_inventory(self) -> None:
@@ -32,13 +35,25 @@ class RepositoryTests(unittest.TestCase):
 
     def test_monorepo_boundaries(self) -> None:
         for path in (
-            "AGENTS.md", "Makefile", "make.cmd", "pyproject.toml", "pnpm-workspace.yaml",
-            "apps/api/README.md", "apps/mobile/README.md", "packages/agent/README.md",
+            "AGENTS.md", "Makefile", "make.cmd", ".env.example", "pyproject.toml", "pnpm-workspace.yaml",
+            "apps/server/README.md", "apps/mobile/README.md", "packages/agent/README.md",
             "packages/knowledge/README.md", "packages/chat_import/README.md",
             "docs/MASTER_PLAN.md", "docs/ARCHITECTURE.md", "docs/SKILL_CONTRACT.md",
+            "knowledge/goutoujunshi/SKILL.md", "knowledge/upstream-manifest.json",
         ):
             with self.subTest(path=path):
                 self.assertTrue((ROOT / path).is_file())
+
+    def test_env_template_and_ignore_rules(self) -> None:
+        template = (ROOT / ".env.example").read_text(encoding="utf-8")
+        self.assertIn("LLM_PROVIDER=mock", template)
+        self.assertNotIn("EXPO_PUBLIC_", template)
+        for name in (".env", ".env.local"):
+            result = subprocess.run(
+                ["git", "-c", f"safe.directory={ROOT.as_posix()}", "check-ignore", "-q", "--", name],
+                cwd=ROOT, check=False,
+            )
+            self.assertEqual(result.returncode, 0, f"{name} should be ignored")
 
     def test_phase_one_dataset_when_enabled(self) -> None:
         phase = json.loads((ROOT / "project-phase.json").read_text(encoding="utf-8"))["completed_phase"]
