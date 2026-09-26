@@ -10,7 +10,9 @@ agent runtime, and mobile app are future phases; this repository does not yet
 claim to run relationship advice independently.
 
 Use `make doctor`, `make test`, `make eval`, and `make verify` on systems with
-GNU Make. On Windows without Make, use `python scripts/verify.py doctor|test|eval|verify`.
+GNU Make. On Windows without GNU Make, `make.cmd` exposes the same targets;
+invoke `./make.cmd verify` from PowerShell or add the repository to `PATH` for
+`make verify`. `python scripts/verify.py doctor|test|eval|verify` is equivalent.
 The verifier reports which phase gates are active and which are deferred.
 
 See [the master plan](docs/MASTER_PLAN.md) and [architecture](docs/ARCHITECTURE.md).

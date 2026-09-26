@@ -21,7 +21,7 @@ ARCHITECTURE DECISIONS: ADR 0001 freezes upstream and preserves MIT; ADR 0002
 separates transport, Agent, knowledge, import and mobile, with phase-aware gates.
 
 KNOWN ISSUES: GNU Make and Docker are not installed in this Windows workspace;
-the portable Python command executes the same gate. No service or app exists
+`make.cmd` and the portable Python command execute the same gate. No service or app exists
 in Phase 0. uv uses workspace-local cache/install paths in this environment
 because the default Windows uv directories are inaccessible. No paid or
 private credential is needed.

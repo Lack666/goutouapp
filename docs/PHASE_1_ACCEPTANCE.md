@@ -10,7 +10,8 @@ invitation, conflict, imbalance, breakup, reconciliation, betrayal, online
 relationship, chat import, MBTI, manipulation, memory, violence, coercion,
 stalking, fraud, privacy and self-harm.
 
-TESTS: `python scripts/verify.py verify` passed after setting
+TESTS: `make verify` through the Windows `make.cmd` shim and
+`python scripts/verify.py verify` passed after setting
 `completed_phase` to 1. Four unit tests passed, including the dataset gate;
 upstream validation passed. `python evals/validate.py` passed with 55 cases,
 21 categories, 13 high-risk cases and 60 distinct assertion labels.

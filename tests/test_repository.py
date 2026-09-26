@@ -32,7 +32,7 @@ class RepositoryTests(unittest.TestCase):
 
     def test_monorepo_boundaries(self) -> None:
         for path in (
-            "AGENTS.md", "Makefile", "pyproject.toml", "pnpm-workspace.yaml",
+            "AGENTS.md", "Makefile", "make.cmd", "pyproject.toml", "pnpm-workspace.yaml",
             "apps/api/README.md", "apps/mobile/README.md", "packages/agent/README.md",
             "packages/knowledge/README.md", "packages/chat_import/README.md",
             "docs/MASTER_PLAN.md", "docs/ARCHITECTURE.md", "docs/SKILL_CONTRACT.md",
