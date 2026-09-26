@@ -1,0 +1,11 @@
+{
+  "name": "goutoujunshi-app",
+  "private": true,
+  "packageManager": "pnpm@11.25.0",
+  "scripts": {
+    "doctor": "python scripts/verify.py doctor",
+    "test": "python scripts/verify.py test",
+    "eval": "python scripts/verify.py eval",
+    "verify": "python scripts/verify.py verify"
+  }
+}

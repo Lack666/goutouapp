@@ -1,0 +1,9 @@
+[project]
+name = "goutoujunshi-runtime"
+version = "0.1.0"
+description = "Independent runtime for the goutoujunshi specification"
+requires-python = ">=3.12,<3.15"
+dependencies = []
+
+[tool.uv]
+package = false
