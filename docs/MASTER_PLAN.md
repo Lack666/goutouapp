@@ -14,7 +14,7 @@ as implemented by a placeholder directory or a golden expectation.
 | Phase | Deliverable | Status |
 | --- | --- | --- |
 | 0 | Repository bootstrap, upstream audit, monorepo, verification | PASS |
-| 1 | Skill contract and at least 40 synthetic Golden Cases | IN PROGRESS |
+| 1 | Skill contract and at least 40 synthetic Golden Cases | PASS |
 | 2 | FastAPI, PostgreSQL, Pydantic, SQLAlchemy, Alembic | PENDING |
 | 3 | Standalone LangGraph runtime, provider abstraction, streaming | PENDING |
 | 4 | Deterministic 1–3 document knowledge router | PENDING |
@@ -68,11 +68,17 @@ as implemented by a placeholder directory or a golden expectation.
 - Created the monorepo boundaries, `AGENTS.md`, `Makefile`, `pyproject.toml`,
   pnpm workspace, architecture and ADRs, plus phase-aware verification.
 - Acceptance: [Phase 0 report](PHASE_0_ACCEPTANCE.md).
+- Commit: `eccc633` (`chore: bootstrap standalone runtime monorepo and freeze upstream`).
 
 ### Phase 1
 
-Golden data and contract review are in progress. Acceptance is recorded only
-after the Phase 1 verifier passes.
+- Completed `docs/SKILL_CONTRACT.md` with intake, evidence, scenario route,
+  safety, relationship, memory, import and evaluation obligations.
+- Added 55 anonymous synthetic Golden Cases across 21 categories, including
+  13 high-risk cases, and a 19-reference alias map linked to the frozen source.
+- Validated uniqueness, coverage, reference existence, safety precedence,
+  explicit memory consent and fact/inference annotation structure.
+- Acceptance: [Phase 1 report](PHASE_1_ACCEPTANCE.md).
 
 ## Dependency policy
 
