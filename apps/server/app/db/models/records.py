@@ -1,9 +1,11 @@
 """Owner-scoped persistence records; no authentication or Agent execution here."""
 
+from datetime import datetime
 from uuid import UUID
 
 from sqlalchemy import (
     CheckConstraint,
+    DateTime,
     Float,
     ForeignKey,
     ForeignKeyConstraint,
@@ -89,6 +91,9 @@ class AgentRun(RecordMixin, Base):
     user_id: Mapped[UUID] = mapped_column(ForeignKey("users.id", ondelete="RESTRICT"), index=True)
     conversation_id: Mapped[UUID] = mapped_column(index=True)
     status: Mapped[str] = mapped_column(String(20), nullable=False)
+    started_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
+    completed_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
+    failure_code: Mapped[str | None] = mapped_column(String(40), nullable=True)
 
 
 class MemoryControlRow(RecordMixin, Base):

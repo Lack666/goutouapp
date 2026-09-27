@@ -87,6 +87,7 @@ class ConversationMessage(ContractModel):
 
 
 class AgentInput(ContractModel):
+    run_id: UUID | None = None
     user_id: UUID
     conversation_id: UUID
     relationship_id: UUID | None = None

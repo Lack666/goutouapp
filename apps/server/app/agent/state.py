@@ -76,7 +76,7 @@ class AgentState(TypedDict):
 def initial_state(request: AgentInput) -> AgentState:
     """Create a fresh state; no dependency or model response object enters it."""
     return AgentState(
-        run_id=uuid4(),
+        run_id=request.run_id or uuid4(),
         run_status=AgentRunStatus.PENDING,
         user_id=request.user_id,
         conversation_id=request.conversation_id,

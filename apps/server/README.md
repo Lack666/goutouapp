@@ -1,5 +1,16 @@
 # Server — verified Phase 2 foundation
 
+Phase 4A adds the Python-only `AgentService` for owner-scoped conversation,
+message and AgentRun orchestration. It accepts a trusted typed actor and calls
+the standalone runtime between two short database transactions. There is still
+no Agent HTTP endpoint. See [Agent Service](../../docs/AGENT_SERVICE.md).
+
+Direct PostgreSQL + MockLLM demo, without FastAPI or an API key:
+
+```powershell
+uv --cache-dir .cache/uv --no-managed-python run --locked --env-file .env python apps/server/agent_service_demo.py
+```
+
 This FastAPI service starts without a reachable PostgreSQL database or LLM key.
 Phase 2B added persistence and database readiness. Phase 2C adds an internal,
 keyless-testable LLM Provider boundary. Phase 2D verifies these layers together

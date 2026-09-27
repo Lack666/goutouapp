@@ -25,6 +25,7 @@ AGENT_ANALYSIS = PHASE >= 3 or SUBPHASE in {"3E", "3F", "3G"}
 AGENT_ACTION_RESPONSE = PHASE >= 3 or SUBPHASE in {"3F", "3G"}
 AGENT_MEMORY = PHASE >= 3 or SUBPHASE == "3G"
 AGENT_STREAMING = PHASE >= 3 or SUBPHASE == "3H"
+AGENT_SERVICE = PHASE >= 4 or SUBPHASE == "4A"
 
 
 def run(command: list[str]) -> None:
@@ -104,6 +105,9 @@ def tests() -> None:
     if AGENT_STREAMING:
         uv_run("pytest", "-q", "apps/server/tests/test_agent_streaming.py")
         uv_run("pytest", "-q", "apps/server/tests/test_phase3_e2e.py")
+    if AGENT_SERVICE:
+        uv_run("pytest", "-q", "apps/server/tests/test_agent_service.py")
+        uv_run("python", "apps/server/agent_service_demo.py")
     if BACKEND_FOUNDATION:
         uv_run("pytest", "-q", "apps/server/tests")
 
@@ -236,6 +240,8 @@ def verify() -> None:
         print("DEFERRED: full live-model Golden runtime eval")
     else:
         print("DEFERRED: memory and full live-model Golden runtime eval")
+    if AGENT_SERVICE:
+        print("PASS: Phase 4A Agent Application Service")
     if AGENT_STREAMING:
         print("PASS: Typed runtime streaming and eight standalone Phase 3 E2E cases")
     if PHASE < 7:
@@ -260,9 +266,15 @@ def verify() -> None:
             raise RuntimeError("Phase 3 Agent Runtime gate is incomplete")
         print("PASS: Phase 3 Agent Runtime")
         print("DEFERRED: RAG")
-        print("DEFERRED: API Transport")
+        print(
+            "DEFERRED: REST API, Network Streaming, Authentication Transport, Full API Idempotency"
+        )
         print("DEFERRED: Mobile")
-        print("PASS: all active Phase 0..3 gates")
+        print(
+            "PASS: all active Phase 0..3 and Phase 4A gates"
+            if AGENT_SERVICE
+            else "PASS: all active Phase 0..3 gates"
+        )
         return
     if PHASE == 2:
         print("PASS: Phase 2 Backend Foundation")

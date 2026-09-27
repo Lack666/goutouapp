@@ -48,3 +48,15 @@ Schema relationships and delete semantics are specified in
 `AgentRun` have explicit owners; `Message` inherits ownership from its
 conversation. The ORM connection uses UTC. Sensitive message content belongs
 in the database, never in normal logs.
+
+## Phase 4A AgentRun lifecycle
+
+Alembic revision `20260928_01` adds nullable `started_at`, `completed_at` and
+`failure_code` to the existing AgentRun table. Existing records remain valid.
+The service creates `pending`, flushes `running` with a start time, and commits
+with the user message before invoking the runtime. A separate transaction
+stores the validated assistant message and `completed`, or only `failed` plus a
+short failure code. The database row ID equals the runtime run ID. On answer
+commit failure, the service rolls back the assistant and attempts a separate
+failed-run update. An unrecoverable update leaves an observable running row and
+returns a typed error. See [Agent Service](AGENT_SERVICE.md).

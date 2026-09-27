@@ -207,7 +207,16 @@ adds an owner-scoped, 20-operation history for saved records. See
 [Streaming runtime](STREAMING_RUNTIME.md), [ADR 0016](adr/0016-memory-undo.md)
 and [ADR 0017](adr/0017-runtime-streaming.md).
 
-Phase 4 will compose authenticated Agent Service calls, FastAPI business
-endpoints, REST and WebSocket/SSE transport, conversation/AgentRun persistence,
-API idempotency and disconnect handling. None of those is a Phase 3 runtime
-dependency.
+## Phase 4A application boundary
+
+`AuthenticatedActor → AgentService → owner-scoped Conversation/Message/AgentRun
+repositories → AgentRuntime` is the new application path. The service commits
+user input plus a running run before runtime execution, then commits only a
+validated assistant answer plus completion. A runtime failure leaves user input
+and a failed run. It constructs a bounded owner-scoped history before inserting
+the current message. Persistent and runtime run IDs are identical. See
+[Agent Service](AGENT_SERVICE.md) and [ADR 0018](adr/0018-agent-service-orchestration.md).
+
+Phase 4B–4D will add authentication adapters, REST and network streaming,
+idempotent retries and disconnect policy. The service will remain the shared
+business boundary; no Phase 4 transport belongs inside the Phase 3 runtime.

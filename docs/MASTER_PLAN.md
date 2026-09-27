@@ -65,9 +65,9 @@ as implemented by a placeholder directory or a golden expectation.
 
 ## Implementation log
 
-Phase 2A–2D and Phase 3A–3H are complete. Phase 3 is accepted as a
-transport-independent Agent Runtime; Phase 4 network/service integration
-remains pending.
+Phase 2A–2D, Phase 3A–3H and Phase 4A are complete. Phase 3 is accepted as a
+transport-independent Agent Runtime. Phase 4A adds the application service;
+Phase 4B–4D network transport, authentication, streaming and retry policy remain pending.
 
 ### Phase 0
 
@@ -284,6 +284,21 @@ remains pending.
   [Phase 3H report](PHASE_3H_ACCEPTANCE.md),
   [Streaming runtime](STREAMING_RUNTIME.md), [ADR 0016](adr/0016-memory-undo.md)
   and [ADR 0017](adr/0017-runtime-streaming.md).
+
+### Phase 4A — Agent application service
+
+- `AgentService.execute` binds a verified actor to an existing owned conversation,
+  stores the user message and running run in a short transaction, then calls the
+  standalone runtime without a database transaction. A second transaction stores
+  the validated answer and completion, or a failure state. Runtime and database
+  run IDs are identical. The owner-scoped history contains at most 20 prior
+  user/assistant messages.
+- A failed runtime preserves user input but writes no assistant answer. If the
+  answer commit fails, the service rolls it back and attempts a separate failed
+  run update; it reports recovery status either way. Memory failure remains a
+  completed response with a warning. See [Agent Service](AGENT_SERVICE.md),
+  [ADR 0018](adr/0018-agent-service-orchestration.md) and
+  [Phase 4A acceptance](PHASE_4A_ACCEPTANCE.md).
 
 ## Dependency policy
 
