@@ -10,6 +10,9 @@ and bounded loading of the frozen references. Phase 3E adds structured
 relationship analysis that consumes typed FIU and loaded excerpts. Phase 3F
 adds action planning and response generation. Phase 3G adds scoped, consented
 long-term memory. RAG remains deferred.
+Phase 3H closes the memory undo contract and exposes typed, transport-independent
+runtime progress events. The overall Phase 3 Agent Runtime is complete after
+its standalone E2E and regression gates; network transport remains deferred.
 
 ```mermaid
 flowchart LR
@@ -191,3 +194,20 @@ returns a receipt. `MemoryStore` has an in-memory implementation for the
 standalone graph and a SQLAlchemy adapter using isolated sessions. Memory
 errors do not discard a completed response. See [Memory](MEMORY.md) and
 [ADR 0015](adr/0015-consent-gated-memory.md).
+
+## Phase 3H streaming and final standalone boundary
+
+`AgentRuntime.run(input)` returns one `AgentResult` or `AgentFailure`.
+`AgentRuntime.stream(input)` iterates typed events from the same compiled
+LangGraph, with one execution and one run ID. The graph's internal node updates
+map to stable product statuses; only validated final text, public result,
+generic failures and bounded memory receipts are emitted. Async-generator
+close/cancellation closes the underlying graph iterator. The memory undo audit
+adds an owner-scoped, 20-operation history for saved records. See
+[Streaming runtime](STREAMING_RUNTIME.md), [ADR 0016](adr/0016-memory-undo.md)
+and [ADR 0017](adr/0017-runtime-streaming.md).
+
+Phase 4 will compose authenticated Agent Service calls, FastAPI business
+endpoints, REST and WebSocket/SSE transport, conversation/AgentRun persistence,
+API idempotency and disconnect handling. None of those is a Phase 3 runtime
+dependency.

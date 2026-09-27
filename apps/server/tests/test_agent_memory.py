@@ -217,6 +217,26 @@ def test_owner_person_scope_deletion_and_idempotency():
     assert service.list_for_user(user) == []
 
 
+def test_undo_recent_insert_is_owner_scoped_bounded_and_available_while_paused():
+    service, user, person, relationship = setup_service()
+    outsider = uuid4()
+    service.grant_consent(user, confirmed=True)
+    for number in range(21):
+        receipt = save(service, user, person, relationship, f"我们计划第{number}周见面")
+        assert receipt.status == MemoryWriteStatus.SAVED
+    assert len(service.store.operations[user]) == 20
+    assert service.undo_last(outsider).status == MemoryWriteStatus.NOTHING_TO_UNDO
+    service.apply_control(user, MemoryDecision.PAUSE)
+    for _ in range(20):
+        assert service.undo_last(user).status == MemoryWriteStatus.UNDONE
+    assert [item.content for item in service.list_for_user(user)] == ["我们计划第0周见面"]
+    assert service.undo_last(user).status == MemoryWriteStatus.NOTHING_TO_UNDO
+    service.apply_control(user, MemoryDecision.RESUME)
+    save(service, user, person, relationship, "我们计划月底见面")
+    assert service.delete_person(user, person, confirmed=True) == 2
+    assert service.undo_last(user).status == MemoryWriteStatus.NOTHING_TO_UNDO
+
+
 def test_candidate_grounding_rejects_inference_chat_and_sensitive_content():
     service, user, person, relationship = setup_service()
     service.grant_consent(user, confirmed=True)

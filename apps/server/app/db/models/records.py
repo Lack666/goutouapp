@@ -112,6 +112,7 @@ class MemoryRecordRow(RecordMixin, Base):
             ondelete="RESTRICT",
         ),
         UniqueConstraint("owner_user_id", "subject_id", "type", "content_hash"),
+        UniqueConstraint("owner_user_id", "id", name="uq_memory_records_owner_id"),
         CheckConstraint("type IN ('user', 'object', 'relationship')", name="type_valid"),
         CheckConstraint(
             "(type = 'user' AND person_id IS NULL AND relationship_id IS NULL "
@@ -134,3 +135,20 @@ class MemoryRecordRow(RecordMixin, Base):
     evidence: Mapped[str] = mapped_column(String(100), nullable=False)
     confidence: Mapped[float | None] = mapped_column(Float, nullable=True)
     first_run_id: Mapped[UUID] = mapped_column(nullable=False)
+
+
+class MemoryOperationRow(RecordMixin, Base):
+    """At most twenty owner-scoped, reversible memory insert operations."""
+
+    __tablename__ = "memory_operations"
+    __table_args__ = (
+        ForeignKeyConstraint(
+            ["owner_user_id", "record_id"],
+            ["memory_records.owner_user_id", "memory_records.id"],
+            ondelete="CASCADE",
+        ),
+        UniqueConstraint("record_id"),
+    )
+
+    owner_user_id: Mapped[UUID] = mapped_column(index=True)
+    record_id: Mapped[UUID] = mapped_column(nullable=False)

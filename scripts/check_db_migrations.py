@@ -19,6 +19,7 @@ EXPECTED = {
     "agent_runs",
     "memory_controls",
     "memory_records",
+    "memory_operations",
 }
 
 

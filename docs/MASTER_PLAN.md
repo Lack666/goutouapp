@@ -16,12 +16,12 @@ as implemented by a placeholder directory or a golden expectation.
 | 0 | Repository bootstrap, upstream audit, monorepo, verification | PASS |
 | 1 | Skill contract and at least 40 synthetic Golden Cases | PASS |
 | 2 | FastAPI, PostgreSQL, Pydantic, SQLAlchemy, Alembic, LLM Provider foundation | PASS |
-| 3 | Standalone LangGraph runtime and Agent streaming integration | PENDING |
-| 4 | Deterministic 1–3 document knowledge router | PENDING |
-| 5 | Consent gated and isolated long-term memory | PENDING |
+| 3 | Standalone LangGraph runtime and Agent streaming integration | PASS |
+| 4 | Agent Service and API transport over the standalone runtime | PENDING |
+| 5 | User-facing memory controls and retention policy integration | PENDING |
 | 6 | TXT/Markdown/JSON import and ordinary-code statistics | PENDING |
 | 7 | Expo React Native MVP | PENDING |
-| 8 | API integration, generated client, WebSocket streaming | PENDING |
+| 8 | Mobile API integration, generated client and stream consumption | PENDING |
 | 9 | Security, privacy, reliability and deletion | PENDING |
 | 10 | Optional hybrid RAG with pgvector | PENDING |
 | 11 | Agent eval and observability | PENDING |
@@ -39,17 +39,22 @@ as implemented by a placeholder directory or a golden expectation.
 2. CRUD storage and migration with ownership checks; API/OpenAPI and database
    integration tests; local Compose demo.
 3. Keyless MockLLM and OpenAI-compatible provider behind `chat`, `stream`, and
-   `structured_output`; independent CLI/Python demo; individual node tests.
-4. Scenario-based reference selection, exact document loading and router eval;
-   no embeddings.
-5. Explicit consent, inspect, pause, resume, delete one/all, source gates and
-   person isolation with database tests.
+   `structured_output`; standalone LangGraph `run()` and typed `stream()`,
+   consented memory with undo, independent CLI/Python demos, individual node
+   tests and full standalone E2E regression.
+4. Compose the standalone runtime behind Agent Service and owner-scoped API
+   transport; map typed events to a network stream, orchestrate conversation,
+   message and AgentRun persistence, and define API idempotency and disconnect
+   behavior. No new relationship reasoning or embeddings.
+5. Expose confirmed consent, inspect, pause, resume, undo and deletion controls
+   through the service boundary, with owner/person isolation and production
+   retention-policy decisions. The Phase 3 memory runtime is the baseline.
 6. Decoupled parsers, speaker mapping, timestamps, source provenance and
    deterministic metrics with representative fixtures.
 7. Six mobile surfaces: home, chat, relationship/profile, import/analysis,
    history, settings. Typecheck and on-device or Expo web demo.
-8. OpenAPI-generated TypeScript client and stable status/token/analysis/
-   interrupt/error/done WebSocket events with run and idempotency IDs.
+8. OpenAPI-generated TypeScript client and mobile consumption of stable
+   transport events with run and idempotency IDs.
 9. Upload limits and type checks, traversal prevention, access isolation,
    deletion, log redaction, and high-risk safety priority.
 10. Optional metadata, keyword/BM25, vector and rerank retrieval; prove value
@@ -60,8 +65,9 @@ as implemented by a placeholder directory or a golden expectation.
 
 ## Implementation log
 
-Phase 2A–2D and the Phase 3A–3G subphases are complete. Phase 3 final
-acceptance and streaming transport integration remain pending.
+Phase 2A–2D and Phase 3A–3H are complete. Phase 3 is accepted as a
+transport-independent Agent Runtime; Phase 4 network/service integration
+remains pending.
 
 ### Phase 0
 
@@ -257,6 +263,27 @@ acceptance and streaming transport integration remain pending.
   for simple reply/invitation and its 38-case replay rerun. See
   [Phase 3G report](PHASE_3G_ACCEPTANCE.md), [Memory](MEMORY.md) and
   [ADR 0015](adr/0015-consent-gated-memory.md).
+
+### Phase 3H and Phase 3 final acceptance
+
+- On 2026-09-27, closed the Phase 1A memory undo MUST gap with a bounded
+  20-operation, owner-scoped undo history for newly saved records. Alembic
+  revision `20260927_03` adds `memory_operations`; undo works across sessions,
+  while hard deletion clears affected operation history.
+- Added transport-independent `AgentRuntime.stream()` over the same compiled
+  LangGraph as `run()`. Typed, JSON-restorable events provide stable progress,
+  a validated full final answer, memory receipt and terminal result/failure.
+  Token-level model generation remains deferred. Cancellation closes the
+  underlying graph iterator; high-risk runs never publish ordinary planning
+  or composing statuses.
+- Eight standalone full-pipeline E2E cases cover ordinary reply, explicit
+  refusal, high risk, cross-conversation memory, absent consent, memory failure,
+  person isolation and run/stream parity. The verifier also runs focused
+  streaming tests and all earlier gates. Phase 3 is complete as an engineering
+  runtime gate; live-model end-to-end quality remains unverified. See
+  [Phase 3H report](PHASE_3H_ACCEPTANCE.md),
+  [Streaming runtime](STREAMING_RUNTIME.md), [ADR 0016](adr/0016-memory-undo.md)
+  and [ADR 0017](adr/0017-runtime-streaming.md).
 
 ## Dependency policy
 

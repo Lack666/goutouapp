@@ -28,6 +28,11 @@ Phase 3G extends the expected schema with `memory_controls` and
 tables. The memory adapter opens a fresh SQLAlchemy session per operation.
 Same-owner composite foreign keys constrain person/relationship scope, and
 owner/subject/type/content hash deduplicates writes. See [Memory](MEMORY.md).
+Phase 3H adds `memory_operations`, making nine tables total. Its composite
+owner/record foreign key cascades on hard deletion. Save and undo run in
+separate, atomic per-operation transactions; history is capped at 20 entries
+per owner. The migration gate checks the full nine-table upgrade/downgrade
+cycle and `alembic check`.
 
 `TEST_DATABASE_URL` is a PostgreSQL connection template whose database name
 must end in `_test` and differ from `DATABASE_URL`'s database name. Tests create

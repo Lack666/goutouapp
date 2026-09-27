@@ -24,6 +24,7 @@ AGENT_KNOWLEDGE = PHASE >= 3 or SUBPHASE in {"3D", "3E", "3F", "3G"}
 AGENT_ANALYSIS = PHASE >= 3 or SUBPHASE in {"3E", "3F", "3G"}
 AGENT_ACTION_RESPONSE = PHASE >= 3 or SUBPHASE in {"3F", "3G"}
 AGENT_MEMORY = PHASE >= 3 or SUBPHASE == "3G"
+AGENT_STREAMING = PHASE >= 3 or SUBPHASE == "3H"
 
 
 def run(command: list[str]) -> None:
@@ -100,6 +101,9 @@ def tests() -> None:
         uv_run("pytest", "-q", "apps/server/tests/test_agent_memory.py")
         uv_run("pytest", "-q", "apps/server/tests/test_memory_database.py")
         uv_run("python", "scripts/check_memory_replay.py")
+    if AGENT_STREAMING:
+        uv_run("pytest", "-q", "apps/server/tests/test_agent_streaming.py")
+        uv_run("pytest", "-q", "apps/server/tests/test_phase3_e2e.py")
     if BACKEND_FOUNDATION:
         uv_run("pytest", "-q", "apps/server/tests")
 
@@ -232,12 +236,34 @@ def verify() -> None:
         print("DEFERRED: full live-model Golden runtime eval")
     else:
         print("DEFERRED: memory and full live-model Golden runtime eval")
+    if AGENT_STREAMING:
+        print("PASS: Typed runtime streaming and eight standalone Phase 3 E2E cases")
     if PHASE < 7:
         print("DEFERRED: Mobile lint/typecheck begin at Phase 7")
-    if PHASE > 2:
+    if PHASE > 3:
         raise RuntimeError(
             "Later-phase verification is not implemented; do not mark that phase complete"
         )
+    if PHASE == 3:
+        if not all(
+            (
+                AGENT_CONTRACTS,
+                AGENT_RUNTIME,
+                AGENT_SEMANTIC,
+                AGENT_KNOWLEDGE,
+                AGENT_ANALYSIS,
+                AGENT_ACTION_RESPONSE,
+                AGENT_MEMORY,
+                AGENT_STREAMING,
+            )
+        ):
+            raise RuntimeError("Phase 3 Agent Runtime gate is incomplete")
+        print("PASS: Phase 3 Agent Runtime")
+        print("DEFERRED: RAG")
+        print("DEFERRED: API Transport")
+        print("DEFERRED: Mobile")
+        print("PASS: all active Phase 0..3 gates")
+        return
     if PHASE == 2:
         print("PASS: Phase 2 Backend Foundation")
         if AGENT_CONTRACTS:

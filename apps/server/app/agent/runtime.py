@@ -1,6 +1,6 @@
 """Reusable safety-first LangGraph runtime for typed semantic nodes."""
 
-from collections.abc import Awaitable, Callable
+from collections.abc import AsyncIterator, Awaitable, Callable
 from uuid import uuid4
 
 from langgraph.graph import END, START, StateGraph
@@ -11,9 +11,21 @@ from app.agent.contracts import (
     AgentResult,
     AgentRunStatus,
     FactExtractionResult,
+    MemoryWriteStatus,
+    Route,
 )
 from app.agent.dependencies import RuntimeDependencies
 from app.agent.errors import AgentError, AgentErrorCode, AgentFailure
+from app.agent.events import (
+    AgentEvent,
+    CompletedEvent,
+    FailedEvent,
+    FinalResponseEvent,
+    MemoryStatusEvent,
+    ProgressStatus,
+    RunStartedEvent,
+    StatusEvent,
+)
 from app.agent.knowledge import ReferenceRegistry
 from app.agent.memory_nodes import (
     load_memory,
@@ -256,6 +268,125 @@ class AgentRuntime:
     def graph(self) -> CompiledStateGraph:
         return self._graph
 
+    @staticmethod
+    def _result(output: AgentState, run_id) -> AgentResult:
+        if output["run_id"] != run_id:
+            raise RuntimeError("graph changed run identity")
+        output["run_status"] = AgentRunStatus.COMPLETED
+        return AgentResult(
+            run_id=run_id,
+            status=output["run_status"],
+            scenario=output["scenario"],
+            safety=output["safety"],
+            route=output["route"],
+            evidence=FactExtractionResult(
+                facts=output["facts"],
+                inferences=output["inferences"],
+                unknowns=output["unknowns"],
+            ),
+            knowledge=output["knowledge_route"],
+            analysis=output["analysis_result"],
+            action=output["action_plan"],
+            memory_intent=output["memory_intent"],
+            memory_candidates=output["memory_candidates"],
+            memory_receipt=output["memory_receipt"],
+            final_answer=output["final_answer"],
+            warnings=output["warnings"],
+        )
+
+    @staticmethod
+    def _failure(run_id, exc: Exception) -> AgentFailure:
+        if isinstance(exc, LLMStructuredOutputError):
+            code = AgentErrorCode.STRUCTURED_OUTPUT_FAILURE
+        elif isinstance(exc, LLMError):
+            code = AgentErrorCode.DEPENDENCY_FAILURE
+        elif isinstance(exc, AgentError):
+            code = exc.code
+        else:
+            code = AgentErrorCode.RUNTIME_FAILURE
+        return AgentFailure(run_id=run_id, code=code, message="Agent run failed")
+
+    async def stream(self, request: AgentInput) -> AsyncIterator[AgentEvent]:
+        """Yield safe lifecycle events while executing the compiled graph once."""
+        if not isinstance(request, AgentInput):
+            run_id = uuid4()
+            yield RunStartedEvent(run_id=run_id)
+            yield FailedEvent(
+                run_id=run_id,
+                failure=AgentFailure(
+                    run_id=run_id,
+                    code=AgentErrorCode.INVALID_INPUT,
+                    message="Agent input is invalid",
+                ),
+            )
+            return
+        try:
+            request = AgentInput.model_validate_json(request.model_dump_json())
+        except Exception:
+            run_id = uuid4()
+            yield RunStartedEvent(run_id=run_id)
+            yield FailedEvent(
+                run_id=run_id,
+                failure=AgentFailure(
+                    run_id=run_id,
+                    code=AgentErrorCode.INVALID_INPUT,
+                    message="Agent input is invalid",
+                ),
+            )
+            return
+        state = initial_state(request)
+        run_id = state["run_id"]
+        state["run_status"] = AgentRunStatus.RUNNING
+        yield RunStartedEvent(run_id=run_id)
+        yield StatusEvent(run_id=run_id, status=ProgressStatus.PREPARING)
+        graph_stream = self._graph.astream(state, stream_mode="updates")
+        try:
+            async for updates in graph_stream:
+                for node_name, update in updates.items():
+                    if node_name not in NODE_WRITES or not isinstance(update, dict):
+                        raise RuntimeError("invalid graph stream update")
+                    state.update(update)
+                    if node_name == "load_memory":
+                        yield StatusEvent(run_id=run_id, status=ProgressStatus.CHECKING_SAFETY)
+                    elif node_name == "safety_check":
+                        status = (
+                            ProgressStatus.LOADING_CONTEXT
+                            if state["route"] == Route.SAFETY
+                            else ProgressStatus.UNDERSTANDING_REQUEST
+                        )
+                        yield StatusEvent(run_id=run_id, status=status)
+                    elif node_name == "extract_fiu":
+                        yield StatusEvent(run_id=run_id, status=ProgressStatus.LOADING_CONTEXT)
+                    elif node_name == "load_references":
+                        status = (
+                            ProgressStatus.PREPARING_SAFETY_RESPONSE
+                            if state["route"] == Route.SAFETY
+                            else ProgressStatus.ANALYZING
+                        )
+                        yield StatusEvent(run_id=run_id, status=status)
+                    elif node_name == "relationship_analysis":
+                        yield StatusEvent(run_id=run_id, status=ProgressStatus.PLANNING)
+                    elif node_name == "action_planner":
+                        yield StatusEvent(run_id=run_id, status=ProgressStatus.COMPOSING)
+                    elif node_name in {"response_generator", "safety_finalize"}:
+                        self._result(state.copy(), run_id)
+                        yield FinalResponseEvent(run_id=run_id, answer=state["final_answer"])
+                    elif (
+                        node_name == "memory_persist"
+                        and state["memory_receipt"].status != MemoryWriteStatus.NONE
+                    ):
+                        yield MemoryStatusEvent(
+                            run_id=run_id,
+                            decision=state["memory_intent"].decision,
+                            receipt=state["memory_receipt"],
+                        )
+            result = self._result(state, run_id)
+            yield CompletedEvent(run_id=run_id, result=result)
+        except Exception as exc:
+            yield FailedEvent(run_id=run_id, failure=self._failure(run_id, exc))
+        finally:
+            await graph_stream.aclose()
+
     async def run(self, request: AgentInput) -> AgentResult | AgentFailure:
         if not isinstance(request, AgentInput):
             return AgentFailure(
@@ -276,36 +407,8 @@ class AgentRuntime:
         state["run_status"] = AgentRunStatus.RUNNING
         try:
             output: AgentState = await self._graph.ainvoke(state)
-            if output["run_id"] != run_id:
-                raise RuntimeError("graph changed run identity")
-            output["run_status"] = AgentRunStatus.COMPLETED
-            return AgentResult(
-                run_id=run_id,
-                status=output["run_status"],
-                scenario=output["scenario"],
-                safety=output["safety"],
-                route=output["route"],
-                evidence=FactExtractionResult(
-                    facts=output["facts"],
-                    inferences=output["inferences"],
-                    unknowns=output["unknowns"],
-                ),
-                knowledge=output["knowledge_route"],
-                analysis=output["analysis_result"],
-                action=output["action_plan"],
-                memory_intent=output["memory_intent"],
-                memory_candidates=output["memory_candidates"],
-                memory_receipt=output["memory_receipt"],
-                final_answer=output["final_answer"],
-                warnings=output["warnings"],
-            )
-        except LLMStructuredOutputError:
-            code = AgentErrorCode.STRUCTURED_OUTPUT_FAILURE
-        except LLMError:
-            code = AgentErrorCode.DEPENDENCY_FAILURE
-        except AgentError as exc:
-            code = exc.code
-        except Exception:
-            code = AgentErrorCode.RUNTIME_FAILURE
+            return self._result(output, run_id)
+        except Exception as exc:
+            failure = self._failure(run_id, exc)
         state["run_status"] = AgentRunStatus.FAILED
-        return AgentFailure(run_id=run_id, code=code, message="Agent run failed")
+        return failure

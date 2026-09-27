@@ -17,6 +17,7 @@ from app.agent.contracts import (
 )
 
 MAX_TOTAL = 200
+MAX_OPERATIONS = 20
 RECALL_LIMIT = 8
 ALLOWED_TYPES = frozenset({"user", "object", "relationship"})
 BLOCKED_CONTENT = re.compile(
@@ -108,6 +109,7 @@ class MemoryStore(Protocol):
     def delete_one(self, user_id: UUID, memory_id: UUID, person_id: UUID | None) -> bool: ...
     def delete_person(self, user_id: UUID, person_id: UUID) -> int: ...
     def delete_all(self, user_id: UUID) -> int: ...
+    def undo_last(self, user_id: UUID) -> bool: ...
 
 
 class InMemoryMemoryStore:
@@ -117,6 +119,7 @@ class InMemoryMemoryStore:
         self.controls: dict[UUID, MemoryControl] = {}
         self.relationships: dict[tuple[UUID, UUID], UUID] = {}
         self.records: dict[UUID, MemoryRecord] = {}
+        self.operations: dict[UUID, list[UUID]] = {}
 
     def bind_relationship(self, user_id: UUID, relationship_id: UUID, person_id: UUID) -> None:
         self.relationships[(user_id, relationship_id)] = person_id
@@ -176,6 +179,9 @@ class InMemoryMemoryStore:
         if len(self.list_records(record.owner_user_id)) >= MAX_TOTAL:
             raise ValueError("memory limit reached")
         self.records[record.id] = record.model_copy()
+        history = self.operations.setdefault(record.owner_user_id, [])
+        history.append(record.id)
+        del history[:-MAX_OPERATIONS]
         return True
 
     def delete_one(self, user_id: UUID, memory_id: UUID, person_id: UUID | None) -> bool:
@@ -183,6 +189,9 @@ class InMemoryMemoryStore:
         if record is None or record.owner_user_id != user_id or record.person_id != person_id:
             return False
         del self.records[memory_id]
+        self.operations[user_id] = [
+            item for item in self.operations.get(user_id, []) if item != memory_id
+        ]
         return True
 
     def delete_person(self, user_id: UUID, person_id: UUID) -> int:
@@ -193,13 +202,28 @@ class InMemoryMemoryStore:
         ]
         for item_id in ids:
             del self.records[item_id]
+        self.operations[user_id] = [
+            item for item in self.operations.get(user_id, []) if item not in ids
+        ]
         return len(ids)
 
     def delete_all(self, user_id: UUID) -> int:
         ids = [item.id for item in self.records.values() if item.owner_user_id == user_id]
         for item_id in ids:
             del self.records[item_id]
+        self.operations[user_id] = []
         return len(ids)
+
+    def undo_last(self, user_id: UUID) -> bool:
+        history = self.operations.get(user_id, [])
+        if not history:
+            return False
+        record_id = history.pop()
+        record = self.records.get(record_id)
+        if record is None or record.owner_user_id != user_id:
+            raise ValueError("memory undo history is inconsistent")
+        del self.records[record_id]
+        return True
 
 
 class MemoryService:
@@ -331,3 +355,8 @@ class MemoryService:
         if revoke:
             self.store.set_control(user_id, MemoryControl(consent_enabled=False, paused=True))
         return count
+
+    def undo_last(self, user_id: UUID) -> MemoryReceipt:
+        if self.store.undo_last(user_id):
+            return MemoryReceipt(status=MemoryWriteStatus.UNDONE, undone_count=1)
+        return MemoryReceipt(status=MemoryWriteStatus.NOTHING_TO_UNDO)

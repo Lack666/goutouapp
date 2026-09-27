@@ -1,4 +1,4 @@
-# Agent contracts and standalone runtime (Phases 3A–3G)
+# Agent contracts and standalone runtime (Phases 3A–3H)
 
 The source behavior is
 `SKILL_CONTRACT.md` and the 81 synthetic cases in `evals/golden_cases.jsonl`.
@@ -7,7 +7,8 @@ fixtures with structured safety, scenario and FIU nodes. Phase 3D adds
 deterministic reference selection and bounded loading. Phase 3E adds typed,
 source-linked relationship analysis. Phase 3F adds independently validated
 action planning and user-facing response generation. Phase 3G adds scoped,
-consent-gated long-term memory after response generation.
+consent-gated long-term memory after response generation. Phase 3H closes the
+memory undo contract and adds a typed progress stream over the same graph.
 
 ## Input and state
 
@@ -51,7 +52,8 @@ relationship/safety scenarios plus `memory`). `RiskLevel` is `normal`/`high`
 and `Route` is `ordinary`/`boundary`/`safety`, as in that dataset. High risk
 requires the safety route. `AgentRunStatus` has exactly `pending`, `running`,
 `completed`, `failed`, matching the current PostgreSQL check constraint; no
-migration is needed. `MemoryDecision` extends the dataset's decisions with inspect.
+migration is needed. `MemoryDecision` extends the dataset's decisions with
+inspect and undo.
 Risk category labels, evidence source strings and memory candidate type strings
 remain open because the source contract does not freeze a comprehensive
 vocabulary for them. `ScenarioResult.reason_summary` is a short displayable
@@ -77,7 +79,7 @@ records a proposed decision, target and any confirmation need. Neither type
 means a database write happened. In particular the Golden `memory_writes=1`
 cases were candidate expectations before Phase 3G; the Phase 3G evaluator
 checks actual store writes. `MemoryReceipt` distinguishes saved, duplicate,
-skipped, rejected and failed outcomes. See [Memory](MEMORY.md).
+undone, skipped, rejected and failed outcomes. See [Memory](MEMORY.md).
 
 ## Runtime dependency and errors
 
@@ -209,7 +211,11 @@ has been run; safety and FIU accuracy in unseen language remains unverified.
 Knowledge loading is described in [Knowledge routing and loading](KNOWLEDGE_ROUTING.md).
 The Phase 3E node and limitations are described in
 [Relationship analysis](RELATIONSHIP_ANALYSIS.md). Phase 3F action and response
-rules are described in [Action and response](ACTION_RESPONSE.md). Phase 3G
-memory loading, consent and persistence are described in [Memory](MEMORY.md).
-Durable checkpointing, streaming transport and mobile remain outside this
-subphase. The compiled graph has no durable resume behavior or business API.
+rules are described in [Action and response](ACTION_RESPONSE.md). Phase 3G–3H
+memory loading, consent, persistence and undo are described in [Memory](MEMORY.md).
+Phase 3H `AgentRuntime.stream()` yields [typed runtime events](STREAMING_RUNTIME.md)
+from the same compiled graph and result builder used by `run()`. It does not
+stream unvalidated tokens. The final answer follows response validation and
+precedes any memory status. Durable checkpointing, network streaming transport
+and mobile remain outside Phase 3. The graph has no durable resume behavior
+or business API.

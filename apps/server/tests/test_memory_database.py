@@ -9,7 +9,7 @@ from sqlalchemy.orm import Session
 
 from app.agent.contracts import Fact, MemoryCandidate, MemoryDecision, MemoryWriteStatus
 from app.agent.memory import MemoryService
-from app.db.models import MemoryRecordRow, Message
+from app.db.models import MemoryOperationRow, MemoryRecordRow, Message
 from app.db.repositories import records
 from app.db.repositories.memory import SQLAlchemyMemoryStore
 
@@ -168,3 +168,52 @@ def test_postgres_same_person_relationship_scope_dedup(database_engine: Engine):
     assert len(service.load_for_context(owner, relation_a, enabled=True)) == 1
     assert len(service.load_for_context(owner, relation_b_id, enabled=True)) == 1
     assert len(service.list_for_user(owner)) == 2
+
+
+def test_postgres_undo_survives_new_session_and_hard_delete_clears_history(database_engine: Engine):
+    owner, outsider, person, _person_b, relationship, _relation_b, *_ = setup_records(
+        database_engine
+    )
+
+    def factory():
+        return Session(database_engine)
+
+    service = MemoryService(SQLAlchemyMemoryStore(factory))
+    save(service, owner, person, relationship, "我们已确认关系")
+    save(service, owner, person, relationship, "我们计划明年见面")
+    fresh = MemoryService(SQLAlchemyMemoryStore(factory))
+    assert fresh.undo_last(outsider).status == MemoryWriteStatus.NOTHING_TO_UNDO
+    fresh.apply_control(owner, MemoryDecision.PAUSE)
+    assert fresh.undo_last(owner).status == MemoryWriteStatus.UNDONE
+    assert [record.content for record in fresh.list_for_user(owner)] == ["我们已确认关系"]
+    assert fresh.delete_all(owner, confirmed=True) == 1
+    assert fresh.undo_last(owner).status == MemoryWriteStatus.NOTHING_TO_UNDO
+
+
+def test_postgres_undo_history_retains_only_latest_twenty(database_engine: Engine):
+    owner, _outsider, person, _person_b, relationship, _relation_b, *_ = setup_records(
+        database_engine
+    )
+
+    def factory():
+        return Session(database_engine)
+
+    service = MemoryService(SQLAlchemyMemoryStore(factory))
+    for number in range(21):
+        assert (
+            save(service, owner, person, relationship, f"我们计划第{number}周见面").saved_count == 1
+        )
+    with factory() as db:
+        assert (
+            len(
+                db.scalars(
+                    select(MemoryOperationRow).where(MemoryOperationRow.owner_user_id == owner)
+                ).all()
+            )
+            == 20
+        )
+    fresh = MemoryService(SQLAlchemyMemoryStore(factory))
+    for _ in range(20):
+        assert fresh.undo_last(owner).status == MemoryWriteStatus.UNDONE
+    assert [record.content for record in fresh.list_for_user(owner)] == ["我们计划第0周见面"]
+    assert fresh.undo_last(owner).status == MemoryWriteStatus.NOTHING_TO_UNDO

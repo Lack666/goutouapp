@@ -8,8 +8,8 @@ from sqlalchemy.dialects.postgresql import insert
 from sqlalchemy.orm import Session
 
 from app.agent.contracts import MemoryControl, MemoryRecord
-from app.agent.memory import MAX_TOTAL, content_key
-from app.db.models import MemoryControlRow, MemoryRecordRow, Relationship
+from app.agent.memory import MAX_OPERATIONS, MAX_TOTAL, content_key
+from app.db.models import MemoryControlRow, MemoryOperationRow, MemoryRecordRow, Relationship
 
 
 class SQLAlchemyMemoryStore:
@@ -134,8 +134,49 @@ class SQLAlchemyMemoryStore:
             inserted = (
                 db.execute(statement.returning(MemoryRecordRow.id)).scalar_one_or_none() is not None
             )
+            if inserted:
+                db.add(
+                    MemoryOperationRow(
+                        id=uuid4(),
+                        owner_user_id=record.owner_user_id,
+                        record_id=record.id,
+                        created_at=record.created_at,
+                        updated_at=record.updated_at,
+                    )
+                )
+                db.flush()
+                old_ids = db.scalars(
+                    select(MemoryOperationRow.id)
+                    .where(MemoryOperationRow.owner_user_id == record.owner_user_id)
+                    .order_by(MemoryOperationRow.created_at.desc(), MemoryOperationRow.id.desc())
+                    .offset(MAX_OPERATIONS)
+                ).all()
+                if old_ids:
+                    db.execute(delete(MemoryOperationRow).where(MemoryOperationRow.id.in_(old_ids)))
             db.commit()
             return inserted
+
+    def undo_last(self, user_id: UUID) -> bool:
+        with self._session_factory() as db:
+            operation = db.scalar(
+                select(MemoryOperationRow)
+                .where(MemoryOperationRow.owner_user_id == user_id)
+                .order_by(MemoryOperationRow.created_at.desc(), MemoryOperationRow.id.desc())
+                .limit(1)
+                .with_for_update()
+            )
+            if operation is None:
+                return False
+            deleted = db.execute(
+                delete(MemoryRecordRow).where(
+                    MemoryRecordRow.owner_user_id == user_id,
+                    MemoryRecordRow.id == operation.record_id,
+                )
+            ).rowcount
+            if deleted != 1:
+                raise ValueError("memory undo history is inconsistent")
+            db.commit()
+            return True
 
     def delete_one(self, user_id: UUID, memory_id: UUID, person_id: UUID | None) -> bool:
         with self._session_factory() as db:

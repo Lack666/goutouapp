@@ -63,6 +63,7 @@ class MemoryDecision(StrEnum):
     DELETE_ALL = "delete_all"
     REVOKE_AND_DELETE_ALL = "revoke_and_delete_all"
     INSPECT = "inspect"
+    UNDO = "undo"
 
 
 class MemoryWriteStatus(StrEnum):
@@ -75,6 +76,8 @@ class MemoryWriteStatus(StrEnum):
     PENDING_CONFIRMATION = "pending_confirmation"
     CONTROL_UPDATED = "control_updated"
     FAILED = "failed"
+    UNDONE = "undone"
+    NOTHING_TO_UNDO = "nothing_to_undo"
 
 
 class ConversationMessage(ContractModel):
@@ -291,6 +294,7 @@ class MemoryReceipt(ContractModel):
     status: MemoryWriteStatus = MemoryWriteStatus.NONE
     saved_count: int = Field(default=0, ge=0)
     duplicate_count: int = Field(default=0, ge=0)
+    undone_count: int = Field(default=0, ge=0)
 
 
 class MemoryIntent(ContractModel):

@@ -1,4 +1,4 @@
-# Phase 3G long-term memory runtime
+# Phase 3G–3H long-term memory runtime
 
 The current conversation and recent messages are short-term input. Long-term
 memory is a separate, small collection of user-authorized records. The Agent
@@ -33,7 +33,7 @@ The service accepts one candidate per call, so one failed save cannot leave a
 partially committed batch. A normalized content hash plus owner, subject, type
 and relationship scope makes repeated runs, including retries of the same run, duplicates rather
 than extra rows. A user has at most 200 records; recall returns at most eight.
-`saved`, `duplicate`, `skipped_no_consent`, `skipped_paused`,
+`saved`, `duplicate`, `undone`, `nothing_to_undo`, `skipped_no_consent`, `skipped_paused`,
 `rejected_validation`, `pending_confirmation` and `failed` are distinguishable
 receipts. The public `AgentResult` contains a receipt and proposed candidates,
 not the loaded long-term memory collection. A successful write reports its
@@ -59,10 +59,29 @@ records. `delete_one` requires owner, ID and exact person scope and returns
 `False` on a repeated delete. `delete_person` requires confirmation and removes
 only that owner's records for that person. `delete_all` requires confirmation
 and removes all of that owner's memory records, leaving conversations and
-messages intact; it can also revoke consent. The graph recognizes delete and
-inspect intents but returns `pending_confirmation` for destructive commands.
+messages intact; it can also revoke consent. The graph recognizes inspect and
+delete intents; delete commands return `pending_confirmation`.
 The caller must invoke the corresponding service operation after an explicit
 confirmation and ownership check. No business endpoint is included here.
+
+## Undo contract closure
+
+The Phase 3H audit found that `SKILL_CONTRACT.md` §8 marks revoking the latest
+update as a **MUST**. The frozen upstream memory guide says `undo` reverses the
+most recent update, its script stores at most 20 operations, and
+`forget-object` clears operation history. [ADR 0016](adr/0016-memory-undo.md)
+records the implementation decision. `MemoryService.undo_last(user_id)`
+reverses only the owner's latest **new record insertion**, because insertion
+is the only reversible memory mutation in this runtime. It works after a new
+SQLAlchemy session or while consent is paused/revoked; it cannot restore a
+hard-deleted record. A duplicate save creates no undo operation. Each owner
+retains at most 20 operations; deleting a record or person clears affected
+operations, and deleting all clears the entire owner's history. Repeated undo
+after the sole operation returns `nothing_to_undo`. If multiple saved records
+remain, each new `undo_last` call intentionally reverses the next latest
+record; it is not a replay-idempotent network command. Phase 4 must supply API
+idempotency and authenticated caller identity. The graph recognizes “撤销刚才的记忆”
+and returns a typed `undone` receipt after the response.
 
 Deletion covers app-owned active primary database memory. Production backups
 and retention policy are not implemented, so no immediate deletion claim is
