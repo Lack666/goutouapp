@@ -22,7 +22,12 @@ schema **in a disposable database only**, set `DATABASE_URL` to that database
 and run `alembic downgrade base`. Do not use `Base.metadata.create_all()` as a
 deployment path. The verification gate runs a real CLI
 `upgrade head` → `downgrade base` → `upgrade head` → `alembic check` against a
-temporary test database and checks the six tables after each migration step.
+temporary test database and checks the expected tables after each migration step.
+Phase 3G extends the expected schema with `memory_controls` and
+`memory_records`; the same disposable migration cycle now checks all eight
+tables. The memory adapter opens a fresh SQLAlchemy session per operation.
+Same-owner composite foreign keys constrain person/relationship scope, and
+owner/subject/type/content hash deduplicates writes. See [Memory](MEMORY.md).
 
 `TEST_DATABASE_URL` is a PostgreSQL connection template whose database name
 must end in `_test` and differ from `DATABASE_URL`'s database name. Tests create
@@ -33,7 +38,7 @@ back to the development database. The verifier loads `.env` for uv commands
 when it exists.
 
 Schema relationships and delete semantics are specified in
-[ADR 0006](adr/0006-postgresql-foundation.md). All six tables have UUID IDs,
+[ADR 0006](adr/0006-postgresql-foundation.md). The six Phase 2B tables have UUID IDs,
 `created_at` and `updated_at`. `Person`, `Relationship`, `Conversation` and
 `AgentRun` have explicit owners; `Message` inherits ownership from its
 conversation. The ORM connection uses UTC. Sensitive message content belongs

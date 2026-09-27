@@ -17,12 +17,13 @@ BACKEND_FOUNDATION = PHASE >= 2 or SUBPHASE in {"2A", "2B", "2C", "2D"}
 DATABASE_FOUNDATION = PHASE >= 2 or SUBPHASE in {"2B", "2C", "2D"}
 LLM_FOUNDATION = PHASE >= 2 or SUBPHASE in {"2C", "2D"}
 INTEGRATION_FOUNDATION = PHASE >= 2 or SUBPHASE == "2D"
-AGENT_CONTRACTS = PHASE >= 3 or SUBPHASE in {"3A", "3B", "3C", "3D", "3E", "3F"}
-AGENT_RUNTIME = PHASE >= 3 or SUBPHASE in {"3B", "3C", "3D", "3E", "3F"}
-AGENT_SEMANTIC = PHASE >= 3 or SUBPHASE in {"3C", "3D", "3E", "3F"}
-AGENT_KNOWLEDGE = PHASE >= 3 or SUBPHASE in {"3D", "3E", "3F"}
-AGENT_ANALYSIS = PHASE >= 3 or SUBPHASE in {"3E", "3F"}
-AGENT_ACTION_RESPONSE = PHASE >= 3 or SUBPHASE == "3F"
+AGENT_CONTRACTS = PHASE >= 3 or SUBPHASE in {"3A", "3B", "3C", "3D", "3E", "3F", "3G"}
+AGENT_RUNTIME = PHASE >= 3 or SUBPHASE in {"3B", "3C", "3D", "3E", "3F", "3G"}
+AGENT_SEMANTIC = PHASE >= 3 or SUBPHASE in {"3C", "3D", "3E", "3F", "3G"}
+AGENT_KNOWLEDGE = PHASE >= 3 or SUBPHASE in {"3D", "3E", "3F", "3G"}
+AGENT_ANALYSIS = PHASE >= 3 or SUBPHASE in {"3E", "3F", "3G"}
+AGENT_ACTION_RESPONSE = PHASE >= 3 or SUBPHASE in {"3F", "3G"}
+AGENT_MEMORY = PHASE >= 3 or SUBPHASE == "3G"
 
 
 def run(command: list[str]) -> None:
@@ -95,6 +96,10 @@ def tests() -> None:
     if AGENT_ACTION_RESPONSE:
         uv_run("pytest", "-q", "apps/server/tests/test_agent_action_response.py")
         uv_run("python", "scripts/check_action_response_replay.py")
+    if AGENT_MEMORY:
+        uv_run("pytest", "-q", "apps/server/tests/test_agent_memory.py")
+        uv_run("pytest", "-q", "apps/server/tests/test_memory_database.py")
+        uv_run("python", "scripts/check_memory_replay.py")
     if BACKEND_FOUNDATION:
         uv_run("pytest", "-q", "apps/server/tests")
 
@@ -111,10 +116,12 @@ def lint() -> None:
         "evals/phase3d_routing.py",
         "evals/phase3e_analysis.py",
         "evals/phase3f_action_response.py",
+        "evals/phase3g_memory.py",
         "scripts/verify.py",
         "scripts/check_knowledge_routing.py",
         "scripts/check_analysis_replay.py",
         "scripts/check_action_response_replay.py",
+        "scripts/check_memory_replay.py",
         "scripts/check_db_migrations.py",
     )
     uv_run(
@@ -126,10 +133,12 @@ def lint() -> None:
         "evals/phase3d_routing.py",
         "evals/phase3e_analysis.py",
         "evals/phase3f_action_response.py",
+        "evals/phase3g_memory.py",
         "scripts/verify.py",
         "scripts/check_knowledge_routing.py",
         "scripts/check_analysis_replay.py",
         "scripts/check_action_response_replay.py",
+        "scripts/check_memory_replay.py",
         "scripts/check_db_migrations.py",
     )
 
@@ -218,7 +227,11 @@ def verify() -> None:
         print("PASS: Structured action/response generation and 38-case Mock replay gate")
     else:
         print("DEFERRED: Action/response generation")
-    print("DEFERRED: memory and full live-model Golden runtime eval")
+    if AGENT_MEMORY:
+        print("PASS: Consent-gated memory runtime, PostgreSQL persistence and 14-case Mock replay")
+        print("DEFERRED: full live-model Golden runtime eval")
+    else:
+        print("DEFERRED: memory and full live-model Golden runtime eval")
     if PHASE < 7:
         print("DEFERRED: Mobile lint/typecheck begin at Phase 7")
     if PHASE > 2:
@@ -239,7 +252,11 @@ def verify() -> None:
                             print("PASS: Phase 3E Relationship Analysis Runtime")
                             if AGENT_ACTION_RESPONSE:
                                 print("PASS: Phase 3F Action Plan and Response Generation")
-                                print("PASS: all active Phase 0..2 and 3A..3F gates")
+                                if AGENT_MEMORY:
+                                    print("PASS: Phase 3G Memory Candidate and Persistence Runtime")
+                                    print("PASS: all active Phase 0..2 and 3A..3G gates")
+                                else:
+                                    print("PASS: all active Phase 0..2 and 3A..3F gates")
                             else:
                                 print("PASS: all active Phase 0..2 and 3A..3E gates")
                         else:

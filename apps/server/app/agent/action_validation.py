@@ -89,7 +89,7 @@ def validate_action(plan: ActionPlan, state: AgentState) -> None:
         raise AgentStructuredOutputError() from None
     if plan.contact_policy == "observe" and not plan.observation_window:
         raise AgentStructuredOutputError() from None
-    if not plan.stop_conditions:
+    if plan.contact_policy in {"observe", "pause", "stop_contact"} and not plan.stop_conditions:
         raise AgentStructuredOutputError() from None
 
 

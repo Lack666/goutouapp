@@ -8,8 +8,8 @@ minimal LangGraph execution path. Phase 3C replaces its fixtures with safety,
 scenario and FIU semantic nodes. Phase 3D adds deterministic knowledge routing
 and bounded loading of the frozen references. Phase 3E adds structured
 relationship analysis that consumes typed FIU and loaded excerpts. Phase 3F
-adds action planning and response generation. RAG and memory implementation
-belong to later phases.
+adds action planning and response generation. Phase 3G adds scoped, consented
+long-term memory. RAG remains deferred.
 
 ```mermaid
 flowchart LR
@@ -174,3 +174,20 @@ checks the contact policy and actionable text against the plan. The high-risk
 path still exits through `safety_finalize` after knowledge loading. See
 [Action and response](ACTION_RESPONSE.md) and
 [ADR 0014](adr/0014-action-response-boundary.md).
+
+## Phase 3G memory boundary
+
+`load_memory` runs after normalization and before safety checking. It uses the
+injected `MemoryService` to retrieve at most eight consented, unpaused records
+for the current user and relationship. User-level memories can be global;
+person and relationship records are confined to the matching relationship.
+Analysis sees historical memory in a separate data field with provenance and
+time, never as current FIU. The high-risk path ends without a memory write.
+
+After an ordinary/boundary response, a typed candidate extractor reads only
+current user message and F facts. The independent persistence node enforces
+source, owner, scope, content and consent gates through `MemoryService` and
+returns a receipt. `MemoryStore` has an in-memory implementation for the
+standalone graph and a SQLAlchemy adapter using isolated sessions. Memory
+errors do not discard a completed response. See [Memory](MEMORY.md) and
+[ADR 0015](adr/0015-consent-gated-memory.md).

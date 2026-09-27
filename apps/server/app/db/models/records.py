@@ -4,6 +4,7 @@ from uuid import UUID
 
 from sqlalchemy import (
     CheckConstraint,
+    Float,
     ForeignKey,
     ForeignKeyConstraint,
     String,
@@ -34,6 +35,9 @@ class Relationship(RecordMixin, Base):
             ["user_id", "person_id"], ["persons.user_id", "persons.id"], ondelete="RESTRICT"
         ),
         UniqueConstraint("user_id", "id"),
+        UniqueConstraint(
+            "user_id", "id", "person_id", name="uq_relationships_user_id_id_person_id"
+        ),
     )
 
     user_id: Mapped[UUID] = mapped_column(ForeignKey("users.id", ondelete="RESTRICT"), index=True)
@@ -85,3 +89,48 @@ class AgentRun(RecordMixin, Base):
     user_id: Mapped[UUID] = mapped_column(ForeignKey("users.id", ondelete="RESTRICT"), index=True)
     conversation_id: Mapped[UUID] = mapped_column(index=True)
     status: Mapped[str] = mapped_column(String(20), nullable=False)
+
+
+class MemoryControlRow(RecordMixin, Base):
+    __tablename__ = "memory_controls"
+    __table_args__ = (UniqueConstraint("user_id"),)
+
+    user_id: Mapped[UUID] = mapped_column(ForeignKey("users.id", ondelete="CASCADE"))
+    consent_enabled: Mapped[bool] = mapped_column(nullable=False, default=False)
+    paused: Mapped[bool] = mapped_column(nullable=False, default=False)
+
+
+class MemoryRecordRow(RecordMixin, Base):
+    __tablename__ = "memory_records"
+    __table_args__ = (
+        ForeignKeyConstraint(
+            ["owner_user_id", "person_id"], ["persons.user_id", "persons.id"], ondelete="RESTRICT"
+        ),
+        ForeignKeyConstraint(
+            ["owner_user_id", "relationship_id", "person_id"],
+            ["relationships.user_id", "relationships.id", "relationships.person_id"],
+            ondelete="RESTRICT",
+        ),
+        UniqueConstraint("owner_user_id", "subject_id", "type", "content_hash"),
+        CheckConstraint("type IN ('user', 'object', 'relationship')", name="type_valid"),
+        CheckConstraint(
+            "(type = 'user' AND person_id IS NULL AND relationship_id IS NULL "
+            "AND subject_id = owner_user_id) OR (type <> 'user' AND person_id IS NOT NULL "
+            "AND relationship_id IS NOT NULL AND subject_id = person_id)",
+            name="scope_valid",
+        ),
+    )
+
+    owner_user_id: Mapped[UUID] = mapped_column(
+        ForeignKey("users.id", ondelete="CASCADE"), index=True
+    )
+    subject_id: Mapped[UUID] = mapped_column(index=True)
+    person_id: Mapped[UUID | None] = mapped_column(nullable=True)
+    relationship_id: Mapped[UUID | None] = mapped_column(nullable=True)
+    type: Mapped[str] = mapped_column(String(20), nullable=False)
+    content: Mapped[str] = mapped_column(String(200), nullable=False)
+    content_hash: Mapped[str] = mapped_column(String(64), nullable=False)
+    source: Mapped[str] = mapped_column(String(30), nullable=False)
+    evidence: Mapped[str] = mapped_column(String(100), nullable=False)
+    confidence: Mapped[float | None] = mapped_column(Float, nullable=True)
+    first_run_id: Mapped[UUID] = mapped_column(nullable=False)

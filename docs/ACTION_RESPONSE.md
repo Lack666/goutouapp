@@ -11,6 +11,10 @@ read models. It does not receive loaded reference text. `ActionPlan` contains
 `contact_policy`, a recommendation, supporting analysis IDs, optional short
 message/observation window and stop conditions. The policy distinguishes a
 copyable reply, invitation, observation, pause and explicit stop of contact.
+The validator requires a structured stop condition for continuing observation,
+pause and stop-contact plans. A simple reply or invitation may leave that field
+empty; the advice must still remain low pressure and stoppable under
+`SKILL_CONTRACT.md` §7.4. This was clarified during the Phase 3G preflight.
 The validator checks that IDs exist, refusal routes stop contact and contain no
 message, scheduling conflicts do not automatically become a permanent stop,
 and message/window fields match the policy. Narrow phrase guards reject

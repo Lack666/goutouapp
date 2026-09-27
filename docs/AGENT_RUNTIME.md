@@ -1,4 +1,4 @@
-# Agent contracts and standalone runtime (Phases 3A–3F)
+# Agent contracts and standalone runtime (Phases 3A–3G)
 
 The source behavior is
 `SKILL_CONTRACT.md` and the 81 synthetic cases in `evals/golden_cases.jsonl`.
@@ -6,7 +6,8 @@ The frozen upstream Skill remains unchanged. Phase 3C replaced the Phase 3B
 fixtures with structured safety, scenario and FIU nodes. Phase 3D adds
 deterministic reference selection and bounded loading. Phase 3E adds typed,
 source-linked relationship analysis. Phase 3F adds independently validated
-action planning and user-facing response generation.
+action planning and user-facing response generation. Phase 3G adds scoped,
+consent-gated long-term memory after response generation.
 
 ## Input and state
 
@@ -18,13 +19,14 @@ are supplied by the caller. `memory_enabled` defaults to false. The transport
 must authenticate and check ownership before creating this input; the Agent
 does not trust a user ID simply because it is present in a request body.
 
-`initial_state(input)` creates the 29-field total `AgentState` TypedDict with explicit
+`initial_state(input)` creates the total `AgentState` TypedDict with explicit
 defaults. Runtime-owned `run_id` is a new UUID and `run_status` starts pending.
 Identity and current/context messages come from input. Scenario,
 safety, route, profiles, analysis, action and final answer start as `None`.
 Facts, inferences, unknowns, selected references, retrieved context, warnings
-and memory candidates start as independent empty lists. Memory intent starts
-at `no_write`. The state contains no dependency, database session, HTTP
+and memory candidates start as independent empty lists. Loaded memories start
+empty, memory intent starts at `no_write`, and the receipt starts at `none`.
+The state contains no dependency, database session, HTTP
 object, secret, raw vendor response or hidden model reasoning. Its contents
 are private business state, not a public API response. State must not be
 persisted wholesale as long-term memory.
@@ -38,7 +40,7 @@ values after the loader runs; it is never part of the public `AgentResult`.
 
 `AgentResult` is the public **completed** result, with schema version `1`,
 run ID, status, scenario, safety, route, FIU evidence, optional knowledge,
-analysis and action, memory intent/candidates, final answer and warnings.
+analysis and action, memory intent/candidates/receipt, final answer and warnings.
 It intentionally omits the full message history, profiles and retrieved
 reference text. `AgentFailure` is a separate safe failed-run value with a
 stable error code and message. Pending/running statuses are lifecycle states,
@@ -49,7 +51,7 @@ relationship/safety scenarios plus `memory`). `RiskLevel` is `normal`/`high`
 and `Route` is `ordinary`/`boundary`/`safety`, as in that dataset. High risk
 requires the safety route. `AgentRunStatus` has exactly `pending`, `running`,
 `completed`, `failed`, matching the current PostgreSQL check constraint; no
-migration is needed. `MemoryDecision` follows the dataset's nine decisions.
+migration is needed. `MemoryDecision` extends the dataset's decisions with inspect.
 Risk category labels, evidence source strings and memory candidate type strings
 remain open because the source contract does not freeze a comprehensive
 vocabulary for them. `ScenarioResult.reason_summary` is a short displayable
@@ -73,27 +75,29 @@ only its text is copied into `AgentResult`.
 evidence, confidence and `requires_consent=true`. `MemoryIntent` separately
 records a proposed decision, target and any confirmation need. Neither type
 means a database write happened. In particular the Golden `memory_writes=1`
-cases map to an **allowed candidate expectation** at this phase, not a claim
-that one item was saved. The memory service and confirmed persistence receipt
-belong to Phase 5.
+cases were candidate expectations before Phase 3G; the Phase 3G evaluator
+checks actual store writes. `MemoryReceipt` distinguishes saved, duplicate,
+skipped, rejected and failed outcomes. See [Memory](MEMORY.md).
 
 ## Runtime dependency and errors
 
 `RuntimeDependencies` receives an existing `LLMProvider` (the Phase 2C
 `chat`, `stream`, `structured_output` protocol), an optional narrow
-`ProfileReader`, and optional reference registry/context budget overrides.
+`ProfileReader`, optional `MemoryService`, and optional reference registry/context budget overrides.
 `ProfileReader` returns typed, owner-scoped profiles; future
 implementations receive scoped services from the composition root. No Agent
 module imports FastAPI, SQLAlchemy, HTTPX or a vendor client, reads settings
-secrets or creates a database engine. More service interfaces should be added
-when their actual nodes are implemented.
+secrets or creates a database engine. A SQLAlchemy adapter lives outside the
+Agent and supplies `MemoryService` when persistence is desired.
 
 Agent errors are `invalid_input`, `dependency_failure`,
 `structured_output_failure`, `knowledge_failure` and `runtime_failure`. The runtime must
 translate Pydantic, LLM and storage exceptions at its boundary into these
 project-owned categories. It must not expose vendor exception details in
 `AgentFailure.message`. Reference registry, read, hash and budget failures
-become `knowledge_failure`. Future storage/transport adapters extend the mapping.
+become `knowledge_failure`. Post-response memory failures instead return a
+generic receipt/warning while retaining the final answer. Future transport
+adapters extend the mapping.
 
 ## Node read/write matrix
 
@@ -103,26 +107,29 @@ limits. Safety runs before ordinary relationship analysis.
 | Node | Reads | Writes |
 | --- | --- | --- |
 | `normalize_input` | `current_message` | `current_message` |
+| `load_memory` | `user_id`, `relationship_id`, `memory_enabled`, `warnings` | `loaded_memories`, `memory_control`, `warnings` |
 | `safety_check` | `current_message`, `messages` | `safety`, `route` |
 | `load_profile` | `user_id`, `relationship_id`, `memory_enabled` | `user_profile`, `relationship_profile` |
 | `classify_scenario` | `current_message`, `messages`, `safety` | `scenario` |
 | `extract_fiu` | `current_message`, `messages`, `scenario`, `safety` | `facts`, `inferences`, `unknowns` |
 | `knowledge_router` | `current_message`, `scenario`, `safety`, `route` | `knowledge_route`, `selected_references` |
 | `load_references` | `selected_references` | `retrieved_context` |
-| `relationship_analysis` | `current_message`, `scenario`, `safety`, `route`, `facts`, `inferences`, `unknowns`, `user_profile`, `relationship_profile`, `retrieved_context` | `analysis_result` |
+| `relationship_analysis` | `current_message`, `scenario`, `safety`, `route`, `facts`, `inferences`, `unknowns`, `user_profile`, `relationship_profile`, `retrieved_context`, `loaded_memories` | `analysis_result` |
 | `action_planner` | `current_message`, `scenario`, `route`, `facts`, `inferences`, `unknowns`, `selected_references`, `analysis_result`, `user_profile`, `relationship_profile` | `action_plan` |
 | `response_generator` | `current_message`, `scenario`, `route`, `facts`, `inferences`, `unknowns`, `analysis_result`, `action_plan` | `final_answer` |
-| `memory_candidate_extractor` | `memory_enabled`, `current_message`, `facts`, `relationship_profile`, `safety` | `memory_intent`, `memory_candidates` |
+| `memory_intent_resolver` | `current_message`, `user_id`, `relationship_id`, `memory_enabled`, `memory_control`, `route`, `warnings` | `memory_intent`, `warnings` |
+| `memory_candidate_extractor` | `current_message`, `facts`, `memory_intent`, `memory_control`, `user_id`, `warnings` | `memory_candidates`, `memory_receipt`, `warnings` |
+| `memory_persist` | `user_id`, `relationship_id`, `run_id`, `memory_enabled`, `memory_intent`, `memory_candidates`, `memory_receipt`, `facts`, `current_message`, `warnings` | `memory_receipt`, `warnings` |
 
 Phase 3C implements the first three semantic rows; Phase 3D implements the two
 knowledge rows; Phase 3E implements relationship analysis; Phase 3F implements
-action and response. `safety_finalize` reads `safety`, `route` and writes
+action and response; Phase 3G implements the memory rows. `safety_finalize` reads `safety`, `route` and writes
 `scenario=safety` plus a fixed safety answer. The runtime,
 not graph nodes, owns `run_status`.
 
-No node may write the identity fields, promote inferences to facts, save
-memory, or access a provider through state. Future graph code should enforce
-these boundaries and the safety-first order.
+No node may write identity fields, promote inferences to facts, or access a
+provider through state. Only `memory_persist` may cause a long-term memory
+write through the injected service, after validation and consent checks.
 
 ## Golden compatibility and limits
 
@@ -135,30 +142,27 @@ timing, quoted vs inferred meaning, speaker swap, explicit vs absent memory
 consent, ordinary repair vs safety, and MBTI vs observable online behavior.
 
 Required and forbidden behavior assertions are **semantic evaluation rules**:
-their actual satisfaction cannot be proven by schema validation. The future
-running Agent's response/action, safety route, FIU and memory side effects must
-be evaluated against those IDs. `final_answer` and `action` provide observable
-surfaces, while `memory_intent`/candidates expose planned memory behavior.
-Actual write counts, deletion completion, speaker attribution in imported data
-and unsafe wording need future runtime or persistence evaluation. These are
-deliberate Phase 3A compatibility limits, not passing behavioral evals.
+schema validation alone cannot prove them. Subsequent Phase 3C–3G Mock replays
+now exercise the graph, response/action structure and actual memory write
+counts for selected cases. They still do not prove unseen live-model quality,
+speaker attribution in future imported data or every unsafe paraphrase.
 
-## Phase 3B architecture baseline and current graph
+## Phase 3B architecture baseline and Phase 3G graph
 
 The root `uv.lock` pins LangGraph 1.2.12. `AgentRuntime` compiles one
 `StateGraph(AgentState)` per runtime instance and reuses it across runs. It has
-no checkpointer, global mutable Agent state, database access or API transport.
+no checkpointer, global mutable Agent state, direct database access or API transport.
 Phase 3B proved conditional routing with synthetic fixtures. Phase 3C removed
 the metadata safety flag, constant scenario and synthetic analysis. The
 current graph has these paths:
 
 ```mermaid
 flowchart TD
-  START --> normalize_input --> safety_check
+  START --> normalize_input --> load_memory --> safety_check
   safety_check -->|ordinary or boundary| classify_scenario --> extract_fiu --> knowledge_router
   safety_check -->|high risk| knowledge_router
   knowledge_router --> load_references
-  load_references -->|ordinary or boundary| relationship_analysis --> action_planner --> response_generator --> END
+  load_references -->|ordinary or boundary| relationship_analysis --> action_planner --> response_generator --> memory_intent_resolver --> memory_candidate_extractor --> memory_persist --> END
   load_references -->|high risk| safety_finalize --> END
 ```
 
@@ -169,7 +173,7 @@ boundary route; a scheduling conflict remains ordinary. Normal/boundary input
 then requests `ScenarioResult` and `FactExtractionResult` from separate nodes.
 All three prompts live under `app/agent/prompts`, cite `SKILL_CONTRACT.md`,
 place the rules in system messages, and encode user context with explicit
-role/speaker labels as untrusted JSON. There is no memory write. FIU also
+role/speaker labels as untrusted JSON. FIU also
 rejects facts whose
 source is outside the Phase 1B provenance vocabulary; it cannot independently
 prove that a valid-looking model claim is true.
@@ -190,8 +194,8 @@ Standalone demo from the repository root:
 uv --cache-dir .cache/uv --no-managed-python run --locked python apps/server/agent_demo.py
 ```
 
-It uses `MockLLMProvider` and prints `AgentResult` JSON without an API key,
-server, network or PostgreSQL. `test_agent_runtime.py` retains graph execution,
+It uses `MockLLMProvider` and prints a bounded two-conversation memory receipt
+summary without an API key, server, network or PostgreSQL. `test_agent_runtime.py` retains graph execution,
 structure, field access, failure and isolation gates; `test_agent_semantic.py`
 adds the semantic node and Golden subset gates.
 
@@ -205,6 +209,7 @@ has been run; safety and FIU accuracy in unseen language remains unverified.
 Knowledge loading is described in [Knowledge routing and loading](KNOWLEDGE_ROUTING.md).
 The Phase 3E node and limitations are described in
 [Relationship analysis](RELATIONSHIP_ANALYSIS.md). Phase 3F action and response
-rules are described in [Action and response](ACTION_RESPONSE.md). Memory writes,
-durable checkpointing, streaming transport and mobile remain outside this
+rules are described in [Action and response](ACTION_RESPONSE.md). Phase 3G
+memory loading, consent and persistence are described in [Memory](MEMORY.md).
+Durable checkpointing, streaming transport and mobile remain outside this
 subphase. The compiled graph has no durable resume behavior or business API.

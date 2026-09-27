@@ -129,7 +129,6 @@ def test_action_and_response_nodes_are_scoped_and_receive_bounded_data():
         {"recommended_action": "冒充她的朋友联系她"},
         {"message_suggestion": "假装家人生病让她回复"},
         {"message_suggestion": None},
-        {"stop_conditions": []},
     ],
 )
 def test_action_validation_rejects_unsupported_or_manipulative_output(change):
@@ -156,6 +155,29 @@ def test_refusal_and_scheduling_conflict_have_distinct_policies():
     validate_action(
         ActionPlan.model_validate(fixture_action(scenario="invitation", route="ordinary")), ordinary
     )
+
+
+def test_stop_conditions_apply_to_continuing_decisions_not_simple_messages():
+    reply = make_state()
+    simple = fixture_action(scenario="reply", route="ordinary") | {"stop_conditions": []}
+    validate_action(ActionPlan.model_validate(simple), reply)
+    invite = make_state(scenario="invitation")
+    simple_invite = fixture_action(scenario="invitation", route="ordinary") | {
+        "stop_conditions": []
+    }
+    validate_action(ActionPlan.model_validate(simple_invite), invite)
+    for policy in ("observe", "pause", "stop_contact"):
+        state = make_state(
+            scenario="consent" if policy == "stop_contact" else "relationship",
+            route="boundary" if policy == "stop_contact" else "ordinary",
+        )
+        data = fixture_action(scenario="relationship", route=state["route"].value)
+        if policy == "pause":
+            data["contact_policy"] = "pause"
+            data.pop("observation_window", None)
+        data["stop_conditions"] = []
+        with pytest.raises(AgentStructuredOutputError):
+            validate_action(ActionPlan.model_validate(data), state)
 
 
 @pytest.mark.parametrize(

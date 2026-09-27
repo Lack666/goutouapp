@@ -1,5 +1,6 @@
 """JSON-safe public values for a future standalone Agent runtime."""
 
+from datetime import datetime
 from enum import StrEnum
 from typing import Literal
 from uuid import UUID
@@ -61,6 +62,19 @@ class MemoryDecision(StrEnum):
     DELETE_PERSON = "delete_person"
     DELETE_ALL = "delete_all"
     REVOKE_AND_DELETE_ALL = "revoke_and_delete_all"
+    INSPECT = "inspect"
+
+
+class MemoryWriteStatus(StrEnum):
+    NONE = "none"
+    SAVED = "saved"
+    DUPLICATE = "duplicate"
+    SKIPPED_NO_CONSENT = "skipped_no_consent"
+    SKIPPED_PAUSED = "skipped_paused"
+    REJECTED_VALIDATION = "rejected_validation"
+    PENDING_CONFIRMATION = "pending_confirmation"
+    CONTROL_UPDATED = "control_updated"
+    FAILED = "failed"
 
 
 class ConversationMessage(ContractModel):
@@ -242,11 +256,41 @@ class ResponseResult(ContractModel):
 class MemoryCandidate(ContractModel):
     subject_id: UUID
     type: str = Field(min_length=1)
-    content: str = Field(min_length=1)
+    content: str = Field(min_length=1, max_length=200)
     source: str = Field(min_length=1)
     evidence: str = Field(min_length=1)
     confidence: float | None = Field(default=None, ge=0, le=1)
     requires_consent: Literal[True] = True
+
+
+class MemoryCandidateBatch(ContractModel):
+    candidates: list[MemoryCandidate] = Field(default_factory=list, max_length=1)
+
+
+class MemoryControl(ContractModel):
+    consent_enabled: bool = False
+    paused: bool = False
+
+
+class MemoryRecord(ContractModel):
+    id: UUID
+    owner_user_id: UUID
+    subject_id: UUID
+    person_id: UUID | None = None
+    relationship_id: UUID | None = None
+    type: str
+    content: str
+    source: str
+    evidence: str
+    confidence: float | None = None
+    created_at: datetime
+    updated_at: datetime
+
+
+class MemoryReceipt(ContractModel):
+    status: MemoryWriteStatus = MemoryWriteStatus.NONE
+    saved_count: int = Field(default=0, ge=0)
+    duplicate_count: int = Field(default=0, ge=0)
 
 
 class MemoryIntent(ContractModel):
@@ -274,6 +318,7 @@ class AgentResult(ContractModel):
     action: ActionPlan | None = None
     memory_intent: MemoryIntent = Field(default_factory=MemoryIntent)
     memory_candidates: list[MemoryCandidate] = Field(default_factory=list)
+    memory_receipt: MemoryReceipt = Field(default_factory=MemoryReceipt)
     final_answer: str = Field(min_length=1)
     warnings: list[str] = Field(default_factory=list)
 
@@ -285,12 +330,9 @@ class AgentResult(ContractModel):
             raise ValueError("high risk must use the safety route")
         if self.memory_candidates and self.memory_intent.decision != MemoryDecision.ALLOW_CANDIDATE:
             raise ValueError("memory candidates require an allow_candidate intent")
-        if self.memory_candidates and (
-            self.memory_intent.person_id is None
-            or any(
-                candidate.subject_id != self.memory_intent.person_id
-                for candidate in self.memory_candidates
-            )
+        if self.memory_candidates and any(
+            candidate.type != "user" and candidate.subject_id != self.memory_intent.person_id
+            for candidate in self.memory_candidates
         ):
             raise ValueError("memory candidates must match the intended person")
         return self

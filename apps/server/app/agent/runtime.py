@@ -15,6 +15,12 @@ from app.agent.contracts import (
 from app.agent.dependencies import RuntimeDependencies
 from app.agent.errors import AgentError, AgentErrorCode, AgentFailure
 from app.agent.knowledge import ReferenceRegistry
+from app.agent.memory_nodes import (
+    load_memory,
+    memory_candidate_extractor,
+    persist_memory,
+    resolve_memory_intent,
+)
 from app.agent.nodes import (
     action_planner,
     classify_scenario,
@@ -36,6 +42,7 @@ AsyncNode = Callable[[AgentState], Awaitable[dict[str, object]]]
 
 NODE_READS: dict[str, frozenset[str]] = {
     "normalize_input": frozenset({"current_message"}),
+    "load_memory": frozenset({"user_id", "relationship_id", "memory_enabled", "warnings"}),
     "safety_check": frozenset({"current_message", "messages"}),
     "classify_scenario": frozenset({"current_message", "messages", "safety"}),
     "extract_fiu": frozenset({"current_message", "messages", "scenario", "safety"}),
@@ -51,6 +58,7 @@ NODE_READS: dict[str, frozenset[str]] = {
             "inferences",
             "unknowns",
             "retrieved_context",
+            "loaded_memories",
             "user_profile",
             "relationship_profile",
         }
@@ -82,9 +90,38 @@ NODE_READS: dict[str, frozenset[str]] = {
         }
     ),
     "safety_finalize": frozenset({"safety", "route"}),
+    "memory_intent_resolver": frozenset(
+        {
+            "current_message",
+            "user_id",
+            "relationship_id",
+            "memory_enabled",
+            "memory_control",
+            "route",
+            "warnings",
+        }
+    ),
+    "memory_candidate_extractor": frozenset(
+        {"current_message", "facts", "memory_intent", "memory_control", "user_id", "warnings"}
+    ),
+    "memory_persist": frozenset(
+        {
+            "user_id",
+            "relationship_id",
+            "run_id",
+            "memory_enabled",
+            "memory_intent",
+            "memory_candidates",
+            "memory_receipt",
+            "facts",
+            "current_message",
+            "warnings",
+        }
+    ),
 }
 NODE_WRITES: dict[str, frozenset[str]] = {
     "normalize_input": frozenset({"current_message"}),
+    "load_memory": frozenset({"loaded_memories", "memory_control", "warnings"}),
     "safety_check": frozenset({"safety", "route"}),
     "classify_scenario": frozenset({"scenario"}),
     "extract_fiu": frozenset({"facts", "inferences", "unknowns"}),
@@ -94,6 +131,9 @@ NODE_WRITES: dict[str, frozenset[str]] = {
     "action_planner": frozenset({"action_plan"}),
     "response_generator": frozenset({"final_answer"}),
     "safety_finalize": frozenset({"scenario", "final_answer"}),
+    "memory_intent_resolver": frozenset({"memory_intent", "warnings"}),
+    "memory_candidate_extractor": frozenset({"memory_candidates", "memory_receipt", "warnings"}),
+    "memory_persist": frozenset({"memory_receipt", "warnings"}),
 }
 
 
@@ -126,6 +166,9 @@ def compile_graph(dependencies: RuntimeDependencies) -> CompiledStateGraph:
     registry = dependencies.reference_registry or ReferenceRegistry()
     builder = StateGraph(AgentState)
     builder.add_node("normalize_input", _bind("normalize_input", normalize_input))
+    builder.add_node(
+        "load_memory", _bind("load_memory", lambda state: load_memory(state, dependencies))
+    )
 
     async def check_safety(state: AgentState) -> dict[str, object]:
         return await safety_check(state, dependencies)
@@ -145,12 +188,25 @@ def compile_graph(dependencies: RuntimeDependencies) -> CompiledStateGraph:
     async def respond(state: AgentState) -> dict[str, object]:
         return await response_generator(state, dependencies)
 
+    async def extract_memory(state: AgentState) -> dict[str, object]:
+        return await memory_candidate_extractor(state, dependencies)
+
     builder.add_node("safety_check", _bind_async("safety_check", check_safety))
     builder.add_node("classify_scenario", _bind_async("classify_scenario", classify))
     builder.add_node("extract_fiu", _bind_async("extract_fiu", extract))
     builder.add_node("relationship_analysis", _bind_async("relationship_analysis", analyze))
     builder.add_node("action_planner", _bind_async("action_planner", plan))
     builder.add_node("response_generator", _bind_async("response_generator", respond))
+    builder.add_node(
+        "memory_intent_resolver",
+        _bind("memory_intent_resolver", lambda state: resolve_memory_intent(state, dependencies)),
+    )
+    builder.add_node(
+        "memory_candidate_extractor", _bind_async("memory_candidate_extractor", extract_memory)
+    )
+    builder.add_node(
+        "memory_persist", _bind("memory_persist", lambda state: persist_memory(state, dependencies))
+    )
     builder.add_node(
         "knowledge_router",
         _bind(
@@ -167,7 +223,8 @@ def compile_graph(dependencies: RuntimeDependencies) -> CompiledStateGraph:
     )
     builder.add_node("safety_finalize", _bind("safety_finalize", safety_finalize))
     builder.add_edge(START, "normalize_input")
-    builder.add_edge("normalize_input", "safety_check")
+    builder.add_edge("normalize_input", "load_memory")
+    builder.add_edge("load_memory", "safety_check")
     builder.add_conditional_edges(
         "safety_check",
         route_after_safety,
@@ -183,7 +240,10 @@ def compile_graph(dependencies: RuntimeDependencies) -> CompiledStateGraph:
     )
     builder.add_edge("relationship_analysis", "action_planner")
     builder.add_edge("action_planner", "response_generator")
-    builder.add_edge("response_generator", END)
+    builder.add_edge("response_generator", "memory_intent_resolver")
+    builder.add_edge("memory_intent_resolver", "memory_candidate_extractor")
+    builder.add_edge("memory_candidate_extractor", "memory_persist")
+    builder.add_edge("memory_persist", END)
     builder.add_edge("safety_finalize", END)
     return builder.compile()
 
@@ -235,6 +295,7 @@ class AgentRuntime:
                 action=output["action_plan"],
                 memory_intent=output["memory_intent"],
                 memory_candidates=output["memory_candidates"],
+                memory_receipt=output["memory_receipt"],
                 final_answer=output["final_answer"],
                 warnings=output["warnings"],
             )

@@ -1,5 +1,23 @@
 """Minimal Phase 2B tables. Import this module to register all metadata."""
 
-from app.db.models.records import AgentRun, Conversation, Message, Person, Relationship, User
+from app.db.models.records import (
+    AgentRun,
+    Conversation,
+    MemoryControlRow,
+    MemoryRecordRow,
+    Message,
+    Person,
+    Relationship,
+    User,
+)
 
-__all__ = ["AgentRun", "Conversation", "Message", "Person", "Relationship", "User"]
+__all__ = [
+    "AgentRun",
+    "Conversation",
+    "MemoryControlRow",
+    "MemoryRecordRow",
+    "Message",
+    "Person",
+    "Relationship",
+    "User",
+]

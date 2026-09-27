@@ -60,8 +60,8 @@ as implemented by a placeholder directory or a golden expectation.
 
 ## Implementation log
 
-Phase 2A–2D and the Phase 3A–3C subphases are complete. Relationship reasoning
-and transport integration remain pending.
+Phase 2A–2D and the Phase 3A–3G subphases are complete. Phase 3 final
+acceptance and streaming transport integration remain pending.
 
 ### Phase 0
 
@@ -240,6 +240,23 @@ and transport integration remain pending.
   structural rules, not live-model advice quality. See
   [Phase 3F report](PHASE_3F_ACCEPTANCE.md), [Action and response](ACTION_RESPONSE.md)
   and [ADR 0014](adr/0014-action-response-boundary.md).
+
+### Phase 3G
+
+- On 2026-09-27, added a post-response memory intent, bounded structured
+  candidate extraction, fact/source/consent validation and separate persistence
+  node. Early memory loading provides historical context to analysis without
+  changing current FIU; high-risk runs skip memory writes.
+- Added per-user opt-in and pause state, scoped inspect/deletion operations,
+  in-memory and SQLAlchemy stores, a two-table Alembic migration, duplicate
+  prevention and nonblocking memory failure receipts. A narrow user/object/
+  relationship fact subset is persisted; event/hypothesis remain deferred.
+- The verifier runs focused memory tests, real PostgreSQL persistence and
+  migration checks, a 14-case Golden Mock replay, all prior gates and a
+  standalone two-run demo. The Phase 3F stop-condition validator was corrected
+  for simple reply/invitation and its 38-case replay rerun. See
+  [Phase 3G report](PHASE_3G_ACCEPTANCE.md), [Memory](MEMORY.md) and
+  [ADR 0015](adr/0015-consent-gated-memory.md).
 
 ## Dependency policy
 

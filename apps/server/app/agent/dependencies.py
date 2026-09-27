@@ -5,6 +5,7 @@ from typing import Protocol
 from uuid import UUID
 
 from app.agent.knowledge import ContextBudget, ReferenceRegistry
+from app.agent.memory import MemoryService
 from app.agent.state import RelationshipProfile, UserProfile
 from app.llm.provider import LLMProvider
 
@@ -23,3 +24,4 @@ class RuntimeDependencies:
     profile_reader: ProfileReader | None = None
     reference_registry: ReferenceRegistry | None = None
     context_budget: ContextBudget = field(default_factory=ContextBudget)
+    memory_service: MemoryService | None = None

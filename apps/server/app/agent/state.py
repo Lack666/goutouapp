@@ -14,7 +14,10 @@ from app.agent.contracts import (
     KnowledgeRouteResult,
     LoadedReference,
     MemoryCandidate,
+    MemoryControl,
     MemoryIntent,
+    MemoryReceipt,
+    MemoryRecord,
     Route,
     RuntimeMetadata,
     SafetyResult,
@@ -62,6 +65,9 @@ class AgentState(TypedDict):
     action_plan: ActionPlan | None
     memory_intent: MemoryIntent
     memory_candidates: list[MemoryCandidate]
+    memory_control: MemoryControl
+    loaded_memories: list[MemoryRecord]
+    memory_receipt: MemoryReceipt
     final_answer: str | None
     warnings: list[str]
     runtime_metadata: RuntimeMetadata
@@ -96,6 +102,9 @@ def initial_state(request: AgentInput) -> AgentState:
         action_plan=None,
         memory_intent=MemoryIntent(),
         memory_candidates=[],
+        memory_control=MemoryControl(),
+        loaded_memories=[],
+        memory_receipt=MemoryReceipt(),
         final_answer=None,
         warnings=[],
         runtime_metadata=RuntimeMetadata(),

@@ -82,7 +82,11 @@ def test_scoped_nodes_and_runtime_wrapper() -> None:
     assert NODE_WRITES["relationship_analysis"] == {"analysis_result"}
     assert NODE_WRITES["action_planner"] == {"action_plan"}
     assert NODE_WRITES["response_generator"] == {"final_answer"}
-    assert "memory_candidates" not in set().union(*NODE_WRITES.values())
+    assert NODE_WRITES["memory_candidate_extractor"] == {
+        "memory_candidates",
+        "memory_receipt",
+        "warnings",
+    }
 
     def bad_read(state):
         return {"current_message": state["facts"]}
@@ -101,6 +105,7 @@ def test_graph_conditional_structure() -> None:
     graph = runtime().graph.get_graph()
     assert {
         "normalize_input",
+        "load_memory",
         "safety_check",
         "classify_scenario",
         "extract_fiu",
@@ -115,7 +120,8 @@ def test_graph_conditional_structure() -> None:
     } <= set(graph.nodes)
     edges = {(edge.source, edge.target, edge.conditional) for edge in graph.edges}
     assert ("__start__", "normalize_input", False) in edges
-    assert ("normalize_input", "safety_check", False) in edges
+    assert ("normalize_input", "load_memory", False) in edges
+    assert ("load_memory", "safety_check", False) in edges
     assert ("safety_check", "classify_scenario", True) in edges
     assert ("safety_check", "knowledge_router", True) in edges
     assert ("classify_scenario", "extract_fiu", False) in edges
@@ -125,7 +131,10 @@ def test_graph_conditional_structure() -> None:
     assert ("load_references", "safety_finalize", True) in edges
     assert ("relationship_analysis", "action_planner", False) in edges
     assert ("action_planner", "response_generator", False) in edges
-    assert ("response_generator", "__end__", False) in edges
+    assert ("response_generator", "memory_intent_resolver", False) in edges
+    assert ("memory_intent_resolver", "memory_candidate_extractor", False) in edges
+    assert ("memory_candidate_extractor", "memory_persist", False) in edges
+    assert ("memory_persist", "__end__", False) in edges
     assert ("safety_finalize", "__end__", False) in edges
 
 

@@ -10,7 +10,16 @@ from sqlalchemy import create_engine, inspect, text
 from sqlalchemy.engine import make_url
 
 ROOT = Path(__file__).resolve().parents[1]
-EXPECTED = {"users", "persons", "relationships", "conversations", "messages", "agent_runs"}
+EXPECTED = {
+    "users",
+    "persons",
+    "relationships",
+    "conversations",
+    "messages",
+    "agent_runs",
+    "memory_controls",
+    "memory_records",
+}
 
 
 def main() -> None:
