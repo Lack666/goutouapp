@@ -1,4 +1,4 @@
-.PHONY: doctor dev test eval verify
+.PHONY: doctor dev test lint eval verify
 
 doctor:
 	python scripts/verify.py doctor
@@ -8,6 +8,9 @@ dev:
 
 test:
 	python scripts/verify.py test
+
+lint:
+	python scripts/verify.py lint
 
 eval:
 	python scripts/verify.py eval

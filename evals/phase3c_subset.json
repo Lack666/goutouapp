@@ -1,0 +1,10 @@
+{
+  "purpose": "Phase 3C structured semantic fields; replay is not live model validation",
+  "case_ids": [
+    "pair_a1", "pair_a2", "pair_b1", "pair_b2", "pair_c1", "pair_c2",
+    "pair_d1", "pair_d2", "pair_e1", "pair_e2", "pair_f1", "pair_f2",
+    "reply_01", "flirt_01", "conflict_03", "betrayal_02", "chat_01",
+    "mbti_01", "pua_03", "safety_01", "safety_04", "online_01",
+    "consent_01", "pua_01"
+  ]
+}

@@ -3,7 +3,36 @@ name = "goutoujunshi-runtime"
 version = "0.1.0"
 description = "Independent runtime for the goutoujunshi specification"
 requires-python = ">=3.12,<3.15"
-dependencies = []
+dependencies = [
+    "alembic>=1.20.0,<1.21",
+    "fastapi>=0.141.1,<0.142",
+    "httpx>=0.28.1,<0.29",
+    "langgraph>=1.2.12,<1.3",
+    "pydantic-settings>=2.15.0,<2.16",
+    "psycopg[binary]>=3.3.6,<3.4",
+    "sqlalchemy>=2.1.1,<2.2",
+    "uvicorn>=0.54.0,<0.55",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=9.1.1,<9.2",
+    "ruff>=0.16.9,<0.17",
+]
 
 [tool.uv]
 package = false
+
+[tool.pytest.ini_options]
+pythonpath = ["apps/server", "."]
+testpaths = ["apps/server/tests"]
+
+[tool.ruff]
+target-version = "py312"
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["app"]

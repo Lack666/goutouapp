@@ -1,0 +1,166 @@
+"""Reusable safety-first LangGraph runtime for typed semantic nodes."""
+
+from collections.abc import Awaitable, Callable
+from uuid import uuid4
+
+from langgraph.graph import END, START, StateGraph
+from langgraph.graph.state import CompiledStateGraph
+
+from app.agent.contracts import (
+    AgentInput,
+    AgentResult,
+    AgentRunStatus,
+    FactExtractionResult,
+)
+from app.agent.dependencies import RuntimeDependencies
+from app.agent.errors import AgentError, AgentErrorCode, AgentFailure
+from app.agent.nodes import (
+    classify_scenario,
+    extract_fiu,
+    minimal_finalize,
+    normalize_input,
+    route_after_safety,
+    safety_check,
+    safety_finalize,
+)
+from app.agent.state import AgentState, initial_state
+from app.llm.errors import LLMError, LLMStructuredOutputError
+
+Node = Callable[[AgentState], dict[str, object]]
+AsyncNode = Callable[[AgentState], Awaitable[dict[str, object]]]
+
+NODE_READS: dict[str, frozenset[str]] = {
+    "normalize_input": frozenset({"current_message"}),
+    "safety_check": frozenset({"current_message", "messages"}),
+    "classify_scenario": frozenset({"current_message", "messages", "safety"}),
+    "extract_fiu": frozenset({"current_message", "messages", "scenario", "safety"}),
+    "minimal_finalize": frozenset({"scenario", "safety", "route"}),
+    "safety_finalize": frozenset({"safety", "route"}),
+}
+NODE_WRITES: dict[str, frozenset[str]] = {
+    "normalize_input": frozenset({"current_message"}),
+    "safety_check": frozenset({"safety", "route"}),
+    "classify_scenario": frozenset({"scenario"}),
+    "extract_fiu": frozenset({"facts", "inferences", "unknowns"}),
+    "minimal_finalize": frozenset({"final_answer"}),
+    "safety_finalize": frozenset({"scenario", "final_answer"}),
+}
+
+
+def _view(state: AgentState, name: str) -> AgentState:
+    """Give each node only its declared read fields, including at runtime."""
+    return AgentState(**{key: state[key] for key in NODE_READS[name]})
+
+
+def _check_update(name: str, update: dict[str, object]) -> dict[str, object]:
+    if set(update) != NODE_WRITES[name]:
+        raise RuntimeError("node returned fields outside its declared update")
+    return update
+
+
+def _bind(name: str, node: Node) -> Node:
+    def guarded(state: AgentState) -> dict[str, object]:
+        return _check_update(name, node(_view(state, name)))
+
+    return guarded
+
+
+def _bind_async(name: str, node: AsyncNode) -> AsyncNode:
+    async def guarded(state: AgentState) -> dict[str, object]:
+        return _check_update(name, await node(_view(state, name)))
+
+    return guarded
+
+
+def compile_graph(dependencies: RuntimeDependencies) -> CompiledStateGraph:
+    builder = StateGraph(AgentState)
+    builder.add_node("normalize_input", _bind("normalize_input", normalize_input))
+
+    async def check_safety(state: AgentState) -> dict[str, object]:
+        return await safety_check(state, dependencies)
+
+    async def classify(state: AgentState) -> dict[str, object]:
+        return await classify_scenario(state, dependencies)
+
+    async def extract(state: AgentState) -> dict[str, object]:
+        return await extract_fiu(state, dependencies)
+
+    builder.add_node("safety_check", _bind_async("safety_check", check_safety))
+    builder.add_node("classify_scenario", _bind_async("classify_scenario", classify))
+    builder.add_node("extract_fiu", _bind_async("extract_fiu", extract))
+    builder.add_node("minimal_finalize", _bind("minimal_finalize", minimal_finalize))
+    builder.add_node("safety_finalize", _bind("safety_finalize", safety_finalize))
+    builder.add_edge(START, "normalize_input")
+    builder.add_edge("normalize_input", "safety_check")
+    builder.add_conditional_edges(
+        "safety_check",
+        route_after_safety,
+        {"ordinary": "classify_scenario", "safety": "safety_finalize"},
+    )
+    builder.add_edge("classify_scenario", "extract_fiu")
+    builder.add_edge("extract_fiu", "minimal_finalize")
+    builder.add_edge("minimal_finalize", END)
+    builder.add_edge("safety_finalize", END)
+    return builder.compile()
+
+
+class AgentRuntime:
+    def __init__(self, *, dependencies: RuntimeDependencies) -> None:
+        self._graph = compile_graph(dependencies)
+
+    @property
+    def graph(self) -> CompiledStateGraph:
+        return self._graph
+
+    async def run(self, request: AgentInput) -> AgentResult | AgentFailure:
+        if not isinstance(request, AgentInput):
+            return AgentFailure(
+                run_id=uuid4(),
+                code=AgentErrorCode.INVALID_INPUT,
+                message="Agent input is invalid",
+            )
+        try:
+            request = AgentInput.model_validate_json(request.model_dump_json())
+        except Exception:
+            return AgentFailure(
+                run_id=uuid4(),
+                code=AgentErrorCode.INVALID_INPUT,
+                message="Agent input is invalid",
+            )
+        state = initial_state(request)
+        run_id = state["run_id"]
+        state["run_status"] = AgentRunStatus.RUNNING
+        try:
+            output: AgentState = await self._graph.ainvoke(state)
+            if output["run_id"] != run_id:
+                raise RuntimeError("graph changed run identity")
+            output["run_status"] = AgentRunStatus.COMPLETED
+            return AgentResult(
+                run_id=run_id,
+                status=output["run_status"],
+                scenario=output["scenario"],
+                safety=output["safety"],
+                route=output["route"],
+                evidence=FactExtractionResult(
+                    facts=output["facts"],
+                    inferences=output["inferences"],
+                    unknowns=output["unknowns"],
+                ),
+                knowledge=output["knowledge_route"],
+                analysis=output["analysis_result"],
+                action=output["action_plan"],
+                memory_intent=output["memory_intent"],
+                memory_candidates=output["memory_candidates"],
+                final_answer=output["final_answer"],
+                warnings=output["warnings"],
+            )
+        except LLMStructuredOutputError:
+            code = AgentErrorCode.STRUCTURED_OUTPUT_FAILURE
+        except LLMError:
+            code = AgentErrorCode.DEPENDENCY_FAILURE
+        except AgentError as exc:
+            code = exc.code
+        except Exception:
+            code = AgentErrorCode.RUNTIME_FAILURE
+        state["run_status"] = AgentRunStatus.FAILED
+        return AgentFailure(run_id=run_id, code=code, message="Agent run failed")

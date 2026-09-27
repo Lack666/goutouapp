@@ -15,8 +15,8 @@ as implemented by a placeholder directory or a golden expectation.
 | --- | --- | --- |
 | 0 | Repository bootstrap, upstream audit, monorepo, verification | PASS |
 | 1 | Skill contract and at least 40 synthetic Golden Cases | PASS |
-| 2 | FastAPI, PostgreSQL, Pydantic, SQLAlchemy, Alembic | PENDING |
-| 3 | Standalone LangGraph runtime, provider abstraction, streaming | PENDING |
+| 2 | FastAPI, PostgreSQL, Pydantic, SQLAlchemy, Alembic, LLM Provider foundation | PASS |
+| 3 | Standalone LangGraph runtime and Agent streaming integration | PENDING |
 | 4 | Deterministic 1–3 document knowledge router | PENDING |
 | 5 | Consent gated and isolated long-term memory | PENDING |
 | 6 | TXT/Markdown/JSON import and ordinary-code statistics | PENDING |
@@ -60,6 +60,9 @@ as implemented by a placeholder directory or a golden expectation.
 
 ## Implementation log
 
+Phase 2A–2D and the Phase 3A–3C subphases are complete. Relationship reasoning
+and transport integration remain pending.
+
 ### Phase 0
 
 - Copied 63 upstream Skill files, including 20 knowledge and 23 practical
@@ -92,12 +95,109 @@ as implemented by a placeholder directory or a golden expectation.
   existing Golden dataset was not changed or re-scored in this subphase;
   a later explicit Phase 1B instruction can rebaseline it against the
   expanded contract. See [Phase 1A report](PHASE_1A_ACCEPTANCE.md).
+- On 2026-09-26, completed the requested Phase 1B Golden Dataset audit.
+  Preserved all 55 original IDs, added 26 targeted synthetic cases, linked
+  every case to contract rules and a behavioral rubric, and covered all 18
+  scenarios plus memory. Added six linked minimal pairs, sourced FIU
+  expectations, flexible 1–3-reference routing, explicit safety and memory
+  decisions, a coverage matrix, and stronger static validation. No Agent or
+  model behavior was run. See [Phase 1B report](PHASE_1B_ACCEPTANCE.md).
+
+### Phase 2A
+
+- On 2026-09-26, implemented the FastAPI backend foundation: environment-backed
+  settings, `/health`, `/api/v1/status`, versioned routing, safe base error
+  responses and logging, and a Uvicorn development launcher. No database or
+  model connection is made at startup.
+- Added root uv runtime/dev dependencies and `uv.lock`; integrated backend
+  pytest and Ruff checks into the Windows `make.cmd verify` path while keeping
+  `completed_phase` at 1 and marking only `completed_subphase` as `2A`.
+- Ran a real Uvicorn process and requested both endpoints over localhost.
+  See [Phase 2A report](PHASE_2A_ACCEPTANCE.md) and
+  [ADR 0005](adr/0005-fastapi-foundation.md).
+
+### Phase 2B
+
+- On 2026-09-27, added the PostgreSQL persistence foundation: six UUID-based
+  owner-scoped models, a lazy engine and request session dependency, a small
+  repository/service layer, Alembic initial migration, database readiness and
+  a Compose development service.
+- The database gate creates disposable test databases, exercises Alembic CLI
+  upgrade/downgrade/upgrade, then runs PostgreSQL integration tests. Agent and
+  mobile gates remain deferred. See [database operations](DATABASE.md),
+  [ADR 0006](adr/0006-postgresql-foundation.md) and the
+  [Phase 2B acceptance report](PHASE_2B_ACCEPTANCE.md).
+
+### Phase 2C
+
+- On 2026-09-27, added a typed `LLMProvider` protocol, keyless queued Mock
+  provider, a single OpenAI-compatible Chat Completions provider, strict
+  structured-output validation, provider-level SSE streaming, and safe error
+  normalization. No real model request or Agent behavior is part of this phase.
+- Moved existing HTTPX to runtime dependencies in the single `uv.lock` and
+  extended Settings with base URL, model and timeout. The verifier now runs an
+  explicit offline LLM unit gate before all backend and PostgreSQL regression
+  tests. See [LLM Provider architecture](LLM_PROVIDER.md),
+  [ADR 0007](adr/0007-llm-provider-boundary.md) and the
+  [Phase 2C acceptance report](PHASE_2C_ACCEPTANCE.md).
+
+### Phase 2D
+
+- On 2026-09-27, verified FastAPI, PostgreSQL and both LLM Provider choices in
+  one backend environment. Added offline/dependency-isolated smoke tests,
+  FastAPI shutdown disposal of the lazy database pool, and `alembic check` to
+  the disposable migration cycle. Re-ran dependency sync, Compose startup,
+  development migration, live Uvicorn HTTP checks and all prior gates.
+- Completed the Phase 2 verification gate and set `completed_phase` to `2`.
+  Agent and Mobile gates remain deferred. See the
+  [Phase 2D acceptance report](PHASE_2D_ACCEPTANCE.md) and
+  [ADR 0008](adr/0008-backend-composition-lifecycle.md).
+
+### Phase 3A
+
+- On 2026-09-27, defined transport-independent Agent input, total TypedDict
+  state, strict structured result/failure schemas, FIU and memory candidate
+  separation, status/error vocabulary, and injected runtime dependencies.
+- Added an offline compatibility test for all 81 Golden cases and six minimal
+  pairs. This proves schema coverage, not Agent behavior or memory writes.
+- Added the future node read/write matrix and hidden-reasoning policy in
+  [Agent contracts](AGENT_RUNTIME.md), with [ADR 0009](adr/0009-agent-contract-boundary.md).
+  Agent execution, knowledge loading, memory persistence and mobile remain
+  deferred. See [Phase 3A report](PHASE_3A_ACCEPTANCE.md).
+
+### Phase 3B
+
+- On 2026-09-27, added locked LangGraph 1.2.12 and a reusable standalone
+  `StateGraph` with independently testable nodes, a conditional synthetic
+  safety branch, scoped state updates and an injected Mock LLM path.
+- Runtime results and failures share a run ID; input, provider output and
+  unexpected node failures map to safe project-owned errors. A keyless CLI
+  demo prints JSON without FastAPI or PostgreSQL.
+- A focused offline gate verifies graph structure, both routes, node limits,
+  failure paths, run isolation and a Golden pair architecture smoke. The full
+  81-case behavior eval remains deferred. See [Phase 3B report](PHASE_3B_ACCEPTANCE.md)
+  and [ADR 0010](adr/0010-minimal-langgraph-runtime.md).
+
+### Phase 3C
+
+- On 2026-09-27, replaced synthetic safety routing, the constant scenario and
+  minimal analysis with separate provider-backed `SafetyResult`,
+  `ScenarioResult` and `FactExtractionResult` nodes. High risk exits before
+  ordinary classification; explicit refusal has a distinct boundary route.
+- Added short source-backed system prompts, speaker-labeled JSON context,
+  structured-output failure handling and a 24-case Golden subset including all
+  six minimal pairs. A deterministic evaluator checks structured fields and
+  catches promoted inferences; oracle-derived Mock replay is not live accuracy.
+- Updated the verifier with focused offline semantic tests. No live semantic
+  model validation was run. See [Phase 3C report](PHASE_3C_ACCEPTANCE.md) and
+  [ADR 0011](adr/0011-semantic-entry-nodes.md).
 
 ## Dependency policy
 
 Official documentation was checked before selecting the layout: uv's project
 and lockfile guidance, FastAPI's request-model tutorial, SQLAlchemy's ORM
 documentation, and Expo's SDK compatibility table. Exact application library
-versions will be chosen at their implementation phase and committed in
-`uv.lock` or `pnpm-lock.yaml`; no pre-release versions by default. Python
-currently has no third-party runtime dependencies.
+versions are chosen at their implementation phase and locked in `uv.lock` or
+`pnpm-lock.yaml`; no pre-release versions by default. Phase 2A introduced the
+first Python runtime dependencies, selected against official release records
+and verified with the lockfile.
