@@ -12,6 +12,7 @@ from app.agent import AgentFailure, AgentInput, AgentResult, initial_state
 from app.agent.contracts import AgentRunStatus, Route, Scenario
 from app.agent.dependencies import RuntimeDependencies
 from app.agent.errors import AgentErrorCode
+from app.agent.knowledge import SCENARIO_ALIASES
 from app.agent.nodes import normalize_input
 from app.agent.runtime import NODE_READS, NODE_WRITES, AgentRuntime, _bind
 from app.llm.errors import LLMUnavailableError
@@ -43,6 +44,22 @@ def scripted_provider(*, high: bool = False, scenario: str = "relationship") -> 
     if not high:
         provider.queue_structured({"primary": scenario, "reason_summary": "Replay cue"})
         provider.queue_structured({"facts": [], "inferences": [], "unknowns": []})
+        alias = SCENARIO_ALIASES[Scenario(scenario)]
+        provider.queue_structured(
+            {
+                "core_issue": "The case details are insufficient",
+                "core_reference_ids": [alias],
+                "insufficient_evidence": True,
+                "constraints": [
+                    {
+                        "statement": "The source offers a lens, not a case fact",
+                        "kind": "framework",
+                        "dimension": "evidence_quality",
+                        "reference_ids": [alias],
+                    }
+                ],
+            }
+        )
     return provider
 
 
@@ -58,9 +75,8 @@ def test_scoped_nodes_and_runtime_wrapper() -> None:
     assert NODE_WRITES["safety_check"] == {"safety", "route"}
     assert NODE_WRITES["classify_scenario"] == {"scenario"}
     assert NODE_WRITES["extract_fiu"] == {"facts", "inferences", "unknowns"}
-    assert not {"analysis_result", "action_plan", "memory_candidates"} & set().union(
-        *NODE_WRITES.values()
-    )
+    assert NODE_WRITES["relationship_analysis"] == {"analysis_result"}
+    assert not {"action_plan", "memory_candidates"} & set().union(*NODE_WRITES.values())
 
     def bad_read(state):
         return {"current_message": state["facts"]}
@@ -82,6 +98,7 @@ def test_graph_conditional_structure() -> None:
         "safety_check",
         "classify_scenario",
         "extract_fiu",
+        "relationship_analysis",
         "knowledge_router",
         "load_references",
         "minimal_finalize",
@@ -97,8 +114,9 @@ def test_graph_conditional_structure() -> None:
     assert ("classify_scenario", "extract_fiu", False) in edges
     assert ("extract_fiu", "knowledge_router", False) in edges
     assert ("knowledge_router", "load_references", False) in edges
-    assert ("load_references", "minimal_finalize", True) in edges
+    assert ("load_references", "relationship_analysis", True) in edges
     assert ("load_references", "safety_finalize", True) in edges
+    assert ("relationship_analysis", "minimal_finalize", False) in edges
     assert ("minimal_finalize", "__end__", False) in edges
     assert ("safety_finalize", "__end__", False) in edges
 
@@ -142,6 +160,8 @@ async def test_success_status_json_and_no_internal_state() -> None:
     assert result.status == AgentRunStatus.COMPLETED
     assert result.schema_version == "1"
     assert result.scenario.primary == Scenario.RELATIONSHIP
+    assert result.analysis is not None
+    assert result.action is None
     assert AgentResult.model_validate_json(result.model_dump_json()) == result
     assert "current_message" not in result.model_dump()
 
@@ -197,6 +217,21 @@ async def test_run_isolation_and_compile_reuse() -> None:
     provider.queue_structured({"risk_level": "normal", "safety_route_required": False})
     provider.queue_structured({"primary": "online", "reason_summary": "Replay cue"})
     provider.queue_structured({"facts": [], "inferences": [], "unknowns": []})
+    provider.queue_structured(
+        {
+            "core_issue": "Case details are insufficient",
+            "core_reference_ids": ["online"],
+            "insufficient_evidence": True,
+            "constraints": [
+                {
+                    "statement": "Source is general context only",
+                    "kind": "framework",
+                    "dimension": "evidence_quality",
+                    "reference_ids": ["online"],
+                }
+            ],
+        }
+    )
     agent = runtime(provider)
     compiled = agent.graph
     third = await agent.run(request("third"))

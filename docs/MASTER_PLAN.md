@@ -209,6 +209,22 @@ and transport integration remain pending.
   [Knowledge routing](KNOWLEDGE_ROUTING.md) and
   [ADR 0012](adr/0012-deterministic-knowledge-loading.md).
 
+### Phase 3E
+
+- On 2026-09-27, added a provider-backed `relationship_analysis` node after
+  knowledge loading on ordinary/boundary paths. High risk still bypasses it.
+  The node consumes typed FIU and the actual loaded excerpts, and writes only
+  structured `AnalysisResult` with evidence/reference provenance.
+- Extended analysis points with observed/tentative/framework/uncertainty roles,
+  relevant dimensions and source IDs. The runtime rejects invalid IDs,
+  inference-to-fact promotion, missing boundary recognition and obvious action
+  or unsupported certainty language. This does not prove semantic entailment.
+- Added a 30-case Golden Mock replay and structural evaluator plus direct
+  reference-content, truncation, injection and failure tests. Live-model
+  relationship analysis was not run. See [Phase 3E report](PHASE_3E_ACCEPTANCE.md),
+  [Relationship analysis](RELATIONSHIP_ANALYSIS.md) and
+  [ADR 0013](adr/0013-grounded-analysis-contract.md).
+
 ## Dependency policy
 
 Official documentation was checked before selecting the layout: uv's project

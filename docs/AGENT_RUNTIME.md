@@ -1,11 +1,12 @@
-# Agent contracts, semantic entry and knowledge loading (Phases 3A–3D)
+# Agent contracts, semantic entry, knowledge and analysis (Phases 3A–3E)
 
 The source behavior is
 `SKILL_CONTRACT.md` and the 81 synthetic cases in `evals/golden_cases.jsonl`.
 The frozen upstream Skill remains unchanged. Phase 3C replaced the Phase 3B
 fixtures with structured safety, scenario and FIU nodes. Phase 3D adds
-deterministic reference selection and bounded loading. Relationship advice is
-still outside the runtime.
+deterministic reference selection and bounded loading. Phase 3E adds typed,
+source-linked relationship analysis. Action plans and response generation
+remain outside the runtime.
 
 ## Input and state
 
@@ -60,9 +61,10 @@ inference requires an alternative explanation; a fact requires provenance.
 separate. A model-generated interpretation must not be copied to `facts`.
 `KnowledgeRouteResult` accepts one to three distinct reference aliases, an
 optional first-alias primary marker and a short routing summary. It contains
-no filesystem paths or document text. `AnalysisResult` and
-`ActionPlan` contain only the core issue, observations, risks/constraints and
-a small action with optional message, observation window and stop conditions.
+no filesystem paths or document text. `AnalysisResult` holds a core issue,
+typed observations/dynamics/risks/constraints/uncertainties and compact FIU or
+reference IDs for provenance. `ActionPlan` is a future contract and is never
+populated in Phase 3E.
 
 `MemoryCandidate` records a subject ID, bounded content, type, source,
 evidence, confidence and `requires_consent=true`. `MemoryIntent` separately
@@ -104,13 +106,13 @@ limits. Safety runs before ordinary relationship analysis.
 | `extract_fiu` | `current_message`, `messages`, `scenario`, `safety` | `facts`, `inferences`, `unknowns` |
 | `knowledge_router` | `current_message`, `scenario`, `safety`, `route` | `knowledge_route`, `selected_references` |
 | `load_references` | `selected_references` | `retrieved_context` |
-| `relationship_analysis` | `scenario`, `safety`, `facts`, `inferences`, `unknowns`, `user_profile`, `relationship_profile`, `retrieved_context` | `analysis_result`, `action_plan` |
+| `relationship_analysis` | `current_message`, `scenario`, `safety`, `route`, `facts`, `inferences`, `unknowns`, `user_profile`, `relationship_profile`, `retrieved_context` | `analysis_result` |
 | `response_generator` | `safety`, `route`, `facts`, `inferences`, `unknowns`, `analysis_result`, `action_plan`, `warnings` | `final_answer` |
 | `memory_candidate_extractor` | `memory_enabled`, `current_message`, `facts`, `relationship_profile`, `safety` | `memory_intent`, `memory_candidates` |
 
 Phase 3C implements the first three semantic rows; Phase 3D implements the two
-knowledge rows. `minimal_finalize` reads
-`scenario`, `safety`, `route` and writes a fixed `final_answer` only;
+knowledge rows; Phase 3E implements relationship analysis. `minimal_finalize` reads
+`scenario`, `safety`, `route`, `analysis_result` and writes a fixed `final_answer` only;
 `safety_finalize` reads `safety`, `route` and writes `scenario=safety` plus a
 fixed safety answer. Neither finalizer gives relationship advice. The runtime,
 not graph nodes, owns `run_status`.
@@ -153,7 +155,7 @@ flowchart TD
   safety_check -->|ordinary or boundary| classify_scenario --> extract_fiu --> knowledge_router
   safety_check -->|high risk| knowledge_router
   knowledge_router --> load_references
-  load_references -->|ordinary or boundary| minimal_finalize --> END
+  load_references -->|ordinary or boundary| relationship_analysis --> minimal_finalize --> END
   load_references -->|high risk| safety_finalize --> END
 ```
 
@@ -198,7 +200,9 @@ consistency, **not independent semantic model accuracy**. No live model test
 has been run; safety and FIU accuracy in unseen language remains unverified.
 
 Knowledge loading is described in [Knowledge routing and loading](KNOWLEDGE_ROUTING.md).
-Relationship reasoning, memory writes, durable checkpointing, streaming
-transport and mobile remain outside this subphase. The compiled graph
+The Phase 3E node and limitations are described in
+[Relationship analysis](RELATIONSHIP_ANALYSIS.md). Action planning, response
+generation, memory writes, durable checkpointing, streaming transport and
+mobile remain outside this subphase. The compiled graph
 has no durable resume behavior, and its minimal answer must not be exposed as
 a production relationship endpoint.

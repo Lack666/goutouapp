@@ -22,6 +22,7 @@ from app.agent.nodes import (
     load_reference_context,
     minimal_finalize,
     normalize_input,
+    relationship_analysis,
     route_after_safety,
     safety_check,
     safety_finalize,
@@ -39,7 +40,21 @@ NODE_READS: dict[str, frozenset[str]] = {
     "extract_fiu": frozenset({"current_message", "messages", "scenario", "safety"}),
     "knowledge_router": frozenset({"current_message", "safety", "route", "scenario"}),
     "load_references": frozenset({"selected_references"}),
-    "minimal_finalize": frozenset({"scenario", "safety", "route"}),
+    "relationship_analysis": frozenset(
+        {
+            "current_message",
+            "scenario",
+            "safety",
+            "route",
+            "facts",
+            "inferences",
+            "unknowns",
+            "retrieved_context",
+            "user_profile",
+            "relationship_profile",
+        }
+    ),
+    "minimal_finalize": frozenset({"scenario", "safety", "route", "analysis_result"}),
     "safety_finalize": frozenset({"safety", "route"}),
 }
 NODE_WRITES: dict[str, frozenset[str]] = {
@@ -49,6 +64,7 @@ NODE_WRITES: dict[str, frozenset[str]] = {
     "extract_fiu": frozenset({"facts", "inferences", "unknowns"}),
     "knowledge_router": frozenset({"knowledge_route", "selected_references"}),
     "load_references": frozenset({"retrieved_context"}),
+    "relationship_analysis": frozenset({"analysis_result"}),
     "minimal_finalize": frozenset({"final_answer"}),
     "safety_finalize": frozenset({"scenario", "final_answer"}),
 }
@@ -93,9 +109,13 @@ def compile_graph(dependencies: RuntimeDependencies) -> CompiledStateGraph:
     async def extract(state: AgentState) -> dict[str, object]:
         return await extract_fiu(state, dependencies)
 
+    async def analyze(state: AgentState) -> dict[str, object]:
+        return await relationship_analysis(state, dependencies)
+
     builder.add_node("safety_check", _bind_async("safety_check", check_safety))
     builder.add_node("classify_scenario", _bind_async("classify_scenario", classify))
     builder.add_node("extract_fiu", _bind_async("extract_fiu", extract))
+    builder.add_node("relationship_analysis", _bind_async("relationship_analysis", analyze))
     builder.add_node(
         "knowledge_router",
         _bind(
@@ -125,8 +145,9 @@ def compile_graph(dependencies: RuntimeDependencies) -> CompiledStateGraph:
     builder.add_conditional_edges(
         "load_references",
         route_after_safety,
-        {"ordinary": "minimal_finalize", "safety": "safety_finalize"},
+        {"ordinary": "relationship_analysis", "safety": "safety_finalize"},
     )
+    builder.add_edge("relationship_analysis", "minimal_finalize")
     builder.add_edge("minimal_finalize", END)
     builder.add_edge("safety_finalize", END)
     return builder.compile()

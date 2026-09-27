@@ -28,6 +28,38 @@ async def main() -> None:
             "unknowns": [{"statement": "The underlying relationship context"}],
         }
     )
+    provider.queue_structured(
+        {
+            "core_issue": "The synthetic request lacks relationship context",
+            "core_evidence_ids": ["F1"],
+            "core_reference_ids": ["reply"],
+            "insufficient_evidence": True,
+            "observations": [
+                {
+                    "statement": "The user asks a synthetic question",
+                    "kind": "observed",
+                    "dimension": "evidence_quality",
+                    "evidence_ids": ["F1"],
+                }
+            ],
+            "uncertainties": [
+                {
+                    "statement": "The underlying relationship context is unknown",
+                    "kind": "uncertainty",
+                    "dimension": "evidence_quality",
+                    "evidence_ids": ["U1"],
+                }
+            ],
+            "constraints": [
+                {
+                    "statement": "The selected reference is general wording guidance",
+                    "kind": "framework",
+                    "dimension": "communication",
+                    "reference_ids": ["reply"],
+                }
+            ],
+        }
+    )
     runtime = AgentRuntime(dependencies=RuntimeDependencies(llm_provider=provider))
     result = await runtime.run(
         AgentInput(
@@ -36,7 +68,7 @@ async def main() -> None:
             message="Synthetic ordinary reply question",
         )
     )
-    if not isinstance(result, AgentResult) or result.knowledge is None:
+    if not isinstance(result, AgentResult) or result.knowledge is None or result.analysis is None:
         raise RuntimeError("Standalone knowledge demo failed")
     print(
         json.dumps(
@@ -45,6 +77,8 @@ async def main() -> None:
                 "scenario": result.scenario.primary,
                 "route": result.route,
                 "selected_references": result.knowledge.selected_references,
+                "evidence": result.evidence.model_dump(mode="json"),
+                "analysis": result.analysis.model_dump(mode="json"),
             },
             ensure_ascii=False,
         )

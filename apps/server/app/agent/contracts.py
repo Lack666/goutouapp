@@ -169,11 +169,60 @@ class LoadedReference(ContractModel):
     content_length: int = Field(ge=1)
 
 
+class AnalysisPoint(ContractModel):
+    statement: str = Field(min_length=1, max_length=500)
+    kind: Literal["observed", "tentative", "framework", "uncertainty"]
+    dimension: Literal[
+        "reciprocity",
+        "boundary",
+        "communication",
+        "consistency",
+        "reality_constraint",
+        "opportunity_cost",
+        "evidence_quality",
+        "personality_caution",
+        "general",
+    ]
+    evidence_ids: list[str] = Field(default_factory=list, max_length=8)
+    reference_ids: list[str] = Field(default_factory=list, max_length=3)
+
+    @model_validator(mode="after")
+    def source_shape(self) -> "AnalysisPoint":
+        if not self.evidence_ids and not self.reference_ids:
+            raise ValueError("analysis point requires a source")
+        if len(set(self.evidence_ids)) != len(self.evidence_ids) or len(
+            set(self.reference_ids)
+        ) != len(self.reference_ids):
+            raise ValueError("analysis provenance IDs must be unique")
+        if self.kind == "observed" and (
+            not self.evidence_ids
+            or any(not evidence_id.startswith("F") for evidence_id in self.evidence_ids)
+            or self.reference_ids
+        ):
+            raise ValueError("observed claim requires only fact evidence")
+        if self.kind == "tentative" and not any(
+            evidence_id.startswith(("F", "I")) for evidence_id in self.evidence_ids
+        ):
+            raise ValueError("tentative interpretation requires case evidence")
+        if self.kind == "framework" and not self.reference_ids:
+            raise ValueError("knowledge lens requires a reference")
+        if self.kind == "uncertainty" and not any(
+            evidence_id.startswith("U") for evidence_id in self.evidence_ids
+        ):
+            raise ValueError("uncertainty requires an unknown")
+        return self
+
+
 class AnalysisResult(ContractModel):
-    core_issue: str = Field(min_length=1)
-    observations: list[str] = Field(default_factory=list)
-    risks: list[str] = Field(default_factory=list)
-    constraints: list[str] = Field(default_factory=list)
+    core_issue: str = Field(min_length=1, max_length=500)
+    core_evidence_ids: list[str] = Field(default_factory=list, max_length=8)
+    core_reference_ids: list[str] = Field(default_factory=list, max_length=3)
+    insufficient_evidence: bool = False
+    observations: list[AnalysisPoint] = Field(default_factory=list, max_length=6)
+    relationship_dynamics: list[AnalysisPoint] = Field(default_factory=list, max_length=6)
+    risks: list[AnalysisPoint] = Field(default_factory=list, max_length=6)
+    constraints: list[AnalysisPoint] = Field(default_factory=list, max_length=6)
+    uncertainties: list[AnalysisPoint] = Field(default_factory=list, max_length=6)
 
 
 class ActionPlan(ContractModel):

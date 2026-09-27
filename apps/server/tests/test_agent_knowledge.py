@@ -29,6 +29,7 @@ from app.agent.knowledge import (
 from app.agent.runtime import NODE_READS, NODE_WRITES, AgentRuntime, _bind
 from app.llm.mock import MockLLMProvider
 from evals.phase3d_routing import evaluate_all, evaluate_route
+from evals.phase3e_analysis import fixture_analysis
 from evals.validate import load_cases
 
 
@@ -47,7 +48,12 @@ def scripted_provider(scenario: str, *, high: bool = False, boundary: bool = Fal
     )
     if not high:
         provider.queue_structured({"primary": scenario, "reason_summary": "Mock semantic cue"})
-        provider.queue_structured({"facts": [], "inferences": [], "unknowns": []})
+        fiu = {"facts": [], "inferences": [], "unknowns": []}
+        provider.queue_structured(fiu)
+        alias = "consent" if boundary else "mbti" if scenario == "personality" else scenario
+        provider.queue_structured(
+            fixture_analysis(alias=alias, fiu=fiu, route="boundary" if boundary else "ordinary")
+        )
     return provider
 
 
@@ -256,6 +262,9 @@ def test_graph_semantic_mock_routes_and_loads(
     assert result.knowledge is not None
     assert result.knowledge.selected_references == [alias]
     assert result.knowledge.primary_reference == alias
+    assert (result.analysis is None) == high
+    assert result.action is None
+    assert result.memory_candidates == []
     assert "retrieved_context" not in result.model_dump()
 
     second_provider = scripted_provider(scenario, high=high, boundary=boundary)

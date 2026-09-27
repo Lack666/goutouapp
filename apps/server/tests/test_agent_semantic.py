@@ -6,14 +6,16 @@ from pathlib import Path
 from uuid import uuid4
 
 from app.agent import AgentFailure, AgentInput, AgentResult, initial_state
-from app.agent.contracts import Fact, RiskLevel, Route
+from app.agent.contracts import Fact, RiskLevel, Route, SafetyResult, Scenario, ScenarioResult
 from app.agent.dependencies import RuntimeDependencies
 from app.agent.errors import AgentErrorCode
+from app.agent.knowledge import route_knowledge
 from app.agent.nodes import classify_scenario, extract_fiu, safety_check
 from app.agent.runtime import NODE_WRITES, AgentRuntime
 from app.llm.errors import LLMTimeoutError
 from app.llm.mock import MockLLMProvider
 from evals.phase3c_semantic import CASES, SELECTED, evaluate, replay_outputs
+from evals.phase3e_analysis import fixture_analysis
 
 ROOT = Path(__file__).resolve().parents[3]
 
@@ -36,6 +38,15 @@ def run_with_outputs(message: str, outputs: list[dict]):
     provider = CaptureMock()
     for output in outputs:
         provider.queue_structured(output)
+    if len(outputs) >= 3 and outputs[1].get("primary") in {item.value for item in Scenario}:
+        safety = SafetyResult.model_validate_json(json.dumps(outputs[0]))
+        scenario = ScenarioResult.model_validate_json(json.dumps(outputs[1]))
+        boundary = bool({"explicit_refusal", "consent_withdrawal"} & set(safety.risk_categories))
+        route = Route.BOUNDARY if boundary else Route.ORDINARY
+        alias = route_knowledge(
+            safety=safety, route=route, scenario=scenario, current_message=message
+        ).selected_references[0]
+        provider.queue_structured(fixture_analysis(alias=alias, fiu=outputs[2], route=route.value))
     result = asyncio.run(
         AgentRuntime(dependencies=RuntimeDependencies(llm_provider=provider)).run(
             input_for(message)

@@ -1,0 +1,11 @@
+{
+  "case_ids": [
+    "conflict_01", "conflict_03", "imbalance_01", "imbalance_03",
+    "breakup_01", "breakup_02", "reconcile_01", "betrayal_02",
+    "online_03", "chat_01", "chat_03", "mbti_01", "mbti_03",
+    "pair_a1", "pair_a2", "pair_b1", "pair_b2", "pair_c1", "pair_c2",
+    "pair_e1", "pair_e2", "pair_f1", "pair_f2", "relationship_01",
+    "long_term_01", "family_02", "attachment_01", "evidence_research_01",
+    "diversity_01", "pua_01"
+  ]
+}

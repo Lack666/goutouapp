@@ -2,7 +2,9 @@
 
 from typing import TypedDict
 
+from app.agent.analysis_validation import validate_analysis
 from app.agent.contracts import (
+    AnalysisResult,
     Fact,
     FactExtractionResult,
     Inference,
@@ -17,7 +19,7 @@ from app.agent.contracts import (
 from app.agent.dependencies import RuntimeDependencies
 from app.agent.errors import AgentInputError, AgentStructuredOutputError
 from app.agent.knowledge import ContextBudget, ReferenceRegistry, load_references, route_knowledge
-from app.agent.prompts import fiu, safety, scenario
+from app.agent.prompts import analysis, fiu, safety, scenario
 from app.agent.prompts.common import context_payload
 from app.agent.state import AgentState
 from app.llm.models import LLMMessage
@@ -70,6 +72,10 @@ class KnowledgeRouteUpdate(TypedDict):
 
 class LoadedContextUpdate(TypedDict):
     retrieved_context: list[LoadedReference]
+
+
+class AnalysisUpdate(TypedDict):
+    analysis_result: AnalysisResult
 
 
 def normalize_input(state: AgentState) -> NormalizeUpdate:
@@ -161,15 +167,39 @@ def load_reference_context(
     return {"retrieved_context": load_references(state["selected_references"], registry, budget)}
 
 
+async def relationship_analysis(
+    state: AgentState, dependencies: RuntimeDependencies
+) -> AnalysisUpdate:
+    if (
+        state["scenario"] is None
+        or state["safety"] is None
+        or state["safety"].safety_route_required
+    ):
+        raise AgentStructuredOutputError() from None
+    if not state["retrieved_context"]:
+        raise AgentStructuredOutputError() from None
+    result = await dependencies.llm_provider.structured_output(
+        [
+            LLMMessage(role="system", content=analysis.SYSTEM),
+            LLMMessage(role="user", content=analysis.input_payload(state)),
+        ],
+        AnalysisResult,
+    )
+    if not isinstance(result, AnalysisResult):
+        raise AgentStructuredOutputError() from None
+    validate_analysis(result, state)
+    return {"analysis_result": result}
+
+
 def minimal_finalize(state: AgentState) -> FinalUpdate:
-    if state["scenario"] is None or state["safety"] is None:
+    if state["scenario"] is None or state["safety"] is None or state["analysis_result"] is None:
         raise RuntimeError("semantic result is incomplete")
     if state["route"] not in {Route.ORDINARY, Route.BOUNDARY}:
         raise RuntimeError("ordinary finalizer received safety route")
     return {
         "final_answer": (
-            "Semantic classification and evidence extraction completed; "
-            "relationship advice is not yet available."
+            "Structured relationship analysis is available in the analysis field; "
+            "action planning and response generation are not yet available."
         )
     }
 

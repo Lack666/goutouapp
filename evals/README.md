@@ -60,3 +60,11 @@ contract rule references, safety precedence, memory decisions, FIU annotation
 shape and all six minimal-pair contrasts. It cannot prove an LLM would follow
 the contract. Future runtime evaluation should use these records as a rubric
 without hard-coding their output wording.
+
+Phase 3E selects 30 analysis-heavy cases in `phase3e_subset.json`. Its
+`phase3e_analysis.py` evaluator checks structured FIU/reference provenance,
+selected required dimensions, several forbidden structured patterns, safety
+bypass and absence of action/memory output. Mock outputs are derived from
+Golden annotations and behavior IDs. Passing this replay checks wiring and
+evaluator consistency; it is not an independent assessment of a live model's
+relationship analysis or nuanced language quality.

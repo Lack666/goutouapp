@@ -6,7 +6,9 @@ LLM Provider boundary; Phase 2D verifies their composition. Phase 3A defines
 Agent state, input/output and dependency contracts. Phase 3B adds a standalone
 minimal LangGraph execution path. Phase 3C replaces its fixtures with safety,
 scenario and FIU semantic nodes. Phase 3D adds deterministic knowledge routing
-and bounded loading of the frozen references. Relationship reasoning, RAG and memory
+and bounded loading of the frozen references. Phase 3E adds structured
+relationship analysis that consumes typed FIU and loaded excerpts. Action
+planning, response generation, RAG and memory
 implementation belong to later phases.
 
 ```mermaid
@@ -91,7 +93,8 @@ explicit Python dependencies. The Agent itself need not receive `Settings` or
 a database session, import `app.main`, create an engine, read raw environment
 variables, or create a vendor client. This describes an injection boundary;
 the executing Agent has Phase 3C semantic entry nodes plus the Phase 3D
-deterministic knowledge router and bounded reference loader.
+deterministic knowledge router, bounded reference loader and Phase 3E
+relationship analysis node.
 `TEST_DATABASE_URL` belongs only to the isolated test harness, and `POSTGRES_*`
 belongs only to Compose. See [ADR 0008](adr/0008-backend-composition-lifecycle.md).
 
@@ -145,3 +148,18 @@ loader verifies the frozen hash and loads at most three typed references under
 per-document and total character budgets. The public result exposes aliases,
 not document text. See [Knowledge routing](KNOWLEDGE_ROUTING.md) and
 [ADR 0012](adr/0012-deterministic-knowledge-loading.md).
+
+## Phase 3E analysis boundary
+
+Only ordinary and boundary paths enter `relationship_analysis` after reference
+loading. The high-risk path continues directly to `safety_finalize`. The node
+receives typed FIU, scenario/route, optional profiles and the actual bounded
+reference excerpts as separate JSON data. `LLMProvider.structured_output`
+returns `AnalysisResult`; a second project-owned validator checks every FIU
+and reference ID, observed/tentative roles, boundary recognition and obvious
+action or certainty language. It writes only `analysis_result`. The public
+result exposes structured analysis but no loaded source text; `action` and
+memory candidates remain empty. These checks establish provenance structure,
+not full semantic entailment or live-model quality. See
+[Relationship analysis](RELATIONSHIP_ANALYSIS.md) and
+[ADR 0013](adr/0013-grounded-analysis-contract.md).

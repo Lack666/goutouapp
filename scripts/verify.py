@@ -17,10 +17,11 @@ BACKEND_FOUNDATION = PHASE >= 2 or SUBPHASE in {"2A", "2B", "2C", "2D"}
 DATABASE_FOUNDATION = PHASE >= 2 or SUBPHASE in {"2B", "2C", "2D"}
 LLM_FOUNDATION = PHASE >= 2 or SUBPHASE in {"2C", "2D"}
 INTEGRATION_FOUNDATION = PHASE >= 2 or SUBPHASE == "2D"
-AGENT_CONTRACTS = PHASE >= 3 or SUBPHASE in {"3A", "3B", "3C", "3D"}
-AGENT_RUNTIME = PHASE >= 3 or SUBPHASE in {"3B", "3C", "3D"}
-AGENT_SEMANTIC = PHASE >= 3 or SUBPHASE in {"3C", "3D"}
-AGENT_KNOWLEDGE = PHASE >= 3 or SUBPHASE == "3D"
+AGENT_CONTRACTS = PHASE >= 3 or SUBPHASE in {"3A", "3B", "3C", "3D", "3E"}
+AGENT_RUNTIME = PHASE >= 3 or SUBPHASE in {"3B", "3C", "3D", "3E"}
+AGENT_SEMANTIC = PHASE >= 3 or SUBPHASE in {"3C", "3D", "3E"}
+AGENT_KNOWLEDGE = PHASE >= 3 or SUBPHASE in {"3D", "3E"}
+AGENT_ANALYSIS = PHASE >= 3 or SUBPHASE == "3E"
 
 
 def run(command: list[str]) -> None:
@@ -87,6 +88,9 @@ def tests() -> None:
     if AGENT_KNOWLEDGE:
         uv_run("pytest", "-q", "apps/server/tests/test_agent_knowledge.py")
         uv_run("python", "scripts/check_knowledge_routing.py")
+    if AGENT_ANALYSIS:
+        uv_run("pytest", "-q", "apps/server/tests/test_agent_analysis.py")
+        uv_run("python", "scripts/check_analysis_replay.py")
     if BACKEND_FOUNDATION:
         uv_run("pytest", "-q", "apps/server/tests")
 
@@ -101,8 +105,10 @@ def lint() -> None:
         "apps/server",
         "evals/phase3c_semantic.py",
         "evals/phase3d_routing.py",
+        "evals/phase3e_analysis.py",
         "scripts/verify.py",
         "scripts/check_knowledge_routing.py",
+        "scripts/check_analysis_replay.py",
         "scripts/check_db_migrations.py",
     )
     uv_run(
@@ -112,8 +118,10 @@ def lint() -> None:
         "apps/server",
         "evals/phase3c_semantic.py",
         "evals/phase3d_routing.py",
+        "evals/phase3e_analysis.py",
         "scripts/verify.py",
         "scripts/check_knowledge_routing.py",
+        "scripts/check_analysis_replay.py",
         "scripts/check_db_migrations.py",
     )
 
@@ -194,7 +202,11 @@ def verify() -> None:
         print("PASS: Deterministic knowledge router, frozen loader and 81-case fixture evaluation")
     else:
         print("DEFERRED: Knowledge router and reference loader")
-    print("DEFERRED: Relationship reasoning and full live-model Golden runtime eval")
+    if AGENT_ANALYSIS:
+        print("PASS: Structured relationship analysis and 30-case Mock replay gate")
+    else:
+        print("DEFERRED: Relationship analysis")
+    print("DEFERRED: Action/response generation, memory and full live-model Golden runtime eval")
     if PHASE < 7:
         print("DEFERRED: Mobile lint/typecheck begin at Phase 7")
     if PHASE > 2:
@@ -211,7 +223,11 @@ def verify() -> None:
                     print("PASS: Phase 3C Safety, Scenario and FIU Semantic Nodes")
                     if AGENT_KNOWLEDGE:
                         print("PASS: Phase 3D Knowledge Router and Reference Loading Runtime")
-                        print("PASS: all active Phase 0..2 and 3A..3D gates")
+                        if AGENT_ANALYSIS:
+                            print("PASS: Phase 3E Relationship Analysis Runtime")
+                            print("PASS: all active Phase 0..2 and 3A..3E gates")
+                        else:
+                            print("PASS: all active Phase 0..2 and 3A..3D gates")
                     else:
                         print("PASS: all active Phase 0..2 and 3A..3C gates")
                 else:
