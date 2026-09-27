@@ -17,6 +17,7 @@ def main() -> None:
     from app.llm.mock import MockLLMProvider
     from evals.phase3c_semantic import replay_outputs
     from evals.phase3e_analysis import evaluate_analysis, fixture_analysis, selected_cases
+    from evals.phase3f_action_response import fixture_action, fixture_response
 
     failures: list[str] = []
     cases = selected_cases()
@@ -35,6 +36,13 @@ def main() -> None:
                     assertions=expected["assertions"],
                 )
             )
+            action = fixture_action(
+                scenario=expected["scenario"],
+                route=expected["route"],
+                assertions=expected["assertions"],
+            )
+            provider.queue_structured(action)
+            provider.queue_structured(fixture_response(action))
         result = asyncio.run(
             AgentRuntime(dependencies=RuntimeDependencies(llm_provider=provider)).run(
                 AgentInput(user_id=uuid4(), conversation_id=uuid4(), message=case["input"])

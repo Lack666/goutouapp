@@ -32,6 +32,7 @@ from evals.phase3e_analysis import (
     fixture_analysis,
     selected_cases,
 )
+from evals.phase3f_action_response import fixture_action, fixture_response
 
 
 class CaptureMock(MockLLMProvider):
@@ -107,6 +108,13 @@ def run_case(case: dict):
                 assertions=case["expected"]["assertions"],
             )
         )
+        action = fixture_action(
+            scenario=case["expected"]["scenario"],
+            route=case["expected"]["route"],
+            assertions=case["expected"]["assertions"],
+        )
+        provider.queue_structured(action)
+        provider.queue_structured(fixture_response(action))
     result = asyncio.run(
         AgentRuntime(dependencies=RuntimeDependencies(llm_provider=provider)).run(
             request(case["input"])
@@ -254,13 +262,13 @@ def test_golden_analysis_subset_mock_replay_and_safety_bypass() -> None:
         assert isinstance(result, AgentResult), case["id"]
         assert evaluate_analysis(case, result) == [], case["id"]
         routes.add(result.route)
-        assert result.action is None and result.memory_candidates == []
+        assert result.memory_candidates == []
         if result.route == Route.SAFETY:
             assert result.analysis is None
             assert [schema.__name__ for schema, _ in provider.calls] == ["SafetyResult"]
         else:
             assert result.analysis is not None
-            assert [schema.__name__ for schema, _ in provider.calls][-1] == "AnalysisResult"
+            assert [schema.__name__ for schema, _ in provider.calls][-1] == "ResponseResult"
     assert routes == {Route.ORDINARY, Route.BOUNDARY, Route.SAFETY}
 
 
@@ -278,7 +286,7 @@ def test_evaluator_detects_analysis_drift() -> None:
     wrong.analysis.core_reference_ids = ["unknown_alias"]
     assert "core_provenance" in evaluate_analysis(case, wrong)
     wrong = result.model_copy(deep=True)
-    wrong.action = {"recommended_action": "Send a message"}
+    wrong.memory_candidates = [{"subject_id": str(uuid4())}]
     assert "out_of_scope_output" in evaluate_analysis(case, wrong)
 
 

@@ -225,6 +225,22 @@ and transport integration remain pending.
   [Relationship analysis](RELATIONSHIP_ANALYSIS.md) and
   [ADR 0013](adr/0013-grounded-analysis-contract.md).
 
+### Phase 3F
+
+- On 2026-09-27, replaced the ordinary-path placeholder with independent
+  `action_planner` and `response_generator` nodes. Each uses typed
+  `LLMProvider.structured_output` and writes only its declared state field;
+  high-risk input still bypasses both nodes.
+- Extended `ActionPlan` with a contact policy and analysis-point provenance,
+  added `ResponseResult`, bounded prompts and project-owned validation for
+  refusal, manipulation, unsupported certainty, internal IDs and plan/answer
+  consistency. No memory persistence or transport was added.
+- Added a 38-case Golden Mock replay, focused mutation tests, a keyless
+  standalone demo and an active verifier gate. This validates wiring and
+  structural rules, not live-model advice quality. See
+  [Phase 3F report](PHASE_3F_ACCEPTANCE.md), [Action and response](ACTION_RESPONSE.md)
+  and [ADR 0014](adr/0014-action-response-boundary.md).
+
 ## Dependency policy
 
 Official documentation was checked before selecting the layout: uv's project

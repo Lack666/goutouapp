@@ -2,14 +2,17 @@
 
 from typing import TypedDict
 
+from app.agent.action_validation import validate_action, validate_response
 from app.agent.analysis_validation import validate_analysis
 from app.agent.contracts import (
+    ActionPlan,
     AnalysisResult,
     Fact,
     FactExtractionResult,
     Inference,
     KnowledgeRouteResult,
     LoadedReference,
+    ResponseResult,
     Route,
     SafetyResult,
     Scenario,
@@ -19,7 +22,7 @@ from app.agent.contracts import (
 from app.agent.dependencies import RuntimeDependencies
 from app.agent.errors import AgentInputError, AgentStructuredOutputError
 from app.agent.knowledge import ContextBudget, ReferenceRegistry, load_references, route_knowledge
-from app.agent.prompts import analysis, fiu, safety, scenario
+from app.agent.prompts import action, analysis, fiu, response, safety, scenario
 from app.agent.prompts.common import context_payload
 from app.agent.state import AgentState
 from app.llm.models import LLMMessage
@@ -76,6 +79,10 @@ class LoadedContextUpdate(TypedDict):
 
 class AnalysisUpdate(TypedDict):
     analysis_result: AnalysisResult
+
+
+class ActionUpdate(TypedDict):
+    action_plan: ActionPlan
 
 
 def normalize_input(state: AgentState) -> NormalizeUpdate:
@@ -191,17 +198,36 @@ async def relationship_analysis(
     return {"analysis_result": result}
 
 
-def minimal_finalize(state: AgentState) -> FinalUpdate:
-    if state["scenario"] is None or state["safety"] is None or state["analysis_result"] is None:
-        raise RuntimeError("semantic result is incomplete")
-    if state["route"] not in {Route.ORDINARY, Route.BOUNDARY}:
-        raise RuntimeError("ordinary finalizer received safety route")
-    return {
-        "final_answer": (
-            "Structured relationship analysis is available in the analysis field; "
-            "action planning and response generation are not yet available."
-        )
-    }
+async def action_planner(state: AgentState, dependencies: RuntimeDependencies) -> ActionUpdate:
+    if state["analysis_result"] is None or state["scenario"] is None:
+        raise AgentStructuredOutputError() from None
+    result = await dependencies.llm_provider.structured_output(
+        [
+            LLMMessage(role="system", content=action.SYSTEM),
+            LLMMessage(role="user", content=action.input_payload(state)),
+        ],
+        ActionPlan,
+    )
+    if not isinstance(result, ActionPlan):
+        raise AgentStructuredOutputError() from None
+    validate_action(result, state)
+    return {"action_plan": result}
+
+
+async def response_generator(state: AgentState, dependencies: RuntimeDependencies) -> FinalUpdate:
+    if state["action_plan"] is None or state["analysis_result"] is None:
+        raise AgentStructuredOutputError() from None
+    result = await dependencies.llm_provider.structured_output(
+        [
+            LLMMessage(role="system", content=response.SYSTEM),
+            LLMMessage(role="user", content=response.input_payload(state)),
+        ],
+        ResponseResult,
+    )
+    if not isinstance(result, ResponseResult):
+        raise AgentStructuredOutputError() from None
+    validate_response(result, state)
+    return {"final_answer": result.final_answer}
 
 
 def safety_finalize(state: AgentState) -> SafetyFinalUpdate:

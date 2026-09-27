@@ -2,6 +2,7 @@
 
 import asyncio
 import json
+import sys
 from uuid import uuid4
 
 from app.agent import AgentInput
@@ -12,6 +13,7 @@ from app.llm.mock import MockLLMProvider
 
 
 async def main() -> None:
+    sys.stdout.reconfigure(encoding="utf-8")
     provider = MockLLMProvider()
     provider.queue_structured({"risk_level": "normal", "safety_route_required": False})
     provider.queue_structured(
@@ -60,6 +62,21 @@ async def main() -> None:
             ],
         }
     )
+    provider.queue_structured(
+        {
+            "contact_policy": "reply",
+            "recommended_action": "只发送一句真实、低压力的回复。",
+            "supporting_analysis_ids": ["A1"],
+            "message_suggestion": "好的，我明白了，等你方便时再聊。",
+            "stop_conditions": ["对方表达不愿继续时停止回复。"],
+        }
+    )
+    provider.queue_structured(
+        {
+            "contact_policy": "reply",
+            "final_answer": "好的，我明白了，等你方便时再聊。 对方若不愿意，就尊重反馈。",
+        }
+    )
     runtime = AgentRuntime(dependencies=RuntimeDependencies(llm_provider=provider))
     result = await runtime.run(
         AgentInput(
@@ -68,7 +85,12 @@ async def main() -> None:
             message="Synthetic ordinary reply question",
         )
     )
-    if not isinstance(result, AgentResult) or result.knowledge is None or result.analysis is None:
+    if (
+        not isinstance(result, AgentResult)
+        or result.knowledge is None
+        or result.analysis is None
+        or result.action is None
+    ):
         raise RuntimeError("Standalone knowledge demo failed")
     print(
         json.dumps(
@@ -79,6 +101,8 @@ async def main() -> None:
                 "selected_references": result.knowledge.selected_references,
                 "evidence": result.evidence.model_dump(mode="json"),
                 "analysis": result.analysis.model_dump(mode="json"),
+                "action": result.action.model_dump(mode="json"),
+                "final_answer": result.final_answer,
             },
             ensure_ascii=False,
         )

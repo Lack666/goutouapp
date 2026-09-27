@@ -7,9 +7,9 @@ Agent state, input/output and dependency contracts. Phase 3B adds a standalone
 minimal LangGraph execution path. Phase 3C replaces its fixtures with safety,
 scenario and FIU semantic nodes. Phase 3D adds deterministic knowledge routing
 and bounded loading of the frozen references. Phase 3E adds structured
-relationship analysis that consumes typed FIU and loaded excerpts. Action
-planning, response generation, RAG and memory
-implementation belong to later phases.
+relationship analysis that consumes typed FIU and loaded excerpts. Phase 3F
+adds action planning and response generation. RAG and memory implementation
+belong to later phases.
 
 ```mermaid
 flowchart LR
@@ -158,8 +158,19 @@ reference excerpts as separate JSON data. `LLMProvider.structured_output`
 returns `AnalysisResult`; a second project-owned validator checks every FIU
 and reference ID, observed/tentative roles, boundary recognition and obvious
 action or certainty language. It writes only `analysis_result`. The public
-result exposes structured analysis but no loaded source text; `action` and
-memory candidates remain empty. These checks establish provenance structure,
+result exposes structured analysis but no loaded source text; at Phase 3E,
+`action` and memory candidates remained empty. These checks establish provenance structure,
 not full semantic entailment or live-model quality. See
 [Relationship analysis](RELATIONSHIP_ANALYSIS.md) and
 [ADR 0013](adr/0013-grounded-analysis-contract.md).
+
+## Phase 3F action and response boundary
+
+Phase 3F extends the ordinary/boundary path after relationship analysis with
+`action_planner → response_generator`. Each calls the injected provider for a
+strict structured value, writes one state field, and runs project-owned
+validation. Action provenance points to analysis points; response validation
+checks the contact policy and actionable text against the plan. The high-risk
+path still exits through `safety_finalize` after knowledge loading. See
+[Action and response](ACTION_RESPONSE.md) and
+[ADR 0014](adr/0014-action-response-boundary.md).

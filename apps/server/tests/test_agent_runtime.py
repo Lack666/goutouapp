@@ -17,6 +17,7 @@ from app.agent.nodes import normalize_input
 from app.agent.runtime import NODE_READS, NODE_WRITES, AgentRuntime, _bind
 from app.llm.errors import LLMUnavailableError
 from app.llm.mock import MockLLMProvider
+from evals.phase3f_action_response import fixture_action, fixture_response
 
 ROOT = Path(__file__).resolve().parents[3]
 
@@ -60,6 +61,9 @@ def scripted_provider(*, high: bool = False, scenario: str = "relationship") -> 
                 ],
             }
         )
+        action = fixture_action(scenario=scenario, route="ordinary")
+        provider.queue_structured(action)
+        provider.queue_structured(fixture_response(action))
     return provider
 
 
@@ -76,7 +80,9 @@ def test_scoped_nodes_and_runtime_wrapper() -> None:
     assert NODE_WRITES["classify_scenario"] == {"scenario"}
     assert NODE_WRITES["extract_fiu"] == {"facts", "inferences", "unknowns"}
     assert NODE_WRITES["relationship_analysis"] == {"analysis_result"}
-    assert not {"action_plan", "memory_candidates"} & set().union(*NODE_WRITES.values())
+    assert NODE_WRITES["action_planner"] == {"action_plan"}
+    assert NODE_WRITES["response_generator"] == {"final_answer"}
+    assert "memory_candidates" not in set().union(*NODE_WRITES.values())
 
     def bad_read(state):
         return {"current_message": state["facts"]}
@@ -101,7 +107,8 @@ def test_graph_conditional_structure() -> None:
         "relationship_analysis",
         "knowledge_router",
         "load_references",
-        "minimal_finalize",
+        "action_planner",
+        "response_generator",
         "safety_finalize",
         "__start__",
         "__end__",
@@ -116,8 +123,9 @@ def test_graph_conditional_structure() -> None:
     assert ("knowledge_router", "load_references", False) in edges
     assert ("load_references", "relationship_analysis", True) in edges
     assert ("load_references", "safety_finalize", True) in edges
-    assert ("relationship_analysis", "minimal_finalize", False) in edges
-    assert ("minimal_finalize", "__end__", False) in edges
+    assert ("relationship_analysis", "action_planner", False) in edges
+    assert ("action_planner", "response_generator", False) in edges
+    assert ("response_generator", "__end__", False) in edges
     assert ("safety_finalize", "__end__", False) in edges
 
 
@@ -161,7 +169,7 @@ async def test_success_status_json_and_no_internal_state() -> None:
     assert result.schema_version == "1"
     assert result.scenario.primary == Scenario.RELATIONSHIP
     assert result.analysis is not None
-    assert result.action is None
+    assert result.action is not None
     assert AgentResult.model_validate_json(result.model_dump_json()) == result
     assert "current_message" not in result.model_dump()
 
@@ -191,8 +199,9 @@ async def test_failures_are_safe_and_correlated() -> None:
     assert malformed.code == AgentErrorCode.STRUCTURED_OUTPUT_FAILURE
     assert AgentFailure.model_validate_json(malformed.model_dump_json()) == malformed
 
-    with patch("app.agent.runtime.minimal_finalize", side_effect=RuntimeError("API_KEY=private")):
-        unexpected = await runtime().run(request())
+    agent = runtime()
+    with patch.object(agent._graph, "ainvoke", side_effect=RuntimeError("API_KEY=private")):
+        unexpected = await agent.run(request())
     assert isinstance(unexpected, AgentFailure)
     assert unexpected.code == AgentErrorCode.RUNTIME_FAILURE
     assert "private" not in unexpected.model_dump_json()
@@ -232,6 +241,9 @@ async def test_run_isolation_and_compile_reuse() -> None:
             ],
         }
     )
+    action = fixture_action(scenario="online", route="ordinary")
+    provider.queue_structured(action)
+    provider.queue_structured(fixture_response(action))
     agent = runtime(provider)
     compiled = agent.graph
     third = await agent.run(request("third"))

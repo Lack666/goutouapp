@@ -1,0 +1,12 @@
+{
+  "case_ids": [
+    "reply_01", "reply_02", "reply_03", "reply_04", "flirt_01", "flirt_02",
+    "invite_01", "invite_02", "invite_03", "conflict_01", "conflict_02",
+    "imbalance_01", "imbalance_02", "breakup_01", "breakup_02",
+    "reconcile_01", "betrayal_01", "online_03", "chat_01", "mbti_01",
+    "pua_01", "family_02", "relationship_01", "long_term_01",
+    "diversity_01", "social_system_01", "pair_a1", "pair_a2",
+    "pair_b1", "pair_b2", "pair_c1", "pair_c2", "pair_d1",
+    "pair_d2", "pair_e1", "pair_e2", "pair_f1", "pair_f2"
+  ]
+}

@@ -16,6 +16,7 @@ from app.llm.errors import LLMTimeoutError
 from app.llm.mock import MockLLMProvider
 from evals.phase3c_semantic import CASES, SELECTED, evaluate, replay_outputs
 from evals.phase3e_analysis import fixture_analysis
+from evals.phase3f_action_response import fixture_action, fixture_response
 
 ROOT = Path(__file__).resolve().parents[3]
 
@@ -47,6 +48,9 @@ def run_with_outputs(message: str, outputs: list[dict]):
             safety=safety, route=route, scenario=scenario, current_message=message
         ).selected_references[0]
         provider.queue_structured(fixture_analysis(alias=alias, fiu=outputs[2], route=route.value))
+        action = fixture_action(scenario=scenario.primary.value, route=route.value)
+        provider.queue_structured(action)
+        provider.queue_structured(fixture_response(action))
     result = asyncio.run(
         AgentRuntime(dependencies=RuntimeDependencies(llm_provider=provider)).run(
             input_for(message)

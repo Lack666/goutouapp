@@ -226,10 +226,17 @@ class AnalysisResult(ContractModel):
 
 
 class ActionPlan(ContractModel):
-    recommended_action: str = Field(min_length=1)
-    message_suggestion: str | None = None
-    observation_window: str | None = None
-    stop_conditions: list[str] = Field(default_factory=list)
+    contact_policy: Literal["reply", "invite", "observe", "pause", "stop_contact"]
+    recommended_action: str = Field(min_length=1, max_length=500)
+    supporting_analysis_ids: list[str] = Field(min_length=1, max_length=5)
+    message_suggestion: str | None = Field(default=None, min_length=1, max_length=300)
+    observation_window: str | None = Field(default=None, min_length=1, max_length=150)
+    stop_conditions: list[str] = Field(default_factory=list, max_length=4)
+
+
+class ResponseResult(ContractModel):
+    final_answer: str = Field(min_length=1, max_length=3000)
+    contact_policy: Literal["reply", "invite", "observe", "pause", "stop_contact"]
 
 
 class MemoryCandidate(ContractModel):

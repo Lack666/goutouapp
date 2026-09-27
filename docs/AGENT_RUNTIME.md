@@ -1,12 +1,12 @@
-# Agent contracts, semantic entry, knowledge and analysis (Phases 3A–3E)
+# Agent contracts and standalone runtime (Phases 3A–3F)
 
 The source behavior is
 `SKILL_CONTRACT.md` and the 81 synthetic cases in `evals/golden_cases.jsonl`.
 The frozen upstream Skill remains unchanged. Phase 3C replaced the Phase 3B
 fixtures with structured safety, scenario and FIU nodes. Phase 3D adds
 deterministic reference selection and bounded loading. Phase 3E adds typed,
-source-linked relationship analysis. Action plans and response generation
-remain outside the runtime.
+source-linked relationship analysis. Phase 3F adds independently validated
+action planning and user-facing response generation.
 
 ## Input and state
 
@@ -63,8 +63,11 @@ separate. A model-generated interpretation must not be copied to `facts`.
 optional first-alias primary marker and a short routing summary. It contains
 no filesystem paths or document text. `AnalysisResult` holds a core issue,
 typed observations/dynamics/risks/constraints/uncertainties and compact FIU or
-reference IDs for provenance. `ActionPlan` is a future contract and is never
-populated in Phase 3E.
+reference IDs for provenance. Ordinary and boundary runs now populate
+`ActionPlan` with a contact policy, recommendation, supporting analysis point
+IDs, optional message/observation window and stop conditions. High-risk runs
+leave it empty. `ResponseResult` validates the provider's final answer before
+only its text is copied into `AgentResult`.
 
 `MemoryCandidate` records a subject ID, bounded content, type, source,
 evidence, confidence and `requires_consent=true`. `MemoryIntent` separately
@@ -107,14 +110,14 @@ limits. Safety runs before ordinary relationship analysis.
 | `knowledge_router` | `current_message`, `scenario`, `safety`, `route` | `knowledge_route`, `selected_references` |
 | `load_references` | `selected_references` | `retrieved_context` |
 | `relationship_analysis` | `current_message`, `scenario`, `safety`, `route`, `facts`, `inferences`, `unknowns`, `user_profile`, `relationship_profile`, `retrieved_context` | `analysis_result` |
-| `response_generator` | `safety`, `route`, `facts`, `inferences`, `unknowns`, `analysis_result`, `action_plan`, `warnings` | `final_answer` |
+| `action_planner` | `current_message`, `scenario`, `route`, `facts`, `inferences`, `unknowns`, `selected_references`, `analysis_result`, `user_profile`, `relationship_profile` | `action_plan` |
+| `response_generator` | `current_message`, `scenario`, `route`, `facts`, `inferences`, `unknowns`, `analysis_result`, `action_plan` | `final_answer` |
 | `memory_candidate_extractor` | `memory_enabled`, `current_message`, `facts`, `relationship_profile`, `safety` | `memory_intent`, `memory_candidates` |
 
 Phase 3C implements the first three semantic rows; Phase 3D implements the two
-knowledge rows; Phase 3E implements relationship analysis. `minimal_finalize` reads
-`scenario`, `safety`, `route`, `analysis_result` and writes a fixed `final_answer` only;
-`safety_finalize` reads `safety`, `route` and writes `scenario=safety` plus a
-fixed safety answer. Neither finalizer gives relationship advice. The runtime,
+knowledge rows; Phase 3E implements relationship analysis; Phase 3F implements
+action and response. `safety_finalize` reads `safety`, `route` and writes
+`scenario=safety` plus a fixed safety answer. The runtime,
 not graph nodes, owns `run_status`.
 
 No node may write the identity fields, promote inferences to facts, save
@@ -155,7 +158,7 @@ flowchart TD
   safety_check -->|ordinary or boundary| classify_scenario --> extract_fiu --> knowledge_router
   safety_check -->|high risk| knowledge_router
   knowledge_router --> load_references
-  load_references -->|ordinary or boundary| relationship_analysis --> minimal_finalize --> END
+  load_references -->|ordinary or boundary| relationship_analysis --> action_planner --> response_generator --> END
   load_references -->|high risk| safety_finalize --> END
 ```
 
@@ -166,8 +169,8 @@ boundary route; a scheduling conflict remains ordinary. Normal/boundary input
 then requests `ScenarioResult` and `FactExtractionResult` from separate nodes.
 All three prompts live under `app/agent/prompts`, cite `SKILL_CONTRACT.md`,
 place the rules in system messages, and encode user context with explicit
-role/speaker labels as untrusted JSON. There is no relationship strategy
-prompt or memory write. FIU also rejects facts whose
+role/speaker labels as untrusted JSON. There is no memory write. FIU also
+rejects facts whose
 source is outside the Phase 1B provenance vocabulary; it cannot independently
 prove that a valid-looking model claim is true.
 
@@ -201,8 +204,7 @@ has been run; safety and FIU accuracy in unseen language remains unverified.
 
 Knowledge loading is described in [Knowledge routing and loading](KNOWLEDGE_ROUTING.md).
 The Phase 3E node and limitations are described in
-[Relationship analysis](RELATIONSHIP_ANALYSIS.md). Action planning, response
-generation, memory writes, durable checkpointing, streaming transport and
-mobile remain outside this subphase. The compiled graph
-has no durable resume behavior, and its minimal answer must not be exposed as
-a production relationship endpoint.
+[Relationship analysis](RELATIONSHIP_ANALYSIS.md). Phase 3F action and response
+rules are described in [Action and response](ACTION_RESPONSE.md). Memory writes,
+durable checkpointing, streaming transport and mobile remain outside this
+subphase. The compiled graph has no durable resume behavior or business API.

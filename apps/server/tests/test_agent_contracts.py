@@ -110,7 +110,14 @@ def test_structured_validation_and_fiu_type_separation() -> None:
             requires_consent=False,
         )
     assert AnalysisResult(core_issue="Unclear pattern").risks == []
-    assert ActionPlan(recommended_action="Ask once").stop_conditions == []
+    assert (
+        ActionPlan(
+            contact_policy="observe",
+            recommended_action="Observe once",
+            supporting_analysis_ids=["A1"],
+        ).stop_conditions
+        == []
+    )
     assert AgentInputError.code == AgentErrorCode.INVALID_INPUT
     assert AgentDependencyError.code == AgentErrorCode.DEPENDENCY_FAILURE
     failure = AgentFailure(

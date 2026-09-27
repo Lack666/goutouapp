@@ -16,13 +16,14 @@ from app.agent.dependencies import RuntimeDependencies
 from app.agent.errors import AgentError, AgentErrorCode, AgentFailure
 from app.agent.knowledge import ReferenceRegistry
 from app.agent.nodes import (
+    action_planner,
     classify_scenario,
     extract_fiu,
     knowledge_router,
     load_reference_context,
-    minimal_finalize,
     normalize_input,
     relationship_analysis,
+    response_generator,
     route_after_safety,
     safety_check,
     safety_finalize,
@@ -54,7 +55,32 @@ NODE_READS: dict[str, frozenset[str]] = {
             "relationship_profile",
         }
     ),
-    "minimal_finalize": frozenset({"scenario", "safety", "route", "analysis_result"}),
+    "action_planner": frozenset(
+        {
+            "current_message",
+            "scenario",
+            "route",
+            "facts",
+            "inferences",
+            "unknowns",
+            "selected_references",
+            "analysis_result",
+            "user_profile",
+            "relationship_profile",
+        }
+    ),
+    "response_generator": frozenset(
+        {
+            "current_message",
+            "scenario",
+            "route",
+            "facts",
+            "inferences",
+            "unknowns",
+            "analysis_result",
+            "action_plan",
+        }
+    ),
     "safety_finalize": frozenset({"safety", "route"}),
 }
 NODE_WRITES: dict[str, frozenset[str]] = {
@@ -65,7 +91,8 @@ NODE_WRITES: dict[str, frozenset[str]] = {
     "knowledge_router": frozenset({"knowledge_route", "selected_references"}),
     "load_references": frozenset({"retrieved_context"}),
     "relationship_analysis": frozenset({"analysis_result"}),
-    "minimal_finalize": frozenset({"final_answer"}),
+    "action_planner": frozenset({"action_plan"}),
+    "response_generator": frozenset({"final_answer"}),
     "safety_finalize": frozenset({"scenario", "final_answer"}),
 }
 
@@ -112,10 +139,18 @@ def compile_graph(dependencies: RuntimeDependencies) -> CompiledStateGraph:
     async def analyze(state: AgentState) -> dict[str, object]:
         return await relationship_analysis(state, dependencies)
 
+    async def plan(state: AgentState) -> dict[str, object]:
+        return await action_planner(state, dependencies)
+
+    async def respond(state: AgentState) -> dict[str, object]:
+        return await response_generator(state, dependencies)
+
     builder.add_node("safety_check", _bind_async("safety_check", check_safety))
     builder.add_node("classify_scenario", _bind_async("classify_scenario", classify))
     builder.add_node("extract_fiu", _bind_async("extract_fiu", extract))
     builder.add_node("relationship_analysis", _bind_async("relationship_analysis", analyze))
+    builder.add_node("action_planner", _bind_async("action_planner", plan))
+    builder.add_node("response_generator", _bind_async("response_generator", respond))
     builder.add_node(
         "knowledge_router",
         _bind(
@@ -130,7 +165,6 @@ def compile_graph(dependencies: RuntimeDependencies) -> CompiledStateGraph:
             lambda state: load_reference_context(state, registry, dependencies.context_budget),
         ),
     )
-    builder.add_node("minimal_finalize", _bind("minimal_finalize", minimal_finalize))
     builder.add_node("safety_finalize", _bind("safety_finalize", safety_finalize))
     builder.add_edge(START, "normalize_input")
     builder.add_edge("normalize_input", "safety_check")
@@ -147,8 +181,9 @@ def compile_graph(dependencies: RuntimeDependencies) -> CompiledStateGraph:
         route_after_safety,
         {"ordinary": "relationship_analysis", "safety": "safety_finalize"},
     )
-    builder.add_edge("relationship_analysis", "minimal_finalize")
-    builder.add_edge("minimal_finalize", END)
+    builder.add_edge("relationship_analysis", "action_planner")
+    builder.add_edge("action_planner", "response_generator")
+    builder.add_edge("response_generator", END)
     builder.add_edge("safety_finalize", END)
     return builder.compile()
 

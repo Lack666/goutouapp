@@ -30,6 +30,7 @@ from app.agent.runtime import NODE_READS, NODE_WRITES, AgentRuntime, _bind
 from app.llm.mock import MockLLMProvider
 from evals.phase3d_routing import evaluate_all, evaluate_route
 from evals.phase3e_analysis import fixture_analysis
+from evals.phase3f_action_response import fixture_action, fixture_response
 from evals.validate import load_cases
 
 
@@ -54,6 +55,9 @@ def scripted_provider(scenario: str, *, high: bool = False, boundary: bool = Fal
         provider.queue_structured(
             fixture_analysis(alias=alias, fiu=fiu, route="boundary" if boundary else "ordinary")
         )
+        action = fixture_action(scenario=scenario, route="boundary" if boundary else "ordinary")
+        provider.queue_structured(action)
+        provider.queue_structured(fixture_response(action))
     return provider
 
 
@@ -263,7 +267,7 @@ def test_graph_semantic_mock_routes_and_loads(
     assert result.knowledge.selected_references == [alias]
     assert result.knowledge.primary_reference == alias
     assert (result.analysis is None) == high
-    assert result.action is None
+    assert (result.action is None) == high
     assert result.memory_candidates == []
     assert "retrieved_context" not in result.model_dump()
 
