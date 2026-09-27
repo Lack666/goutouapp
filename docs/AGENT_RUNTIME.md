@@ -1,10 +1,11 @@
-# Agent contracts and semantic entry nodes (Phases 3A–3C)
+# Agent contracts, semantic entry and knowledge loading (Phases 3A–3D)
 
 The source behavior is
 `SKILL_CONTRACT.md` and the 81 synthetic cases in `evals/golden_cases.jsonl`.
-The frozen upstream Skill remains unchanged. Phase 3C replaces the Phase 3B
-fixtures with structured safety, scenario and FIU nodes. Relationship advice
-is still outside the runtime.
+The frozen upstream Skill remains unchanged. Phase 3C replaced the Phase 3B
+fixtures with structured safety, scenario and FIU nodes. Phase 3D adds
+deterministic reference selection and bounded loading. Relationship advice is
+still outside the runtime.
 
 ## Input and state
 
@@ -29,8 +30,8 @@ persisted wholesale as long-term memory.
 
 `UserProfile` and `RelationshipProfile` are small read models, not a new
 psychological profile schema. The latter carries relationship/person IDs for
-isolation. `retrieved_context` is reserved for short selected source text;
-Knowledge loading is not implemented in this phase.
+isolation. `retrieved_context` contains typed, budgeted `LoadedReference`
+values after the loader runs; it is never part of the public `AgentResult`.
 
 ## Results and vocabulary
 
@@ -57,8 +58,9 @@ FIU uses three separate model types: `Fact`, `Inference` and `Unknown`. An
 inference requires an alternative explanation; a fact requires provenance.
 `FactExtractionResult` has three typed lists, and `AgentState` keeps the lists
 separate. A model-generated interpretation must not be copied to `facts`.
-`KnowledgeRouteResult` accepts one to three distinct reference aliases and
-a short routing summary. It contains no document loader. `AnalysisResult` and
+`KnowledgeRouteResult` accepts one to three distinct reference aliases, an
+optional first-alias primary marker and a short routing summary. It contains
+no filesystem paths or document text. `AnalysisResult` and
 `ActionPlan` contain only the core issue, observations, risks/constraints and
 a small action with optional message, observation window and stop conditions.
 
@@ -73,24 +75,25 @@ belong to Phase 5.
 ## Runtime dependency and errors
 
 `RuntimeDependencies` receives an existing `LLMProvider` (the Phase 2C
-`chat`, `stream`, `structured_output` protocol) and optionally a narrow
-`ProfileReader`. `ProfileReader` returns typed, owner-scoped profiles; future
+`chat`, `stream`, `structured_output` protocol), an optional narrow
+`ProfileReader`, and optional reference registry/context budget overrides.
+`ProfileReader` returns typed, owner-scoped profiles; future
 implementations receive scoped services from the composition root. No Agent
 module imports FastAPI, SQLAlchemy, HTTPX or a vendor client, reads settings
 secrets or creates a database engine. More service interfaces should be added
 when their actual nodes are implemented.
 
 Agent errors are `invalid_input`, `dependency_failure`,
-`structured_output_failure` and `runtime_failure`. A future runtime must
+`structured_output_failure`, `knowledge_failure` and `runtime_failure`. The runtime must
 translate Pydantic, LLM and storage exceptions at its boundary into these
 project-owned categories. It must not expose vendor exception details in
-`AgentFailure.message`. Phase 3B translates errors reachable in its minimal
-graph. Future storage and transport adapters must extend that mapping.
+`AgentFailure.message`. Reference registry, read, hash and budget failures
+become `knowledge_failure`. Future storage/transport adapters extend the mapping.
 
-## Future node read/write matrix
+## Node read/write matrix
 
-The matrix is a design limit for future LangGraph nodes. It does not imply
-these nodes exist. Safety runs before ordinary relationship analysis.
+Implemented rows are enforced by LangGraph wrappers. Other rows remain design
+limits. Safety runs before ordinary relationship analysis.
 
 | Node | Reads | Writes |
 | --- | --- | --- |
@@ -99,12 +102,14 @@ these nodes exist. Safety runs before ordinary relationship analysis.
 | `load_profile` | `user_id`, `relationship_id`, `memory_enabled` | `user_profile`, `relationship_profile` |
 | `classify_scenario` | `current_message`, `messages`, `safety` | `scenario` |
 | `extract_fiu` | `current_message`, `messages`, `scenario`, `safety` | `facts`, `inferences`, `unknowns` |
-| `knowledge_router` | `scenario`, `safety`, `route`, `facts`, `unknowns` | `knowledge_route`, `selected_references`, `retrieved_context` |
+| `knowledge_router` | `current_message`, `scenario`, `safety`, `route` | `knowledge_route`, `selected_references` |
+| `load_references` | `selected_references` | `retrieved_context` |
 | `relationship_analysis` | `scenario`, `safety`, `facts`, `inferences`, `unknowns`, `user_profile`, `relationship_profile`, `retrieved_context` | `analysis_result`, `action_plan` |
 | `response_generator` | `safety`, `route`, `facts`, `inferences`, `unknowns`, `analysis_result`, `action_plan`, `warnings` | `final_answer` |
 | `memory_candidate_extractor` | `memory_enabled`, `current_message`, `facts`, `relationship_profile`, `safety` | `memory_intent`, `memory_candidates` |
 
-Phase 3C implements the first three semantic rows. `minimal_finalize` reads
+Phase 3C implements the first three semantic rows; Phase 3D implements the two
+knowledge rows. `minimal_finalize` reads
 `scenario`, `safety`, `route` and writes a fixed `final_answer` only;
 `safety_finalize` reads `safety`, `route` and writes `scenario=safety` plus a
 fixed safety answer. Neither finalizer gives relationship advice. The runtime,
@@ -133,7 +138,7 @@ Actual write counts, deletion completion, speaker attribution in imported data
 and unsafe wording need future runtime or persistence evaluation. These are
 deliberate Phase 3A compatibility limits, not passing behavioral evals.
 
-## Phase 3B architecture baseline and Phase 3C graph
+## Phase 3B architecture baseline and current graph
 
 The root `uv.lock` pins LangGraph 1.2.12. `AgentRuntime` compiles one
 `StateGraph(AgentState)` per runtime instance and reuses it across runs. It has
@@ -145,8 +150,11 @@ current graph has these paths:
 ```mermaid
 flowchart TD
   START --> normalize_input --> safety_check
-  safety_check -->|ordinary or boundary| classify_scenario --> extract_fiu --> minimal_finalize --> END
-  safety_check -->|high risk| safety_finalize --> END
+  safety_check -->|ordinary or boundary| classify_scenario --> extract_fiu --> knowledge_router
+  safety_check -->|high risk| knowledge_router
+  knowledge_router --> load_references
+  load_references -->|ordinary or boundary| minimal_finalize --> END
+  load_references -->|high risk| safety_finalize --> END
 ```
 
 `safety_check` calls the injected provider for `SafetyResult` based on the
@@ -157,7 +165,7 @@ then requests `ScenarioResult` and `FactExtractionResult` from separate nodes.
 All three prompts live under `app/agent/prompts`, cite `SKILL_CONTRACT.md`,
 place the rules in system messages, and encode user context with explicit
 role/speaker labels as untrusted JSON. There is no relationship strategy
-prompt, knowledge retrieval or memory write. FIU also rejects facts whose
+prompt or memory write. FIU also rejects facts whose
 source is outside the Phase 1B provenance vocabulary; it cannot independently
 prove that a valid-looking model claim is true.
 
@@ -189,7 +197,8 @@ derived from Golden expectations. Passing it proves execution and evaluator
 consistency, **not independent semantic model accuracy**. No live model test
 has been run; safety and FIU accuracy in unseen language remains unverified.
 
-Knowledge loading, relationship reasoning, memory writes, durable checkpointing,
-streaming transport and mobile remain outside this subphase. The compiled graph
+Knowledge loading is described in [Knowledge routing and loading](KNOWLEDGE_ROUTING.md).
+Relationship reasoning, memory writes, durable checkpointing, streaming
+transport and mobile remain outside this subphase. The compiled graph
 has no durable resume behavior, and its minimal answer must not be exposed as
 a production relationship endpoint.

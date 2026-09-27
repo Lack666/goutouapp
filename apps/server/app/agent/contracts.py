@@ -139,6 +139,7 @@ class FactExtractionResult(ContractModel):
 
 class KnowledgeRouteResult(ContractModel):
     selected_references: list[str] = Field(min_length=1, max_length=3)
+    primary_reference: str | None = None
     reason_summary: str = Field(min_length=1)
     max_references: int = Field(default=3, ge=1, le=3)
 
@@ -150,7 +151,22 @@ class KnowledgeRouteResult(ContractModel):
             raise ValueError("selected references must be nonblank")
         if len(set(self.selected_references)) != len(self.selected_references):
             raise ValueError("selected references must be unique")
+        if (
+            self.primary_reference is not None
+            and self.primary_reference != self.selected_references[0]
+        ):
+            raise ValueError("primary reference must be selected first")
         return self
+
+
+class LoadedReference(ContractModel):
+    alias: str = Field(min_length=1)
+    source_id: str = Field(min_length=1)
+    title: str = Field(min_length=1)
+    category: str = Field(min_length=1)
+    content: str = Field(min_length=1)
+    truncated: bool
+    content_length: int = Field(ge=1)
 
 
 class AnalysisResult(ContractModel):

@@ -30,8 +30,8 @@ exist. Run `python evals/validate.py` or `.\make.cmd eval` on Windows.
   when a user-reported quote requires no interpretation.
 - `expected.knowledge`: `required_any` lists a suitable primary reference
   family; `allowed` lists accepted on-topic references; `forbidden` identifies
-  specifically unrelated references; `max_count` is at most 3. A future router
-  passes when it loads a relevant primary reference, respects the count and
+  specifically unrelated references; `max_count` is at most 3. The Phase 3D
+  deterministic router passes when it selects a relevant primary reference, respects the count and
   excludes forbidden material. It need not choose an identical full set. Safety
   cases require the `safety` alias before ordinary relationship material.
   Aliases resolve through `reference_map.json` to existing frozen files.

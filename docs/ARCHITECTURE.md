@@ -5,7 +5,8 @@ foundation; Phase 2B adds PostgreSQL persistence; Phase 2C adds the internal
 LLM Provider boundary; Phase 2D verifies their composition. Phase 3A defines
 Agent state, input/output and dependency contracts. Phase 3B adds a standalone
 minimal LangGraph execution path. Phase 3C replaces its fixtures with safety,
-scenario and FIU semantic nodes. Relationship reasoning, RAG and memory
+scenario and FIU semantic nodes. Phase 3D adds deterministic knowledge routing
+and bounded loading of the frozen references. Relationship reasoning, RAG and memory
 implementation belong to later phases.
 
 ```mermaid
@@ -13,7 +14,7 @@ flowchart LR
   Mobile[React Native + Expo] -->|REST / WebSocket| Server[FastAPI server]
   Server --> Database[(PostgreSQL)]
   Server -.->|future integration| Runtime[Independent LangGraph Agent Runtime]
-  Runtime -.->|future router| Knowledge[Preserved goutoujunshi Skill]
+  Runtime -->|deterministic reference loader| Knowledge[Preserved goutoujunshi Skill]
 ```
 
 - `apps/mobile` is the React Native and Expo client. It never calls an LLM API
@@ -89,7 +90,8 @@ Future Phase 3 code can receive an `LLMProvider` and scoped services as
 explicit Python dependencies. The Agent itself need not receive `Settings` or
 a database session, import `app.main`, create an engine, read raw environment
 variables, or create a vendor client. This describes an injection boundary;
-the executing Agent has only the Phase 3C semantic entry nodes.
+the executing Agent has Phase 3C semantic entry nodes plus the Phase 3D
+deterministic knowledge router and bounded reference loader.
 `TEST_DATABASE_URL` belongs only to the isolated test harness, and `POSTGRES_*`
 belongs only to Compose. See [ADR 0008](adr/0008-backend-composition-lifecycle.md).
 
@@ -128,6 +130,18 @@ ordinary node. Other input receives typed `ScenarioResult` and
 source-backed files; user text and recent speaker-labeled messages are supplied
 as untrusted context. A 24-case Golden subset has deterministic structural
 comparison and oracle-derived Mock replay. This verifies graph wiring and
-evaluation behavior, not live model accuracy. No Knowledge Router, relationship
-advice, memory persistence or new HTTP endpoint exists. See
+evaluation behavior, not live model accuracy. Relationship advice, memory
+persistence and a new HTTP endpoint are still absent. See
 [ADR 0011](adr/0011-semantic-entry-nodes.md).
+
+## Phase 3D knowledge boundary
+
+The ordinary graph loads knowledge after FIU; the high risk graph branches
+straight from safety checking into the same router and loader. The router uses
+scenario and route with narrow topic cues to choose a stable alias; it cannot
+ask an LLM or form a path from user text. The registry resolves aliases only
+through `evals/reference_map.json`, within the frozen tree and manifest. The
+loader verifies the frozen hash and loads at most three typed references under
+per-document and total character budgets. The public result exposes aliases,
+not document text. See [Knowledge routing](KNOWLEDGE_ROUTING.md) and
+[ADR 0012](adr/0012-deterministic-knowledge-loading.md).

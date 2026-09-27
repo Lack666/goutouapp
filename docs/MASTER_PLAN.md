@@ -192,6 +192,23 @@ and transport integration remain pending.
   model validation was run. See [Phase 3C report](PHASE_3C_ACCEPTANCE.md) and
   [ADR 0011](adr/0011-semantic-entry-nodes.md).
 
+### Phase 3D
+
+- On 2026-09-27, added deterministic Knowledge Router and independent Reference
+  Loader nodes to ordinary, boundary and high-risk graph paths. The safety
+  branch still skips scenario/FIU but now loads its safety reference first.
+- An app-owned registry validates `reference_map.json` aliases against the
+  frozen manifest and canonical paths. The loader verifies selected file
+  hashes, returns typed excerpts under explicit document/total budgets and
+  converts failures to a safe Agent error. The public result exposes aliases
+  only. No RAG or relationship advice was added.
+- The verifier runs all 81 Golden routing constraints with expected semantic
+  labels as fixtures, plus runtime integration and loader security tests.
+  This is a deterministic router evaluation, not a live model evaluation.
+  See [Phase 3D report](PHASE_3D_ACCEPTANCE.md),
+  [Knowledge routing](KNOWLEDGE_ROUTING.md) and
+  [ADR 0012](adr/0012-deterministic-knowledge-loading.md).
+
 ## Dependency policy
 
 Official documentation was checked before selecting the layout: uv's project

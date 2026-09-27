@@ -14,9 +14,12 @@ from app.agent.contracts import (
 )
 from app.agent.dependencies import RuntimeDependencies
 from app.agent.errors import AgentError, AgentErrorCode, AgentFailure
+from app.agent.knowledge import ReferenceRegistry
 from app.agent.nodes import (
     classify_scenario,
     extract_fiu,
+    knowledge_router,
+    load_reference_context,
     minimal_finalize,
     normalize_input,
     route_after_safety,
@@ -34,6 +37,8 @@ NODE_READS: dict[str, frozenset[str]] = {
     "safety_check": frozenset({"current_message", "messages"}),
     "classify_scenario": frozenset({"current_message", "messages", "safety"}),
     "extract_fiu": frozenset({"current_message", "messages", "scenario", "safety"}),
+    "knowledge_router": frozenset({"current_message", "safety", "route", "scenario"}),
+    "load_references": frozenset({"selected_references"}),
     "minimal_finalize": frozenset({"scenario", "safety", "route"}),
     "safety_finalize": frozenset({"safety", "route"}),
 }
@@ -42,6 +47,8 @@ NODE_WRITES: dict[str, frozenset[str]] = {
     "safety_check": frozenset({"safety", "route"}),
     "classify_scenario": frozenset({"scenario"}),
     "extract_fiu": frozenset({"facts", "inferences", "unknowns"}),
+    "knowledge_router": frozenset({"knowledge_route", "selected_references"}),
+    "load_references": frozenset({"retrieved_context"}),
     "minimal_finalize": frozenset({"final_answer"}),
     "safety_finalize": frozenset({"scenario", "final_answer"}),
 }
@@ -73,6 +80,7 @@ def _bind_async(name: str, node: AsyncNode) -> AsyncNode:
 
 
 def compile_graph(dependencies: RuntimeDependencies) -> CompiledStateGraph:
+    registry = dependencies.reference_registry or ReferenceRegistry()
     builder = StateGraph(AgentState)
     builder.add_node("normalize_input", _bind("normalize_input", normalize_input))
 
@@ -88,6 +96,20 @@ def compile_graph(dependencies: RuntimeDependencies) -> CompiledStateGraph:
     builder.add_node("safety_check", _bind_async("safety_check", check_safety))
     builder.add_node("classify_scenario", _bind_async("classify_scenario", classify))
     builder.add_node("extract_fiu", _bind_async("extract_fiu", extract))
+    builder.add_node(
+        "knowledge_router",
+        _bind(
+            "knowledge_router",
+            lambda state: knowledge_router(state, registry, dependencies.context_budget),
+        ),
+    )
+    builder.add_node(
+        "load_references",
+        _bind(
+            "load_references",
+            lambda state: load_reference_context(state, registry, dependencies.context_budget),
+        ),
+    )
     builder.add_node("minimal_finalize", _bind("minimal_finalize", minimal_finalize))
     builder.add_node("safety_finalize", _bind("safety_finalize", safety_finalize))
     builder.add_edge(START, "normalize_input")
@@ -95,10 +117,16 @@ def compile_graph(dependencies: RuntimeDependencies) -> CompiledStateGraph:
     builder.add_conditional_edges(
         "safety_check",
         route_after_safety,
-        {"ordinary": "classify_scenario", "safety": "safety_finalize"},
+        {"ordinary": "classify_scenario", "safety": "knowledge_router"},
     )
     builder.add_edge("classify_scenario", "extract_fiu")
-    builder.add_edge("extract_fiu", "minimal_finalize")
+    builder.add_edge("extract_fiu", "knowledge_router")
+    builder.add_edge("knowledge_router", "load_references")
+    builder.add_conditional_edges(
+        "load_references",
+        route_after_safety,
+        {"ordinary": "minimal_finalize", "safety": "safety_finalize"},
+    )
     builder.add_edge("minimal_finalize", END)
     builder.add_edge("safety_finalize", END)
     return builder.compile()

@@ -6,6 +6,8 @@ from app.agent.contracts import (
     Fact,
     FactExtractionResult,
     Inference,
+    KnowledgeRouteResult,
+    LoadedReference,
     Route,
     SafetyResult,
     Scenario,
@@ -14,6 +16,7 @@ from app.agent.contracts import (
 )
 from app.agent.dependencies import RuntimeDependencies
 from app.agent.errors import AgentInputError, AgentStructuredOutputError
+from app.agent.knowledge import ContextBudget, ReferenceRegistry, load_references, route_knowledge
 from app.agent.prompts import fiu, safety, scenario
 from app.agent.prompts.common import context_payload
 from app.agent.state import AgentState
@@ -58,6 +61,15 @@ class FinalUpdate(TypedDict):
 
 class SafetyFinalUpdate(ScenarioUpdate, FinalUpdate):
     pass
+
+
+class KnowledgeRouteUpdate(TypedDict):
+    knowledge_route: KnowledgeRouteResult
+    selected_references: list[str]
+
+
+class LoadedContextUpdate(TypedDict):
+    retrieved_context: list[LoadedReference]
 
 
 def normalize_input(state: AgentState) -> NormalizeUpdate:
@@ -122,6 +134,31 @@ async def extract_fiu(state: AgentState, dependencies: RuntimeDependencies) -> F
     if any(fact.source not in FACT_SOURCES for fact in result.facts):
         raise AgentStructuredOutputError() from None
     return {"facts": result.facts, "inferences": result.inferences, "unknowns": result.unknowns}
+
+
+def knowledge_router(
+    state: AgentState, registry: ReferenceRegistry, budget: ContextBudget
+) -> KnowledgeRouteUpdate:
+    safety_result = state["safety"]
+    route = state["route"]
+    if safety_result is None or route is None:
+        raise RuntimeError("safety decision is unavailable")
+    result = route_knowledge(
+        safety=safety_result,
+        route=route,
+        scenario=state["scenario"],
+        current_message=state["current_message"],
+        max_references=budget.max_references,
+    )
+    for alias in result.selected_references:
+        registry.get(alias)
+    return {"knowledge_route": result, "selected_references": result.selected_references}
+
+
+def load_reference_context(
+    state: AgentState, registry: ReferenceRegistry, budget: ContextBudget
+) -> LoadedContextUpdate:
+    return {"retrieved_context": load_references(state["selected_references"], registry, budget)}
 
 
 def minimal_finalize(state: AgentState) -> FinalUpdate:

@@ -82,6 +82,8 @@ def test_graph_conditional_structure() -> None:
         "safety_check",
         "classify_scenario",
         "extract_fiu",
+        "knowledge_router",
+        "load_references",
         "minimal_finalize",
         "safety_finalize",
         "__start__",
@@ -91,9 +93,12 @@ def test_graph_conditional_structure() -> None:
     assert ("__start__", "normalize_input", False) in edges
     assert ("normalize_input", "safety_check", False) in edges
     assert ("safety_check", "classify_scenario", True) in edges
-    assert ("safety_check", "safety_finalize", True) in edges
+    assert ("safety_check", "knowledge_router", True) in edges
     assert ("classify_scenario", "extract_fiu", False) in edges
-    assert ("extract_fiu", "minimal_finalize", False) in edges
+    assert ("extract_fiu", "knowledge_router", False) in edges
+    assert ("knowledge_router", "load_references", False) in edges
+    assert ("load_references", "minimal_finalize", True) in edges
+    assert ("load_references", "safety_finalize", True) in edges
     assert ("minimal_finalize", "__end__", False) in edges
     assert ("safety_finalize", "__end__", False) in edges
 

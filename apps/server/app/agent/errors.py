@@ -14,6 +14,7 @@ class AgentErrorCode(StrEnum):
     DEPENDENCY_FAILURE = "dependency_failure"
     STRUCTURED_OUTPUT_FAILURE = "structured_output_failure"
     RUNTIME_FAILURE = "runtime_failure"
+    KNOWLEDGE_FAILURE = "knowledge_failure"
 
 
 class AgentError(Exception):
@@ -33,6 +34,10 @@ class AgentDependencyError(AgentError):
 
 class AgentStructuredOutputError(AgentError):
     code = AgentErrorCode.STRUCTURED_OUTPUT_FAILURE
+
+
+class AgentKnowledgeError(AgentError):
+    code = AgentErrorCode.KNOWLEDGE_FAILURE
 
 
 class AgentFailure(BaseModel):

@@ -12,6 +12,7 @@ from app.agent.contracts import (
     Fact,
     Inference,
     KnowledgeRouteResult,
+    LoadedReference,
     MemoryCandidate,
     MemoryIntent,
     Route,
@@ -53,7 +54,7 @@ class AgentState(TypedDict):
     inferences: list[Inference]
     unknowns: list[Unknown]
     selected_references: list[str]
-    retrieved_context: list[str]
+    retrieved_context: list[LoadedReference]
     knowledge_route: KnowledgeRouteResult | None
     user_profile: UserProfile | None
     relationship_profile: RelationshipProfile | None
