@@ -18,7 +18,7 @@ as implemented by a placeholder directory or a golden expectation.
 | 2 | FastAPI, PostgreSQL, Pydantic, SQLAlchemy, Alembic, LLM Provider foundation | PASS |
 | 3 | Standalone LangGraph runtime and Agent streaming integration | PASS |
 | 4 | Agent Service and API transport over the standalone runtime | PASS |
-| 5 | Chat Import and Relationship Data Pipeline | IN PROGRESS (5A PASS) |
+| 5 | Chat Import and Relationship Data Pipeline | IN PROGRESS (5A/5B PASS) |
 | 6 | User-facing memory controls and retention policy integration | PENDING |
 | 7 | Expo React Native MVP | PENDING |
 | 8 | Mobile API integration, generated client and stream consumption | PENDING |
@@ -90,6 +90,16 @@ Phase 6 in this roadmap. Neither future phase was implemented in Phase 4D.
   remain deferred. See [Chat Import](CHAT_IMPORT.md),
   [ADR 0022](adr/0022-chat-import-parser-boundary.md) and
   [Phase 5A acceptance](PHASE_5A_ACCEPTANCE.md).
+
+### Phase 5B — persistent import jobs and explicit binding
+
+- Added owner-scoped PostgreSQL job and speaker inventory records, a
+  transport-independent `ImportJobService`, explicit self/person/system/ignore
+  binding, relationship compatibility and one-to-one readiness checks.
+- Fatal parse results are rejected. Ready remains pre-import; no imported
+  Conversation or Message is written. Source bytes are not stored. See
+  [Import Jobs](IMPORT_JOBS.md), [ADR 0023](adr/0023-persistent-import-binding.md)
+  and [Phase 5B acceptance](PHASE_5B_ACCEPTANCE.md).
 
 ### Phase 0
 

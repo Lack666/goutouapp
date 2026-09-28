@@ -107,6 +107,7 @@ class SpeakerCount:
 class ChatParseResult:
     schema_version: str
     source_format: str | None
+    source_timezone: str | None
     parser_version: str
     source_name: str | None
     messages: tuple[ImportedMessage, ...]

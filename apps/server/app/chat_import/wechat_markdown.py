@@ -170,6 +170,7 @@ class WeChatMarkdownParser:
                     if candidates or options.source_format == FORMAT_WECHAT_MARKDOWN_V1
                     else None
                 ),
+                source_timezone=options.source_timezone,
                 parser_version=PARSER_VERSION,
                 source_name=source.source_name,
                 messages=tuple(messages),

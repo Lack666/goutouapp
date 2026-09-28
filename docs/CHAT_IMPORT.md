@@ -69,6 +69,9 @@ byte chunks, or UTF-8 encoding of consumed text chunks; `source_name` is
 excluded. The source fingerprint is absent if parsing stops before consuming
 the source, and transcript fingerprint is absent on fatal or empty results.
 These unkeyed hashes aid future deduplication but are not proof of ownership.
+The message fingerprint is not an occurrence identity. Repeated identical
+messages can share it; Phase 5C must include source position within a verified
+ImportJob when defining imported Message uniqueness.
 
 ## Issues, limits and memory
 
@@ -107,6 +110,7 @@ information, so direct dry-run output accordingly. It requires no network,
 PostgreSQL, Agent or model key. The 10,000-message test uses a generator whose
 `read()` raises, confirming line iteration and summary mode.
 
-Phase 5B/5C own import jobs, explicit speaker/relationship binding and
-imported message persistence. Phase 5A does not create conversation rows or
-split a transcript into multiple conversations.
+Phase 5B adds persistent, owner-scoped job metadata and explicit speaker and
+Relationship binding outside this parser; see [Import Jobs](IMPORT_JOBS.md).
+Phase 5C owns imported Message persistence. The parser does not create
+conversation rows or split a transcript into multiple conversations.

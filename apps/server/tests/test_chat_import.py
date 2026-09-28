@@ -230,6 +230,8 @@ def test_summary_mode_and_10k_incremental_generator() -> None:
     assert result.messages == ()
     assert [s.message_count for s in result.speaker_counts] == [3334, 3333, 3333]
     assert result.warning_count == 9999
+    assert len(result.issues) == 1000
+    assert result.issues_truncated == 8999
     assert result.fatal_count == 0
     assert result.source_fingerprint and result.transcript_fingerprint
 

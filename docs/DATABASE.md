@@ -72,3 +72,13 @@ requires key and fingerprint to be present together. Message IDs are foreign
 keys; the result is reconstructed from the existing assistant Message, not a
 saved HTTP response. See [Idempotency](IDEMPOTENCY.md) and
 [ADR 0021](adr/0021-persistent-operation-idempotency.md).
+
+## Phase 5B import workflow tables
+
+Alembic revision `20260928_03` adds `chat_import_jobs` and
+`chat_import_speakers`. They hold parser metadata, exact raw speaker labels,
+counts and explicit bindings only. Composite foreign keys bind a job's
+Relationship and a speaker's Person to the same owner; a speaker's owner and
+job must also match. No final imported Message row is created. The migration
+gate checks all eleven tables through upgrade/downgrade/upgrade and Alembic
+check. See [Import Jobs](IMPORT_JOBS.md).

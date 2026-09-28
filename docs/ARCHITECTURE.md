@@ -268,6 +268,16 @@ raw speaker labels, converts explicit source-local times to UTC, reports typed
 issues and emits canonical messages plus a dry-run summary. It streams one
 bounded message at a time and has no import-job, Conversation, Relationship or
 Memory storage dependency. Neither FastAPI nor AgentRuntime participates in
-the parser. Phase 5B/5C will add ownership, explicit binding and persistence
-outside this parser. See [Chat Import](CHAT_IMPORT.md) and
+the parser. Phase 5B adds owner-scoped, durable job metadata and explicit
+binding outside this parser. Phase 5C owns final Message persistence. See
+[Chat Import](CHAT_IMPORT.md), [Import Jobs](IMPORT_JOBS.md) and
 [ADR 0022](adr/0022-chat-import-parser-boundary.md).
+
+## Phase 5B import workflow boundary
+
+`ChatParseResult → ImportJobService(AuthenticatedActor) → ChatImportJob +
+ChatImportSpeaker` persists summary and speaker inventory only. PostgreSQL
+composite foreign keys enforce owner scope for Person and Relationship targets.
+The service locks the job for binding changes and readiness checks. A ready
+job can enter Phase 5C, but has no imported Conversation or Message. See
+[ADR 0023](adr/0023-persistent-import-binding.md).
