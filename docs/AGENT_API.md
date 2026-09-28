@@ -17,8 +17,10 @@ builds one runtime and service per FastAPI app, then reuses that compiled graph.
 The request is JSON with `message` (1–20,000 Unicode characters; whitespace
 only, NUL and invalid Unicode are rejected). Optional
 `expected_relationship_id` asserts the Conversation relationship; it cannot
-override it. Optional `operation_key` is 1–128 characters and passes to the
-service. Extra fields, including `user_id`, `person_id`, provider choice and
+override it. Optional `operation_key` is a client-generated, opaque 1–128
+character retry key without whitespace or control characters. It is scoped to
+the authenticated user and Conversation; the same key requires the same
+logical request. Extra fields, including `user_id`, `person_id`, provider choice and
 API keys, return the uniform validation envelope. The authenticated user ID
 comes solely from the signed Bearer credential.
 
@@ -36,10 +38,15 @@ with a Bearer challenge. Missing and foreign conversations return the same
 `run_id` and `recovery_status` (`failed` or `running_unknown`) for future
 inspection. They never include provider, SQLAlchemy or secret details.
 
-**Persistent idempotency is deferred to Phase 4D.** `operation_key` is only a
-service seam today; repeating a request can create a second user message and
-run. Network streaming, WebSocket, SSE and disconnect policy are deferred to
-Phase 4C. The existing health, readiness and status endpoints remain public.
+Phase 4D makes `operation_key` persistent across both endpoints. A completed
+same-key request returns the original response without another Runtime call,
+Message or Memory write. A changed payload returns 409
+`idempotency_conflict`; a running operation returns 409
+`operation_in_progress`; an unfinalized result returns 409
+`operation_unresolved`. A failed operation remains failed; a new user attempt
+requires a new key. Omit the key only when retry safety is unnecessary. See
+[Idempotency](IDEMPOTENCY.md) for scope, normalization, replay and recovery.
+The existing health, readiness and status endpoints remain public.
 
 ## Local development request
 

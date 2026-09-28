@@ -8,7 +8,7 @@ The service returns a typed `AgentServiceResult` or raises a typed
 
 ## Actor and ownership
 
-The future authentication adapter must verify a credential, then call
+The authentication adapter verifies a credential, then calls
 `actor_from_verified_identity(user_id)`. The actor constructor rejects ordinary
 construction. The issuer function is a trusted Python composition boundary;
 Phase 4B verifies signed Bearer credentials in the FastAPI adapter before
@@ -62,12 +62,16 @@ not expose ORM objects. Service errors expose stable categories for invalid
 actor/input, missing/forbidden conversation, invalid scope, runtime failure and
 persistence failure. Internal DB/provider exception strings are discarded.
 
-## Future seams
+## Streaming and persistent operations
 
-`execute(..., operation_key=...)` accepts a bounded client operation key, but
-Phase 4B does not persist it or deduplicate retries. Phase 4D must add an
-owner-scoped unique key and replay semantics before an HTTP retry contract is
-offered. Callers must not treat the current parameter as idempotent.
+`execute()` and `stream()` accept an optional client-generated `operation_key`.
+Phase 4D persists it on AgentRun with an owner/Conversation unique constraint
+and a request fingerprint. Transaction A checks for a matching operation under
+the Conversation advisory lock before inserting a new Message. Completed
+operations replay from the persistent Assistant Message and result summary;
+running, failed, conflicting and unresolved operations never re-execute.
+Omitting the key remains non-idempotent. See [Idempotency](IDEMPOTENCY.md) and
+[ADR 0021](adr/0021-persistent-operation-idempotency.md).
 
 Phase 4C adds `AgentService.stream()` over exactly one `AgentRuntime.stream()`
 execution. Both service methods share the same owned Conversation preflight,
@@ -84,6 +88,11 @@ disconnect closes the runtime and marks the run failed with
 run, while unfinished memory work is canceled. See
 [Streaming API](STREAMING_API.md) and
 [ADR 0020](adr/0020-streaming-transport-disconnect.md).
+
+Streaming result metadata is finalized when optional memory work ends or the
+stream closes. A same-key duplicate during this short window returns 409
+instead of an incomplete replay. The replay stream contains only persisted
+`final_response` and `completed` events.
 
 ## Run locally
 

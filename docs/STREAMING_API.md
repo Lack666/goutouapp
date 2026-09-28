@@ -41,6 +41,12 @@ The ordinary success order is `run_started`, one or more `status`,
 `completed`. High-risk runs use only safety progress statuses; ordinary
 analysis/planning/composing statuses are absent.
 
+A completed same-key retry is a persisted replay. It sends only
+`final_response` then `completed`, with the original run and assistant Message
+IDs. It does not invent progress events or invoke the Runtime again. The
+envelope remains protocol version `1`; this short event sequence identifies a
+replay without a new flag. See [Idempotency](IDEMPOTENCY.md).
+
 This is **runtime progress streaming**, not token-level LLM generation
 streaming. The complete answer appears in one `final_response` frame after
 validation and database commit. Version negotiation and heartbeat frames are
@@ -58,6 +64,12 @@ conversations share the same 404 JSON envelope. One Conversation permits only
 one active run across server workers; a second synchronous or streaming run
 gets 409 `conversation_busy`. The guard uses a PostgreSQL transaction advisory
 lock followed by an active-run query, never a process-local set.
+
+For a supplied operation key, a matching running operation returns 409
+`operation_in_progress` with its existing run ID before SSE starts; a changed
+payload returns 409 `idempotency_conflict`. A failed or unresolved operation
+also uses a normal pre-stream HTTP error. V1 cannot attach to another live
+generator.
 
 After HTTP 200 headers, runtime or answer-persistence failures are terminal
 `failed` events. The status code cannot change. If the answer commit fails,
@@ -88,9 +100,10 @@ unknown; no reconciliation endpoint is added here. Such an active row blocks
 a new same-Conversation run until it is reconciled in a later reliability
 phase.
 
-`operation_key` is accepted and passed to the service, but **persistent
-idempotency is deferred to Phase 4D**. A reconnecting client must not assume a
-retry reuses the prior run. There is no WebSocket transport in Phase 4C.
+After a precommit disconnect, the same key refers to the original failed run
+and does not start another execution. After a postcommit disconnect, replay
+uses the committed result once its memory summary has been finalized. A new
+user attempt requires a new key. There is no WebSocket transport in Phase 4.
 
 ## Local run
 
@@ -102,8 +115,10 @@ as it arrives, and queries PostgreSQL immediately on `completed`:
 uv --cache-dir .cache/uv --no-managed-python run --locked --env-file .env python apps/server/agent_stream_demo.py
 ```
 
-The demo creates and drops a separate disposable `_test` database. The
-integration and disconnect tests use signed credentials and real PostgreSQL:
+The demo creates and drops a separate disposable `_test` database. The same
+real-socket demo also performs a sync retry, a stream replay, and both
+cross-transport replays with the original run IDs. The integration and
+disconnect tests use signed credentials and real PostgreSQL:
 
 ```powershell
 uv --cache-dir .cache/uv --no-managed-python run --locked --env-file .env pytest -q apps/server/tests/test_agent_stream_contract.py apps/server/tests/test_agent_stream_api.py apps/server/tests/test_agent_stream_disconnect.py

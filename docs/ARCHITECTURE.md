@@ -13,7 +13,8 @@ long-term memory. RAG remains deferred.
 Phase 3H closes the memory undo contract and exposes typed, transport-independent
 runtime progress events. The overall Phase 3 Agent Runtime is complete after
 its standalone E2E and regression gates; network transport was deferred at
-that point. Phase 4B now supplies synchronous REST transport.
+that point. Phase 4 now supplies signed REST, POST SSE and persistent operation
+idempotency around the standalone runtime.
 
 ```mermaid
 flowchart LR
@@ -25,8 +26,8 @@ flowchart LR
 
 - `apps/mobile` is the React Native and Expo client. It never calls an LLM API
   directly and does not contain model keys, prompts or the Skill corpus.
-- `apps/server` exposes `/health`, `/ready`, `/api/v1/status` and one signed
-  Agent run REST endpoint through FastAPI.
+- `apps/server` exposes `/health`, `/ready`, `/api/v1/status` and signed
+  synchronous and POST SSE Agent run endpoints through FastAPI.
   Its Pydantic Settings and error/logging foundation run without a database
   or LLM key. PostgreSQL is contacted only for readiness or data operations.
 - The minimal Agent Runtime uses LangGraph and is callable without FastAPI or
@@ -231,8 +232,7 @@ The service remains responsible for ownership, history, persistence and memory
 scope. See [Authentication](AUTHENTICATION.md), [Agent API](AGENT_API.md) and
 [ADR 0019](adr/0019-rest-authentication-boundary.md).
 
-Phase 4D will add persistent idempotent retries. No Phase 4 transport belongs
-inside the Phase 3 runtime.
+No Phase 4 transport belongs inside the Phase 3 runtime.
 
 ## Phase 4C network streaming boundary
 
@@ -246,3 +246,15 @@ disconnect preserves the completed run. PostgreSQL serializes same-Conversation
 run starts and rejects an active second run with 409. See
 [Streaming API](STREAMING_API.md) and
 [ADR 0020](adr/0020-streaming-transport-disconnect.md).
+
+## Phase 4D persistent operation boundary
+
+`AgentService` uses one PostgreSQL-backed operation lookup for both REST and
+SSE. Transaction A locks the Conversation, checks a scoped key and canonical
+request fingerprint, then either reuses the original run or creates the user
+Message and AgentRun atomically. A database unique constraint arbitrates
+cross-worker races. Completed operations replay from the linked Assistant
+Message and bounded result metadata; failed, running or unresolved operations
+never silently re-execute. SSE replay emits only persisted final and completion
+events. See [Idempotency](IDEMPOTENCY.md) and
+[ADR 0021](adr/0021-persistent-operation-idempotency.md).

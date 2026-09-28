@@ -6,7 +6,7 @@ from uuid import UUID
 from pydantic import BaseModel, ConfigDict, Field, field_validator
 
 from app.agent.contracts import AgentRunStatus, MemoryWriteStatus
-from app.services.agent_service import AgentServiceResult
+from app.services.agent_service import AgentServiceResult, valid_operation_key
 
 
 class CreateAgentRunRequest(BaseModel):
@@ -14,7 +14,15 @@ class CreateAgentRunRequest(BaseModel):
 
     message: str = Field(min_length=1, max_length=20000)
     expected_relationship_id: UUID | None = None
-    operation_key: str | None = Field(default=None, min_length=1, max_length=128)
+    operation_key: str | None = Field(
+        default=None,
+        min_length=1,
+        max_length=128,
+        description=(
+            "Optional client-generated retry key scoped to this user and conversation. "
+            "Reuse only with the same logical request; use a new key for a new attempt."
+        ),
+    )
 
     @field_validator("message")
     @classmethod
@@ -27,6 +35,13 @@ class CreateAgentRunRequest(BaseModel):
             value.encode("utf-8")
         except UnicodeEncodeError:
             raise ValueError("message is not valid Unicode") from None
+        return value
+
+    @field_validator("operation_key")
+    @classmethod
+    def opaque_operation_key(cls, value: str | None) -> str | None:
+        if value is not None and not valid_operation_key(value):
+            raise ValueError("operation_key contains unsupported characters")
         return value
 
 

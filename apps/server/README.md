@@ -13,6 +13,11 @@ Phase 4C adds one POST SSE endpoint at the same path with `/stream` appended.
 It streams progress and one committed final answer, then completion; it does
 not stream model tokens. See [Streaming API](../../docs/STREAMING_API.md).
 
+Phase 4D adds PostgreSQL-backed operation-key idempotency shared by both
+endpoints. A completed request can replay through either transport without
+another Runtime execution. See [Idempotency](../../docs/IDEMPOTENCY.md) and
+[Phase 4D acceptance](../../docs/PHASE_4D_ACCEPTANCE.md).
+
 Keyless PostgreSQL + MockLLM demos for the direct service and real HTTP API:
 
 ```powershell
@@ -59,7 +64,7 @@ responds to `SELECT 1`, otherwise a generic 503 error.
 
 Run `.\make.cmd test` for inherited, LLM, database and integration tests,
 `.\make.cmd lint` for Ruff, and `.\make.cmd verify` for all active Phase 0–3
-and 4A–4C gates.
+and Phase 4 gates.
 The database gate requires a separate `TEST_DATABASE_URL` ending in `_test`;
 it creates and removes disposable databases and never uses the development DB.
 The Python dependency versions are locked in the root `uv.lock`. The root

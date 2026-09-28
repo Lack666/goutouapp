@@ -66,6 +66,35 @@ def register_error_handlers(app: FastAPI) -> None:
             return error_response(400, "invalid_input", "Invalid request")
         if exc.code == AgentServiceErrorCode.CONVERSATION_BUSY:
             return error_response(409, "conversation_busy", "Conversation has an active run")
+        if exc.code == AgentServiceErrorCode.IDEMPOTENCY_CONFLICT:
+            return error_response(
+                409,
+                "idempotency_conflict",
+                "Operation key belongs to another request",
+                run_id=exc.run_id,
+            )
+        if exc.code == AgentServiceErrorCode.OPERATION_IN_PROGRESS:
+            return error_response(
+                409,
+                "operation_in_progress",
+                "Operation is still running",
+                run_id=exc.run_id,
+            )
+        if exc.code == AgentServiceErrorCode.OPERATION_UNRESOLVED:
+            return error_response(
+                409,
+                "operation_unresolved",
+                "Operation requires recovery",
+                run_id=exc.run_id,
+            )
+        if exc.code == AgentServiceErrorCode.OPERATION_FAILED:
+            return error_response(
+                409,
+                "operation_failed",
+                "Operation previously failed",
+                run_id=exc.run_id,
+                recovery_status="failed",
+            )
         if exc.code in {AgentServiceErrorCode.INVALID_ACTOR, AgentServiceErrorCode.USER_NOT_FOUND}:
             return error_response(
                 401,

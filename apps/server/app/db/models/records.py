@@ -13,6 +13,7 @@ from sqlalchemy import (
     Text,
     UniqueConstraint,
 )
+from sqlalchemy.dialects.postgresql import JSONB
 from sqlalchemy.orm import Mapped, mapped_column
 
 from app.db.base import Base, RecordMixin
@@ -86,6 +87,14 @@ class AgentRun(RecordMixin, Base):
         CheckConstraint(
             "status IN ('pending', 'running', 'completed', 'failed')", name="status_valid"
         ),
+        CheckConstraint(
+            "(operation_key IS NULL AND request_fingerprint IS NULL) OR "
+            "(operation_key IS NOT NULL AND request_fingerprint IS NOT NULL)",
+            name="operation_fingerprint_pair",
+        ),
+        UniqueConstraint(
+            "user_id", "conversation_id", "operation_key", name="uq_agent_runs_operation"
+        ),
     )
 
     user_id: Mapped[UUID] = mapped_column(ForeignKey("users.id", ondelete="RESTRICT"), index=True)
@@ -94,6 +103,16 @@ class AgentRun(RecordMixin, Base):
     started_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
     completed_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
     failure_code: Mapped[str | None] = mapped_column(String(40), nullable=True)
+    operation_key: Mapped[str | None] = mapped_column(String(128), nullable=True)
+    request_fingerprint: Mapped[str | None] = mapped_column(String(64), nullable=True)
+    user_message_id: Mapped[UUID | None] = mapped_column(
+        ForeignKey("messages.id", ondelete="SET NULL"), nullable=True
+    )
+    assistant_message_id: Mapped[UUID | None] = mapped_column(
+        ForeignKey("messages.id", ondelete="SET NULL"), nullable=True
+    )
+    memory_status: Mapped[str | None] = mapped_column(String(40), nullable=True)
+    result_warnings: Mapped[list[str] | None] = mapped_column(JSONB, nullable=True)
 
 
 class MemoryControlRow(RecordMixin, Base):

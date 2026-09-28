@@ -60,3 +60,15 @@ short failure code. The database row ID equals the runtime run ID. On answer
 commit failure, the service rolls back the assistant and attempts a separate
 failed-run update. An unrecoverable update leaves an observable running row and
 returns a typed error. See [Agent Service](AGENT_SERVICE.md).
+
+## Phase 4D AgentRun operation key
+
+Alembic revision `20260928_02` adds a nullable operation key, SHA-256 request
+fingerprint, user/assistant Message references, final memory status and public
+warning list to AgentRun. A unique constraint on owner, Conversation and
+operation key is the durable duplicate arbiter. Null keys remain allowed, so
+legacy and deliberately non-idempotent runs are unaffected. A check constraint
+requires key and fingerprint to be present together. Message IDs are foreign
+keys; the result is reconstructed from the existing assistant Message, not a
+saved HTTP response. See [Idempotency](IDEMPOTENCY.md) and
+[ADR 0021](adr/0021-persistent-operation-idempotency.md).

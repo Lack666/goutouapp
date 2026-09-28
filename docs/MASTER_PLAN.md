@@ -17,9 +17,9 @@ as implemented by a placeholder directory or a golden expectation.
 | 1 | Skill contract and at least 40 synthetic Golden Cases | PASS |
 | 2 | FastAPI, PostgreSQL, Pydantic, SQLAlchemy, Alembic, LLM Provider foundation | PASS |
 | 3 | Standalone LangGraph runtime and Agent streaming integration | PASS |
-| 4 | Agent Service and API transport over the standalone runtime | PENDING |
-| 5 | User-facing memory controls and retention policy integration | PENDING |
-| 6 | TXT/Markdown/JSON import and ordinary-code statistics | PENDING |
+| 4 | Agent Service and API transport over the standalone runtime | PASS |
+| 5 | Chat Import and Relationship Data Pipeline | PENDING |
+| 6 | User-facing memory controls and retention policy integration | PENDING |
 | 7 | Expo React Native MVP | PENDING |
 | 8 | Mobile API integration, generated client and stream consumption | PENDING |
 | 9 | Security, privacy, reliability and deletion | PENDING |
@@ -46,11 +46,12 @@ as implemented by a placeholder directory or a golden expectation.
    transport; map typed events to a network stream, orchestrate conversation,
    message and AgentRun persistence, and define API idempotency and disconnect
    behavior. No new relationship reasoning or embeddings.
-5. Expose confirmed consent, inspect, pause, resume, undo and deletion controls
+5. Decoupled TXT/Markdown/JSON parsers, speaker mapping, timestamps, source
+   provenance and deterministic relationship metrics with representative
+   fixtures.
+6. Expose confirmed consent, inspect, pause, resume, undo and deletion controls
    through the service boundary, with owner/person isolation and production
    retention-policy decisions. The Phase 3 memory runtime is the baseline.
-6. Decoupled parsers, speaker mapping, timestamps, source provenance and
-   deterministic metrics with representative fixtures.
 7. Six mobile surfaces: home, chat, relationship/profile, import/analysis,
    history, settings. Typecheck and on-device or Expo web demo.
 8. OpenAPI-generated TypeScript client and mobile consumption of stable
@@ -65,11 +66,13 @@ as implemented by a placeholder directory or a golden expectation.
 
 ## Implementation log
 
-Phase 2A–2D, Phase 3A–3H and Phase 4A are complete. Phase 3 is accepted as a
-transport-independent Agent Runtime. Phase 4A adds the application service;
-Phase 4B REST authentication and Phase 4C network progress streaming and
-disconnect policy are complete. Phase 4D persistent retry policy remains
-pending.
+Phase 2A–2D, Phase 3A–3H and Phase 4A–4D are complete. Phase 3 is accepted
+as a transport-independent Agent Runtime. Phase 4 adds the application
+service, signed REST authentication, network progress streaming, disconnect
+policy and PostgreSQL-backed cross-transport idempotency. Phase 5 remains
+pending. The Phase 4D instruction names Chat Import and Relationship Data
+Pipeline as Phase 5; the former Phase 5 memory-control deliverable moves to
+Phase 6 in this roadmap. Neither future phase was implemented in Phase 4D.
 
 ### Phase 0
 
@@ -334,6 +337,24 @@ pending.
   a frame-by-frame Uvicorn demo verify terminal DB state and event order. See
   [Streaming API](STREAMING_API.md), [ADR 0020](adr/0020-streaming-transport-disconnect.md)
   and [Phase 4C acceptance](PHASE_4C_ACCEPTANCE.md).
+
+### Phase 4D — persistent idempotency and Phase 4 acceptance
+
+- Added an owner/Conversation-scoped operation key and SHA-256 fingerprint to
+  AgentRun, with PostgreSQL uniqueness and an advisory-lock first-writer
+  transaction. Repeated matching requests never create another user Message,
+  AgentRun, assistant Message or Runtime/Memory execution.
+- Completed operations replay across synchronous REST and POST SSE from the
+  persistent assistant Message and bounded result summary. Running, failed,
+  conflicting and unresolved operations fail closed with stable pre-stream
+  HTTP errors. A new user attempt requires a new key.
+- Signed API E2E, an eight-request PostgreSQL race, real socket disconnect
+  retries, migration cycle and a local Uvicorn sync/stream replay demo pass.
+  Phase 4 is complete as an engineering API gate. This does not include Mobile,
+  Chat Import, OAuth, RAG, token-level model streaming or production
+  reconciliation. See [Idempotency](IDEMPOTENCY.md),
+  [ADR 0021](adr/0021-persistent-operation-idempotency.md) and
+  [Phase 4D acceptance](PHASE_4D_ACCEPTANCE.md).
 
 ## Dependency policy
 

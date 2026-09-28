@@ -149,12 +149,24 @@ def create_agent_run(db: Session, user_id: UUID, conversation_id: UUID) -> Agent
     return record
 
 
-def start_agent_run(db: Session, user_id: UUID, conversation_id: UUID, run_id: UUID) -> AgentRun:
+def start_agent_run(
+    db: Session,
+    user_id: UUID,
+    conversation_id: UUID,
+    run_id: UUID,
+    *,
+    operation_key: str | None = None,
+    request_fingerprint: str | None = None,
+    user_message_id: UUID | None = None,
+) -> AgentRun:
     record = AgentRun(
         id=run_id,
         user_id=user_id,
         conversation_id=conversation_id,
         status=AgentRunStatus.PENDING,
+        operation_key=operation_key,
+        request_fingerprint=request_fingerprint,
+        user_message_id=user_message_id,
     )
     db.add(record)
     db.flush()
@@ -164,11 +176,27 @@ def start_agent_run(db: Session, user_id: UUID, conversation_id: UUID, run_id: U
     return record
 
 
-def claim_conversation_run_slot(db: Session, conversation_id: UUID) -> bool:
-    """Serialize run starts across workers, then inspect committed active runs."""
+def lock_conversation_run_slot(db: Session, conversation_id: UUID) -> None:
+    """Serialize operation lookup and run starts across server processes."""
     first = int.from_bytes(conversation_id.bytes[:4], "big", signed=True)
     second = int.from_bytes(conversation_id.bytes[4:8], "big", signed=True)
     db.execute(select(func.pg_advisory_xact_lock(first, second)))
+
+
+def get_agent_operation(
+    db: Session, user_id: UUID, conversation_id: UUID, operation_key: str
+) -> AgentRun | None:
+    return db.scalar(
+        select(AgentRun).where(
+            AgentRun.user_id == user_id,
+            AgentRun.conversation_id == conversation_id,
+            AgentRun.operation_key == operation_key,
+        )
+    )
+
+
+def claim_conversation_run_slot(db: Session, conversation_id: UUID) -> bool:
+    """Call after lock_conversation_run_slot within the same transaction."""
     active = db.scalar(
         select(AgentRun.id)
         .where(
@@ -187,6 +215,10 @@ def finish_agent_run(
     run_id: UUID,
     status: AgentRunStatus,
     failure_code: str | None = None,
+    *,
+    assistant_message_id: UUID | None = None,
+    memory_status: str | None = None,
+    result_warnings: list[str] | None = None,
 ) -> bool:
     record = db.scalar(
         select(AgentRun).where(
@@ -200,5 +232,32 @@ def finish_agent_run(
     record.status = status
     record.completed_at = datetime.now(UTC)
     record.failure_code = failure_code
+    record.assistant_message_id = assistant_message_id
+    record.memory_status = memory_status
+    record.result_warnings = result_warnings
     db.flush()
+    return True
+
+
+def finalize_agent_run_result(
+    db: Session,
+    user_id: UUID,
+    conversation_id: UUID,
+    run_id: UUID,
+    memory_status: str,
+    warnings: list[str],
+) -> bool:
+    record = db.scalar(
+        select(AgentRun).where(
+            AgentRun.id == run_id,
+            AgentRun.user_id == user_id,
+            AgentRun.conversation_id == conversation_id,
+        )
+    )
+    if record is None or record.status != AgentRunStatus.COMPLETED:
+        return False
+    if record.memory_status is None:
+        record.memory_status = memory_status
+        record.result_warnings = warnings
+        db.flush()
     return True

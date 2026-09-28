@@ -432,6 +432,7 @@ def test_stream_log_does_not_include_token_or_message(database_engine, monkeypat
     )
     credential = token(user)
     message = "private relation input"
+    operation_key = "private-operation-key-marker"
     output = []
 
     class Capture(logging.Handler):
@@ -445,12 +446,13 @@ def test_stream_log_does_not_include_token_or_message(database_engine, monkeypat
         with TestClient(create_app(config(database_engine))) as client:
             response = client.post(
                 PATH.format(conversation_id=conversation),
-                json={"message": message},
+                json={"message": message, "operation_key": operation_key},
                 headers={"Authorization": f"Bearer {credential}"},
             )
         assert response.status_code == 200
         assert credential not in "".join(output)
         assert message not in "".join(output)
+        assert operation_key not in "".join(output)
         assert "Bearer" not in "".join(output)
         final = next(item for item in parse(response) if item.event == "final_response")
         assert final.data.answer not in "".join(output)

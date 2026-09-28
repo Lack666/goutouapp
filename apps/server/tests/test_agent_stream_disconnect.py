@@ -21,6 +21,7 @@ from app.llm.mock import MockLLMProvider
 from app.main import create_app
 
 SECRET = "phase4c-disconnect-synthetic-secret-more-than-32-bytes"
+MEMORY_MESSAGE = "关于对象A：我们已确认关系。我明确同意把这项稳定信息存入长期关系档案。"
 
 
 def context(engine: Engine, *, relationship=False):
@@ -143,13 +144,15 @@ class BlockingMemory(CaptureMock):
         return await super().structured_output(messages, schema, **kwargs)
 
 
-def close_after_event(base_url, conversation_id, user_id, message, event_name, entered):
+def close_after_event(
+    base_url, conversation_id, user_id, message, event_name, entered, operation_key=None
+):
     url = f"{base_url}/api/v1/conversations/{conversation_id}/agent-runs/stream"
     with httpx.Client(timeout=10) as client:
         with client.stream(
             "POST",
             url,
-            json={"message": message},
+            json={"message": message, "operation_key": operation_key},
             headers={"Authorization": f"Bearer {token(user_id)}"},
         ) as response:
             assert response.status_code == 200
@@ -199,10 +202,61 @@ def test_disconnect_after_final_keeps_committed_run_and_cancels_memory(
             "关于对象A：我们已确认关系。我明确同意把这项稳定信息存入长期关系档案。",
             "final_response",
             provider.entered,
+            operation_key="after-final-key",
         )
         assert "completed" not in observed
         assert provider.cancelled.wait(5)
+        with httpx.Client(timeout=10) as client:
+            replay = client.post(
+                f"{base_url}/api/v1/conversations/{conversation}/agent-runs/stream",
+                json={
+                    "message": MEMORY_MESSAGE,
+                    "operation_key": "after-final-key",
+                },
+                headers={"Authorization": f"Bearer {token(user)}"},
+            )
+        assert replay.status_code == 200
+        assert [
+            line.removeprefix("event: ")
+            for line in replay.text.splitlines()
+            if line.startswith("event: ")
+        ] == ["final_response", "completed"]
     run, messages, memories = state(database_engine, conversation)
     assert run.status == "completed" and run.failure_code is None
     assert [message.role for message in messages] == ["user", "assistant"]
+    assert memories == 0
+    assert str(run.id) in replay.text
+
+
+def test_keyed_precommit_disconnect_replays_failure_without_new_run(database_engine, monkeypatch):
+    user, conversation, _ = context(database_engine)
+    provider = BlockingSafety()
+    with server(database_engine, monkeypatch, provider) as base_url:
+        close_after_event(
+            base_url,
+            conversation,
+            user,
+            "private input",
+            "status",
+            provider.entered,
+            operation_key="before-final-key",
+        )
+        assert provider.cancelled.wait(5)
+        assert wait_for(
+            lambda: (
+                (run := state(database_engine, conversation)[0]) is not None
+                and run.status == "failed"
+            )
+        )
+        with httpx.Client(timeout=10) as client:
+            retry = client.post(
+                f"{base_url}/api/v1/conversations/{conversation}/agent-runs",
+                json={"message": "private input", "operation_key": "before-final-key"},
+                headers={"Authorization": f"Bearer {token(user)}"},
+            )
+        assert retry.status_code == 409
+        assert retry.json()["error"]["code"] == "operation_failed"
+    run, messages, memories = state(database_engine, conversation)
+    assert retry.json()["error"]["run_id"] == str(run.id)
+    assert [message.role for message in messages] == ["user"]
     assert memories == 0

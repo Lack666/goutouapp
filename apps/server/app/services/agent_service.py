@@ -1,8 +1,11 @@
 """Transport-independent, owner-scoped Agent execution orchestration."""
 
+import json
+import unicodedata
 from collections.abc import AsyncIterator, Callable
 from dataclasses import dataclass
 from enum import StrEnum
+from hashlib import sha256
 from typing import Protocol
 from uuid import UUID, uuid4
 
@@ -24,6 +27,7 @@ from app.agent.events import (
     RunStartedEvent,
     StatusEvent,
 )
+from app.db.models import AgentRun, Message
 from app.db.repositories import records
 from app.services.agent_stream import (
     AgentServiceStream,
@@ -38,6 +42,41 @@ from app.services.agent_stream import (
 
 HISTORY_LIMIT = 20
 _ACTOR_ISSUER = object()
+
+
+def valid_operation_key(value: str) -> bool:
+    """An opaque UTF-8 key of 1–128 non-whitespace, non-control characters."""
+    if not isinstance(value, str) or not 1 <= len(value) <= 128:
+        return False
+    if any(char.isspace() or unicodedata.category(char) == "Cc" for char in value):
+        return False
+    try:
+        value.encode("utf-8")
+    except UnicodeEncodeError:
+        return False
+    return True
+
+
+def request_fingerprint(
+    owner_id: UUID,
+    conversation_id: UUID,
+    message: str,
+    relationship_id: UUID | None,
+    person_id: UUID | None,
+) -> str:
+    canonical = json.dumps(
+        {
+            "conversation_id": str(conversation_id),
+            "expected_relationship_id": str(relationship_id) if relationship_id else None,
+            "message": message,
+            "owner_user_id": str(owner_id),
+            "person_id": str(person_id) if person_id else None,
+        },
+        ensure_ascii=False,
+        sort_keys=True,
+        separators=(",", ":"),
+    )
+    return sha256(canonical.encode("utf-8")).hexdigest()
 
 
 @dataclass(frozen=True, init=False)
@@ -65,6 +104,10 @@ class AgentServiceErrorCode(StrEnum):
     CONVERSATION_FORBIDDEN = "conversation_forbidden"
     INVALID_RELATIONSHIP_SCOPE = "invalid_relationship_scope"
     CONVERSATION_BUSY = "conversation_busy"
+    IDEMPOTENCY_CONFLICT = "idempotency_conflict"
+    OPERATION_IN_PROGRESS = "operation_in_progress"
+    OPERATION_UNRESOLVED = "operation_unresolved"
+    OPERATION_FAILED = "operation_failed"
     RUNTIME_FAILURE = "runtime_failure"
     PERSISTENCE_FAILURE = "persistence_failure"
 
@@ -111,6 +154,48 @@ class AgentService:
         self._session_factory = session_factory
         self._runtime = runtime
 
+    @staticmethod
+    def _replay_result(db: Session, run: AgentRun, conversation_id: UUID) -> AgentServiceResult:
+        if run.status == AgentRunStatus.RUNNING:
+            raise AgentServiceError(
+                AgentServiceErrorCode.OPERATION_IN_PROGRESS,
+                run_id=run.id,
+            )
+        if run.status == AgentRunStatus.FAILED:
+            if run.failure_code == "client_disconnected":
+                code = AgentServiceErrorCode.OPERATION_FAILED
+            elif run.failure_code == "persistence_failure":
+                code = AgentServiceErrorCode.PERSISTENCE_FAILURE
+            else:
+                code = AgentServiceErrorCode.RUNTIME_FAILURE
+            raise AgentServiceError(code, run_id=run.id, recovery_status="failed")
+        if run.status != AgentRunStatus.COMPLETED or run.memory_status is None:
+            raise AgentServiceError(AgentServiceErrorCode.OPERATION_UNRESOLVED, run_id=run.id)
+        message = db.get(Message, run.assistant_message_id) if run.assistant_message_id else None
+        if (
+            run.user_message_id is None
+            or message is None
+            or message.conversation_id != conversation_id
+            or message.role != "assistant"
+            or not isinstance(run.result_warnings, list)
+            or not all(isinstance(item, str) for item in run.result_warnings)
+        ):
+            raise AgentServiceError(AgentServiceErrorCode.OPERATION_UNRESOLVED, run_id=run.id)
+        try:
+            memory_status = MemoryWriteStatus(run.memory_status)
+        except ValueError:
+            raise AgentServiceError(
+                AgentServiceErrorCode.OPERATION_UNRESOLVED, run_id=run.id
+            ) from None
+        return AgentServiceResult(
+            run_id=run.id,
+            conversation_id=conversation_id,
+            assistant_message=AssistantMessageResult(message.id, "assistant", message.content),
+            status=AgentRunStatus.COMPLETED,
+            memory_status=memory_status,
+            warnings=tuple(run.result_warnings),
+        )
+
     def _prepare(
         self,
         *,
@@ -120,7 +205,7 @@ class AgentService:
         relationship_id: UUID | None,
         person_id: UUID | None,
         operation_key: str | None,
-    ) -> AgentInput:
+    ) -> AgentInput | AgentServiceResult:
         if not isinstance(actor, AuthenticatedActor):
             raise AgentServiceError(AgentServiceErrorCode.INVALID_ACTOR)
         if (
@@ -129,14 +214,30 @@ class AgentService:
             or not message.strip()
         ):
             raise AgentServiceError(AgentServiceErrorCode.INVALID_INPUT)
-        if operation_key is not None and (
-            not isinstance(operation_key, str) or not 1 <= len(operation_key) <= 128
-        ):
+        if operation_key is not None and not valid_operation_key(operation_key):
             raise AgentServiceError(AgentServiceErrorCode.INVALID_INPUT)
         if relationship_id is not None and not isinstance(relationship_id, UUID):
             raise AgentServiceError(AgentServiceErrorCode.INVALID_INPUT)
         if person_id is not None and not isinstance(person_id, UUID):
             raise AgentServiceError(AgentServiceErrorCode.INVALID_INPUT)
+        try:
+            message.encode("utf-8")
+        except UnicodeEncodeError:
+            raise AgentServiceError(AgentServiceErrorCode.INVALID_INPUT) from None
+        normalized_message = (
+            unicodedata.normalize("NFC", message.strip()) if operation_key is not None else message
+        )
+        fingerprint = (
+            request_fingerprint(
+                actor.user_id,
+                conversation_id,
+                normalized_message,
+                relationship_id,
+                person_id,
+            )
+            if operation_key is not None
+            else None
+        )
 
         run_id = uuid4()
         try:
@@ -153,6 +254,17 @@ class AgentService:
                     )
                     raise AgentServiceError(code)
                 bound_relationship = conversation.relationship_id
+                records.lock_conversation_run_slot(db, conversation_id)
+                if operation_key is not None:
+                    existing = records.get_agent_operation(
+                        db, actor.user_id, conversation_id, operation_key
+                    )
+                    if existing is not None:
+                        if existing.request_fingerprint != fingerprint:
+                            raise AgentServiceError(
+                                AgentServiceErrorCode.IDEMPOTENCY_CONFLICT, run_id=existing.id
+                            )
+                        return self._replay_result(db, existing, conversation_id)
                 if relationship_id is not None and relationship_id != bound_relationship:
                     raise AgentServiceError(AgentServiceErrorCode.INVALID_RELATIONSHIP_SCOPE)
                 if person_id is not None:
@@ -172,11 +284,19 @@ class AgentService:
                     )
                 ]
                 user_message = records.create_message(
-                    db, actor.user_id, conversation_id, "user", message
+                    db, actor.user_id, conversation_id, "user", normalized_message
                 )
                 if user_message is None:
                     raise AgentServiceError(AgentServiceErrorCode.CONVERSATION_NOT_FOUND)
-                records.start_agent_run(db, actor.user_id, conversation_id, run_id)
+                records.start_agent_run(
+                    db,
+                    actor.user_id,
+                    conversation_id,
+                    run_id,
+                    operation_key=operation_key,
+                    request_fingerprint=fingerprint,
+                    user_message_id=user_message.id,
+                )
         except AgentServiceError:
             raise
         except Exception:
@@ -187,7 +307,7 @@ class AgentService:
             user_id=actor.user_id,
             conversation_id=conversation_id,
             relationship_id=bound_relationship,
-            message=message,
+            message=normalized_message,
             recent_messages=history,
             memory_enabled=True,
         )
@@ -208,7 +328,14 @@ class AgentService:
         except Exception:
             return "running_unknown"
 
-    def _commit_answer(self, request: AgentInput, answer: str) -> UUID:
+    def _commit_answer(
+        self,
+        request: AgentInput,
+        answer: str,
+        *,
+        memory_status: MemoryWriteStatus | None = None,
+        warnings: tuple[str, ...] | None = None,
+    ) -> UUID:
         try:
             # Transaction B commits the assistant and terminal run atomically.
             with self._session_factory() as db, db.begin():
@@ -221,6 +348,9 @@ class AgentService:
                     request.conversation_id,
                     request.run_id,
                     AgentRunStatus.COMPLETED,
+                    assistant_message_id=assistant.id,
+                    memory_status=memory_status.value if memory_status is not None else None,
+                    result_warnings=list(warnings) if warnings is not None else None,
                 ):
                     raise RuntimeError("run or conversation missing")
                 return assistant.id
@@ -231,6 +361,23 @@ class AgentService:
                 run_id=request.run_id,
                 recovery_status=recovery,
             ) from None
+
+    def _finalize_summary(
+        self, request: AgentInput, memory_status: MemoryWriteStatus, warnings: tuple[str, ...]
+    ) -> bool:
+        try:
+            with self._session_factory() as db, db.begin():
+                return records.finalize_agent_run_result(
+                    db,
+                    request.user_id,
+                    request.conversation_id,
+                    request.run_id,
+                    memory_status.value,
+                    list(warnings),
+                )
+        except Exception:
+            # The answer is already durable; never re-execute it to repair metadata.
+            return False
 
     async def execute(
         self,
@@ -250,6 +397,8 @@ class AgentService:
             person_id=person_id,
             operation_key=operation_key,
         )
+        if isinstance(request, AgentServiceResult):
+            return request
         try:
             result = await self._runtime.run(request)
         except Exception:
@@ -274,7 +423,12 @@ class AgentService:
             )
             raise AgentServiceError(code, run_id=request.run_id, recovery_status=recovery)
 
-        assistant_id = self._commit_answer(request, result.final_answer)
+        assistant_id = self._commit_answer(
+            request,
+            result.final_answer,
+            memory_status=result.memory_receipt.status,
+            warnings=tuple(result.warnings),
+        )
         return AgentServiceResult(
             run_id=request.run_id,
             conversation_id=conversation_id,
@@ -306,11 +460,25 @@ class AgentService:
             person_id=person_id,
             operation_key=operation_key,
         )
+        if isinstance(request, AgentServiceResult):
+            return AgentServiceStream(
+                run_id=request.run_id,
+                events=self._replay_events(request),
+                cancel_if_running=lambda: None,
+            )
         return AgentServiceStream(
             run_id=request.run_id,
             events=self._stream_events(request),
             cancel_if_running=lambda: self._mark_failed(request, "client_disconnected"),
         )
+
+    @staticmethod
+    async def _replay_events(result: AgentServiceResult) -> AsyncIterator[ServiceStreamEvent]:
+        # A replay publishes persisted facts only; it invents no runtime progress.
+        yield ServiceFinalResponse(
+            result.run_id, result.assistant_message.id, result.assistant_message.content
+        )
+        yield ServiceCompleted(result.run_id, result.assistant_message.id, result.memory_status)
 
     async def _stream_events(self, request: AgentInput) -> AsyncIterator[ServiceStreamEvent]:
         run_id = request.run_id
@@ -346,6 +514,7 @@ class AgentService:
                     if assistant_id is None or event.result.final_answer != final_answer:
                         raise RuntimeError("completed event without matching final response")
                     memory_status = event.result.memory_receipt.status
+                    self._finalize_summary(request, memory_status, tuple(event.result.warnings))
                     if memory_status != MemoryWriteStatus.NONE and not memory_sent:
                         yield ServiceMemoryStatus(run_id, memory_status)
                     terminal = True
@@ -353,13 +522,17 @@ class AgentService:
                     return
                 elif isinstance(event, FailedEvent):
                     if assistant_id is not None:
+                        summary_status = memory_status if memory_sent else MemoryWriteStatus.FAILED
+                        self._finalize_summary(
+                            request, summary_status, ("Long-term memory was not saved",)
+                        )
                         if not memory_sent:
                             yield ServiceMemoryStatus(run_id, MemoryWriteStatus.FAILED)
                         terminal = True
                         yield ServiceCompleted(
                             run_id,
                             assistant_id,
-                            memory_status if memory_sent else MemoryWriteStatus.FAILED,
+                            summary_status,
                         )
                     else:
                         recovery = self._mark_failed(request, event.failure.code.value)
@@ -379,13 +552,15 @@ class AgentService:
             )
         except Exception:
             if assistant_id is not None:
+                summary_status = memory_status if memory_sent else MemoryWriteStatus.FAILED
+                self._finalize_summary(request, summary_status, ("Long-term memory was not saved",))
                 if not memory_sent:
                     yield ServiceMemoryStatus(run_id, MemoryWriteStatus.FAILED)
                 terminal = True
                 yield ServiceCompleted(
                     run_id,
                     assistant_id,
-                    memory_status if memory_sent else MemoryWriteStatus.FAILED,
+                    summary_status,
                 )
             else:
                 recovery = self._mark_failed(request, "runtime_failure")
@@ -399,3 +574,5 @@ class AgentService:
             finally:
                 if not terminal and assistant_id is None:
                     self._mark_failed(request, "client_disconnected")
+                elif not terminal:
+                    self._finalize_summary(request, memory_status, ())

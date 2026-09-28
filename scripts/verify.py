@@ -25,9 +25,10 @@ AGENT_ANALYSIS = PHASE >= 3 or SUBPHASE in {"3E", "3F", "3G"}
 AGENT_ACTION_RESPONSE = PHASE >= 3 or SUBPHASE in {"3F", "3G"}
 AGENT_MEMORY = PHASE >= 3 or SUBPHASE == "3G"
 AGENT_STREAMING = PHASE >= 3 or SUBPHASE == "3H"
-AGENT_SERVICE = PHASE >= 4 or SUBPHASE in {"4A", "4B", "4C"}
-AGENT_REST = PHASE >= 4 or SUBPHASE in {"4B", "4C"}
-AGENT_STREAM_TRANSPORT = PHASE >= 4 or SUBPHASE == "4C"
+AGENT_SERVICE = PHASE >= 4 or SUBPHASE in {"4A", "4B", "4C", "4D"}
+AGENT_REST = PHASE >= 4 or SUBPHASE in {"4B", "4C", "4D"}
+AGENT_STREAM_TRANSPORT = PHASE >= 4 or SUBPHASE in {"4C", "4D"}
+AGENT_IDEMPOTENCY = PHASE >= 4 or SUBPHASE == "4D"
 
 
 def run(command: list[str]) -> None:
@@ -128,6 +129,8 @@ def tests() -> None:
             "apps/server/tests/test_agent_stream_disconnect.py",
         )
         uv_run("python", "apps/server/agent_stream_demo.py")
+    if AGENT_IDEMPOTENCY:
+        uv_run("pytest", "-q", "apps/server/tests/test_phase4_idempotency.py")
     if BACKEND_FOUNDATION:
         uv_run("pytest", "-q", "apps/server/tests")
 
@@ -266,14 +269,44 @@ def verify() -> None:
         print("PASS: Phase 4B REST/Auth, signed-JWT PostgreSQL integration and real HTTP demo")
     if AGENT_STREAM_TRANSPORT:
         print("PASS: Phase 4C Streaming Transport, disconnect policy and socket demo")
+    if AGENT_IDEMPOTENCY:
+        print(
+            "PASS: Phase 4D persistent and cross-transport idempotency, "
+            "PostgreSQL race and replay demo"
+        )
     if AGENT_STREAMING:
         print("PASS: Typed runtime streaming and eight standalone Phase 3 E2E cases")
     if PHASE < 7:
         print("DEFERRED: Mobile lint/typecheck begin at Phase 7")
-    if PHASE > 3:
+    if PHASE > 4:
         raise RuntimeError(
             "Later-phase verification is not implemented; do not mark that phase complete"
         )
+    if PHASE == 4:
+        if not all(
+            (
+                AGENT_CONTRACTS,
+                AGENT_RUNTIME,
+                AGENT_SEMANTIC,
+                AGENT_KNOWLEDGE,
+                AGENT_ANALYSIS,
+                AGENT_ACTION_RESPONSE,
+                AGENT_MEMORY,
+                AGENT_STREAMING,
+                AGENT_SERVICE,
+                AGENT_REST,
+                AGENT_STREAM_TRANSPORT,
+                AGENT_IDEMPOTENCY,
+            )
+        ):
+            raise RuntimeError("Phase 4 API gate is incomplete")
+        print("PASS: Phase 3 Agent Runtime")
+        print("PASS: Phase 4 Application Service / REST / Auth / Streaming / Idempotency")
+        print("DEFERRED: Chat Import")
+        print("DEFERRED: Mobile")
+        print("DEFERRED: RAG")
+        print("PASS: all active Phase 0..4 gates")
+        return
     if PHASE == 3:
         if not all(
             (

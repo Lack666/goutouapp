@@ -110,13 +110,15 @@ def main() -> None:
         endpoint = (
             f"http://127.0.0.1:{port}/api/v1/conversations/{conversation_id}/agent-runs/stream"
         )
+        sync_endpoint = endpoint.removesuffix("/stream")
+        request_body = {"message": "有人正在伤害我", "operation_key": "phase4-demo-stream"}
         names = []
         observed_run = None
         with httpx.Client(timeout=10) as client:
             with client.stream(
                 "POST",
                 endpoint,
-                json={"message": "有人正在伤害我"},
+                json=request_body,
                 headers={"Authorization": f"Bearer {token}"},
             ) as response:
                 if response.status_code != 200:
@@ -158,6 +160,86 @@ def main() -> None:
             and names[-2:] == ["final_response", "completed"]
         ):
             raise RuntimeError("Unexpected network event order")
+        with httpx.Client(timeout=10) as client:
+            stream_to_sync = client.post(
+                sync_endpoint,
+                json=request_body,
+                headers={"Authorization": f"Bearer {token}"},
+            )
+            if stream_to_sync.status_code != 200 or stream_to_sync.json()["run_id"] != str(
+                observed_run
+            ):
+                raise RuntimeError("Stream-to-sync replay did not reuse the run")
+            replay_names = []
+            with client.stream(
+                "POST",
+                endpoint,
+                json=request_body,
+                headers={"Authorization": f"Bearer {token}"},
+            ) as replay:
+                if replay.status_code != 200:
+                    raise RuntimeError("Stream replay failed")
+                for line in replay.iter_lines():
+                    if line.startswith("data: "):
+                        event = NETWORK_EVENT_ADAPTER.validate_json(line[6:])
+                        if event.run_id != observed_run:
+                            raise RuntimeError("Stream replay changed run ID")
+                        replay_names.append(event.event)
+                        print(f"replay_event={event.event}", flush=True)
+            if replay_names != ["final_response", "completed"]:
+                raise RuntimeError("Stream replay invented progress or missed completion")
+
+            with factory() as db, db.begin():
+                sync_conversation_id = records.create_conversation(db, user_id).id
+            provider.queue_structured(
+                {
+                    "risk_level": "high",
+                    "safety_route_required": True,
+                    "risk_categories": ["violence"],
+                }
+            )
+            sync_url = (
+                f"http://127.0.0.1:{port}/api/v1/conversations/{sync_conversation_id}/agent-runs"
+            )
+            sync_body = {"message": "有人正在伤害我", "operation_key": "phase4-demo-sync"}
+            sync_first = client.post(
+                sync_url, json=sync_body, headers={"Authorization": f"Bearer {token}"}
+            )
+            sync_retry = client.post(
+                sync_url, json=sync_body, headers={"Authorization": f"Bearer {token}"}
+            )
+            if sync_first.status_code != 200 or sync_first.json() != sync_retry.json():
+                raise RuntimeError("Sync retry did not return the persisted response")
+            sync_to_stream_names = []
+            with client.stream(
+                "POST",
+                sync_url + "/stream",
+                json=sync_body,
+                headers={"Authorization": f"Bearer {token}"},
+            ) as replay:
+                if replay.status_code != 200:
+                    raise RuntimeError("Sync-to-stream replay failed")
+                for line in replay.iter_lines():
+                    if line.startswith("data: "):
+                        event = NETWORK_EVENT_ADAPTER.validate_json(line[6:])
+                        if str(event.run_id) != sync_first.json()["run_id"]:
+                            raise RuntimeError("Sync-to-stream replay changed run ID")
+                        sync_to_stream_names.append(event.event)
+            if sync_to_stream_names != ["final_response", "completed"]:
+                raise RuntimeError("Sync-to-stream replay did not use persisted facts")
+
+        with factory() as db:
+            original_runs = list(
+                db.scalars(select(AgentRun).where(AgentRun.conversation_id == conversation_id))
+            )
+            sync_runs = list(
+                db.scalars(select(AgentRun).where(AgentRun.conversation_id == sync_conversation_id))
+            )
+            sync_messages = list(
+                db.scalars(select(Message).where(Message.conversation_id == sync_conversation_id))
+            )
+        if len(original_runs) != 1 or len(sync_runs) != 1 or len(sync_messages) != 2:
+            raise RuntimeError("A retry created duplicate database side effects")
         print(
             json.dumps(
                 {
@@ -165,6 +247,10 @@ def main() -> None:
                     "run_id": str(observed_run),
                     "event_types": names,
                     "completed_was_persisted_when_received": True,
+                    "stream_replay_events": replay_names,
+                    "sync_retry_same_response": True,
+                    "sync_to_stream_replay_events": sync_to_stream_names,
+                    "one_run_per_operation": True,
                 }
             )
         )
