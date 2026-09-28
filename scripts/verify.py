@@ -29,6 +29,7 @@ AGENT_SERVICE = PHASE >= 4 or SUBPHASE in {"4A", "4B", "4C", "4D"}
 AGENT_REST = PHASE >= 4 or SUBPHASE in {"4B", "4C", "4D"}
 AGENT_STREAM_TRANSPORT = PHASE >= 4 or SUBPHASE in {"4C", "4D"}
 AGENT_IDEMPOTENCY = PHASE >= 4 or SUBPHASE == "4D"
+CHAT_IMPORT_PARSER = PHASE >= 5 or SUBPHASE == "5A"
 
 
 def run(command: list[str]) -> None:
@@ -131,6 +132,9 @@ def tests() -> None:
         uv_run("python", "apps/server/agent_stream_demo.py")
     if AGENT_IDEMPOTENCY:
         uv_run("pytest", "-q", "apps/server/tests/test_phase4_idempotency.py")
+    if CHAT_IMPORT_PARSER:
+        uv_run("pytest", "-q", "apps/server/tests/test_chat_import.py")
+        uv_run("python", "apps/server/chat_import_demo.py")
     if BACKEND_FOUNDATION:
         uv_run("pytest", "-q", "apps/server/tests")
 
@@ -274,6 +278,8 @@ def verify() -> None:
             "PASS: Phase 4D persistent and cross-transport idempotency, "
             "PostgreSQL race and replay demo"
         )
+    if CHAT_IMPORT_PARSER:
+        print("PASS: Phase 5A chat import parser, dry run and 10k-message fixture")
     if AGENT_STREAMING:
         print("PASS: Typed runtime streaming and eight standalone Phase 3 E2E cases")
     if PHASE < 7:
@@ -302,10 +308,20 @@ def verify() -> None:
             raise RuntimeError("Phase 4 API gate is incomplete")
         print("PASS: Phase 3 Agent Runtime")
         print("PASS: Phase 4 Application Service / REST / Auth / Streaming / Idempotency")
-        print("DEFERRED: Chat Import")
+        if CHAT_IMPORT_PARSER:
+            print("PASS: Phase 5A Chat Import Contract and Parser Foundation")
+            print("DEFERRED: Persistent Import Jobs")
+            print("DEFERRED: Speaker Binding")
+            print("DEFERRED: Imported Message DB Persistence")
+        else:
+            print("DEFERRED: Chat Import")
         print("DEFERRED: Mobile")
         print("DEFERRED: RAG")
-        print("PASS: all active Phase 0..4 gates")
+        print(
+            "PASS: all active Phase 0..4 and Phase 5A gates"
+            if CHAT_IMPORT_PARSER
+            else "PASS: all active Phase 0..4 gates"
+        )
         return
     if PHASE == 3:
         if not all(

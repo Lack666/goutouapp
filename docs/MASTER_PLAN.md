@@ -18,7 +18,7 @@ as implemented by a placeholder directory or a golden expectation.
 | 2 | FastAPI, PostgreSQL, Pydantic, SQLAlchemy, Alembic, LLM Provider foundation | PASS |
 | 3 | Standalone LangGraph runtime and Agent streaming integration | PASS |
 | 4 | Agent Service and API transport over the standalone runtime | PASS |
-| 5 | Chat Import and Relationship Data Pipeline | PENDING |
+| 5 | Chat Import and Relationship Data Pipeline | IN PROGRESS (5A PASS) |
 | 6 | User-facing memory controls and retention policy integration | PENDING |
 | 7 | Expo React Native MVP | PENDING |
 | 8 | Mobile API integration, generated client and stream consumption | PENDING |
@@ -69,10 +69,27 @@ as implemented by a placeholder directory or a golden expectation.
 Phase 2A–2D, Phase 3A–3H and Phase 4A–4D are complete. Phase 3 is accepted
 as a transport-independent Agent Runtime. Phase 4 adds the application
 service, signed REST authentication, network progress streaming, disconnect
-policy and PostgreSQL-backed cross-transport idempotency. Phase 5 remains
-pending. The Phase 4D instruction names Chat Import and Relationship Data
+policy and PostgreSQL-backed cross-transport idempotency. Phase 5A establishes
+the offline chat parser; Phase 5 as a whole remains incomplete. The Phase 4D
+instruction names Chat Import and Relationship Data
 Pipeline as Phase 5; the former Phase 5 memory-control deliverable moves to
 Phase 6 in this roadmap. Neither future phase was implemented in Phase 4D.
+
+### Phase 5A — chat import contract and parser foundation
+
+- Added transport-free typed import source, options, message, issue and result
+  contracts with parser/schema version `1` and a `ChatImportParser` protocol.
+- Added a one-pass WeChat Markdown v1 parser with strict header handling,
+  conservative multiline normalization, explicit IANA source timezone,
+  DST anomaly errors, raw speaker inventory, provenance and stable SHA-256
+  message/transcript/source fingerprints. It never binds a speaker to a user.
+- Synthetic fixture, standalone summary-only dry run and 10,000-message
+  generator test exercise the parser without network, Agent or database.
+  Focused tests and the full Phase 0–4 gate are part of `make verify`.
+  Import jobs, speaker/relationship binding, message persistence and Mobile
+  remain deferred. See [Chat Import](CHAT_IMPORT.md),
+  [ADR 0022](adr/0022-chat-import-parser-boundary.md) and
+  [Phase 5A acceptance](PHASE_5A_ACCEPTANCE.md).
 
 ### Phase 0
 

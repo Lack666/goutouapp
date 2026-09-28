@@ -258,3 +258,16 @@ Message and bounded result metadata; failed, running or unresolved operations
 never silently re-execute. SSE replay emits only persisted final and completion
 events. See [Idempotency](IDEMPOTENCY.md) and
 [ADR 0021](adr/0021-persistent-operation-idempotency.md).
+
+## Phase 5A chat import parser boundary
+
+`ChatImportSource` supplies text or UTF-8 byte chunks to the
+transport-independent `ChatImportParser` protocol. The WeChat Markdown v1
+implementation recognizes strict message headers, retains source order and
+raw speaker labels, converts explicit source-local times to UTC, reports typed
+issues and emits canonical messages plus a dry-run summary. It streams one
+bounded message at a time and has no import-job, Conversation, Relationship or
+Memory storage dependency. Neither FastAPI nor AgentRuntime participates in
+the parser. Phase 5B/5C will add ownership, explicit binding and persistence
+outside this parser. See [Chat Import](CHAT_IMPORT.md) and
+[ADR 0022](adr/0022-chat-import-parser-boundary.md).
