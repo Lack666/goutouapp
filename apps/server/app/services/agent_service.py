@@ -41,6 +41,7 @@ def actor_from_verified_identity(user_id: UUID) -> AuthenticatedActor:
 
 class AgentServiceErrorCode(StrEnum):
     INVALID_ACTOR = "invalid_actor"
+    USER_NOT_FOUND = "user_not_found"
     INVALID_INPUT = "invalid_input"
     CONVERSATION_NOT_FOUND = "conversation_not_found"
     CONVERSATION_FORBIDDEN = "conversation_forbidden"
@@ -120,6 +121,8 @@ class AgentService:
         try:
             # Transaction A: all reads and writes finish before the runtime starts.
             with self._session_factory() as db, db.begin():
+                if records.get_user(db, actor.user_id) is None:
+                    raise AgentServiceError(AgentServiceErrorCode.USER_NOT_FOUND)
                 conversation = records.get_conversation(db, actor.user_id, conversation_id)
                 if conversation is None:
                     code = (

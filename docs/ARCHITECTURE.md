@@ -12,19 +12,21 @@ adds action planning and response generation. Phase 3G adds scoped, consented
 long-term memory. RAG remains deferred.
 Phase 3H closes the memory undo contract and exposes typed, transport-independent
 runtime progress events. The overall Phase 3 Agent Runtime is complete after
-its standalone E2E and regression gates; network transport remains deferred.
+its standalone E2E and regression gates; network transport was deferred at
+that point. Phase 4B now supplies synchronous REST transport.
 
 ```mermaid
 flowchart LR
   Mobile[React Native + Expo] -->|REST / WebSocket| Server[FastAPI server]
   Server --> Database[(PostgreSQL)]
-  Server -.->|future integration| Runtime[Independent LangGraph Agent Runtime]
+  Server -->|AgentService| Runtime[Independent LangGraph Agent Runtime]
   Runtime -->|deterministic reference loader| Knowledge[Preserved goutoujunshi Skill]
 ```
 
 - `apps/mobile` is the React Native and Expo client. It never calls an LLM API
   directly and does not contain model keys, prompts or the Skill corpus.
-- `apps/server` exposes `/health`, `/ready` and `/api/v1/status` through FastAPI.
+- `apps/server` exposes `/health`, `/ready`, `/api/v1/status` and one signed
+  Agent run REST endpoint through FastAPI.
   Its Pydantic Settings and error/logging foundation run without a database
   or LLM key. PostgreSQL is contacted only for readiness or data operations.
 - The minimal Agent Runtime uses LangGraph and is callable without FastAPI or
@@ -217,6 +219,17 @@ and a failed run. It constructs a bounded owner-scoped history before inserting
 the current message. Persistent and runtime run IDs are identical. See
 [Agent Service](AGENT_SERVICE.md) and [ADR 0018](adr/0018-agent-service-orchestration.md).
 
-Phase 4B–4D will add authentication adapters, REST and network streaming,
-idempotent retries and disconnect policy. The service will remain the shared
-business boundary; no Phase 4 transport belongs inside the Phase 3 runtime.
+## Phase 4B REST and authentication boundary
+
+FastAPI's Agent route receives a signed Bearer JWT through a transport
+dependency. A separate verifier checks signature, UUID subject, expiration,
+issuer, audience and fixed HS256 algorithm before issuing `AuthenticatedActor`.
+The route validates a bounded message, calls `AgentService.execute()` and maps
+its typed result/error into the established HTTP envelope. A lazy per-app
+service reuses one compiled LangGraph; startup makes no model or database call.
+The service remains responsible for ownership, history, persistence and memory
+scope. See [Authentication](AUTHENTICATION.md), [Agent API](AGENT_API.md) and
+[ADR 0019](adr/0019-rest-authentication-boundary.md).
+
+Phase 4C–4D will add network streaming, disconnect policy and persistent
+idempotent retries. No Phase 4 transport belongs inside the Phase 3 runtime.

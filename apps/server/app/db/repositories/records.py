@@ -17,6 +17,10 @@ def create_user(db: Session) -> User:
     return record
 
 
+def get_user(db: Session, user_id: UUID) -> User | None:
+    return db.get(User, user_id)
+
+
 def create_person(db: Session, user_id: UUID, display_name: str) -> Person:
     record = Person(user_id=user_id, display_name=display_name)
     db.add(record)

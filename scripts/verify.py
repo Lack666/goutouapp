@@ -25,7 +25,8 @@ AGENT_ANALYSIS = PHASE >= 3 or SUBPHASE in {"3E", "3F", "3G"}
 AGENT_ACTION_RESPONSE = PHASE >= 3 or SUBPHASE in {"3F", "3G"}
 AGENT_MEMORY = PHASE >= 3 or SUBPHASE == "3G"
 AGENT_STREAMING = PHASE >= 3 or SUBPHASE == "3H"
-AGENT_SERVICE = PHASE >= 4 or SUBPHASE == "4A"
+AGENT_SERVICE = PHASE >= 4 or SUBPHASE in {"4A", "4B"}
+AGENT_REST = PHASE >= 4 or SUBPHASE == "4B"
 
 
 def run(command: list[str]) -> None:
@@ -108,6 +109,15 @@ def tests() -> None:
     if AGENT_SERVICE:
         uv_run("pytest", "-q", "apps/server/tests/test_agent_service.py")
         uv_run("python", "apps/server/agent_service_demo.py")
+    if AGENT_REST:
+        uv_run(
+            "pytest",
+            "-q",
+            "apps/server/tests/test_auth_jwt.py",
+            "apps/server/tests/test_agent_rest_contract.py",
+            "apps/server/tests/test_agent_rest.py",
+        )
+        uv_run("python", "apps/server/agent_rest_demo.py")
     if BACKEND_FOUNDATION:
         uv_run("pytest", "-q", "apps/server/tests")
 
@@ -242,6 +252,8 @@ def verify() -> None:
         print("DEFERRED: memory and full live-model Golden runtime eval")
     if AGENT_SERVICE:
         print("PASS: Phase 4A Agent Application Service")
+    if AGENT_REST:
+        print("PASS: Phase 4B REST/Auth, signed-JWT PostgreSQL integration and real HTTP demo")
     if AGENT_STREAMING:
         print("PASS: Typed runtime streaming and eight standalone Phase 3 E2E cases")
     if PHASE < 7:
@@ -266,15 +278,20 @@ def verify() -> None:
             raise RuntimeError("Phase 3 Agent Runtime gate is incomplete")
         print("PASS: Phase 3 Agent Runtime")
         print("DEFERRED: RAG")
-        print(
-            "DEFERRED: REST API, Network Streaming, Authentication Transport, Full API Idempotency"
-        )
+        if AGENT_REST:
+            print("DEFERRED: Network Streaming, Persistent Idempotency")
+        else:
+            print(
+                "DEFERRED: REST API, Network Streaming, Authentication Transport, "
+                "Full API Idempotency"
+            )
         print("DEFERRED: Mobile")
-        print(
-            "PASS: all active Phase 0..3 and Phase 4A gates"
-            if AGENT_SERVICE
-            else "PASS: all active Phase 0..3 gates"
-        )
+        if AGENT_REST:
+            print("PASS: all active Phase 0..3, Phase 4A and Phase 4B gates")
+        elif AGENT_SERVICE:
+            print("PASS: all active Phase 0..3 and Phase 4A gates")
+        else:
+            print("PASS: all active Phase 0..3 gates")
         return
     if PHASE == 2:
         print("PASS: Phase 2 Backend Foundation")

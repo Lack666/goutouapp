@@ -1,6 +1,7 @@
 """FastAPI transport assembly with lazy, shutdown-owned database resources."""
 
 from contextlib import asynccontextmanager
+from threading import RLock
 
 from fastapi import FastAPI
 
@@ -15,8 +16,11 @@ from app.schemas.error import ErrorResponse
 
 ERROR_RESPONSES = {
     400: {"model": ErrorResponse, "description": "Invalid request"},
+    401: {"model": ErrorResponse, "description": "Authentication required"},
     404: {"model": ErrorResponse, "description": "Resource not found"},
     422: {"model": ErrorResponse, "description": "Validation error"},
+    502: {"model": ErrorResponse, "description": "Agent execution failed"},
+    503: {"model": ErrorResponse, "description": "Dependency unavailable"},
     500: {"model": ErrorResponse, "description": "Internal server error"},
 }
 
@@ -42,6 +46,8 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     )
     app.state.settings = settings
     app.state.database = Database(settings)
+    app.state.agent_service = None
+    app.state.agent_service_lock = RLock()
     register_error_handlers(app)
     app.include_router(health_router)
     app.include_router(readiness_router)

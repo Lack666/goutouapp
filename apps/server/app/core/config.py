@@ -25,6 +25,9 @@ class Settings(BaseSettings):
     llm_base_url: SecretStr | None = None
     llm_model: str | None = None
     llm_timeout_seconds: float = Field(default=30.0, gt=0, le=300)
+    auth_jwt_secret: SecretStr | None = None
+    auth_jwt_issuer: str = "goutouapp"
+    auth_jwt_audience: str = "goutouapp-api"
 
 
 @lru_cache

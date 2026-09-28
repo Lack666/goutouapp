@@ -1,0 +1,66 @@
+# Phase 4B Agent REST API
+
+`POST /api/v1/conversations/{conversation_id}/agent-runs` performs one
+non-streaming `AgentService.execute()` call. It returns **200** when execution
+and persistence finish. The URL treats a run as the resource being executed;
+the response is a completed operation rather than an asynchronous creation
+receipt. The endpoint contains no ownership query, history builder, memory
+logic, database write or direct runtime call. The dependency layer lazily
+builds one runtime and service per FastAPI app, then reuses that compiled graph.
+
+The request is JSON with `message` (1–20,000 Unicode characters; whitespace
+only, NUL and invalid Unicode are rejected). Optional
+`expected_relationship_id` asserts the Conversation relationship; it cannot
+override it. Optional `operation_key` is 1–128 characters and passes to the
+service. Extra fields, including `user_id`, `person_id`, provider choice and
+API keys, return the uniform validation envelope. The authenticated user ID
+comes solely from the signed Bearer credential.
+
+Success returns `run_id`, `conversation_id`, `status=completed`, an assistant
+message `{id, role, content}`, `memory_status` and `warnings`. It contains
+only the validated answer and public metadata, never AgentState, prompt,
+history, references, analysis internals or hidden reasoning. Memory persistence
+failure remains HTTP 200 with `memory_status=failed` and a warning.
+
+All business and validation errors use `{"error":{"code":"...","message":"..."}}`.
+Missing/invalid/expired credentials and unknown signed subjects return 401
+with a Bearer challenge. Missing and foreign conversations return the same
+404. Invalid request data returns 400 or 422. Agent runtime failure maps to
+502; answer persistence failure maps to 503. Those 5xx envelopes may include
+`run_id` and `recovery_status` (`failed` or `running_unknown`) for future
+inspection. They never include provider, SQLAlchemy or secret details.
+
+**Persistent idempotency is deferred to Phase 4D.** `operation_key` is only a
+service seam today; repeating a request can create a second user message and
+run. Network streaming, WebSocket, SSE and disconnect policy are deferred to
+Phase 4C. The existing health, readiness and status endpoints remain public.
+
+## Local development request
+
+After `docker compose up -d postgres` and `alembic upgrade head`, configure
+the JWT settings in ignored `.env`. Run `dev_auth_cli.py bootstrap`, then
+`dev_auth_cli.py token --user-id <UUID>` as described in
+[authentication](AUTHENTICATION.md). Start the server with `.\make.cmd dev`.
+With the printed IDs and token in PowerShell variables:
+
+```powershell
+$body = @{ message = '有人正在伤害我' } | ConvertTo-Json
+Invoke-RestMethod -Method Post -Uri "http://127.0.0.1:8000/api/v1/conversations/$conversationId/agent-runs" -Headers @{ Authorization = "Bearer $token" } -ContentType 'application/json' -Body $body
+```
+
+The default Mock provider has no queued answer for arbitrary manual calls.
+Configure a real provider for manual conversational execution, or run the
+offline demo below for a deterministic keyless success path.
+
+## Offline REST demo
+
+```powershell
+uv --cache-dir .cache/uv --no-managed-python run --locked --env-file .env python apps/server/agent_rest_demo.py
+```
+
+The demo creates a disposable migrated PostgreSQL database, starts a real
+local Uvicorn socket with a queued MockLLM, signs a short-lived synthetic JWT,
+sends an HTTP request through the production verifier and Agent endpoint,
+then reopens a database session to verify the user message, completed run and
+assistant answer. It prints only IDs, status and persistence evidence, then
+stops the server and removes the disposable database.

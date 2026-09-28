@@ -1,21 +1,26 @@
-# Server — verified Phase 2 foundation
+# Server — FastAPI, Agent Service and signed REST boundary
 
 Phase 4A adds the Python-only `AgentService` for owner-scoped conversation,
 message and AgentRun orchestration. It accepts a trusted typed actor and calls
-the standalone runtime between two short database transactions. There is still
-no Agent HTTP endpoint. See [Agent Service](../../docs/AGENT_SERVICE.md).
+the standalone runtime between two short database transactions. Phase 4B adds
+one Agent HTTP endpoint at
+`POST /api/v1/conversations/{conversation_id}/agent-runs`, requiring a signed
+Bearer JWT. See [Agent Service](../../docs/AGENT_SERVICE.md),
+[Authentication](../../docs/AUTHENTICATION.md) and
+[Agent API](../../docs/AGENT_API.md).
 
-Direct PostgreSQL + MockLLM demo, without FastAPI or an API key:
+Keyless PostgreSQL + MockLLM demos for the direct service and real HTTP API:
 
 ```powershell
 uv --cache-dir .cache/uv --no-managed-python run --locked --env-file .env python apps/server/agent_service_demo.py
+uv --cache-dir .cache/uv --no-managed-python run --locked --env-file .env python apps/server/agent_rest_demo.py
 ```
 
 This FastAPI service starts without a reachable PostgreSQL database or LLM key.
 Phase 2B added persistence and database readiness. Phase 2C adds an internal,
 keyless-testable LLM Provider boundary. Phase 2D verifies these layers together
-and releases the database pool at application shutdown. No chat or Agent
-endpoint exists.
+and releases the database pool at application shutdown. The Agent endpoint is
+the signed, synchronous REST route above.
 
 ## Setup and run
 
@@ -48,7 +53,8 @@ not assert database or model readiness. `GET /ready` returns 200 when PostgreSQL
 responds to `SELECT 1`, otherwise a generic 503 error.
 
 Run `.\make.cmd test` for inherited, LLM, database and integration tests,
-`.\make.cmd lint` for Ruff, and `.\make.cmd verify` for all Phase 0–2 gates.
+`.\make.cmd lint` for Ruff, and `.\make.cmd verify` for all active Phase 0–3,
+4A and 4B gates.
 The database gate requires a separate `TEST_DATABASE_URL` ending in `_test`;
 it creates and removes disposable databases and never uses the development DB.
 The Python dependency versions are locked in the root `uv.lock`. The root
@@ -74,6 +80,9 @@ read process environment variables, which take precedence over `.env`.
 | `LLM_BASE_URL` | unset | Compatible API prefix before `/chat/completions` |
 | `LLM_MODEL` | unset | Model name required for `openai_compatible` calls |
 | `LLM_TIMEOUT_SECONDS` | `30` | Per-operation timeout, validated to (0, 300] seconds |
+| `AUTH_JWT_SECRET` | unset | Server-only HS256 signing key, at least 32 UTF-8 bytes for Agent REST |
+| `AUTH_JWT_ISSUER` | `goutouapp` | Required JWT issuer claim |
+| `AUTH_JWT_AUDIENCE` | `goutouapp-api` | Required JWT audience claim |
 
 `DATABASE_URL`, `LLM_API_KEY` and `LLM_BASE_URL` use Pydantic `SecretStr` and are never returned
 by status endpoints. The app does not log request headers, query strings or

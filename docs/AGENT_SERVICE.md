@@ -11,8 +11,9 @@ The service returns a typed `AgentServiceResult` or raises a typed
 The future authentication adapter must verify a credential, then call
 `actor_from_verified_identity(user_id)`. The actor constructor rejects ordinary
 construction. The issuer function is a trusted Python composition boundary;
-Phase 4A has no external authentication provider, so it cannot protect against
-malicious in-process Python code. Request bodies must never create actors.
+Phase 4B verifies signed Bearer credentials in the FastAPI adapter before
+calling this issuer. Malicious in-process Python code remains outside the
+HTTP trust boundary. Request bodies must never create actors.
 
 The service loads `Conversation` under `actor.user_id` before writing anything.
 A foreign conversation is refused with `conversation_forbidden`; a missing one
@@ -64,7 +65,7 @@ persistence failure. Internal DB/provider exception strings are discarded.
 ## Future seams
 
 `execute(..., operation_key=...)` accepts a bounded client operation key, but
-Phase 4A does not persist it or deduplicate retries. Phase 4D must add an
+Phase 4B does not persist it or deduplicate retries. Phase 4D must add an
 owner-scoped unique key and replay semantics before an HTTP retry contract is
 offered. Callers must not treat the current parameter as idempotent.
 

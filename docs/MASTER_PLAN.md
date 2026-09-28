@@ -67,7 +67,8 @@ as implemented by a placeholder directory or a golden expectation.
 
 Phase 2A–2D, Phase 3A–3H and Phase 4A are complete. Phase 3 is accepted as a
 transport-independent Agent Runtime. Phase 4A adds the application service;
-Phase 4B–4D network transport, authentication, streaming and retry policy remain pending.
+Phase 4B REST authentication, real PostgreSQL integration and local HTTP demo
+are complete. Phase 4C–4D streaming and retry policy remain pending.
 
 ### Phase 0
 
@@ -299,6 +300,22 @@ Phase 4B–4D network transport, authentication, streaming and retry policy rema
   completed response with a warning. See [Agent Service](AGENT_SERVICE.md),
   [ADR 0018](adr/0018-agent-service-orchestration.md) and
   [Phase 4A acceptance](PHASE_4A_ACCEPTANCE.md).
+
+### Phase 4B — REST API and authentication boundary
+
+- Added signed HS256 Bearer JWT verification with required UUID subject,
+  expiration, issuer and audience. The verifier issues a typed identity before
+  the transport constructs an `AuthenticatedActor`; the service checks the User
+  still exists and continues to own conversation authorization.
+- Added a synchronous typed Agent run endpoint, uniform public errors, OpenAPI
+  Bearer scheme and app-scoped lazy runtime composition. Health endpoints remain
+  public. A development-only CLI can create local test identities and sign
+  short-lived tokens; no production token issuance route exists.
+- Offline authentication and REST contract tests, real PostgreSQL API
+  integration and a signed-token Uvicorn socket demo pass. See
+  [Phase 4B acceptance](PHASE_4B_ACCEPTANCE.md),
+  [Authentication](AUTHENTICATION.md), [Agent REST API](AGENT_API.md) and
+  [ADR 0019](adr/0019-rest-authentication-boundary.md).
 
 ## Dependency policy
 
