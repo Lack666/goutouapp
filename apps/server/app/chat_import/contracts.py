@@ -1,6 +1,6 @@
 """Transport-free contracts for a dry-run chat export parser."""
 
-from collections.abc import Iterable
+from collections.abc import Callable, Iterable
 from dataclasses import dataclass
 from datetime import datetime
 from enum import StrEnum
@@ -129,4 +129,9 @@ class ChatParseResult:
 
 
 class ChatImportParser(Protocol):
-    def parse(self, source: ChatImportSource, options: ImportOptions) -> ChatParseResult: ...
+    def parse(
+        self,
+        source: ChatImportSource,
+        options: ImportOptions,
+        on_message: Callable[[ImportedMessage], None] | None = None,
+    ) -> ChatParseResult: ...

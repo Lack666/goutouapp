@@ -114,3 +114,7 @@ Phase 5B adds persistent, owner-scoped job metadata and explicit speaker and
 Relationship binding outside this parser; see [Import Jobs](IMPORT_JOBS.md).
 Phase 5C owns imported Message persistence. The parser does not create
 conversation rows or split a transcript into multiple conversations.
+Phase 5C uses the same parser with a per-message callback and
+`include_messages=False`: accepted canonical messages are staged in bounded
+batches, and summary fingerprints are checked before formal promotion. See
+[Imported Messages](IMPORTED_MESSAGES.md).

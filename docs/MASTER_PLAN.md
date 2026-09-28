@@ -18,7 +18,7 @@ as implemented by a placeholder directory or a golden expectation.
 | 2 | FastAPI, PostgreSQL, Pydantic, SQLAlchemy, Alembic, LLM Provider foundation | PASS |
 | 3 | Standalone LangGraph runtime and Agent streaming integration | PASS |
 | 4 | Agent Service and API transport over the standalone runtime | PASS |
-| 5 | Chat Import and Relationship Data Pipeline | IN PROGRESS (5A/5B PASS) |
+| 5 | Chat Import and Relationship Data Pipeline | IN PROGRESS (5A/5B/5C PASS) |
 | 6 | User-facing memory controls and retention policy integration | PENDING |
 | 7 | Expo React Native MVP | PENDING |
 | 8 | Mobile API integration, generated client and stream consumption | PENDING |
@@ -100,6 +100,17 @@ Phase 6 in this roadmap. Neither future phase was implemented in Phase 4D.
   Conversation or Message is written. Source bytes are not stored. See
   [Import Jobs](IMPORT_JOBS.md), [ADR 0023](adr/0023-persistent-import-binding.md)
   and [Phase 5B acceptance](PHASE_5B_ACCEPTANCE.md).
+
+### Phase 5C — imported relationship messages and idempotent merge
+
+- Added a separate owner-scoped RelationshipMessage table and atomic
+  parse/stage/validate/promote service. Agent history remains isolated.
+- Added source occurrence uniqueness, exact transcript dataset dedup, durable
+  Job import summary, same-Job replay, 10k PostgreSQL regression and standalone
+  demo. Cross-file partial overlap dedup remains deferred. See
+  [Imported Messages](IMPORTED_MESSAGES.md),
+  [ADR 0024](adr/0024-relationship-message-merge.md) and
+  [Phase 5C acceptance](PHASE_5C_ACCEPTANCE.md).
 
 ### Phase 0
 

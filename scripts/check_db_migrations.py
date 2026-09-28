@@ -22,6 +22,7 @@ EXPECTED = {
     "memory_operations",
     "chat_import_jobs",
     "chat_import_speakers",
+    "relationship_messages",
 }
 
 

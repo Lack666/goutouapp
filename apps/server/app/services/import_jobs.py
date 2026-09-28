@@ -17,6 +17,8 @@ from app.services.agent_service import AuthenticatedActor
 class ImportJobStatus(StrEnum):
     AWAITING_BINDING = "awaiting_binding"
     READY = "ready"
+    IMPORTING = "importing"
+    IMPORTED = "imported"
     CANCELLED = "cancelled"
 
 
@@ -34,6 +36,7 @@ class ImportJobErrorCode(StrEnum):
     FATAL_PARSE_RESULT = "fatal_parse_result"
     JOB_NOT_FOUND = "job_not_found"
     JOB_CANCELLED = "job_cancelled"
+    JOB_IMPORTED = "job_imported"
     SPEAKER_NOT_FOUND = "speaker_not_found"
     PERSON_NOT_FOUND = "person_not_found"
     RELATIONSHIP_NOT_FOUND = "relationship_not_found"
@@ -78,6 +81,10 @@ class ImportJobView:
     issue_code_samples: tuple[str, ...]
     bound_relationship_id: UUID | None
     binding_revision: int
+    imported_message_count: int | None
+    ignored_message_count: int | None
+    system_message_count: int | None
+    imported_at: datetime | None
     possible_duplicate_job_id: UUID | None
     created_at: datetime
     updated_at: datetime
@@ -190,11 +197,17 @@ class ImportJobService:
         return self._view(job, prior)
 
     def _readiness(
-        self, job: ChatImportJob, speakers: tuple[ChatImportSpeaker, ...]
+        self,
+        job: ChatImportJob,
+        speakers: tuple[ChatImportSpeaker, ...],
+        *,
+        include_status: bool = True,
     ) -> tuple[str, ...]:
         issues: list[str] = []
-        if job.status == ImportJobStatus.CANCELLED:
+        if include_status and job.status == ImportJobStatus.CANCELLED:
             return ("job_cancelled",)
+        if include_status and job.status in (ImportJobStatus.IMPORTING, ImportJobStatus.IMPORTED):
+            return ("job_imported",)
         if not all(
             (
                 job.source_format,
@@ -255,6 +268,10 @@ class ImportJobService:
             issue_code_samples=tuple(job.issue_code_samples),
             bound_relationship_id=job.bound_relationship_id,
             binding_revision=job.binding_revision,
+            imported_message_count=job.imported_message_count,
+            ignored_message_count=job.ignored_message_count,
+            system_message_count=job.system_message_count,
+            imported_at=job.imported_at,
             possible_duplicate_job_id=prior,
             created_at=job.created_at,
             updated_at=job.updated_at,
@@ -289,6 +306,8 @@ class ImportJobService:
     def _editable(job: ChatImportJob, expected_revision: int | None) -> None:
         if job.status == ImportJobStatus.CANCELLED:
             raise ImportJobError(ImportJobErrorCode.JOB_CANCELLED)
+        if job.status in (ImportJobStatus.IMPORTING, ImportJobStatus.IMPORTED):
+            raise ImportJobError(ImportJobErrorCode.JOB_IMPORTED)
         if expected_revision is not None and job.binding_revision != expected_revision:
             raise ImportJobError(ImportJobErrorCode.REVISION_CONFLICT)
 
@@ -362,6 +381,7 @@ class ImportJobService:
 
     def cancel(self, actor: AuthenticatedActor, job_id: UUID) -> ImportJobView:
         job = self._job(self._owner(actor), job_id, lock=True)
+        self._editable(job, None)
         job.status = ImportJobStatus.CANCELLED.value
         job.updated_at = datetime.now(UTC)
         self.db.flush()

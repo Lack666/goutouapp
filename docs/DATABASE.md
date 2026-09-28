@@ -82,3 +82,13 @@ Relationship and a speaker's Person to the same owner; a speaker's owner and
 job must also match. No final imported Message row is created. The migration
 gate checks all eleven tables through upgrade/downgrade/upgrade and Alembic
 check. See [Import Jobs](IMPORT_JOBS.md).
+
+## Phase 5C relationship message history
+
+Alembic revision `20260928_04` adds `relationship_messages`, separate from
+Agent `messages`. It adds imported status/receipt fields to Jobs, a partial
+unique index for imported owner/Relationship/transcript scopes, and composite
+foreign keys for owner/Job/Relationship, Person compatibility and source
+speaker provenance. `(import_job_id, source_index)` is the occurrence key.
+The migration gate now checks twelve tables and the full reversible cycle.
+See [Imported Messages](IMPORTED_MESSAGES.md).

@@ -281,3 +281,15 @@ composite foreign keys enforce owner scope for Person and Relationship targets.
 The service locks the job for binding changes and readiness checks. A ready
 job can enter Phase 5C, but has no imported Conversation or Message. See
 [ADR 0023](adr/0023-persistent-import-binding.md).
+
+## Phase 5C relationship history boundary
+
+External chat uses `RelationshipMessage`, a table separate from Agent
+`Conversation`/`Message`. `ImportMergeService` accepts an authenticated actor,
+ready Job, expected revision and original source stream. A trusted parser
+stages bounded batches in a transaction-local PostgreSQL table; complete
+metadata and binding checks precede atomic promotion. Owner-scoped composite
+foreign keys and a dataset unique index enforce relationship scope and exact
+transcript idempotency. Agent history queries remain on their original table.
+See [Imported Messages](IMPORTED_MESSAGES.md) and
+[ADR 0024](adr/0024-relationship-message-merge.md).

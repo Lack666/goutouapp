@@ -13,6 +13,11 @@ row, and one inventory row per exact raw speaker label. It does not create a
 Person, Relationship, Conversation, Message, Memory, or AgentRun. `ready` means
 the job can enter Phase 5C; no transcript message has been imported.
 
+Phase 5C extends the status vocabulary with transaction-local `importing`
+and durable `imported`. The imported Job records actual imported, ignored and
+system message counts and import time. Its bindings are frozen; a new
+ImportJob is required for rebinding. See [Imported Messages](IMPORTED_MESSAGES.md).
+
 Every inspect and mutation filters by the authenticated owner's ID. Unknown and
 other-owner jobs both return `job_not_found`. The service checks owner-scoped
 Person and Relationship records before binding. Composite database foreign

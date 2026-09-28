@@ -7,7 +7,7 @@ import hashlib
 import json
 import re
 from collections import Counter
-from collections.abc import Iterator
+from collections.abc import Callable, Iterator
 from dataclasses import dataclass
 from datetime import UTC, datetime
 from typing import Protocol
@@ -132,7 +132,12 @@ def _utc_from_local(local: datetime, zone: ZoneInfo) -> tuple[datetime | None, I
 class WeChatMarkdownParser:
     """Parse a stream without transport, identity, persistence, or model dependencies."""
 
-    def parse(self, source: ChatImportSource, options: ImportOptions) -> ChatParseResult:
+    def parse(
+        self,
+        source: ChatImportSource,
+        options: ImportOptions,
+        on_message: Callable[[ImportedMessage], None] | None = None,
+    ) -> ChatParseResult:
         issues: list[ImportIssue] = []
         counts: Counter[IssueSeverity] = Counter()
         speakers: Counter[str] = Counter()
@@ -289,23 +294,25 @@ class WeChatMarkdownParser:
                 first = utc
             last = utc
             previous = utc
-            if options.include_messages:
-                messages.append(
-                    ImportedMessage(
-                        schema_version=SCHEMA_VERSION,
-                        source_index=candidates,
-                        original_timestamp=original_timestamp or "",
-                        source_local_datetime=local,
-                        source_timezone=options.source_timezone or "",
-                        timestamp_utc=utc,
-                        raw_speaker_label=speaker,
-                        content=content,
-                        content_type=content_type,
-                        provenance=location,
-                        normalization=tuple(notes),
-                        fingerprint=fingerprint,
-                    )
+            if options.include_messages or on_message is not None:
+                parsed_message = ImportedMessage(
+                    schema_version=SCHEMA_VERSION,
+                    source_index=candidates,
+                    original_timestamp=original_timestamp or "",
+                    source_local_datetime=local,
+                    source_timezone=options.source_timezone or "",
+                    timestamp_utc=utc,
+                    raw_speaker_label=speaker,
+                    content=content,
+                    content_type=content_type,
+                    provenance=location,
+                    normalization=tuple(notes),
+                    fingerprint=fingerprint,
                 )
+                if options.include_messages:
+                    messages.append(parsed_message)
+                if on_message is not None:
+                    on_message(parsed_message)
 
         try:
             for line in _iter_lines(source, options.max_line_chars, source_hash):

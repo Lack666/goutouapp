@@ -29,8 +29,9 @@ AGENT_SERVICE = PHASE >= 4 or SUBPHASE in {"4A", "4B", "4C", "4D"}
 AGENT_REST = PHASE >= 4 or SUBPHASE in {"4B", "4C", "4D"}
 AGENT_STREAM_TRANSPORT = PHASE >= 4 or SUBPHASE in {"4C", "4D"}
 AGENT_IDEMPOTENCY = PHASE >= 4 or SUBPHASE == "4D"
-CHAT_IMPORT_PARSER = PHASE >= 5 or SUBPHASE in {"5A", "5B"}
-CHAT_IMPORT_JOBS = PHASE >= 5 or SUBPHASE == "5B"
+CHAT_IMPORT_PARSER = PHASE >= 5 or SUBPHASE in {"5A", "5B", "5C"}
+CHAT_IMPORT_JOBS = PHASE >= 5 or SUBPHASE in {"5B", "5C"}
+CHAT_IMPORT_MERGE = PHASE >= 5 or SUBPHASE == "5C"
 
 
 def run(command: list[str]) -> None:
@@ -139,6 +140,9 @@ def tests() -> None:
     if CHAT_IMPORT_JOBS:
         uv_run("pytest", "-q", "apps/server/tests/test_import_jobs.py")
         uv_run("python", "apps/server/import_job_demo.py")
+    if CHAT_IMPORT_MERGE:
+        uv_run("pytest", "-q", "apps/server/tests/test_import_merge.py")
+        uv_run("python", "apps/server/import_merge_demo.py")
     if BACKEND_FOUNDATION:
         uv_run("pytest", "-q", "apps/server/tests")
 
@@ -286,6 +290,8 @@ def verify() -> None:
         print("PASS: Phase 5A chat import parser, dry run and 10k-message fixture")
     if CHAT_IMPORT_JOBS:
         print("PASS: Phase 5B persistent jobs, binding and PostgreSQL demo")
+    if CHAT_IMPORT_MERGE:
+        print("PASS: Phase 5C atomic relationship message merge and 10k PostgreSQL import")
     if AGENT_STREAMING:
         print("PASS: Typed runtime streaming and eight standalone Phase 3 E2E cases")
     if PHASE < 7:
@@ -321,13 +327,18 @@ def verify() -> None:
             else:
                 print("DEFERRED: Persistent Import Jobs")
                 print("DEFERRED: Speaker Binding")
-            print("DEFERRED: Imported Message DB Persistence")
+            if CHAT_IMPORT_MERGE:
+                print("PASS: Phase 5C Imported Message Persistence and Idempotent Merge")
+            else:
+                print("DEFERRED: Imported Message DB Persistence")
         else:
             print("DEFERRED: Chat Import")
         print("DEFERRED: Mobile")
         print("DEFERRED: RAG")
         print(
-            "PASS: all active Phase 0..4 and Phase 5A/5B gates"
+            "PASS: all active Phase 0..4 and Phase 5A/5B/5C gates"
+            if CHAT_IMPORT_MERGE
+            else "PASS: all active Phase 0..4 and Phase 5A/5B gates"
             if CHAT_IMPORT_JOBS
             else "PASS: all active Phase 0..4 and Phase 5A gates"
             if CHAT_IMPORT_PARSER
