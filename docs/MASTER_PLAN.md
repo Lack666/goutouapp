@@ -67,8 +67,9 @@ as implemented by a placeholder directory or a golden expectation.
 
 Phase 2A–2D, Phase 3A–3H and Phase 4A are complete. Phase 3 is accepted as a
 transport-independent Agent Runtime. Phase 4A adds the application service;
-Phase 4B REST authentication, real PostgreSQL integration and local HTTP demo
-are complete. Phase 4C–4D streaming and retry policy remain pending.
+Phase 4B REST authentication and Phase 4C network progress streaming and
+disconnect policy are complete. Phase 4D persistent retry policy remains
+pending.
 
 ### Phase 0
 
@@ -316,6 +317,23 @@ are complete. Phase 4C–4D streaming and retry policy remain pending.
   [Phase 4B acceptance](PHASE_4B_ACCEPTANCE.md),
   [Authentication](AUTHENTICATION.md), [Agent REST API](AGENT_API.md) and
   [ADR 0019](adr/0019-rest-authentication-boundary.md).
+
+### Phase 4C — streaming transport and disconnect policy
+
+- Added a POST SSE endpoint with a versioned, narrow event envelope. It reuses
+  4B JWT authentication and awaits `AgentService.stream()` ownership/preflight
+  before HTTP headers. The service shares transaction and recovery helpers
+  with `execute()`, consumes one runtime stream, and commits the assistant and
+  completed run before sending the final response frame.
+- Defined precommit disconnect as runtime cancellation plus failed run with
+  `client_disconnected`; postcommit disconnect preserves the completed run and
+  cancels unfinished optional memory work. PostgreSQL advisory transaction
+  locking and an active-run query reject a second run on the same Conversation
+  with 409 across service instances.
+- Real PostgreSQL signed-JWT integration, socket-level cancellation tests and
+  a frame-by-frame Uvicorn demo verify terminal DB state and event order. See
+  [Streaming API](STREAMING_API.md), [ADR 0020](adr/0020-streaming-transport-disconnect.md)
+  and [Phase 4C acceptance](PHASE_4C_ACCEPTANCE.md).
 
 ## Dependency policy
 

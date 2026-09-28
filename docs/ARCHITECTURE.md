@@ -231,5 +231,18 @@ The service remains responsible for ownership, history, persistence and memory
 scope. See [Authentication](AUTHENTICATION.md), [Agent API](AGENT_API.md) and
 [ADR 0019](adr/0019-rest-authentication-boundary.md).
 
-Phase 4C–4D will add network streaming, disconnect policy and persistent
-idempotent retries. No Phase 4 transport belongs inside the Phase 3 runtime.
+Phase 4D will add persistent idempotent retries. No Phase 4 transport belongs
+inside the Phase 3 runtime.
+
+## Phase 4C network streaming boundary
+
+The sole network stream is POST `text/event-stream` through the same Bearer
+dependency as REST. `AgentService.stream()` runs preflight before the HTTP
+response, shares owned history and persistence helpers with `execute()`, then
+consumes one `AgentRuntime.stream()` execution. It commits the validated answer
+before emitting the public final frame. A response finalizer propagates a
+disconnect to the runtime and marks a precommit run failed; postcommit
+disconnect preserves the completed run. PostgreSQL serializes same-Conversation
+run starts and rejects an active second run with 409. See
+[Streaming API](STREAMING_API.md) and
+[ADR 0020](adr/0020-streaming-transport-disconnect.md).

@@ -3,7 +3,7 @@
 from datetime import UTC, datetime
 from uuid import UUID
 
-from sqlalchemy import select
+from sqlalchemy import func, select
 from sqlalchemy.orm import Session
 
 from app.agent.contracts import AgentRunStatus
@@ -162,6 +162,22 @@ def start_agent_run(db: Session, user_id: UUID, conversation_id: UUID, run_id: U
     record.started_at = datetime.now(UTC)
     db.flush()
     return record
+
+
+def claim_conversation_run_slot(db: Session, conversation_id: UUID) -> bool:
+    """Serialize run starts across workers, then inspect committed active runs."""
+    first = int.from_bytes(conversation_id.bytes[:4], "big", signed=True)
+    second = int.from_bytes(conversation_id.bytes[4:8], "big", signed=True)
+    db.execute(select(func.pg_advisory_xact_lock(first, second)))
+    active = db.scalar(
+        select(AgentRun.id)
+        .where(
+            AgentRun.conversation_id == conversation_id,
+            AgentRun.status == AgentRunStatus.RUNNING,
+        )
+        .limit(1)
+    )
+    return active is None
 
 
 def finish_agent_run(

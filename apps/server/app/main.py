@@ -18,6 +18,7 @@ ERROR_RESPONSES = {
     400: {"model": ErrorResponse, "description": "Invalid request"},
     401: {"model": ErrorResponse, "description": "Authentication required"},
     404: {"model": ErrorResponse, "description": "Resource not found"},
+    409: {"model": ErrorResponse, "description": "Conversation has an active run"},
     422: {"model": ErrorResponse, "description": "Validation error"},
     502: {"model": ErrorResponse, "description": "Agent execution failed"},
     503: {"model": ErrorResponse, "description": "Dependency unavailable"},

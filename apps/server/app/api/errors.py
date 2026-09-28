@@ -64,6 +64,8 @@ def register_error_handlers(app: FastAPI) -> None:
             return error_response(404, "not_found", "Resource not found")
         if exc.code == AgentServiceErrorCode.INVALID_INPUT:
             return error_response(400, "invalid_input", "Invalid request")
+        if exc.code == AgentServiceErrorCode.CONVERSATION_BUSY:
+            return error_response(409, "conversation_busy", "Conversation has an active run")
         if exc.code in {AgentServiceErrorCode.INVALID_ACTOR, AgentServiceErrorCode.USER_NOT_FOUND}:
             return error_response(
                 401,

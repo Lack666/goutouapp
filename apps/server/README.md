@@ -3,17 +3,22 @@
 Phase 4A adds the Python-only `AgentService` for owner-scoped conversation,
 message and AgentRun orchestration. It accepts a trusted typed actor and calls
 the standalone runtime between two short database transactions. Phase 4B adds
-one Agent HTTP endpoint at
+one synchronous Agent HTTP endpoint at
 `POST /api/v1/conversations/{conversation_id}/agent-runs`, requiring a signed
 Bearer JWT. See [Agent Service](../../docs/AGENT_SERVICE.md),
 [Authentication](../../docs/AUTHENTICATION.md) and
 [Agent API](../../docs/AGENT_API.md).
+
+Phase 4C adds one POST SSE endpoint at the same path with `/stream` appended.
+It streams progress and one committed final answer, then completion; it does
+not stream model tokens. See [Streaming API](../../docs/STREAMING_API.md).
 
 Keyless PostgreSQL + MockLLM demos for the direct service and real HTTP API:
 
 ```powershell
 uv --cache-dir .cache/uv --no-managed-python run --locked --env-file .env python apps/server/agent_service_demo.py
 uv --cache-dir .cache/uv --no-managed-python run --locked --env-file .env python apps/server/agent_rest_demo.py
+uv --cache-dir .cache/uv --no-managed-python run --locked --env-file .env python apps/server/agent_stream_demo.py
 ```
 
 This FastAPI service starts without a reachable PostgreSQL database or LLM key.
@@ -53,8 +58,8 @@ not assert database or model readiness. `GET /ready` returns 200 when PostgreSQL
 responds to `SELECT 1`, otherwise a generic 503 error.
 
 Run `.\make.cmd test` for inherited, LLM, database and integration tests,
-`.\make.cmd lint` for Ruff, and `.\make.cmd verify` for all active Phase 0–3,
-4A and 4B gates.
+`.\make.cmd lint` for Ruff, and `.\make.cmd verify` for all active Phase 0–3
+and 4A–4C gates.
 The database gate requires a separate `TEST_DATABASE_URL` ending in `_test`;
 it creates and removes disposable databases and never uses the development DB.
 The Python dependency versions are locked in the root `uv.lock`. The root

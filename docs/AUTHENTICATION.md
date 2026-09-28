@@ -1,6 +1,9 @@
 # Phase 4B authentication
 
 The Agent REST endpoint accepts one `Authorization: Bearer <JWT>` credential.
+The Phase 4C POST streaming endpoint uses the identical FastAPI dependency and
+verifier before any SSE headers are sent; it does not accept URL query tokens
+or a trusted user header. See [Streaming API](STREAMING_API.md).
 FastAPI's HTTP Bearer dependency extracts it. `JWTBearerVerifier` verifies its
 HS256 signature using a server-only `AUTH_JWT_SECRET`, then requires `sub`,
 `exp`, `iss` and `aud`. The issuer and audience must match

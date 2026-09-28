@@ -6,6 +6,7 @@ from uuid import UUID
 from fastapi import APIRouter, Depends
 
 from app.api.dependencies import get_agent_service, get_authenticated_actor
+from app.api.streaming import ManagedRunStreamingResponse
 from app.schemas.agent_run import AgentRunResponse, CreateAgentRunRequest
 from app.services.agent_service import AgentService, AuthenticatedActor
 
@@ -31,3 +32,29 @@ async def create_agent_run(
         operation_key=body.operation_key,
     )
     return AgentRunResponse.from_service(result)
+
+
+@router.post(
+    "/conversations/{conversation_id}/agent-runs/stream",
+    tags=["agent"],
+    responses={
+        200: {
+            "description": "Version 1 events; failures after headers use a failed event",
+            "content": {"text/event-stream": {"schema": {"type": "string"}}},
+        }
+    },
+)
+async def stream_agent_run(
+    conversation_id: UUID,
+    body: CreateAgentRunRequest,
+    actor: Annotated[AuthenticatedActor, Depends(get_authenticated_actor)],
+    service: Annotated[AgentService, Depends(get_agent_service)],
+) -> ManagedRunStreamingResponse:
+    stream = await service.stream(
+        actor=actor,
+        conversation_id=conversation_id,
+        message=body.message,
+        relationship_id=body.expected_relationship_id,
+        operation_key=body.operation_key,
+    )
+    return ManagedRunStreamingResponse(stream)

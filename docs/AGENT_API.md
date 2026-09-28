@@ -1,5 +1,11 @@
 # Phase 4B Agent REST API
 
+Phase 4C also exposes a versioned POST SSE endpoint at
+`/api/v1/conversations/{conversation_id}/agent-runs/stream`. It reuses the
+same request schema and Bearer verifier while keeping this synchronous route
+unchanged. See [Streaming API](STREAMING_API.md) for frames, preflight HTTP
+errors, disconnect and persistence ordering.
+
 `POST /api/v1/conversations/{conversation_id}/agent-runs` performs one
 non-streaming `AgentService.execute()` call. It returns **200** when execution
 and persistence finish. The URL treats a run as the resource being executed;

@@ -69,13 +69,21 @@ Phase 4B does not persist it or deduplicate retries. Phase 4D must add an
 owner-scoped unique key and replay semantics before an HTTP retry contract is
 offered. Callers must not treat the current parameter as idempotent.
 
-Phase 4C can share ownership validation, transaction A and terminal transaction
-B with a future `AgentService.stream()` orchestration path over
-`AgentRuntime.stream()`. A network handler must call the service, never run the
-graph or write records itself. **OPEN DESIGN QUESTION:** when a consumer closes
-after final answer but before memory completion, should execution continue or
-cancel? The Phase 3H runtime can cancel memory work on generator close. The
-transport disconnect policy is deliberately deferred to Phase 4C.
+Phase 4C adds `AgentService.stream()` over exactly one `AgentRuntime.stream()`
+execution. Both service methods share the same owned Conversation preflight,
+history snapshot, Transaction A, assistant commit and failure recovery helpers.
+The streaming preflight runs before HTTP headers, and a PostgreSQL advisory
+transaction lock plus active-run query rejects a second run on the same
+Conversation with 409. The network handler never calls the graph or writes
+records itself.
+
+The stream commits the validated answer and completed run before emitting
+`final_response`; optional memory work follows. Before that commit, client
+disconnect closes the runtime and marks the run failed with
+`client_disconnected`. After commit, disconnect keeps the answer and completed
+run, while unfinished memory work is canceled. See
+[Streaming API](STREAMING_API.md) and
+[ADR 0020](adr/0020-streaming-transport-disconnect.md).
 
 ## Run locally
 
