@@ -3,7 +3,9 @@
 `ChatParseResult → ImportJobService → chat_import_jobs + chat_import_speakers`
 is an application workflow, independent of FastAPI and AgentRuntime. The caller
 supplies a Phase 4 `AuthenticatedActor` and owns the SQLAlchemy transaction.
-No upload route exists in this phase.
+Phase 5D adds an HTTP adapter and an optional owner-bound artifact reference;
+the 5B service still owns all binding/readiness rules. See
+[Import API](IMPORT_API.md).
 
 ## Lifecycle and ownership
 
@@ -80,6 +82,11 @@ a job, prints the speaker inventory, binds `我` to the authenticated user and
 `怡宝🥰` to a synthetic Person, binds an existing Relationship, marks ready,
 closes the Session, then inspects in a new Session. It asserts zero formal
 Message rows and drops the disposable database.
+
+Phase 5D Jobs created by HTTP have a unique `artifact_id`, constrained by a
+composite foreign key to an artifact of the same owner. Older programmatic
+Jobs remain valid with a null artifact reference. Finalize can only use the
+creation-bound source, and inspect reveals its state without a storage key.
 
 See [ADR 0023](adr/0023-persistent-import-binding.md) for decisions and
 [Phase 5B acceptance](PHASE_5B_ACCEPTANCE.md) for validation evidence.

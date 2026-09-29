@@ -1,5 +1,14 @@
 # Server — FastAPI, Agent Service and signed REST boundary
 
+Phase 5D adds one-upload authenticated chat import, explicit speaker and
+Relationship binding, artifact-backed finalization and bounded relationship
+history. See [Import API](../../docs/IMPORT_API.md) and
+[Artifact lifecycle](../../docs/IMPORT_ARTIFACTS.md). The local socket demo is:
+
+```powershell
+uv --cache-dir .cache/uv --no-managed-python run --locked --env-file .env python apps/server/import_api_demo.py
+```
+
 Phase 4A adds the Python-only `AgentService` for owner-scoped conversation,
 message and AgentRun orchestration. It accepts a trusted typed actor and calls
 the standalone runtime between two short database transactions. Phase 4B adds
@@ -93,6 +102,9 @@ read process environment variables, which take precedence over `.env`.
 | `AUTH_JWT_SECRET` | unset | Server-only HS256 signing key, at least 32 UTF-8 bytes for Agent REST |
 | `AUTH_JWT_ISSUER` | `goutouapp` | Required JWT issuer claim |
 | `AUTH_JWT_AUDIENCE` | `goutouapp-api` | Required JWT audience claim |
+| `CHAT_IMPORT_ARTIFACT_ROOT` | `.cache/import-artifacts` | Private temporary raw source directory |
+| `MAX_CHAT_IMPORT_BYTES` | `104857600` | Maximum uploaded file bytes, default 100 MiB |
+| `CHAT_IMPORT_RETENTION_HOURS` | `72` | Expiration of unfinished upload artifacts |
 
 `DATABASE_URL`, `LLM_API_KEY` and `LLM_BASE_URL` use Pydantic `SecretStr` and are never returned
 by status endpoints. The app does not log request headers, query strings or

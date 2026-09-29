@@ -29,9 +29,10 @@ AGENT_SERVICE = PHASE >= 4 or SUBPHASE in {"4A", "4B", "4C", "4D"}
 AGENT_REST = PHASE >= 4 or SUBPHASE in {"4B", "4C", "4D"}
 AGENT_STREAM_TRANSPORT = PHASE >= 4 or SUBPHASE in {"4C", "4D"}
 AGENT_IDEMPOTENCY = PHASE >= 4 or SUBPHASE == "4D"
-CHAT_IMPORT_PARSER = PHASE >= 5 or SUBPHASE in {"5A", "5B", "5C"}
-CHAT_IMPORT_JOBS = PHASE >= 5 or SUBPHASE in {"5B", "5C"}
-CHAT_IMPORT_MERGE = PHASE >= 5 or SUBPHASE == "5C"
+CHAT_IMPORT_PARSER = PHASE >= 5 or SUBPHASE in {"5A", "5B", "5C", "5D"}
+CHAT_IMPORT_JOBS = PHASE >= 5 or SUBPHASE in {"5B", "5C", "5D"}
+CHAT_IMPORT_MERGE = PHASE >= 5 or SUBPHASE in {"5C", "5D"}
+CHAT_IMPORT_API = PHASE >= 5 or SUBPHASE == "5D"
 
 
 def run(command: list[str]) -> None:
@@ -143,6 +144,9 @@ def tests() -> None:
     if CHAT_IMPORT_MERGE:
         uv_run("pytest", "-q", "apps/server/tests/test_import_merge.py")
         uv_run("python", "apps/server/import_merge_demo.py")
+    if CHAT_IMPORT_API:
+        uv_run("pytest", "-q", "apps/server/tests/test_import_api.py")
+        uv_run("python", "apps/server/import_api_demo.py")
     if BACKEND_FOUNDATION:
         uv_run("pytest", "-q", "apps/server/tests")
 
@@ -292,14 +296,45 @@ def verify() -> None:
         print("PASS: Phase 5B persistent jobs, binding and PostgreSQL demo")
     if CHAT_IMPORT_MERGE:
         print("PASS: Phase 5C atomic relationship message merge and 10k PostgreSQL import")
+    if CHAT_IMPORT_API:
+        print("PASS: Phase 5D authenticated one-upload import, cleanup, pagination and 10k HTTP")
     if AGENT_STREAMING:
         print("PASS: Typed runtime streaming and eight standalone Phase 3 E2E cases")
     if PHASE < 7:
         print("DEFERRED: Mobile lint/typecheck begin at Phase 7")
-    if PHASE > 4:
+    if PHASE > 5:
         raise RuntimeError(
             "Later-phase verification is not implemented; do not mark that phase complete"
         )
+    if PHASE == 5:
+        if not all(
+            (
+                AGENT_CONTRACTS,
+                AGENT_RUNTIME,
+                AGENT_SEMANTIC,
+                AGENT_KNOWLEDGE,
+                AGENT_ANALYSIS,
+                AGENT_ACTION_RESPONSE,
+                AGENT_MEMORY,
+                AGENT_STREAMING,
+                AGENT_SERVICE,
+                AGENT_REST,
+                AGENT_STREAM_TRANSPORT,
+                AGENT_IDEMPOTENCY,
+                CHAT_IMPORT_PARSER,
+                CHAT_IMPORT_JOBS,
+                CHAT_IMPORT_MERGE,
+                CHAT_IMPORT_API,
+            )
+        ):
+            raise RuntimeError("Phase 5 import pipeline gate is incomplete")
+        print("PASS: Phase 4 API")
+        print("PASS: Phase 5 Chat Import and Relationship Data Pipeline")
+        print("DEFERRED: Chat Analysis")
+        print("DEFERRED: Mobile")
+        print("DEFERRED: RAG")
+        print("PASS: all active Phase 0..5 gates")
+        return
     if PHASE == 4:
         if not all(
             (

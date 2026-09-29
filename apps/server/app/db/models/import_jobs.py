@@ -24,6 +24,12 @@ class ChatImportJob(RecordMixin, Base):
     __tablename__ = "chat_import_jobs"
     __table_args__ = (
         UniqueConstraint("owner_user_id", "id"),
+        UniqueConstraint("artifact_id"),
+        ForeignKeyConstraint(
+            ["owner_user_id", "artifact_id"],
+            ["chat_import_artifacts.owner_user_id", "chat_import_artifacts.id"],
+            ondelete="RESTRICT",
+        ),
         UniqueConstraint(
             "owner_user_id",
             "id",
@@ -57,6 +63,7 @@ class ChatImportJob(RecordMixin, Base):
     owner_user_id: Mapped[UUID] = mapped_column(
         ForeignKey("users.id", ondelete="RESTRICT"), index=True
     )
+    artifact_id: Mapped[UUID | None] = mapped_column(nullable=True)
     status: Mapped[str] = mapped_column(String(24), nullable=False)
     source_format: Mapped[str] = mapped_column(String(64), nullable=False)
     parser_version: Mapped[str] = mapped_column(String(20), nullable=False)
@@ -78,6 +85,26 @@ class ChatImportJob(RecordMixin, Base):
     ignored_message_count: Mapped[int | None] = mapped_column(nullable=True)
     system_message_count: Mapped[int | None] = mapped_column(nullable=True)
     imported_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
+
+
+class ChatImportArtifact(RecordMixin, Base):
+    __tablename__ = "chat_import_artifacts"
+    __table_args__ = (
+        UniqueConstraint("owner_user_id", "id"),
+        UniqueConstraint("storage_key"),
+        CheckConstraint("size_bytes > 0", name="positive_size"),
+        CheckConstraint("state IN ('active', 'deleted', 'expired')", name="state_valid"),
+    )
+
+    owner_user_id: Mapped[UUID] = mapped_column(
+        ForeignKey("users.id", ondelete="RESTRICT"), index=True
+    )
+    storage_key: Mapped[str] = mapped_column(String(32), nullable=False)
+    source_format: Mapped[str] = mapped_column(String(64), nullable=False)
+    size_bytes: Mapped[int] = mapped_column(nullable=False)
+    content_hash: Mapped[str] = mapped_column(String(64), nullable=False)
+    expires_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False)
+    state: Mapped[str] = mapped_column(String(16), nullable=False)
 
 
 class ChatImportSpeaker(RecordMixin, Base):

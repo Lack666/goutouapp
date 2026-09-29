@@ -1,5 +1,10 @@
 # Phase 4B Agent REST API
 
+Phase 5D also exposes a separate authenticated import workflow at
+`/api/v1/chat-imports` and paginated RelationshipMessage history. It uses the
+same Bearer verifier but does not add imported history to Agent inputs or
+invoke the Agent during upload/finalize. See [Import API](IMPORT_API.md).
+
 Phase 4C also exposes a versioned POST SSE endpoint at
 `/api/v1/conversations/{conversation_id}/agent-runs/stream`. It reuses the
 same request schema and Bearer verifier while keeping this synchronous route

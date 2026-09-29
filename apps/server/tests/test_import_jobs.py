@@ -141,7 +141,14 @@ def test_fatal_duplicate_and_bounded_issue_metadata(db_session: Session) -> None
     assert first.id != second.id
     assert second.possible_duplicate_job_id == first.id
     assert second.issue_code_samples == ()
-    assert db_session.scalar(select(func.count()).select_from(ChatImportJob)) == 2
+    assert (
+        db_session.scalar(
+            select(func.count())
+            .select_from(ChatImportJob)
+            .where(ChatImportJob.owner_user_id == actor.user_id)
+        )
+        == 2
+    )
 
 
 def test_warning_flood_has_bounded_parser_and_job_metadata(db_session: Session) -> None:

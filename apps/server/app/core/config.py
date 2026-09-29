@@ -1,6 +1,7 @@
 """Environment-backed server settings. No external service is required at startup."""
 
 from functools import lru_cache
+from pathlib import Path
 from typing import Literal
 
 from pydantic import Field, SecretStr
@@ -28,6 +29,9 @@ class Settings(BaseSettings):
     auth_jwt_secret: SecretStr | None = None
     auth_jwt_issuer: str = "goutouapp"
     auth_jwt_audience: str = "goutouapp-api"
+    chat_import_artifact_root: Path = Path(".cache/import-artifacts")
+    max_chat_import_bytes: int = Field(default=100 * 1024 * 1024, gt=0)
+    chat_import_retention_hours: int = Field(default=72, ge=1, le=24 * 365)
 
 
 @lru_cache

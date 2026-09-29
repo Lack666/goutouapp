@@ -9,7 +9,7 @@ from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from app.chat_import.contracts import ChatParseResult
-from app.db.models import ChatImportJob, ChatImportSpeaker
+from app.db.models import ChatImportArtifact, ChatImportJob, ChatImportSpeaker
 from app.db.repositories import records
 from app.services.agent_service import AuthenticatedActor
 
@@ -63,6 +63,8 @@ class SpeakerView:
 @dataclass(frozen=True)
 class ImportJobView:
     id: UUID
+    artifact_id: UUID | None
+    artifact_state: str | None
     owner_user_id: UUID
     status: ImportJobStatus
     source_format: str
@@ -146,11 +148,17 @@ class ImportJobService:
         ):
             raise ImportJobError(ImportJobErrorCode.INVALID_PARSE_RESULT)
 
-    def create(self, actor: AuthenticatedActor, result: ChatParseResult) -> ImportJobView:
+    def create(
+        self, actor: AuthenticatedActor, result: ChatParseResult, *, artifact_id: UUID | None = None
+    ) -> ImportJobView:
         owner = self._owner(actor)
         self._validate_parse(result)
         if records.get_user(self.db, owner) is None:
             raise ImportJobError(ImportJobErrorCode.INVALID_ACTOR)
+        if artifact_id is not None:
+            artifact = self.db.get(ChatImportArtifact, artifact_id)
+            if artifact is None or artifact.owner_user_id != owner or artifact.state != "active":
+                raise ImportJobError(ImportJobErrorCode.INVALID_PARSE_RESULT)
         prior = self.db.scalar(
             select(ChatImportJob.id)
             .where(
@@ -163,6 +171,7 @@ class ImportJobService:
         codes = list(dict.fromkeys(issue.code.value for issue in result.issues))[:20]
         job = ChatImportJob(
             owner_user_id=owner,
+            artifact_id=artifact_id,
             status=ImportJobStatus.AWAITING_BINDING.value,
             source_format=result.source_format,
             parser_version=result.parser_version,
@@ -250,6 +259,12 @@ class ImportJobService:
         speakers = self._speakers(job.owner_user_id, job.id)
         return ImportJobView(
             id=job.id,
+            artifact_id=job.artifact_id,
+            artifact_state=(
+                self.db.get(ChatImportArtifact, job.artifact_id).state
+                if job.artifact_id is not None
+                else None
+            ),
             owner_user_id=job.owner_user_id,
             status=ImportJobStatus(job.status),
             source_format=job.source_format,

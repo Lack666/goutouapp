@@ -92,3 +92,13 @@ foreign keys for owner/Job/Relationship, Person compatibility and source
 speaker provenance. `(import_job_id, source_index)` is the occurrence key.
 The migration gate now checks twelve tables and the full reversible cycle.
 See [Imported Messages](IMPORTED_MESSAGES.md).
+
+## Phase 5D temporary source metadata
+
+Alembic revision `20260928_05` adds `chat_import_artifacts` and a nullable,
+unique Job artifact ID. A composite `(owner_user_id, artifact_id)` foreign key
+prevents a Job from referencing another owner's source. The table stores only
+metadata and an opaque key; bytes remain in private artifact storage. The
+migration gate checks thirteen tables and the reversible cycle. Expiration
+cleanup is an explicit service operation; it cannot delete formal
+RelationshipMessages. See [Import Artifacts](IMPORT_ARTIFACTS.md).

@@ -62,8 +62,18 @@ to a different Relationship after explicit compatible binding.
 
 **CROSS-FILE PARTIAL OVERLAP DEDUP: DEFERRED.** Different files covering
 overlapping periods can contain indistinguishable real repeats. Phase 5C
-does not discard their messages based on content fingerprints. Upload,
-resumable artifacts and large network transport belong to Phase 5D.
+does not discard their messages based on content fingerprints. Phase 5D adds
+one-upload network transport and temporary artifacts; resumable upload remains
+deferred.
+
+In 5D, the HTTP workflow opens the Job-bound artifact and invokes this merge
+service unchanged. After a successful formal import the raw file is deleted;
+same-Job HTTP replay returns the durable receipt directly. A ready duplicate
+Job continues to use the exact-dataset rule and retains its own artifact until
+cancel or expiry. The 5C temporary staging table has `ON COMMIT DROP`, so no
+permanent staging rows remain after success, rollback or a closed connection.
+Relationship history is exposed through owner-scoped keyset pagination, at
+most 200 rows per request. See [Import API](IMPORT_API.md).
 
 ## Local demo
 

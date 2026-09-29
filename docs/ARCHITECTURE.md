@@ -293,3 +293,16 @@ foreign keys and a dataset unique index enforce relationship scope and exact
 transcript idempotency. Agent history queries remain on their original table.
 See [Imported Messages](IMPORTED_MESSAGES.md) and
 [ADR 0024](adr/0024-relationship-message-merge.md).
+
+## Phase 5D upload and artifact boundary
+
+The Phase 4 JWT dependency authenticates the multipart HTTP adapter before it
+creates an artifact. The adapter reads bounded chunks through
+`ImportArtifactStore`; `ImportWorkflowService` parses and creates the owner-
+bound Job, then later opens that exact artifact for 5C merge. PostgreSQL
+stores metadata and receipt, never raw source bytes. Success and cancel clean
+the private file; an explicit expiration operation reaps abandoned and crash-
+orphan files. `RelationshipMessage` reads use owner-scoped keyset pagination.
+The Agent history and Memory paths do not query imported messages. See
+[Import API](IMPORT_API.md), [Import Artifacts](IMPORT_ARTIFACTS.md) and
+[ADR 0025](adr/0025-import-artifact-api.md).

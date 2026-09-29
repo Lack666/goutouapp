@@ -18,7 +18,7 @@ as implemented by a placeholder directory or a golden expectation.
 | 2 | FastAPI, PostgreSQL, Pydantic, SQLAlchemy, Alembic, LLM Provider foundation | PASS |
 | 3 | Standalone LangGraph runtime and Agent streaming integration | PASS |
 | 4 | Agent Service and API transport over the standalone runtime | PASS |
-| 5 | Chat Import and Relationship Data Pipeline | IN PROGRESS (5A/5B/5C PASS) |
+| 5 | Chat Import and Relationship Data Pipeline | PASS (5A–5D) |
 | 6 | User-facing memory controls and retention policy integration | PENDING |
 | 7 | Expo React Native MVP | PENDING |
 | 8 | Mobile API integration, generated client and stream consumption | PENDING |
@@ -46,9 +46,11 @@ as implemented by a placeholder directory or a golden expectation.
    transport; map typed events to a network stream, orchestrate conversation,
    message and AgentRun persistence, and define API idempotency and disconnect
    behavior. No new relationship reasoning or embeddings.
-5. Decoupled TXT/Markdown/JSON parsers, speaker mapping, timestamps, source
-   provenance and deterministic relationship metrics with representative
-   fixtures.
+5. A versioned WeChat Markdown parser, explicit speaker/relationship binding,
+   provenance, owner-scoped imported history, one-upload authenticated API,
+   bounded pagination, exact-dataset idempotency and artifact lifecycle with
+   representative and 10k-message fixtures. Other formats and relationship
+   analysis require later explicit scope.
 6. Expose confirmed consent, inspect, pause, resume, undo and deletion controls
    through the service boundary, with owner/person isolation and production
    retention-policy decisions. The Phase 3 memory runtime is the baseline.
@@ -70,7 +72,7 @@ Phase 2A–2D, Phase 3A–3H and Phase 4A–4D are complete. Phase 3 is accepted
 as a transport-independent Agent Runtime. Phase 4 adds the application
 service, signed REST authentication, network progress streaming, disconnect
 policy and PostgreSQL-backed cross-transport idempotency. Phase 5A establishes
-the offline chat parser; Phase 5 as a whole remains incomplete. The Phase 4D
+the offline chat parser; 5B–5D complete the import pipeline. The Phase 4D
 instruction names Chat Import and Relationship Data
 Pipeline as Phase 5; the former Phase 5 memory-control deliverable moves to
 Phase 6 in this roadmap. Neither future phase was implemented in Phase 4D.
@@ -111,6 +113,21 @@ Phase 6 in this roadmap. Neither future phase was implemented in Phase 4D.
   [Imported Messages](IMPORTED_MESSAGES.md),
   [ADR 0024](adr/0024-relationship-message-merge.md) and
   [Phase 5C acceptance](PHASE_5C_ACCEPTANCE.md).
+
+### Phase 5D — import API, artifact lifecycle and final acceptance
+
+- Added a private, immutable-key artifact store with bounded multipart upload,
+  owner-bound metadata, size limit, SHA-256, explicit expiry cleanup and
+  single-upload Job creation. Authentication reuses the Phase 4 JWT.
+- Exposed inspect, explicit speaker/relationship binding, ready, finalize,
+  cancel and bounded relationship history routes. Finalize reuses 5C integrity
+  and atomicity, deletes successful raw data, and replays imported receipts
+  after deletion. No Agent, LLM or Memory work runs during import.
+- Real Uvicorn socket demo, 10k HTTP/PostgreSQL import, concurrent finalize,
+  security/lifecycle tests, migration cycle and Phase 0–5 regression pass.
+  See [Import API](IMPORT_API.md), [Import Artifacts](IMPORT_ARTIFACTS.md),
+  [ADR 0025](adr/0025-import-artifact-api.md) and
+  [Phase 5D acceptance](PHASE_5D_ACCEPTANCE.md).
 
 ### Phase 0
 

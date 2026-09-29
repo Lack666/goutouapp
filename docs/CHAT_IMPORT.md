@@ -1,8 +1,8 @@
 # Chat import parser — Phase 5A
 
 Phase 5A is an offline, read-only parser boundary. The only supported source is
-`wechat_markdown_v1`; no upload route, database write, speaker identity mapping,
-Agent call or model call occurs here. The implementation lives in
+`wechat_markdown_v1`; the parser itself performs no upload, database write,
+speaker identity mapping, Agent call or model call. The implementation lives in
 `apps/server/app/chat_import` and has no FastAPI or SQLAlchemy dependency.
 
 ## Input and grammar
@@ -112,7 +112,9 @@ PostgreSQL, Agent or model key. The 10,000-message test uses a generator whose
 
 Phase 5B adds persistent, owner-scoped job metadata and explicit speaker and
 Relationship binding outside this parser; see [Import Jobs](IMPORT_JOBS.md).
-Phase 5C owns imported Message persistence. The parser does not create
+Phase 5C owns imported Message persistence. Phase 5D exposes the same parser
+through a bounded, authenticated one-upload API; see [Import API](IMPORT_API.md).
+The parser does not create
 conversation rows or split a transcript into multiple conversations.
 Phase 5C uses the same parser with a per-message callback and
 `include_messages=False`: accepted canonical messages are staged in bounded

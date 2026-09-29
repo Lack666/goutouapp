@@ -1,5 +1,7 @@
 """Atomic deterministic promotion of a verified transcript into relationship history."""
 
+import json
+from base64 import urlsafe_b64decode, urlsafe_b64encode
 from collections.abc import Callable
 from dataclasses import dataclass
 from datetime import UTC, datetime
@@ -7,7 +9,7 @@ from enum import StrEnum
 from hashlib import sha256
 from uuid import UUID, uuid4
 
-from sqlalchemy import select, text
+from sqlalchemy import select, text, tuple_
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm import Session
 
@@ -72,6 +74,12 @@ class RelationshipMessageView:
     content: str
     content_type: str
     message_fingerprint: str
+
+
+@dataclass(frozen=True)
+class RelationshipMessagePage:
+    items: tuple[RelationshipMessageView, ...]
+    next_cursor: str | None
 
 
 _STAGE_COLUMNS = (
@@ -357,3 +365,90 @@ def list_relationship_messages(
         )
         for row in rows
     )
+
+
+def page_relationship_messages(
+    db: Session,
+    actor: AuthenticatedActor,
+    relationship_id: UUID,
+    *,
+    limit: int = 100,
+    cursor: str | None = None,
+) -> RelationshipMessagePage:
+    if not isinstance(actor, AuthenticatedActor):
+        raise ImportMergeError(ImportMergeErrorCode.INVALID_ACTOR)
+    if not 1 <= limit <= 200:
+        raise ValueError("invalid pagination")
+    if records.get_relationship(db, actor.user_id, relationship_id) is None:
+        raise ImportMergeError(ImportMergeErrorCode.JOB_NOT_FOUND)
+    query = select(RelationshipMessage).where(
+        RelationshipMessage.owner_user_id == actor.user_id,
+        RelationshipMessage.relationship_id == relationship_id,
+    )
+    if cursor is not None:
+        try:
+            payload = json.loads(urlsafe_b64decode(cursor.encode("ascii") + b"=="))
+            if not isinstance(payload, list) or len(payload) != 4:
+                raise ValueError
+            stamp = datetime.fromisoformat(payload[0])
+            job_id = UUID(payload[1])
+            source_index = int(payload[2])
+            row_id = UUID(payload[3])
+            if stamp.tzinfo is None or source_index < 1:
+                raise ValueError
+        except (ValueError, TypeError, UnicodeError, IndexError) as exc:
+            raise ValueError("invalid cursor") from exc
+        query = query.where(
+            tuple_(
+                RelationshipMessage.timestamp_utc,
+                RelationshipMessage.import_job_id,
+                RelationshipMessage.source_index,
+                RelationshipMessage.id,
+            )
+            > (stamp, job_id, source_index, row_id)
+        )
+    rows = tuple(
+        db.scalars(
+            query.order_by(
+                RelationshipMessage.timestamp_utc,
+                RelationshipMessage.import_job_id,
+                RelationshipMessage.source_index,
+                RelationshipMessage.id,
+            ).limit(limit + 1)
+        )
+    )
+    has_more = len(rows) > limit
+    selected = rows[:limit]
+    # Existing mapper enforces owner scope; this fetch uses only selected source IDs.
+    items = tuple(
+        RelationshipMessageView(
+            row.id,
+            row.relationship_id,
+            row.import_job_id,
+            row.source_index,
+            row.timestamp_utc,
+            row.original_timestamp,
+            row.source_timezone,
+            row.sender_kind,
+            row.person_id,
+            row.raw_speaker_label,
+            row.content,
+            row.content_type,
+            row.message_fingerprint,
+        )
+        for row in selected
+    )
+    next_cursor = None
+    if has_more and selected:
+        last = selected[-1]
+        raw = json.dumps(
+            [
+                last.timestamp_utc.isoformat(),
+                str(last.import_job_id),
+                last.source_index,
+                str(last.id),
+            ],
+            separators=(",", ":"),
+        ).encode("ascii")
+        next_cursor = urlsafe_b64encode(raw).decode("ascii").rstrip("=")
+    return RelationshipMessagePage(items, next_cursor)

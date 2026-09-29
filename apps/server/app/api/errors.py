@@ -9,10 +9,14 @@ from fastapi.responses import JSONResponse
 from starlette.exceptions import HTTPException as StarletteHTTPException
 
 from app.auth.jwt_verifier import CredentialConfigurationError, CredentialVerificationError
+from app.chat_import.artifacts import ArtifactStoreError, UploadTooLarge
 from app.core.logging import LOGGER_NAME
 from app.db.session import DatabaseUnavailable
 from app.schemas.error import ErrorDetail, ErrorResponse
 from app.services.agent_service import AgentServiceError, AgentServiceErrorCode
+from app.services.import_jobs import ImportJobError, ImportJobErrorCode
+from app.services.import_merge import ImportMergeError, ImportMergeErrorCode
+from app.services.import_workflow import ImportWorkflowError, ImportWorkflowErrorCode
 
 
 def error_response(
@@ -37,6 +41,62 @@ def error_response(
 
 
 def register_error_handlers(app: FastAPI) -> None:
+    @app.exception_handler(UploadTooLarge)
+    async def upload_too_large(_request: Request, _exc: UploadTooLarge) -> JSONResponse:
+        return error_response(413, "upload_too_large", "Upload exceeds configured limit")
+
+    @app.exception_handler(ImportWorkflowError)
+    async def import_workflow_error(_request: Request, exc: ImportWorkflowError) -> JSONResponse:
+        code = exc.code
+        if code == ImportWorkflowErrorCode.TRANSCRIPT_MISMATCH:
+            return error_response(409, "transcript_mismatch", "Source integrity check failed")
+        if code == ImportWorkflowErrorCode.ARTIFACT_UNAVAILABLE:
+            return error_response(409, "artifact_unavailable", "Import source unavailable")
+        if code == ImportWorkflowErrorCode.PARSE_FAILED:
+            return error_response(422, "parse_failed", "Chat source could not be parsed")
+        if code == ImportWorkflowErrorCode.UNSUPPORTED_FORMAT:
+            return error_response(415, "unsupported_format", "Unsupported chat export format")
+        return error_response(400, "invalid_upload", "Invalid import request")
+
+    @app.exception_handler(ArtifactStoreError)
+    async def artifact_error(_request: Request, _exc: ArtifactStoreError) -> JSONResponse:
+        return error_response(503, "artifact_unavailable", "Import storage unavailable")
+
+    @app.exception_handler(ImportJobError)
+    async def import_job_error(_request: Request, exc: ImportJobError) -> JSONResponse:
+        if exc.code in {
+            ImportJobErrorCode.JOB_NOT_FOUND,
+            ImportJobErrorCode.SPEAKER_NOT_FOUND,
+            ImportJobErrorCode.PERSON_NOT_FOUND,
+            ImportJobErrorCode.RELATIONSHIP_NOT_FOUND,
+        }:
+            return error_response(404, "job_not_found", "Import resource not found")
+        if exc.code == ImportJobErrorCode.REVISION_CONFLICT:
+            return error_response(409, "stale_revision", "Import binding revision changed")
+        if exc.code == ImportJobErrorCode.NOT_READY:
+            return error_response(409, "job_not_ready", "Import binding is incomplete")
+        if exc.code == ImportJobErrorCode.INVALID_BINDING:
+            return error_response(400, "binding_invalid", "Invalid speaker binding")
+        if exc.code in {ImportJobErrorCode.JOB_CANCELLED, ImportJobErrorCode.JOB_IMPORTED}:
+            return error_response(409, "job_not_ready", "Import job is no longer editable")
+        if exc.code == ImportJobErrorCode.INVALID_ACTOR:
+            return error_response(401, "invalid_credential", "Valid Bearer credential required")
+        return error_response(422, "parse_failed", "Chat source could not be parsed")
+
+    @app.exception_handler(ImportMergeError)
+    async def import_merge_error(_request: Request, exc: ImportMergeError) -> JSONResponse:
+        if exc.code == ImportMergeErrorCode.JOB_NOT_FOUND:
+            return error_response(404, "job_not_found", "Import resource not found")
+        if exc.code == ImportMergeErrorCode.REVISION_CONFLICT:
+            return error_response(409, "stale_revision", "Import binding revision changed")
+        if exc.code == ImportMergeErrorCode.TRANSCRIPT_MISMATCH:
+            return error_response(409, "transcript_mismatch", "Source integrity check failed")
+        if exc.code == ImportMergeErrorCode.BINDING_INVALID:
+            return error_response(409, "binding_invalid", "Import binding is invalid")
+        if exc.code == ImportMergeErrorCode.PERSISTENCE_FAILED:
+            return error_response(503, "import_failed", "Import could not be saved")
+        return error_response(409, "job_not_ready", "Import job is not ready")
+
     @app.exception_handler(CredentialVerificationError)
     async def invalid_credential(
         _request: Request, _exc: CredentialVerificationError
@@ -126,6 +186,8 @@ def register_error_handlers(app: FastAPI) -> None:
     async def http_error(_request: Request, exc: StarletteHTTPException) -> JSONResponse:
         if exc.status_code == 404:
             return error_response(404, "not_found", "Resource not found", exc.headers)
+        if exc.status_code == 413:
+            return error_response(413, "upload_too_large", "Upload exceeds configured limit")
         return error_response(exc.status_code, "http_error", "Request failed", exc.headers)
 
     @app.exception_handler(RequestValidationError)
