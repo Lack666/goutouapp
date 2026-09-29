@@ -283,6 +283,8 @@ class SQLAlchemyMemoryStore:
 
     def undo_last(self, user_id: UUID) -> bool:
         with self._session_factory() as db:
+            if db.scalar(select(User.id).where(User.id == user_id).with_for_update()) is None:
+                return False
             operation = db.scalar(
                 select(MemoryOperationRow)
                 .where(MemoryOperationRow.owner_user_id == user_id)
@@ -305,6 +307,8 @@ class SQLAlchemyMemoryStore:
 
     def delete_one(self, user_id: UUID, memory_id: UUID, person_id: UUID | None) -> bool:
         with self._session_factory() as db:
+            if db.scalar(select(User.id).where(User.id == user_id).with_for_update()) is None:
+                return False
             result = db.execute(
                 delete(MemoryRecordRow).where(
                     MemoryRecordRow.owner_user_id == user_id,
@@ -317,6 +321,8 @@ class SQLAlchemyMemoryStore:
 
     def delete_person(self, user_id: UUID, person_id: UUID) -> int:
         with self._session_factory() as db:
+            if db.scalar(select(User.id).where(User.id == user_id).with_for_update()) is None:
+                return 0
             result = db.execute(
                 delete(MemoryRecordRow).where(
                     MemoryRecordRow.owner_user_id == user_id,
@@ -328,6 +334,8 @@ class SQLAlchemyMemoryStore:
 
     def delete_all(self, user_id: UUID) -> int:
         with self._session_factory() as db:
+            if db.scalar(select(User.id).where(User.id == user_id).with_for_update()) is None:
+                return 0
             result = db.execute(
                 delete(MemoryRecordRow).where(MemoryRecordRow.owner_user_id == user_id)
             )

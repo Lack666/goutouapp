@@ -1,4 +1,4 @@
-# Phase 6A memory control API
+# Phase 6A–6B memory control API
 
 Phase 3 owns the Agent's consent-gated memory runtime. Phase 6A adds a user
 control plane: `AuthenticatedActor → MemoryControlService → SQLAlchemyMemoryStore
@@ -50,14 +50,59 @@ historical saved information may no longer be accurate. Content is returned
 only to its owner and is not
 logged by these endpoints.
 
-Undo and destructive deletion remain Phase 6B. Production retention duration,
-backup handling and expiry remain Phase 6C. No mobile client is part of 6A.
+## Phase 6B guarded mutations
+
+The same signed Bearer JWT and owner-scoped error envelope apply. Mutation
+requests never invoke an Agent, LLM or knowledge loader. See
+[Memory Deletion](MEMORY_DELETION.md) for the full safety and retry contract.
+The AgentRun sync and streaming routes return `pending_confirmation` for
+conversational undo without mutating memory. Safety routing runs first. Public
+undo uses the guarded route.
+
+| Method | Path | Request | Response |
+| --- | --- | --- | --- |
+| GET | `/api/v1/memory/undo/preview` | none | `UndoPreview` |
+| POST | `/api/v1/memory/undo` | `expected_operation_id`, `operation_key` | `MemoryMutationReceipt` |
+| POST | `/api/v1/memory/deletions/one/prepare` | `memory_id`, `person_id`, `relationship_id` | `MemoryConfirmationChallenge` |
+| POST | `/api/v1/memory/deletions/person/prepare` | `person_id` | `MemoryConfirmationChallenge` |
+| POST | `/api/v1/memory/deletions/all/prepare` | required `revoke_consent_after_delete` boolean | `MemoryConfirmationChallenge` |
+| POST | `/api/v1/memory/deletions/{confirmation_id}/execute` | `operation_key` | `MemoryMutationReceipt` |
+| GET | `/api/v1/memory/mutations/{mutation_id}` | none | owned receipt |
+
+Undo preview gives the current latest reversible new-record insertion ID and
+scope, without changing history. Undo must name that expected operation and
+provide a valid operation key. A changed latest operation yields `stale_undo`;
+no operation yields `undo_unavailable`. The same key and request replay the
+durable receipt, including after the memory disappears. A new request with a
+reused key yields `mutation_conflict`.
+
+A prepare call writes only an owner-bound confirmation challenge. It gives
+action, target/scope, expected affected count and a five-minute expiry; it
+never returns saved content. A successful execute atomically consumes the
+challenge, deletes the confirmed primary-store records, clears affected undo
+history and writes a receipt. A changed record snapshot yields
+`confirmation_stale`; an expired challenge yields `confirmation_expired`;
+missing or foreign challenge yields `confirmation_required`. The challenge
+cannot be reused for a new mutation. The same operation key and challenge
+replay the first receipt. These errors use HTTP 409; missing owner-scoped
+records/persons/receipts use 404, invalid operation keys use 400, and masked
+storage errors use 503. Pydantic validation errors use 422.
+
+`MemoryMutationReceipt` reports mutation ID, key, action, status, count, target
+scope, timestamp and `replayed`. `primary_store_only=true` states the deletion
+boundary. It contains no saved content. Delete-all leaves consent as it was
+when `revoke_consent_after_delete=false`; `true` also revokes consent and
+pauses memory access in the same transaction. Revocation alone keeps records.
+Production retention, backup and expiry policy remain Phase 6C. The mobile
+client remains Phase 7.
 
 Run the keyless demos with a disposable PostgreSQL test namespace:
 
 ```powershell
 uv --cache-dir .cache/uv --no-managed-python run --locked python apps/server/memory_control_demo.py
 uv --cache-dir .cache/uv --no-managed-python run --locked python apps/server/memory_control_http_demo.py
+uv --cache-dir .cache/uv --no-managed-python run --locked python apps/server/memory_destructive_control_demo.py
+uv --cache-dir .cache/uv --no-managed-python run --locked python apps/server/memory_destructive_http_demo.py
 ```
 
 Set `TEST_DATABASE_URL` to a `postgresql+psycopg` URL whose database ends in

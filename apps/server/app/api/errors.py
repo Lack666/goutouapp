@@ -18,6 +18,7 @@ from app.services.import_jobs import ImportJobError, ImportJobErrorCode
 from app.services.import_merge import ImportMergeError, ImportMergeErrorCode
 from app.services.import_workflow import ImportWorkflowError, ImportWorkflowErrorCode
 from app.services.memory_control import MemoryControlError, MemoryControlErrorCode
+from app.services.memory_mutation import MemoryMutationError, MemoryMutationErrorCode
 
 
 def error_response(
@@ -42,6 +43,28 @@ def error_response(
 
 
 def register_error_handlers(app: FastAPI) -> None:
+    @app.exception_handler(MemoryMutationError)
+    async def memory_mutation_error(_request: Request, exc: MemoryMutationError) -> JSONResponse:
+        code = exc.code
+        if code == MemoryMutationErrorCode.UNAUTHORIZED:
+            return error_response(
+                401,
+                "invalid_credential",
+                "Valid Bearer credential required",
+                {"WWW-Authenticate": "Bearer"},
+            )
+        if code in {
+            MemoryMutationErrorCode.MEMORY_NOT_FOUND,
+            MemoryMutationErrorCode.PERSON_NOT_FOUND,
+            MemoryMutationErrorCode.MUTATION_NOT_FOUND,
+        }:
+            return error_response(404, code.value, "Resource not found")
+        if code == MemoryMutationErrorCode.INVALID_OPERATION_KEY:
+            return error_response(400, code.value, "Invalid operation key")
+        if code == MemoryMutationErrorCode.PERSISTENCE_FAILURE:
+            return error_response(503, code.value, "Memory mutation unavailable")
+        return error_response(409, code.value, "Memory mutation needs a new confirmation")
+
     @app.exception_handler(MemoryControlError)
     async def memory_control_error(_request: Request, exc: MemoryControlError) -> JSONResponse:
         code = exc.code

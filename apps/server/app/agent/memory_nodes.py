@@ -93,7 +93,10 @@ def resolve_memory_intent(
     elif "撤回" in message and "同意" in message:
         intent = MemoryIntent(decision=MemoryDecision.REVOKE_KEEP)
     elif "撤销" in message and "记忆" in message:
-        intent = MemoryIntent(decision=MemoryDecision.UNDO)
+        intent = MemoryIntent(
+            decision=MemoryDecision.UNDO,
+            requires_confirmation=state["guarded_undo_required"],
+        )
     elif "恢复" in message and "记忆" in message:
         intent = MemoryIntent(decision=MemoryDecision.RESUME)
     elif "暂停" in message and "记忆" in message:
@@ -215,7 +218,11 @@ def persist_memory(state: AgentState, dependencies: RuntimeDependencies) -> Pers
         }:
             receipt = service.apply_control(state["user_id"], intent.decision)
         elif intent.decision == MemoryDecision.UNDO:
-            receipt = service.undo_last(state["user_id"])
+            receipt = (
+                MemoryReceipt(status=MemoryWriteStatus.PENDING_CONFIRMATION)
+                if intent.requires_confirmation
+                else service.undo_last(state["user_id"])
+            )
         elif intent.decision in {
             MemoryDecision.DELETE_ITEM,
             MemoryDecision.DELETE_PERSON,

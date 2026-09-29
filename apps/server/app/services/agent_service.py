@@ -310,6 +310,7 @@ class AgentService:
             message=normalized_message,
             recent_messages=history,
             memory_enabled=True,
+            guarded_undo_required=True,
         )
 
     def _mark_failed(self, request: AgentInput, failure_code: str) -> str:

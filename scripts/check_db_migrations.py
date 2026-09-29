@@ -20,6 +20,8 @@ EXPECTED = {
     "memory_controls",
     "memory_records",
     "memory_operations",
+    "memory_confirmations",
+    "memory_mutations",
     "chat_import_jobs",
     "chat_import_artifacts",
     "chat_import_speakers",

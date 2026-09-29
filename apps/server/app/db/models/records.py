@@ -176,3 +176,59 @@ class MemoryOperationRow(RecordMixin, Base):
 
     owner_user_id: Mapped[UUID] = mapped_column(index=True)
     record_id: Mapped[UUID] = mapped_column(nullable=False)
+
+
+class MemoryConfirmationRow(RecordMixin, Base):
+    """Short-lived, owner-bound destructive action challenge."""
+
+    __tablename__ = "memory_confirmations"
+    __table_args__ = (
+        CheckConstraint(
+            "action IN ('delete_one', 'delete_person', 'delete_all')",
+            name="action_valid",
+        ),
+        CheckConstraint("expected_count >= 0", name="nonnegative_count"),
+    )
+
+    owner_user_id: Mapped[UUID] = mapped_column(
+        ForeignKey("users.id", ondelete="CASCADE"), index=True
+    )
+    action: Mapped[str] = mapped_column(String(24), nullable=False)
+    target_id: Mapped[UUID | None] = mapped_column(nullable=True)
+    person_id: Mapped[UUID | None] = mapped_column(nullable=True)
+    relationship_id: Mapped[UUID | None] = mapped_column(nullable=True)
+    revoke_consent_after_delete: Mapped[bool] = mapped_column(nullable=False, default=False)
+    expected_count: Mapped[int] = mapped_column(nullable=False)
+    snapshot_hash: Mapped[str] = mapped_column(String(64), nullable=False)
+    expires_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False)
+    consumed_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+
+
+class MemoryMutationRow(RecordMixin, Base):
+    """Durable receipt and owner-scoped network retry key."""
+
+    __tablename__ = "memory_mutations"
+    __table_args__ = (
+        UniqueConstraint("owner_user_id", "operation_key"),
+        CheckConstraint(
+            "action IN ('undo', 'delete_one', 'delete_person', 'delete_all')",
+            name="action_valid",
+        ),
+        CheckConstraint("status IN ('undone', 'deleted')", name="status_valid"),
+        CheckConstraint("affected_count >= 0", name="nonnegative_count"),
+    )
+
+    owner_user_id: Mapped[UUID] = mapped_column(
+        ForeignKey("users.id", ondelete="CASCADE"), index=True
+    )
+    operation_key: Mapped[str] = mapped_column(String(128), nullable=False)
+    request_fingerprint: Mapped[str] = mapped_column(String(64), nullable=False)
+    action: Mapped[str] = mapped_column(String(24), nullable=False)
+    status: Mapped[str] = mapped_column(String(24), nullable=False)
+    affected_count: Mapped[int] = mapped_column(nullable=False)
+    target_id: Mapped[UUID | None] = mapped_column(nullable=True)
+    person_id: Mapped[UUID | None] = mapped_column(nullable=True)
+    relationship_id: Mapped[UUID | None] = mapped_column(nullable=True)
+    undone_memory_id: Mapped[UUID | None] = mapped_column(nullable=True)
+    confirmation_id: Mapped[UUID | None] = mapped_column(nullable=True)
+    performed_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False)

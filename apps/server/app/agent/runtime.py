@@ -108,6 +108,7 @@ NODE_READS: dict[str, frozenset[str]] = {
             "user_id",
             "relationship_id",
             "memory_enabled",
+            "guarded_undo_required",
             "memory_control",
             "route",
             "warnings",

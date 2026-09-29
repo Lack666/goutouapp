@@ -1,7 +1,10 @@
 # Phase 3G–3H long-term memory runtime
 
 Phase 6A exposes signed user controls and bounded inspection over this same
-store; see [Memory API](MEMORY_API.md) and [ADR 0026](adr/0026-memory-control-plane.md).
+store. Phase 6B adds guarded undo and confirmed deletion; see
+[Memory API](MEMORY_API.md), [Memory Deletion](MEMORY_DELETION.md),
+[ADR 0026](adr/0026-memory-control-plane.md) and
+[ADR 0027](adr/0027-guarded-memory-mutations.md).
 
 The current conversation and recent messages are short-term input. Long-term
 memory is a separate, small collection of user-authorized records. The Agent
@@ -82,9 +85,13 @@ retains at most 20 operations; deleting a record or person clears affected
 operations, and deleting all clears the entire owner's history. Repeated undo
 after the sole operation returns `nothing_to_undo`. If multiple saved records
 remain, each new `undo_last` call intentionally reverses the next latest
-record; it is not a replay-idempotent network command. Phase 4 must supply API
-idempotency and authenticated caller identity. The graph recognizes “撤销刚才的记忆”
-and returns a typed `undone` receipt after the response.
+record; it is not a replay-idempotent network command. Phase 6B's dedicated
+signed API adds expected-operation matching and durable operation-key replay.
+The standalone graph recognizes “撤销刚才的记忆” and returns a typed `undone`
+receipt after the response. The Agent Service sets a typed guard for public
+runs, so the same conversational intent returns `pending_confirmation` after
+safety routing and cannot perform undo. Clients use the dedicated control API
+for previewed undo.
 
 Deletion covers app-owned active primary database memory. Production backups
 and retention policy are not implemented, so no immediate deletion claim is

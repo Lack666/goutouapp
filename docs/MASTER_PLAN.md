@@ -19,7 +19,7 @@ as implemented by a placeholder directory or a golden expectation.
 | 3 | Standalone LangGraph runtime and Agent streaming integration | PASS |
 | 4 | Agent Service and API transport over the standalone runtime | PASS |
 | 5 | Chat Import and Relationship Data Pipeline | PASS (5A–5D) |
-| 6 | User-facing memory controls and retention policy integration | IN PROGRESS (6A PASS) |
+| 6 | User-facing memory controls and retention policy integration | IN PROGRESS (6A–6B PASS) |
 | 7 | Expo React Native MVP | PENDING |
 | 8 | Mobile API integration, generated client and stream consumption | PENDING |
 | 9 | Security, privacy, reliability and deletion | PENDING |
@@ -135,9 +135,29 @@ Phase 6 in this roadmap. Neither future phase was implemented in Phase 4D.
   Phase 3 authoritative MemoryStore; PostgreSQL serializes control changes.
 - Added bounded keyset memory inspection, owner/person/relationship validation,
   signed HTTP and Agent integration tests, plus standalone and socket demos.
-  Undo/deletion remain 6B, retention policy 6C, mobile Phase 7. See
+  Undo/deletion are covered by 6B; retention policy is 6C and mobile is Phase 7. See
   [Memory API](MEMORY_API.md), [ADR 0026](adr/0026-memory-control-plane.md)
   and [Phase 6A acceptance](PHASE_6A_ACCEPTANCE.md).
+
+### Phase 6B — guarded undo and confirmed deletion
+
+- Added read-only undo preview, expected-operation guarded undo and durable
+  owner-bound operation-key receipts. A retry replays its original outcome and
+  cannot undo the next record.
+- Added server-side, five-minute confirmation challenges for delete-one,
+  delete-person and delete-all. Execution rechecks the target snapshot under
+  the owner lock, deletes active primary memory records, clears affected undo
+  history and persists the receipt in one transaction. Delete-all requires an
+  explicit choice to preserve or revoke consent.
+- Signed JWT/PostgreSQL tests cover concurrency, rollback, ownership, runtime
+  recall after deletion and preservation of Agent/import data. Keyless direct
+  and HTTP demos are included. The public Agent Service returns a pending
+  receipt for conversational undo after safety routing; the guarded API
+  performs the mutation. Retention and backup policy
+  remain 6C; Phase 6 final acceptance remains 6D. See
+  [Memory Deletion](MEMORY_DELETION.md),
+  [ADR 0027](adr/0027-guarded-memory-mutations.md) and
+  [Phase 6B acceptance](PHASE_6B_ACCEPTANCE.md).
 
 ### Phase 0
 

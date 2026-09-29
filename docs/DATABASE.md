@@ -34,6 +34,16 @@ separate, atomic per-operation transactions; history is capped at 20 entries
 per owner. The migration gate checks the full nine-table upgrade/downgrade
 cycle and `alembic check`.
 
+Phase 6B revision `20260929_01` adds `memory_confirmations` and
+`memory_mutations`. The first binds a short-lived destructive confirmation to
+the owner, action, target, scope and record snapshot; the second stores a
+durable receipt with a unique `(owner_user_id, operation_key)` retry key.
+Neither table stores memory content. Active memory deletion and undo use the
+same owner row lock as Agent writes, then change `memory_records`, cascading
+`memory_operations`, and persist the receipt in one transaction. The migration
+gate checks the expanded schema through the same cycle. See
+[Memory Deletion](MEMORY_DELETION.md).
+
 `TEST_DATABASE_URL` is a PostgreSQL connection template whose database name
 must end in `_test` and differ from `DATABASE_URL`'s database name. Tests create
 a random database from that template, apply Alembic, roll back each test's

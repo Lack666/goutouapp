@@ -34,6 +34,7 @@ CHAT_IMPORT_JOBS = PHASE >= 5 or SUBPHASE in {"5B", "5C", "5D"}
 CHAT_IMPORT_MERGE = PHASE >= 5 or SUBPHASE in {"5C", "5D"}
 CHAT_IMPORT_API = PHASE >= 5 or SUBPHASE == "5D"
 MEMORY_CONTROL_API = PHASE >= 6 or SUBPHASE in {"6A", "6B", "6C", "6D"}
+MEMORY_MUTATION_API = PHASE >= 6 or SUBPHASE in {"6B", "6C", "6D"}
 
 
 def run(command: list[str]) -> None:
@@ -152,6 +153,10 @@ def tests() -> None:
         uv_run("pytest", "-q", "apps/server/tests/test_memory_control.py")
         uv_run("python", "apps/server/memory_control_demo.py")
         uv_run("python", "apps/server/memory_control_http_demo.py")
+    if MEMORY_MUTATION_API:
+        uv_run("pytest", "-q", "apps/server/tests/test_memory_mutation.py")
+        uv_run("python", "apps/server/memory_destructive_control_demo.py")
+        uv_run("python", "apps/server/memory_destructive_http_demo.py")
     if BACKEND_FOUNDATION:
         uv_run("pytest", "-q", "apps/server/tests")
 
@@ -305,8 +310,12 @@ def verify() -> None:
         print("PASS: Phase 5D authenticated one-upload import, cleanup, pagination and 10k HTTP")
     if MEMORY_CONTROL_API:
         print("PASS: Phase 6A Memory Control Service, signed API and Agent integration")
-        print("DEFERRED TO 6B: Undo/Delete Public Controls")
+        if MEMORY_MUTATION_API:
+            print("PASS: Phase 6B guarded undo, confirmed deletion and durable receipts")
+        else:
+            print("DEFERRED TO 6B: Undo/Delete Public Controls")
         print("DEFERRED TO 6C: Retention Policy")
+        print("DEFERRED TO 6D: Phase 6 Final Acceptance")
         print("DEFERRED TO PHASE 7: Mobile")
     if AGENT_STREAMING:
         print("PASS: Typed runtime streaming and eight standalone Phase 3 E2E cases")
@@ -342,14 +351,17 @@ def verify() -> None:
         print("PASS: Phase 5 Chat Import and Relationship Data Pipeline")
         if MEMORY_CONTROL_API:
             print("PASS: Phase 6A Memory Control Service and Public Contracts")
+        if MEMORY_MUTATION_API:
+            print("PASS: Phase 6B Memory Undo, Deletion and Confirmation Boundary")
         print("DEFERRED: Chat Analysis")
         print("DEFERRED: Mobile")
         print("DEFERRED: RAG")
-        print(
-            "PASS: all active Phase 0..5 and 6A gates"
-            if MEMORY_CONTROL_API
-            else "PASS: all active Phase 0..5 gates"
-        )
+        active = "Phase 0..5"
+        if MEMORY_CONTROL_API:
+            active += " and 6A"
+        if MEMORY_MUTATION_API:
+            active += " and 6B"
+        print(f"PASS: all active {active} gates")
         return
     if PHASE == 4:
         if not all(

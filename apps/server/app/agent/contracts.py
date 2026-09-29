@@ -96,6 +96,7 @@ class AgentInput(ContractModel):
     locale: str | None = None
     timezone: str | None = None
     memory_enabled: bool = False
+    guarded_undo_required: bool = False
     metadata: dict[str, str] = Field(default_factory=dict)
 
     @model_validator(mode="after")

@@ -49,6 +49,7 @@ class AgentState(TypedDict):
     locale: str | None
     timezone: str | None
     memory_enabled: bool
+    guarded_undo_required: bool
     input_metadata: dict[str, str]
     scenario: ScenarioResult | None
     safety: SafetyResult | None
@@ -86,6 +87,7 @@ def initial_state(request: AgentInput) -> AgentState:
         locale=request.locale,
         timezone=request.timezone,
         memory_enabled=request.memory_enabled,
+        guarded_undo_required=request.guarded_undo_required,
         input_metadata=dict(request.metadata),
         scenario=None,
         safety=None,

@@ -9,7 +9,9 @@ from app.db.models.import_jobs import (
 from app.db.models.records import (
     AgentRun,
     Conversation,
+    MemoryConfirmationRow,
     MemoryControlRow,
+    MemoryMutationRow,
     MemoryOperationRow,
     MemoryRecordRow,
     Message,
@@ -26,6 +28,8 @@ __all__ = [
     "AgentRun",
     "Conversation",
     "MemoryControlRow",
+    "MemoryConfirmationRow",
+    "MemoryMutationRow",
     "MemoryOperationRow",
     "MemoryRecordRow",
     "Message",

@@ -316,3 +316,20 @@ no Agent or LLM call. The SQL store serializes control mutations on the owner
 row and pages records in stable key order. Record insertion rechecks the
 control under that lock. See [Memory API](MEMORY_API.md) and
 [ADR 0026](adr/0026-memory-control-plane.md).
+
+## Phase 6B memory mutation boundary
+
+`Bearer JWT → AuthenticatedActor → MemoryMutationService → PostgreSQL` uses
+the Phase 3 `memory_records`, `memory_operations` and `memory_controls` tables.
+The new `memory_confirmations` and `memory_mutations` tables hold only
+owner-bound challenges and receipts, never another copy of memory content.
+Undo requires the ID from a read-only latest-operation preview and a durable
+operation key. Deletes require a server-side challenge binding owner, action,
+target, scope and snapshot. Owner-row locks serialize these mutations with
+Agent saves and legacy MemoryService operations. A single transaction deletes
+records, cascades their undo operations, optionally revokes consent, consumes
+the challenge and writes the receipt. No Agent or LLM runs in the control
+path. The public Agent Service marks conversational undo as pending after
+safety routing, so it cannot bypass expected-operation matching. See
+[Memory Deletion](MEMORY_DELETION.md) and
+[ADR 0027](adr/0027-guarded-memory-mutations.md).
