@@ -1,5 +1,8 @@
 # Phase 3G–3H long-term memory runtime
 
+Phase 6A exposes signed user controls and bounded inspection over this same
+store; see [Memory API](MEMORY_API.md) and [ADR 0026](adr/0026-memory-control-plane.md).
+
 The current conversation and recent messages are short-term input. Long-term
 memory is a separate, small collection of user-authorized records. The Agent
 never copies a transcript, response, action plan, reference, model analysis or

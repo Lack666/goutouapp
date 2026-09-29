@@ -17,6 +17,7 @@ from app.services.agent_service import AgentServiceError, AgentServiceErrorCode
 from app.services.import_jobs import ImportJobError, ImportJobErrorCode
 from app.services.import_merge import ImportMergeError, ImportMergeErrorCode
 from app.services.import_workflow import ImportWorkflowError, ImportWorkflowErrorCode
+from app.services.memory_control import MemoryControlError, MemoryControlErrorCode
 
 
 def error_response(
@@ -41,6 +42,26 @@ def error_response(
 
 
 def register_error_handlers(app: FastAPI) -> None:
+    @app.exception_handler(MemoryControlError)
+    async def memory_control_error(_request: Request, exc: MemoryControlError) -> JSONResponse:
+        code = exc.code
+        if code == MemoryControlErrorCode.UNAUTHORIZED:
+            return error_response(
+                401,
+                "invalid_credential",
+                "Valid Bearer credential required",
+                {"WWW-Authenticate": "Bearer"},
+            )
+        if code in {
+            MemoryControlErrorCode.PERSON_NOT_FOUND,
+            MemoryControlErrorCode.RELATIONSHIP_NOT_FOUND,
+            MemoryControlErrorCode.MEMORY_NOT_FOUND,
+        }:
+            return error_response(404, code.value, "Resource not found")
+        if code == MemoryControlErrorCode.INVALID_SCOPE:
+            return error_response(400, "invalid_scope", "Invalid memory scope or cursor")
+        return error_response(503, "persistence_failure", "Memory operation unavailable")
+
     @app.exception_handler(UploadTooLarge)
     async def upload_too_large(_request: Request, _exc: UploadTooLarge) -> JSONResponse:
         return error_response(413, "upload_too_large", "Upload exceeds configured limit")

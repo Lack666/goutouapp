@@ -306,3 +306,13 @@ orphan files. `RelationshipMessage` reads use owner-scoped keyset pagination.
 The Agent history and Memory paths do not query imported messages. See
 [Import API](IMPORT_API.md), [Import Artifacts](IMPORT_ARTIFACTS.md) and
 [ADR 0025](adr/0025-import-artifact-api.md).
+
+## Phase 6A memory control boundary
+
+`Bearer JWT → AuthenticatedActor → MemoryControlService → SQLAlchemyMemoryStore`
+reads and changes the same PostgreSQL memory controls used by
+`AgentRuntime → MemoryService → SQLAlchemyMemoryStore`. The control plane has
+no Agent or LLM call. The SQL store serializes control mutations on the owner
+row and pages records in stable key order. Record insertion rechecks the
+control under that lock. See [Memory API](MEMORY_API.md) and
+[ADR 0026](adr/0026-memory-control-plane.md).

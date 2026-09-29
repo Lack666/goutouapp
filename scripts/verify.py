@@ -33,6 +33,7 @@ CHAT_IMPORT_PARSER = PHASE >= 5 or SUBPHASE in {"5A", "5B", "5C", "5D"}
 CHAT_IMPORT_JOBS = PHASE >= 5 or SUBPHASE in {"5B", "5C", "5D"}
 CHAT_IMPORT_MERGE = PHASE >= 5 or SUBPHASE in {"5C", "5D"}
 CHAT_IMPORT_API = PHASE >= 5 or SUBPHASE == "5D"
+MEMORY_CONTROL_API = PHASE >= 6 or SUBPHASE in {"6A", "6B", "6C", "6D"}
 
 
 def run(command: list[str]) -> None:
@@ -147,6 +148,10 @@ def tests() -> None:
     if CHAT_IMPORT_API:
         uv_run("pytest", "-q", "apps/server/tests/test_import_api.py")
         uv_run("python", "apps/server/import_api_demo.py")
+    if MEMORY_CONTROL_API:
+        uv_run("pytest", "-q", "apps/server/tests/test_memory_control.py")
+        uv_run("python", "apps/server/memory_control_demo.py")
+        uv_run("python", "apps/server/memory_control_http_demo.py")
     if BACKEND_FOUNDATION:
         uv_run("pytest", "-q", "apps/server/tests")
 
@@ -298,6 +303,11 @@ def verify() -> None:
         print("PASS: Phase 5C atomic relationship message merge and 10k PostgreSQL import")
     if CHAT_IMPORT_API:
         print("PASS: Phase 5D authenticated one-upload import, cleanup, pagination and 10k HTTP")
+    if MEMORY_CONTROL_API:
+        print("PASS: Phase 6A Memory Control Service, signed API and Agent integration")
+        print("DEFERRED TO 6B: Undo/Delete Public Controls")
+        print("DEFERRED TO 6C: Retention Policy")
+        print("DEFERRED TO PHASE 7: Mobile")
     if AGENT_STREAMING:
         print("PASS: Typed runtime streaming and eight standalone Phase 3 E2E cases")
     if PHASE < 7:
@@ -330,10 +340,16 @@ def verify() -> None:
             raise RuntimeError("Phase 5 import pipeline gate is incomplete")
         print("PASS: Phase 4 API")
         print("PASS: Phase 5 Chat Import and Relationship Data Pipeline")
+        if MEMORY_CONTROL_API:
+            print("PASS: Phase 6A Memory Control Service and Public Contracts")
         print("DEFERRED: Chat Analysis")
         print("DEFERRED: Mobile")
         print("DEFERRED: RAG")
-        print("PASS: all active Phase 0..5 gates")
+        print(
+            "PASS: all active Phase 0..5 and 6A gates"
+            if MEMORY_CONTROL_API
+            else "PASS: all active Phase 0..5 gates"
+        )
         return
     if PHASE == 4:
         if not all(

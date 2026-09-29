@@ -1,5 +1,9 @@
 # Phase 4B Agent REST API
 
+Phase 6A adds signed memory control and inspection endpoints alongside this
+Agent endpoint. See [Memory API](MEMORY_API.md). Their changes affect later
+Agent recall and writes through the same PostgreSQL MemoryStore.
+
 Phase 5D also exposes a separate authenticated import workflow at
 `/api/v1/chat-imports` and paginated RelationshipMessage history. It uses the
 same Bearer verifier but does not add imported history to Agent inputs or

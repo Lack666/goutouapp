@@ -19,7 +19,7 @@ as implemented by a placeholder directory or a golden expectation.
 | 3 | Standalone LangGraph runtime and Agent streaming integration | PASS |
 | 4 | Agent Service and API transport over the standalone runtime | PASS |
 | 5 | Chat Import and Relationship Data Pipeline | PASS (5A–5D) |
-| 6 | User-facing memory controls and retention policy integration | PENDING |
+| 6 | User-facing memory controls and retention policy integration | IN PROGRESS (6A PASS) |
 | 7 | Expo React Native MVP | PENDING |
 | 8 | Mobile API integration, generated client and stream consumption | PENDING |
 | 9 | Security, privacy, reliability and deletion | PENDING |
@@ -128,6 +128,16 @@ Phase 6 in this roadmap. Neither future phase was implemented in Phase 4D.
   See [Import API](IMPORT_API.md), [Import Artifacts](IMPORT_ARTIFACTS.md),
   [ADR 0025](adr/0025-import-artifact-api.md) and
   [Phase 5D acceptance](PHASE_5D_ACCEPTANCE.md).
+
+### Phase 6A — memory control service and public contracts
+
+- Added authenticated, typed consent, pause, resume and inspect APIs over the
+  Phase 3 authoritative MemoryStore; PostgreSQL serializes control changes.
+- Added bounded keyset memory inspection, owner/person/relationship validation,
+  signed HTTP and Agent integration tests, plus standalone and socket demos.
+  Undo/deletion remain 6B, retention policy 6C, mobile Phase 7. See
+  [Memory API](MEMORY_API.md), [ADR 0026](adr/0026-memory-control-plane.md)
+  and [Phase 6A acceptance](PHASE_6A_ACCEPTANCE.md).
 
 ### Phase 0
 

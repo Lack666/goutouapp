@@ -1,5 +1,14 @@
 # Server — FastAPI, Agent Service and signed REST boundary
 
+Phase 6A adds signed memory control and bounded inspection APIs over the same
+durable MemoryStore used by the Agent. See [Memory API](../../docs/MEMORY_API.md).
+The keyless PostgreSQL + MockLLM and local signed HTTP demos are:
+
+```powershell
+uv --cache-dir .cache/uv --no-managed-python run --locked python apps/server/memory_control_demo.py
+uv --cache-dir .cache/uv --no-managed-python run --locked python apps/server/memory_control_http_demo.py
+```
+
 Phase 5D adds one-upload authenticated chat import, explicit speaker and
 Relationship binding, artifact-backed finalization and bounded relationship
 history. See [Import API](../../docs/IMPORT_API.md) and

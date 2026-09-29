@@ -1,15 +1,23 @@
 """PostgreSQL adapter for the Agent-owned MemoryStore protocol."""
 
 from collections.abc import Callable
+from datetime import datetime
 from uuid import UUID, uuid4
 
-from sqlalchemy import delete, func, select
+from sqlalchemy import and_, delete, func, or_, select
 from sqlalchemy.dialects.postgresql import insert
 from sqlalchemy.orm import Session
 
-from app.agent.contracts import MemoryControl, MemoryRecord
-from app.agent.memory import MAX_OPERATIONS, MAX_TOTAL, content_key
-from app.db.models import MemoryControlRow, MemoryOperationRow, MemoryRecordRow, Relationship
+from app.agent.contracts import MemoryControl, MemoryRecord, MemoryWriteStatus
+from app.agent.memory import MAX_OPERATIONS, MAX_TOTAL, MemoryWriteBlocked, content_key
+from app.db.models import (
+    MemoryControlRow,
+    MemoryOperationRow,
+    MemoryRecordRow,
+    Person,
+    Relationship,
+    User,
+)
 
 
 class SQLAlchemyMemoryStore:
@@ -17,16 +25,40 @@ class SQLAlchemyMemoryStore:
         self._session_factory = session_factory
 
     def get_control(self, user_id: UUID) -> MemoryControl:
+        return self.control_state(user_id)[0]
+
+    def control_state(self, user_id: UUID) -> tuple[MemoryControl, datetime | None]:
         with self._session_factory() as db:
             row = db.scalar(select(MemoryControlRow).where(MemoryControlRow.user_id == user_id))
             return (
-                MemoryControl(consent_enabled=row.consent_enabled, paused=row.paused)
-                if row
-                else MemoryControl()
+                (
+                    MemoryControl(consent_enabled=row.consent_enabled, paused=row.paused),
+                    row.updated_at,
+                )
+                if row is not None
+                else (MemoryControl(), None)
             )
+
+    def owner_exists(self, user_id: UUID) -> bool:
+        with self._session_factory() as db:
+            return db.scalar(select(User.id).where(User.id == user_id)) is not None
+
+    def person_exists(self, user_id: UUID, person_id: UUID) -> bool:
+        with self._session_factory() as db:
+            return (
+                db.scalar(
+                    select(Person.id).where(Person.user_id == user_id, Person.id == person_id)
+                )
+                is not None
+            )
+
+    def relationship_person(self, user_id: UUID, relationship_id: UUID) -> UUID | None:
+        return self.resolve_person(user_id, relationship_id)
 
     def set_control(self, user_id: UUID, control: MemoryControl) -> None:
         with self._session_factory() as db:
+            if db.scalar(select(User.id).where(User.id == user_id).with_for_update()) is None:
+                raise LookupError("memory owner not found")
             row = db.scalar(select(MemoryControlRow).where(MemoryControlRow.user_id == user_id))
             if row is None:
                 row = MemoryControlRow(
@@ -40,6 +72,102 @@ class SQLAlchemyMemoryStore:
                 row.consent_enabled = control.consent_enabled
                 row.paused = control.paused
             db.commit()
+
+    def change_control(self, user_id: UUID, decision: str) -> MemoryControl | None:
+        if decision not in {"grant", "revoke", "pause", "resume"}:
+            raise ValueError("invalid memory control decision")
+        with self._session_factory() as db:
+            if db.scalar(select(User.id).where(User.id == user_id).with_for_update()) is None:
+                raise LookupError("memory owner not found")
+            row = db.scalar(select(MemoryControlRow).where(MemoryControlRow.user_id == user_id))
+            current = MemoryControl(
+                consent_enabled=row.consent_enabled if row is not None else False,
+                paused=row.paused if row is not None else False,
+            )
+            if decision in {"pause", "resume"} and not current.consent_enabled:
+                return None
+            target = current.model_copy()
+            if decision == "grant":
+                target.consent_enabled = True
+            elif decision == "revoke":
+                target.consent_enabled = False
+                target.paused = True
+            else:
+                target.paused = decision == "pause"
+            if row is None:
+                db.add(
+                    MemoryControlRow(
+                        id=uuid4(),
+                        user_id=user_id,
+                        consent_enabled=target.consent_enabled,
+                        paused=target.paused,
+                    )
+                )
+            elif target != current:
+                row.consent_enabled = target.consent_enabled
+                row.paused = target.paused
+            db.commit()
+            return target
+
+    def page_records(
+        self,
+        user_id: UUID,
+        *,
+        person_id: UUID | None,
+        relationship_id: UUID | None,
+        after: tuple[datetime, UUID] | None,
+        limit: int,
+    ) -> list[MemoryRecord]:
+        with self._session_factory() as db:
+            query = select(MemoryRecordRow).where(MemoryRecordRow.owner_user_id == user_id)
+            if person_id is not None:
+                query = query.where(MemoryRecordRow.person_id == person_id)
+            if relationship_id is not None:
+                query = query.where(MemoryRecordRow.relationship_id == relationship_id)
+            if after is not None:
+                created_at, record_id = after
+                query = query.where(
+                    or_(
+                        MemoryRecordRow.created_at < created_at,
+                        and_(
+                            MemoryRecordRow.created_at == created_at,
+                            MemoryRecordRow.id < record_id,
+                        ),
+                    )
+                )
+            rows = db.scalars(
+                query.order_by(MemoryRecordRow.created_at.desc(), MemoryRecordRow.id.desc()).limit(
+                    limit
+                )
+            ).all()
+            return [self._record(row) for row in rows]
+
+    def get_record(self, user_id: UUID, memory_id: UUID) -> MemoryRecord | None:
+        with self._session_factory() as db:
+            row = db.scalar(
+                select(MemoryRecordRow).where(
+                    MemoryRecordRow.owner_user_id == user_id,
+                    MemoryRecordRow.id == memory_id,
+                )
+            )
+            return self._record(row) if row is not None else None
+
+    @staticmethod
+    def _record(row: MemoryRecordRow) -> MemoryRecord:
+        return MemoryRecord(
+            id=row.id,
+            owner_user_id=row.owner_user_id,
+            subject_id=row.subject_id,
+            person_id=row.person_id,
+            relationship_id=row.relationship_id,
+            type=row.type,
+            content=row.content,
+            source=row.source,
+            evidence=row.evidence,
+            confidence=row.confidence,
+            created_at=row.created_at,
+            updated_at=row.updated_at,
+        )
 
     def resolve_person(self, user_id: UUID, relationship_id: UUID) -> UUID | None:
         with self._session_factory() as db:
@@ -57,26 +185,23 @@ class SQLAlchemyMemoryStore:
             rows = db.scalars(
                 query.order_by(MemoryRecordRow.created_at.desc(), MemoryRecordRow.id)
             ).all()
-            return [
-                MemoryRecord(
-                    id=row.id,
-                    owner_user_id=row.owner_user_id,
-                    subject_id=row.subject_id,
-                    person_id=row.person_id,
-                    relationship_id=row.relationship_id,
-                    type=row.type,
-                    content=row.content,
-                    source=row.source,
-                    evidence=row.evidence,
-                    confidence=row.confidence,
-                    created_at=row.created_at,
-                    updated_at=row.updated_at,
-                )
-                for row in rows
-            ]
+            return [self._record(row) for row in rows]
 
     def save_record(self, record: MemoryRecord) -> bool:
         with self._session_factory() as db:
+            # Serialize the final write gate with API and Agent control changes.
+            if (
+                db.scalar(select(User.id).where(User.id == record.owner_user_id).with_for_update())
+                is None
+            ):
+                raise MemoryWriteBlocked(MemoryWriteStatus.SKIPPED_NO_CONSENT)
+            control = db.scalar(
+                select(MemoryControlRow).where(MemoryControlRow.user_id == record.owner_user_id)
+            )
+            if control is None or not control.consent_enabled:
+                raise MemoryWriteBlocked(MemoryWriteStatus.SKIPPED_NO_CONSENT)
+            if control.paused:
+                raise MemoryWriteBlocked(MemoryWriteStatus.SKIPPED_PAUSED)
             if record.person_id is not None:
                 valid = db.scalar(
                     select(Relationship.id).where(

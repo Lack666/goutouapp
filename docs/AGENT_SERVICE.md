@@ -106,3 +106,10 @@ uv --cache-dir .cache/uv --no-managed-python run --locked --env-file .env python
 
 Both operate without FastAPI, external model credentials or Mobile. The demo
 creates and drops a random test database after Alembic migration.
+
+## Phase 6A memory control service
+
+`MemoryControlService` is a separate authenticated application service over
+the Phase 3 `SQLAlchemyMemoryStore`. It shares the `memory_controls` and
+`memory_records` tables with `AgentService`'s runtime. Control calls never
+invoke `AgentService` or a provider. See [Memory API](MEMORY_API.md).

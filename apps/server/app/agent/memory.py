@@ -20,6 +20,16 @@ MAX_TOTAL = 200
 MAX_OPERATIONS = 20
 RECALL_LIMIT = 8
 ALLOWED_TYPES = frozenset({"user", "object", "relationship"})
+
+
+class MemoryWriteBlocked(Exception):
+    """The durable control changed between candidate validation and insertion."""
+
+    def __init__(self, status: MemoryWriteStatus) -> None:
+        self.status = status
+        super().__init__(status.value)
+
+
 BLOCKED_CONTENT = re.compile(
     r"(?:身份证|住址|密码|口令|验证码|api[_ -]?key|access[_ -]?token|"
     r"整份聊天|聊天记录|完整对话|chain.of.thought|系统提示|system prompt|"
@@ -103,6 +113,7 @@ def validate_candidate(
 class MemoryStore(Protocol):
     def get_control(self, user_id: UUID) -> MemoryControl: ...
     def set_control(self, user_id: UUID, control: MemoryControl) -> None: ...
+    def change_control(self, user_id: UUID, decision: str) -> MemoryControl | None: ...
     def resolve_person(self, user_id: UUID, relationship_id: UUID) -> UUID | None: ...
     def list_records(self, user_id: UUID, person_id: UUID | None = None) -> list[MemoryRecord]: ...
     def save_record(self, record: MemoryRecord) -> bool: ...
@@ -129,6 +140,22 @@ class InMemoryMemoryStore:
 
     def set_control(self, user_id: UUID, control: MemoryControl) -> None:
         self.controls[user_id] = control.model_copy()
+
+    def change_control(self, user_id: UUID, decision: str) -> MemoryControl | None:
+        current = self.get_control(user_id)
+        if decision == "grant":
+            current.consent_enabled = True
+        elif decision == "revoke":
+            current.consent_enabled = False
+            current.paused = True
+        elif decision in {"pause", "resume"}:
+            if not current.consent_enabled:
+                return None
+            current.paused = decision == "pause"
+        else:
+            raise ValueError("invalid memory control decision")
+        self.set_control(user_id, current)
+        return current
 
     def resolve_person(self, user_id: UUID, relationship_id: UUID) -> UUID | None:
         return self.relationships.get((user_id, relationship_id))
@@ -239,8 +266,7 @@ class MemoryService:
     def grant_consent(self, user_id: UUID, *, confirmed: bool) -> MemoryReceipt:
         if not confirmed:
             return MemoryReceipt(status=MemoryWriteStatus.SKIPPED_NO_CONSENT)
-        current = self.control(user_id)
-        self.store.set_control(user_id, MemoryControl(consent_enabled=True, paused=current.paused))
+        self.store.change_control(user_id, "grant")
         return MemoryReceipt(status=MemoryWriteStatus.CONTROL_UPDATED)
 
     def load_for_context(
@@ -266,19 +292,16 @@ class MemoryService:
         return self.store.list_records(user_id, person_id)
 
     def apply_control(self, user_id: UUID, decision: MemoryDecision) -> MemoryReceipt:
-        current = self.control(user_id)
         if decision == MemoryDecision.PAUSE:
-            if not current.consent_enabled:
-                return MemoryReceipt(status=MemoryWriteStatus.SKIPPED_NO_CONSENT)
-            self.store.set_control(user_id, MemoryControl(consent_enabled=True, paused=True))
+            operation = "pause"
         elif decision == MemoryDecision.RESUME:
-            if not current.consent_enabled:
-                return MemoryReceipt(status=MemoryWriteStatus.SKIPPED_NO_CONSENT)
-            self.store.set_control(user_id, MemoryControl(consent_enabled=True, paused=False))
+            operation = "resume"
         elif decision == MemoryDecision.REVOKE_KEEP:
-            self.store.set_control(user_id, MemoryControl(consent_enabled=False, paused=True))
+            operation = "revoke"
         else:
             return MemoryReceipt(status=MemoryWriteStatus.PENDING_CONFIRMATION)
+        if self.store.change_control(user_id, operation) is None:
+            return MemoryReceipt(status=MemoryWriteStatus.SKIPPED_NO_CONSENT)
         return MemoryReceipt(status=MemoryWriteStatus.CONTROL_UPDATED)
 
     def persist_candidates(
@@ -330,10 +353,13 @@ class MemoryService:
                 created_at=now,
                 updated_at=now,
             )
-            if self.store.save_record(record):
-                saved += 1
-            else:
-                duplicates += 1
+            try:
+                if self.store.save_record(record):
+                    saved += 1
+                else:
+                    duplicates += 1
+            except MemoryWriteBlocked as exc:
+                return MemoryReceipt(status=exc.status)
         return MemoryReceipt(
             status=MemoryWriteStatus.SAVED if saved else MemoryWriteStatus.DUPLICATE,
             saved_count=saved,
@@ -353,7 +379,7 @@ class MemoryService:
             return 0
         count = self.store.delete_all(user_id)
         if revoke:
-            self.store.set_control(user_id, MemoryControl(consent_enabled=False, paused=True))
+            self.store.change_control(user_id, "revoke")
         return count
 
     def undo_last(self, user_id: UUID) -> MemoryReceipt:
