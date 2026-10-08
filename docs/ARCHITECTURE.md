@@ -18,7 +18,7 @@ idempotency around the standalone runtime.
 
 ```mermaid
 flowchart LR
-  Mobile[React Native + Expo] -->|REST / WebSocket| Server[FastAPI server]
+  Mobile[React Native + Expo] -.->|Phase 8: REST / POST SSE| Server[FastAPI server]
   Server --> Database[(PostgreSQL)]
   Server -->|AgentService| Runtime[Independent LangGraph Agent Runtime]
   Runtime -->|deterministic reference loader| Knowledge[Preserved goutoujunshi Skill]
@@ -34,8 +34,9 @@ flowchart LR
   any external Agent Harness such as Codex or Claude Code.
 - `knowledge/goutoujunshi` preserves the upstream Skill. Its content is not
   modified as part of app development.
-- Mobile and server are separate deployments. They communicate through REST
-  and WebSocket; PostgreSQL belongs to the server side.
+- Mobile and server are separate deployments. Phase 8 will integrate REST and
+  the actual Phase 4 POST SSE transport; the original WebSocket direction is
+  not implemented. PostgreSQL belongs to the server side. Phase 7A is local only.
 
 Further behavior requirements are recorded in `docs/SKILL_CONTRACT.md` and
 future phase decisions in `docs/adr/`.
@@ -369,3 +370,28 @@ and retained metadata. Imported relationship messages and Agent conversations
 are separate storage domains. Phase 6 acceptance exercises actual signed HTTP,
 LangGraph, Mock LLM and PostgreSQL together; it does not establish production
 scheduler, backup or restore infrastructure. Mobile remains Phase 7.
+
+## Phase 7A Mobile foundation boundary
+
+`Expo Router root layout → ThemeProvider + DataSourceProvider → Screens →
+UI State/ViewModels` is a separate Expo SDK 57 / strict TypeScript client.
+Home opens five Stack leaf routes: Chat, Relationship/Profile, Import/Analysis,
+History and Settings. Each leaf returns through history or Home for a direct link;
+unknown routes recover to Home. Shared React Native components own safe-area,
+scroll/keyboard layout and token-based presentation. Theme preference is real,
+system/light/dark and session-local across routes.
+
+Only the composition root selects the local Demo source; screens do not import
+fixtures. The read-only state boundary is loading/empty/error with safe ViewModels.
+State-preview/Retry controls have actual local effects, while sending, profile
+editing and file selection are disabled. No Agent output, account, Memory save,
+network upload or connected-server claim is fabricated.
+
+No REST/SSE, JWT session, OpenAPI generator, provider call or database connection
+is implemented here. Phase 8 will translate authoritative server DTOs/events
+through adapters at the UI boundary. Existing server contracts, frozen knowledge,
+Python locks and Agent behavior are unchanged. Root verification retains Phase
+0–6 and adds Mobile static gates; actual Expo Web smoke is separate, Android NOT
+RUN. See [Mobile architecture](MOBILE_ARCHITECTURE.md),
+[ADR 0029](adr/0029-mobile-shell-and-data-boundary.md) and
+[7A acceptance](PHASE_7A_ACCEPTANCE.md).

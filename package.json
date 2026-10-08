@@ -3,6 +3,8 @@
   "private": true,
   "packageManager": "pnpm@11.25.0",
   "scripts": {
+    "mobile:verify": "python scripts/check_mobile.py",
+    "mobile:web": "pnpm --filter @goutou/mobile web",
     "doctor": "python scripts/verify.py doctor",
     "test": "python scripts/verify.py test",
     "eval": "python scripts/verify.py eval",

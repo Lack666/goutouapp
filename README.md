@@ -11,13 +11,15 @@ Phase 0–6 已完成（Phase 6A–6D PASS）。当前有 83 个合成 Golden Ca
 独立 LangGraph Runtime、真实 JWT 的 Agent REST/SSE、显式绑定的聊天导入流水线，
 以及 consent/查看/暂停/恢复、受保护撤销、确认删除、有限保留期和维护 CLI。
 可用 Mock LLM 无密钥运行；真实模型的端到端语义质量尚未验证。
-生产调度、备份轮换与恢复删除重放尚未部署。React Native 客户端为 Phase 7。
+生产调度、备份轮换与恢复删除重放尚未部署。Phase 7A 已建立真实 Expo React Native
+导航骨架、六个页面入口、共享主题与本地状态预览；Phase 7 整体仍未完成。
 阶段状态以代码和验收结果为准，参见 [Master Plan](docs/MASTER_PLAN.md)
-和 [Phase 6 最终验收报告](docs/PHASE_6_FINAL_ACCEPTANCE.md)。
+和 [Phase 6 最终验收报告](docs/PHASE_6_FINAL_ACCEPTANCE.md)、
+[Phase 7A 验收报告](docs/PHASE_7A_ACCEPTANCE.md)。
 
 ## 目录
 
-- `apps/mobile`：未来的 Expo 手机客户端。
+- `apps/mobile`：Expo 手机客户端基础与导航骨架（本地 Demo）。
 - `apps/server`：FastAPI/PostgreSQL 基础、LLM Provider 与独立 Agent Runtime。
 - `knowledge/goutoujunshi`：未修改的上游 Skill 内容。
 - `knowledge/upstream-manifest.json`：上游仓库、commit、License 和文件哈希。
@@ -35,6 +37,22 @@ Phase 0–6 已完成（Phase 6A–6D PASS）。当前有 83 个合成 Golden Ca
 
 配置模板见 [.env.example](.env.example)。只在服务端使用真实密钥；本地
 `.env` 已被 Git 忽略，不提交。运行时 Python 依赖由 `uv.lock` 锁定。
+
+Mobile 使用 Node 24.15.0（SDK 57 最低 22.13+）和仓库固定 pnpm 11.25.0，
+依赖由根目录 `pnpm-lock.yaml` 锁定：
+
+```powershell
+pnpm --version
+pnpm install --frozen-lockfile
+pnpm --filter @goutou/mobile web
+pnpm mobile:verify
+```
+
+`make verify` 同时运行 Mobile 静态门禁和全部已完成后端阶段回归。
+真实 Expo Web smoke 单独运行；本阶段 Web 已验证，Android 尚未运行。
+界面明确标为演示，发送消息、上传和编辑资料禁用。主题切换、导航与本地错误重试
+有效；不包含假登录或真实服务器数据。Phase 8 才接入生成客户端及 REST/SSE。
+详细启动、Chrome smoke 和 Android 条件见 [Mobile 架构](docs/MOBILE_ARCHITECTURE.md)。
 
 Phase 6 独立端到端演示使用隔离 PostgreSQL 测试库（`TEST_DATABASE_URL` 数据库名
 以 `_test` 结尾），真实本地 Uvicorn socket、签名 JWT 与 Mock LLM：

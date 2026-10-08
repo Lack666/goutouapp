@@ -1,0 +1,13 @@
+{
+  "expo": {
+    "name": "狗头军师",
+    "slug": "goutoujunshi-mobile",
+    "version": "0.1.0",
+    "scheme": "goutoujunshi",
+    "userInterfaceStyle": "automatic",
+    "orientation": "default",
+    "plugins": ["expo-router", "expo-status-bar"],
+    "web": { "bundler": "metro", "output": "single" },
+    "android": { "package": "com.goutoujunshi.mobile" }
+  }
+}

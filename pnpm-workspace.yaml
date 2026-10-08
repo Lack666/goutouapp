@@ -1,2 +1,14 @@
 packages:
   - apps/mobile
+
+storeDir: .pnpm-store
+saveExact: true
+strictPeerDependencies: true
+minimumReleaseAgeStrict: true
+allowBuilds:
+  unrs-resolver: true
+minimumReleaseAgeExclude:
+  - '@playwright/test@1.64.0'
+  - '@testing-library/react-native@14.1.0'
+  - playwright-core@1.64.0
+  - playwright@1.64.0

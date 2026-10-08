@@ -43,6 +43,7 @@ MEMORY_RETENTION = (
 MEMORY_PHASE6_E2E = (
     PHASE >= 6 or SUBPHASE == "6D" or (ROOT / "apps/server/tests/test_phase6_e2e.py").is_file()
 )
+MOBILE_FOUNDATION = (ROOT / "apps/mobile/package.json").is_file()
 
 
 def run(command: list[str]) -> None:
@@ -199,6 +200,7 @@ def lint() -> None:
         "scripts/check_action_response_replay.py",
         "scripts/check_memory_replay.py",
         "scripts/check_db_migrations.py",
+        "scripts/check_mobile.py",
     )
     uv_run(
         "ruff",
@@ -216,6 +218,7 @@ def lint() -> None:
         "scripts/check_action_response_replay.py",
         "scripts/check_memory_replay.py",
         "scripts/check_db_migrations.py",
+        "scripts/check_mobile.py",
     )
 
 
@@ -257,7 +260,7 @@ def repository_checks() -> None:
             raise RuntimeError(f"Git does not ignore {name}")
     mobile = ROOT / "apps" / "mobile"
     if mobile.exists():
-        for path in mobile.rglob("*"):
+        for path in list((mobile / "app").rglob("*")) + list((mobile / "src").rglob("*")):
             if path.is_file() and path.suffix in {".ts", ".tsx", ".js", ".json"}:
                 content = path.read_text(encoding="utf-8")
                 if "EXPO_PUBLIC_OPENAI" in content or "EXPO_PUBLIC_DEEPSEEK" in content:
@@ -271,6 +274,8 @@ def verify() -> None:
     evals()
     repository_checks()
     lint()
+    if MOBILE_FOUNDATION:
+        run([sys.executable, "scripts/check_mobile.py"])
     if DATABASE_FOUNDATION:
         print("PASS: PostgreSQL migration and integration gate")
     elif BACKEND_FOUNDATION:
@@ -342,10 +347,11 @@ def verify() -> None:
             print("PASS: Phase 6D signed HTTP Agent/Memory end-to-end integration")
         else:
             print("DEFERRED TO 6D: Phase 6 Final Acceptance")
-        print("DEFERRED TO PHASE 7: Mobile")
+        if not MOBILE_FOUNDATION:
+            print("DEFERRED TO PHASE 7: Mobile")
     if AGENT_STREAMING:
         print("PASS: Typed runtime streaming and eight standalone Phase 3 E2E cases")
-    if PHASE < 7:
+    if not MOBILE_FOUNDATION:
         print("DEFERRED: Mobile lint/typecheck begin at Phase 7")
     if PHASE > 6:
         raise RuntimeError(
@@ -380,7 +386,12 @@ def verify() -> None:
         if MEMORY_MUTATION_API:
             print("PASS: Phase 6B Memory Undo, Deletion and Confirmation Boundary")
         print("DEFERRED: Chat Analysis")
-        print("DEFERRED: Mobile")
+        if MOBILE_FOUNDATION:
+            print("PASS: Phase 7A Mobile static gates")
+            print("SEPARATE GATE: Expo Web / Android runtime smoke")
+            print("DEFERRED: Phase 7B+ feature UI and Phase 8 API integration")
+        else:
+            print("DEFERRED: Mobile")
         print("DEFERRED: RAG")
         if PHASE == 6:
             if not all(
@@ -389,7 +400,8 @@ def verify() -> None:
                 raise RuntimeError("Phase 6 memory acceptance gate is incomplete")
             print("PASS: Phase 6 Memory Controls and Retention")
             print("PRODUCTION SCHEDULER / BACKUP / RESTORE REPLAY: NOT DEPLOYED")
-            print("PASS: all active Phase 0..6 gates")
+            suffix = " and 7A static gates" if MOBILE_FOUNDATION else ""
+            print(f"PASS: all active Phase 0..6{suffix}")
             return
         active = "Phase 0..5"
         if MEMORY_CONTROL_API:

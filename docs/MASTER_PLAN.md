@@ -20,7 +20,7 @@ as implemented by a placeholder directory or a golden expectation.
 | 4 | Agent Service and API transport over the standalone runtime | PASS |
 | 5 | Chat Import and Relationship Data Pipeline | PASS (5A–5D) |
 | 6 | User-facing memory controls and retention policy integration | PASS (6A–6D) |
-| 7 | Expo React Native MVP | PENDING |
+| 7 | Expo React Native MVP | IN PROGRESS (7A PASS; whole phase pending) |
 | 8 | Mobile API integration, generated client and stream consumption | PENDING |
 | 9 | Security, privacy, reliability and deletion | PENDING |
 | 10 | Optional hybrid RAG with pgvector | PENDING |
@@ -67,6 +67,26 @@ as implemented by a placeholder directory or a golden expectation.
 12. Locked dependencies, CI, Docker/Compose, EAS preview and release checklist.
 
 ## Implementation log
+
+### Phase 7A — Expo React Native foundation and navigation shell
+
+- Added an actual Expo SDK 57 project in the pnpm workspace, strict TypeScript,
+  Expo Router Stack and reachable Home/Chat/Relationship/Import/History/Settings
+  skeletons. Central theme and shared accessible components handle small screens.
+- The injected local read-only DataSource and ViewModels are separate from
+  screens. All pages declare Demo; state previews/retry and session-local theme
+  changes work. Unimplemented business controls are disabled.
+- Root verify includes frozen dependency/peer/SDK/static Mobile gates separately
+  from live Expo Web smoke. All Phase 0–6 regression gates remain active.
+  Android is NOT RUN. Whole Phase 7, Phase 7B feature UI and Phase 8 generated
+  client/auth/API/progress streaming remain deferred.
+- After CODE/TEST/DOC/DEMO/REGRESSION pass, marker advances only to
+  `completed_phase=6`, `completed_subphase=7A`. The pre-marker full verify exited
+  0 with 23 Mobile tests, 448 backend tests and all prior gates; live Expo Web
+  smoke separately passed. Final accepted-marker full verify also exited 0.
+  See [Mobile architecture](MOBILE_ARCHITECTURE.md),
+  [ADR 0029](adr/0029-mobile-shell-and-data-boundary.md) and
+  [Phase 7A acceptance](PHASE_7A_ACCEPTANCE.md).
 
 Phase 6D is accepted after full verification of CODE/TEST/DOC/DEMO/REGRESSION.
 Integration adds a signed HTTP Agent/Memory acceptance suite and full
