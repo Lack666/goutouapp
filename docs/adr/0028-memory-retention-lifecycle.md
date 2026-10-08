@@ -38,3 +38,10 @@ backup or provider erasure. The separate backup policy describes a planned
 or scheduler is claimed deployed. No Mobile, RAG, queue or new reasoning.
 
 Authoritative policies: MEMORY_RETENTION.md and MEMORY_BACKUP_DELETION_POLICY.md.
+
+Phase 6D clarification: an expired row still owns its scoped unique content key
+until physically removed. A new authorized save may atomically remove just that
+expired collision and cascade its old undo, then insert a new UUID/creation/expiry
+and undo operation. It reuses the owner lock and durable final consent/pause gate;
+failure rolls back both steps. Active duplicate saves do not renew lifetime.
+No new ADR, schema, graph or runtime abstraction is required for this repair.

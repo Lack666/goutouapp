@@ -1,5 +1,18 @@
 # Phase 3G–3H long-term memory runtime
 
+Phase 6D completes integration acceptance of the 6A–6C controls. The same
+AgentService composition is exercised through signed REST/SSE with PostgreSQL
+and a deterministic Mock LLM, without overriding identity verification. See
+[Phase 6 final acceptance](PHASE_6_FINAL_ACCEPTANCE.md).
+
+A valid new save of expired identical content produces a new record ID,
+creation time, expiry and undo operation. The SQL adapter checks durable
+consent/pause/scope before removing the expired unique-key collision and
+inserting its replacement in one owner-locked transaction. Failure rolls back
+both removal and insertion. Active duplicates never renew expiry. Standalone
+in-memory behavior follows the same rule using the new save's timestamp.
+Unauthorized or paused requests leave the expired row untouched until cleanup.
+
 Phase 6A exposes signed user controls and bounded inspection over this same
 store. Phase 6B adds guarded undo and confirmed deletion; see
 [Memory API](MEMORY_API.md), [Memory Deletion](MEMORY_DELETION.md),

@@ -1,5 +1,22 @@
 # Server — FastAPI, Agent Service and signed REST boundary
 
+Phase 6D integrates memory through real signed HTTP and the production
+AgentService/LangGraph composition; Mock LLM replaces only the provider.
+Expired same-content saves replace the expired primary row and its undo target
+atomically under the existing owner lock and durable control gate. See
+[Phase 6 final acceptance](../../docs/PHASE_6_FINAL_ACCEPTANCE.md).
+
+```powershell
+uv --cache-dir .cache/uv --no-managed-python run --locked --env-file .env pytest -q apps/server/tests/test_phase6_e2e.py
+uv --cache-dir .cache/uv --no-managed-python run --locked --env-file .env python apps/server/memory_phase6_e2e_demo.py
+```
+
+Set a disposable `TEST_DATABASE_URL` namespace ending `_test`. The full demo
+starts a real Uvicorn socket and validates consent/save/inspect/pause/resume,
+REST/SSE, guarded undo/replay, confirmation/deletion/receipts, expiry and bounded
+cleanup. Output contains operation counts/status/IDs only. Production scheduler,
+backup encryption/rotation and restore replay remain **NOT DEPLOYED**.
+
 Phase 6A adds signed memory control and bounded inspection APIs over the same
 durable MemoryStore used by the Agent. Phase 6B adds guarded undo and confirmed
 deletion over that store. See [Memory API](../../docs/MEMORY_API.md) and
@@ -85,8 +102,8 @@ not assert database or model readiness. `GET /ready` returns 200 when PostgreSQL
 responds to `SELECT 1`, otherwise a generic 503 error.
 
 Run `.\make.cmd test` for inherited, LLM, database and integration tests,
-`.\make.cmd lint` for Ruff, and `.\make.cmd verify` for all active Phase 0–3
-and Phase 4 gates.
+`.\make.cmd lint` for Ruff, and `.\make.cmd verify` for all active Phase 0–6
+gates, including the final signed Agent/Memory E2E suite and socket demo.
 The database gate requires a separate `TEST_DATABASE_URL` ending in `_test`;
 it creates and removes disposable databases and never uses the development DB.
 The Python dependency versions are locked in the root `uv.lock`. The root

@@ -194,17 +194,29 @@ class InMemoryMemoryStore:
             record.type,
             content_key(record.content, record.relationship_id),
         )
-        if any(
+        existing = next(
             (
-                item.owner_user_id,
-                item.subject_id,
-                item.type,
-                content_key(item.content, item.relationship_id),
-            )
-            == key
-            for item in self.records.values()
-        ):
-            return False
+                item
+                for item in self.records.values()
+                if (
+                    item.owner_user_id,
+                    item.subject_id,
+                    item.type,
+                    content_key(item.content, item.relationship_id),
+                )
+                == key
+            ),
+            None,
+        )
+        if existing is not None:
+            if existing.expires_at > record.created_at:
+                return False
+            control = self.get_control(record.owner_user_id)
+            if not control.consent_enabled:
+                raise MemoryWriteBlocked(MemoryWriteStatus.SKIPPED_NO_CONSENT)
+            if control.paused:
+                raise MemoryWriteBlocked(MemoryWriteStatus.SKIPPED_PAUSED)
+            self.delete_one(record.owner_user_id, existing.id, existing.person_id)
         if len(self.list_records(record.owner_user_id)) >= MAX_TOTAL:
             raise ValueError("memory limit reached")
         self.records[record.id] = record.model_copy()

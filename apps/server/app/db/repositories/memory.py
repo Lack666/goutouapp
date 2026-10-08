@@ -235,16 +235,20 @@ class SQLAlchemyMemoryStore:
             ):
                 raise ValueError("memory scope is invalid")
             key = content_key(record.content, record.relationship_id)
-            existing = db.scalar(
-                select(MemoryRecordRow.id).where(
+            existing = db.execute(
+                select(MemoryRecordRow.id, MemoryRecordRow.expires_at).where(
                     MemoryRecordRow.owner_user_id == record.owner_user_id,
                     MemoryRecordRow.subject_id == record.subject_id,
                     MemoryRecordRow.type == record.type,
                     MemoryRecordRow.content_hash == key,
                 )
-            )
+            ).one_or_none()
             if existing is not None:
-                return False
+                if existing.expires_at > as_utc(self.clock()):
+                    return False
+                # A fresh, authorized save replaces only this expired collision.
+                # FK cascade invalidates its old undo operation; rollback restores both.
+                db.execute(delete(MemoryRecordRow).where(MemoryRecordRow.id == existing.id))
             count = db.scalar(
                 select(func.count())
                 .select_from(MemoryRecordRow)
@@ -276,6 +280,9 @@ class SQLAlchemyMemoryStore:
             inserted = (
                 db.execute(statement.returning(MemoryRecordRow.id)).scalar_one_or_none() is not None
             )
+            if not inserted and existing is not None:
+                db.rollback()
+                return False
             if inserted:
                 db.add(
                     MemoryOperationRow(

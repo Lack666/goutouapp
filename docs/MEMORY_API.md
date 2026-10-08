@@ -129,3 +129,36 @@ Receipts replay after their challenge is physically cleaned, with no retry cutof
 while owner and metadata remain intact. See [retention policy](MEMORY_RETENTION.md)
 and [backup/deletion policy](MEMORY_BACKUP_DELETION_POLICY.md). Primary deletion does
 not promise immediate backup/provider erasure.
+
+## Phase 6D integration and deletion disclosure
+
+The existing 13 memory endpoints retain their routes, signed Bearer JWT,
+owner-bound service contracts and narrow Pydantic views. No client owner override,
+maintenance endpoint or direct ORM object is exposed. Schema/extra-field errors
+are 422; invalid cursor/scope and operation keys are 400; owner-neutral missing
+resources are 404; stale/unavailable undo, invalid challenges and payload conflicts
+are 409; database failures are generic 503. See the existing error-code definitions.
+
+`MemoryConfirmationChallenge` and `MemoryMutationReceipt` additionally contain
+`deletion_scope_notice`: scoped primary Memory and associated undo history only;
+confirmation/mutation metadata follows its retention policy; chats, imports,
+identities, backups, logs and provider copies are outside the operation.
+`primary_store_only=true` is retained. Delete-person is structured Person scope,
+not erasure of everything mentioning a person.
+
+HTTP grant is honored by the real AgentService REST/SSE. Pause blocks read/write;
+revoke keeps inspection, sets consent=false/paused=true, and blocks new recall/write.
+Regrant preserves pause and requires explicit resume. Resume while revoked does
+not grant consent. A committed control change during candidate generation is
+rechecked inside the final owner-locked save. Context already loaded into an
+in-flight run cannot be retracted.
+
+Expired duplicate content can be saved again through a newly authorized Agent
+request with a new ID/creation/expiry/undo operation. Active duplicates remain
+duplicates. Conversation undo requires the guarded preview/execute API and returns
+pending_confirmation without mutation; high-risk safety precedes memory intents.
+Memory persistence failure keeps the completed answer and assistant Message,
+with generic failed memory status/warning, through REST and SSE.
+
+The full signed socket demo is `apps/server/memory_phase6_e2e_demo.py`.
+See [final acceptance](PHASE_6_FINAL_ACCEPTANCE.md).

@@ -75,3 +75,27 @@ rotation and restore quarantine. Application engineering owns primary lifecycle
 and replay invariants. The deployment owner must implement and test this runbook
 before production backup/restore claims are made. Complete account deletion,
 all-history deletion and a backup service remain outside Phase 6C.
+
+## Phase 6 final operational readiness
+
+Engineering completion and production deployment are independent. Phase 6D
+does not deploy a scheduler, backup system or restore reconciliation tooling.
+
+| Capability | Engineering evidence | Production status / required operator action |
+| --- | --- | --- |
+| Finite expiry and query-time exclusion | UTC boundary tests, real Agent recall excludes expired rows before cleanup | Code ready; configure finite new-save lifetime before rollout |
+| Bounded maintenance CLI | Dry-run, committed counts, FK undo cascade, restart/retry/concurrent cleanup tested | CLI ready; grant only maintenance operator DB privileges |
+| Periodic scheduling | One-shot command documented; no worker infrastructure added | **NOT DEPLOYED**; install hourly scheduler, retry and backlog alerts |
+| Backup encryption and custody | Requirements documented only | **NOT DEPLOYED**; provision encryption, separate keys, least privilege and copy inventory |
+| Daily backups and 35-day rotation | Proposed finite policy documented only | **NOT DEPLOYED**; automate copies, verified rotation and erasure of expired objects |
+| Restore isolation | Fail-closed restore runbook documented | **NOT DEPLOYED**; quarantine restored DB and block serving/mutations until reconciliation |
+| Post-backup deletion replay | Receipt limits and exact-history requirement documented | **NOT DEPLOYED**; authoritative current/WAL/history reconciliation and full restore drill required |
+| Receipt/key durability | Owner/key replay after challenge cleanup and conflicts tested; cleanup removes zero receipts | Code ready; protect current receipt metadata across restore and monitor storage growth |
+| Owner/person/relationship isolation | Signed HTTP inspection/mutation and actual Agent recall tested | Code ready; deployment auth/key custody and access audit must be configured |
+| Full Phase 5 data separation | Real HTTP import/bind/finalize, memory deletes and cleanup preserve imported and Agent data | Code ready; all-history/account deletion remains outside this scope |
+
+The passing local PostgreSQL + Mock LLM exercise proves primary-store engineering
+behavior. It is not evidence of deployed backups or a completed production restore
+drill. Do not reopen a restored Memory service with incomplete deletion or key
+evidence. Exact reconciliation, global recovery disable controls and purge tooling
+remain explicitly deferred.

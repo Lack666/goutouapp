@@ -19,7 +19,7 @@ as implemented by a placeholder directory or a golden expectation.
 | 3 | Standalone LangGraph runtime and Agent streaming integration | PASS |
 | 4 | Agent Service and API transport over the standalone runtime | PASS |
 | 5 | Chat Import and Relationship Data Pipeline | PASS (5A–5D) |
-| 6 | User-facing memory controls and retention policy integration | IN PROGRESS (6A–6C PASS) |
+| 6 | User-facing memory controls and retention policy integration | PASS (6A–6D) |
 | 7 | Expo React Native MVP | PENDING |
 | 8 | Mobile API integration, generated client and stream consumption | PENDING |
 | 9 | Security, privacy, reliability and deletion | PENDING |
@@ -67,6 +67,13 @@ as implemented by a placeholder directory or a golden expectation.
 12. Locked dependencies, CI, Docker/Compose, EAS preview and release checklist.
 
 ## Implementation log
+
+Phase 6D is accepted after full verification of CODE/TEST/DOC/DEMO/REGRESSION.
+Integration adds a signed HTTP Agent/Memory acceptance suite and full
+real socket demo, plus a minimal owner-locked atomic expired-duplicate resave fix.
+The Phase 6 final marker is updated only after all CODE/TEST/DOC/DEMO/REGRESSION
+gates pass. Production scheduler, backup and restore automation remain NOT
+DEPLOYED. See [Phase 6 final acceptance](PHASE_6_FINAL_ACCEPTANCE.md).
 
 Phase 2A–2D, Phase 3A–3H and Phase 4A–4D are complete. Phase 3 is accepted
 as a transport-independent Agent Runtime. Phase 4 adds the application
@@ -463,4 +470,19 @@ and verified with the lockfile.
   Production scheduling and backup automation are NOT DEPLOYED. See
   [retention policy](MEMORY_RETENTION.md), [backup policy](MEMORY_BACKUP_DELETION_POLICY.md),
   [ADR 0028](adr/0028-memory-retention-lifecycle.md) and [acceptance](PHASE_6C_ACCEPTANCE.md).
-  Phase 6D final acceptance and Phase 7 Mobile remain pending.
+  At 6C acceptance, 6D final acceptance and Phase 7 Mobile were pending.
+
+### Phase 6D — integrated controls and Phase 6 final acceptance
+
+- Actual signed JWT HTTP, AgentService/LangGraph/MockLLM and PostgreSQL E2E
+  cover consent, inspection, pause/revoke/resume and in-flight control changes;
+  guarded undo, confirmation safety, durable retries and ownership isolation;
+  REST/SSE failure/pending/safety behavior and Phase 5 import separation.
+- Expired same-content resaves atomically replace only the expired collision,
+  creating a new ID, dates and undo operation after durable control checks.
+  Active duplicates, owner locking, rollback and concurrency invariants remain.
+- Full real socket demo and phase-aware verification include 32 new E2E tests,
+  448 full backend tests, 83 Golden annotations and all prior regression gates.
+- Phase 6 is PASS; marker is `6 / 6D`. Production scheduler, encrypted backup
+  rotation and restore replay remain NOT DEPLOYED. Phase 7 is PENDING.
+  See [Phase 6 final acceptance](PHASE_6_FINAL_ACCEPTANCE.md).

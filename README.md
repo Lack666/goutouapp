@@ -7,12 +7,13 @@ Agent Harness 独立运行的 LangGraph Agent。手机端不直接调用模型 A
 
 ## 当前状态
 
-Phase 0–3 已完成：后端基础、81 个合成 Golden Cases，以及包含安全、场景、
-FIU、知识路由、关系分析、行动建议、受控长期记忆和类型化进度事件的独立
-LangGraph Runtime。可用 Mock LLM 无密钥运行；真实模型的端到端语义质量尚未
-验证。Agent Service/API transport 与 React Native 客户端仍待后续阶段。
+Phase 0–6 已完成（Phase 6A–6D PASS）。当前有 83 个合成 Golden Cases、
+独立 LangGraph Runtime、真实 JWT 的 Agent REST/SSE、显式绑定的聊天导入流水线，
+以及 consent/查看/暂停/恢复、受保护撤销、确认删除、有限保留期和维护 CLI。
+可用 Mock LLM 无密钥运行；真实模型的端到端语义质量尚未验证。
+生产调度、备份轮换与恢复删除重放尚未部署。React Native 客户端为 Phase 7。
 阶段状态以代码和验收结果为准，参见 [Master Plan](docs/MASTER_PLAN.md)
-和 [Phase 3 验收报告](docs/PHASE_3H_ACCEPTANCE.md)。
+和 [Phase 6 最终验收报告](docs/PHASE_6_FINAL_ACCEPTANCE.md)。
 
 ## 目录
 
@@ -29,11 +30,20 @@ LangGraph Runtime。可用 Mock LLM 无密钥运行；真实模型的端到端�
 需要 Python 3.12+、uv、Node.js、pnpm 和 Git；Docker 从服务端阶段开始使用。
 在有 GNU Make 的系统运行 `make doctor`，在 Windows PowerShell 运行
 `.\make.cmd doctor`。当前阶段的完整回归命令是 `make verify` 或
-`.\make.cmd verify`。Phase 3 的完整验证需要按
+`.\make.cmd verify`。完整验证需要按
 [数据库操作说明](docs/DATABASE.md)配置隔离的 PostgreSQL 测试库。
 
 配置模板见 [.env.example](.env.example)。只在服务端使用真实密钥；本地
 `.env` 已被 Git 忽略，不提交。运行时 Python 依赖由 `uv.lock` 锁定。
+
+Phase 6 独立端到端演示使用隔离 PostgreSQL 测试库（`TEST_DATABASE_URL` 数据库名
+以 `_test` 结尾），真实本地 Uvicorn socket、签名 JWT 与 Mock LLM：
+
+```powershell
+uv --cache-dir .cache/uv --no-managed-python run --locked --env-file .env python apps/server/memory_phase6_e2e_demo.py
+```
+
+演示输出操作状态、计数、ID 和断言，不输出记忆内容、聊天或 JWT。
 
 ## 上游署名
 

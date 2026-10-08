@@ -88,3 +88,24 @@ primary memory awaiting cleanup, with the original explicit revoke flag unchange
 Revoke-and-keep stops future recall/write but does not pause the retention clock.
 See [retention policy](MEMORY_RETENTION.md) and [backup/restore design](MEMORY_BACKUP_DELETION_POLICY.md).
 Production backup rotation, restore-safe deletion replay and scheduling are not deployed.
+
+## Phase 6D accepted semantics
+
+Delete-one requires the exact memory/person/relationship scope from inspection.
+Prepare alone never removes memory. Its stored snapshot binds owner, action,
+target and selected records; execute rejects extra client action/target fields,
+foreign/missing/expired/consumed challenges and widened snapshots. Completed
+same-key retries replay the durable receipt even after challenge cleanup; changed
+payloads conflict. Undo likewise matches one expected latest operation, never
+falls back after expiry/cleanup, and preserves older memory on retry.
+
+Challenge and receipt responses include `deletion_scope_notice`. Success means
+the selected primary memory and its undo targets were removed. Necessary receipt
+metadata stays durable; challenge metadata follows expiry+grace. Neither deletes
+full Agent chat history, imports, Person/Relationship entities, logs, backups nor
+provider copies. Both explicit delete-all revoke flag modes remain supported.
+
+Replacing an expired duplicate during a fresh authorized save invalidates only
+the old record's undo target. The old ID cannot be resurrected by guarded undo.
+Removal plus new save/new operation is atomic; consent/pause failure or rollback
+leaves the old row intact. See [Phase 6 final acceptance](PHASE_6_FINAL_ACCEPTANCE.md).

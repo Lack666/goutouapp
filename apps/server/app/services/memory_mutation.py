@@ -23,6 +23,11 @@ from app.db.models import (
 from app.services.agent_service import AuthenticatedActor, valid_operation_key
 
 CONFIRMATION_LIFETIME = timedelta(minutes=5)
+DELETION_SCOPE_NOTICE = (
+    "Only scoped primary memory and its undo history are removed. Confirmation and mutation "
+    "metadata are retained by policy. Chats, imports, identities, backups, logs and external "
+    "provider copies are outside this operation."
+)
 
 
 class MemoryMutationErrorCode(StrEnum):
@@ -71,6 +76,7 @@ class MemoryConfirmationChallenge(PublicModel):
     revoke_consent_after_delete: bool
     issued_at: datetime
     expires_at: datetime
+    deletion_scope_notice: str = DELETION_SCOPE_NOTICE
 
 
 class MemoryMutationReceipt(PublicModel):
@@ -86,6 +92,7 @@ class MemoryMutationReceipt(PublicModel):
     performed_at: datetime
     replayed: bool
     primary_store_only: bool = True
+    deletion_scope_notice: str = DELETION_SCOPE_NOTICE
 
 
 def _fingerprint(action: str, token: UUID) -> str:

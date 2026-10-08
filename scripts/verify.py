@@ -40,6 +40,9 @@ MEMORY_RETENTION = (
     or SUBPHASE in {"6C", "6D"}
     or (ROOT / "apps/server/app/services/memory_retention.py").is_file()
 )
+MEMORY_PHASE6_E2E = (
+    PHASE >= 6 or SUBPHASE == "6D" or (ROOT / "apps/server/tests/test_phase6_e2e.py").is_file()
+)
 
 
 def run(command: list[str]) -> None:
@@ -170,6 +173,9 @@ def tests() -> None:
     if MEMORY_RETENTION:
         uv_run("pytest", "-q", "apps/server/tests/test_memory_retention.py")
         uv_run("python", "apps/server/memory_retention_demo.py")
+    if MEMORY_PHASE6_E2E:
+        uv_run("pytest", "-q", "apps/server/tests/test_phase6_e2e.py")
+        uv_run("python", "apps/server/memory_phase6_e2e_demo.py")
     if BACKEND_FOUNDATION:
         uv_run("pytest", "-q", "apps/server/tests")
 
@@ -332,17 +338,20 @@ def verify() -> None:
             print("AUTOMATIC SCHEDULING: NOT DEPLOYED")
         else:
             print("DEFERRED TO 6C: Retention Policy")
-        print("DEFERRED TO 6D: Phase 6 Final Acceptance")
+        if MEMORY_PHASE6_E2E:
+            print("PASS: Phase 6D signed HTTP Agent/Memory end-to-end integration")
+        else:
+            print("DEFERRED TO 6D: Phase 6 Final Acceptance")
         print("DEFERRED TO PHASE 7: Mobile")
     if AGENT_STREAMING:
         print("PASS: Typed runtime streaming and eight standalone Phase 3 E2E cases")
     if PHASE < 7:
         print("DEFERRED: Mobile lint/typecheck begin at Phase 7")
-    if PHASE > 5:
+    if PHASE > 6:
         raise RuntimeError(
             "Later-phase verification is not implemented; do not mark that phase complete"
         )
-    if PHASE == 5:
+    if PHASE in {5, 6}:
         if not all(
             (
                 AGENT_CONTRACTS,
@@ -373,6 +382,15 @@ def verify() -> None:
         print("DEFERRED: Chat Analysis")
         print("DEFERRED: Mobile")
         print("DEFERRED: RAG")
+        if PHASE == 6:
+            if not all(
+                (MEMORY_CONTROL_API, MEMORY_MUTATION_API, MEMORY_RETENTION, MEMORY_PHASE6_E2E)
+            ):
+                raise RuntimeError("Phase 6 memory acceptance gate is incomplete")
+            print("PASS: Phase 6 Memory Controls and Retention")
+            print("PRODUCTION SCHEDULER / BACKUP / RESTORE REPLAY: NOT DEPLOYED")
+            print("PASS: all active Phase 0..6 gates")
+            return
         active = "Phase 0..5"
         if MEMORY_CONTROL_API:
             active += " and 6A"
@@ -380,6 +398,8 @@ def verify() -> None:
             active += " and 6B"
         if MEMORY_RETENTION:
             active += " and 6C"
+        if MEMORY_PHASE6_E2E:
+            active += " and 6D"
         print(f"PASS: all active {active} gates")
         return
     if PHASE == 4:

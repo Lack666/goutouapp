@@ -155,3 +155,21 @@ Durable receipts grow with successful mutations, beyond the 200-record memory
 limit. Operators must budget storage and monitor growth. Future bounded receipts
 require independently verified terminal-key fencing before removing any receipt.
 No legal-compliance claim is attached to these product retention durations.
+
+## Phase 6D expired duplicate decision
+
+Expiry does not itself extend a record or release its unique content key. When
+a fresh candidate passes provenance/scope validation and durable consent/pause
+checks, the store takes the existing owner lock, examines the scoped content
+collision, and removes it only if `expires_at <= current UTC time`. It inserts a
+new ID, creation/expiry and undo operation in that same transaction. Old undo
+cascades; rollback restores the original row and operation. Active duplicates
+remain duplicates with unchanged dates. Unauthorized/paused requests cannot
+remove the expired row. Concurrent resaves yield one save and one duplicate.
+No schema, graph, background worker or new lifetime-refresh operation is needed.
+
+This behavior is verified by signed Agent HTTP tests, SQL rollback/concurrency
+tests and the standalone in-memory store. The expired Golden retention fixture
+includes the resave expectation. Scheduler and production backup readiness remain
+separate from these passing engineering gates; see the readiness checklist in
+[backup/deletion policy](MEMORY_BACKUP_DELETION_POLICY.md).

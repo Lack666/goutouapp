@@ -351,3 +351,21 @@ Agent/import history and providers are untouched by maintenance. No HTTP mainten
 endpoint, queue or LLM invocation is introduced. Production scheduler and backup/
 restore automation are not deployed. See [ADR 0028](adr/0028-memory-retention-lifecycle.md),
 [retention](MEMORY_RETENTION.md) and [backup/deletion policy](MEMORY_BACKUP_DELETION_POLICY.md).
+
+## Phase 6D integrated boundary
+
+Public memory controls and Agent REST/SSE share the durable store, owner
+serialization and structured person/relationship scope. No graph, service,
+transport or database architecture is replaced. When the unique scoped content
+key belongs to an expired row, a new authorized save removes that row and its
+undo operation and inserts a new UUID, creation/expiry and undo operation in
+the same transaction. Active duplicates do not renew. Consent/pause and scope
+checks precede removal; failure restores the old row and operation. Two concurrent
+saves leave one new record and operation. The standalone fake follows the same
+expiry rule using the new save timestamp.
+
+Confirmation and mutation views explicitly describe primary-memory deletion
+and retained metadata. Imported relationship messages and Agent conversations
+are separate storage domains. Phase 6 acceptance exercises actual signed HTTP,
+LangGraph, Mock LLM and PostgreSQL together; it does not establish production
+scheduler, backup or restore infrastructure. Mobile remains Phase 7.
