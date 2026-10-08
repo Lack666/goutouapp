@@ -1,4 +1,4 @@
-"""Phase 7A static gates; Expo/device runtime smoke stays explicit and separate."""
+"""Mobile static and Phase 7B focused gates; runtime smoke stays separate."""
 
 from __future__ import annotations
 
@@ -19,6 +19,7 @@ def boundary_check() -> None:
         r"api\.(?:openai|deepseek|anthropic)\.com|"
         r"\b(?:fetch|XMLHttpRequest|WebSocket|EventSource)\s*\(|"
         r"from\s+['\"](?:openai|anthropic|pg|postgres|axios)['\"]"
+        r"|\b(?:localStorage|sessionStorage|AsyncStorage|SecureStore)\b|console\.\w+\s*\("
     )
     for directory in (MOBILE / "app", MOBILE / "src"):
         for path in directory.rglob("*"):
@@ -26,8 +27,8 @@ def boundary_check() -> None:
                 content = path.read_text(encoding="utf-8")
                 if forbidden.search(content):
                     raise RuntimeError(f"Mobile secret/network boundary violation: {path}")
-                if directory.name == "src" and path.parent.name in {"features", "components"}:
-                    if "demoSource" in content:
+                if directory.name == "src" and {"features", "components"} & set(path.parts):
+                    if re.search(r"from\s+['\"].*(?:demoSource|featureFixtures)['\"]", content):
                         raise RuntimeError(f"Screen coupled to fixtures: {path}")
     for name in ("index", "chat", "relationship", "import", "history", "settings"):
         if not (MOBILE / "app" / f"{name}.tsx").is_file():
@@ -58,6 +59,9 @@ def main() -> None:
         [pnpm, "--filter", "@goutou/mobile", "run", name]
         for name in ("compatibility", "typecheck", "lint", "format:check", "test")
     )
+    feature_ui = (MOBILE / "src/features/ChatScreen.tsx").is_file()
+    if feature_ui:
+        commands.append([pnpm, "--filter", "@goutou/mobile", "run", "test:features"])
     for command in commands:
         print("+", " ".join(command), flush=True)
         subprocess.run(command, cwd=ROOT, check=True)
@@ -68,6 +72,8 @@ def main() -> None:
     if "No peer dependency issues found" not in peers.stdout:
         raise RuntimeError("Mobile dependency peer audit failed")
     print("PASS: Phase 7A Mobile static gates; runtime smoke is a separate command")
+    if feature_ui:
+        print("PASS: Phase 7B Chat/Relationship focused gate; runtime smoke is separate")
 
 
 if __name__ == "__main__":

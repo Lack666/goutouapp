@@ -13,11 +13,13 @@ export function StatePreview({
   scenario,
   onSelect,
   onRetry,
+  showEmpty = true,
 }: {
   state: SurfaceState;
   scenario: DemoScenario;
   onSelect: (scenario: DemoScenario) => void;
   onRetry: () => void;
+  showEmpty?: boolean;
 }) {
   return (
     <>
@@ -38,9 +40,9 @@ export function StatePreview({
         <LoadingState />
       ) : state.status === 'error' ? (
         <ErrorState message={state.message} onRetry={onRetry} />
-      ) : (
+      ) : showEmpty ? (
         <EmptyState title={state.view.emptyTitle} description={state.view.emptyDescription} />
-      )}
+      ) : null}
     </>
   );
 }

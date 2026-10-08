@@ -64,6 +64,8 @@ describe('actual Expo Router shell', () => {
     'controls local states and retry on %s',
     async (path) => {
       await renderRouter(app, { initialUrl: path });
+      if (path === '/chat')
+        await fireEvent.press(screen.getByRole('button', { name: '演示状态预览' }));
       await fireEvent.press(screen.getByRole('button', { name: '加载状态' }));
       expect(screen.getByText('演示加载中')).toBeOnTheScreen();
       await fireEvent.press(screen.getByRole('button', { name: '错误状态' }));
@@ -74,10 +76,11 @@ describe('actual Expo Router shell', () => {
     },
   );
 
-  it('marks sending and input unavailable', async () => {
+  it('keeps server sending unavailable and enables only local input', async () => {
     await renderRouter(app, { initialUrl: '/chat' });
     expect(screen.getByRole('button', { name: '发送（尚未开放）' })).toBeDisabled();
-    expect(screen.getByLabelText('消息输入（尚未开放）')).toHaveProp('editable', false);
+    expect(screen.getByLabelText('本地预览消息输入')).toHaveProp('editable', true);
+    expect(screen.getByRole('button', { name: '添加到本地预览' })).toBeDisabled();
   });
 
   it.each([
@@ -105,7 +108,7 @@ describe('actual Expo Router shell', () => {
 describe('provider and ViewModel boundary', () => {
   it('uses an injected source without importing fixtures into the screen', async () => {
     const source: ShellDataSource = {
-      kind: 'demo',
+      ...demoSource,
       readSurface: () => ({
         status: 'empty',
         view: {

@@ -1,4 +1,1 @@
-import SurfaceScreen from '../src/features/SurfaceScreen';
-export default function ChatRoute() {
-  return <SurfaceScreen id="chat" />;
-}
+export { default } from '../src/features/ChatScreen';

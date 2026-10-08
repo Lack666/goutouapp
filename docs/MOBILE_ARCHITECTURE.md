@@ -1,6 +1,6 @@
-# Mobile architecture — Phase 7A
+# Mobile architecture — Phase 7A–7B
 
-Only the Expo React Native foundation and navigation shell are implemented.
+The Expo React Native foundation, navigation shell and local Chat/Profile UI are implemented.
 Phase 7 remains the six-surface Mobile MVP; Phase 8 remains generated API client
 and stream integration. No server/Agent behavior or frozen knowledge is changed.
 
@@ -51,7 +51,7 @@ ignored. ESLint 9 is retained with Expo's recommended config in this foundation.
 ## Directory boundaries
 
 - `app/`: Expo Router's root layout, six route modules and not-found route only.
-- `src/features/`: Home, shared surface skeleton and Settings presentation.
+- `src/features/`: Home, Chat, Relationship, Import/History shell and Settings.
 - `src/components/`: ScreenContainer, AppHeader, PrimaryButton, SectionCard,
   EmptyState, LoadingState, ErrorState, DemoNotice and StatePreview.
 - `src/theme/`: shared palette, type, spacing, radius, layout and theme provider.
@@ -81,26 +81,37 @@ handling; actual Android behavior is not counted as tested by Web or Jest.
 No six-item bottom bar is introduced: it would crowd small screens. Home serves
 as the compact launch surface. There are no automatic redirects or circular routes.
 
-Home displays welcome and entry actions. Chat shows empty conversation and a
-disabled composer/send. Relationship shows empty profile/background slots and
-disabled edit. Import shows disabled file selection and empty analysis region.
+Home displays welcome and entry actions. Chat supports a virtualized message
+list and local multiline preview; real server sending remains disabled.
+Relationship has scoped synthetic Person/profile cards, missing-data handling
+and A/B selection; real editing remains disabled. Import shows disabled file
+selection and empty analysis region.
 History shows empty record space. Settings shows app version, theme and truthful
-unconnected account/memory information. Complex feature UI belongs to 7B onward.
+unconnected account/memory information. Import/History/Memory settings business
+UI remains Phase 7C; generated API integration remains Phase 8.
 
 ## Data and interaction boundary
 
 `ShellDataSource.readSurface(id, scenario)` supplies a `SurfaceState` discriminated
 union of loading, empty-with-ViewModel or safe error. It is deliberately synchronous
-and read-only for this local shell. Values are fresh copies rather than shared
-mutable fixture objects. There are no synthetic messages, users, analyses, saved
-memories, successful uploads or authenticated sessions. Every page states
+and read-only for this local shell. Phase 7B extends it with `readChat` and
+`readRelationships`, returning typed, freshly allocated feature templates.
+Chat begins empty; an explicit action loads predefined assistant/user examples.
+Local input adds only a user bubble. Synthetic profiles/FIU are clearly labeled;
+there are no real analyses, saved memories, successful uploads or authenticated
+sessions. Every page states
 **本地演示 · Demo** and that the server is unconnected.
 
-The four feature skeletons expose clearly labeled local state preview controls.
-Loading is held for inspection, not a claimed network request. Error's Retry
-resets that screen to empty. These preview controls use local React state and
-never persist anything. All enabled buttons navigate, change theme/scenario,
-or reset an error. Unavailable business buttons are explicitly disabled.
+Import/History retain the original shell states. Relationship retains the same
+local loading/error controls alongside its complete Demo profile. Chat has a
+separate seven-state presentation union: idle/unavailable/starting/progressing/
+completed/failed/pending_confirmation. Manual previews never claim a live run.
+Chat Retry resets its display state; profile/shell Retry restores local content.
+Enabled controls also type/clear/preview input, load examples or select a profile.
+No action persists, logs or sends input; real business controls remain disabled.
+Draft/list state clears on Chat unmount/reload or a changed relationship scope.
+Profile selection survives Stack push/back while mounted and resets on reload.
+See [Chat UI](MOBILE_CHAT_UI.md) and [Relationship UI](MOBILE_RELATIONSHIP_UI.md).
 
 Phase 8 can introduce async resource hooks and adapters translating existing
 server DTOs into these UI ViewModels. It will replace the source at composition,
@@ -110,7 +121,9 @@ OpenAPI types, operation_key/run_id handling, REST and POST SSE consumption,
 imports and memory mutations remain deferred. Current backend supports signed
 JWT verification and development tokens, not complete production registration.
 The actual Phase 4 stream is progress SSE with a committed final response,
-not model token streaming or WebSocket; see AGENT_API/STREAMING_API,
+not model token streaming or WebSocket. Structured FIU/profile data is not
+currently supplied by the public answer DTO; Phase 8 must coordinate its mapping.
+See AGENT_API/STREAMING_API,
 IMPORT_API and MEMORY_API for the future adapter's authority.
 
 ## Theme, layout and accessibility
@@ -121,12 +134,14 @@ provider for this app session and resets on restart. No durable storage or token
 store is implied. Color, typography, spacing, radius and 48-unit minimum touch
 targets are central tokens; system fonts avoid external licenses and downloads.
 
-SafeAreaProvider/SafeAreaView wrap each screen. ScrollView, bounded max width
-and wrapping preference controls handle small screens and long Chinese text.
-KeyboardAvoidingView is present for later enabled inputs; the current composer
-is intentionally read-only. No fixed screen dimensions or dynamic font-size
+SafeAreaProvider/SafeAreaView wrap each screen. Profile/shell ScrollViews,
+bounded max width and wrapping controls handle small screens. Chat uses one
+FlatList outside a fixed composer, with KeyboardAvoidingView around both.
+Multiline input is enabled only for local preview. No fixed screen dimensions or dynamic font-size
 suppression. Headers, buttons and input have readable labels and roles; selected
 and disabled controls expose accessibilityState, error text uses alert semantics.
+Web toggles explicitly expose aria-pressed and selected borders; native selected
+state is retained. Text bubbles identify sender/source/time.
 No device keyboard, TalkBack or complete accessibility certification is claimed.
 
 ## Run and verify
@@ -172,9 +187,12 @@ pnpm --filter @goutou/mobile smoke:web
 Smoke runs Expo/Metro on `http://localhost:8087` (Windows resolves it to `::1`;
 do not substitute 127.0.0.1 when using `--localhost`). Chrome is headless.
 It tests five Home transitions/back, all direct links, unknown-route recovery,
-three theme modes, state previews/retry, read-only composer, 320/360/412 widths,
+three theme modes, state previews/retry, enabled local composer, 320/360/412 widths,
 48px back target and no external application requests/page errors.
-Ignored evidence goes to `.cache/phase7a-web-smoke.json`, Web results and PNGs.
+Seven scenarios include the retained 7A flow and six 7B light/dark/width flows
+with preview typing, append/scroll, FIU, disabled confirmation, A/B profile,
+scoped Chat and return navigation. Ignored evidence goes to
+`.cache/phase7b-web-smoke.json`, Web results and PNGs.
 Web export is an additional build check, not a replacement for this live smoke.
 
 ## Environment and security boundaries
@@ -192,5 +210,7 @@ provider, database and network-call patterns in the static gate; runtime smoke
 also records network requests. This baseline audit is not a general security
 certification. All real authentication/ownership/model operations stay server-side.
 
-See [ADR 0029](adr/0029-mobile-shell-and-data-boundary.md) and
-[Phase 7A acceptance](PHASE_7A_ACCEPTANCE.md).
+See [ADR 0029](adr/0029-mobile-shell-and-data-boundary.md),
+[ADR 0030](adr/0030-mobile-chat-preview-and-relationship-scope.md),
+[Phase 7A acceptance](PHASE_7A_ACCEPTANCE.md) and
+[Phase 7B acceptance](PHASE_7B_ACCEPTANCE.md).

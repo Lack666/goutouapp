@@ -84,8 +84,11 @@ export function PrimaryButton({
 }: ButtonProps) {
   const { colors } = useTheme();
   const quiet = variant === 'quiet';
+  const webToggle =
+    Platform.OS === 'web' && selected !== undefined ? { 'aria-pressed': selected } : {};
   return (
     <Pressable
+      {...webToggle}
       accessibilityRole="button"
       accessibilityLabel={accessibilityLabel}
       accessibilityState={{ disabled, ...(selected === undefined ? {} : { selected }) }}
@@ -96,6 +99,8 @@ export function PrimaryButton({
         {
           backgroundColor: disabled ? colors.disabled : quiet ? colors.tint : colors.primary,
           opacity: pressed ? 0.75 : 1,
+          borderWidth: 1,
+          borderColor: selected ? colors.primary : 'transparent',
         },
       ]}
     >

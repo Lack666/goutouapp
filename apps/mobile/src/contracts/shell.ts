@@ -1,3 +1,5 @@
+import type { ChatScreenViewModel } from './chat';
+import type { RelationshipProfileViewModel } from './relationship';
 export type SurfaceId = 'home' | 'chat' | 'relationship' | 'import' | 'history' | 'settings';
 export type DemoScenario = 'empty' | 'loading' | 'error';
 export interface SurfaceViewModel {
@@ -15,5 +17,7 @@ export type SurfaceState =
 // UI-facing read seam only. Auth, wire DTOs and network adapters belong to Phase 8.
 export interface ShellDataSource {
   readonly kind: 'demo';
+  readChat: (relationshipId: string | null) => ChatScreenViewModel;
+  readRelationships: () => readonly RelationshipProfileViewModel[];
   readSurface: (id: SurfaceId, scenario: DemoScenario) => SurfaceState;
 }

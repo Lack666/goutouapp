@@ -20,7 +20,7 @@ as implemented by a placeholder directory or a golden expectation.
 | 4 | Agent Service and API transport over the standalone runtime | PASS |
 | 5 | Chat Import and Relationship Data Pipeline | PASS (5A–5D) |
 | 6 | User-facing memory controls and retention policy integration | PASS (6A–6D) |
-| 7 | Expo React Native MVP | IN PROGRESS (7A PASS; whole phase pending) |
+| 7 | Expo React Native MVP | IN PROGRESS (7A–7B PASS; whole phase pending) |
 | 8 | Mobile API integration, generated client and stream consumption | PENDING |
 | 9 | Security, privacy, reliability and deletion | PENDING |
 | 10 | Optional hybrid RAG with pgvector | PENDING |
@@ -68,6 +68,34 @@ as implemented by a placeholder directory or a golden expectation.
 
 ## Implementation log
 
+### Phase 7B — Chat and Relationship UI
+
+- Completed local Chat/Profile presentation using the existing SDK/theme/Stack,
+  typed injected templates and anonymous synthetic fixtures. One FlatList handles
+  messages; fixed multiline composer validates/clears/appends only a local user
+  bubble, with honest no-send/no-save feedback and no generated assistant.
+- Seven manual run previews respect progress-then-final SSE semantics; synthetic
+  FIU separates fact/provenance, inference/alternative and unknown. Safety has a
+  reserved notice and pending execution remains disabled. Profile A/B selection
+  replaces every field, handles missing values and passes scoped Chat navigation.
+- Retained all 23 7A scenarios (local input now enabled, server send disabled),
+  added 24 focused tests and integrated their explicit root gate. Real Expo Web
+  passed seven scenarios, covering both themes and 320/360/412px. Twelve PNGs
+  were visually inspected. Android/TalkBack NOT RUN: SDK tools exist but there
+  is no connected device or configured AVD.
+- Complete pre-marker `make verify` exited 0: 47 Mobile, 448 backend and 13
+  repository tests, Golden 83, migrations, frozen upstream, replay, Ruff and
+  all completed-phase gates. Doctor 21/21; Web export passed. Advance only to
+  `completed_phase=6`, `completed_subphase=7B`; whole Phase 7 stays incomplete.
+  Final marker-aware full verifier also exited 0 with the same test counts;
+  its evidence is recorded in the acceptance report.
+- Phase 7C UI and Phase 8 client/API/SSE/auth remain deferred. Current public
+  answer DTO does not supply structured FIU/profile resources; record that
+  integration seam instead of changing the server. See [Chat UI](MOBILE_CHAT_UI.md),
+  [Relationship UI](MOBILE_RELATIONSHIP_UI.md),
+  [ADR 0030](adr/0030-mobile-chat-preview-and-relationship-scope.md) and
+  [7B acceptance](PHASE_7B_ACCEPTANCE.md).
+
 ### Phase 7A — Expo React Native foundation and navigation shell
 
 - Added an actual Expo SDK 57 project in the pnpm workspace, strict TypeScript,
@@ -78,7 +106,7 @@ as implemented by a placeholder directory or a golden expectation.
   changes work. Unimplemented business controls are disabled.
 - Root verify includes frozen dependency/peer/SDK/static Mobile gates separately
   from live Expo Web smoke. All Phase 0–6 regression gates remain active.
-  Android is NOT RUN. Whole Phase 7, Phase 7B feature UI and Phase 8 generated
+  At 7A acceptance Android was NOT RUN. Whole Phase 7, Phase 7B feature UI and Phase 8 generated
   client/auth/API/progress streaming remain deferred.
 - After CODE/TEST/DOC/DEMO/REGRESSION pass, marker advances only to
   `completed_phase=6`, `completed_subphase=7A`. The pre-marker full verify exited

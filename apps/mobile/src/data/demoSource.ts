@@ -1,4 +1,5 @@
 import type { ShellDataSource, SurfaceId, SurfaceViewModel } from '../contracts/shell';
+import { readDemoChat, readDemoRelationships } from './featureFixtures';
 
 const surfaces: Record<SurfaceId, SurfaceViewModel> = {
   home: {
@@ -47,6 +48,8 @@ const surfaces: Record<SurfaceId, SurfaceViewModel> = {
 
 export const demoSource: ShellDataSource = {
   kind: 'demo',
+  readChat: readDemoChat,
+  readRelationships: readDemoRelationships,
   readSurface(id, scenario) {
     if (scenario === 'loading') return { status: 'loading' };
     if (scenario === 'error')

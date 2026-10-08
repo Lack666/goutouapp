@@ -36,7 +36,7 @@ flowchart LR
   modified as part of app development.
 - Mobile and server are separate deployments. Phase 8 will integrate REST and
   the actual Phase 4 POST SSE transport; the original WebSocket direction is
-  not implemented. PostgreSQL belongs to the server side. Phase 7A is local only.
+  not implemented. PostgreSQL belongs to the server side. Phase 7A/7B are local only.
 
 Further behavior requirements are recorded in `docs/SKILL_CONTRACT.md` and
 future phase decisions in `docs/adr/`.
@@ -395,3 +395,29 @@ Python locks and Agent behavior are unchanged. Root verification retains Phase
 RUN. See [Mobile architecture](MOBILE_ARCHITECTURE.md),
 [ADR 0029](adr/0029-mobile-shell-and-data-boundary.md) and
 [7A acceptance](PHASE_7A_ACCEPTANCE.md).
+
+## Phase 7B Chat and Relationship boundary
+
+The existing Expo Stack/theme/provider remains. Typed read-only feature templates
+extend ShellDataSource. Chat uses a single virtualized FlatList with a separate
+fixed, multiline local composer. Preview appends only a user bubble; assistant
+content requires an explicit predefined synthetic example action. Run presentation
+is manually held (idle/unavailable/starting/progressing/completed/failed/pending),
+independent of messages and without network/token timers. FIU is synthetic teaching
+content with provenance/alternative/unknown semantics, Safety has a neutral reserved
+notice, and pending execution is disabled.
+
+Person and Relationship retain separate IDs/models; imported self/person/system
+messages never become Agent user/assistant bubbles. A/B selection derives every
+profile field from the current model. Chat navigation passes synthetic relationship
+scope; changed scope remounts its ephemeral controller. No private fixture, logging,
+storage, API, authentication or Memory write is added. Import/History/Settings business
+UI remains Phase 7C. Public FIU/profile mapping remains a Phase 8 coordination item,
+because the current answer DTO exposes a public answer rather than these structured
+resources. No backend, LangGraph or frozen knowledge change is made.
+
+Root verify keeps all 7A/regression gates and adds an explicit 7B focused test gate;
+real Web smoke is separate, Android/TalkBack NOT RUN. See [Chat UI](MOBILE_CHAT_UI.md),
+[Relationship UI](MOBILE_RELATIONSHIP_UI.md),
+[ADR 0030](adr/0030-mobile-chat-preview-and-relationship-scope.md) and
+[7B acceptance](PHASE_7B_ACCEPTANCE.md).

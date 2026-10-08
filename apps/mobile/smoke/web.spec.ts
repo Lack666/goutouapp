@@ -36,7 +36,8 @@ test('six surfaces, return navigation, theme, UI states and small screens in rea
   await page.getByRole('button', { name: '返回上一级' }).click();
   await page.getByRole('button', { name: '开始对话' }).click();
   await expect(page.getByRole('button', { name: '发送（尚未开放）' })).toBeDisabled();
-  await expect(page.getByLabel('消息输入（尚未开放）')).not.toBeEditable();
+  await expect(page.getByLabel('本地预览消息输入')).toBeEditable();
+  await page.getByRole('button', { name: '演示状态预览', exact: true }).click();
   await page.getByRole('button', { name: '加载状态' }).click();
   await expect(page.getByText('演示加载中', { exact: true })).toBeVisible();
   await page.getByRole('button', { name: '错误状态' }).click();
