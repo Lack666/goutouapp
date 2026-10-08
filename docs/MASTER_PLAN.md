@@ -20,7 +20,7 @@ as implemented by a placeholder directory or a golden expectation.
 | 4 | Agent Service and API transport over the standalone runtime | PASS |
 | 5 | Chat Import and Relationship Data Pipeline | PASS (5A–5D) |
 | 6 | User-facing memory controls and retention policy integration | PASS (6A–6D) |
-| 7 | Expo React Native MVP | IN PROGRESS (7A–7B PASS; whole phase pending) |
+| 7 | Expo React Native MVP | IN PROGRESS (7A–7C PASS; whole phase pending) |
 | 8 | Mobile API integration, generated client and stream consumption | PENDING |
 | 9 | Security, privacy, reliability and deletion | PENDING |
 | 10 | Optional hybrid RAG with pgvector | PENDING |
@@ -68,6 +68,42 @@ as implemented by a placeholder directory or a golden expectation.
 
 ## Implementation log
 
+### Phase 7C — Import, History and Settings UI
+
+- Kept the SDK/theme/Stack/provider and added typed, injected local feature
+  templates. Import has five explicit steps with preserved raw labels/Emoji,
+  manual self/person/system/ignore binding, relationship confirmation and local
+  compatibility/group readiness. Real picker/parser/upload/finalize/analysis
+  remain disabled; result is only demo precheck completion.
+- History separates Agent user/assistant from external self/person/system, scopes
+  exactly to the chosen relationship, and orders historical instants with stable
+  dataset/source-index/ID tie-breakers. One FlatList uses 30-row incremental
+  windows; tests preserve all 1,020 occurrences per relationship and exhaust pages.
+- Settings previews Phase 6 consent/pause semantics, inspect/expiry, expected
+  undo and one/person/all deletion confirmation with explicit consent choice.
+  Formal operations remain disabled; retention is a server-configurable policy
+  with 180 days as an example. No records are actually deleted or persisted.
+- Explicit scope propagates across Relationship/Import/History/Chat; unknown IDs
+  fail closed, and scope changes/reset/unmount/reload clear local previews.
+  No business network, private fixture, new dependency, backend/frozen knowledge
+  or lockfile change. Public FIU/profile/history resources need Phase 8 coordination.
+- Mobile static gates pass 82 tests, including 35 new 7C and retained 47 7A/7B
+  cases. Doctor 21/21, frozen install/peer/SDK checks and Web export pass.
+  Real Expo Web passes 13 scenarios (both themes, 320/360/412px), including
+  reload, zero requests/errors and B-only history. Ten representative PNGs were
+  visually reviewed. Android native/TalkBack NOT RUN: SDK tools exist but no
+  device, AVD or installed emulator system image is available.
+- Pre-marker root verify passed 448 backend tests, 13 repository tests, Golden
+  83, migration cycle, frozen upstream, all previous replay/HTTP/SSE/demo gates
+  and Mobile gates. It ran 81 Mobile/34 7C tests before one extra lifecycle case
+  and strengthened paging/browser assertions; the later Mobile/browser gates
+  passed 82/35 and 13 respectively. Marker advances only to 6/7C; final
+  marker-aware verification also exited 0 with 82 Mobile/35 7C, 448 backend
+  and every earlier gate. See [7C acceptance](PHASE_7C_ACCEPTANCE.md).
+  Phase 7D overall acceptance and Phase 8 are not started. See
+  [Import UI](MOBILE_IMPORT_UI.md), [History UI](MOBILE_HISTORY_UI.md),
+  [Settings UI](MOBILE_SETTINGS_UI.md).
+
 ### Phase 7B — Chat and Relationship UI
 
 - Completed local Chat/Profile presentation using the existing SDK/theme/Stack,
@@ -89,7 +125,7 @@ as implemented by a placeholder directory or a golden expectation.
   `completed_phase=6`, `completed_subphase=7B`; whole Phase 7 stays incomplete.
   Final marker-aware full verifier also exited 0 with the same test counts;
   its evidence is recorded in the acceptance report.
-- Phase 7C UI and Phase 8 client/API/SSE/auth remain deferred. Current public
+- At 7B acceptance, Phase 7C UI and Phase 8 client/API/SSE/auth remained deferred. Current public
   answer DTO does not supply structured FIU/profile resources; record that
   integration seam instead of changing the server. See [Chat UI](MOBILE_CHAT_UI.md),
   [Relationship UI](MOBILE_RELATIONSHIP_UI.md),

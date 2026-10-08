@@ -1,4 +1,4 @@
-"""Mobile static and Phase 7B focused gates; runtime smoke stays separate."""
+"""Mobile static and Phase 7B/7C focused gates; runtime smoke stays separate."""
 
 from __future__ import annotations
 
@@ -28,7 +28,10 @@ def boundary_check() -> None:
                 if forbidden.search(content):
                     raise RuntimeError(f"Mobile secret/network boundary violation: {path}")
                 if directory.name == "src" and {"features", "components"} & set(path.parts):
-                    if re.search(r"from\s+['\"].*(?:demoSource|featureFixtures)['\"]", content):
+                    if re.search(
+                        r"from\s+['\"].*(?:demoSource|featureFixtures|controlFixtures)['\"]",
+                        content,
+                    ):
                         raise RuntimeError(f"Screen coupled to fixtures: {path}")
     for name in ("index", "chat", "relationship", "import", "history", "settings"):
         if not (MOBILE / "app" / f"{name}.tsx").is_file():
@@ -62,6 +65,15 @@ def main() -> None:
     feature_ui = (MOBILE / "src/features/ChatScreen.tsx").is_file()
     if feature_ui:
         commands.append([pnpm, "--filter", "@goutou/mobile", "run", "test:features"])
+    controls_ui = (MOBILE / "src/features/ImportScreen.tsx").is_file()
+    if controls_ui:
+        for name in ("ImportScreen", "HistoryScreen", "SettingsScreen"):
+            if not (MOBILE / "src/features" / f"{name}.tsx").is_file():
+                raise RuntimeError(f"Missing Phase 7C screen: {name}")
+        for name in ("import", "history", "settings", "controls"):
+            if not (MOBILE / "tests" / f"{name}.test.tsx").is_file():
+                raise RuntimeError(f"Missing Phase 7C test suite: {name}")
+        commands.append([pnpm, "--filter", "@goutou/mobile", "run", "test:controls"])
     for command in commands:
         print("+", " ".join(command), flush=True)
         subprocess.run(command, cwd=ROOT, check=True)
@@ -74,6 +86,8 @@ def main() -> None:
     print("PASS: Phase 7A Mobile static gates; runtime smoke is a separate command")
     if feature_ui:
         print("PASS: Phase 7B Chat/Relationship focused gate; runtime smoke is separate")
+    if controls_ui:
+        print("PASS: Phase 7C Import/History/Settings focused gate; runtime smoke is separate")
 
 
 if __name__ == "__main__":

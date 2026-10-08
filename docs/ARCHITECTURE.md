@@ -36,7 +36,7 @@ flowchart LR
   modified as part of app development.
 - Mobile and server are separate deployments. Phase 8 will integrate REST and
   the actual Phase 4 POST SSE transport; the original WebSocket direction is
-  not implemented. PostgreSQL belongs to the server side. Phase 7A/7B are local only.
+  not implemented. PostgreSQL belongs to the server side. Phase 7A–7C are local only.
 
 Further behavior requirements are recorded in `docs/SKILL_CONTRACT.md` and
 future phase decisions in `docs/adr/`.
@@ -421,3 +421,25 @@ real Web smoke is separate, Android/TalkBack NOT RUN. See [Chat UI](MOBILE_CHAT_
 [Relationship UI](MOBILE_RELATIONSHIP_UI.md),
 [ADR 0030](adr/0030-mobile-chat-preview-and-relationship-scope.md) and
 [7B acceptance](PHASE_7B_ACCEPTANCE.md).
+
+## Phase 7C Import, History and Settings boundary
+
+The existing Stack/theme/injected source remains; readImport/readHistory/readSettings
+extend its read-only template seam. Typed feature state owns a five-step Import
+wizard, separate AI/external History domains and Memory-control previews. Explicit
+speaker roles/Person IDs and relationship confirmation precede local readiness.
+Unknown relationship scopes fail closed; scope changes reset controllers/bindings.
+History orders historical instants with dataset/source-index/ID tie-breakers and
+uses one virtualized FlatList with 30-row incremental windows. Content is never deduped.
+
+Memory controls preserve server consent/pause semantics in local state. Inspect
+contains public summaries/scopes/dates only; undo/delete explain expected operation
+and confirmation boundaries while formal execution remains disabled. Policy is a
+configurable server authority, with 180 days shown only as an example. No backend,
+Agent, database, dependency or frozen knowledge changes occur. Real upload/finalize,
+Agent history/profile resource contracts, public FIU mapping and guarded Memory
+mutations await Phase 8. No new state store/infrastructure or architecture replacement
+requires another ADR. Root verify adds the explicit 7C focused static gate; live Web
+remains separate, native Android NOT RUN. See [Import UI](MOBILE_IMPORT_UI.md),
+[History UI](MOBILE_HISTORY_UI.md), [Settings UI](MOBILE_SETTINGS_UI.md) and
+[7C acceptance](PHASE_7C_ACCEPTANCE.md). Phase 7D and whole Phase 7 stay pending.

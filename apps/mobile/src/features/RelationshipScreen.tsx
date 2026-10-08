@@ -4,6 +4,7 @@ import { View } from 'react-native';
 import { useDataSource } from '../data/DataSourceProvider';
 import { useSurface } from '../hooks/useSurface';
 import { StatePreview } from '../components/StatePreview';
+import { useRelationshipScope } from '../navigation/scope';
 import {
   AppHeader,
   BodyText,
@@ -15,11 +16,16 @@ import {
 } from '../components/ui';
 
 export default function RelationshipScreen() {
+  const scope = useRelationshipScope();
+  return <RelationshipSession key={scope ?? 'default'} scope={scope} />;
+}
+function RelationshipSession({ scope }: { scope: string | null }) {
   const source = useDataSource();
   const router = useRouter();
   const profiles = useMemo(() => source.readRelationships(), [source]);
   const [selected, setSelected] = useState<string | null>(null);
-  const profile = profiles.find((p) => p.id === selected) ?? profiles[0];
+  const requested = selected ?? scope;
+  const profile = requested === null ? profiles[0] : profiles.find((p) => p.id === requested);
   const { state, scenario, setScenario, retry } = useSurface('relationship');
   return (
     <ScreenContainer>
@@ -67,9 +73,11 @@ export default function RelationshipScreen() {
             <SectionCard title="历史摘要">
               <BodyText muted>{profile.historySummary ?? '未提供历史聊天或摘要。'}</BodyText>
               <PrimaryButton
-                label="查看关系历史（尚未接入）"
+                label="查看关系历史 Demo"
                 variant="quiet"
-                onPress={() => router.push('/history')}
+                onPress={() =>
+                  router.push({ pathname: '/history', params: { relationshipId: profile.id } })
+                }
               />
             </SectionCard>
             <SectionCard title="分析结果">
@@ -84,13 +92,18 @@ export default function RelationshipScreen() {
               }
             />
             <PrimaryButton
-              label="前往导入与分析（尚未接入）"
+              label="前往导入与分析 Demo"
               variant="quiet"
-              onPress={() => router.push('/import')}
+              onPress={() =>
+                router.push({ pathname: '/import', params: { relationshipId: profile.id } })
+              }
             />
           </>
         ) : (
-          <EmptyState title="还没有关系资料" description="未提供对象或关系资料。" />
+          <EmptyState
+            title={requested === null ? '还没有关系资料' : '关系不可用'}
+            description="未提供对象或关系资料。不会回退到另一段关系。"
+          />
         )
       ) : null}
       <BodyText muted>

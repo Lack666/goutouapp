@@ -82,7 +82,8 @@ an alternative explanation, and unknowns. The completed preview explicitly says
 it has not analyzed input. It makes no success probability, psychological
 diagnosis, mind-reading claim or manipulative recommendation. A neutral safety
 notice reserves a place for future public Safety results; no client classifier
-or model inference exists. The full analysis surface remains Phase 7C.
+or model inference exists. Phase 7C adds an independent synthetic analysis preview
+on Import; no real imported-chat Agent analysis runs.
 
 Input has a readable label and disabled semantics; preview/Clear are buttons;
 message labels include sender; errors use alert and status/feedback use polite
@@ -101,3 +102,8 @@ composer, long messages scroll, and external/business requests and page errors
 must be zero. Screenshots live under ignored `.cache/phase7b-*.png`; visual
 review and exact results are recorded in [7B acceptance](PHASE_7B_ACCEPTANCE.md).
 Android keyboard, insets, hardware Back and TalkBack remain NOT RUN.
+
+Phase 7C keeps this Chat/composer design and adds a fail-closed unavailable view
+for unknown/ambiguous relationship IDs. Import and History pass explicit scope
+to Chat; changed scope still clears the mounted local conversation. Its local
+input never becomes Agent History. See [7C acceptance](PHASE_7C_ACCEPTANCE.md).

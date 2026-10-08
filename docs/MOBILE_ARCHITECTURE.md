@@ -1,6 +1,6 @@
-# Mobile architecture — Phase 7A–7B
+# Mobile architecture — Phase 7A–7C
 
-The Expo React Native foundation, navigation shell and local Chat/Profile UI are implemented.
+The Expo React Native foundation, navigation shell and local Chat/Profile/Import/History/Settings UI are implemented.
 Phase 7 remains the six-surface Mobile MVP; Phase 8 remains generated API client
 and stream integration. No server/Agent behavior or frozen knowledge is changed.
 
@@ -51,7 +51,7 @@ ignored. ESLint 9 is retained with Expo's recommended config in this foundation.
 ## Directory boundaries
 
 - `app/`: Expo Router's root layout, six route modules and not-found route only.
-- `src/features/`: Home, Chat, Relationship, Import/History shell and Settings.
+- `src/features/`: Home, Chat, Relationship, Import wizard, History and Settings.
 - `src/components/`: ScreenContainer, AppHeader, PrimaryButton, SectionCard,
   EmptyState, LoadingState, ErrorState, DemoNotice and StatePreview.
 - `src/theme/`: shared palette, type, spacing, radius, layout and theme provider.
@@ -84,11 +84,12 @@ as the compact launch surface. There are no automatic redirects or circular rout
 Home displays welcome and entry actions. Chat supports a virtualized message
 list and local multiline preview; real server sending remains disabled.
 Relationship has scoped synthetic Person/profile cards, missing-data handling
-and A/B selection; real editing remains disabled. Import shows disabled file
-selection and empty analysis region.
-History shows empty record space. Settings shows app version, theme and truthful
-unconnected account/memory information. Import/History/Memory settings business
-UI remains Phase 7C; generated API integration remains Phase 8.
+and A/B selection; real editing remains disabled. Import is a five-step explicit
+source/identity/relationship/readiness/result Demo, with disabled file/finalize
+actions and synthetic FIU teaching preview. History has separate AI/external
+views, scoped synthetic data and virtualized 30-row incremental windows. Settings
+has local consent/pause/inspect/undo/delete-confirmation/retention previews,
+app information and theme. Generated API integration remains Phase 8.
 
 ## Data and interaction boundary
 
@@ -96,13 +97,18 @@ UI remains Phase 7C; generated API integration remains Phase 8.
 union of loading, empty-with-ViewModel or safe error. It is deliberately synchronous
 and read-only for this local shell. Phase 7B extends it with `readChat` and
 `readRelationships`, returning typed, freshly allocated feature templates.
+Phase 7C adds readImport/readHistory/readSettings, also read-only templates;
+feature controllers own only ephemeral presentation state. Import readiness is
+local, History domains are discriminated, and Memory actions reflect existing
+Phase 6 semantics without creating wire statuses/challenges/receipts.
 Chat begins empty; an explicit action loads predefined assistant/user examples.
 Local input adds only a user bubble. Synthetic profiles/FIU are clearly labeled;
 there are no real analyses, saved memories, successful uploads or authenticated
 sessions. Every page states
 **本地演示 · Demo** and that the server is unconnected.
 
-Import/History retain the original shell states. Relationship retains the same
+Import/History/Settings retain local loading/empty/error presentation controls.
+Relationship retains the same
 local loading/error controls alongside its complete Demo profile. Chat has a
 separate seven-state presentation union: idle/unavailable/starting/progressing/
 completed/failed/pending_confirmation. Manual previews never claim a live run.
@@ -113,16 +119,27 @@ Draft/list state clears on Chat unmount/reload or a changed relationship scope.
 Profile selection survives Stack push/back while mounted and resets on reload.
 See [Chat UI](MOBILE_CHAT_UI.md) and [Relationship UI](MOBILE_RELATIONSHIP_UI.md).
 
+All scoped navigation uses explicit relationshipId. Unknown/ambiguous IDs fail
+closed on Chat/Relationship/Import/History. Import changes clear bindings and
+confirmation; route-scope changes remount scoped controllers. History scope changes
+clear loaded state/filter/window; Memory controls are owner-level demo state, not
+relationship chat. Unmount/reload/restart clears feature previews. Stack push/back
+retains still-mounted state; theme lives separately at root. There is no global
+state library or durable storage. See [Import UI](MOBILE_IMPORT_UI.md),
+[History UI](MOBILE_HISTORY_UI.md), [Settings UI](MOBILE_SETTINGS_UI.md).
+
 Phase 8 can introduce async resource hooks and adapters translating existing
 server DTOs into these UI ViewModels. It will replace the source at composition,
 extend states for loaded records and preserve shared rendering/components.
 This is not an ApiClient or a copied backend schema. JWT storage, generated
 OpenAPI types, operation_key/run_id handling, REST and POST SSE consumption,
-imports and memory mutations remain deferred. Current backend supports signed
+real imports and memory mutations remain deferred. Current backend supports signed
 JWT verification and development tokens, not complete production registration.
 The actual Phase 4 stream is progress SSE with a committed final response,
 not model token streaming or WebSocket. Structured FIU/profile data is not
 currently supplied by the public answer DTO; Phase 8 must coordinate its mapping.
+Public Profile/Person resource reads and a general Agent-history-list adapter
+also need contract coordination; internal AgentService history is not a mobile API.
 See AGENT_API/STREAMING_API,
 IMPORT_API and MEMORY_API for the future adapter's authority.
 
@@ -189,10 +206,11 @@ do not substitute 127.0.0.1 when using `--localhost`). Chrome is headless.
 It tests five Home transitions/back, all direct links, unknown-route recovery,
 three theme modes, state previews/retry, enabled local composer, 320/360/412 widths,
 48px back target and no external application requests/page errors.
-Seven scenarios include the retained 7A flow and six 7B light/dark/width flows
+Thirteen scenarios include the retained 7A flow, six 7B light/dark/width flows
 with preview typing, append/scroll, FIU, disabled confirmation, A/B profile,
-scoped Chat and return navigation. Ignored evidence goes to
-`.cache/phase7b-web-smoke.json`, Web results and PNGs.
+scoped Chat and return navigation, plus six 7C wizard/B-only History/Memory-control
+and confirmation flows at those widths/themes. Ignored current evidence goes to
+`.cache/phase7c-web-smoke.json`, Web results and PNGs.
 Web export is an additional build check, not a replacement for this live smoke.
 
 ## Environment and security boundaries
@@ -213,4 +231,4 @@ certification. All real authentication/ownership/model operations stay server-si
 See [ADR 0029](adr/0029-mobile-shell-and-data-boundary.md),
 [ADR 0030](adr/0030-mobile-chat-preview-and-relationship-scope.md),
 [Phase 7A acceptance](PHASE_7A_ACCEPTANCE.md) and
-[Phase 7B acceptance](PHASE_7B_ACCEPTANCE.md).
+[Phase 7B acceptance](PHASE_7B_ACCEPTANCE.md), [Phase 7C acceptance](PHASE_7C_ACCEPTANCE.md).

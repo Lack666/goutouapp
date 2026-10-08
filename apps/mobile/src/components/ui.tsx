@@ -29,10 +29,17 @@ export function ScreenContainer({ children }: PropsWithChildren) {
   );
 }
 
-export function BodyText({ children, muted = false }: PropsWithChildren<{ muted?: boolean }>) {
+export function BodyText({
+  children,
+  muted = false,
+  live = false,
+}: PropsWithChildren<{ muted?: boolean; live?: boolean }>) {
   const { colors } = useTheme();
   return (
-    <Text style={[tokens.type.body, { color: muted ? colors.muted : colors.text }]}>
+    <Text
+      accessibilityLiveRegion={live ? 'polite' : undefined}
+      style={[tokens.type.body, { color: muted ? colors.muted : colors.text }]}
+    >
       {children}
     </Text>
   );

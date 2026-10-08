@@ -37,11 +37,11 @@ describe('Relationship public profile', () => {
   it.each([
     ['前往本地对话预览', '/chat', '关系 B · 待补充'],
     [
-      '前往导入与分析（尚未接入）',
+      '前往导入与分析 Demo',
       '/import',
       '导入入口和分析展示区已预留。当前不会读取、上传或分析任何聊天文件。',
     ],
-    ['查看关系历史（尚未接入）', '/history', '还没有历史记录'],
+    ['查看关系历史 Demo', '/history', '还没有历史记录'],
   ])(
     'navigates using %s and restores the selected relationship on back',
     async (label, path, text) => {

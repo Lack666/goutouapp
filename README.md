@@ -11,15 +11,17 @@ Phase 0–6 已完成（Phase 6A–6D PASS）。当前有 83 个合成 Golden Ca
 独立 LangGraph Runtime、真实 JWT 的 Agent REST/SSE、显式绑定的聊天导入流水线，
 以及 consent/查看/暂停/恢复、受保护撤销、确认删除、有限保留期和维护 CLI。
 可用 Mock LLM 无密钥运行；真实模型的端到端语义质量尚未验证。
-生产调度、备份轮换与恢复删除重放尚未部署。Phase 7A 已建立真实 Expo React Native
-导航骨架、六个页面入口、共享主题与本地状态预览；Phase 7 整体仍未完成。
+生产调度、备份轮换与恢复删除重放尚未部署。Phase 7A–7C 已完成 Expo React Native
+六页面骨架、Chat/Profile、导入向导、分域历史与 Memory 设置的本地演示。
+Phase 7 整体仍待 7D 验收，Phase 8 真实 API 接入尚未开始。
 阶段状态以代码和验收结果为准，参见 [Master Plan](docs/MASTER_PLAN.md)
 和 [Phase 6 最终验收报告](docs/PHASE_6_FINAL_ACCEPTANCE.md)、
-[Phase 7A 验收报告](docs/PHASE_7A_ACCEPTANCE.md)。
+[Phase 7A 验收报告](docs/PHASE_7A_ACCEPTANCE.md)、
+[Phase 7C 验收报告](docs/PHASE_7C_ACCEPTANCE.md)。
 
 ## 目录
 
-- `apps/mobile`：Expo 手机客户端基础与导航骨架（本地 Demo）。
+- `apps/mobile`：Expo 手机客户端六页面与功能 UI（本地 Demo）。
 - `apps/server`：FastAPI/PostgreSQL 基础、LLM Provider 与独立 Agent Runtime。
 - `knowledge/goutoujunshi`：未修改的上游 Skill 内容。
 - `knowledge/upstream-manifest.json`：上游仓库、commit、License 和文件哈希。

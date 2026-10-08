@@ -111,7 +111,7 @@ for (const mode of ['浅色', '深色']) {
         'aria-pressed',
         'true',
       );
-      await page.getByRole('button', { name: '前往导入与分析（尚未接入）' }).click();
+      await page.getByRole('button', { name: '前往导入与分析 Demo' }).click();
       await expect(page.getByRole('button', { name: '选择文件（尚未开放）' })).toBeDisabled();
       await page.getByRole('button', { name: '返回上一级' }).click();
       await page.reload();

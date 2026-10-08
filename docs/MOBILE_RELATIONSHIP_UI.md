@@ -30,15 +30,19 @@ demo has a completed analysis. No private chat fixtures are used.
 
 The profile includes title/current relationship, Person, known information,
 missing information, history and analysis placeholders, source explanation,
-Chat/Import/History navigation and disabled real editing. History and Import
-remain Phase 7A shells and say their business features are unconnected.
+Chat/Import/History navigation and disabled real editing. Phase 7C supplies
+explicit scoped Import wizard and separate local History views; server features
+remain unconnected.
 Navigation does not start a task or upload/parse/analyze a file.
 
-Chat navigation passes the selected synthetic relationshipId via Router params.
-Chat's template shows that scope; unsupported IDs display **关系未提供** rather
+Chat/Import/History navigation passes the selected synthetic relationshipId via Router params.
+Chat's template shows that scope; unsupported IDs display **关系不可用** rather
 than falling back to A's profile. Changing Chat scope clears its local state.
 Back returns to the still-mounted profile with the same selected relationship.
-Reload/remount resets profile selection to the first supplied entry; it never
+An explicit incoming relationshipId selects its matching profile; unknown or
+ambiguous IDs show unavailable without falling back. Changing route scope clears
+the local selection. Reload/remount uses that explicit ID, or the first supplied
+entry only when no scope was provided; it never
 stores a preferred relationship or authenticated account.
 
 Loading/error/empty controls retain the 7A Demo state seam. Error Retry resets
@@ -66,3 +70,5 @@ Browser smoke covers both themes at 320/360/412px, A/B switching, scoped Chat,
 Back, Import shell and reload policy. Screenshots and zero-request/error evidence
 are recorded in [7B acceptance](PHASE_7B_ACCEPTANCE.md). Android native smoke
 and TalkBack are NOT RUN; Web/Jest do not substitute for native validation.
+Phase 7C adds scope propagation/reset and Import/History controls without rewriting
+the existing profile cards. See [7C acceptance](PHASE_7C_ACCEPTANCE.md).

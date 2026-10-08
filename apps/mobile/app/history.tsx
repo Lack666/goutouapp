@@ -1,4 +1,1 @@
-import SurfaceScreen from '../src/features/SurfaceScreen';
-export default function HistoryRoute() {
-  return <SurfaceScreen id="history" />;
-}
+export { default } from '../src/features/HistoryScreen';

@@ -13,6 +13,7 @@
     "format": "prettier --write .",
     "test": "jest --runInBand",
     "test:features": "jest --runInBand tests/chat.test.tsx tests/relationship.test.tsx",
+    "test:controls": "jest --runInBand tests/import.test.tsx tests/history.test.tsx tests/settings.test.tsx tests/controls.test.tsx",
     "compatibility": "expo install --check",
     "export:web": "expo export --platform web",
     "smoke:web": "playwright test"

@@ -1,5 +1,5 @@
 import { useMemo, useRef, useState } from 'react';
-import { useLocalSearchParams, useRouter } from 'expo-router';
+import { useRouter } from 'expo-router';
 import { KeyboardAvoidingView, Platform, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import type {
@@ -10,16 +10,33 @@ import type {
 import { appendLocalPreview, COMPOSER_LIMIT } from '../contracts/chat';
 import { useDataSource } from '../data/DataSourceProvider';
 import { useTheme } from '../theme/ThemeProvider';
-import { AppHeader, BodyText, DemoNotice, PrimaryButton } from '../components/ui';
+import {
+  AppHeader,
+  BodyText,
+  DemoNotice,
+  PrimaryButton,
+  ScreenContainer,
+  EmptyState,
+} from '../components/ui';
+import { useRelationshipScope, useLocalNavigation } from '../navigation/scope';
 import { ChatMessageList } from '../components/ChatMessageList';
 import { ChatComposer } from '../components/ChatComposer';
 import { ChatRunStatus, FiuPreview, runPreviews } from '../components/ChatRunPreview';
 
 export default function ChatScreen() {
   const source = useDataSource();
-  const { relationshipId } = useLocalSearchParams<{ relationshipId?: string }>();
-  const scope = typeof relationshipId === 'string' ? relationshipId : null;
+  const scope = useRelationshipScope();
+  const nav = useLocalNavigation();
+  const profiles = useMemo(() => source.readRelationships(), [source]);
   const model = useMemo(() => source.readChat(scope), [source, scope]);
+  if (scope !== null && !profiles.some((p) => p.id === scope))
+    return (
+      <ScreenContainer>
+        <AppHeader title="对话" subtitle="关系范围未提供" onBack={nav.back} />
+        <DemoNotice />
+        <EmptyState title="关系不可用" description="不会显示另一段关系的对话，请返回修改。" />
+      </ScreenContainer>
+    );
   return <ChatSession key={`${model.thread.id}:${scope}`} model={model} />;
 }
 export function ChatSession({ model }: { model: ChatScreenViewModel }) {

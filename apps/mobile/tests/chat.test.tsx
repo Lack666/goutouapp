@@ -160,7 +160,7 @@ describe('Chat local interaction and public presentation', () => {
   });
   it('shows unsupported relationship scope as unknown without falling back to A', async () => {
     await renderRouter(app, { initialUrl: '/chat?relationshipId=unknown-demo' });
-    expect(screen.getByText('关系未提供')).toBeOnTheScreen();
+    expect(screen.getByText('关系不可用')).toBeOnTheScreen();
     expect(screen.queryByText('关系 A · 同学')).toBeNull();
     expect(screen.queryAllByTestId(/^message-/)).toHaveLength(0);
   });

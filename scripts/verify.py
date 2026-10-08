@@ -45,6 +45,7 @@ MEMORY_PHASE6_E2E = (
 )
 MOBILE_FOUNDATION = (ROOT / "apps/mobile/package.json").is_file()
 MOBILE_FEATURE_UI = (ROOT / "apps/mobile/src/features/ChatScreen.tsx").is_file()
+MOBILE_CONTROLS_UI = (ROOT / "apps/mobile/src/features/ImportScreen.tsx").is_file()
 
 
 def run(command: list[str]) -> None:
@@ -392,7 +393,9 @@ def verify() -> None:
             print("SEPARATE GATE: Expo Web / Android runtime smoke")
             if MOBILE_FEATURE_UI:
                 print("PASS: Phase 7B Chat/Relationship focused static gate")
-            print("DEFERRED: Phase 7C UI and Phase 8 API integration")
+            if MOBILE_CONTROLS_UI:
+                print("PASS: Phase 7C Import/History/Settings focused static gate")
+            print("DEFERRED: Phase 7D final acceptance and Phase 8 API integration")
         else:
             print("DEFERRED: Mobile")
         print("DEFERRED: RAG")
@@ -406,6 +409,8 @@ def verify() -> None:
             suffix = " and 7A static gates" if MOBILE_FOUNDATION else ""
             if MOBILE_FEATURE_UI:
                 suffix += " and 7B focused gate"
+            if MOBILE_CONTROLS_UI:
+                suffix += " and 7C focused gate"
             print(f"PASS: all active Phase 0..6{suffix}")
             return
         active = "Phase 0..5"
