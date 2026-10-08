@@ -68,3 +68,9 @@ bypass and absence of action/memory output. Mock outputs are derived from
 Golden annotations and behavior IDs. Passing this replay checks wiring and
 evaluator consistency; it is not an independent assessment of a live model's
 relationship analysis or nuanced language quality.
+
+Phase 6C adds two synthetic Golden retention fixtures (`memory_retention_active_01`
+and `memory_retention_expired_01`), bringing the inventory to 83 cases. The retention
+integration tests consume their expiry/count annotations against real PostgreSQL,
+AgentService and MockLLM. Existing 24/30/38/14 semantic/analysis/action/memory replay
+subsets remain unchanged; no live-model accuracy is claimed.

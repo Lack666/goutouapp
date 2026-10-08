@@ -12,6 +12,7 @@ from sqlalchemy.exc import SQLAlchemyError
 
 from app.agent.contracts import MemoryRecord
 from app.db.repositories.memory import SQLAlchemyMemoryStore
+from app.retention import as_utc
 from app.services.agent_service import AuthenticatedActor
 
 
@@ -53,6 +54,9 @@ class MemoryRecordView(PublicModel):
     provenance_summary: str
     created_at: datetime
     updated_at: datetime
+    expires_at: datetime
+    state: str
+    retention_policy_summary: str = ""
     historical_notice: str = (
         "Saved memories describe past information and may no longer be accurate."
     )
@@ -61,6 +65,7 @@ class MemoryRecordView(PublicModel):
 class MemoryListResult(PublicModel):
     items: list[MemoryRecordView]
     next_cursor: str | None
+    retention_policy_summary: str = ""
     historical_notice: str = (
         "Saved memories describe past information and may no longer be accurate."
     )
@@ -140,8 +145,7 @@ class MemoryControlService:
     def resume(self, actor: AuthenticatedActor) -> MemoryControlView:
         return self._change(actor, "resume")
 
-    @staticmethod
-    def _record_view(item: MemoryRecord) -> MemoryRecordView:
+    def _record_view(self, item: MemoryRecord) -> MemoryRecordView:
         return MemoryRecordView(
             id=item.id,
             type=item.type,
@@ -159,6 +163,9 @@ class MemoryControlService:
             ),
             created_at=item.created_at,
             updated_at=item.updated_at,
+            expires_at=item.expires_at,
+            state="active" if item.expires_at > as_utc(self._store.clock()) else "expired",
+            retention_policy_summary=self._store.policy.summary,
         )
 
     def inspect_memory(self, actor: AuthenticatedActor, memory_id: UUID) -> MemoryRecordView:
@@ -209,4 +216,5 @@ class MemoryControlService:
         return MemoryListResult(
             items=[self._record_view(item) for item in page],
             next_cursor=next_cursor,
+            retention_policy_summary=self._store.policy.summary,
         )

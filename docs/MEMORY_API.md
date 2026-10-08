@@ -93,8 +93,8 @@ scope, timestamp and `replayed`. `primary_store_only=true` states the deletion
 boundary. It contains no saved content. Delete-all leaves consent as it was
 when `revoke_consent_after_delete=false`; `true` also revokes consent and
 pauses memory access in the same transaction. Revocation alone keeps records.
-Production retention, backup and expiry policy remain Phase 6C. The mobile
-client remains Phase 7.
+Phase 6C adds fixed expiration and a documented backup policy; see below.
+The mobile client remains Phase 7.
 
 Run the keyless demos with a disposable PostgreSQL test namespace:
 
@@ -109,3 +109,23 @@ Set `TEST_DATABASE_URL` to a `postgresql+psycopg` URL whose database ends in
 `_test`. The demos create and remove a separate migrated database. The HTTP
 demo starts a local Uvicorn socket and signs a short-lived development JWT;
 neither demo prints token or saved content.
+
+## Phase 6C additive public retention fields
+
+`MemoryRecordView` additionally returns UTC `expires_at`, `state` (`active` or
+`expired`) and `retention_policy_summary`. `MemoryListResult` includes the summary
+even when empty. Existing fields and routes remain intact. Default lists exclude
+expired records; owned GET-by-ID shows their expired state until physical cleanup.
+Pause/revoke still allow inspection. Expired records are never recallable.
+An expired latest undo preview is unavailable; an expected undo target that expires
+fails `undo_unavailable`, or `stale_undo` after cleanup exposes an older operation.
+It never falls back to deleting the older target. Deletes still cover selected
+primary records including expired rows awaiting maintenance.
+
+The default new-record policy is 180 days from creation, without recall renewal;
+legacy records get 180 days from migration. Changing Settings affects new saves
+only. There is no user retention Settings UI or maintenance HTTP endpoint.
+Receipts replay after their challenge is physically cleaned, with no retry cutoff
+while owner and metadata remain intact. See [retention policy](MEMORY_RETENTION.md)
+and [backup/deletion policy](MEMORY_BACKUP_DELETION_POLICY.md). Primary deletion does
+not promise immediate backup/provider erasure.

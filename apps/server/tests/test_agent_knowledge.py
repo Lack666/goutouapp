@@ -82,7 +82,7 @@ def test_registry_matches_frozen_manifest_and_loads_distinct_families() -> None:
 def test_golden_all_81_routes_use_flexible_constraints() -> None:
     registry = ReferenceRegistry()
     count, errors = evaluate_all(registry)
-    assert count == 81
+    assert count == 83
     assert errors == []
     case = next(c for c in load_cases() if c["id"] == "conflict_02")
     allowed_alternative = KnowledgeRouteResult(

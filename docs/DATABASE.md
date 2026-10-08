@@ -112,3 +112,21 @@ metadata and an opaque key; bytes remain in private artifact storage. The
 migration gate checks thirteen tables and the reversible cycle. Expiration
 cleanup is an explicit service operation; it cannot delete formal
 RelationshipMessages. See [Import Artifacts](IMPORT_ARTIFACTS.md).
+
+## Phase 6B–6C memory mutation and expiry schema
+
+Revision `20260929_01` added owner/key-unique `memory_mutations` durable receipts
+and owner-bound `memory_confirmations`. Receipt confirmation IDs intentionally
+have no FK requiring challenge retention. They store IDs/fingerprints/counts,
+never saved content. Revision `20261008_01` adds non-null timestamptz `expires_at`
+to `memory_records`, indexed for expiry cleanup, and indexes challenge expiry.
+It backfills all existing rows to migration transaction time + 180 days, leaving
+creation/update/control fields intact; no old row expires immediately. Subsequent
+service writes supply configured creation-based expiry explicitly.
+
+The migration gate checks all fifteen tables through upgrade/downgrade/upgrade/check.
+Legacy-row regression separately migrates an old record forward. SQL recall/default
+inspection require expiry > UTC now; direct owner inspection can see expired rows.
+Cleanup locks owners before children, rechecks bounded IDs, deletes records and
+cascades only their `memory_operations`, and removes challenges after expiry+grace.
+Receipts and controls have no time cleanup. See [retention policy](MEMORY_RETENTION.md).

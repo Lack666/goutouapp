@@ -18,11 +18,20 @@ from app.db.models import (
     Relationship,
     User,
 )
+from app.retention import RetentionPolicy, as_utc, utc_now
 
 
 class SQLAlchemyMemoryStore:
-    def __init__(self, session_factory: Callable[[], Session]) -> None:
+    def __init__(
+        self,
+        session_factory: Callable[[], Session],
+        *,
+        policy: RetentionPolicy | None = None,
+        clock: Callable[[], datetime] = utc_now,
+    ) -> None:
         self._session_factory = session_factory
+        self.policy = policy or RetentionPolicy()
+        self.clock = clock
 
     def get_control(self, user_id: UUID) -> MemoryControl:
         return self.control_state(user_id)[0]
@@ -119,7 +128,10 @@ class SQLAlchemyMemoryStore:
         limit: int,
     ) -> list[MemoryRecord]:
         with self._session_factory() as db:
-            query = select(MemoryRecordRow).where(MemoryRecordRow.owner_user_id == user_id)
+            query = select(MemoryRecordRow).where(
+                MemoryRecordRow.owner_user_id == user_id,
+                MemoryRecordRow.expires_at > as_utc(self.clock()),
+            )
             if person_id is not None:
                 query = query.where(MemoryRecordRow.person_id == person_id)
             if relationship_id is not None:
@@ -167,6 +179,7 @@ class SQLAlchemyMemoryStore:
             confidence=row.confidence,
             created_at=row.created_at,
             updated_at=row.updated_at,
+            expires_at=row.expires_at,
         )
 
     def resolve_person(self, user_id: UUID, relationship_id: UUID) -> UUID | None:
@@ -179,7 +192,10 @@ class SQLAlchemyMemoryStore:
 
     def list_records(self, user_id: UUID, person_id: UUID | None = None) -> list[MemoryRecord]:
         with self._session_factory() as db:
-            query = select(MemoryRecordRow).where(MemoryRecordRow.owner_user_id == user_id)
+            query = select(MemoryRecordRow).where(
+                MemoryRecordRow.owner_user_id == user_id,
+                MemoryRecordRow.expires_at > as_utc(self.clock()),
+            )
             if person_id is not None:
                 query = query.where(MemoryRecordRow.subject_id.in_([user_id, person_id]))
             rows = db.scalars(
@@ -253,6 +269,7 @@ class SQLAlchemyMemoryStore:
                     first_run_id=UUID(record.evidence.split(":", 1)[0]),
                     created_at=record.created_at,
                     updated_at=record.updated_at,
+                    expires_at=record.expires_at,
                 )
                 .on_conflict_do_nothing(constraint="uq_memory_records_owner_user_id")
             )

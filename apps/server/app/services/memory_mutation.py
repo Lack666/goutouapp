@@ -186,6 +186,8 @@ class MemoryMutationService:
                 if latest is None:
                     return UndoPreview(available=False)
                 operation, record = latest
+                if record.expires_at <= self._clock():
+                    return UndoPreview(available=False)
                 return UndoPreview(
                     available=True,
                     latest_operation_id=operation.id,
@@ -218,6 +220,8 @@ class MemoryMutationService:
                 operation, record = latest
                 if operation.id != expected_operation_id:
                     raise MemoryMutationError(MemoryMutationErrorCode.STALE_UNDO)
+                if record.expires_at <= self._clock():
+                    raise MemoryMutationError(MemoryMutationErrorCode.UNDO_UNAVAILABLE)
                 removed = db.execute(
                     delete(MemoryRecordRow).where(
                         MemoryRecordRow.owner_user_id == owner_id,

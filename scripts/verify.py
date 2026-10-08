@@ -35,6 +35,11 @@ CHAT_IMPORT_MERGE = PHASE >= 5 or SUBPHASE in {"5C", "5D"}
 CHAT_IMPORT_API = PHASE >= 5 or SUBPHASE == "5D"
 MEMORY_CONTROL_API = PHASE >= 6 or SUBPHASE in {"6A", "6B", "6C", "6D"}
 MEMORY_MUTATION_API = PHASE >= 6 or SUBPHASE in {"6B", "6C", "6D"}
+MEMORY_RETENTION = (
+    PHASE >= 6
+    or SUBPHASE in {"6C", "6D"}
+    or (ROOT / "apps/server/app/services/memory_retention.py").is_file()
+)
 
 
 def run(command: list[str]) -> None:
@@ -51,7 +56,12 @@ def doctor() -> None:
         if not location:
             raise RuntimeError(f"Required tool missing: {name}")
         version = subprocess.run(
-            [location, "--version"], capture_output=True, text=True, check=True
+            # Inspect installed tools without pnpm's project-version auto-download.
+            [location, "--version"],
+            cwd=ROOT.parent,
+            capture_output=True,
+            text=True,
+            check=True,
         ).stdout.strip()
         print(f"{name}: {version} ({location})")
     print(f"make: {shutil.which('make') or 'use make.cmd on Windows'}")
@@ -157,6 +167,9 @@ def tests() -> None:
         uv_run("pytest", "-q", "apps/server/tests/test_memory_mutation.py")
         uv_run("python", "apps/server/memory_destructive_control_demo.py")
         uv_run("python", "apps/server/memory_destructive_http_demo.py")
+    if MEMORY_RETENTION:
+        uv_run("pytest", "-q", "apps/server/tests/test_memory_retention.py")
+        uv_run("python", "apps/server/memory_retention_demo.py")
     if BACKEND_FOUNDATION:
         uv_run("pytest", "-q", "apps/server/tests")
 
@@ -273,7 +286,7 @@ def verify() -> None:
     else:
         print("DEFERRED: Safety, Scenario and FIU semantic nodes")
     if AGENT_KNOWLEDGE:
-        print("PASS: Deterministic knowledge router, frozen loader and 81-case fixture evaluation")
+        print("PASS: Deterministic knowledge router, frozen loader and Golden fixture evaluation")
     else:
         print("DEFERRED: Knowledge router and reference loader")
     if AGENT_ANALYSIS:
@@ -314,7 +327,11 @@ def verify() -> None:
             print("PASS: Phase 6B guarded undo, confirmed deletion and durable receipts")
         else:
             print("DEFERRED TO 6B: Undo/Delete Public Controls")
-        print("DEFERRED TO 6C: Retention Policy")
+        if MEMORY_RETENTION:
+            print("PASS: Phase 6C retention expiry, bounded maintenance and durable receipt safety")
+            print("AUTOMATIC SCHEDULING: NOT DEPLOYED")
+        else:
+            print("DEFERRED TO 6C: Retention Policy")
         print("DEFERRED TO 6D: Phase 6 Final Acceptance")
         print("DEFERRED TO PHASE 7: Mobile")
     if AGENT_STREAMING:
@@ -361,6 +378,8 @@ def verify() -> None:
             active += " and 6A"
         if MEMORY_MUTATION_API:
             active += " and 6B"
+        if MEMORY_RETENTION:
+            active += " and 6C"
         print(f"PASS: all active {active} gates")
         return
     if PHASE == 4:

@@ -68,6 +68,23 @@ deleting or undoing that target.
 
 Successful delete responses report `primary_store_only=true`. This means the
 app-owned active primary PostgreSQL records are gone. It does not claim that
-backups or external copies are immediately erased. Production retention,
-challenge/receipt cleanup and backup/deletion policy are Phase 6C. The mobile
-client is Phase 7.
+backups or external copies are immediately erased. Phase 6C adds expiration, challenge cleanup and a backup/deletion policy.
+Receipts remain durable. The mobile client is Phase 7.
+
+## Phase 6C lifecycle and scope clarification
+
+Retention cleanup physically removes expired primary records and cascades only
+their undo operations under the existing owner lock. Expired expected undo targets
+fail unavailable; after cleanup, a changed latest operation fails stale. No fallback
+undo or pseudo-success receipt is created. Mutation receipts are durable for owner
+lifetime, so matching retries replay even after consumed/expired challenge cleanup.
+Different payloads reusing the key conflict. Challenge cleanup waits until five-minute
+expiry plus configurable 24-hour grace. Valid challenges are retained.
+
+Delete-person relies on structured Person/Relationship associations; it does not
+search arbitrary user-level text for mentions or remove Person entities, imported
+messages, chats or all system data about that person. Delete-all includes expired
+primary memory awaiting cleanup, with the original explicit revoke flag unchanged.
+Revoke-and-keep stops future recall/write but does not pause the retention clock.
+See [retention policy](MEMORY_RETENTION.md) and [backup/restore design](MEMORY_BACKUP_DELETION_POLICY.md).
+Production backup rotation, restore-safe deletion replay and scheduling are not deployed.

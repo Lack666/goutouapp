@@ -159,6 +159,9 @@ class MemoryRecordRow(RecordMixin, Base):
     evidence: Mapped[str] = mapped_column(String(100), nullable=False)
     confidence: Mapped[float | None] = mapped_column(Float, nullable=True)
     first_run_id: Mapped[UUID] = mapped_column(nullable=False)
+    expires_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), nullable=False, index=True
+    )
 
 
 class MemoryOperationRow(RecordMixin, Base):
@@ -200,7 +203,9 @@ class MemoryConfirmationRow(RecordMixin, Base):
     revoke_consent_after_delete: Mapped[bool] = mapped_column(nullable=False, default=False)
     expected_count: Mapped[int] = mapped_column(nullable=False)
     snapshot_hash: Mapped[str] = mapped_column(String(64), nullable=False)
-    expires_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False)
+    expires_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), nullable=False, index=True
+    )
     consumed_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
 
 

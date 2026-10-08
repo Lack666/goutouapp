@@ -19,7 +19,7 @@ as implemented by a placeholder directory or a golden expectation.
 | 3 | Standalone LangGraph runtime and Agent streaming integration | PASS |
 | 4 | Agent Service and API transport over the standalone runtime | PASS |
 | 5 | Chat Import and Relationship Data Pipeline | PASS (5A–5D) |
-| 6 | User-facing memory controls and retention policy integration | IN PROGRESS (6A–6B PASS) |
+| 6 | User-facing memory controls and retention policy integration | IN PROGRESS (6A–6C PASS) |
 | 7 | Expo React Native MVP | PENDING |
 | 8 | Mobile API integration, generated client and stream consumption | PENDING |
 | 9 | Security, privacy, reliability and deletion | PENDING |
@@ -450,3 +450,17 @@ versions are chosen at their implementation phase and locked in `uv.lock` or
 `pnpm-lock.yaml`; no pre-release versions by default. Phase 2A introduced the
 first Python runtime dependencies, selected against official release records
 and verified with the lockfile.
+
+### Phase 6C — retention, expiry and backup/deletion policy
+
+- Fixed configurable finite memory expiry; migration-time legacy grace; query-time
+  exclusion, user-visible expiration/state/summary and unavailable expired undo.
+- Bounded deterministic maintenance with owner-lock serialization, cascade-safe undo
+  history cleanup and challenge expiry+grace. Receipts remain durable to preserve
+  persistent destructive-operation retries after challenge removal.
+- Authoritative inventory and backup/restore design, true primary deletion boundaries,
+  real PostgreSQL/MockLLM demo, failure/race tests and prior-phase regression.
+  Production scheduling and backup automation are NOT DEPLOYED. See
+  [retention policy](MEMORY_RETENTION.md), [backup policy](MEMORY_BACKUP_DELETION_POLICY.md),
+  [ADR 0028](adr/0028-memory-retention-lifecycle.md) and [acceptance](PHASE_6C_ACCEPTANCE.md).
+  Phase 6D final acceptance and Phase 7 Mobile remain pending.

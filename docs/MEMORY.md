@@ -93,9 +93,11 @@ runs, so the same conversational intent returns `pending_confirmation` after
 safety routing and cannot perform undo. Clients use the dedicated control API
 for previewed undo.
 
-Deletion covers app-owned active primary database memory. Production backups
-and retention policy are not implemented, so no immediate deletion claim is
-made for backups or external copies. There is no account deletion workflow.
+Deletion covers app-owned active primary database memory. Phase 6C implements
+finite expiry and deterministic primary-store cleanup;
+[retention policy](MEMORY_RETENTION.md) and [backup policy](MEMORY_BACKUP_DELETION_POLICY.md)
+define the lifecycle. Production backups are not deployed; no immediate
+backup or external-copy erasure is claimed. There is no account deletion workflow.
 
 ## Graph and failure boundary
 
@@ -121,3 +123,15 @@ The isolated PostgreSQL tests exercise a new store/session after saving;
 `scripts/check_db_migrations.py` exercises upgrade, downgrade, upgrade and
 `alembic check` on a disposable database. `scripts/check_memory_replay.py`
 runs the Phase 1B memory subset with Mock output and checks actual write counts.
+
+## Phase 6C expiration
+
+New memories expire at creation + configured 180 days by default. SQL recall
+and standalone MemoryService enforce expiration at query/recall time, without
+waiting for maintenance. Ordinary recall and duplicate saves do not renew them.
+Legacy records receive 180 days from migration. Consent/pause are independent;
+revoke-and-keep records still expire. In-flight loaded context cannot be retracted.
+Owned inspection by ID can show expired records until physical cleanup; default
+lists show active records. Cleanup cascades affected undo history, cleans old
+challenges after grace, and never removes mutation receipts. Read the authoritative
+[retention policy](MEMORY_RETENTION.md) and [backup/restore policy](MEMORY_BACKUP_DELETION_POLICY.md).

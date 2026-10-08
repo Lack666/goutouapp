@@ -187,3 +187,25 @@ recommends keeping the generated lockfile with the project.
 See [database operations](../../docs/DATABASE.md) and
 [ADR 0006](../../docs/adr/0006-postgresql-foundation.md) for the schema,
 ownership, delete behavior, migration commands and test isolation strategy.
+
+## Phase 6C memory retention maintenance
+
+New records default to 180 days from creation (`MEMORY_RETENTION_DAYS`); legacy
+records receive 180 days from migration. Ordinary recall does not renew them.
+`MEMORY_CHALLENGE_CLEANUP_GRACE_HOURS=24` and `MEMORY_CLEANUP_BATCH_SIZE=100`
+control bounded maintenance; destructive mutation receipts remain durable.
+
+```powershell
+uv --cache-dir .cache/uv --no-managed-python run --locked --env-file .env python apps/server/cleanup_memory_retention.py --dry-run
+uv --cache-dir .cache/uv --no-managed-python run --locked --env-file .env python apps/server/cleanup_memory_retention.py --execute --batch-size 100 --max-batches 10
+uv --cache-dir .cache/uv --no-managed-python run --locked --env-file .env python apps/server/memory_retention_demo.py
+```
+
+The CLI uses private server DATABASE_URL, outputs counts/generic errors and is
+privileged operator tooling, not a user endpoint. The synthetic demo uses a
+separate TEST_DATABASE_URL `_test` namespace and removes its disposable database.
+Recommend hourly one-shot scheduling and backlog/storage alerts; **AUTOMATIC
+SCHEDULING: NOT DEPLOYED**. Production backup/restore automation is not deployed.
+See [retention policy](../../docs/MEMORY_RETENTION.md),
+[backup runbook](../../docs/MEMORY_BACKUP_DELETION_POLICY.md) and
+[Phase 6C acceptance](../../docs/PHASE_6C_ACCEPTANCE.md).

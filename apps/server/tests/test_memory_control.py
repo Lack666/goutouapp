@@ -211,7 +211,11 @@ def test_inspect_scope_pagination_and_privacy(database_engine):
                     "created_at",
                     "updated_at",
                     "historical_notice",
+                    "expires_at",
+                    "state",
+                    "retention_policy_summary",
                 }
+                assert item["state"] == "active" and item["expires_at"] > item["created_at"]
                 seen.append(item["id"])
             cursor = payload["next_cursor"]
             if cursor is None:

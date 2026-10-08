@@ -2,7 +2,8 @@
 
 import hashlib
 import re
-from datetime import UTC, datetime
+from collections.abc import Callable
+from datetime import datetime
 from typing import Protocol
 from uuid import UUID, uuid4
 
@@ -15,6 +16,7 @@ from app.agent.contracts import (
     MemoryRecord,
     MemoryWriteStatus,
 )
+from app.retention import RetentionPolicy, as_utc, utc_now
 
 MAX_TOTAL = 200
 MAX_OPERATIONS = 20
@@ -254,8 +256,16 @@ class InMemoryMemoryStore:
 
 
 class MemoryService:
-    def __init__(self, store: MemoryStore) -> None:
+    def __init__(
+        self,
+        store: MemoryStore,
+        *,
+        policy: RetentionPolicy | None = None,
+        clock: Callable[[], datetime] | None = None,
+    ) -> None:
         self.store = store
+        self.policy = policy or getattr(store, "policy", RetentionPolicy())
+        self._clock = clock or getattr(store, "clock", utc_now)
 
     def resolve_person(self, user_id: UUID, relationship_id: UUID | None) -> UUID | None:
         return self.store.resolve_person(user_id, relationship_id) if relationship_id else None
@@ -281,11 +291,15 @@ class MemoryService:
         if relationship_id is not None and person_id is None:
             return []
         records = self.store.list_records(user_id, person_id)
+        now = as_utc(self._clock())
         return [
             item
             for item in records
-            if item.subject_id == user_id
-            or (relationship_id is not None and item.relationship_id == relationship_id)
+            if item.expires_at > now
+            and (
+                item.subject_id == user_id
+                or (relationship_id is not None and item.relationship_id == relationship_id)
+            )
         ][:RECALL_LIMIT]
 
     def list_for_user(self, user_id: UUID, person_id: UUID | None = None) -> list[MemoryRecord]:
@@ -336,7 +350,7 @@ class MemoryService:
         ):
             return MemoryReceipt(status=MemoryWriteStatus.REJECTED_VALIDATION)
         saved = duplicates = 0
-        now = datetime.now(UTC)
+        now = as_utc(self._clock())
         for item in candidates:
             is_user = item.type == "user"
             record = MemoryRecord(
@@ -352,6 +366,7 @@ class MemoryService:
                 confidence=item.confidence,
                 created_at=now,
                 updated_at=now,
+                expires_at=self.policy.expires_at(now),
             )
             try:
                 if self.store.save_record(record):

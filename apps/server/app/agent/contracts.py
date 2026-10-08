@@ -290,6 +290,20 @@ class MemoryRecord(ContractModel):
     confidence: float | None = None
     created_at: datetime
     updated_at: datetime
+    expires_at: datetime | None = None
+
+    @model_validator(mode="after")
+    def expiration_contract(self) -> "MemoryRecord":
+        from app.retention import RetentionPolicy, as_utc
+
+        self.created_at = as_utc(self.created_at)
+        self.updated_at = as_utc(self.updated_at)
+        self.expires_at = (
+            as_utc(self.expires_at)
+            if self.expires_at is not None
+            else RetentionPolicy().expires_at(self.created_at)
+        )
+        return self
 
 
 class MemoryReceipt(ContractModel):

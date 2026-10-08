@@ -8,6 +8,7 @@ from pydantic import BaseModel, ConfigDict
 
 from app.api.dependencies import get_authenticated_actor
 from app.db.repositories.memory import SQLAlchemyMemoryStore
+from app.retention import RetentionPolicy
 from app.services.agent_service import AuthenticatedActor
 from app.services.memory_control import (
     MemoryControlService,
@@ -59,7 +60,12 @@ class ExecuteDeleteRequest(BaseModel):
 
 
 def _service(request: Request) -> MemoryControlService:
-    return MemoryControlService(SQLAlchemyMemoryStore(request.app.state.database.session))
+    return MemoryControlService(
+        SQLAlchemyMemoryStore(
+            request.app.state.database.session,
+            policy=RetentionPolicy.from_settings(request.app.state.settings),
+        )
+    )
 
 
 def _mutation_service(request: Request) -> MemoryMutationService:

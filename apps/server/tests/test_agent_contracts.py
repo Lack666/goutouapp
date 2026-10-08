@@ -254,7 +254,7 @@ def test_golden_case_has_contract_surface(case: dict) -> None:
 
 def test_all_six_minimal_pairs_are_covered() -> None:
     pairs = {case["id"]: case["expected"] for case in CASES if case["id"].startswith("pair_")}
-    assert len(CASES) == 81
+    assert len(CASES) == 83
     assert {f"pair_{letter}{number}" for letter in "abcdef" for number in (1, 2)} <= set(pairs)
     assert Route(pairs["pair_a1"]["route"]) != Route(pairs["pair_a2"]["route"])
     for letter in "bc":

@@ -13,6 +13,7 @@ from app.agent.runtime import AgentRuntime
 from app.auth.jwt_verifier import CredentialVerificationError, JWTBearerVerifier
 from app.db.repositories.memory import SQLAlchemyMemoryStore
 from app.llm.factory import create_llm_provider
+from app.retention import RetentionPolicy
 from app.services.agent_service import (
     AgentService,
     AuthenticatedActor,
@@ -42,7 +43,11 @@ def get_agent_service(request: Request) -> AgentService:
             runtime = AgentRuntime(
                 dependencies=RuntimeDependencies(
                     llm_provider=provider,
-                    memory_service=MemoryService(SQLAlchemyMemoryStore(database.session)),
+                    memory_service=MemoryService(
+                        SQLAlchemyMemoryStore(
+                            database.session, policy=RetentionPolicy.from_settings(state.settings)
+                        )
+                    ),
                 )
             )
             state.agent_service = AgentService(database.session, runtime)

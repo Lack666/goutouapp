@@ -333,3 +333,21 @@ path. The public Agent Service marks conversational undo as pending after
 safety routing, so it cannot bypass expected-operation matching. See
 [Memory Deletion](MEMORY_DELETION.md) and
 [ADR 0027](adr/0027-guarded-memory-mutations.md).
+
+## Phase 6C retention boundary
+
+`Settings → RetentionPolicy` injects finite creation-based expiry into the same
+SQL MemoryStore/MemoryService used by HTTP controls and AgentService. A non-null
+UTC `expires_at` is fixed on save; migration gives legacy rows 180 days of grace.
+SQL and standalone recall exclude expiry independently of physical cleanup.
+Public inspection adds expiry/state/summary; default lists show active rows.
+
+`MemoryRetentionService → PostgreSQL` is a privileged deterministic one-shot CLI,
+with bounded per-category batches, sorted owner locks, eligibility rechecks and
+per-batch transactions. Record deletion cascades its undo targets; expired guarded
+undo is unavailable and never falls back. Challenge expiry+grace allows metadata
+removal while durable receipts preserve old operation keys and replay. Controls,
+Agent/import history and providers are untouched by maintenance. No HTTP maintenance
+endpoint, queue or LLM invocation is introduced. Production scheduler and backup/
+restore automation are not deployed. See [ADR 0028](adr/0028-memory-retention-lifecycle.md),
+[retention](MEMORY_RETENTION.md) and [backup/deletion policy](MEMORY_BACKUP_DELETION_POLICY.md).
