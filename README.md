@@ -14,13 +14,16 @@ Phase 0–6 已完成（Phase 6A–6D PASS）。当前有 83 个合成 Golden Ca
 生产调度、备份轮换与恢复删除重放尚未部署。Phase 7A–7D 提供 Expo React Native
 六页面骨架、Chat/Profile、导入向导、分域历史与 Memory 设置的本地演示。
 Phase 7 已完成（7A–7D PASS），六页面集成与错误恢复已验证；详见最终验收报告。
-Phase 8 真实 API 接入尚未开始。
+Phase 8A 已实现服务端 Person/Relationship/Conversation 公共资源与 Agent 历史前置合同；
+Phase 8 整体仍为 PENDING，Mobile 尚未接入真实 API。
 阶段状态以代码和验收结果为准，参见 [Master Plan](docs/MASTER_PLAN.md)
 和 [Phase 6 最终验收报告](docs/PHASE_6_FINAL_ACCEPTANCE.md)、
 [Phase 7A 验收报告](docs/PHASE_7A_ACCEPTANCE.md)、
 [Phase 7C 验收报告](docs/PHASE_7C_ACCEPTANCE.md)、
 [Phase 7 最终验收](docs/PHASE_7_FINAL_ACCEPTANCE.md)和
 [Phase 8 API 交接清单](docs/PHASE_8_MOBILE_INTEGRATION_HANDOFF.md)。
+资源、重试和生成输入见 [Public Resource API](docs/RESOURCE_API.md)与
+[Phase 8A 验收报告](docs/PHASE_8A_ACCEPTANCE.md)。
 
 ## 目录
 
@@ -73,6 +76,17 @@ uv --cache-dir .cache/uv --no-managed-python run --locked --env-file .env python
 ```
 
 演示输出操作状态、计数、ID 和断言，不输出记忆内容、聊天或 JWT。
+
+Phase 8A 的无真实模型密钥演示同样使用隔离测试库，真实 HTTP 创建三个资源、
+重复创建重试、跨用户拒绝、现有 Agent 执行与正式历史读取：
+
+```powershell
+uv --cache-dir .cache/uv --no-managed-python run --locked python apps/server/resource_api_demo.py
+uv --cache-dir .cache/uv --no-managed-python run --locked python scripts/export_openapi.py --check
+```
+
+`docs/contracts/openapi.json` 是后续 8B 的正式 TypeScript 生成输入，当前未生成客户端。
+开发身份继续使用 development-only JWT CLI，生产账号系统仍未实现。
 
 ## 上游署名
 

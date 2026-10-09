@@ -459,3 +459,25 @@ attempts stay distinct; Web meets the MASTER_PLAN minimum demo gate. Real API,
 auth, streams and generated client remain Phase 8. See
 [final acceptance](PHASE_7_FINAL_ACCEPTANCE.md) and
 [audited integration handoff](PHASE_8_MOBILE_INTEGRATION_HANDOFF.md).
+
+## Phase 8A public resource boundary
+
+`Bearer JWT → AuthenticatedActor → ResourceService → existing owner repositories
+→ PostgreSQL` adds Person/Relationship/Conversation creation/list/detail and Agent
+Message history. It uses the existing tables and constraints, with explicit typed
+public projections. Conversation remains optionally Relationship-bound; no Person,
+title, state or inferred Profile fields are introduced. Resources call no runtime.
+
+Required caller-retained UUID v4 plus a transaction advisory lock and existing PK
+provide durable row-lifetime creation retries. Matching creation fields replay;
+changed fields conflict. Bounded timestamp/UUID keysets use opaque scope-bound
+navigation cursors; every query still authorizes independently. Short committed
+live pages have no fixed snapshot. Agent Message and imported RelationshipMessage
+remain distinct, and imported data still does not enter AgentService.
+
+Deterministic OpenAPI export preserves the 26 actual Phase 7D contracts and adds
+ten operations. It supplies 8B's formal generation input, without generating a
+client or connecting Mobile. Existing development-only JWT CLI supplies manual
+credentials; production accounts remain absent. See [resource API](RESOURCE_API.md),
+[ADR0031](adr/0031-public-resource-acquisition-and-retries.md),
+[handoff](PHASE_8_MOBILE_INTEGRATION_HANDOFF.md) and [8A acceptance](PHASE_8A_ACCEPTANCE.md).

@@ -31,3 +31,22 @@ class MobilePhaseGateTests(unittest.TestCase):
         with patch.multiple(verifier, PHASE=8):
             with self.assertRaisesRegex(RuntimeError, "Phase 8"):
                 verifier.phase_marker_check()
+
+    def test_8a_keeps_phase_seven_complete_and_phase_eight_incomplete(self) -> None:
+        with patch.multiple(verifier, PHASE=7, SUBPHASE="8A"):
+            verifier.phase_marker_check()
+
+    def test_8a_requires_resource_gate(self) -> None:
+        with patch.multiple(verifier, PHASE=7, SUBPHASE="8A", PUBLIC_RESOURCES_API=False):
+            with self.assertRaisesRegex(RuntimeError, "resource gates"):
+                verifier.phase_marker_check()
+
+    def test_8a_cannot_skip_phase_seven(self) -> None:
+        with patch.multiple(verifier, PHASE=6, SUBPHASE="8A"):
+            with self.assertRaisesRegex(RuntimeError, "complete Phase 7"):
+                verifier.phase_marker_check()
+
+    def test_8b_is_not_supported_by_8a(self) -> None:
+        with patch.multiple(verifier, PHASE=7, SUBPHASE="8B"):
+            with self.assertRaisesRegex(RuntimeError, "all Mobile subphase gates"):
+                verifier.phase_marker_check()

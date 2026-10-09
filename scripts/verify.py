@@ -47,19 +47,39 @@ MOBILE_FOUNDATION = (ROOT / "apps/mobile/package.json").is_file()
 MOBILE_FEATURE_UI = (ROOT / "apps/mobile/src/features/ChatScreen.tsx").is_file()
 MOBILE_CONTROLS_UI = (ROOT / "apps/mobile/src/features/ImportScreen.tsx").is_file()
 MOBILE_FINAL_UI = (ROOT / "apps/mobile/tests/integration.test.tsx").is_file()
+PUBLIC_RESOURCES_API = (ROOT / "apps/server/app/api/v1/resources.py").is_file()
+RESOURCE_GATE_FILES = (
+    "apps/server/app/services/resources.py",
+    "apps/server/app/db/repositories/resources.py",
+    "apps/server/app/schemas/resources.py",
+    "apps/server/tests/test_resource_api.py",
+    "apps/server/tests/test_resource_contract.py",
+    "apps/server/resource_api_demo.py",
+    "scripts/export_openapi.py",
+    "docs/contracts/openapi.json",
+    "docs/contracts/phase7d-openapi-baseline.json",
+    "docs/RESOURCE_API.md",
+    "docs/PHASE_8A_ACCEPTANCE.md",
+)
 
 
 def phase_marker_check() -> None:
     if PHASE > 7:
         raise RuntimeError("Phase 8+ verification is not implemented")
     if PHASE == 7:
-        if SUBPHASE != "7D" or not all(
+        if SUBPHASE not in {"7D", "8A"} or not all(
             (MOBILE_FOUNDATION, MOBILE_FEATURE_UI, MOBILE_CONTROLS_UI, MOBILE_FINAL_UI)
         ):
             raise RuntimeError("Phase 7 marker requires all Mobile subphase gates and 7D")
         for name in ("PHASE_7_FINAL_ACCEPTANCE.md", "PHASE_8_MOBILE_INTEGRATION_HANDOFF.md"):
             if not (ROOT / "docs" / name).is_file():
                 raise RuntimeError(f"Missing Phase 7 final document: {name}")
+    if SUBPHASE == "8A":
+        if PHASE != 7 or not PUBLIC_RESOURCES_API:
+            raise RuntimeError("Phase 8A requires complete Phase 7 and resource gates")
+        for name in RESOURCE_GATE_FILES:
+            if not (ROOT / name).is_file():
+                raise RuntimeError(f"Missing Phase 8A gate: {name}")
 
 
 def run(command: list[str]) -> None:
@@ -193,6 +213,15 @@ def tests() -> None:
     if MEMORY_PHASE6_E2E:
         uv_run("pytest", "-q", "apps/server/tests/test_phase6_e2e.py")
         uv_run("python", "apps/server/memory_phase6_e2e_demo.py")
+    if PUBLIC_RESOURCES_API:
+        uv_run("python", "scripts/export_openapi.py", "--check")
+        uv_run(
+            "pytest",
+            "-q",
+            "apps/server/tests/test_resource_contract.py",
+            "apps/server/tests/test_resource_api.py",
+        )
+        uv_run("python", "apps/server/resource_api_demo.py")
     if BACKEND_FOUNDATION:
         uv_run("pytest", "-q", "apps/server/tests")
 
@@ -217,6 +246,7 @@ def lint() -> None:
         "scripts/check_memory_replay.py",
         "scripts/check_db_migrations.py",
         "scripts/check_mobile.py",
+        "scripts/export_openapi.py",
     )
     uv_run(
         "ruff",
@@ -235,6 +265,7 @@ def lint() -> None:
         "scripts/check_memory_replay.py",
         "scripts/check_db_migrations.py",
         "scripts/check_mobile.py",
+        "scripts/export_openapi.py",
     )
 
 
@@ -375,6 +406,11 @@ def verify() -> None:
             print("DEFERRED TO PHASE 7: Mobile")
     if AGENT_STREAMING:
         print("PASS: Typed runtime streaming and eight standalone Phase 3 E2E cases")
+    if PUBLIC_RESOURCES_API:
+        print(
+            "PASS: Phase 8A public resources, signed JWT/ownership, retries/history and HTTP demo"
+        )
+        print("PASS: Deterministic OpenAPI generation input and Phase 7D compatibility")
     if not MOBILE_FOUNDATION:
         print("DEFERRED: Mobile lint/typecheck begin at Phase 7")
     if PHASE in {5, 6, 7}:
@@ -437,7 +473,8 @@ def verify() -> None:
                 suffix += " and 7D integration/runtime gates"
             if PHASE == 7:
                 print("PASS: Phase 7 Expo React Native MVP")
-                print("PASS: all active Phase 0..7; Phase 8 PENDING")
+                suffix = " and Phase 8A" if PUBLIC_RESOURCES_API else ""
+                print(f"PASS: all active Phase 0..7{suffix}; Phase 8 PENDING")
             else:
                 print(f"PASS: all active Phase 0..6{suffix}")
             return

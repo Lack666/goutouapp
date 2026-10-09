@@ -85,3 +85,12 @@ An abandoned `running` operation also blocks a different-key Run on the same
 Conversation under the Phase 4C one-active-run policy. See
 [ADR 0021](adr/0021-persistent-operation-idempotency.md) and
 [Phase 4D acceptance](PHASE_4D_ACCEPTANCE.md).
+
+## Separate Phase 8A resource creation policy
+
+Person/Relationship/Conversation creation does not use AgentRun operation keys.
+Each POST requires a stable caller UUID v4 and compares canonical creation fields
+under a PostgreSQL transaction lock; an existing matching row replays 201 and a
+changed payload yields409. The existing resource PK is the reservation and lasts
+with the row. There is no guarantee after future/internal deletion. See
+[resource retry contract](RESOURCE_API.md#creation-and-response-loss-retries).

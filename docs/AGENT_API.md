@@ -1,5 +1,10 @@
 # Phase 4B Agent REST API
 
+Phase 8A supplies [signed Conversation creation and public Agent history](RESOURCE_API.md)
+over the existing records. A newly created generic or relationship-bound Conversation
+works immediately with this unchanged Agent endpoint. Expected relationship scope
+continues to be checked by AgentService; imported history is still excluded.
+
 Phase 6A adds signed memory control and inspection endpoints alongside this
 Agent endpoint. See [Memory API](MEMORY_API.md). Their changes affect later
 Agent recall and writes through the same PostgreSQL MemoryStore.

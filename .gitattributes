@@ -1,0 +1,2 @@
+# Preserve canonical OpenAPI generation input bytes on every checkout.
+docs/contracts/*.json text eol=lf

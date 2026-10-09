@@ -19,6 +19,7 @@ from app.services.import_merge import ImportMergeError, ImportMergeErrorCode
 from app.services.import_workflow import ImportWorkflowError, ImportWorkflowErrorCode
 from app.services.memory_control import MemoryControlError, MemoryControlErrorCode
 from app.services.memory_mutation import MemoryMutationError, MemoryMutationErrorCode
+from app.services.resources import ResourceError, ResourceErrorCode
 
 
 def error_response(
@@ -43,6 +44,23 @@ def error_response(
 
 
 def register_error_handlers(app: FastAPI) -> None:
+    @app.exception_handler(ResourceError)
+    async def resource_error(_request: Request, exc: ResourceError) -> JSONResponse:
+        if exc.code == ResourceErrorCode.UNAUTHORIZED:
+            return error_response(
+                401,
+                "invalid_credential",
+                "Valid Bearer credential required",
+                {"WWW-Authenticate": "Bearer"},
+            )
+        if exc.code == ResourceErrorCode.NOT_FOUND:
+            return error_response(404, "not_found", "Resource not found")
+        if exc.code == ResourceErrorCode.CREATION_CONFLICT:
+            return error_response(409, exc.code.value, "Resource ID belongs to another request")
+        if exc.code == ResourceErrorCode.INVALID_CURSOR:
+            return error_response(422, exc.code.value, "Invalid resource cursor")
+        return error_response(503, "persistence_failure", "Resource operation unavailable")
+
     @app.exception_handler(MemoryMutationError)
     async def memory_mutation_error(_request: Request, exc: MemoryMutationError) -> JSONResponse:
         code = exc.code

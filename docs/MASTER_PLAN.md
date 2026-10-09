@@ -68,6 +68,26 @@ as implemented by a placeholder directory or a golden expectation.
 
 ## Implementation log
 
+### Phase 8A — Public resource APIs and integration contract foundation
+
+- Add ten signed Person/Relationship/Conversation create/list/detail and Agent
+  Message history operations over existing PostgreSQL rows, without migrations,
+  inferred Profile fields or imported-chat analysis. Generic Conversations remain
+  valid. AgentService remains the expected-relationship authority.
+- Required stable UUID v4, transaction advisory locks and existing PKs give
+  row-lifetime retry safety; matching payloads replay, changes conflict. Owner
+  checks, bounded timestamp/UUID pages and explicit public projections apply.
+- Export deterministic OpenAPI generation input with all 26 actual Phase 7D
+  operation/schema/security hashes preserved and ten additions. Refine development
+  JWT/resource/history handoff. Mobile/client/session/SSE remain deferred.
+- Focused 97 signed JWT/PostgreSQL/contract/concurrency/rollback/history/socket
+  tests and actual Uvicorn demo pass. Complete pre-marker verifier passed at7/7D:
+  backend545, repository21, Mobile95/Web22, Golden83 and all0–7 gates. Marker
+  advanced only to `7 / 8A`; accepted-marker full rerun also exited0 with the same
+  results. Phase8A is PASS. Whole Phase8
+  remains PENDING; 8B/8C are not started.
+  See [resource API](RESOURCE_API.md) and [8A acceptance](PHASE_8A_ACCEPTANCE.md).
+
 ### Phase 7D — Mobile MVP integration and Phase 7 final acceptance
 
 - Verified the six interactive surfaces as complete real Expo Web journeys in

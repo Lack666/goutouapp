@@ -21,8 +21,12 @@ def get_user(db: Session, user_id: UUID) -> User | None:
     return db.get(User, user_id)
 
 
-def create_person(db: Session, user_id: UUID, display_name: str) -> Person:
+def create_person(
+    db: Session, user_id: UUID, display_name: str, *, resource_id: UUID | None = None
+) -> Person:
     record = Person(user_id=user_id, display_name=display_name)
+    if resource_id is not None:
+        record.id = resource_id
     db.add(record)
     db.flush()
     return record
@@ -33,11 +37,19 @@ def get_person(db: Session, user_id: UUID, person_id: UUID) -> Person | None:
 
 
 def create_relationship(
-    db: Session, user_id: UUID, person_id: UUID, relationship_type: str, status: str
+    db: Session,
+    user_id: UUID,
+    person_id: UUID,
+    relationship_type: str,
+    status: str,
+    *,
+    resource_id: UUID | None = None,
 ) -> Relationship:
     record = Relationship(
         user_id=user_id, person_id=person_id, relationship_type=relationship_type, status=status
     )
+    if resource_id is not None:
+        record.id = resource_id
     db.add(record)
     db.flush()
     return record
@@ -52,9 +64,15 @@ def get_relationship(db: Session, user_id: UUID, relationship_id: UUID) -> Relat
 
 
 def create_conversation(
-    db: Session, user_id: UUID, relationship_id: UUID | None = None
+    db: Session,
+    user_id: UUID,
+    relationship_id: UUID | None = None,
+    *,
+    resource_id: UUID | None = None,
 ) -> Conversation:
     record = Conversation(user_id=user_id, relationship_id=relationship_id)
+    if resource_id is not None:
+        record.id = resource_id
     db.add(record)
     db.flush()
     return record

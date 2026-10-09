@@ -130,3 +130,15 @@ inspection require expiry > UTC now; direct owner inspection can see expired row
 Cleanup locks owners before children, rechecks bounded IDs, deletes records and
 cascades only their `memory_operations`, and removes challenges after expiry+grace.
 Receipts and controls have no time cleanup. See [retention policy](MEMORY_RETENTION.md).
+
+## Phase 8A public resource acquisition
+
+No migration is added; the same fifteen tables, UUID primary keys and composite
+owner bindings remain. Repository creation helpers accept an optional stable UUID
+for the public service while preserving prior caller defaults. Required UUID v4
+creation IDs become actual resource PKs; a transaction advisory lock serializes
+same type/ID lookup, payload comparison and insert across workers. Existing PKs
+and FKs remain final arbitration. Replay lasts with the row, without a new receipt
+table or AgentRun reservation. New owner-scoped queries use bounded ascending
+created_at/UUID keysets over existing resources and Agent Messages only.
+See [resource contract](RESOURCE_API.md) and [ADR0031](adr/0031-public-resource-acquisition-and-retries.md).

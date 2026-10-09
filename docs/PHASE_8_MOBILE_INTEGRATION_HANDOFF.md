@@ -1,12 +1,17 @@
 # Phase 8 Mobile integration handoff — 2026-10-09
 
-This is a Phase 7D audit and a requirements list, not a Phase 8 implementation.
-Phase 8 remains PENDING. No server code, schema, API client, authentication,
-network stream or real mutation was added. Audit base: server at `6f9e17c`;
+This evolving handoff preserves the Phase 7D audit and records Phase 8A's server
+resource foundation. Whole Phase 8 remains PENDING; Mobile is still the local
+Demo, without generated client, auth session, REST or SSE consumption.
+Historical 7D audit base: server at `6f9e17c`;
 generated locally from `create_app(Settings(_env_file=None, llm_provider='mock')).openapi()`.
 Evidence: `.cache/phase7d-openapi.json` and `.cache/phase7d-openapi-audit.log`.
-The resulting inventory has 26 method/path operations, including three health/status
-operations. OpenAPI describes the current assembly; service code and existing
+That inventory had 26 method/path operations, including three health/status
+operations. Phase 8A verified the same pre-edit assembly at `ccabc98` and adds
+ten resource/history operations for a total of 36, preserving all old operation,
+schema and security hashes. See [resource API](RESOURCE_API.md),
+[formal generation input](contracts/openapi.json), [baseline](contracts/phase7d-openapi-baseline.json)
+and [8A acceptance](PHASE_8A_ACCEPTANCE.md). OpenAPI describes the current assembly; service code and existing
 integration tests establish semantics beyond its schema.
 
 Each capability below has one of the required dispositions. A confirmed API
@@ -20,29 +25,41 @@ user ID or synthetic Mobile `demo-a` / `demo-b` identifiers.
   signature, expiry, issuer and audience checks, plus existing-owner checks.
   See `app/api/dependencies.py`, `app/auth/`, [authentication](AUTHENTICATION.md).
   There is no production HTTP token issuer in the OpenAPI inventory.
-- **EXISTING API — NEEDS CONTRACT REVIEW**: Phase 4 tooling
+- **EXISTING TOOLING — CONFIRMED**: Phase 4 tooling
   `apps/server/dev_auth_cli.py bootstrap` / `token --user-id ...` supplies
   development identities and short-lived signed credentials, subject to its
   environment restrictions. This is a CLI, not an HTTP login API or production
-  account system. Decide the development handoff without putting signing
-  secrets, console tokens or test identities into the App bundle/logs.
+  account system. In APP_ENV=development, bootstrap supplies a real existing
+  local UUID and token signs it for 15 minutes. Development handoff for 8B is
+  a manually supplied short-lived Bearer credential; signing secret stays on
+  the server, and token/session entry/storage/expiry/logout remain 8B. No public
+  signer, bundled JWT, console-token logging or production login is added.
 - **FUTURE / OUT OF SCOPE**: Formal registration/password/OAuth/refresh/revocation
   account flows are absent. They require separately agreed account-system scope.
-- **SERVER GAP — PHASE 8 COORDINATION**: Production/session identity acquisition
-  contract is absent. Phase 8 must agree how the development App obtains its actor.
-- **FUTURE / OUT OF SCOPE** for this 7D delivery: SecureStore/session/token storage
+- **SERVER GAP — PHASE 8 COORDINATION**: Production identity acquisition remains
+  absent; the manual development credential contract does not provide accounts.
+- **FUTURE / OUT OF SCOPE** for this 8A delivery: SecureStore/session/token storage
   has not been implemented. Phase 8 owns secure local lifecycle, expiry handling
   and credential removal; server authority must remain separate from UI state.
-- **SERVER GAP — PHASE 8 COORDINATION**: Public Person create/list/detail/select
-  resource APIs do not exist. DB models/repositories and fixture Persons are not
-  public resources. Real identity selection in Import/Memory cannot use nicknames
-  or UI synthetic IDs as database IDs.
-- **SERVER GAP — PHASE 8 COORDINATION**: Public Relationship create/list/detail
-  APIs and profile DTO do not exist. The only current `/relationships/...` public
-  route reads imported messages; it is not a Relationship resource API.
-- **SERVER GAP — PHASE 8 COORDINATION**: Conversation create/list/detail/select
-  APIs do not exist. Agent execution requires an already-owned Conversation.
-  Internal persistence services and demo bootstrap scripts are not Mobile endpoints.
+- **EXISTING API — CONFIRMED (8A)**: Person POST/GET `/api/v1/persons`, GET
+  `/api/v1/persons/{person_id}` return real owned UUID/name/times, without inferred
+  identity/profile fields. Import/Memory selectors must use these actual resources.
+- **EXISTING API — CONFIRMED (8A)**: Relationship POST/GET `/api/v1/relationships`,
+  GET `/api/v1/relationships/{relationship_id}`. Explicit owned Person and required
+  type/status strings including `unknown`; no romance inference. This is a narrow
+  resource, not a structured Profile DTO.
+- **EXISTING API — CONFIRMED (8A)**: Conversation POST/GET `/api/v1/conversations`,
+  GET `/api/v1/conversations/{conversation_id}`. Optional owned Relationship or
+  generic null association; no Person/title/status fields exist. A new resource
+  immediately works with AgentService; expected_relationship_id stays its authority.
+- **EXISTING CONTRACT — CONFIRMED (8A)**: Each creation requires a fresh UUID v4
+  retained for the same logical payload on retries. It becomes the real resource
+  ID. Matching requests replay 201/the original timestamps; changes return409;
+  foreign reserved IDs/bindings use generic404. Reservation lasts with the row.
+  No resource operation_key/AgentRun receipt. Lists default30/max100 with opaque
+  cursor and `{items,next_cursor}`. See RESOURCE_API for normalization and lifetime.
+- **FUTURE / OUT OF SCOPE (8A)**: Mobile acquisition/controllers/resource selection,
+  generated client and session storage are 8B. Server availability is not UI integration.
 
 ## Chat, public answer and stream
 
@@ -86,12 +103,20 @@ Authority: `app/api/v1/agent_runs.py`, `app/schemas/agent_run.py`,
 
 ## History and cursor mapping
 
-Authority: `app/api/v1/chat_imports.py`, `app/services/import_merge.py`,
+Authority: `app/api/v1/resources.py`, `app/services/resources.py`,
+`app/api/v1/chat_imports.py`, `app/services/import_merge.py`,
 `app/schemas/chat_import.py`, [imported history](IMPORTED_MESSAGES.md).
 
-- **SERVER GAP — PHASE 8 COORDINATION**: Public Agent conversation-history
-  list/detail/message pagination is absent. AgentService's bounded prior-message
-  read is an internal execution input; it cannot power Mobile History directly.
+- **EXISTING API — CONFIRMED (8A)**: Public Agent history
+  `GET /api/v1/conversations/{conversation_id}/messages?limit=...&cursor=...`.
+  Owner-validated Conversation, default30/max100, ascending created_at/UUID,
+  `{items,next_cursor}`. Message fields: id/conversation_id/user-or-assistant/
+  content/created_at, without tool/speaker/internal state. Reads the actual Message
+  domain independently of AgentService's latest20 input; no imported rows.
+- **EXISTING CONTRACT — NEEDS CLIENT IMPLEMENTATION**: Resource/Agent cursors
+  are owner/domain/parent-bound navigation values. Every query authorizes separately.
+  Per-page committed/live reads, not a held snapshot; refresh after exhaustion or
+  late commits/backfills/deletions. Preserve occurrences, stable IDs and scope resets.
 - **EXISTING API — CONFIRMED**: Imported history
   `GET /api/v1/relationships/{relationship_id}/messages?limit=...&cursor=...`.
   Default 100, maximum 200; response `{items,next_cursor}`. Fields include UUID
@@ -146,8 +171,9 @@ Authority: `app/api/v1/chat_imports.py`, `app/schemas/chat_import.py`,
   revisions, expiration/cancelled artifacts and merge receipts to UI recovery;
   retries must respect actual revision and durable workflow status. Native picker
   MIME/UTF-8/size handling and real upload adapter are Phase 8 work.
-- **SERVER GAP — PHASE 8 COORDINATION**: Person and Relationship resources for
-  explicit binding must be acquired through agreed public APIs first.
+- **EXISTING API — CONFIRMED (8A)**: Person and Relationship resources now supply
+  explicit binding IDs. Mobile acquisition/upload adapters remain future work;
+  a selected nickname or synthetic fixture ID cannot authorize binding.
 
 ## Analysis / FIU / Profile
 
@@ -228,7 +254,13 @@ The SDK/React Native/Router/toolchain lock remains unchanged. Generated TypeScri
 types alone will not describe SSE event semantics (OpenAPI declares the stream
 body as text). Phase 8 must review a public event schema/version mapping and test
 split UTF-8/chunk boundaries, terminal errors, disconnect/replay and stable IDs.
-No such generated client, parser or token storage is delivered by Phase 7D.
+No generated client, parser or token storage is delivered by Phase 8A.
 
-Start Phase 8 only after a new explicit instruction. Resolve resource acquisition,
-history and public analysis gaps before wiring UI controls to assumed endpoints.
+Generate future 8B types only from `docs/contracts/openapi.json`, checked with
+`uv run --locked python scripts/export_openapi.py --check`. Export is deterministic
+and offline; all 26 old operations/schemas/security are compatibility-gated. Use
+the separate STREAMING_API V1 contract when implementing later SSE consumption.
+
+Stop after 8A. Begin 8B only on a new explicit instruction. Resource/history
+server gaps are closed; production accounts, public FIU/Profile and imported-data
+analysis gaps remain. Do not enable an analysis button based on import completion.

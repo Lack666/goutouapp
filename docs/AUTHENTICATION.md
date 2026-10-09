@@ -48,3 +48,10 @@ local user. It prints a 15-minute token to the invoking terminal so it can be
 used for a manual request; do not paste it into logs or commit it. The fully
 offline [REST demo](AGENT_API.md#offline-rest-demo) uses a separate synthetic
 secret and disposable PostgreSQL database.
+
+Phase 8A's ten resource/history operations reuse this verifier and existing-user
+check without an owner override. Development handoff for 8B is a manually supplied
+15-minute CLI token for the actual local UUID; token entry/storage/expiry/logout
+remain 8B. The signing secret stays in private server configuration. No Mobile
+signer, embedded JWT, public development issuer or production account flow is
+introduced. See [resource API](RESOURCE_API.md).
