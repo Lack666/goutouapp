@@ -12,7 +12,7 @@ export interface RelationshipProfileViewModel {
   readonly missing: readonly string[];
   readonly historySummary: string | null;
   readonly analysisSummary: string | null;
-  readonly source: 'demo';
+  readonly source: 'demo' | 'server';
 }
 // Imported RelationshipMessage (self/person/system) is deliberately absent.
 // Summary metadata never becomes an Agent assistant message.

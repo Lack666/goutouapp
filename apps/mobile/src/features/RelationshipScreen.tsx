@@ -1,4 +1,6 @@
 import { useMemo, useState } from 'react';
+import { useConnection } from '../session/ConnectionProvider';
+import { ConnectedResourcesScreen } from './ConnectedResourcesScreen';
 import { useRouter } from 'expo-router';
 import { View } from 'react-native';
 import { useDataSource } from '../data/DataSourceProvider';
@@ -16,6 +18,14 @@ import {
 } from '../components/ui';
 
 export default function RelationshipScreen() {
+  const connection = useConnection();
+  return connection?.session.snapshot().mode === 'connected' ? (
+    <ConnectedResourcesScreen connection={connection} />
+  ) : (
+    <DemoRelationshipScreen />
+  );
+}
+function DemoRelationshipScreen() {
   const scope = useRelationshipScope();
   return <RelationshipSession key={scope ?? 'default'} scope={scope} />;
 }

@@ -4,6 +4,7 @@ from contextlib import asynccontextmanager
 from threading import RLock
 
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 
 from app.api.errors import register_error_handlers
 from app.api.health import router as health_router
@@ -62,6 +63,14 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     app.state.agent_service_lock = RLock()
     register_error_handlers(app)
     app.add_middleware(ImportUploadBodyLimit, max_file_bytes=settings.max_chat_import_bytes)
+    if settings.dev_cors_origins:
+        app.add_middleware(
+            CORSMiddleware,
+            allow_origins=settings.dev_cors_origins,
+            allow_credentials=False,
+            allow_methods=["GET", "POST"],
+            allow_headers=["Authorization", "Content-Type"],
+        )
     app.include_router(health_router)
     app.include_router(readiness_router)
     app.include_router(v1_router)

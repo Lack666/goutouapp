@@ -48,6 +48,24 @@ MOBILE_FEATURE_UI = (ROOT / "apps/mobile/src/features/ChatScreen.tsx").is_file()
 MOBILE_CONTROLS_UI = (ROOT / "apps/mobile/src/features/ImportScreen.tsx").is_file()
 MOBILE_FINAL_UI = (ROOT / "apps/mobile/tests/integration.test.tsx").is_file()
 PUBLIC_RESOURCES_API = (ROOT / "apps/server/app/api/v1/resources.py").is_file()
+MOBILE_CONNECTED = (ROOT / "apps/mobile/src/data/resourceController.ts").is_file()
+CONNECTED_GATE_FILES = (
+    "apps/mobile/src/api/generated/client.ts",
+    "apps/mobile/src/api/transport.ts",
+    "apps/mobile/src/session/developmentSession.ts",
+    "apps/mobile/src/session/tokenStorage.native.ts",
+    "apps/mobile/tests/connected.test.ts",
+    "apps/mobile/connected/http.spec.ts",
+    "apps/mobile/connected/web.spec.ts",
+    "apps/server/mobile_connected_fixture.py",
+    "apps/server/tests/test_mobile_dev_cors.py",
+    "tools/api-codegen/generate-api.mjs",
+    "tools/api-codegen/generate-api.test.mjs",
+    "docs/MOBILE_API_CLIENT.md",
+    "docs/MOBILE_DEV_AUTH.md",
+    "docs/MOBILE_RESOURCE_INTEGRATION.md",
+    "docs/PHASE_8B_ACCEPTANCE.md",
+)
 RESOURCE_GATE_FILES = (
     "apps/server/app/services/resources.py",
     "apps/server/app/db/repositories/resources.py",
@@ -67,19 +85,25 @@ def phase_marker_check() -> None:
     if PHASE > 7:
         raise RuntimeError("Phase 8+ verification is not implemented")
     if PHASE == 7:
-        if SUBPHASE not in {"7D", "8A"} or not all(
+        if SUBPHASE not in {"7D", "8A", "8B"} or not all(
             (MOBILE_FOUNDATION, MOBILE_FEATURE_UI, MOBILE_CONTROLS_UI, MOBILE_FINAL_UI)
         ):
             raise RuntimeError("Phase 7 marker requires all Mobile subphase gates and 7D")
         for name in ("PHASE_7_FINAL_ACCEPTANCE.md", "PHASE_8_MOBILE_INTEGRATION_HANDOFF.md"):
             if not (ROOT / "docs" / name).is_file():
                 raise RuntimeError(f"Missing Phase 7 final document: {name}")
-    if SUBPHASE == "8A":
+    if SUBPHASE in {"8A", "8B"}:
         if PHASE != 7 or not PUBLIC_RESOURCES_API:
             raise RuntimeError("Phase 8A requires complete Phase 7 and resource gates")
         for name in RESOURCE_GATE_FILES:
             if not (ROOT / name).is_file():
                 raise RuntimeError(f"Missing Phase 8A gate: {name}")
+    if SUBPHASE == "8B":
+        if PHASE != 7 or not MOBILE_CONNECTED:
+            raise RuntimeError("Phase 8B requires complete Phase 7 and connected Mobile gates")
+        for name in CONNECTED_GATE_FILES:
+            if not (ROOT / name).is_file():
+                raise RuntimeError(f"Missing Phase 8B gate: {name}")
 
 
 def run(command: list[str]) -> None:
@@ -331,6 +355,13 @@ def verify() -> None:
         for name in ("export:web", "smoke:web"):
             run([pnpm, "--filter", "@goutou/mobile", "run", name])
         print("PASS: Phase 7D real Expo Web export and six-surface browser regression")
+    if MOBILE_CONNECTED:
+        pnpm = shutil.which("pnpm")
+        if not pnpm:
+            raise RuntimeError("pnpm is required for connected Mobile integration")
+        run([pnpm, "--filter", "@goutou/mobile", "run", "smoke:connected"])
+        print("PASS: Phase 8B generated client / CLI JWT / real HTTP / PostgreSQL / Expo Web")
+        print("ANDROID CONNECTED: separate native evidence; Web is not Android verification")
     if DATABASE_FOUNDATION:
         print("PASS: PostgreSQL migration and integration gate")
     elif BACKEND_FOUNDATION:
@@ -453,7 +484,7 @@ def verify() -> None:
                 print("PASS: Phase 7D focused integration and real browser gates")
             else:
                 print("DEFERRED: Phase 7D final acceptance")
-            print("DEFERRED: Phase 8 API integration, generated client and stream consumption")
+            print("DEFERRED: Phase 8C Agent REST/SSE, Phase 8D Import/History, Phase 8E Memory")
         else:
             print("DEFERRED: Mobile")
         print("DEFERRED: RAG")
@@ -473,8 +504,16 @@ def verify() -> None:
                 suffix += " and 7D integration/runtime gates"
             if PHASE == 7:
                 print("PASS: Phase 7 Expo React Native MVP")
-                suffix = " and Phase 8A" if PUBLIC_RESOURCES_API else ""
-                print(f"PASS: all active Phase 0..7{suffix}; Phase 8 PENDING")
+                suffix = (
+                    " and Phase 8A/8B"
+                    if MOBILE_CONNECTED
+                    else " and Phase 8A"
+                    if PUBLIC_RESOURCES_API
+                    else ""
+                )
+                print(
+                    f"PASS: all active Phase 0..7{suffix}; Phase 8 IN PROGRESS / NOT YET COMPLETE"
+                )
             else:
                 print(f"PASS: all active Phase 0..6{suffix}")
             return

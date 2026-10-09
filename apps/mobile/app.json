@@ -6,7 +6,7 @@
     "scheme": "goutoujunshi",
     "userInterfaceStyle": "automatic",
     "orientation": "default",
-    "plugins": ["expo-router", "expo-status-bar"],
+    "plugins": ["expo-router", "expo-status-bar", "expo-secure-store"],
     "web": { "bundler": "metro", "output": "single" },
     "android": { "package": "com.goutoujunshi.mobile" }
   }

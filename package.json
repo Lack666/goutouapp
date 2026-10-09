@@ -3,6 +3,8 @@
   "private": true,
   "packageManager": "pnpm@11.25.0",
   "scripts": {
+    "api:generate": "pnpm --filter @goutou/api-codegen generate",
+    "api:check": "pnpm --filter @goutou/api-codegen check",
     "mobile:verify": "python scripts/check_mobile.py",
     "mobile:web": "pnpm --filter @goutou/mobile web",
     "doctor": "python scripts/verify.py doctor",

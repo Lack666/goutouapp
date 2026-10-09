@@ -1,4 +1,6 @@
 import { useMemo, useState } from 'react';
+import { useConnection } from '../session/ConnectionProvider';
+import { ConnectedPendingScreen } from './ConnectedPendingScreen';
 import { View } from 'react-native';
 import { useDataSource } from '../data/DataSourceProvider';
 import {
@@ -25,6 +27,14 @@ import { StatePreview } from '../components/StatePreview';
 import { useSurface } from '../hooks/useSurface';
 
 export default function ImportScreen() {
+  const connection = useConnection();
+  return connection?.session.snapshot().mode === 'connected' ? (
+    <ConnectedPendingScreen connection={connection} title="导入与分析" />
+  ) : (
+    <DemoImportScreen />
+  );
+}
+function DemoImportScreen() {
   const scope = useRelationshipScope();
   const source = useDataSource();
   return <ImportSession key={scope ?? 'unselected'} scope={scope} source={source} />;

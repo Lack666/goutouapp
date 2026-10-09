@@ -1,8 +1,7 @@
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { DataSourceProvider } from '../src/data/DataSourceProvider';
-import { demoSource } from '../src/data/demoSource';
+import { ConnectionProvider } from '../src/session/ConnectionProvider';
 import { ThemeProvider, useTheme } from '../src/theme/ThemeProvider';
 
 function NavigationShell() {
@@ -20,9 +19,9 @@ export default function RootLayout() {
   return (
     <SafeAreaProvider>
       <ThemeProvider>
-        <DataSourceProvider source={demoSource}>
+        <ConnectionProvider>
           <NavigationShell />
-        </DataSourceProvider>
+        </ConnectionProvider>
       </ThemeProvider>
     </SafeAreaProvider>
   );

@@ -15,7 +15,8 @@ Phase 0–6 已完成（Phase 6A–6D PASS）。当前有 83 个合成 Golden Ca
 六页面骨架、Chat/Profile、导入向导、分域历史与 Memory 设置的本地演示。
 Phase 7 已完成（7A–7D PASS），六页面集成与错误恢复已验证；详见最终验收报告。
 Phase 8A 已实现服务端 Person/Relationship/Conversation 公共资源与 Agent 历史前置合同；
-Phase 8 整体仍为 PENDING，Mobile 尚未接入真实 API。
+Phase 8B 接入 OpenAPI 生成客户端、开发 JWT 会话与真实 owned 资源；Demo 保留。
+Phase 8 整体仍为 IN PROGRESS / NOT YET COMPLETE，Agent/SSE、Import/History 与 Memory 网络接入尚未开始。
 阶段状态以代码和验收结果为准，参见 [Master Plan](docs/MASTER_PLAN.md)
 和 [Phase 6 最终验收报告](docs/PHASE_6_FINAL_ACCEPTANCE.md)、
 [Phase 7A 验收报告](docs/PHASE_7A_ACCEPTANCE.md)、
@@ -27,7 +28,8 @@ Phase 8 整体仍为 PENDING，Mobile 尚未接入真实 API。
 
 ## 目录
 
-- `apps/mobile`：Expo 手机客户端六页面与功能 UI（本地 Demo）。
+- `apps/mobile`：Expo 手机客户端六页面，Demo 与真实开发资源连接模式。
+- `tools/api-codegen`：锁定生成器工具包；输出唯一 OpenAPI 权威对应的客户端。
 - `apps/server`：FastAPI/PostgreSQL 基础、LLM Provider 与独立 Agent Runtime。
 - `knowledge/goutoujunshi`：未修改的上游 Skill 内容。
 - `knowledge/upstream-manifest.json`：上游仓库、commit、License 和文件哈希。
@@ -59,9 +61,9 @@ pnpm mobile:verify
 `make verify` 同时运行 Mobile 静态/7D 集成门禁、真实 Web 导出与浏览器回归，
 以及全部已完成后端阶段回归。Web 22 个场景通过；用户报告 Android 人工检查通过，
 Codex 原生启动尝试因模拟器断连/无响应未完成，原生自动化与 APK 构建未运行。
-界面明确标为演示，服务器发送消息、上传和编辑资料禁用。本地用户消息预览、
+Demo 界面明确标为演示，服务器发送消息、上传和编辑资料禁用。本地用户消息预览、
 导入预检、历史增量窗口、Memory 预览、主题切换、导航与本地错误重试
-有效；不包含假登录或真实服务器数据。Phase 8 才接入生成客户端及 REST/SSE。
+有效；Demo 不显示服务器结果。8B Connected 使用真实资源，Agent REST/SSE 仍待 8C。
 详细启动、Chrome smoke 和 Android 条件见 [Mobile 架构](docs/MOBILE_ARCHITECTURE.md)。
 
 最终六页面 Demo 可复现：`pnpm --filter @goutou/mobile demo:final`，
@@ -85,8 +87,21 @@ uv --cache-dir .cache/uv --no-managed-python run --locked python apps/server/res
 uv --cache-dir .cache/uv --no-managed-python run --locked python scripts/export_openapi.py --check
 ```
 
-`docs/contracts/openapi.json` 是后续 8B 的正式 TypeScript 生成输入，当前未生成客户端。
+`docs/contracts/openapi.json` 是唯一 TypeScript 生成输入。`pnpm api:generate` 生成，
+`pnpm api:check` 检测字节漂移并测试可复现性；不手改生成代码。
 开发身份继续使用 development-only JWT CLI，生产账号系统仍未实现。
+
+8B 开发接入：按 [开发会话](docs/MOBILE_DEV_AUTH.md)获取 15 分钟 CLI JWT，
+Settings 中主动隐藏录入并验证，Relationship 页面创建/列出/查看三个资源。
+Android/iOS 使用 SecureStore，Web 只存内存；过期/401/退出清除凭证及全部资源作用域。
+公开配置仅为 `EXPO_PUBLIC_API_BASE_URL`，不能放 JWT/模型/签名/数据库密钥。
+详见 [客户端](docs/MOBILE_API_CLIENT.md)、[资源与 Android 步骤](docs/MOBILE_RESOURCE_INTEGRATION.md)
+和 [8B 验收](docs/PHASE_8B_ACCEPTANCE.md)。
+
+`pnpm --filter @goutou/mobile smoke:connected` 使用隔离 PostgreSQL，实际 CLI JWT、
+FastAPI 和 Chrome 验证资源、同 UUID 重试、分页与用户切换。Root verify 同时运行
+旧 Demo 的 22 个浏览器场景和新 connected gate。Android connected 本阶段为 NOT RUN，
+模拟器未建立稳定 adb；Doctor/Android JS 导出不算原生网络成功，Phase 8 最终仍需该证据。
 
 ## 上游署名
 

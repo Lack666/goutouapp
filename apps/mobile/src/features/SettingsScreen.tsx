@@ -20,6 +20,8 @@ import { StatePreview } from '../components/StatePreview';
 import { useSurface } from '../hooks/useSurface';
 import { useTheme, type ThemePreference } from '../theme/ThemeProvider';
 import { tokens } from '../theme/tokens';
+import { useConnection } from '../session/ConnectionProvider';
+import { DevelopmentSessionControls } from '../components/DevelopmentSessionControls';
 
 const preferences: readonly { id: ThemePreference; label: string }[] = [
   { id: 'system', label: '跟随系统' },
@@ -27,6 +29,38 @@ const preferences: readonly { id: ThemePreference; label: string }[] = [
   { id: 'dark', label: '深色' },
 ];
 export default function SettingsScreen() {
+  const connection = useConnection();
+  return connection?.session.snapshot().mode === 'connected' ? (
+    <ConnectedSettingsScreen />
+  ) : (
+    <DemoSettingsScreen />
+  );
+}
+function ConnectedSettingsScreen() {
+  const { back } = useLocalNavigation();
+  const { preference, setPreference } = useTheme();
+  return (
+    <ScreenContainer>
+      <AppHeader title="设置" subtitle="开发会话与外观" onBack={back} />
+      <SectionCard title="外观">
+        {preferences.map((item) => (
+          <PrimaryButton
+            key={item.id}
+            label={item.label}
+            selected={preference === item.id}
+            variant="quiet"
+            onPress={() => setPreference(item.id)}
+          />
+        ))}
+      </SectionCard>
+      <DevelopmentSessionControls />
+      <SectionCard title="记忆服务尚未接入">
+        <BodyText>开发会话不代表 Memory 授权；真实记忆读取与变更仍未开放。</BodyText>
+      </SectionCard>
+    </ScreenContainer>
+  );
+}
+function DemoSettingsScreen() {
   const source = useDataSource();
   const model = useMemo(() => source.readSettings(), [source]);
   const profiles = useMemo(() => source.readRelationships(), [source]);
@@ -66,6 +100,7 @@ export default function SettingsScreen() {
         <BodyText muted>移动端本地演示 · Backend not connected</BodyText>
       </SectionCard>
       <DemoNotice />
+      <DevelopmentSessionControls />
       <SectionCard title="账户与记忆">
         <BodyText muted>尚未接入账户或记忆服务。当前没有可管理的服务器资料。</BodyText>
       </SectionCard>

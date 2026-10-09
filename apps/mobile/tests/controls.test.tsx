@@ -88,7 +88,7 @@ describe('7C shared boundaries', () => {
       logging.mockRestore();
     }
   });
-  it('has no network/persistence/secret calls, no fixture imports in screens, no fabricated server success', () => {
+  it('keeps network/storage in 8B adapters, no fixture imports in screens, no fabricated server success', () => {
     const files = (directory: string): string[] =>
       readdirSync(directory, { withFileTypes: true }).flatMap((entry) =>
         entry.isDirectory()
@@ -100,8 +100,9 @@ describe('7C shared boundaries', () => {
     for (const path of [...files('src'), ...files('app')]) {
       const code = readFileSync(path, 'utf8');
       expect(code).not.toMatch(
-        /\b(fetch|XMLHttpRequest|WebSocket|EventSource)\s*\(|\b(AsyncStorage|SecureStore|localStorage|sessionStorage)\b|console\.\w+\s*\(/,
+        /\b(fetch|XMLHttpRequest|WebSocket|EventSource)\s*\(|\b(AsyncStorage|localStorage|sessionStorage)\b|console\.\w+\s*\(/,
       );
+      if (!path.endsWith('tokenStorage.native.ts')) expect(code).not.toMatch(/\bSecureStore\b/);
       expect(code).not.toMatch(
         /EXPO_PUBLIC_\w*(KEY|TOKEN|SECRET)|postgres(?:ql)?:\/\/|sk-[A-Za-z0-9_-]{16,}/,
       );

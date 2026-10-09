@@ -18,7 +18,7 @@ idempotency around the standalone runtime.
 
 ```mermaid
 flowchart LR
-  Mobile[React Native + Expo] -.->|Phase 8: REST / POST SSE| Server[FastAPI server]
+  Mobile[React Native + Expo] -->|8B resource REST; later POST SSE| Server[FastAPI server]
   Server --> Database[(PostgreSQL)]
   Server -->|AgentService| Runtime[Independent LangGraph Agent Runtime]
   Runtime -->|deterministic reference loader| Knowledge[Preserved goutoujunshi Skill]
@@ -37,6 +37,14 @@ flowchart LR
 - Mobile and server are separate deployments. Phase 8 will integrate REST and
   the actual Phase 4 POST SSE transport; the original WebSocket direction is
   not implemented. PostgreSQL belongs to the server side. Phase 7A–7D are local only.
+
+Phase8B connects the generated typed client through one credential-injecting
+transport and async owned-resource controller, translating DTOs into existing
+ViewModels. Native SecureStore and volatile Web credentials require a real server
+probe; epoch/cancellation/storage ordering isolate identities. Demo remains local.
+Only explicit loopback development/test CORS is added; resource/Agent contracts,
+runtime, knowledge and Memory/Import behavior are unchanged. See
+[ADR0032](adr/0032-generated-mobile-client-and-development-session.md).
 
 Further behavior requirements are recorded in `docs/SKILL_CONTRACT.md` and
 future phase decisions in `docs/adr/`.

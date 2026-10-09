@@ -46,7 +46,21 @@ class MobilePhaseGateTests(unittest.TestCase):
             with self.assertRaisesRegex(RuntimeError, "complete Phase 7"):
                 verifier.phase_marker_check()
 
-    def test_8b_is_not_supported_by_8a(self) -> None:
+    def test_8b_requires_connected_implementation(self) -> None:
+        with patch.multiple(verifier, PHASE=7, SUBPHASE="8B", MOBILE_CONNECTED=False):
+            with self.assertRaisesRegex(RuntimeError, "connected Mobile gates"):
+                verifier.phase_marker_check()
+
+    def test_8b_keeps_phase_eight_incomplete(self) -> None:
         with patch.multiple(verifier, PHASE=7, SUBPHASE="8B"):
+            verifier.phase_marker_check()
+
+    def test_8c_is_not_supported_by_8b(self) -> None:
+        with patch.multiple(verifier, PHASE=7, SUBPHASE="8C"):
             with self.assertRaisesRegex(RuntimeError, "all Mobile subphase gates"):
+                verifier.phase_marker_check()
+
+    def test_8b_cannot_skip_phase_seven(self) -> None:
+        with patch.multiple(verifier, PHASE=6, SUBPHASE="8B"):
+            with self.assertRaisesRegex(RuntimeError, "complete Phase 7"):
                 verifier.phase_marker_check()

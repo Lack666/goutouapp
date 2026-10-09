@@ -1,10 +1,26 @@
-# Mobile app — Phase 7A–7D
+# Mobile app — Phase 7A–7D and Phase 8B
+
+Demo retains Phase7 behavior. Connected Development Mode adds real generated
+Person/Relationship/Conversation create/list/detail and a manually entered short-lived
+CLI JWT; Agent/SSE/import/history/Memory business operations are still unavailable.
+See [API client](../../docs/MOBILE_API_CLIENT.md), [development session](../../docs/MOBILE_DEV_AUTH.md)
+and [resources/Android smoke](../../docs/MOBILE_RESOURCE_INTEGRATION.md).
+
+`pnpm api:generate` / `pnpm api:check` run from root. `test:connected` covers auth,
+transport/adapters/UUID retries; `smoke:connected` uses real CLI JWT/FastAPI/PostgreSQL/
+Chrome on ports8018/8088 with a disposable database. Root verify includes both Demo
+and Connected gates. Configure only the public `EXPO_PUBLIC_API_BASE_URL` in Mobile;
+the `.env.example` has no credentials. Native uses SecureStore57.0.4; Web credentials
+are volatile. Logout/expiry/401 and mode/session changes cancel requests and clear
+all resource/form scopes. Android connected runtime/storage is NOT RUN on this host;
+JS export/Doctor are separate checks. Final Phase8 must provide actual native evidence.
 
 Expo SDK 57.0.27 / React Native 0.86.3 / React 19.2.3 / Expo Router 57.0.25 /
 TypeScript 6.0.3. Use Node 22.13+ (validated 24.15.0) and the root project pin
 pnpm 11.25.0. This is a real React Native shell with six reachable surfaces,
 session-local system/light/dark preference, interactive local Chat/Profile/Import/History/Settings and
-explicit Demo state previews. Dependencies and SDK remain the 7A pins.
+explicit Demo state previews. The existing Expo/RN/React/TypeScript pins are retained;
+Phase8B adds SDK-compatible SecureStore/Crypto and the generated API client dependency.
 
 From the repository root:
 
@@ -43,7 +59,7 @@ each leaf returns to the prior page or Home on a direct link. No crowded six-ite
 tab bar. `app/` contains routes only; `src/` contains UI, contracts, injected local
 source, hooks and theme. Tests are outside `app/`.
 
-Every surface is marked **本地演示 · Demo**. No authenticated account, successful
+In Demo mode every surface is marked **本地演示 · Demo**. No authenticated account, successful
 upload, Agent conclusion or saved memory is fabricated. Chat supports typing,
 Clear and **添加到本地预览**, appending one local user bubble and reporting
 **仅在本地预览，尚未发送给 AI**. No assistant is generated; only the explicit
@@ -53,8 +69,8 @@ relationship scope. Real Chat sending, profile editing and file selection remain
 disabled. Profile A/B selection and missing-value cards work locally; selection
 survives push/back while mounted and resets on reload. State previews/Retry and
 theme/navigation are functional local controls. The preference persists only across this session's
-routes, not app restarts. No LLM/DB/backend call, provider secret or knowledge is
-included. Phase 8 will replace the data source at the composition boundary.
+routes, not app restarts. Demo makes no LLM/DB/backend call. Provider secrets and
+knowledge remain server-only. Connected selects its source at the composition boundary.
 
 Import provides a five-step synthetic wizard with explicit speaker/Person and
 relationship confirmation, compatibility/group checks, reset and navigation.
@@ -64,7 +80,8 @@ scope and uses one FlatList with 30-row local windows/More. Unknown IDs never fa
 back to A/B. Settings previews consent/pause/inspect/undo/delete confirmation and
 server-configurable retention; formal guarded operations stay disabled and no
 sample is deleted. Previews clear on unmount/restart; scope changes clear relevant
-bindings/history windows. Every data source contains anonymous synthetic fixtures.
+bindings/history windows. The Demo data source contains anonymous synthetic fixtures;
+Connected resource data comes only from confirmed server responses.
 
 **EXPO WEB SMOKE: PASS**, 22 scenarios including nine new 7D integration/recovery
 cases. The user reported manual Android emulator smoke passed after 7C.
@@ -85,9 +102,10 @@ relationship gates) → B History/More → Chat multi-line user-only preview →
 Settings Memory/Undo/delete-confirmation/reset/reload → Home, in both palettes
 at 320/360/412px. Screenshot/JSON evidence is written under root `.cache`.
 For interactive use, start `web` and follow those controls; no backend/key needed.
-Phase 8 auth, generated API client, REST/SSE, real upload/import/history persistence
-and Memory mutations remain deferred. Public resources/analysis gaps are documented,
-not filled by synthetic IDs. Read the current final acceptance for whole-phase status.
+Phase8B development auth, generated client and owned resources are implemented.
+Agent REST/SSE, real upload/import/history persistence and Memory mutations remain
+deferred. Read the [8B acceptance](../../docs/PHASE_8B_ACCEPTANCE.md) for current status;
+the Phase7 reports below document the retained Demo behavior.
 
 See [Mobile architecture](../../docs/MOBILE_ARCHITECTURE.md),
 [ADR 0029](../../docs/adr/0029-mobile-shell-and-data-boundary.md), and

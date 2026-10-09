@@ -1,8 +1,19 @@
 # Phase 8 Mobile integration handoff — 2026-10-09
 
-This evolving handoff preserves the Phase 7D audit and records Phase 8A's server
-resource foundation. Whole Phase 8 remains PENDING; Mobile is still the local
-Demo, without generated client, auth session, REST or SSE consumption.
+This handoff preserves the Phase7D/8A audit and adds current 8B client integration.
+Whole Phase8 is IN PROGRESS / NOT YET COMPLETE. Mobile now has generated resource
+HTTP, native SecureStore/Web volatile Development Session and owned-resource
+create/list/detail. The entries below retain historical 8A dispositions where
+explicitly labelled; current 8B completion supersedes their deferred-client wording.
+See MOBILE_API_CLIENT, MOBILE_DEV_AUTH, MOBILE_RESOURCE_INTEGRATION and 8B acceptance.
+
+Current disposition: **IMPLEMENTED IN 8B** — generated36-operation contracts and
+callable client from the sole OpenAPI authority; manual development JWT probe/
+expiry/logout/401; cancellation/epoch owner isolation; explicit UUID resource
+acquisition and same-body retries; opaque domain cursors and real Chrome/HTTP/DB
+integration. **NOT RUN** — native connected/storage/background smoke; final Phase8
+still needs actual Android proof. **DEFERRED** — 8C Agent REST/POST SSE, 8D actual
+Import/History, 8E Memory networking. No generated future function implies completion.
 Historical 7D audit base: server at `6f9e17c`;
 generated locally from `create_app(Settings(_env_file=None, llm_provider='mock')).openapi()`.
 Evidence: `.cache/phase7d-openapi.json` and `.cache/phase7d-openapi-audit.log`.
@@ -261,6 +272,7 @@ Generate future 8B types only from `docs/contracts/openapi.json`, checked with
 and offline; all 26 old operations/schemas/security are compatibility-gated. Use
 the separate STREAMING_API V1 contract when implementing later SSE consumption.
 
-Stop after 8A. Begin 8B only on a new explicit instruction. Resource/history
-server gaps are closed; production accounts, public FIU/Profile and imported-data
-analysis gaps remain. Do not enable an analysis button based on import completion.
+Stop after 8B. Begin 8C only on a new explicit instruction. Resource/history
+server gaps are closed; Mobile message-history/import/Memory networking, production
+accounts, public FIU/Profile and imported-data analysis gaps remain. Do not enable
+an analysis button based on import completion.

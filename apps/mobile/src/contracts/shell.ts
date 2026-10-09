@@ -19,7 +19,7 @@ export type SurfaceState =
 
 // UI-facing read seam only. Auth, wire DTOs and network adapters belong to Phase 8.
 export interface ShellDataSource {
-  readonly kind: 'demo';
+  readonly kind: 'demo' | 'connected';
   readChat: (relationshipId: string | null) => ChatScreenViewModel;
   readRelationships: () => readonly RelationshipProfileViewModel[];
   readImport: (kind: ImportDemoKind) => ImportWizardViewModel;

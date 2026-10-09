@@ -21,7 +21,7 @@ as implemented by a placeholder directory or a golden expectation.
 | 5 | Chat Import and Relationship Data Pipeline | PASS (5A–5D) |
 | 6 | User-facing memory controls and retention policy integration | PASS (6A–6D) |
 | 7 | Expo React Native MVP | PASS (7A–7D) |
-| 8 | Mobile API integration, generated client and stream consumption | PENDING |
+| 8 | Mobile API integration, generated client and stream consumption | IN PROGRESS / NOT YET COMPLETE (8A–8B PASS) |
 | 9 | Security, privacy, reliability and deletion | PENDING |
 | 10 | Optional hybrid RAG with pgvector | PENDING |
 | 11 | Agent eval and observability | PENDING |
@@ -68,6 +68,28 @@ as implemented by a placeholder directory or a golden expectation.
 
 ## Implementation log
 
+### Phase 8B — Generated client, development session and owned resources
+
+- Generate TypeScript contracts, UUID fields, operation/auth inventory and callable
+  openapi-fetch client from the unchanged 8A OpenAPI. Separate pinned generator
+  TS5 workspace preserves Mobile TS6 and peer compatibility; byte/source-hash
+  checks and mutation tests reject input/output drift.
+- Add native SecureStore/Web volatile development JWT session, real server probe,
+  expiry/401/logout, serialized storage and epoch/cancellation guards. Demo remains
+  available; Connected uses resource adapters/controllers for explicit create/list/
+  detail, opaque pages and stable UUID retries, with no synthetic fallback.
+- Real CLI JWT/FastAPI/PostgreSQL/generated-client/Chrome integration verifies
+  response-loss retries, concurrency, owned resources, cross-page UUIDs and A→B
+  isolation. Only explicit local development/test CORS is added to the server.
+- Native emulator attempts did not yield stable adb; Android connected runtime
+  remains NOT RUN. Doctor and JS export are separate checks; final Phase8 still
+  requires Android connected proof. Whole Phase8 remains incomplete. 8C Agent
+  REST/SSE, 8D Import/History and 8E Memory are not started. Full pre-marker root
+  verification passed: backend555, Mobile143 (retained95 + new48), old Demo Web22,
+  real Connected3, generated3, repository24 and Golden83. Marker advanced only to
+  `7 / 8B`; accepted-marker full verification also exited0 with the same passing
+  counts. See [8B report](PHASE_8B_ACCEPTANCE.md).
+
 ### Phase 8A — Public resource APIs and integration contract foundation
 
 - Add ten signed Person/Relationship/Conversation create/list/detail and Agent
@@ -85,7 +107,7 @@ as implemented by a placeholder directory or a golden expectation.
   backend545, repository21, Mobile95/Web22, Golden83 and all0–7 gates. Marker
   advanced only to `7 / 8A`; accepted-marker full rerun also exited0 with the same
   results. Phase8A is PASS. Whole Phase8
-  remains PENDING; 8B/8C are not started.
+  was PENDING at 8A acceptance; 8B/8C had not started at that point.
   See [resource API](RESOURCE_API.md) and [8A acceptance](PHASE_8A_ACCEPTANCE.md).
 
 ### Phase 7D — Mobile MVP integration and Phase 7 final acceptance

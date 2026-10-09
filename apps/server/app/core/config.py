@@ -4,7 +4,7 @@ from functools import lru_cache
 from pathlib import Path
 from typing import Literal
 
-from pydantic import Field, SecretStr, field_validator
+from pydantic import Field, SecretStr, field_validator, model_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -20,6 +20,7 @@ class Settings(BaseSettings):
     app_debug: bool = False
     app_host: str = "127.0.0.1"
     app_port: int = Field(default=8000, ge=1, le=65535)
+    dev_cors_origins: list[str] = Field(default_factory=list)
     database_url: SecretStr | None = None
     llm_provider: str = "mock"
     llm_api_key: SecretStr | None = None
@@ -35,6 +36,27 @@ class Settings(BaseSettings):
     memory_challenge_cleanup_grace_hours: int = Field(default=24, ge=1, le=8760, strict=True)
     memory_cleanup_batch_size: int = Field(default=100, ge=1, le=1000, strict=True)
     chat_import_retention_hours: int = Field(default=72, ge=1, le=24 * 365)
+
+    @model_validator(mode="after")
+    def local_cors_only(self):
+        from urllib.parse import urlsplit
+
+        if self.dev_cors_origins and self.app_env not in {"development", "test"}:
+            raise ValueError("Development CORS is restricted to development/test")
+        for origin in self.dev_cors_origins:
+            url = urlsplit(origin)
+            if (
+                url.scheme not in {"http", "https"}
+                or url.hostname not in {"localhost", "127.0.0.1", "::1"}
+                or not url.port
+                or url.path
+                or url.query
+                or url.fragment
+                or url.username
+                or url.password
+            ):
+                raise ValueError("Development CORS requires explicit loopback origins")
+        return self
 
     @field_validator(
         "memory_retention_days",

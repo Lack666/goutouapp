@@ -1,4 +1,6 @@
 import { useMemo, useRef, useState } from 'react';
+import { useConnection } from '../session/ConnectionProvider';
+import { ConnectedPendingScreen } from './ConnectedPendingScreen';
 import { useRouter } from 'expo-router';
 import { KeyboardAvoidingView, Platform, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -24,6 +26,14 @@ import { ChatComposer } from '../components/ChatComposer';
 import { ChatRunStatus, FiuPreview, runPreviews } from '../components/ChatRunPreview';
 
 export default function ChatScreen() {
+  const connection = useConnection();
+  return connection?.session.snapshot().mode === 'connected' ? (
+    <ConnectedPendingScreen connection={connection} title="对话" />
+  ) : (
+    <DemoChatScreen />
+  );
+}
+function DemoChatScreen() {
   const source = useDataSource();
   const scope = useRelationshipScope();
   const nav = useLocalNavigation();

@@ -1,0 +1,14 @@
+{
+  "name": "@goutou/api-codegen",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "generate": "node generate-api.mjs",
+    "check": "node generate-api.mjs --check && node --test generate-api.test.mjs"
+  },
+  "devDependencies": {
+    "openapi-typescript": "7.13.0",
+    "typescript": "5.9.3",
+    "prettier": "3.8.1"
+  }
+}

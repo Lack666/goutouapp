@@ -1,4 +1,5 @@
 import { useRouter } from 'expo-router';
+import { useConnection } from '../session/ConnectionProvider';
 import {
   AppHeader,
   BodyText,
@@ -13,6 +14,28 @@ import { useSurface } from '../hooks/useSurface';
 import { routes } from '../navigation/routes';
 
 export default function HomeScreen() {
+  const connection = useConnection();
+  return connection?.session.snapshot().mode === 'connected' ? (
+    <ConnectedHomeScreen />
+  ) : (
+    <DemoHomeScreen />
+  );
+}
+function ConnectedHomeScreen() {
+  const router = useRouter();
+  return (
+    <ScreenContainer>
+      <AppHeader title="狗头军师" subtitle="Connected Development Mode" />
+      <SectionCard title="服务器资源">
+        <BodyText>在关系资料中创建和选择对象、关系与会话。</BodyText>
+        <PrimaryButton label="进入关系资料" onPress={() => router.push('/relationship')} />
+        <PrimaryButton label="进入设置" variant="quiet" onPress={() => router.push('/settings')} />
+        <BodyText muted>对话、导入、历史内容和 Memory 业务尚未接入。</BodyText>
+      </SectionCard>
+    </ScreenContainer>
+  );
+}
+function DemoHomeScreen() {
   const router = useRouter();
   const { state, retry } = useSurface('home');
   if (state.status !== 'empty')

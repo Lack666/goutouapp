@@ -1,4 +1,4 @@
-"""Mobile static and Phase 7B/7C/7D focused gates; runtime smoke stays separate."""
+"""Mobile static, Phase 7 regression and Phase 8B client/session/resource gates."""
 
 from __future__ import annotations
 
@@ -19,7 +19,7 @@ def boundary_check() -> None:
         r"api\.(?:openai|deepseek|anthropic)\.com|"
         r"\b(?:fetch|XMLHttpRequest|WebSocket|EventSource)\s*\(|"
         r"from\s+['\"](?:openai|anthropic|pg|postgres|axios)['\"]"
-        r"|\b(?:localStorage|sessionStorage|AsyncStorage|SecureStore)\b|console\.\w+\s*\("
+        r"|\b(?:localStorage|sessionStorage|AsyncStorage)\b|console\.\w+\s*\("
     )
     for directory in (MOBILE / "app", MOBILE / "src"):
         for path in directory.rglob("*"):
@@ -27,6 +27,11 @@ def boundary_check() -> None:
                 content = path.read_text(encoding="utf-8")
                 if forbidden.search(content):
                     raise RuntimeError(f"Mobile secret/network boundary violation: {path}")
+                if (
+                    "SecureStore" in content
+                    and path != MOBILE / "src/session/tokenStorage.native.ts"
+                ):
+                    raise RuntimeError(f"Credential storage outside platform adapter: {path}")
                 if directory.name == "src" and {"features", "components"} & set(path.parts):
                     if re.search(
                         r"from\s+['\"].*(?:demoSource|featureFixtures|controlFixtures)['\"]",
@@ -62,6 +67,10 @@ def main() -> None:
         [pnpm, "--filter", "@goutou/mobile", "run", name]
         for name in ("compatibility", "typecheck", "lint", "format:check", "test")
     )
+    if (MOBILE / "src/api/generated/client.ts").is_file():
+        commands.append([pnpm, "run", "api:check"])
+        commands.append([pnpm, "--filter", "@goutou/mobile", "exec", "expo-doctor"])
+        commands.append([pnpm, "--filter", "@goutou/mobile", "run", "test:connected"])
     feature_ui = (MOBILE / "src/features/ChatScreen.tsx").is_file()
     if feature_ui:
         commands.append([pnpm, "--filter", "@goutou/mobile", "run", "test:features"])

@@ -1,4 +1,30 @@
-# Mobile architecture — Phase 7A–7D
+# Mobile architecture — Phase 7A–7D and Phase 8B
+
+Current 8B implementation adds generated resource HTTP and a Development Session.
+The Phase7 sections below describe preserved Demo behavior. Connected uses
+`ConnectionProvider → DevelopmentSession + ApiTransport + ResourceController →
+generated DTO adapters → existing ViewModels/components`. Root selects Demo or
+Connected ShellDataSource and remounts local scope state on mode/session epoch.
+No new global state framework or screen redesign. Resource state contains no token.
+
+New directories: `src/api/generated` (generator-owned), `src/api` (safe transport,
+UUID validation, DTO adapters), `src/session` (lifecycle and platform storage),
+async resource controller and Connected screens. The separate `tools/api-codegen`
+workspace pins generator TS5 while Mobile keeps TS6. Native SecureStore57.0.4 and
+Crypto57.0.3 match the SDK57 compatibility map; openapi-fetch0.17.0 uses injected
+fetch. No Expo/React/RN upgrade or ignored peer conflict.
+
+Connected handles Person/Relationship/Conversation create/list/detail only. Current
+resource selections propagate UUIDs to unavailable Chat/Import/History screens;
+no Agent, SSE, formal history, upload/binding or Memory network work exists.
+Web is volatile; native secure credentials revalidate on restore. Epoch guards,
+serialized storage and request aborts prevent owner leakage. Local CORS is explicit
+and development/test-only. `api:check`, unit tests, Doctor and real connected browser
+gate join root verification. Native connected runtime is NOT RUN on this host;
+Android JS export is separate. See [API client](MOBILE_API_CLIENT.md),
+[session](MOBILE_DEV_AUTH.md), [resource/platform steps](MOBILE_RESOURCE_INTEGRATION.md),
+[ADR0032](adr/0032-generated-mobile-client-and-development-session.md) and
+[8B acceptance](PHASE_8B_ACCEPTANCE.md).
 
 The Expo React Native foundation, navigation shell and local Chat/Profile/Import/History/Settings UI are implemented.
 Phase 7 remains the six-surface Mobile MVP; Phase 8 remains generated API client
