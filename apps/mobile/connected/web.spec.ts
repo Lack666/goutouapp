@@ -71,16 +71,21 @@ test('real Expo Web owned resource creation, lost response retry, contexts and A
   await page.getByRole('button', { name: '创建新 Conversation', exact: true }).click();
   await expect(page.getByText('服务器已确认保存 conversations', { exact: true })).toBeVisible();
   for (const [label, path] of [
-    ['前往对话（尚未接入）', 'chat'],
+    ['前往对话', 'chat'],
     ['前往导入（尚未接入）', 'import'],
     ['前往历史（尚未接入）', 'history'],
   ]) {
     await page.getByRole('button', { name: label, exact: true }).click();
     await expect(page).toHaveURL(new RegExp(`/${path}\\?.*relationshipId=${relationshipId}`));
-    await expect(
-      page.getByText(`关系上下文：Web synthetic person · ${relationshipId}`, { exact: true }),
-    ).toBeVisible();
-    await expect(page.getByRole('button', { name: '执行服务器业务（尚未开放）' })).toBeDisabled();
+    if (path === 'chat') {
+      await expect(page.getByText(`关系范围：${relationshipId}`, { exact: true })).toBeVisible();
+      await expect(page.getByRole('button', { name: '发送 Agent 消息' })).toBeDisabled(); // Empty composer; no Agent request in 8B regression.
+    } else {
+      await expect(
+        page.getByText(`关系上下文：Web synthetic person · ${relationshipId}`, { exact: true }),
+      ).toBeVisible();
+      await expect(page.getByRole('button', { name: '执行服务器业务（尚未开放）' })).toBeDisabled();
+    }
     await page.getByRole('button', { name: '返回上一级' }).click();
   }
   await page.getByRole('button', { name: '清除当前开发会话' }).click();
@@ -101,8 +106,10 @@ test('real Expo Web owned resource creation, lost response retry, contexts and A
     ),
   ).toEqual([]);
   expect(
-    requests.every((path) =>
-      /^\/api\/v1\/(persons|relationships|conversations)(\/[a-f0-9-]{36})?$/.test(path),
+    requests.every(
+      (path) =>
+        /^\/api\/v1\/(persons|relationships|conversations)(\/[a-f0-9-]{36})?$/.test(path) ||
+        /^\/api\/v1\/conversations\/[a-f0-9-]{36}\/messages$/.test(path), // 8C Chat now reads formal Agent History; still no Agent POST/import/Memory.
     ),
   ).toBe(true);
   expect(errors).toEqual([]);

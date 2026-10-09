@@ -18,7 +18,7 @@ idempotency around the standalone runtime.
 
 ```mermaid
 flowchart LR
-  Mobile[React Native + Expo] -->|8B resource REST; later POST SSE| Server[FastAPI server]
+  Mobile[React Native + Expo] -->|8B resource REST; 8C Agent REST/POST SSE/History| Server[FastAPI server]
   Server --> Database[(PostgreSQL)]
   Server -->|AgentService| Runtime[Independent LangGraph Agent Runtime]
   Runtime -->|deterministic reference loader| Knowledge[Preserved goutoujunshi Skill]
@@ -48,6 +48,14 @@ runtime, knowledge and Memory/Import behavior are unchanged. See
 
 Further behavior requirements are recorded in `docs/SKILL_CONTRACT.md` and
 future phase decisions in `docs/adr/`.
+
+Phase8C adds owned Conversation Chat/History through that same generated client,
+session and transport; native streaming uses installed expo/fetch. A bounded
+independent V1 parser and page/session generations isolate consumption. Immutable
+operation keys and explicit unknown outcomes follow existing server replay/disconnect
+semantics; Message IDs reconcile confirmed answers with formal History. Runtime,
+knowledge, provider contract, Import and Memory behavior remain unchanged. See
+[ADR0033](adr/0033-mobile-agent-chat-stream-and-recovery.md).
 
 ## Implemented Phase 2A boundary
 

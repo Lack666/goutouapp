@@ -1,5 +1,12 @@
 # Phase 8 Mobile integration handoff — 2026-10-09
 
+Current Phase8C connects owned Conversation Chat through generated REST/History
+and existing authenticated POST SSE, with V1 validation, retained operation keys,
+explicit unknown outcomes and server-ID reconciliation. Shared8B session/native
+credentials and Demo are preserved. See [8C report](PHASE_8C_ACCEPTANCE.md).
+Import/RelationshipMessage history remain8D, Memory controls8E. No future stage begins.
+The8B/8A historical handoff below is superseded for Agent Chat only.
+
 This handoff preserves the Phase7D/8A audit and adds current 8B client integration.
 Whole Phase8 is IN PROGRESS / NOT YET COMPLETE. Mobile now has generated resource
 HTTP, native SecureStore/Web volatile Development Session and owned-resource

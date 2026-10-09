@@ -1,5 +1,11 @@
 # 狗头军师 App
 
+Phase8C adds Connected Agent Chat REST/POST SSE and public Agent History, preserving
+the existing generated client/session/resources and local Demo. Stable operation
+keys, explicit unknown outcomes and server Message IDs guard replay/recovery.
+See [8C acceptance](docs/PHASE_8C_ACCEPTANCE.md) and [streaming/native steps](docs/MOBILE_STREAMING.md).
+Whole Phase8 remains incomplete;8D Import/History and8E Memory are not started.
+
 这是将 [goutoujunshi Skill](https://github.com/shengjidaguai-china/goutoujunshi)
 改造成独立 AI Agent 与 React Native 手机 App 的 Monorepo。目标架构为
 React Native + Expo 客户端、FastAPI + PostgreSQL 服务端，以及可脱离任何

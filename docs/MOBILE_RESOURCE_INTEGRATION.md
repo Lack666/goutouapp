@@ -1,4 +1,12 @@
-# Owned resource integration — Phase 8B
+# Owned resource integration — Phase 8B/8C
+
+Phase8C uses these actual Conversation IDs for Connected Chat, validates owned
+detail and any relationship assertion, and enables Agent REST/POST SSE plus public
+Agent History. Generic Conversations have a direct Chat action. Relationship scope
+cannot borrow another Conversation. Import/RelationshipMessage History and Memory
+controls remain unavailable. See [Chat](MOBILE_AGENT_CHAT.md),
+[streaming/native steps](MOBILE_STREAMING.md) and [8C acceptance](PHASE_8C_ACCEPTANCE.md).
+The following8B notes remain historical resource-acquisition evidence.
 
 Demo keeps all Phase 7 UI/controller behavior and makes no business requests.
 Connected Development Mode reads only server-confirmed Person/Relationship/

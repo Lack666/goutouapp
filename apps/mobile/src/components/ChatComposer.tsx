@@ -10,11 +10,13 @@ export function ChatComposer({
   onChange,
   onPreview,
   feedback = '',
+  connected = false,
 }: {
   state: ChatComposerState;
   onChange: (text: string) => void;
   onPreview: () => void;
   feedback?: string;
+  connected?: boolean;
 }) {
   const { colors } = useTheme();
   return (
@@ -31,14 +33,16 @@ export function ChatComposer({
       }}
     >
       <TextInput
-        accessibilityLabel="本地预览消息输入"
+        accessibilityLabel={connected ? 'Agent 消息输入' : '本地预览消息输入'}
         accessibilityState={{ disabled: state.disabled }}
         editable={!state.disabled}
         multiline
         maxLength={COMPOSER_LIMIT}
         value={state.text}
         onChangeText={(text) => onChange(text.slice(0, COMPOSER_LIMIT))}
-        placeholder="写下想梳理的内容，仅在本地预览"
+        placeholder={
+          connected ? '写下想梳理的内容，发送到服务器' : '写下想梳理的内容，仅在本地预览'
+        }
         placeholderTextColor={colors.muted}
         style={{
           ...tokens.type.body,
@@ -52,7 +56,8 @@ export function ChatComposer({
         }}
       />
       <Text style={[tokens.type.caption, { color: colors.muted }]}>
-        Demo · {state.text.length}/{COMPOSER_LIMIT} · 不发送、不保存
+        {connected ? 'Connected' : 'Demo'} · {state.text.length}/{COMPOSER_LIMIT} ·{' '}
+        {connected ? '服务器确认后进入正式记录' : '不发送、不保存'}
       </Text>
       {!!feedback && (
         <Text
@@ -65,7 +70,7 @@ export function ChatComposer({
       <View style={{ flexDirection: 'row', gap: 8 }}>
         <View style={{ flex: 1 }}>
           <PrimaryButton
-            label="添加到本地预览"
+            label={connected ? '发送 Agent 消息' : '添加到本地预览'}
             disabled={state.disabled || !state.text.trim() || state.text.length > COMPOSER_LIMIT}
             onPress={onPreview}
           />

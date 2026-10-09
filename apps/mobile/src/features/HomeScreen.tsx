@@ -30,7 +30,14 @@ function ConnectedHomeScreen() {
         <BodyText>在关系资料中创建和选择对象、关系与会话。</BodyText>
         <PrimaryButton label="进入关系资料" onPress={() => router.push('/relationship')} />
         <PrimaryButton label="进入设置" variant="quiet" onPress={() => router.push('/settings')} />
-        <BodyText muted>对话、导入、历史内容和 Memory 业务尚未接入。</BodyText>
+        <PrimaryButton
+          label="开始 Agent 对话"
+          variant="quiet"
+          onPress={() => router.push('/chat')}
+        />
+        <BodyText muted>
+          Agent 对话可发送并恢复服务器历史；导入、关系聊天历史和 Memory 控制尚未接入。
+        </BodyText>
       </SectionCard>
     </ScreenContainer>
   );

@@ -1,4 +1,11 @@
-# Generated Mobile API client — Phase 8B
+# Generated Mobile API client — Phase 8B/8C
+
+Phase8C reuses the unchanged generated client for Agent REST and public Agent
+History. App composition explicitly enables these paths and POST SSE in the same
+authenticated transport. Import/Memory operations stay disabled. Native streaming
+uses installed expo/fetch with the same session/epoch/origin; the OpenAPI SSE string
+has a separately audited V1 union. See [Chat](MOBILE_AGENT_CHAT.md) and
+[streaming](MOBILE_STREAMING.md). The resource-only allowlist below is the8B default.
 
 The only generation authority is `docs/contracts/openapi.json`, exported and
 compatibility checked by `scripts/export_openapi.py`. Its 36 method/path operations,

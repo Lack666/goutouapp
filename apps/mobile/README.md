@@ -1,4 +1,15 @@
-# Mobile app — Phase 7A–7D and Phase 8B
+# Mobile app — Phase 7A–7D and Phase 8B/8C
+
+Phase8C Connected Chat sends actual Agent REST/POST SSE through the same8B JWT
+session, selects owned generic/bound Conversations and recovers public Agent History.
+It shows server-confirmed answers, actual run/key IDs, safe same-key retry and explicit
+unknown outcomes. Import/RelationshipMessage history and Memory mutations stay deferred.
+See [Chat](../../docs/MOBILE_AGENT_CHAT.md), [streaming/native steps](../../docs/MOBILE_STREAMING.md)
+and [8C acceptance](../../docs/PHASE_8C_ACCEPTANCE.md). `test:sse`, `test:agent-chat`
+and `demo:agent` run focused parser/controller/UI and real CLI JWT/PostgreSQL/
+FastAPI/MockLLM/Chrome flows. Android native proof remains separate from Web.
+The following8B/Phase7 notes retain their historical boundaries; Agent Chat is now
+implemented as described above. The original Demo remains available unchanged.
 
 Demo retains Phase7 behavior. Connected Development Mode adds real generated
 Person/Relationship/Conversation create/list/detail and a manually entered short-lived

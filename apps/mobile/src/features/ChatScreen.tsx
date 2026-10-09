@@ -1,6 +1,6 @@
 import { useMemo, useRef, useState } from 'react';
 import { useConnection } from '../session/ConnectionProvider';
-import { ConnectedPendingScreen } from './ConnectedPendingScreen';
+import { ConnectedChatScreen } from './ConnectedChatScreen';
 import { useRouter } from 'expo-router';
 import { KeyboardAvoidingView, Platform, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -28,7 +28,7 @@ import { ChatRunStatus, FiuPreview, runPreviews } from '../components/ChatRunPre
 export default function ChatScreen() {
   const connection = useConnection();
   return connection?.session.snapshot().mode === 'connected' ? (
-    <ConnectedPendingScreen connection={connection} title="对话" />
+    <ConnectedChatScreen connection={connection} />
   ) : (
     <DemoChatScreen />
   );

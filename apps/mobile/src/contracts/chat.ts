@@ -12,7 +12,7 @@ export interface AgentChatMessageViewModel {
   readonly role: 'user' | 'assistant';
   readonly text: string;
   readonly timeLabel: string;
-  readonly source: 'synthetic-demo' | 'local-preview';
+  readonly source: 'synthetic-demo' | 'local-preview' | 'server';
 }
 export interface ChatThreadViewModel {
   readonly id: string;

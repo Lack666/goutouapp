@@ -17,15 +17,30 @@ import { ResourceController } from '../data/resourceController';
 import { DataSourceProvider } from '../data/DataSourceProvider';
 import { demoSource } from '../data/demoSource';
 import { connectedSource } from '../data/connectedSource';
+import { AgentChatController } from '../data/agentChatController';
+import { streamFetch } from '../api/streamFetch';
 
 export interface Connection {
   session: DevelopmentSession;
   resources: ResourceController;
+  chat: AgentChatController;
 }
 export function createConnection(baseURL: string, localDevelopment: boolean): Connection {
   const session = new DevelopmentSession(createPlatformTokenStorage());
-  const transport = new ApiTransport(baseURL, session, fetch, 12_000, localDevelopment);
-  return { session, resources: new ResourceController(transport, session, randomUUID) };
+  const transport = new ApiTransport(
+    baseURL,
+    session,
+    fetch,
+    12_000,
+    localDevelopment,
+    true,
+    streamFetch,
+  );
+  return {
+    session,
+    resources: new ResourceController(transport, session, randomUUID),
+    chat: new AgentChatController(transport, session, randomUUID),
+  };
 }
 const Context = createContext<Connection | null>(null);
 export const useConnection = () => useContext(Context);
@@ -63,7 +78,7 @@ export function ConnectionProvider({
     if (navigationEpoch.current !== session.epoch) {
       navigationEpoch.current = session.epoch;
       // Drop stacked owner URLs as well as in-memory selections on identity reset.
-      router.dismissAll();
+      if (router.canDismiss()) router.dismissAll();
       router.replace('/settings');
     }
   }, [router, session.epoch]);
@@ -71,6 +86,7 @@ export function ConnectionProvider({
     void connection.session.restore(connection.resources.probe);
     const subscription = AppState.addEventListener('change', (state) => {
       if (state === 'active') connection.session.resume();
+      else connection.chat.pause();
     });
     return () => subscription.remove();
   }, [connection]);

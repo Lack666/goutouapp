@@ -236,7 +236,11 @@ export function ConnectedResourcesScreen({ connection }: { connection: Connectio
               {(['/chat', '/import', '/history'] as const).map((path) => (
                 <PrimaryButton
                   key={path}
-                  label={`前往${path === '/chat' ? '对话' : path === '/import' ? '导入' : '历史'}（尚未接入）`}
+                  label={
+                    path === '/chat'
+                      ? '前往对话'
+                      : `前往${path === '/import' ? '导入' : '历史'}（尚未接入）`
+                  }
                   onPress={() =>
                     router.push({
                       pathname: path,
@@ -253,6 +257,17 @@ export function ConnectedResourcesScreen({ connection }: { connection: Connectio
                 />
               ))}
             </SectionCard>
+          )}
+          {view.selectedConversationId && !view.selectedRelationshipId && (
+            <PrimaryButton
+              label="前往对话"
+              onPress={() =>
+                router.push({
+                  pathname: '/chat',
+                  params: { conversationId: view.selectedConversationId! },
+                })
+              }
+            />
           )}
         </>
       )}

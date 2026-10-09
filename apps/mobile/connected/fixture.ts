@@ -8,6 +8,12 @@ interface Backend {
   b: string;
   expired: string;
   counts(): Promise<Record<string, number>>;
+  agentEvidence(): Promise<{
+    calls: number;
+    memories: number;
+    runs: { id: string; owner: string; conversation: string; status: string; key: string }[];
+    messages: { id: string; conversation: string; role: string }[];
+  }>;
 }
 export const test = base.extend<object, { backend: Backend }>({
   backend: [
@@ -37,10 +43,16 @@ export const test = base.extend<object, { backend: Backend }>({
       const first = await iterator.next();
       if (first.done)
         throw new Error('Real PostgreSQL fixture failed to start; check TEST_DATABASE_URL.');
-      const credentials = JSON.parse(first.value) as Omit<Backend, 'counts'>;
+      const credentials = JSON.parse(first.value) as Omit<Backend, 'counts' | 'agentEvidence'>;
       try {
         await useBackend({
           ...credentials,
+          agentEvidence: async () => {
+            child.stdin.write('agent_evidence\n');
+            const row = await iterator.next();
+            if (row.done) throw new Error('Agent database evidence unavailable');
+            return JSON.parse(row.value);
+          },
           counts: async () => {
             child.stdin.write('counts\n');
             const row = await iterator.next();

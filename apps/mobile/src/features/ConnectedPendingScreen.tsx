@@ -35,7 +35,7 @@ export function ConnectedPendingScreen({
       <DevelopmentSessionControls />
       <SectionCard title="尚未接入服务器业务">
         <BodyText>
-          当前仅接入对象、关系和会话资源。对话发送、导入、历史内容与记忆操作尚未开放。
+          对话页已支持 Agent 发送和正式历史。此页的导入、关系聊天历史或记忆操作尚未开放。
         </BodyText>
         {session.status === 'authenticated' && (
           <>

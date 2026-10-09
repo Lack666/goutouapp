@@ -1,4 +1,11 @@
-# Mobile architecture — Phase 7A–7D and Phase 8B
+# Mobile architecture — Phase 7A–7D and Phase 8B/8C
+
+Phase8C extends the8B composition with one AgentChatController using the same
+transport/session/resources. Generated Agent REST/History and native expo/fetch POST
+SSE feed the existing composer/FlatList through public ViewModels. No synthetic
+Connected fallback/FIU, imported history or Memory mutation is enabled. Details in
+[Chat](MOBILE_AGENT_CHAT.md) and [streaming](MOBILE_STREAMING.md); historical Phase7/8B
+descriptions below retain their earlier acceptance boundaries.
 
 Current 8B implementation adds generated resource HTTP and a Development Session.
 The Phase7 sections below describe preserved Demo behavior. Connected uses

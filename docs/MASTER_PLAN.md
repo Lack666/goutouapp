@@ -21,7 +21,7 @@ as implemented by a placeholder directory or a golden expectation.
 | 5 | Chat Import and Relationship Data Pipeline | PASS (5A–5D) |
 | 6 | User-facing memory controls and retention policy integration | PASS (6A–6D) |
 | 7 | Expo React Native MVP | PASS (7A–7D) |
-| 8 | Mobile API integration, generated client and stream consumption | IN PROGRESS / NOT YET COMPLETE (8A–8B PASS) |
+| 8 | Mobile API integration, generated client and stream consumption | IN PROGRESS / NOT YET COMPLETE (8A–8C engineering PASS) |
 | 9 | Security, privacy, reliability and deletion | PENDING |
 | 10 | Optional hybrid RAG with pgvector | PENDING |
 | 11 | Agent eval and observability | PENDING |
@@ -68,6 +68,26 @@ as implemented by a placeholder directory or a golden expectation.
 
 ## Implementation log
 
+### Phase 8C — Agent Chat REST / POST SSE Integration
+
+- Reuse generated client, actual owned Conversation, shared JWT/session/origin,
+  navigation/theme/composer/FlatList; connect Agent REST/POST SSE and public Agent
+  History. Import/RelationshipMessage History and Memory controls remain deferred.
+- Independent incremental UTF-8 parser validates narrow V1 envelopes/order/run IDs,
+  bounded frames and terminal state. Native adapter uses installed expo/fetch;
+  Web/socket and native verification remain separate.
+- Immutable per-action operation keys, controlled cross-transport replay, explicit
+  unknown outcomes and Message-ID reconciliation prevent duplicate execution/bubbles.
+  Page/session generation, cancel/deadline/expiry and owner guards reject stale data.
+- Actual CLI JWT/FastAPI/PostgreSQL/MockLLM/Expo Web demo and both full root runs
+  passed (exit0). Accepted-marker results: backend555, repository27, Golden83,
+  Mobile217 (143 retained +74 new), focused46, parser28, Demo Web22, resources3 and
+  Agent Chat3. Native Connected SSE NOT RUN; Doctor21/21 and Android JS export are
+  distinct evidence. Marker advanced only to7/8C after all applicable gates;
+  accepted-marker full rerun also passed. Whole Phase8 incomplete.
+  See [8C acceptance](PHASE_8C_ACCEPTANCE.md), [Agent Chat](MOBILE_AGENT_CHAT.md)
+  and [streaming](MOBILE_STREAMING.md). Stop after8C;8D/8E are not started.
+
 ### Phase 8B — Generated client, development session and owned resources
 
 - Generate TypeScript contracts, UUID fields, operation/auth inventory and callable
@@ -83,8 +103,8 @@ as implemented by a placeholder directory or a golden expectation.
   isolation. Only explicit local development/test CORS is added to the server.
 - Native emulator attempts did not yield stable adb; Android connected runtime
   remains NOT RUN. Doctor and JS export are separate checks; final Phase8 still
-  requires Android connected proof. Whole Phase8 remains incomplete. 8C Agent
-  REST/SSE, 8D Import/History and 8E Memory are not started. Full pre-marker root
+  requires Android connected proof. Whole Phase8 remains incomplete. At8B acceptance,
+  8C Agent REST/SSE, 8D Import/History and 8E Memory were not started. Full pre-marker root
   verification passed: backend555, Mobile143 (retained95 + new48), old Demo Web22,
   real Connected3, generated3, repository24 and Golden83. Marker advanced only to
   `7 / 8B`; accepted-marker full verification also exited0 with the same passing

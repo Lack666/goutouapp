@@ -16,7 +16,8 @@ const MessageBubble = memo(function MessageBubble({
   onLayout?: (event: LayoutChangeEvent) => void;
 }) {
   const { colors } = useTheme();
-  const sender = message.role === 'user' ? '你' : '助手（预置示例）';
+  const sender =
+    message.role === 'user' ? '你' : message.source === 'server' ? '助手' : '助手（预置示例）';
   return (
     <View
       testID={`message-${message.id}`}
@@ -34,8 +35,11 @@ const MessageBubble = memo(function MessageBubble({
       }}
     >
       <Text style={[tokens.type.caption, { color: colors.muted }]}>
-        {sender} · Demo · {message.source === 'local-preview' ? '本地输入' : '合成示例'} ·{' '}
-        {message.timeLabel}
+        {sender} ·{' '}
+        {message.source === 'server'
+          ? '服务器已提交'
+          : `Demo · ${message.source === 'local-preview' ? '本地输入' : '合成示例'}`}{' '}
+        · {message.timeLabel}
       </Text>
       <Text
         selectable
@@ -52,11 +56,13 @@ export function ChatMessageList({
   header,
   footer,
   scrollToLatest = 0,
+  connected = false,
 }: {
   messages: readonly AgentChatMessageViewModel[];
   header?: ReactElement;
   footer?: ReactElement;
   scrollToLatest?: number;
+  connected?: boolean;
 }) {
   const list = useRef<FlatList<AgentChatMessageViewModel>>(null);
   const lastScroll = useRef(0);
@@ -106,7 +112,11 @@ export function ChatMessageList({
       ListEmptyComponent={
         <EmptyState
           title="还没有对话"
-          description="输入内容，添加到本地预览。不会发送给 AI，也不会保存到历史。"
+          description={
+            connected
+              ? '尚无服务器确认的 Agent 消息。'
+              : '输入内容，添加到本地预览。不会发送给 AI，也不会保存到历史。'
+          }
         />
       }
     />
