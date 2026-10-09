@@ -34,13 +34,15 @@ describe('Import local wizard', () => {
     expect(screen.getAllByText('绑定：unbound')).toHaveLength(3);
     expect(screen.getByText('匿名同学🌱')).toBeOnTheScreen();
     expect(screen.getByText('合成导出标签 1 · 5 条消息')).toBeOnTheScreen();
-    await press('下一步');
-    await press('下一步');
     expect(screen.getByText('存在未处理说话人')).toBeOnTheScreen();
     expect(screen.getByRole('button', { name: '下一步' })).toBeDisabled();
-    await press('返回修改说话人');
+    await press('下一步');
+    expect(screen.getByText('2 / 5 · 说话人绑定')).toBeOnTheScreen();
     await bindPair();
     await press('下一步');
+    expect(screen.getByRole('button', { name: '下一步' })).toBeDisabled();
+    await press('下一步');
+    expect(screen.getByText('3 / 5 · 关系绑定')).toBeOnTheScreen();
     await press('确认关系绑定（Demo）');
     await press('下一步');
     expect(screen.getByText('演示预检通过')).toBeOnTheScreen();
@@ -85,11 +87,10 @@ describe('Import local wizard', () => {
     await bindPair();
     await press('匿名参与者🌿 → person');
     await press('匿名参与者🌿 → person-a');
-    await press('下一步');
-    await press('确认关系绑定（Demo）');
-    await press('下一步');
     expect(screen.getByText('当前版本的一对一关系导入不支持多人群聊')).toBeOnTheScreen();
     expect(screen.getByRole('button', { name: '下一步' })).toBeDisabled();
+    await press('下一步');
+    expect(screen.getByText('2 / 5 · 说话人绑定')).toBeOnTheScreen();
   });
   it.each(['missing', 'demo-a&relationshipId=demo-b'])(
     'fails closed for invalid scope %s',

@@ -1,8 +1,8 @@
 import { defineConfig } from '@playwright/test';
 export default defineConfig({
   testDir: './smoke',
-  outputDir: '../../.cache/phase7c-web-results',
-  reporter: [['list'], ['json', { outputFile: '../../.cache/phase7c-web-smoke.json' }]],
+  outputDir: '../../.cache/phase7d-web-results',
+  reporter: [['list'], ['json', { outputFile: '../../.cache/phase7d-web-smoke.json' }]],
   workers: 1,
   use: {
     baseURL: 'http://localhost:8087',

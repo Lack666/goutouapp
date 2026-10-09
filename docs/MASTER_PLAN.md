@@ -20,7 +20,7 @@ as implemented by a placeholder directory or a golden expectation.
 | 4 | Agent Service and API transport over the standalone runtime | PASS |
 | 5 | Chat Import and Relationship Data Pipeline | PASS (5A–5D) |
 | 6 | User-facing memory controls and retention policy integration | PASS (6A–6D) |
-| 7 | Expo React Native MVP | IN PROGRESS (7A–7C PASS; whole phase pending) |
+| 7 | Expo React Native MVP | PASS (7A–7D) |
 | 8 | Mobile API integration, generated client and stream consumption | PENDING |
 | 9 | Security, privacy, reliability and deletion | PENDING |
 | 10 | Optional hybrid RAG with pgvector | PENDING |
@@ -67,6 +67,35 @@ as implemented by a placeholder directory or a golden expectation.
 12. Locked dependencies, CI, Docker/Compose, EAS preview and release checklist.
 
 ## Implementation log
+
+### Phase 7D — Mobile MVP integration and Phase 7 final acceptance
+
+- Verified the six interactive surfaces as complete real Expo Web journeys in
+  both palettes at 320/360/412px. Preserved 13 existing browser cases and added
+  nine integration/deep-link/scope/lifecycle/error-recovery cases: 22 PASS.
+- Fixed three observed P1 issues with targeted regression: Import Next now
+  requires explicit identities and relationship confirmation; Chat consumes
+  latest-message scroll after row layout; Home renders loading/error rather
+  than blank output. Kept FlatList, stable IDs, 1,020-occurrence history windows,
+  source/ViewModels and local-only business boundaries. Mobile 95 PASS, focused
+  7B/7C/7D 24/35/13; frozen install, Doctor 21/21, SDK/peer/TS/lint/format pass.
+- Audited current server code and generated OpenAPI for the Phase 8 handoff.
+  Conversation/Person/Relationship public resources, Agent history, public FIU/
+  Profile DTOs and imported-data analysis remain explicit coordination gaps.
+  No generated client, auth/session, REST/SSE, real import/Memory/LLM or server
+  change is made. Phase 8 remains PENDING.
+- User-manual Android smoke is REPORTED PASS after 7C. Codex detected an existing
+  Pixel_10 AVD and briefly connected Android 17/API 37 with Expo Go 57.0.9,
+  but native UI smoke could not complete after disconnect/unresponsive shell.
+  Native keyboard/Back/TalkBack/automation and APK build remain NOT RUN/NOT BUILT.
+  Preserve all historical 7A–7C reports; Web meets the roadmap's demo minimum.
+- Complete pre-marker root verify exited 0 at 6/7C: 448 backend, 32 Phase 6
+  E2E, 17 repository tests, Golden 83, migration cycle/check, frozen snapshot,
+  Ruff/secret boundary, all prior gates plus actual Mobile export/browser.
+  Advanced to 7/7D only after CODE/TEST/DOC/DEMO/REGRESSION; the complete
+  marker-aware verifier also exited 0 with the same counts and all Phase 0–7
+  gates. Results are recorded in [final acceptance](PHASE_7_FINAL_ACCEPTANCE.md). See
+  [Phase 8 handoff](PHASE_8_MOBILE_INTEGRATION_HANDOFF.md). Stop after 7D.
 
 ### Phase 7C — Import, History and Settings UI
 

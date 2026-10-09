@@ -3,8 +3,10 @@ import { View } from 'react-native';
 import { useDataSource } from '../data/DataSourceProvider';
 import {
   initialImport,
+  canAdvanceImport,
   moveImport,
   previewReadiness,
+  speakerIssues,
   type ImportDemoKind,
   type SpeakerBindingDraft,
 } from '../contracts/import';
@@ -42,6 +44,7 @@ export function ImportSession({
   const { state, scenario, setScenario, retry } = useSurface('import');
   const unavailable = scope !== null && !profiles.some((p) => p.id === scope);
   const readiness = previewReadiness(model, draft, profiles);
+  const canAdvance = canAdvanceImport(model, draft, profiles);
   const bind = (id: string, value: SpeakerBindingDraft) =>
     setDraft((d) => ({ ...d, bindings: { ...d.bindings, [id]: value } }));
   const steps = {
@@ -164,6 +167,8 @@ export function ImportSession({
                   </SectionCard>
                 );
               })}
+            {draft.step === 'speakers' &&
+              speakerIssues(model, draft).map((issue) => <BodyText key={issue}>{issue}</BodyText>)}
             {draft.step === 'relationship' && (
               <>
                 <RelationshipSelector
@@ -182,6 +187,7 @@ export function ImportSession({
                 <BodyText muted>
                   切换关系会清除全部说话人绑定并返回身份确认，防止沿用上一段关系。
                 </BodyText>
+                {!draft.relationship.confirmed && <BodyText>Relationship 未选择或未确认</BodyText>}
                 <PrimaryButton
                   label="确认关系绑定（Demo）"
                   disabled={!profiles.some((p) => p.id === draft.relationship.relationshipId)}
@@ -234,17 +240,12 @@ export function ImportSession({
               label="上一步"
               variant="quiet"
               disabled={draft.step === 'source'}
-              onPress={() => setDraft((d) => moveImport(d, 'back', readiness.ready))}
+              onPress={() => setDraft((d) => moveImport(d, 'back', canAdvance))}
             />
             <PrimaryButton
               label="下一步"
-              disabled={
-                !draft.loaded ||
-                model.summary.messageCount === 0 ||
-                draft.step === 'result' ||
-                (draft.step === 'readiness' && !readiness.ready)
-              }
-              onPress={() => setDraft((d) => moveImport(d, 'next', readiness.ready))}
+              disabled={!canAdvance}
+              onPress={() => setDraft((d) => moveImport(d, 'next', canAdvance))}
             />
             <PrimaryButton
               label="重置 Demo"

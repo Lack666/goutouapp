@@ -1,4 +1,4 @@
-# Mobile app — Phase 7A–7C
+# Mobile app — Phase 7A–7D
 
 Expo SDK 57.0.27 / React Native 0.86.3 / React 19.2.3 / Expo Router 57.0.25 /
 TypeScript 6.0.3. Use Node 22.13+ (validated 24.15.0) and the root project pin
@@ -18,9 +18,10 @@ pnpm --filter @goutou/mobile exec expo-doctor
 pnpm --filter @goutou/mobile export:web
 ```
 
-Static scripts: `typecheck`, `lint`, `format:check`, `test`, `test:features`, `test:controls`, `compatibility`.
+Static scripts: `typecheck`, `lint`, `format:check`, `test`, `test:features`, `test:controls`, `test:integration`, `compatibility`.
 `format` writes formatting; `start` runs Expo. Root `make verify` adds these
-static gates alongside Phase 0–6 regression. It does not launch a device.
+static gates alongside Phase 0–6 regression, followed by real Web export and all
+browser regression scenarios. It does not launch a device or claim native results.
 
 Live smoke starts Expo Web on localhost:8087 and uses headless Chromium:
 
@@ -65,11 +66,28 @@ server-configurable retention; formal guarded operations stay disabled and no
 sample is deleted. Previews clear on unmount/restart; scope changes clear relevant
 bindings/history windows. Every data source contains anonymous synthetic fixtures.
 
-**EXPO WEB SMOKE: PASS** is the accepted runtime platform. **ANDROID: NOT RUN**;
-Android requires an SDK 57-compatible Expo Go/development build plus device/emulator.
-Device keyboard and TalkBack checks remain unverified. Phase 7D overall MVP
-acceptance, auth, OpenAPI client, REST/SSE consumption, real upload/import/history
-persistence and Memory mutation are deferred.
+**EXPO WEB SMOKE: PASS**, 22 scenarios including nine new 7D integration/recovery
+cases. The user reported manual Android emulator smoke passed after 7C.
+**CODEX ANDROID SMOKE: NOT RUN / launch attempt incomplete**: the configured AVD
+briefly connected then disconnected or stopped responding to shell/UI commands.
+Native keyboard/Back/TalkBack automation and APK/development-build construction
+remain **NOT RUN / NOT BUILT**, independently of the user's manual feedback.
+Android requires SDK-compatible Expo Go/development build plus device/emulator.
+
+Reproduce the final six-surface Demo with the same Chrome/PATH setup above:
+
+```powershell
+pnpm --filter @goutou/mobile demo:final
+```
+
+This runs actual Home → Relationship B → five-step Import (explicit speaker and
+relationship gates) → B History/More → Chat multi-line user-only preview →
+Settings Memory/Undo/delete-confirmation/reset/reload → Home, in both palettes
+at 320/360/412px. Screenshot/JSON evidence is written under root `.cache`.
+For interactive use, start `web` and follow those controls; no backend/key needed.
+Phase 8 auth, generated API client, REST/SSE, real upload/import/history persistence
+and Memory mutations remain deferred. Public resources/analysis gaps are documented,
+not filled by synthetic IDs. Read the current final acceptance for whole-phase status.
 
 See [Mobile architecture](../../docs/MOBILE_ARCHITECTURE.md),
 [ADR 0029](../../docs/adr/0029-mobile-shell-and-data-boundary.md), and
@@ -80,3 +98,6 @@ See [Mobile architecture](../../docs/MOBILE_ARCHITECTURE.md),
 [Phase 7B acceptance](../../docs/PHASE_7B_ACCEPTANCE.md),
 [Import UI](../../docs/MOBILE_IMPORT_UI.md), [History UI](../../docs/MOBILE_HISTORY_UI.md),
 [Settings UI](../../docs/MOBILE_SETTINGS_UI.md) and [7C acceptance](../../docs/PHASE_7C_ACCEPTANCE.md).
+
+See [Phase 7 final acceptance](../../docs/PHASE_7_FINAL_ACCEPTANCE.md) and
+[Phase 8 API handoff](../../docs/PHASE_8_MOBILE_INTEGRATION_HANDOFF.md).

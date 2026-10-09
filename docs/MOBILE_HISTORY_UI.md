@@ -58,5 +58,7 @@ stability, cross-dataset tie-breakers, all local page slices, bounded initial mo
 type/scope switching, empty/missing scopes, source substitution, Chat separation
 and route lifetime. Real browser exercises B-only history, More, AI separation and
 scoped Chat in both themes at 320/360/412px. Android scroll/back/insets and TalkBack
-are **NOT RUN**. Phase 7D overall acceptance remains pending.
+were **NOT RUN** in 7C. Phase 7D adds complete six-page Web journeys, A/B domain/window
+reset, invalid routes and repeated-scope recovery. Native evidence remains separately
+qualified in [final acceptance](PHASE_7_FINAL_ACCEPTANCE.md).
 See [acceptance](PHASE_7C_ACCEPTANCE.md) and [imported messages](IMPORTED_MESSAGES.md).

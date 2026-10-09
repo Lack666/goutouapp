@@ -19,7 +19,10 @@ Five explicit steps are source → speakers → relationship → readiness → r
 Next/Back, return-to-edit and Reset Demo operate on route-local React state.
 Source starts unloaded; the separate **体验导入流程（演示数据）** action loads
 only metadata. Group and empty sample actions exercise those paths. Empty sources
-block Next. There are no timers, automatic advances or simulated server receipts.
+block Next. Phase 7D also blocks Next until every speaker is explicitly handled,
+exactly one self/selected Person exists, and the relationship step is confirmed.
+Intermediate errors remain visible at their own step; group and final compatibility
+checks cannot be bypassed. There are no timers, automatic advances or simulated server receipts.
 Readiness must pass before the result step; no enabled formal-import action exists.
 
 The summary includes source format, message/speaker counts, first/last historical
@@ -70,5 +73,8 @@ No server contract changed in this phase.
 Jest tests cover navigation, raw labels, explicit bindings, incompatible scopes,
 unbound/group/empty/missing paths, result boundary, reset and source substitution.
 Real Expo Web validates the wizard at 320/360/412px in both themes, with zero
-business requests. Android native smoke and TalkBack: **NOT RUN**. Phase 7D
-still owns overall MVP integration/final acceptance. See [acceptance](PHASE_7C_ACCEPTANCE.md).
+business requests. Historical 7C Android native smoke and TalkBack: **NOT RUN**.
+The user subsequently reported manual Android smoke passed. Phase 7D validates
+the full Web journey and documents incomplete Codex native attempts without
+changing that history. See [7C acceptance](PHASE_7C_ACCEPTANCE.md) and
+[final acceptance](PHASE_7_FINAL_ACCEPTANCE.md).

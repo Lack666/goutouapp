@@ -42,7 +42,10 @@ and the controlled handler both enforce the limit. Empty/whitespace-only input
 cannot be previewed; Clear empties the input. Starting, progressing and pending
 confirmation disable typing and actions. Preview trims outer whitespace,
 appends exactly one user bubble, clears input and reports **仅在本地预览，尚未发送给 AI**.
-New-message content size triggers scrolling to the last message. The composer
+New-message content size requests scrolling; Phase 7D waits for the final row's
+layout before marking that pending scroll handled. This fixes the first multi-line
+message remaining outside the visible list. The real browser regression checks its
+position above composer, alongside existing long-content cases. The composer
 always retains its Demo/no-send/no-save notice when the header scrolls away.
 
 Draft, bubbles, feedback and selected preview state are React state scoped to

@@ -14,9 +14,11 @@
     "test": "jest --runInBand",
     "test:features": "jest --runInBand tests/chat.test.tsx tests/relationship.test.tsx",
     "test:controls": "jest --runInBand tests/import.test.tsx tests/history.test.tsx tests/settings.test.tsx tests/controls.test.tsx",
+    "test:integration": "jest --runInBand tests/integration.test.tsx",
     "compatibility": "expo install --check",
     "export:web": "expo export --platform web",
-    "smoke:web": "playwright test"
+    "smoke:web": "playwright test",
+    "demo:final": "playwright test smoke/integration.spec.ts"
   },
   "dependencies": {
     "expo": "57.0.27",

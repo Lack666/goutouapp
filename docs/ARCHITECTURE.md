@@ -36,7 +36,7 @@ flowchart LR
   modified as part of app development.
 - Mobile and server are separate deployments. Phase 8 will integrate REST and
   the actual Phase 4 POST SSE transport; the original WebSocket direction is
-  not implemented. PostgreSQL belongs to the server side. Phase 7A–7C are local only.
+  not implemented. PostgreSQL belongs to the server side. Phase 7A–7D are local only.
 
 Further behavior requirements are recorded in `docs/SKILL_CONTRACT.md` and
 future phase decisions in `docs/adr/`.
@@ -442,4 +442,20 @@ mutations await Phase 8. No new state store/infrastructure or architecture repla
 requires another ADR. Root verify adds the explicit 7C focused static gate; live Web
 remains separate, native Android NOT RUN. See [Import UI](MOBILE_IMPORT_UI.md),
 [History UI](MOBILE_HISTORY_UI.md), [Settings UI](MOBILE_SETTINGS_UI.md) and
-[7C acceptance](PHASE_7C_ACCEPTANCE.md). Phase 7D and whole Phase 7 stay pending.
+[7C acceptance](PHASE_7C_ACCEPTANCE.md). At 7C, Phase 7D and whole Phase 7 stayed pending.
+
+## Phase 7D integration boundary
+
+Preserve the Mobile Stack/theme/typed source and feature controllers. Import
+gates Next at explicit speaker selection and relationship confirmation; final
+compatibility remains a local precheck. Chat consumes a pending scroll only
+after the last row lays out, fixing a first multi-line preview left below the
+visible list. Home renders source loading/error. No server or Agent behavior changes.
+
+Completion verification adds focused integration/recovery cases plus actual
+Expo Web export and retained/new browser journeys. It supports 7/7D and rejects
+later phases. Android's user-reported manual smoke and Codex's incomplete native
+attempts stay distinct; Web meets the MASTER_PLAN minimum demo gate. Real API,
+auth, streams and generated client remain Phase 8. See
+[final acceptance](PHASE_7_FINAL_ACCEPTANCE.md) and
+[audited integration handoff](PHASE_8_MOBILE_INTEGRATION_HANDOFF.md).

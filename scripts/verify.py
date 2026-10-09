@@ -46,6 +46,20 @@ MEMORY_PHASE6_E2E = (
 MOBILE_FOUNDATION = (ROOT / "apps/mobile/package.json").is_file()
 MOBILE_FEATURE_UI = (ROOT / "apps/mobile/src/features/ChatScreen.tsx").is_file()
 MOBILE_CONTROLS_UI = (ROOT / "apps/mobile/src/features/ImportScreen.tsx").is_file()
+MOBILE_FINAL_UI = (ROOT / "apps/mobile/tests/integration.test.tsx").is_file()
+
+
+def phase_marker_check() -> None:
+    if PHASE > 7:
+        raise RuntimeError("Phase 8+ verification is not implemented")
+    if PHASE == 7:
+        if SUBPHASE != "7D" or not all(
+            (MOBILE_FOUNDATION, MOBILE_FEATURE_UI, MOBILE_CONTROLS_UI, MOBILE_FINAL_UI)
+        ):
+            raise RuntimeError("Phase 7 marker requires all Mobile subphase gates and 7D")
+        for name in ("PHASE_7_FINAL_ACCEPTANCE.md", "PHASE_8_MOBILE_INTEGRATION_HANDOFF.md"):
+            if not (ROOT / "docs" / name).is_file():
+                raise RuntimeError(f"Missing Phase 7 final document: {name}")
 
 
 def run(command: list[str]) -> None:
@@ -271,6 +285,7 @@ def repository_checks() -> None:
 
 
 def verify() -> None:
+    phase_marker_check()
     doctor()
     tests()
     evals()
@@ -278,6 +293,13 @@ def verify() -> None:
     lint()
     if MOBILE_FOUNDATION:
         run([sys.executable, "scripts/check_mobile.py"])
+    if MOBILE_FINAL_UI:
+        pnpm = shutil.which("pnpm")
+        if not pnpm:
+            raise RuntimeError("pnpm is required for the Phase 7 runtime gate")
+        for name in ("export:web", "smoke:web"):
+            run([pnpm, "--filter", "@goutou/mobile", "run", name])
+        print("PASS: Phase 7D real Expo Web export and six-surface browser regression")
     if DATABASE_FOUNDATION:
         print("PASS: PostgreSQL migration and integration gate")
     elif BACKEND_FOUNDATION:
@@ -355,11 +377,7 @@ def verify() -> None:
         print("PASS: Typed runtime streaming and eight standalone Phase 3 E2E cases")
     if not MOBILE_FOUNDATION:
         print("DEFERRED: Mobile lint/typecheck begin at Phase 7")
-    if PHASE > 6:
-        raise RuntimeError(
-            "Later-phase verification is not implemented; do not mark that phase complete"
-        )
-    if PHASE in {5, 6}:
+    if PHASE in {5, 6, 7}:
         if not all(
             (
                 AGENT_CONTRACTS,
@@ -395,11 +413,15 @@ def verify() -> None:
                 print("PASS: Phase 7B Chat/Relationship focused static gate")
             if MOBILE_CONTROLS_UI:
                 print("PASS: Phase 7C Import/History/Settings focused static gate")
-            print("DEFERRED: Phase 7D final acceptance and Phase 8 API integration")
+            if MOBILE_FINAL_UI:
+                print("PASS: Phase 7D focused integration and real browser gates")
+            else:
+                print("DEFERRED: Phase 7D final acceptance")
+            print("DEFERRED: Phase 8 API integration, generated client and stream consumption")
         else:
             print("DEFERRED: Mobile")
         print("DEFERRED: RAG")
-        if PHASE == 6:
+        if PHASE in {6, 7}:
             if not all(
                 (MEMORY_CONTROL_API, MEMORY_MUTATION_API, MEMORY_RETENTION, MEMORY_PHASE6_E2E)
             ):
@@ -411,7 +433,13 @@ def verify() -> None:
                 suffix += " and 7B focused gate"
             if MOBILE_CONTROLS_UI:
                 suffix += " and 7C focused gate"
-            print(f"PASS: all active Phase 0..6{suffix}")
+            if MOBILE_FINAL_UI:
+                suffix += " and 7D integration/runtime gates"
+            if PHASE == 7:
+                print("PASS: Phase 7 Expo React Native MVP")
+                print("PASS: all active Phase 0..7; Phase 8 PENDING")
+            else:
+                print(f"PASS: all active Phase 0..6{suffix}")
             return
         active = "Phase 0..5"
         if MEMORY_CONTROL_API:

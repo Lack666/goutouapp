@@ -1,4 +1,4 @@
-# Mobile architecture — Phase 7A–7C
+# Mobile architecture — Phase 7A–7D
 
 The Expo React Native foundation, navigation shell and local Chat/Profile/Import/History/Settings UI are implemented.
 Phase 7 remains the six-surface Mobile MVP; Phase 8 remains generated API client
@@ -178,12 +178,15 @@ pnpm mobile:verify
 ```
 
 Android requires Android Studio/emulator with adb or a physical device and
-an SDK 57-compatible Expo Go/development build. This phase did not run Android.
+an SDK 57-compatible Expo Go/development build. The user reported a successful
+manual emulator check after 7C; 7D Codex launch attempts did not complete native
+UI smoke. These evidence categories remain separate from Web and automation.
 Web works without Android SDK or backend. `pnpm mobile:verify` uses frozen
 offline installation, so run the first online install on a new checkout.
 Root verify retains all backend PostgreSQL gates and adds Mobile static gates
 when the actual package exists, including before the phase marker changes.
-It never starts an emulator or browser to imply the runtime demo passed.
+Phase 7D additionally runs real Web export and all browser regression paths.
+It never treats those as native Android evidence; Android remains a separate check.
 
 For reproducible real Expo Web smoke:
 
@@ -232,3 +235,19 @@ See [ADR 0029](adr/0029-mobile-shell-and-data-boundary.md),
 [ADR 0030](adr/0030-mobile-chat-preview-and-relationship-scope.md),
 [Phase 7A acceptance](PHASE_7A_ACCEPTANCE.md) and
 [Phase 7B acceptance](PHASE_7B_ACCEPTANCE.md), [Phase 7C acceptance](PHASE_7C_ACCEPTANCE.md).
+
+## Phase 7D integration and acceptance boundary
+
+All six interactive Demo surfaces are tested as one real browser journey.
+Next is gated at speaker selection and explicit relationship confirmation;
+compatibility still gates the final precheck. Changed scope clears draft state.
+Chat waits for last-row layout before consuming its pending scroll revision,
+so first multi-line previews remain above composer. Home loading/error is visible.
+Architecture, dependencies and server contracts are retained.
+
+The verifier adds focused integration/recovery tests and live Expo Web regression,
+and supports the completed 7/7D marker while rejecting Phase 8+ completion.
+`demo:final` reproduces the complete MVP journey/recovery suite. See
+[final acceptance](PHASE_7_FINAL_ACCEPTANCE.md) for current gates and native limits,
+and [API handoff](PHASE_8_MOBILE_INTEGRATION_HANDOFF.md) for confirmed endpoints
+and explicit public-resource/analysis gaps. No Phase 8 behavior is implemented.

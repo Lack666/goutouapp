@@ -1,4 +1,4 @@
-"""Mobile static and Phase 7B/7C focused gates; runtime smoke stays separate."""
+"""Mobile static and Phase 7B/7C/7D focused gates; runtime smoke stays separate."""
 
 from __future__ import annotations
 
@@ -74,6 +74,11 @@ def main() -> None:
             if not (MOBILE / "tests" / f"{name}.test.tsx").is_file():
                 raise RuntimeError(f"Missing Phase 7C test suite: {name}")
         commands.append([pnpm, "--filter", "@goutou/mobile", "run", "test:controls"])
+    integration_ui = (MOBILE / "tests/integration.test.tsx").is_file()
+    if integration_ui:
+        if not (MOBILE / "smoke/integration.spec.ts").is_file():
+            raise RuntimeError("Missing Phase 7D six-surface browser journey")
+        commands.append([pnpm, "--filter", "@goutou/mobile", "run", "test:integration"])
     for command in commands:
         print("+", " ".join(command), flush=True)
         subprocess.run(command, cwd=ROOT, check=True)
@@ -88,6 +93,8 @@ def main() -> None:
         print("PASS: Phase 7B Chat/Relationship focused gate; runtime smoke is separate")
     if controls_ui:
         print("PASS: Phase 7C Import/History/Settings focused gate; runtime smoke is separate")
+    if integration_ui:
+        print("PASS: Phase 7D integration/recovery focused gate; runtime smoke is separate")
 
 
 if __name__ == "__main__":

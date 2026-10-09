@@ -11,13 +11,16 @@ Phase 0–6 已完成（Phase 6A–6D PASS）。当前有 83 个合成 Golden Ca
 独立 LangGraph Runtime、真实 JWT 的 Agent REST/SSE、显式绑定的聊天导入流水线，
 以及 consent/查看/暂停/恢复、受保护撤销、确认删除、有限保留期和维护 CLI。
 可用 Mock LLM 无密钥运行；真实模型的端到端语义质量尚未验证。
-生产调度、备份轮换与恢复删除重放尚未部署。Phase 7A–7C 已完成 Expo React Native
+生产调度、备份轮换与恢复删除重放尚未部署。Phase 7A–7D 提供 Expo React Native
 六页面骨架、Chat/Profile、导入向导、分域历史与 Memory 设置的本地演示。
-Phase 7 整体仍待 7D 验收，Phase 8 真实 API 接入尚未开始。
+Phase 7 已完成（7A–7D PASS），六页面集成与错误恢复已验证；详见最终验收报告。
+Phase 8 真实 API 接入尚未开始。
 阶段状态以代码和验收结果为准，参见 [Master Plan](docs/MASTER_PLAN.md)
 和 [Phase 6 最终验收报告](docs/PHASE_6_FINAL_ACCEPTANCE.md)、
 [Phase 7A 验收报告](docs/PHASE_7A_ACCEPTANCE.md)、
-[Phase 7C 验收报告](docs/PHASE_7C_ACCEPTANCE.md)。
+[Phase 7C 验收报告](docs/PHASE_7C_ACCEPTANCE.md)、
+[Phase 7 最终验收](docs/PHASE_7_FINAL_ACCEPTANCE.md)和
+[Phase 8 API 交接清单](docs/PHASE_8_MOBILE_INTEGRATION_HANDOFF.md)。
 
 ## 目录
 
@@ -50,11 +53,17 @@ pnpm --filter @goutou/mobile web
 pnpm mobile:verify
 ```
 
-`make verify` 同时运行 Mobile 静态门禁和全部已完成后端阶段回归。
-真实 Expo Web smoke 单独运行；本阶段 Web 已验证，Android 尚未运行。
-界面明确标为演示，发送消息、上传和编辑资料禁用。主题切换、导航与本地错误重试
+`make verify` 同时运行 Mobile 静态/7D 集成门禁、真实 Web 导出与浏览器回归，
+以及全部已完成后端阶段回归。Web 22 个场景通过；用户报告 Android 人工检查通过，
+Codex 原生启动尝试因模拟器断连/无响应未完成，原生自动化与 APK 构建未运行。
+界面明确标为演示，服务器发送消息、上传和编辑资料禁用。本地用户消息预览、
+导入预检、历史增量窗口、Memory 预览、主题切换、导航与本地错误重试
 有效；不包含假登录或真实服务器数据。Phase 8 才接入生成客户端及 REST/SSE。
 详细启动、Chrome smoke 和 Android 条件见 [Mobile 架构](docs/MOBILE_ARCHITECTURE.md)。
+
+最终六页面 Demo 可复现：`pnpm --filter @goutou/mobile demo:final`，
+按 Mobile README 配置 Chromium/Chrome。真实业务接入、账号资源与结构化分析 DTO
+缺口见交接文档；App 尚未调用后端 Agent、导入或 Memory 服务。
 
 Phase 6 独立端到端演示使用隔离 PostgreSQL 测试库（`TEST_DATABASE_URL` 数据库名
 以 `_test` 结尾），真实本地 Uvicorn socket、签名 JWT 与 Mock LLM：

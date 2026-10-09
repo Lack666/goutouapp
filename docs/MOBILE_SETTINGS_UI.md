@@ -66,6 +66,9 @@ through async adapters with owner/scope validation remaining server-side. No API
 client, JWT/SecureStore, persistence or mutation is started here. Jest/browser tests
 cover controls, inspect/expiry, guarded boundaries, all deletion scopes/choices,
 reset, substitution, themes, state errors and zero business network/log calls.
-Android native smoke/TalkBack: **NOT RUN**; whole MVP acceptance remains Phase 7D.
+Historical 7C Android native smoke/TalkBack: **NOT RUN**. Phase 7D adds complete
+cross-page/reset/reload/confirmation-choice regression; its report distinguishes
+the user's later manual smoke from Codex's incomplete native attempts.
+See [final acceptance](PHASE_7_FINAL_ACCEPTANCE.md).
 See [acceptance](PHASE_7C_ACCEPTANCE.md), [Memory API](MEMORY_API.md),
 [deletion](MEMORY_DELETION.md) and [retention](MEMORY_RETENTION.md).

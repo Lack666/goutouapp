@@ -63,7 +63,7 @@ export default function SettingsScreen() {
       </SectionCard>
       <SectionCard title="应用信息">
         <BodyText>狗头军师 · 0.1.0</BodyText>
-        <BodyText muted>移动端本地演示 · Phase 7C · Backend not connected</BodyText>
+        <BodyText muted>移动端本地演示 · Backend not connected</BodyText>
       </SectionCard>
       <DemoNotice />
       <SectionCard title="账户与记忆">

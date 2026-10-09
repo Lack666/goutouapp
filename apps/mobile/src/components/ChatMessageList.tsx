@@ -1,5 +1,6 @@
 import { memo, useRef } from 'react';
 import type { ReactElement } from 'react';
+import type { LayoutChangeEvent } from 'react-native';
 import { FlatList, Text, View } from 'react-native';
 import type { AgentChatMessageViewModel } from '../contracts/chat';
 import { useTheme } from '../theme/ThemeProvider';
@@ -9,14 +10,17 @@ import { EmptyState } from './ui';
 export const messageKey = (message: AgentChatMessageViewModel) => message.id;
 const MessageBubble = memo(function MessageBubble({
   message,
+  onLayout,
 }: {
   message: AgentChatMessageViewModel;
+  onLayout?: (event: LayoutChangeEvent) => void;
 }) {
   const { colors } = useTheme();
   const sender = message.role === 'user' ? '你' : '助手（预置示例）';
   return (
     <View
       testID={`message-${message.id}`}
+      onLayout={onLayout}
       style={{
         alignSelf: message.role === 'user' ? 'flex-end' : 'flex-start',
         width: '92%',
@@ -61,7 +65,6 @@ export function ChatMessageList({
       ref={list}
       onContentSizeChange={() => {
         if (scrollToLatest !== lastScroll.current) {
-          lastScroll.current = scrollToLatest;
           list.current?.scrollToEnd({ animated: false });
         }
       }}
@@ -77,7 +80,23 @@ export function ChatMessageList({
       }}
       data={messages}
       keyExtractor={messageKey}
-      renderItem={({ item }) => <MessageBubble message={item} />}
+      renderItem={({ item, index }) => (
+        <MessageBubble
+          message={item}
+          onLayout={
+            index === messages.length - 1
+              ? () => {
+                  if (scrollToLatest !== lastScroll.current) {
+                    requestAnimationFrame(() => {
+                      list.current?.scrollToEnd({ animated: false });
+                      lastScroll.current = scrollToLatest;
+                    });
+                  }
+                }
+              : undefined
+          }
+        />
+      )}
       initialNumToRender={12}
       maxToRenderPerBatch={12}
       windowSize={5}

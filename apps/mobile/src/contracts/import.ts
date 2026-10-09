@@ -49,11 +49,10 @@ export function initialImport(relationshipId: string | null): ImportPresentation
     relationship: { relationshipId, confirmed: false },
   };
 }
-export function previewReadiness(
+export function speakerIssues(
   model: ImportWizardViewModel,
   state: ImportPresentationState,
-  profiles: readonly RelationshipProfileViewModel[],
-): ImportReadinessViewModel {
+): string[] {
   const issues: string[] = [];
   const bindings = model.speakers.map((s) => state.bindings[s.id] ?? { kind: 'unbound' });
   const persons = bindings.filter(
@@ -67,6 +66,17 @@ export function previewReadiness(
   if (bindings.some((b) => b.kind === 'unbound')) issues.push('存在未处理说话人');
   if (bindings.filter((b) => b.kind === 'self' || b.kind === 'person').length > 2)
     issues.push('当前版本的一对一关系导入不支持多人群聊');
+  return issues;
+}
+export function previewReadiness(
+  model: ImportWizardViewModel,
+  state: ImportPresentationState,
+  profiles: readonly RelationshipProfileViewModel[],
+): ImportReadinessViewModel {
+  const issues = speakerIssues(model, state);
+  const persons = model.speakers
+    .map((s) => state.bindings[s.id])
+    .filter((b): b is Extract<SpeakerBindingDraft, { kind: 'person' }> => b?.kind === 'person');
   const profile = profiles.find((p) => p.id === state.relationship.relationshipId);
   if (!state.relationship.relationshipId || !state.relationship.confirmed)
     issues.push('Relationship 未选择或未确认');
@@ -75,10 +85,24 @@ export function previewReadiness(
     issues.push('speaker/relationship 不兼容');
   return { ready: issues.length === 0, issues, authority: 'local-preview' };
 }
+export function canAdvanceImport(
+  model: ImportWizardViewModel,
+  state: ImportPresentationState,
+  profiles: readonly RelationshipProfileViewModel[],
+): boolean {
+  if (!state.loaded || !model.summary.messageCount || state.step === 'result') return false;
+  if (state.step === 'speakers') return speakerIssues(model, state).length === 0;
+  if (state.step === 'relationship')
+    return (
+      state.relationship.confirmed &&
+      profiles.some((p) => p.id === state.relationship.relationshipId)
+    );
+  return state.step === 'source' || previewReadiness(model, state, profiles).ready;
+}
 export function moveImport(
   state: ImportPresentationState,
   direction: 'next' | 'back',
-  ready: boolean,
+  canAdvance: boolean,
 ): ImportPresentationState {
   const steps: readonly ImportStep[] = [
     'source',
@@ -88,8 +112,7 @@ export function moveImport(
     'result',
   ];
   const index = steps.indexOf(state.step);
-  if (direction === 'next' && (!state.loaded || (state.step === 'readiness' && !ready)))
-    return state;
+  if (direction === 'next' && (!state.loaded || !canAdvance)) return state;
   return {
     ...state,
     step: steps[Math.max(0, Math.min(4, index + (direction === 'next' ? 1 : -1)))] ?? 'source',

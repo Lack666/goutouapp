@@ -3,6 +3,8 @@ import {
   AppHeader,
   BodyText,
   DemoNotice,
+  ErrorState,
+  LoadingState,
   PrimaryButton,
   ScreenContainer,
   SectionCard,
@@ -12,8 +14,19 @@ import { routes } from '../navigation/routes';
 
 export default function HomeScreen() {
   const router = useRouter();
-  const { state } = useSurface('home');
-  if (state.status !== 'empty') return null;
+  const { state, retry } = useSurface('home');
+  if (state.status !== 'empty')
+    return (
+      <ScreenContainer>
+        <AppHeader title="狗头军师" subtitle="从一次对话，或一份关系资料开始。" />
+        <DemoNotice />
+        {state.status === 'loading' ? (
+          <LoadingState />
+        ) : (
+          <ErrorState message={state.message} onRetry={retry} />
+        )}
+      </ScreenContainer>
+    );
   return (
     <ScreenContainer>
       <AppHeader title="狗头军师" subtitle={state.view.description} />
