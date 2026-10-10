@@ -21,7 +21,7 @@ as implemented by a placeholder directory or a golden expectation.
 | 5 | Chat Import and Relationship Data Pipeline | PASS (5A–5D) |
 | 6 | User-facing memory controls and retention policy integration | PASS (6A–6D) |
 | 7 | Expo React Native MVP | PASS (7A–7D) |
-| 8 | Mobile API integration, generated client and stream consumption | IN PROGRESS / NOT YET COMPLETE (8A–8C engineering PASS) |
+| 8 | Mobile API integration, generated client and stream consumption | IN PROGRESS / NOT YET COMPLETE (8A–8D engineering PASS) |
 | 9 | Security, privacy, reliability and deletion | PENDING |
 | 10 | Optional hybrid RAG with pgvector | PENDING |
 | 11 | Agent eval and observability | PENDING |
@@ -68,6 +68,40 @@ as implemented by a placeholder directory or a golden expectation.
 
 ## Implementation log
 
+### Phase 8D — Chat Import and History Mobile Integration
+
+- 2026-10-10 starts at clean5083062/marker7/8C. Audited actual Import routes,
+  generated DTOs, shared session/transport, server revision/receipt/cancel and
+  artifact contracts before connecting existing wizard/history presentation.
+- Explicit user file selection, binary multipart/IANA timezone, real Job inspect,
+  owned Person/Relationship submissions, server readiness/finalize/receipt/replay/
+  cancel now use the existing APIs. No upload-recovery endpoint exists: lost Job
+  ID is unknown, blocks automatic re-upload and is distinct from finalize replay.
+- Separate owned Agent/Relationship history preserves occurrence IDs, source
+  provenance, equal timestamps and identical content through opaque100-row pages,
+  serialized More and a2,000-record collection limit. Epoch/scope/route/logout
+  guards reject late responses; no imported-chat analysis or Memory invocation.
+- SDK57-compatible DocumentPicker/FileSystem, lockfile and real Web picker.
+  Android native testing exposed unreadable Expo Go host picker cache; Android
+  now copies the user-granted content URI directly into owned cache before upload.
+  The only server change is PUT CORS for the same local development origins.
+- Actual JWT/FastAPI/PostgreSQL HTTP3 and Chrome import/history1 passed, including
+  1,001 occurrences/all11 cursor pages, revision conflict, same-Job/exact-dataset
+  replay, committed response loss, foreign owner denial and zero Agent/Memory writes.
+  Latest complete pre-marker root exited0: backend556,repository30,Mobile296,
+  focused77,Demo22,8B3,8C3,8D4,Doctor21/21 and all prior regression gates.
+- Actual Pixel_10/Android17/API37/Expo Go57.0.9 core native picker/binary/Job/
+  explicit bindings/ready/finalize/receipt passed:1,001 persisted messages,
+  Agent0,Memory0,active artifact0. Formal native History showed ready/100.
+  Native More/full lifecycle/fault/OwnerB/performance matrix remains incomplete;
+  expiry cleared editable Job/file UI. Web is not substituted for native evidence.
+- Marker advances only to7/8D after applicable engineering gates. Accepted-marker
+  full root rerun passed the same296/77/556 and22/3/3/4 regression gates.
+  Whole Phase8 remains incomplete;8E is not started.
+  See [8D acceptance](PHASE_8D_ACCEPTANCE.md), [API audit](PHASE_8D_API_AUDIT.md),
+  [Import/native steps](MOBILE_IMPORT_UI.md), [History](MOBILE_HISTORY_UI.md) and
+  [ADR0034](adr/0034-mobile-import-and-relationship-history.md). Stop after8D.
+
 ### Phase 8C — Agent Chat REST / POST SSE Integration
 
 - 2026-10-10 revalidation starts from the existing f4cb2cc/7/8C implementation,
@@ -94,7 +128,8 @@ as implemented by a placeholder directory or a golden expectation.
   distinct evidence. Marker advanced only to7/8C after all applicable gates;
   accepted-marker full rerun also passed. Whole Phase8 incomplete.
   See [8C acceptance](PHASE_8C_ACCEPTANCE.md), [Agent Chat](MOBILE_AGENT_CHAT.md)
-  and [streaming](MOBILE_STREAMING.md). Stop after8C;8D/8E are not started.
+  and [streaming](MOBILE_STREAMING.md). At that acceptance work stopped after8C;
+  8D/8E had not started.
 
 ### Phase 8B — Generated client, development session and owned resources
 

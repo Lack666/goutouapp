@@ -1,10 +1,12 @@
 # 狗头军师 App
 
-Phase8C adds Connected Agent Chat REST/POST SSE and public Agent History, preserving
-the existing generated client/session/resources and local Demo. Stable operation
-keys, explicit unknown outcomes and server Message IDs guard replay/recovery.
-See [8C acceptance](docs/PHASE_8C_ACCEPTANCE.md) and [streaming/native steps](docs/MOBILE_STREAMING.md).
-Whole Phase8 remains incomplete;8D Import/History and8E Memory are not started.
+Phase8D adds real Markdown file selection, multipart ImportJob upload, explicit
+speaker/relationship binding and formal RelationshipMessage history. It reuses
+the generated client, development JWT session and the existing server import
+pipeline. Agent Chat and local Demo remain available. See
+[8D acceptance](docs/PHASE_8D_ACCEPTANCE.md) and
+[file/native instructions](docs/MOBILE_IMPORT_UI.md).
+Whole Phase8 remains incomplete;8E Memory is not started.
 
 这是将 [goutoujunshi Skill](https://github.com/shengjidaguai-china/goutoujunshi)
 改造成独立 AI Agent 与 React Native 手机 App 的 Monorepo。目标架构为
@@ -22,7 +24,8 @@ Phase 0–6 已完成（Phase 6A–6D PASS）。当前有 83 个合成 Golden Ca
 Phase 7 已完成（7A–7D PASS），六页面集成与错误恢复已验证；详见最终验收报告。
 Phase 8A 已实现服务端 Person/Relationship/Conversation 公共资源与 Agent 历史前置合同；
 Phase 8B 接入 OpenAPI 生成客户端、开发 JWT 会话与真实 owned 资源；Demo 保留。
-Phase 8 整体仍为 IN PROGRESS / NOT YET COMPLETE，Agent/SSE、Import/History 与 Memory 网络接入尚未开始。
+Phase 8C 已接入 Agent REST/SSE；8D 接入真实文件导入与关系聊天历史。
+Phase 8 整体仍为 IN PROGRESS / NOT YET COMPLETE；8E Memory 网络接入尚未开始。
 阶段状态以代码和验收结果为准，参见 [Master Plan](docs/MASTER_PLAN.md)
 和 [Phase 6 最终验收报告](docs/PHASE_6_FINAL_ACCEPTANCE.md)、
 [Phase 7A 验收报告](docs/PHASE_7A_ACCEPTANCE.md)、
@@ -69,7 +72,7 @@ pnpm mobile:verify
 Codex 原生启动尝试因模拟器断连/无响应未完成，原生自动化与 APK 构建未运行。
 Demo 界面明确标为演示，服务器发送消息、上传和编辑资料禁用。本地用户消息预览、
 导入预检、历史增量窗口、Memory 预览、主题切换、导航与本地错误重试
-有效；Demo 不显示服务器结果。8B Connected 使用真实资源，Agent REST/SSE 仍待 8C。
+有效；Demo 不显示服务器结果。Connected 使用真实资源、Agent REST/SSE 和导入/历史。
 详细启动、Chrome smoke 和 Android 条件见 [Mobile 架构](docs/MOBILE_ARCHITECTURE.md)。
 
 最终六页面 Demo 可复现：`pnpm --filter @goutou/mobile demo:final`，

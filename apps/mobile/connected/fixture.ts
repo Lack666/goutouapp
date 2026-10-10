@@ -8,6 +8,13 @@ interface Backend {
   b: string;
   expired: string;
   counts(): Promise<Record<string, number>>;
+  importEvidence(): Promise<{
+    jobs: { id: string; status: string; revision: number }[];
+    messages: number;
+    agent_messages: number;
+    memories: number;
+    active_artifacts: number;
+  }>;
   agentEvidence(): Promise<{
     calls: number;
     memories: number;
@@ -43,10 +50,19 @@ export const test = base.extend<object, { backend: Backend }>({
       const first = await iterator.next();
       if (first.done)
         throw new Error('Real PostgreSQL fixture failed to start; check TEST_DATABASE_URL.');
-      const credentials = JSON.parse(first.value) as Omit<Backend, 'counts' | 'agentEvidence'>;
+      const credentials = JSON.parse(first.value) as Omit<
+        Backend,
+        'counts' | 'agentEvidence' | 'importEvidence'
+      >;
       try {
         await useBackend({
           ...credentials,
+          importEvidence: async () => {
+            child.stdin.write('import_evidence\n');
+            const row = await iterator.next();
+            if (row.done) throw new Error('Import evidence unavailable');
+            return JSON.parse(row.value);
+          },
           agentEvidence: async () => {
             child.stdin.write('agent_evidence\n');
             const row = await iterator.next();

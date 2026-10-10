@@ -70,7 +70,21 @@ class MobilePhaseGateTests(unittest.TestCase):
                 verifier.phase_marker_check()
 
     def test_8d_is_not_supported_by_8c(self) -> None:
+        with patch.multiple(verifier, PHASE=7, SUBPHASE="8D", MOBILE_IMPORT=False):
+            with self.assertRaisesRegex(RuntimeError, "Import/History gates"):
+                verifier.phase_marker_check()
+
+    def test_8d_keeps_whole_phase_eight_incomplete(self) -> None:
         with patch.multiple(verifier, PHASE=7, SUBPHASE="8D"):
+            verifier.phase_marker_check()
+
+    def test_8d_cannot_skip_agent_chat(self) -> None:
+        with patch.multiple(verifier, PHASE=7, SUBPHASE="8D", MOBILE_AGENT_CHAT=False):
+            with self.assertRaisesRegex(RuntimeError, "Agent Chat gates"):
+                verifier.phase_marker_check()
+
+    def test_8e_is_not_implemented_by_8d(self) -> None:
+        with patch.multiple(verifier, PHASE=7, SUBPHASE="8E"):
             with self.assertRaisesRegex(RuntimeError, "all Mobile subphase gates"):
                 verifier.phase_marker_check()
 

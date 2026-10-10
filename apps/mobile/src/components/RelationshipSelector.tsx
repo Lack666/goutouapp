@@ -6,13 +6,17 @@ export function RelationshipSelector({
   profiles,
   selected,
   onSelect,
+  connected = false,
+  disabled = false,
 }: {
   profiles: readonly RelationshipProfileViewModel[];
   selected: string | null;
   onSelect: (id: string) => void;
+  connected?: boolean;
+  disabled?: boolean;
 }) {
   return (
-    <SectionCard title="关系范围 · Demo">
+    <SectionCard title={connected ? '关系范围 · 服务器资源' : '关系范围 · Demo'}>
       <BodyText>
         {selected === null
           ? '尚未选择关系'
@@ -22,9 +26,10 @@ export function RelationshipSelector({
         {profiles.map((p) => (
           <PrimaryButton
             key={p.id}
-            label={`选择${p.displayName}`}
+            label={`选择${p.displayName}${connected ? ` · ${p.id}` : ''}`}
             selected={p.id === selected}
             variant="quiet"
+            disabled={disabled}
             onPress={() => onSelect(p.id)}
           />
         ))}

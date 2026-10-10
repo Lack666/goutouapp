@@ -1,4 +1,12 @@
-# Mobile app — Phase 7A–7D and Phase 8B/8C
+# Mobile app — Phase 7A–7D and Phase 8B–8D
+
+Phase8D uses the SDK57 DocumentPicker and binary File adapters for existing
+multipart Import APIs, explicit UUID/revision bindings, server readiness/finalize
+and separate bounded Relationship/Agent history. `test:imports` runs focused
+controller/platform/UI tests; `smoke:imports` runs signed HTTP/PostgreSQL and
+Chrome file-picker E2E. See [8D acceptance](../../docs/PHASE_8D_ACCEPTANCE.md),
+[import/native instructions](../../docs/MOBILE_IMPORT_UI.md) and
+[history](../../docs/MOBILE_HISTORY_UI.md). Memory HTTP remains deferred to8E.
 
 Phase8C Connected Chat sends actual Agent REST/POST SSE through the same8B JWT
 session, selects owned generic/bound Conversations and recovers public Agent History.

@@ -1,5 +1,10 @@
 # Connected Agent Chat — Phase 8C
 
+Phase8D adds separate imported RelationshipMessage History; this Chat controller,
+AgentService input and Conversation Message contract remain unchanged. Import
+creates no Agent answer or Memory. No imported transcript is sent to a provider.
+The historical import-deferred description below is superseded only for8D UI.
+
 Connected Chat uses the existing owned Conversation selector, generated client,
 8B API origin/JWT session, transport, themes, FlatList and composer. Demo remains
 local and unchanged. Import and RelationshipMessage history remain deferred;

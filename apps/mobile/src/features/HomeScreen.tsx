@@ -35,8 +35,18 @@ function ConnectedHomeScreen() {
           variant="quiet"
           onPress={() => router.push('/chat')}
         />
+        <PrimaryButton
+          label="进入导入与分析"
+          variant="quiet"
+          onPress={() => router.push('/import')}
+        />
+        <PrimaryButton
+          label="进入历史记录"
+          variant="quiet"
+          onPress={() => router.push('/history')}
+        />
         <BodyText muted>
-          Agent 对话可发送并恢复服务器历史；导入、关系聊天历史和 Memory 控制尚未接入。
+          Agent 对话、微信 Markdown 导入与两种服务器历史已接入。Memory 控制仍未开放联网操作。
         </BodyText>
       </SectionCard>
     </ScreenContainer>

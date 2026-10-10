@@ -56,3 +56,32 @@ def test_default_has_no_cors():
     with TestClient(create_app(Settings(_env_file=None))) as client:
         response = client.get("/health", headers={"Origin": "http://localhost:8087"})
         assert "access-control-allow-origin" not in response.headers
+
+
+def test_import_put_preflight_is_local_and_does_not_bypass_signed_auth():
+    path = "/api/v1/chat-imports/11111111-1111-4111-8111-111111111111/speakers"
+    origin = "http://localhost:8090"
+    with TestClient(create_app(Settings(_env_file=None, dev_cors_origins=[origin]))) as client:
+        headers = {
+            "Origin": origin,
+            "Access-Control-Request-Method": "PUT",
+            "Access-Control-Request-Headers": "authorization,content-type",
+        }
+        allowed = client.options(path, headers=headers)
+        assert allowed.status_code == 200
+        assert allowed.headers["access-control-allow-origin"] == origin
+        assert "access-control-allow-credentials" not in allowed.headers
+        assert (
+            client.options(path, headers={**headers, "Origin": "https://example.com"}).status_code
+            == 400
+        )
+        assert (
+            client.options(
+                path, headers={**headers, "Access-Control-Request-Method": "DELETE"}
+            ).status_code
+            == 400
+        )
+        assert (
+            client.put(path, json={"binding_kind": "self"}, headers={"Origin": origin}).status_code
+            == 401
+        )

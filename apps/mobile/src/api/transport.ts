@@ -1,6 +1,7 @@
 import { createApiClient } from './generated/client';
 import { ApiError, httpError } from './errors';
 import { agentHTTPError } from './agentErrors';
+import { importHTTPError } from './importErrors';
 import type { components, UUID } from './generated/client';
 import type { AgentEvent } from './agentEvents';
 import { consumeSSE } from './sseParser';
@@ -40,6 +41,8 @@ export class ApiTransport {
     private readonly agentEnabled = false,
     private readonly streamingFetcher: typeof fetch = fetcher,
     private readonly agentTimeoutMs = 60_000,
+    private readonly importEnabled = false,
+    private readonly importTimeoutMs = 120_000,
   ) {
     this.baseURL = validateBaseURL(baseURL, localDevelopment);
     this.client = createApiClient({
@@ -86,6 +89,19 @@ export class ApiTransport {
     const path = new URL(request.url).pathname;
     const isAgent =
       /^\/api\/v1\/conversations\/[0-9a-f-]{36}\/(agent-runs(?:\/stream)?|messages)$/i.test(path);
+    const importMethod =
+      path === '/api/v1/chat-imports'
+        ? 'POST'
+        : /^\/api\/v1\/chat-imports\/[0-9a-f-]{36}$/i.test(path)
+          ? 'GET'
+          : /^\/api\/v1\/chat-imports\/[0-9a-f-]{36}\/(speakers|relationship)$/i.test(path)
+            ? 'PUT'
+            : /^\/api\/v1\/chat-imports\/[0-9a-f-]{36}\/(ready|finalize|cancel)$/i.test(path)
+              ? 'POST'
+              : /^\/api\/v1\/relationships\/[0-9a-f-]{36}\/messages$/i.test(path)
+                ? 'GET'
+                : null;
+    const isImport = importMethod !== null;
     if (
       !(
         /^\/api\/v1\/(persons|relationships|conversations)(\/[0-9a-f-]{36})?$/i.test(path) &&
@@ -95,7 +111,8 @@ export class ApiTransport {
         this.agentEnabled &&
         isAgent &&
         request.method === (path.endsWith('/messages') ? 'GET' : 'POST')
-      )
+      ) &&
+      !(this.importEnabled && isImport && request.method === importMethod)
     )
       throw new ApiError('validation');
     const epoch = this.session.epoch();
@@ -110,14 +127,14 @@ export class ApiTransport {
         timedOut = true;
         controller.abort();
       },
-      isAgent ? this.agentTimeoutMs : this.timeoutMs,
+      isImport ? this.importTimeoutMs : isAgent ? this.agentTimeoutMs : this.timeoutMs,
     );
     let rejectAbort: ((error: ApiError) => void) | undefined;
     const failOnAbort = () => rejectAbort?.(new ApiError(timedOut ? 'timeout' : 'cancelled'));
     try {
       const token = this.session.credential();
       if (epoch !== this.session.epoch()) throw new ApiError('cancelled');
-      if (isAgent && !token) throw new ApiError('unauthorized');
+      if ((isAgent || isImport) && !token) throw new ApiError('unauthorized');
       if (controller.signal.aborted) throw new ApiError('cancelled');
       const headers = new Headers(request.headers);
       headers.delete('Authorization');
@@ -148,6 +165,8 @@ export class ApiTransport {
         // Agent recovery uses only allowlisted public codes/IDs; never retain raw messages.
         if (isAgent && response.status !== 401)
           throw agentHTTPError(response.status, await Promise.race([response.text(), cancelled]));
+        if (isImport && response.status !== 401)
+          throw importHTTPError(response.status, await Promise.race([response.text(), cancelled]));
         throw httpError(response.status);
       }
       const result = await consume(response, controller.signal, <V>(promise: Promise<V>) =>

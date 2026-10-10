@@ -1,5 +1,11 @@
 # Owned resource integration — Phase 8B/8C
 
+Phase8D uses these same real Person/Relationship resources for explicit import
+binding and separate formal History. Connected resource links now open actual
+Import/History pages; resource regression still performs no Upload/Agent/Memory
+mutation. Duplicate display names remain separate UUID choices. Historical8B/8C
+deferred wording below is superseded for8D only. Memory networking remains8E.
+
 Phase8C uses these actual Conversation IDs for Connected Chat, validates owned
 detail and any relationship assertion, and enables Agent REST/POST SSE plus public
 Agent History. Generic Conversations have a direct Chat action. Relationship scope

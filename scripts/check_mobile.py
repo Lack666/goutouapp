@@ -1,4 +1,4 @@
-"""Mobile static, Phase 7 regression and Phase 8B/8C connected gates."""
+"""Mobile static, Phase 7 regression and Phase 8B/8C/8D connected gates."""
 
 from __future__ import annotations
 
@@ -74,6 +74,8 @@ def main() -> None:
     if (MOBILE / "src/data/agentChatController.ts").is_file():
         for name in ("test:sse", "test:agent-chat"):
             commands.append([pnpm, "--filter", "@goutou/mobile", "run", name])
+    if (MOBILE / "src/data/importController.ts").is_file():
+        commands.append([pnpm, "--filter", "@goutou/mobile", "run", "test:imports"])
     feature_ui = (MOBILE / "src/features/ChatScreen.tsx").is_file()
     if feature_ui:
         commands.append([pnpm, "--filter", "@goutou/mobile", "run", "test:features"])

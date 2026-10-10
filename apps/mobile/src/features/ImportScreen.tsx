@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react';
 import { useConnection } from '../session/ConnectionProvider';
-import { ConnectedPendingScreen } from './ConnectedPendingScreen';
-import { View } from 'react-native';
+import { ConnectedImportScreen } from './ConnectedImportScreen';
+import { SpeakerBindingControls } from '../components/SpeakerBindingControls';
 import { useDataSource } from '../data/DataSourceProvider';
 import {
   initialImport,
@@ -29,7 +29,7 @@ import { useSurface } from '../hooks/useSurface';
 export default function ImportScreen() {
   const connection = useConnection();
   return connection?.session.snapshot().mode === 'connected' ? (
-    <ConnectedPendingScreen connection={connection} title="导入与分析" />
+    <ConnectedImportScreen connection={connection} />
   ) : (
     <DemoImportScreen />
   );
@@ -136,45 +136,13 @@ export function ImportSession({
               model.speakers.map((speaker) => {
                 const binding = draft.bindings[speaker.id] ?? { kind: 'unbound' };
                 return (
-                  <SectionCard key={speaker.id} title={speaker.rawLabel}>
-                    <BodyText>
-                      {speaker.sourceLabel} · {speaker.messageCount} 条消息
-                    </BodyText>
-                    <BodyText>
-                      绑定：{binding.kind}
-                      {binding.kind === 'person'
-                        ? ` · ${binding.personId ?? '尚未选择 Person'}`
-                        : ''}
-                    </BodyText>
-                    <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 8 }}>
-                      {(['self', 'person', 'system', 'ignore'] as const).map((role) => (
-                        <PrimaryButton
-                          key={role}
-                          label={`${speaker.rawLabel} → ${role}`}
-                          variant="quiet"
-                          selected={binding.kind === role}
-                          onPress={() =>
-                            bind(
-                              speaker.id,
-                              role === 'person' ? { kind: role, personId: null } : { kind: role },
-                            )
-                          }
-                        />
-                      ))}
-                    </View>
-                    {binding.kind === 'person' &&
-                      profiles.map((p) => (
-                        <PrimaryButton
-                          key={p.id}
-                          label={`${speaker.rawLabel} → ${p.person.id}`}
-                          variant="quiet"
-                          selected={binding.personId === p.person.id}
-                          onPress={() =>
-                            bind(speaker.id, { kind: 'person', personId: p.person.id })
-                          }
-                        />
-                      ))}
-                  </SectionCard>
+                  <SpeakerBindingControls
+                    key={speaker.id}
+                    speaker={speaker}
+                    binding={binding}
+                    persons={profiles.map((p) => p.person)}
+                    onBind={(value) => bind(speaker.id, value)}
+                  />
                 );
               })}
             {draft.step === 'speakers' &&

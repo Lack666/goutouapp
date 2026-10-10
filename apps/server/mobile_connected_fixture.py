@@ -14,6 +14,7 @@ import sys
 import threading
 import time
 from datetime import UTC, datetime, timedelta
+from tempfile import TemporaryDirectory
 
 import jwt
 import uvicorn
@@ -26,7 +27,17 @@ from app.agent.dependencies import RuntimeDependencies
 from app.agent.memory import MemoryService
 from app.agent.runtime import AgentRuntime
 from app.core.config import Settings
-from app.db.models import AgentRun, Conversation, MemoryRecordRow, Message, Person, Relationship
+from app.db.models import (
+    AgentRun,
+    ChatImportArtifact,
+    ChatImportJob,
+    Conversation,
+    MemoryRecordRow,
+    Message,
+    Person,
+    Relationship,
+    RelationshipMessage,
+)
 from app.db.repositories.memory import SQLAlchemyMemoryStore
 from app.llm.mock import MockLLMProvider
 from app.main import create_app
@@ -55,9 +66,19 @@ class ChatDemoMock(MockLLMProvider):
 
 
 def main():
-    with disposable_database() as engine:
+    with (
+        disposable_database() as engine,
+        TemporaryDirectory(prefix="goutou-mobile-artifacts-") as artifacts,
+    ):
         agent_mode = os.environ.get("GOUTOU_AGENT_E2E") == "1"
-        port = 8019 if agent_mode else 8018
+        import_mode = os.environ.get("GOUTOU_IMPORT_E2E") == "1"
+        port = (
+            int(os.environ.get("GOUTOU_IMPORT_PORT", "8020"))
+            if import_mode
+            else 8019
+            if agent_mode
+            else 8018
+        )
         owner, other = create_owners(engine)
         secret = os.urandom(48).hex()
         settings = Settings(
@@ -65,7 +86,14 @@ def main():
             app_env="development",
             database_url=engine.url.render_as_string(hide_password=False),
             auth_jwt_secret=secret,
-            dev_cors_origins=["http://localhost:8089" if agent_mode else "http://localhost:8088"],
+            dev_cors_origins=[
+                "http://localhost:8090"
+                if import_mode
+                else "http://localhost:8089"
+                if agent_mode
+                else "http://localhost:8088"
+            ],
+            chat_import_artifact_root=artifacts,
         )
         env = {
             **os.environ,
@@ -177,6 +205,37 @@ def main():
                                     ],
                                     "memories": db.scalar(
                                         select(func.count()).select_from(MemoryRecordRow)
+                                    ),
+                                }
+                            ),
+                            flush=True,
+                        )
+                if command.strip() == "import_evidence":
+                    with Session(engine) as db:
+                        print(
+                            json.dumps(
+                                {
+                                    "jobs": [
+                                        {
+                                            "id": str(row.id),
+                                            "status": row.status,
+                                            "revision": row.binding_revision,
+                                        }
+                                        for row in db.scalars(select(ChatImportJob))
+                                    ],
+                                    "messages": db.scalar(
+                                        select(func.count()).select_from(RelationshipMessage)
+                                    ),
+                                    "agent_messages": db.scalar(
+                                        select(func.count()).select_from(Message)
+                                    ),
+                                    "memories": db.scalar(
+                                        select(func.count()).select_from(MemoryRecordRow)
+                                    ),
+                                    "active_artifacts": db.scalar(
+                                        select(func.count())
+                                        .select_from(ChatImportArtifact)
+                                        .where(ChatImportArtifact.state == "active")
                                     ),
                                 }
                             ),

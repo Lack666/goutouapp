@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
 import { useConnection } from '../session/ConnectionProvider';
-import { ConnectedPendingScreen } from './ConnectedPendingScreen';
+import { ConnectedHistoryScreen } from './ConnectedHistoryScreen';
 import { View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { filterHistory, HISTORY_PAGE_SIZE, type HistorySourceKind } from '../contracts/history';
@@ -23,7 +23,7 @@ import { HistoryList } from '../components/HistoryList';
 export default function HistoryScreen() {
   const connection = useConnection();
   return connection?.session.snapshot().mode === 'connected' ? (
-    <ConnectedPendingScreen connection={connection} title="历史记录" />
+    <ConnectedHistoryScreen connection={connection} />
   ) : (
     <DemoHistoryScreen />
   );

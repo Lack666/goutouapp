@@ -14,8 +14,17 @@ export type ApiErrorKind =
   | 'active_run'
   | 'operation_failed'
   | 'operation_unresolved'
-  | 'agent_failed';
+  | 'agent_failed'
+  | 'unsupported_file'
+  | 'file_unreadable'
+  | 'file_too_large'
+  | 'binding_mismatch';
+// File failures happen before transport and do not imply a server Job was created.
 const messages: Record<ApiErrorKind, string> = {
+  unsupported_file: '仅开放 .md / .markdown 的微信 Markdown v1 文件；服务器仍会检查实际内容。',
+  file_unreadable: '文件无法读取或大小已变化，请主动重新选择文件。',
+  file_too_large: '文件超过客户端 100 MiB 提示限制；服务器可能配置更小的上限。',
+  binding_mismatch: '说话人 Person 与所选 Relationship 不兼容，请重新明确绑定。',
   unauthorized: '开发凭证已过期或无效，请重新获取。',
   not_found: '资源不存在或不属于当前会话。',
   conflict: '创建标识与原请求不一致，请核对后开始新的创建。',

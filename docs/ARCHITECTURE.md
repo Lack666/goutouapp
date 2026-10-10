@@ -18,7 +18,7 @@ idempotency around the standalone runtime.
 
 ```mermaid
 flowchart LR
-  Mobile[React Native + Expo] -->|8B resource REST; 8C Agent REST/POST SSE/History| Server[FastAPI server]
+  Mobile[React Native + Expo] -->|8B resources; 8C Agent REST/SSE; 8D binary import/history| Server[FastAPI server]
   Server --> Database[(PostgreSQL)]
   Server -->|AgentService| Runtime[Independent LangGraph Agent Runtime]
   Runtime -->|deterministic reference loader| Knowledge[Preserved goutoujunshi Skill]
@@ -60,6 +60,15 @@ The 2026-10-10 revalidation adds actual native incremental SSE and Chinese
 answer/replay/owner-isolation evidence. Only the disposable native Mock demo
 adds port/scenario options; transport/runtime/provider boundaries are unchanged.
 Native lifecycle/fault coverage remains partial; no QA route or probe is shipped.
+
+Phase8D adds real binary file selection/upload and formal ImportJob/Relationship
+History through that same generated client/session/transport. Deterministic server
+parser/binding/merge/permissions are unchanged. Existing ImportStep/speaker/source
+and History ViewModels/shared controls/FlatList remain; feature adapters/controllers
+own public DTO validation, explicit revision/unknown outcomes and bounded opaque
+pagination. Native cache File/Web File remain private; no durable second store,
+new account system, Memory mutation or imported analysis. See
+[ADR0034](adr/0034-mobile-import-and-relationship-history.md).
 
 ## Implemented Phase 2A boundary
 

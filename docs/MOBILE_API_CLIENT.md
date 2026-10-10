@@ -1,5 +1,13 @@
 # Generated Mobile API client — Phase 8B/8C
 
+Phase8D also enables the existing generated ImportJob/binding/ready/finalize/cancel
+and RelationshipMessage history routes through the same transport/session. Narrow
+binary FormData serialization bridges the generator's binary-as-string field;
+no second token manager or wire DTO. Import errors read only allowlisted public
+codes. Memory routes remain disabled. See [8D](PHASE_8D_ACCEPTANCE.md) and
+[import contract](MOBILE_IMPORT_UI.md). The earlier deferred-import text below
+describes the8C historical boundary, superseded by8D.
+
 Phase8C reuses the unchanged generated client for Agent REST and public Agent
 History. App composition explicitly enables these paths and POST SSE in the same
 authenticated transport. Import/Memory operations stay disabled. Native streaming

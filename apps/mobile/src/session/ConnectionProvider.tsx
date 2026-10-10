@@ -19,11 +19,15 @@ import { demoSource } from '../data/demoSource';
 import { connectedSource } from '../data/connectedSource';
 import { AgentChatController } from '../data/agentChatController';
 import { streamFetch } from '../api/streamFetch';
+import { ImportController } from '../data/importController';
+import { HistoryController } from '../data/historyController';
 
 export interface Connection {
   session: DevelopmentSession;
   resources: ResourceController;
   chat: AgentChatController;
+  imports: ImportController;
+  history: HistoryController;
 }
 export function createConnection(baseURL: string, localDevelopment: boolean): Connection {
   const session = new DevelopmentSession(createPlatformTokenStorage());
@@ -35,11 +39,15 @@ export function createConnection(baseURL: string, localDevelopment: boolean): Co
     localDevelopment,
     true,
     streamFetch,
+    60_000,
+    true,
   );
   return {
     session,
     resources: new ResourceController(transport, session, randomUUID),
     chat: new AgentChatController(transport, session, randomUUID),
+    imports: new ImportController(transport, session),
+    history: new HistoryController(transport, session),
   };
 }
 const Context = createContext<Connection | null>(null);
@@ -85,8 +93,20 @@ export function ConnectionProvider({
   useEffect(() => {
     void connection.session.restore(connection.resources.probe);
     const subscription = AppState.addEventListener('change', (state) => {
-      if (state === 'active') connection.session.resume();
-      else connection.chat.pause();
+      if (state === 'active') {
+        connection.session.resume();
+        if (
+          connection.session.snapshot().status === 'authenticated' &&
+          connection.imports.snapshot().job
+        )
+          void connection.imports.inspect();
+        void connection.history.resume();
+      } else {
+        connection.chat.pause();
+        // Opening the system picker itself changes AppState; retain its guarded result.
+        if (connection.imports.snapshot().upload !== 'selecting') connection.imports.pause();
+        connection.history.pause();
+      }
     });
     return () => subscription.remove();
   }, [connection]);

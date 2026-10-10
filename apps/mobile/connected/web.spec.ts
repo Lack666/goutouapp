@@ -70,21 +70,29 @@ test('real Expo Web owned resource creation, lost response retry, contexts and A
   await page.getByRole('button', { name: relationship!, exact: true }).click();
   await page.getByRole('button', { name: '创建新 Conversation', exact: true }).click();
   await expect(page.getByText('服务器已确认保存 conversations', { exact: true })).toBeVisible();
+  // The saved response precedes the formal list/detail selection. Navigation
+  // needs that owned detail, so await it rather than racing the async selection.
+  await expect(page.getByText(`绑定关系：${relationshipId}`, { exact: true })).toBeVisible();
   for (const [label, path] of [
     ['前往对话', 'chat'],
-    ['前往导入（尚未接入）', 'import'],
-    ['前往历史（尚未接入）', 'history'],
+    ['前往导入', 'import'],
+    ['前往历史', 'history'],
   ]) {
     await page.getByRole('button', { name: label, exact: true }).click();
     await expect(page).toHaveURL(new RegExp(`/${path}\\?.*relationshipId=${relationshipId}`));
     if (path === 'chat') {
       await expect(page.getByText(`关系范围：${relationshipId}`, { exact: true })).toBeVisible();
       await expect(page.getByRole('button', { name: '发送 Agent 消息' })).toBeDisabled(); // Empty composer; no Agent request in 8B regression.
-    } else {
+    } else if (path === 'import') {
       await expect(
-        page.getByText(`关系上下文：Web synthetic person · ${relationshipId}`, { exact: true }),
-      ).toBeVisible();
-      await expect(page.getByRole('button', { name: '执行服务器业务（尚未开放）' })).toBeDisabled();
+        page.getByRole('button', { name: '上传并创建任务', exact: true }),
+      ).toBeDisabled();
+      await expect(
+        page.getByRole('button', { name: '选择微信 Markdown 文件', exact: true }),
+      ).toBeEnabled();
+    } else {
+      await expect(page.getByText(new RegExp(`范围：${relationshipId}`))).toBeVisible();
+      await expect(page.getByText(/已读取 0 条/)).toBeVisible();
     }
     await page.getByRole('button', { name: '返回上一级' }).click();
   }
@@ -109,7 +117,7 @@ test('real Expo Web owned resource creation, lost response retry, contexts and A
     requests.every(
       (path) =>
         /^\/api\/v1\/(persons|relationships|conversations)(\/[a-f0-9-]{36})?$/.test(path) ||
-        /^\/api\/v1\/conversations\/[a-f0-9-]{36}\/messages$/.test(path), // 8C Chat now reads formal Agent History; still no Agent POST/import/Memory.
+        /^\/api\/v1\/(conversations|relationships)\/[a-f0-9-]{36}\/messages$/.test(path), // 8C/8D pages read separate formal histories; no Agent POST/upload/Memory in this regression.
     ),
   ).toBe(true);
   expect(errors).toEqual([]);
@@ -131,8 +139,11 @@ test('real browser rejects expired/invalid credentials, normalizes offline and c
   await connect(page, backend.a);
   await page.getByRole('button', { name: '返回上一级' }).click();
   await page.getByRole('button', { name: '进入关系资料' }).click();
+  // This credential test must also work if Playwright recreated its worker DB.
+  await page.getByLabel('Person 显示名称').fill('Credential synthetic person');
+  await page.getByRole('button', { name: '创建新 Person', exact: true }).click();
   await expect(
-    page.getByRole('button', { name: '查看 persons Web synthetic person' }),
+    page.getByRole('button', { name: '查看 persons Credential synthetic person', exact: true }),
   ).toBeVisible();
   await context.setOffline(true);
   await page.getByRole('button', { name: '刷新 persons', exact: true }).click();
@@ -140,7 +151,7 @@ test('real browser rejects expired/invalid credentials, normalizes offline and c
   await context.setOffline(false);
   await page.getByRole('button', { name: '重试读取 persons' }).click();
   await expect(
-    page.getByRole('button', { name: '查看 persons Web synthetic person' }),
+    page.getByRole('button', { name: '查看 persons Credential synthetic person', exact: true }),
   ).toBeVisible();
   await page.route(`${backend.baseURL}/api/v1/persons*`, (route) =>
     route.fulfill({
@@ -151,7 +162,7 @@ test('real browser rejects expired/invalid credentials, normalizes offline and c
   );
   await page.getByRole('button', { name: '刷新 persons', exact: true }).click();
   await expect(page.getByText('开发凭证无效，请重新获取', { exact: true })).toBeVisible();
-  await expect(page.getByRole('button', { name: '查看 persons Web synthetic person' })).toHaveCount(
-    0,
-  );
+  await expect(
+    page.getByRole('button', { name: '查看 persons Mobile HTTP synthetic A', exact: true }),
+  ).toHaveCount(0);
 });

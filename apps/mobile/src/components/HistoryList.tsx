@@ -11,7 +11,9 @@ const HistoryRow = memo(function HistoryRow({ item }: { item: HistoryItemViewMod
     item.kind === 'agent'
       ? item.role === 'user'
         ? '用户 · user'
-        : 'AI 助手示例 · assistant'
+        : item.provenance === 'server'
+          ? 'AI 助手 · assistant'
+          : 'AI 助手示例 · assistant'
       : `${item.sender} · ${item.rawSpeakerLabel}`;
   return (
     <View
@@ -26,7 +28,9 @@ const HistoryRow = memo(function HistoryRow({ item }: { item: HistoryItemViewMod
         gap: 8,
       }}
     >
-      <Text style={[tokens.type.caption, { color: colors.muted }]}>{sender} · Demo · 匿名合成</Text>
+      <Text style={[tokens.type.caption, { color: colors.muted }]}>
+        {sender} · {item.provenance === 'server' ? '服务器记录' : 'Demo · 匿名合成'}
+      </Text>
       <Text
         selectable
         accessibilityLabel={`${sender}：${item.content}`}
@@ -37,7 +41,11 @@ const HistoryRow = memo(function HistoryRow({ item }: { item: HistoryItemViewMod
       <Text style={[tokens.type.caption, { color: colors.muted }]}>
         历史时间：{item.timestamp}
         {'\n'}来源：{item.datasetId} · source_index {item.sourceIndex}
-        {'\n'}关系：{item.relationshipId ?? '通用 AI 示例'}
+        {'\n'}关系：
+        {item.relationshipId ?? (item.provenance === 'server' ? '通用 AI 对话' : '通用 AI 示例')}
+        {item.kind === 'relationship' &&
+          item.provenance === 'server' &&
+          `\n原始时间：${item.originalTimestamp} · 源时区 ${item.sourceTimezone}\nMessage ID：${item.id}`}
       </Text>
     </View>
   );
@@ -46,10 +54,12 @@ export function HistoryList({
   items,
   header,
   footer,
+  connected = false,
 }: {
   items: readonly HistoryItemViewModel[];
   header: ReactElement;
   footer?: ReactElement;
+  connected?: boolean;
 }) {
   return (
     <FlatList
@@ -73,7 +83,11 @@ export function HistoryList({
       ListEmptyComponent={
         <EmptyState
           title="还没有历史记录"
-          description="当前本地演示窗口为空；不是服务器保存的历史。"
+          description={
+            connected
+              ? '当前范围尚无已读取的服务器消息。'
+              : '当前本地演示窗口为空；不是服务器保存的历史。'
+          }
         />
       }
     />

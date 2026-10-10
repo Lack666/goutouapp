@@ -1,16 +1,26 @@
 # Phase 8 Mobile integration handoff — 2026-10-09
 
-Current Phase8C connects owned Conversation Chat through generated REST/History
+Phase8D now implements Connected DocumentPicker/binary multipart, formal ImportJob
+inspection, explicit revisioned Person/Relationship binding, server readiness,
+finalize/receipt/replay/cancel and separate RelationshipMessage/Agent History.
+Upload has no operation recovery API: lost Job ID stays unknown with no automatic
+re-upload. See [audit](PHASE_8D_API_AUDIT.md), [8D report](PHASE_8D_ACCEPTANCE.md),
+[Import](MOBILE_IMPORT_UI.md) and [History](MOBILE_HISTORY_UI.md). Historical
+8A–8C deferred-import wording below is superseded. Memory HTTP remains8E; whole8
+is incomplete. No imported-analysis workflow/public FIU/Profile contract exists.
+Stop after8D and wait for explicit8E instruction.
+
+At Phase8C acceptance, owned Conversation Chat connected through generated REST/History
 and existing authenticated POST SSE, with V1 validation, retained operation keys,
 explicit unknown outcomes and server-ID reconciliation. Shared8B session/native
 credentials and Demo are preserved. See [8C report](PHASE_8C_ACCEPTANCE.md).
-Import/RelationshipMessage history remain8D, Memory controls8E. No future stage begins.
+Import/RelationshipMessage history remained8D, Memory controls8E at that time.
 The8B/8A historical handoff below is superseded for Agent Chat only.
 Revalidated on 2026-10-10 at existing HEAD f4cb2cc/marker7/8C. All root gates
 passed again; actual Android native core Chat/Chinese SSE/replay/history/logout/
 owner-isolation evidence now exists. Native active-run faults/background/expiry
 and complete keyboard QA remain open. See the current8C report; whole8 stays
-incomplete and8D/8E have not started.
+incomplete;8D/8E had not started at that acceptance.
 
 This handoff preserves the Phase7D/8A audit and adds current 8B client integration.
 Whole Phase8 is IN PROGRESS / NOT YET COMPLETE. Mobile now has generated resource
@@ -19,7 +29,7 @@ create/list/detail. The entries below retain historical 8A dispositions where
 explicitly labelled; current 8B completion supersedes their deferred-client wording.
 See MOBILE_API_CLIENT, MOBILE_DEV_AUTH, MOBILE_RESOURCE_INTEGRATION and 8B acceptance.
 
-Current disposition: **IMPLEMENTED IN 8B** — generated36-operation contracts and
+Disposition at8B acceptance: **IMPLEMENTED IN 8B** — generated36-operation contracts and
 callable client from the sole OpenAPI authority; manual development JWT probe/
 expiry/logout/401; cancellation/epoch owner isolation; explicit UUID resource
 acquisition and same-body retries; opaque domain cursors and real Chrome/HTTP/DB

@@ -50,6 +50,24 @@ MOBILE_FINAL_UI = (ROOT / "apps/mobile/tests/integration.test.tsx").is_file()
 PUBLIC_RESOURCES_API = (ROOT / "apps/server/app/api/v1/resources.py").is_file()
 MOBILE_CONNECTED = (ROOT / "apps/mobile/src/data/resourceController.ts").is_file()
 MOBILE_AGENT_CHAT = (ROOT / "apps/mobile/src/data/agentChatController.ts").is_file()
+MOBILE_IMPORT = (ROOT / "apps/mobile/src/data/importController.ts").is_file()
+IMPORT_GATE_FILES = (
+    "apps/mobile/src/data/filePicker.native.ts",
+    "apps/mobile/src/data/historyController.ts",
+    "apps/mobile/src/api/importAdapter.ts",
+    "apps/mobile/src/features/ConnectedImportScreen.tsx",
+    "apps/mobile/src/features/ConnectedHistoryScreen.tsx",
+    "apps/mobile/tests/connectedImport.test.ts",
+    "apps/mobile/tests/connectedHistory.test.ts",
+    "apps/mobile/tests/filePicker.test.ts",
+    "apps/mobile/tests/connectedImportUI.test.tsx",
+    "apps/mobile/import-connected/http.spec.ts",
+    "apps/mobile/import-connected/web.spec.ts",
+    "apps/mobile/playwright.import.config.ts",
+    "docs/PHASE_8D_API_AUDIT.md",
+    "docs/PHASE_8D_ACCEPTANCE.md",
+    "docs/adr/0034-mobile-import-and-relationship-history.md",
+)
 AGENT_CHAT_GATE_FILES = (
     "apps/mobile/src/api/agentEvents.ts",
     "apps/mobile/src/api/sseParser.ts",
@@ -101,31 +119,37 @@ def phase_marker_check() -> None:
     if PHASE > 7:
         raise RuntimeError("Phase 8+ verification is not implemented")
     if PHASE == 7:
-        if SUBPHASE not in {"7D", "8A", "8B", "8C"} or not all(
+        if SUBPHASE not in {"7D", "8A", "8B", "8C", "8D"} or not all(
             (MOBILE_FOUNDATION, MOBILE_FEATURE_UI, MOBILE_CONTROLS_UI, MOBILE_FINAL_UI)
         ):
             raise RuntimeError("Phase 7 marker requires all Mobile subphase gates and 7D")
         for name in ("PHASE_7_FINAL_ACCEPTANCE.md", "PHASE_8_MOBILE_INTEGRATION_HANDOFF.md"):
             if not (ROOT / "docs" / name).is_file():
                 raise RuntimeError(f"Missing Phase 7 final document: {name}")
-    if SUBPHASE in {"8A", "8B", "8C"}:
+    if SUBPHASE in {"8A", "8B", "8C", "8D"}:
         if PHASE != 7 or not PUBLIC_RESOURCES_API:
             raise RuntimeError("Phase 8A requires complete Phase 7 and resource gates")
         for name in RESOURCE_GATE_FILES:
             if not (ROOT / name).is_file():
                 raise RuntimeError(f"Missing Phase 8A gate: {name}")
-    if SUBPHASE in {"8B", "8C"}:
+    if SUBPHASE in {"8B", "8C", "8D"}:
         if PHASE != 7 or not MOBILE_CONNECTED:
             raise RuntimeError("Phase 8B requires complete Phase 7 and connected Mobile gates")
         for name in CONNECTED_GATE_FILES:
             if not (ROOT / name).is_file():
                 raise RuntimeError(f"Missing Phase 8B gate: {name}")
-    if SUBPHASE == "8C":
+    if SUBPHASE in {"8C", "8D"}:
         if PHASE != 7 or not MOBILE_AGENT_CHAT:
             raise RuntimeError("Phase 8C requires complete Phase 7 and Agent Chat gates")
         for name in AGENT_CHAT_GATE_FILES:
             if not (ROOT / name).is_file():
                 raise RuntimeError(f"Missing Phase 8C gate: {name}")
+    if SUBPHASE == "8D":
+        if PHASE != 7 or not MOBILE_IMPORT:
+            raise RuntimeError("Phase 8D requires complete Phase 7 and Import/History gates")
+        for name in IMPORT_GATE_FILES:
+            if not (ROOT / name).is_file():
+                raise RuntimeError(f"Missing Phase 8D gate: {name}")
 
 
 def run(command: list[str]) -> None:
@@ -391,6 +415,13 @@ def verify() -> None:
         run([pnpm, "--filter", "@goutou/mobile", "run", "smoke:agent"])
         print("PASS: Phase 8C CLI JWT / Agent REST / POST SSE / PostgreSQL / Expo Web")
         print("ANDROID CONNECTED SSE: separate native evidence; never inferred from Web")
+    if MOBILE_IMPORT:
+        pnpm = shutil.which("pnpm")
+        if not pnpm:
+            raise RuntimeError("pnpm is required for Import/History integration")
+        run([pnpm, "--filter", "@goutou/mobile", "run", "smoke:imports"])
+        print("PASS: Phase 8D signed JWT / multipart / ImportJob / PostgreSQL / History / Expo Web")
+        print("ANDROID NATIVE IMPORT: separate evidence; never inferred from Web")
     if DATABASE_FOUNDATION:
         print("PASS: PostgreSQL migration and integration gate")
     elif BACKEND_FOUNDATION:
@@ -513,7 +544,9 @@ def verify() -> None:
                 print("PASS: Phase 7D focused integration and real browser gates")
             else:
                 print("DEFERRED: Phase 7D final acceptance")
-            if MOBILE_AGENT_CHAT:
+            if MOBILE_IMPORT:
+                print("DEFERRED: Phase 8E Memory; whole Phase 8 final/native fault evidence")
+            elif MOBILE_AGENT_CHAT:
                 print("DEFERRED: Phase 8D Import/History, Phase 8E Memory; native final evidence")
             else:
                 print("DEFERRED: Phase 8C Agent REST/SSE, Phase 8D Import/History, Phase 8E Memory")
@@ -537,7 +570,9 @@ def verify() -> None:
             if PHASE == 7:
                 print("PASS: Phase 7 Expo React Native MVP")
                 suffix = (
-                    " and Phase 8A/8B/8C"
+                    " and Phase 8A/8B/8C/8D"
+                    if MOBILE_IMPORT
+                    else " and Phase 8A/8B/8C"
                     if MOBILE_AGENT_CHAT
                     else " and Phase 8A/8B"
                     if MOBILE_CONNECTED

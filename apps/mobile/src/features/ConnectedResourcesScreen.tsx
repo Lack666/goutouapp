@@ -237,9 +237,7 @@ export function ConnectedResourcesScreen({ connection }: { connection: Connectio
                 <PrimaryButton
                   key={path}
                   label={
-                    path === '/chat'
-                      ? '前往对话'
-                      : `前往${path === '/import' ? '导入' : '历史'}（尚未接入）`
+                    path === '/chat' ? '前往对话' : `前往${path === '/import' ? '导入' : '历史'}`
                   }
                   onPress={() =>
                     router.push({

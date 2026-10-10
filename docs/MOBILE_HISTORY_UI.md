@@ -1,4 +1,34 @@
-# History UI — Phase 7C
+# History UI — Phase 8D
+
+Connected preserves the existing FlatList/rows/theme and maps generated DTOs into
+the typed History ViewModels. RelationshipMessage uses actual ID/relationship/
+import_job_id/source_index/timestamp_utc/original_timestamp/source_timezone/raw
+speaker/sender/Person/content type/fingerprint; UTC historical time is separate
+from original source-local time. No import or current date replaces historical time.
+Agent Message uses a separately verified owned Conversation, user/assistant and
+created_at. Explicit domain/Conversation choice prevents relabelling external
+Person as AI. Neither import summaries nor Memory become saved History.
+
+`HistoryController` validates owned parent detail before GET, requests100-row
+pages (within both server contracts), forwards opaque cursor, guards concurrent
+More and merges only stable Message IDs in service order. Equal microsecond/time
+and identical-content occurrences remain. Collection stops at2,000 rows with an
+explicit limit notice; FlatList initially/batch renders12 with window5. It does
+not fetch all10k rows or claim device performance testing. Refresh resets cursor
+and reads the first committed live page, required after new import/backfill.
+Empty/loading/error/retry states never substitute Demo rows.
+
+Scope/domain/route/logout/credential changes abort and clear records/cursors and
+reject old responses through request generations/8B epochs. Background clears
+visible History and foreground verifies/refreshes its original scope. Foreign or
+malformed scopes fail closed. Detail/list errors have controlled retry; resource
+selectors offer actual owned pages and existing creation navigation. 1,001-message
+synthetic multi-page regression exercises preserved occurrences, without claiming
+a real large-history performance benchmark. Demo behavior below remains unchanged.
+See [ADR0034](adr/0034-mobile-import-and-relationship-history.md),
+[8D acceptance](PHASE_8D_ACCEPTANCE.md), [Import/native instructions](MOBILE_IMPORT_UI.md).
+
+## Historical Phase 7C Demo
 
 Two explicit local views separate **AI 对话** (Agent Chat History) and
 **关系聊天** (Imported Relationship Chat History). Neither is a saved server

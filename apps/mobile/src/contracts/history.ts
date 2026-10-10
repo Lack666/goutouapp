@@ -6,7 +6,7 @@ interface HistoryBase {
   readonly timestamp: string;
   readonly datasetId: string;
   readonly sourceIndex: number;
-  readonly provenance: 'synthetic-demo';
+  readonly provenance: 'synthetic-demo' | 'server';
 }
 export interface AgentHistoryItemViewModel extends HistoryBase {
   readonly kind: 'agent';
@@ -17,6 +17,11 @@ export interface RelationshipHistoryItemViewModel extends HistoryBase {
   readonly relationshipId: string;
   readonly sender: 'self' | 'person' | 'system';
   readonly rawSpeakerLabel: string;
+  readonly originalTimestamp?: string;
+  readonly sourceTimezone?: string;
+  readonly personId?: string | null;
+  readonly contentType?: string;
+  readonly messageFingerprint?: string;
 }
 export type HistoryItemViewModel = AgentHistoryItemViewModel | RelationshipHistoryItemViewModel;
 export interface HistoryPageViewModel {
