@@ -1,5 +1,7 @@
 """Interactive native smoke backend; private CLI configuration is never reported."""
 
+import argparse
+import asyncio
 import json
 import os
 import socket
@@ -9,6 +11,7 @@ import time
 from pathlib import Path
 
 import uvicorn
+from agent_demo import queue_run
 from memory_control_demo import disposable_database
 from mobile_connected_fixture import ChatDemoMock
 from resource_demo_support import create_owners
@@ -18,11 +21,31 @@ from app.agent.memory import MemoryService
 from app.agent.runtime import AgentRuntime
 from app.core.config import Settings
 from app.db.repositories.memory import SQLAlchemyMemoryStore
+from app.llm.mock import MockLLMProvider
 from app.main import create_app
 from app.services.agent_service import AgentService
 
 
+class ChineseDemoMock(MockLLMProvider):
+    """Existing standalone synthetic outputs, including a validated Chinese answer."""
+
+    def __init__(self):
+        super().__init__()
+        for _ in range(100):
+            queue_run(self, first=False, person_id=None)
+
+    async def structured_output(self, messages, schema, **kwargs):
+        await asyncio.sleep(0.1)
+        return await super().structured_output(messages, schema, **kwargs)
+
+
 def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--port", type=int, default=8019)
+    parser.add_argument("--scenario", choices=("safety", "chinese"), default="safety")
+    args = parser.parse_args()
+    if not 1024 <= args.port <= 65535:
+        parser.error("--port must be between 1024 and 65535")
     root = Path(__file__).resolve().parents[2]
     private_config = root / ".cache/phase8c-native-server.env"
     private_config.parent.mkdir(exist_ok=True)
@@ -44,13 +67,15 @@ def main():
             app.state.database.session,
             AgentRuntime(
                 dependencies=RuntimeDependencies(
-                    llm_provider=ChatDemoMock(),
+                    llm_provider=ChineseDemoMock()
+                    if args.scenario == "chinese"
+                    else ChatDemoMock(),
                     memory_service=MemoryService(SQLAlchemyMemoryStore(app.state.database.session)),
                 )
             ),
         )
         listen = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        listen.bind(("127.0.0.1", 8019))
+        listen.bind(("127.0.0.1", args.port))
         listen.listen(128)
         server = uvicorn.Server(uvicorn.Config(app, log_config=None, access_log=False))
         thread = threading.Thread(target=server.run, kwargs={"sockets": [listen]}, daemon=True)
@@ -74,7 +99,11 @@ def main():
                 "\n".join(f"{key}={json.dumps(value)}" for key, value in fields.items()) + "\n",
                 encoding="utf-8",
             )
-            print(f"native_mock_ready port=8019 owner_a={owner} owner_b={other}", flush=True)
+            print(
+                f"native_mock_ready port={args.port} scenario={args.scenario} "
+                f"owner_a={owner} owner_b={other}",
+                flush=True,
+            )
             print(
                 "CLI config: .cache/phase8c-native-server.env; enter stop to clean up", flush=True
             )

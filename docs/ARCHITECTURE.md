@@ -56,6 +56,10 @@ operation keys and explicit unknown outcomes follow existing server replay/disco
 semantics; Message IDs reconcile confirmed answers with formal History. Runtime,
 knowledge, provider contract, Import and Memory behavior remain unchanged. See
 [ADR0033](adr/0033-mobile-agent-chat-stream-and-recovery.md).
+The 2026-10-10 revalidation adds actual native incremental SSE and Chinese
+answer/replay/owner-isolation evidence. Only the disposable native Mock demo
+adds port/scenario options; transport/runtime/provider boundaries are unchanged.
+Native lifecycle/fault coverage remains partial; no QA route or probe is shipped.
 
 ## Implemented Phase 2A boundary
 

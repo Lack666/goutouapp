@@ -7,7 +7,10 @@ decoding. The [official SDK57 documentation](https://docs.expo.dev/versions/v57.
 documents streaming fetch and these APIs. No new streaming/native dependency or
 Expo/RN upgrade is introduced. Web uses standard fetch; `.native.ts` explicitly uses
 `expo/fetch` and adapts URL/method/headers/JSON body/signal. Installed-source support
-is not an on-device result. Android Connected SSE remains separately verified.
+is not an on-device result. On 2026-10-10 an actual Pixel_10/Expo Go run verified
+native incremental consumption, Chinese answers, replay and owner isolation;
+see the revalidation section in [8C acceptance](PHASE_8C_ACCEPTANCE.md).
+Active native disconnect/background/expiry and complete keyboard QA remain open.
 
 `ApiTransport.streamAgent` sends POST JSON + current Bearer + Accept:text/event-stream
 to the existing `/api/v1/conversations/{conversation_id}/agent-runs/stream`.
@@ -86,15 +89,20 @@ The Mock fixture uses only the synthetic violence prompt; it is not a real provi
 
 ## Android Studio manual acceptance
 
-An emulator launch was attempted on this host; see the acceptance report for actual
-adb evidence. Native fetch/SecureStore/Back/keyboard behavior cannot be inferred from
-Web, Expo Doctor, TS checks or Android JS export. Final Phase8 requires native proof.
+The original 2026-10-09 attempt was NOT RUN. The 2026-10-10 native core smoke passed:
+actual JWT, owned Conversation, incremental POST SSE, Chinese final text, completed,
+REST/SSE replay, History, Back after completion, logout and foreign-owner denial.
+Native lifecycle/fault coverage remains partial; final Phase8 must close those gaps.
+Web, Doctor and Android JS export remain separate evidence.
 
 1. Start the configured Pixel_10 emulator or a physical Android device with an
    SDK57-compatible Expo Go/development build. Confirm `adb devices -l` is stable.
 2. Reuse 8B local HTTP policy: `adb reverse tcp:8000 tcp:8000`, or use emulator host
    gateway `http://10.0.2.2:8000`; never assume emulator localhost is the Windows host.
-   Set only EXPO_PUBLIC_API_BASE_URL, then restart Metro. Production remains HTTPS.
+   Set only EXPO_PUBLIC_API_BASE_URL, then restart Metro. On this Windows host,
+   `--localhost` listened only on IPv6 while adb reverse used IPv4. Use `--lan`
+   for the controlled development listener and open `exp://127.0.0.1:<Metro-port>`
+   through adb reverse. Production remains HTTPS.
 3. Start the interactive disposable backend below in one terminal, leaving it open.
    It prints only owner IDs/readiness and writes private server CLI settings to an
    ignored `.cache` env file, removed on stop. In another terminal, invoke the actual
@@ -117,11 +125,22 @@ These steps require real native execution; automated Web success is not an Andro
 ```powershell
 # Terminal1, with TEST_DATABASE_URL from the Web reproduction section:
 uv --cache-dir .cache/uv --no-managed-python run --locked python apps/server/mobile_agent_native_demo.py
+# For a validated Chinese ordinary answer, add --scenario chinese.
+# That fixture accepts synthetic ordinary relationship questions only.
+# --port 8020 can isolate native smoke from the Web/socket fixture on 8019.
 # Terminal2: use the owner_a or owner_b UUID printed by Terminal1:
 uv --cache-dir .cache/uv --no-managed-python run --locked --env-file .cache/phase8c-native-server.env python apps/server/dev_auth_cli.py token --user-id <printed-owner-UUID>
 adb reverse tcp:8019 tcp:8019
 $env:EXPO_PUBLIC_API_BASE_URL='http://127.0.0.1:8019'
-pnpm --filter @goutou/mobile exec expo start --clear
-# Open on the actual Android device; use the synthetic violence prompt above.
+pnpm --filter @goutou/mobile exec expo start --lan --port 8081 --clear
+adb reverse tcp:8081 tcp:8081
+# Open on the actual Android device. The default safety fixture uses the synthetic
+# violence prompt. With --scenario chinese, use 请根据关系背景分析现状。 instead.
 # Enter stop in Terminal1 after manual acceptance to remove the DB/private env.
 ```
+
+The Chinese scenario reuses the standalone demo's queued MockLLM outputs through
+the actual LangGraph and AgentService, with no new provider contract or answer
+substitution. The default safety scenario retains its original behavior.
+The local DevTools installation reported a dotslash cross-drive rename failure
+and used its fallback; that warning did not prevent the native App or SSE run.

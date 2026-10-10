@@ -261,9 +261,11 @@ describe('development sessions and credential lifecycle', () => {
   it('mode switch cancels scope and preserves Demo isolation', async () => {
     const x = setup();
     await x.session.connect(token(), x.resources.probe);
-    x.session.demo();
-    expect(x.session.snapshot()).toMatchObject({ mode: 'demo', status: 'no_token' });
+    const clearing = x.session.demo();
+    expect(x.session.snapshot()).toMatchObject({ mode: 'demo', status: 'clearing' });
     expect(x.session.credential()).toBeNull();
+    await clearing;
+    expect(x.session.snapshot()).toMatchObject({ mode: 'demo', status: 'no_token' });
   });
   it('ignores delayed A response after B identity switch', async () => {
     let finish: (response: Response) => void = () => undefined;

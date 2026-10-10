@@ -4,6 +4,7 @@ import type { TokenStorage } from './storage';
 
 export type SessionStatus =
   | 'no_token'
+  | 'clearing'
   | 'checking'
   | 'authenticated'
   | 'expired'
@@ -74,11 +75,20 @@ export class DevelopmentSession {
     clearTimeout(this.timer);
     this.token = null;
     this.expiresAt = 0;
-    this.publish({ mode, status, epoch: this.view.epoch + 1 });
-    const epoch = this.epoch();
-    void this.store(() => this.storage.clear()).catch(() => {
-      if (this.epoch() === epoch) this.publish({ ...this.view, status: 'storage_error' });
+    this.publish({
+      mode,
+      status: status === 'no_token' ? 'clearing' : status,
+      epoch: this.view.epoch + 1,
     });
+    const epoch = this.epoch();
+    return this.store(() => this.storage.clear())
+      .then(() => {
+        if (this.epoch() === epoch && this.view.status === 'clearing')
+          this.publish({ ...this.view, status });
+      })
+      .catch(() => {
+        if (this.epoch() === epoch) this.publish({ ...this.view, status: 'storage_error' });
+      });
   }
   logout = () => this.reset('connected', 'no_token');
   demo = () => this.reset('demo', 'no_token');
@@ -104,7 +114,7 @@ export class DevelopmentSession {
     const epoch = this.epoch();
     const token = input.trim();
     if (!token) {
-      this.reset('connected', 'no_token');
+      await this.reset('connected', 'no_token');
       return;
     }
     try {

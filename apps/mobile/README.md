@@ -7,7 +7,11 @@ unknown outcomes. Import/RelationshipMessage history and Memory mutations stay d
 See [Chat](../../docs/MOBILE_AGENT_CHAT.md), [streaming/native steps](../../docs/MOBILE_STREAMING.md)
 and [8C acceptance](../../docs/PHASE_8C_ACCEPTANCE.md). `test:sse`, `test:agent-chat`
 and `demo:agent` run focused parser/controller/UI and real CLI JWT/PostgreSQL/
-FastAPI/MockLLM/Chrome flows. Android native proof remains separate from Web.
+FastAPI/MockLLM/Chrome flows. On 2026-10-10 actual Android core SSE/Chinese/replay/
+History/logout/owner-isolation smoke also ran; active native faults/background/
+expiry and complete keyboard QA remain unverified. See the 8C revalidation report.
+For IPv4 adb reverse on this Windows host use Metro `--lan`, then open its explicit
+`exp://127.0.0.1:<port>` address. `--localhost` listened only on IPv6 here.
 The following8B/Phase7 notes retain their historical boundaries; Agent Chat is now
 implemented as described above. The original Demo remains available unchanged.
 

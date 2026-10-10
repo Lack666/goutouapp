@@ -17,6 +17,57 @@ const ok = () =>
     headers: { 'Content-Type': 'application/json' },
   });
 
+it('logout cancels credentials immediately and acknowledges durable removal only after storage clears', async () => {
+  let value: string | null = null;
+  let delayed = false;
+  let finish: () => void = () => undefined;
+  const storage: TokenStorage = {
+    read: async () => value,
+    write: async (token) => {
+      value = token;
+    },
+    clear: async () => {
+      if (delayed) await new Promise<void>((resolve) => (finish = resolve));
+      value = null;
+    },
+  };
+  const session = new DevelopmentSession(storage);
+  await session.connect(credential(), async () => undefined);
+  const epoch = session.epoch();
+  delayed = true;
+  const logout = session.logout();
+  expect(session.snapshot()).toMatchObject({ status: 'clearing', epoch: epoch + 1 });
+  expect(session.credential()).toBeNull();
+  for (let step = 0; step < 8; step++) await Promise.resolve();
+  expect(value).not.toBeNull();
+  expect(session.snapshot().status).toBe('clearing');
+  finish();
+  await logout;
+  expect(value).toBeNull();
+  expect(session.snapshot().status).toBe('no_token');
+  const restored = new DevelopmentSession(storage);
+  const probe = jest.fn(async () => undefined);
+  await restored.restore(probe);
+  expect(probe).not.toHaveBeenCalled();
+  expect(restored.credential()).toBeNull();
+});
+
+it('failed credential removal never reports logout storage as cleared', async () => {
+  let rejectClear = false;
+  const session = new DevelopmentSession({
+    read: async () => null,
+    write: async () => undefined,
+    clear: async () => {
+      if (rejectClear) throw new Error('private native failure');
+    },
+  });
+  await session.connect(credential(), async () => undefined);
+  rejectClear = true;
+  await session.logout();
+  expect(session.snapshot().status).toBe('storage_error');
+  expect(session.credential()).toBeNull();
+});
+
 it('delayed old 401 cannot invalidate the new verified session', async () => {
   const session = new DevelopmentSession(createVolatileTokenStorage());
   let finish: () => void = () => undefined;

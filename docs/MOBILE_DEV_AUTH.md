@@ -28,9 +28,11 @@ The plugin config retains its default encrypted-backup exclusions. SecureStore i
 supported by Expo Go without biometric `requireAuthentication`; see
 [official SecureStore API](https://docs.expo.dev/versions/latest/sdk/securestore/).
 No AsyncStorage credential fallback exists. Native restart reads the secure item
-and rechecks it with the server; logout/invalidation delete it. Actual native
-storage persistence is **NOT RUN** on this host; adapter read/write/delete tests,
-Expo Doctor and Android JS export are separate evidence.
+and rechecks it with the server; logout/invalidation delete it. The historical
+Phase8B native storage result was NOT RUN. On 2026-10-10, actual Pixel_10/Expo Go
+credential restoration and acknowledged logout followed by force-stop/restart
+passed. Native expiry/background fault coverage remains NOT RUN; adapter tests,
+Expo Doctor and Android JS export remain separate evidence.
 
 Web/default uses only a closure-held volatile token, with no localStorage,
 sessionStorage or cookies. A browser reload returns to Demo and needs a new manual
@@ -38,7 +40,7 @@ session. A failed storage operation is explicit `storage_error`, with a clear
 session action to retry removal. Tokens are absent from UI state snapshots,
 resource state, error messages, test snapshots, analytics and console output.
 
-Session states: no token, checking, authenticated development session, expired,
+Session states: no token, clearing, checking, authenticated development session, expired,
 invalid, network unavailable and storage error. A deadline timer expires idle
 credentials; foreground resume and each HTTP request recheck expiry. Expiration
 requires a new CLI credential; no silent refresh/bypass. A server 401 clears the
@@ -50,7 +52,11 @@ lists, details, resource selection, cursors, create attempts and safe error stat
 abort HTTP requests and remount scope-local form/controllers. The reset also
 discards the old navigation stack and resource query IDs, returning to Settings.
 Credential deletion is serialized with writes so delayed completion cannot resurrect an old
-session. Old responses cannot update state after the epoch changes.
+session. Logout invalidates the in-memory token and epoch immediately, but shows
+clearing until secure storage confirms deletion; only then does it report no token.
+A failed deletion shows storage error. Keep the App open while clearing: process
+termination before confirmation can interrupt deletion. Old clear completions and
+responses cannot update state after the epoch changes.
 
 For Expo Web, set a restricted development origin in the **server** config:
 

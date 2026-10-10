@@ -70,6 +70,14 @@ as implemented by a placeholder directory or a golden expectation.
 
 ### Phase 8C — Agent Chat REST / POST SSE Integration
 
+- 2026-10-10 revalidation starts from the existing f4cb2cc/7/8C implementation,
+  rather than assuming7/8B. Complete root verification passed again. Actual
+  Pixel_10/Android17/API37/Expo Go57.0.9 core smoke observed native reader chunks,
+  Chinese committed text/completed, same-key REST/SSE replay, History, post-run
+  Back, credential restoration/logout and OwnerB isolation. Active native faults,
+  background/expiry and complete keyboard QA remain open; whole8 incomplete.
+  Only the disposable native demo gains port/scenario options; temporary probes
+  are removed. Historical8C acceptance remains preserved below its new addendum.
 - Reuse generated client, actual owned Conversation, shared JWT/session/origin,
   navigation/theme/composer/FlatList; connect Agent REST/POST SSE and public Agent
   History. Import/RelationshipMessage History and Memory controls remain deferred.

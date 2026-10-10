@@ -7,6 +7,10 @@ cannot borrow another Conversation. Import/RelationshipMessage History and Memor
 controls remain unavailable. See [Chat](MOBILE_AGENT_CHAT.md),
 [streaming/native steps](MOBILE_STREAMING.md) and [8C acceptance](PHASE_8C_ACCEPTANCE.md).
 The following8B notes remain historical resource-acquisition evidence.
+On 2026-10-10 Phase8C also obtained actual Android JWT/Conversation/History/SSE
+core smoke evidence, including owner isolation. Remaining native lifecycle tests
+are listed in [8C acceptance](PHASE_8C_ACCEPTANCE.md); the historical8B NOT RUN
+below remains unchanged for its original execution date.
 
 Demo keeps all Phase 7 UI/controller behavior and makes no business requests.
 Connected Development Mode reads only server-confirmed Person/Relationship/
@@ -86,7 +90,9 @@ above. Choose one explicit local path, then start Metro with a public address:
 adb reverse tcp:8000 tcp:8000
 adb reverse tcp:8081 tcp:8081
 $env:EXPO_PUBLIC_API_BASE_URL='http://127.0.0.1:8000'
-pnpm --filter @goutou/mobile exec expo start --android --localhost --clear
+pnpm --filter @goutou/mobile exec expo start --lan --port 8081 --clear
+# Open exp://127.0.0.1:8081 on Expo Go through the reverse above.
+# Windows --localhost may listen only on IPv6, unreachable by IPv4 adb reverse.
 ```
 
 Alternatively configure the emulator host gateway `http://10.0.2.2:8000` for an

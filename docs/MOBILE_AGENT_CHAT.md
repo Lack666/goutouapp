@@ -53,8 +53,13 @@ over a failure category. Changed retry payload409 is a client conflict, never a 
 
 Leaving/blurring Chat, changing Conversation/relationship, backgrounding, logout,
 expiry,401 or identity replacement aborts consumption and rejects stale events.
-Session epochs and page generations guard every async response. Logout also clears
-attempts/messages/cursors/errors/scopes and native credentials; navigation reset
+Session epochs and page generations guard every async response. Logout immediately
+clears in-memory credentials/attempts/messages/cursors/errors/scopes and cancels
+requests. A `clearing` presentation remains until native storage confirms removal;
+only then does `no_token` acknowledge completion. Failure becomes `storage_error`.
+Closing the process before confirmation can interrupt durable removal; keep the App
+open during clearing. Old clear completions cannot replace a newer session epoch.
+Navigation reset
 checks canDismiss before clearing an existing stack. Pausing preserves the original
 key and states only that the client stopped waiting. It does not promise rollback.
 Established SSE auth is not continuously checked by the server; local token expiry
@@ -74,3 +79,11 @@ real provider quality, Import networking and Memory controls remain deferred.
 
 See [streaming](MOBILE_STREAMING.md), [Agent API](AGENT_API.md),
 [idempotency](IDEMPOTENCY.md) and [acceptance](PHASE_8C_ACCEPTANCE.md).
+
+The 2026-10-10 revalidation independently reran all root gates at the existing
+7/8C marker and exercised actual Android core Chat. Native Chinese consumption
+observed eight reader chunks and ten V1 events; same-key REST/SSE replay retained
+one completed run and two Message rows. Actual History, postcompletion Back,
+logout, SecureStore restoration and Owner B's foreign-Conversation denial were
+observed. Native active-run disconnect/background/expiry and full keyboard QA
+remain separate unexecuted checks. No temporary native QA route is shipped.

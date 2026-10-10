@@ -52,9 +52,17 @@ owned safe messages; raw response error bodies and native exception text are
 discarded. 401 invalidates only the initiating session epoch. 404, 409, 422, 503,
 offline, cancellation, timeout and malformed response have distinct safe states.
 
-The injected transport permits only the nine resource create/list/detail paths.
-Generated Agent/import/Memory functions and types do not enable those operations.
-There is no SSE parser, Agent send, run tracking, upload or Memory HTTP call.
+Explicit logout/mode changes invalidate credentials and cancel requests immediately,
+while `clearing` acknowledges pending durable credential removal. `no_token` follows
+successful storage removal; a failure stays visible as `storage_error`. This avoids
+claiming durable logout before an asynchronous SecureStore deletion finishes.
+
+The default transport permits the nine resource create/list/detail paths.
+Phase8C application composition also enables generated Agent REST, Agent History
+and the existing POST SSE path using the shared session. SSE has its independent
+V1 parser and run tracking. Generated Import/Memory types do not enable uploads
+or Memory HTTP mutations. Native core SSE evidence is recorded in the 2026-10-10
+revalidation section of [8C acceptance](PHASE_8C_ACCEPTANCE.md).
 
 `EXPO_PUBLIC_API_BASE_URL` is a public origin, without credentials/query/path.
 HTTP is permitted only in a development runtime for controlled local connections;

@@ -6,6 +6,11 @@ explicit unknown outcomes and server-ID reconciliation. Shared8B session/native
 credentials and Demo are preserved. See [8C report](PHASE_8C_ACCEPTANCE.md).
 Import/RelationshipMessage history remain8D, Memory controls8E. No future stage begins.
 The8B/8A historical handoff below is superseded for Agent Chat only.
+Revalidated on 2026-10-10 at existing HEAD f4cb2cc/marker7/8C. All root gates
+passed again; actual Android native core Chat/Chinese SSE/replay/history/logout/
+owner-isolation evidence now exists. Native active-run faults/background/expiry
+and complete keyboard QA remain open. See the current8C report; whole8 stays
+incomplete and8D/8E have not started.
 
 This handoff preserves the Phase7D/8A audit and adds current 8B client integration.
 Whole Phase8 is IN PROGRESS / NOT YET COMPLETE. Mobile now has generated resource

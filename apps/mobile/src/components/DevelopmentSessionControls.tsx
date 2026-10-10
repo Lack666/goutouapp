@@ -6,6 +6,7 @@ import { useTheme } from '../theme/ThemeProvider';
 
 const labels = {
   no_token: '未连接：没有开发凭证',
+  clearing: '正在清除设备开发凭证，请保持应用打开',
   checking: '正在验证开发凭证',
   authenticated: '开发会话已连接',
   expired: '开发凭证已过期，请重新获取',
