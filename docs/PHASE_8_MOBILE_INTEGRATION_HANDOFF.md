@@ -311,3 +311,13 @@ Stop after 8B. Begin 8C only on a new explicit instruction. Resource/history
 server gaps are closed; Mobile message-history/import/Memory networking, production
 accounts, public FIU/Profile and imported-data analysis gaps remain. Do not enable
 an analysis button based on import completion.
+## Phase 8F current handoff supplement — 2026-10-11
+
+8F is now authorized and underway. All existing Connected capabilities remain;
+new final Web and shared-session focused gates supplement every previous gate.
+Native verification is being recorded without substituting Web evidence. Whole
+Phase 8 remains IN PROGRESS and marker7/8E is retained pending final acceptance.
+See [final report](PHASE_8_FINAL_ACCEPTANCE.md),
+[native reproduction](PHASE_8_FINAL_ANDROID_DEMO.md) and
+[Phase 9 risks](PHASE_9_SECURITY_RELIABILITY_HANDOFF.md).
+The earlier sections above retain their historical stop/NOT RUN boundaries.

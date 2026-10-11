@@ -1,4 +1,4 @@
-"""Mobile static, Phase 7 regression and Phase 8B/8C/8D/8E connected gates."""
+"""Mobile static, Phase 7 regression and Phase 8B–8F connected gates."""
 
 from __future__ import annotations
 
@@ -79,6 +79,8 @@ def main() -> None:
         commands.append([pnpm, "--filter", "@goutou/mobile", "run", "test:imports"])
     if (MOBILE / "src/data/memoryController.ts").is_file():
         commands.append([pnpm, "--filter", "@goutou/mobile", "run", "test:memory"])
+    if (MOBILE / "tests/fullMobileIntegration.test.ts").is_file():
+        commands.append([pnpm, "--filter", "@goutou/mobile", "run", "test:final"])
     feature_ui = (MOBILE / "src/features/ChatScreen.tsx").is_file()
     if feature_ui:
         commands.append([pnpm, "--filter", "@goutou/mobile", "run", "test:features"])

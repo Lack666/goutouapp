@@ -35,6 +35,7 @@ from app.db.models import (
     ChatImportJob,
     Conversation,
     MemoryConfirmationRow,
+    MemoryControlRow,
     MemoryMutationRow,
     MemoryRecordRow,
     Message,
@@ -75,11 +76,14 @@ def main():
         disposable_database() as engine,
         TemporaryDirectory(prefix="goutou-mobile-artifacts-") as artifacts,
     ):
+        final_mode = os.environ.get("GOUTOU_FINAL_E2E") == "1"
         agent_mode = os.environ.get("GOUTOU_AGENT_E2E") == "1"
-        import_mode = os.environ.get("GOUTOU_IMPORT_E2E") == "1"
-        memory_mode = os.environ.get("GOUTOU_MEMORY_E2E") == "1"
+        import_mode = final_mode or os.environ.get("GOUTOU_IMPORT_E2E") == "1"
+        memory_mode = final_mode or os.environ.get("GOUTOU_MEMORY_E2E") == "1"
         port = (
-            8022
+            8023
+            if final_mode
+            else int(os.environ.get("GOUTOU_MEMORY_PORT", "8022"))
             if memory_mode
             else int(os.environ.get("GOUTOU_IMPORT_PORT", "8020"))
             if import_mode
@@ -95,7 +99,9 @@ def main():
             database_url=engine.url.render_as_string(hide_password=False),
             auth_jwt_secret=secret,
             dev_cors_origins=[
-                "http://localhost:8091"
+                "http://localhost:8094"
+                if final_mode
+                else "http://localhost:8091"
                 if memory_mode
                 else "http://localhost:8090"
                 if import_mode
@@ -178,6 +184,21 @@ def main():
             for command in sys.stdin:
                 if command.strip() == "stop":
                     break
+                if command.strip() in {"renew_token a", "renew_token b"}:
+                    user = owner if command.strip().endswith(" a") else other
+                    # This response is private pipe data, never reporter output.
+                    renewed = subprocess.check_output(
+                        [
+                            sys.executable,
+                            "apps/server/dev_auth_cli.py",
+                            "token",
+                            "--user-id",
+                            str(user),
+                        ],
+                        env=env,
+                        text=True,
+                    ).strip()
+                    print(json.dumps({"credential": renewed}), flush=True)
                 if memory_mode and command.startswith(("expire_memory ", "expire_confirmation ")):
                     kind, identifier = command.strip().split()
                     model = MemoryRecordRow if kind == "expire_memory" else MemoryConfirmationRow
@@ -209,6 +230,14 @@ def main():
                                         for value in provider.analysis_payloads
                                     ],
                                     "calls": len(provider.calls),
+                                    "controls": [
+                                        {
+                                            "owner": str(row.user_id),
+                                            "consent_enabled": row.consent_enabled,
+                                            "paused": row.paused,
+                                        }
+                                        for row in db.scalars(select(MemoryControlRow))
+                                    ],
                                 }
                             ),
                             flush=True,

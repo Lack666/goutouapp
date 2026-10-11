@@ -68,6 +68,27 @@ as implemented by a placeholder directory or a golden expectation.
 
 ## Implementation log
 
+### Phase 8F — Full Mobile Integration and Phase 8 Final Acceptance (in progress)
+
+- Scope remains Phase 8 integration/verification only; Phase 9–12 unchanged.
+- Adds five cross-controller recovery/isolation cases and one real six-surface
+  Web journey with four cursor pages, SSE/REST same-key replay, deletion domain
+  isolation and Owner B. Existing tests/contracts/Golden/frozen Skill retained.
+- Android Pixel_10 cold boot recovered using software GPU and a separate adb
+  port, without wiping data. Loopback Metro plus IPv4/IPv6 relay keeps all
+  services local. Native core and missing matrix evidence are recorded separately.
+- Doctor fallback now requires allowlisted network causes and rejects TLS,
+  abort/unknown errors, URL credentials, original Request private headers and
+  custom transports. Five regression cases preserve the original three scenarios.
+- Marker stays 7/8E until full native final acceptance and all root gates pass.
+  Final automated root exit0: backend556, Mobile351, repository38, Golden83;
+  retained Web22/3/3/4/5 and new final1 all pass; Doctor21/21. Actual Android
+  import/history100→200→300→301 and lifecycle/Memory subsets exited0, but full
+  native SSE diagnostic/fault/pending-operation acceptance remains BLOCKED.
+  See [final acceptance](PHASE_8_FINAL_ACCEPTANCE.md),
+  [Android procedure](PHASE_8_FINAL_ANDROID_DEMO.md) and
+  [Phase 9 handoff](PHASE_9_SECURITY_RELIABILITY_HANDOFF.md). Phase 9 not started.
+
 ### Phase 8E — Memory Controls and Guarded Mutations Mobile Integration
 
 - Current scope is8E only; whole8 remains IN PROGRESS,8F not started.

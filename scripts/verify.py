@@ -338,6 +338,7 @@ def lint() -> None:
         "scripts/check_db_migrations.py",
         "scripts/check_mobile.py",
         "scripts/export_openapi.py",
+        "scripts/phase8_android_demo.py",
     )
     uv_run(
         "ruff",
@@ -357,6 +358,7 @@ def lint() -> None:
         "scripts/check_db_migrations.py",
         "scripts/check_mobile.py",
         "scripts/export_openapi.py",
+        "scripts/phase8_android_demo.py",
     )
 
 
@@ -455,6 +457,13 @@ def verify() -> None:
             "PostgreSQL / Expo Web"
         )
         print("ANDROID NATIVE MEMORY: separate evidence; never inferred from Web")
+    if (ROOT / "apps/mobile/playwright.final.config.ts").is_file():
+        pnpm = shutil.which("pnpm")
+        if not pnpm:
+            raise RuntimeError("pnpm is required for Phase 8F cross-surface integration")
+        run([pnpm, "--filter", "@goutou/mobile", "run", "smoke:final"])
+        print("PASS: Phase 8F real Connected six-surface Web integration")
+        print("PHASE 8 FINAL: Android acceptance remains a separate required gate")
     if DATABASE_FOUNDATION:
         print("PASS: PostgreSQL migration and integration gate")
     elif BACKEND_FOUNDATION:

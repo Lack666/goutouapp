@@ -20,6 +20,8 @@
     "test:agent-chat": "jest --runInBand tests/agentChat.test.ts tests/connectedChatUI.test.tsx",
     "test:imports": "jest --runInBand tests/connectedImport.test.ts tests/connectedHistory.test.ts tests/filePicker.test.ts tests/connectedImportUI.test.tsx",
     "test:memory": "jest --runInBand tests/connectedMemory.test.ts tests/connectedMemoryUI.test.tsx",
+    "test:final": "jest --runInBand tests/fullMobileIntegration.test.ts",
+    "smoke:final": "playwright test --config playwright.final.config.ts",
     "smoke:memory": "playwright test --config playwright.memory.config.ts",
     "smoke:imports": "playwright test --config playwright.import.config.ts",
     "smoke:agent": "playwright test --config playwright.agent.config.ts",

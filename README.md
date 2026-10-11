@@ -1,12 +1,10 @@
 # 狗头军师 App
 
-Phase8D adds real Markdown file selection, multipart ImportJob upload, explicit
-speaker/relationship binding and formal RelationshipMessage history. It reuses
-the generated client, development JWT session and the existing server import
-pipeline. Agent Chat and local Demo remain available. See
-[8D acceptance](docs/PHASE_8D_ACCEPTANCE.md) and
-[file/native instructions](docs/MOBILE_IMPORT_UI.md).
-Whole Phase8 remains incomplete;8E Memory is not started.
+Phase 8A–8E 已完成工程验收：生成客户端、开发 JWT、真实资源、Agent REST/POST SSE、
+聊天导入与分域历史、Memory 控制及受保护操作。Phase 8F 正在补齐跨模块与 Android
+最终验收；Phase 8 整体仍为 IN PROGRESS，标记保持 `7 / 8E`。
+当前证据与未关闭项目见 [Phase 8 最终验收](docs/PHASE_8_FINAL_ACCEPTANCE.md)，
+后续范围见 [Phase 9 交接](docs/PHASE_9_SECURITY_RELIABILITY_HANDOFF.md)。
 
 这是将 [goutoujunshi Skill](https://github.com/shengjidaguai-china/goutoujunshi)
 改造成独立 AI Agent 与 React Native 手机 App 的 Monorepo。目标架构为
@@ -25,7 +23,8 @@ Phase 7 已完成（7A–7D PASS），六页面集成与错误恢复已验证；
 Phase 8A 已实现服务端 Person/Relationship/Conversation 公共资源与 Agent 历史前置合同；
 Phase 8B 接入 OpenAPI 生成客户端、开发 JWT 会话与真实 owned 资源；Demo 保留。
 Phase 8C 已接入 Agent REST/SSE；8D 接入真实文件导入与关系聊天历史。
-Phase 8 整体仍为 IN PROGRESS / NOT YET COMPLETE；8E Memory 网络接入尚未开始。
+Phase 8E 已接入真实 Memory 控制、Guarded Undo/Delete 和持久回执。
+Phase 8 整体仍为 IN PROGRESS / NOT YET COMPLETE；8F 最终验收未全部关闭。
 阶段状态以代码和验收结果为准，参见 [Master Plan](docs/MASTER_PLAN.md)
 和 [Phase 6 最终验收报告](docs/PHASE_6_FINAL_ACCEPTANCE.md)、
 [Phase 7A 验收报告](docs/PHASE_7A_ACCEPTANCE.md)、

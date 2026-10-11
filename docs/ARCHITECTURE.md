@@ -516,3 +516,14 @@ client or connecting Mobile. Existing development-only JWT CLI supplies manual
 credentials; production accounts remain absent. See [resource API](RESOURCE_API.md),
 [ADR0031](adr/0031-public-resource-acquisition-and-retries.md),
 [handoff](PHASE_8_MOBILE_INTEGRATION_HANDOFF.md) and [8A acceptance](PHASE_8A_ACCEPTANCE.md).
+## Phase 8F acceptance boundary (2026-10-11 supplement)
+
+The implementation remains the existing generated transport, DevelopmentSession,
+resource/Chat/import/history/Memory controllers and server services. 8F adds a
+cross-surface Web gate and a synthetic native acceptance helper; it adds no
+public endpoint, schema, graph behavior or infrastructure. The helper captures
+CLI credentials over private pipes and creates/drops its own PostgreSQL database.
+Native UI actions and host-side Agent fixture preparation are distinct evidence.
+Loopback Metro and adb reverse replace a LAN listener for this host's acceptance.
+The prior sections retain their historical phase boundaries. Current acceptance
+and recovery limits are in PHASE_8_FINAL_ACCEPTANCE and the Phase 9 handoff.

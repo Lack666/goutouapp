@@ -1,4 +1,12 @@
-# Mobile app — Phase 7A–7D and Phase 8B–8E
+# Mobile app — Phase 7A–7D and Phase 8B–8F acceptance
+
+8F adds `test:final` for cross-controller owner/mode/background/restart boundaries
+and `smoke:final` for all six actual Connected surfaces in one signed
+FastAPI/PostgreSQL/LangGraph/MockLLM journey. Existing tests are retained.
+Final acceptance requires separate Android evidence and remains incomplete.
+See [final acceptance](../../docs/PHASE_8_FINAL_ACCEPTANCE.md) and
+[native demo](../../docs/PHASE_8_FINAL_ANDROID_DEMO.md). No production accounts,
+outbox, imported-chat analysis, provider quality or release APK is implied.
 
 Phase8E connects Settings to the existing Memory APIs using shared development
 JWT/generated transport. It includes server controls/retention/known-ID expiry,
@@ -7,7 +15,7 @@ runs48 focused controller/UI cases; `smoke:memory` runs real signed HTTP,
 PostgreSQL/LangGraph and Chrome Expo UI. No model keys or local Memory database.
 Recovery is session-only; restart cannot automatically retry a lost key. See
 [Memory/native instructions](../../docs/MOBILE_MEMORY_INTEGRATION.md) and
-[8E report](../../docs/PHASE_8E_ACCEPTANCE.md). Whole8 stays incomplete;8F not started.
+[8E report](../../docs/PHASE_8E_ACCEPTANCE.md). Whole8 stays incomplete;8F acceptance is underway.
 
 Phase8D uses the SDK57 DocumentPicker and binary File adapters for existing
 multipart Import APIs, explicit UUID/revision bindings, server readiness/finalize
@@ -28,8 +36,9 @@ and `demo:agent` run focused parser/controller/UI and real CLI JWT/PostgreSQL/
 FastAPI/MockLLM/Chrome flows. On 2026-10-10 actual Android core SSE/Chinese/replay/
 History/logout/owner-isolation smoke also ran; active native faults/background/
 expiry and complete keyboard QA remain unverified. See the 8C revalidation report.
-For IPv4 adb reverse on this Windows host use Metro `--lan`, then open its explicit
-`exp://127.0.0.1:<port>` address. `--localhost` listened only on IPv6 here.
+For native verification use loopback Metro and adb reverse. If Metro listens only
+on `::1`, a loopback-only IPv4 relay resolves the host-family mismatch; details
+are in the final native demo. No LAN listener is needed.
 The following8B/Phase7 notes retain their historical boundaries; Agent Chat is now
 implemented as described above. The original Demo remains available unchanged.
 

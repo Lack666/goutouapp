@@ -293,3 +293,13 @@ and supports the completed 7/7D marker while rejecting Phase 8+ completion.
 [final acceptance](PHASE_7_FINAL_ACCEPTANCE.md) for current gates and native limits,
 and [API handoff](PHASE_8_MOBILE_INTEGRATION_HANDOFF.md) for confirmed endpoints
 and explicit public-resource/analysis gaps. No Phase 8 behavior is implemented.
+## Phase 8F current acceptance supplement
+
+Current Connected composition includes all six surfaces and their existing
+8B–8E controllers. One new Web journey exercises the entire owned scope through
+Chat, import pages, two History domains, Memory deletion and owner replacement.
+Five focused tests exercise shared-session invalidation and conservative restart
+boundaries. No new product screen, state store, outbox or public DTO is introduced.
+Final Android evidence remains separate and required; current limits are in
+[final acceptance](PHASE_8_FINAL_ACCEPTANCE.md). The original sections above
+preserve earlier implementation/NOT RUN statements as dated historical evidence.
