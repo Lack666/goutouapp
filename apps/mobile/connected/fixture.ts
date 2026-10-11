@@ -7,6 +7,15 @@ interface Backend {
   a: string;
   b: string;
   expired: string;
+  expire(kind: 'memory' | 'confirmation', id: string): Promise<void>;
+  memoryEvidence(): Promise<{
+    memories: number;
+    receipts: number;
+    agent_messages: number;
+    relationship_messages: number;
+    recall_counts: number[];
+    calls: number;
+  }>;
   counts(): Promise<Record<string, number>>;
   importEvidence(): Promise<{
     jobs: { id: string; status: string; revision: number }[];
@@ -52,11 +61,23 @@ export const test = base.extend<object, { backend: Backend }>({
         throw new Error('Real PostgreSQL fixture failed to start; check TEST_DATABASE_URL.');
       const credentials = JSON.parse(first.value) as Omit<
         Backend,
-        'counts' | 'agentEvidence' | 'importEvidence'
+        'counts' | 'agentEvidence' | 'importEvidence' | 'expire' | 'memoryEvidence'
       >;
       try {
         await useBackend({
           ...credentials,
+          expire: async (kind, id) => {
+            child.stdin.write(`expire_${kind} ${id}\n`);
+            const row = await iterator.next();
+            if (row.done || JSON.parse(row.value).expired !== true)
+              throw new Error('Synthetic expiry unavailable');
+          },
+          memoryEvidence: async () => {
+            child.stdin.write('memory_evidence\n');
+            const row = await iterator.next();
+            if (row.done) throw new Error('Memory evidence unavailable');
+            return JSON.parse(row.value);
+          },
           importEvidence: async () => {
             child.stdin.write('import_evidence\n');
             const row = await iterator.next();

@@ -15,10 +15,12 @@ import threading
 import time
 from datetime import UTC, datetime, timedelta
 from tempfile import TemporaryDirectory
+from uuid import UUID
 
 import jwt
 import uvicorn
 from memory_control_demo import disposable_database
+from memory_phase6_support import Phase6Mock
 from resource_demo_support import create_owners
 from sqlalchemy import func, select
 from sqlalchemy.orm import Session
@@ -32,6 +34,8 @@ from app.db.models import (
     ChatImportArtifact,
     ChatImportJob,
     Conversation,
+    MemoryConfirmationRow,
+    MemoryMutationRow,
     MemoryRecordRow,
     Message,
     Person,
@@ -41,6 +45,7 @@ from app.db.models import (
 from app.db.repositories.memory import SQLAlchemyMemoryStore
 from app.llm.mock import MockLLMProvider
 from app.main import create_app
+from app.retention import RetentionPolicy
 from app.services.agent_service import AgentService
 
 
@@ -72,8 +77,11 @@ def main():
     ):
         agent_mode = os.environ.get("GOUTOU_AGENT_E2E") == "1"
         import_mode = os.environ.get("GOUTOU_IMPORT_E2E") == "1"
+        memory_mode = os.environ.get("GOUTOU_MEMORY_E2E") == "1"
         port = (
-            int(os.environ.get("GOUTOU_IMPORT_PORT", "8020"))
+            8022
+            if memory_mode
+            else int(os.environ.get("GOUTOU_IMPORT_PORT", "8020"))
             if import_mode
             else 8019
             if agent_mode
@@ -87,13 +95,16 @@ def main():
             database_url=engine.url.render_as_string(hide_password=False),
             auth_jwt_secret=secret,
             dev_cors_origins=[
-                "http://localhost:8090"
+                "http://localhost:8091"
+                if memory_mode
+                else "http://localhost:8090"
                 if import_mode
                 else "http://localhost:8089"
                 if agent_mode
                 else "http://localhost:8088"
             ],
             chat_import_artifact_root=artifacts,
+            memory_retention_days=37 if memory_mode else 180,
         )
         env = {
             **os.environ,
@@ -122,7 +133,7 @@ def main():
             algorithm="HS256",
         )
         app = create_app(settings)
-        provider = ChatDemoMock() if agent_mode else None
+        provider = Phase6Mock() if memory_mode else ChatDemoMock() if agent_mode else None
         if provider:
             app.state.agent_service = AgentService(
                 app.state.database.session,
@@ -130,7 +141,10 @@ def main():
                     dependencies=RuntimeDependencies(
                         llm_provider=provider,
                         memory_service=MemoryService(
-                            SQLAlchemyMemoryStore(app.state.database.session)
+                            SQLAlchemyMemoryStore(
+                                app.state.database.session,
+                                policy=RetentionPolicy.from_settings(settings),
+                            )
                         ),
                     )
                 ),
@@ -164,6 +178,41 @@ def main():
             for command in sys.stdin:
                 if command.strip() == "stop":
                     break
+                if memory_mode and command.startswith(("expire_memory ", "expire_confirmation ")):
+                    kind, identifier = command.strip().split()
+                    model = MemoryRecordRow if kind == "expire_memory" else MemoryConfirmationRow
+                    with Session(engine) as db, db.begin():
+                        row = db.get(model, UUID(identifier))
+                        if row is None:
+                            raise ValueError("Synthetic expiry target not found")
+                        row.expires_at = datetime.now(UTC) - timedelta(seconds=1)
+                    print(json.dumps({"expired": True}), flush=True)
+                if memory_mode and command.strip() == "memory_evidence":
+                    with Session(engine) as db:
+                        print(
+                            json.dumps(
+                                {
+                                    "memories": db.scalar(
+                                        select(func.count()).select_from(MemoryRecordRow)
+                                    ),
+                                    "receipts": db.scalar(
+                                        select(func.count()).select_from(MemoryMutationRow)
+                                    ),
+                                    "agent_messages": db.scalar(
+                                        select(func.count()).select_from(Message)
+                                    ),
+                                    "relationship_messages": db.scalar(
+                                        select(func.count()).select_from(RelationshipMessage)
+                                    ),
+                                    "recall_counts": [
+                                        len(value.get("historical_memory", []))
+                                        for value in provider.analysis_payloads
+                                    ],
+                                    "calls": len(provider.calls),
+                                }
+                            ),
+                            flush=True,
+                        )
                 if command.strip() == "counts":
                     with Session(engine) as db:
                         counts = {

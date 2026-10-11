@@ -1,14 +1,27 @@
 # Phase 8 Mobile integration handoff — 2026-10-09
 
+Accepted8E adds real Memory controls/inspect/expiry, guarded latest
+Undo, one/Person/all server-confirmed deletion and durable mutation receipts.
+It reuses existing JWT/epoch/generated transport; session-only immutable attempts
+retain original targets for safe retry, and restart loss is disclosed. Chat entry
+only navigates to Settings. See [8E acceptance](PHASE_8E_ACCEPTANCE.md) and
+[Memory/native procedure](MOBILE_MEMORY_INTEGRATION.md). Final root acceptance
+status is in that report. Native Memory is NOT RUN because the existing device
+is offline. Pre/post-marker full root both exited0 at7/8E with backend556,
+Mobile346 (new Memory48),repository36 and Web22/3/3/4/5. The device
+is unavailable; exact old anonymous fixture cleanup is DEFERRED. Whole8 stays
+IN PROGRESS. Stop at8E and wait for explicit8F instruction. Historical deferred
+Memory wording below describes earlier phases.
+
 Phase8D now implements Connected DocumentPicker/binary multipart, formal ImportJob
 inspection, explicit revisioned Person/Relationship binding, server readiness,
 finalize/receipt/replay/cancel and separate RelationshipMessage/Agent History.
 Upload has no operation recovery API: lost Job ID stays unknown with no automatic
 re-upload. See [audit](PHASE_8D_API_AUDIT.md), [8D report](PHASE_8D_ACCEPTANCE.md),
 [Import](MOBILE_IMPORT_UI.md) and [History](MOBILE_HISTORY_UI.md). Historical
-8A–8C deferred-import wording below is superseded. Memory HTTP remains8E; whole8
-is incomplete. No imported-analysis workflow/public FIU/Profile contract exists.
-Stop after8D and wait for explicit8E instruction.
+8A–8C deferred-import wording below is superseded. At8D Memory HTTP was deferred
+to8E; whole8 is incomplete. No imported-analysis workflow/public FIU/Profile
+contract exists. At8D work stopped and waited for the explicit8E instruction.
 
 At Phase8C acceptance, owned Conversation Chat connected through generated REST/History
 and existing authenticated POST SSE, with V1 validation, retained operation keys,

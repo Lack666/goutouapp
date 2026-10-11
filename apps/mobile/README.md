@@ -1,4 +1,13 @@
-# Mobile app — Phase 7A–7D and Phase 8B–8D
+# Mobile app — Phase 7A–7D and Phase 8B–8E
+
+Phase8E connects Settings to the existing Memory APIs using shared development
+JWT/generated transport. It includes server controls/retention/known-ID expiry,
+guarded Undo, one/Person/all confirmation and durable receipts. `test:memory`
+runs48 focused controller/UI cases; `smoke:memory` runs real signed HTTP,
+PostgreSQL/LangGraph and Chrome Expo UI. No model keys or local Memory database.
+Recovery is session-only; restart cannot automatically retry a lost key. See
+[Memory/native instructions](../../docs/MOBILE_MEMORY_INTEGRATION.md) and
+[8E report](../../docs/PHASE_8E_ACCEPTANCE.md). Whole8 stays incomplete;8F not started.
 
 Phase8D uses the SDK57 DocumentPicker and binary File adapters for existing
 multipart Import APIs, explicit UUID/revision bindings, server readiness/finalize
@@ -6,12 +15,13 @@ and separate bounded Relationship/Agent history. `test:imports` runs focused
 controller/platform/UI tests; `smoke:imports` runs signed HTTP/PostgreSQL and
 Chrome file-picker E2E. See [8D acceptance](../../docs/PHASE_8D_ACCEPTANCE.md),
 [import/native instructions](../../docs/MOBILE_IMPORT_UI.md) and
-[history](../../docs/MOBILE_HISTORY_UI.md). Memory HTTP remains deferred to8E.
+[history](../../docs/MOBILE_HISTORY_UI.md). Memory HTTP was deferred at8D acceptance.
 
 Phase8C Connected Chat sends actual Agent REST/POST SSE through the same8B JWT
 session, selects owned generic/bound Conversations and recovers public Agent History.
 It shows server-confirmed answers, actual run/key IDs, safe same-key retry and explicit
-unknown outcomes. Import/RelationshipMessage history and Memory mutations stay deferred.
+unknown outcomes. At8C acceptance, Import/RelationshipMessage history and Memory
+mutations were deferred; the current8D/8E sections above supersede that boundary.
 See [Chat](../../docs/MOBILE_AGENT_CHAT.md), [streaming/native steps](../../docs/MOBILE_STREAMING.md)
 and [8C acceptance](../../docs/PHASE_8C_ACCEPTANCE.md). `test:sse`, `test:agent-chat`
 and `demo:agent` run focused parser/controller/UI and real CLI JWT/PostgreSQL/

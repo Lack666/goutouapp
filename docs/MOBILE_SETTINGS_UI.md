@@ -1,8 +1,16 @@
-# Settings / Memory UI — Phase 7C
+# Settings / Memory UI — Phase 7C Demo and Phase 8E Connected
 
-All Memory controls are **local UI demonstrations** using anonymous synthetic
+Connected Settings now reads actual server controls/records/retention and presents
+guarded Undo and one/Person/all deletion preparation, explicit confirmation and
+durable receipts through the existing JWT/generated transport. Consent and pause
+remain separate; uncertain outcomes are inspected and only the original submitted
+request can be replayed. See [integration/Android steps](MOBILE_MEMORY_INTEGRATION.md)
+and [acceptance](PHASE_8E_ACCEPTANCE.md). Demo never falls back into Connected state.
+The sections below describe the preserved Phase7C Demo only.
+
+In Demo mode all Memory controls are **local UI demonstrations** using anonymous synthetic
 ViewModels. No Memory API, authentication, saved preference, challenge, receipt
-or database mutation exists in Mobile. Feedback says **本地演示状态已更新**.
+or database mutation exists in the Demo. Feedback says **本地演示状态已更新**.
 
 ## Contracts and consent semantics
 

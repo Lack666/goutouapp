@@ -51,6 +51,21 @@ PUBLIC_RESOURCES_API = (ROOT / "apps/server/app/api/v1/resources.py").is_file()
 MOBILE_CONNECTED = (ROOT / "apps/mobile/src/data/resourceController.ts").is_file()
 MOBILE_AGENT_CHAT = (ROOT / "apps/mobile/src/data/agentChatController.ts").is_file()
 MOBILE_IMPORT = (ROOT / "apps/mobile/src/data/importController.ts").is_file()
+MOBILE_MEMORY = (ROOT / "apps/mobile/src/data/memoryController.ts").is_file()
+MEMORY_GATE_FILES = (
+    "apps/mobile/src/api/memoryAdapter.ts",
+    "apps/mobile/src/api/memoryErrors.ts",
+    "apps/mobile/src/contracts/connectedMemory.ts",
+    "apps/mobile/src/features/ConnectedMemoryPanel.tsx",
+    "apps/mobile/tests/connectedMemory.test.ts",
+    "apps/mobile/tests/connectedMemoryUI.test.tsx",
+    "apps/mobile/memory-connected/http.spec.ts",
+    "apps/mobile/memory-connected/web.spec.ts",
+    "apps/mobile/playwright.memory.config.ts",
+    "docs/MOBILE_MEMORY_INTEGRATION.md",
+    "docs/PHASE_8E_ACCEPTANCE.md",
+    "docs/adr/0035-mobile-memory-guards-and-session-recovery.md",
+)
 IMPORT_GATE_FILES = (
     "apps/mobile/src/data/filePicker.native.ts",
     "apps/mobile/src/data/historyController.ts",
@@ -119,37 +134,43 @@ def phase_marker_check() -> None:
     if PHASE > 7:
         raise RuntimeError("Phase 8+ verification is not implemented")
     if PHASE == 7:
-        if SUBPHASE not in {"7D", "8A", "8B", "8C", "8D"} or not all(
+        if SUBPHASE not in {"7D", "8A", "8B", "8C", "8D", "8E"} or not all(
             (MOBILE_FOUNDATION, MOBILE_FEATURE_UI, MOBILE_CONTROLS_UI, MOBILE_FINAL_UI)
         ):
             raise RuntimeError("Phase 7 marker requires all Mobile subphase gates and 7D")
         for name in ("PHASE_7_FINAL_ACCEPTANCE.md", "PHASE_8_MOBILE_INTEGRATION_HANDOFF.md"):
             if not (ROOT / "docs" / name).is_file():
                 raise RuntimeError(f"Missing Phase 7 final document: {name}")
-    if SUBPHASE in {"8A", "8B", "8C", "8D"}:
+    if SUBPHASE in {"8A", "8B", "8C", "8D", "8E"}:
         if PHASE != 7 or not PUBLIC_RESOURCES_API:
             raise RuntimeError("Phase 8A requires complete Phase 7 and resource gates")
         for name in RESOURCE_GATE_FILES:
             if not (ROOT / name).is_file():
                 raise RuntimeError(f"Missing Phase 8A gate: {name}")
-    if SUBPHASE in {"8B", "8C", "8D"}:
+    if SUBPHASE in {"8B", "8C", "8D", "8E"}:
         if PHASE != 7 or not MOBILE_CONNECTED:
             raise RuntimeError("Phase 8B requires complete Phase 7 and connected Mobile gates")
         for name in CONNECTED_GATE_FILES:
             if not (ROOT / name).is_file():
                 raise RuntimeError(f"Missing Phase 8B gate: {name}")
-    if SUBPHASE in {"8C", "8D"}:
+    if SUBPHASE in {"8C", "8D", "8E"}:
         if PHASE != 7 or not MOBILE_AGENT_CHAT:
             raise RuntimeError("Phase 8C requires complete Phase 7 and Agent Chat gates")
         for name in AGENT_CHAT_GATE_FILES:
             if not (ROOT / name).is_file():
                 raise RuntimeError(f"Missing Phase 8C gate: {name}")
-    if SUBPHASE == "8D":
+    if SUBPHASE in {"8D", "8E"}:
         if PHASE != 7 or not MOBILE_IMPORT:
             raise RuntimeError("Phase 8D requires complete Phase 7 and Import/History gates")
         for name in IMPORT_GATE_FILES:
             if not (ROOT / name).is_file():
                 raise RuntimeError(f"Missing Phase 8D gate: {name}")
+    if SUBPHASE == "8E":
+        if PHASE != 7 or not MOBILE_MEMORY:
+            raise RuntimeError("Phase 8E requires complete Phase 7 and Memory gates")
+        for name in MEMORY_GATE_FILES:
+            if not (ROOT / name).is_file():
+                raise RuntimeError(f"Missing Phase 8E gate: {name}")
 
 
 def run(command: list[str]) -> None:
@@ -348,6 +369,8 @@ def evals() -> None:
 
 def repository_checks() -> None:
     safe_directory = f"safe.directory={ROOT.as_posix()}"
+    run(["git", "-c", safe_directory, "diff", "--check"])
+    run(["git", "-c", safe_directory, "diff", "--cached", "--check"])
     tracked = (
         subprocess.run(
             ["git", "-c", safe_directory, "ls-files", "-z"],
@@ -422,6 +445,16 @@ def verify() -> None:
         run([pnpm, "--filter", "@goutou/mobile", "run", "smoke:imports"])
         print("PASS: Phase 8D signed JWT / multipart / ImportJob / PostgreSQL / History / Expo Web")
         print("ANDROID NATIVE IMPORT: separate evidence; never inferred from Web")
+    if MOBILE_MEMORY:
+        pnpm = shutil.which("pnpm")
+        if not pnpm:
+            raise RuntimeError("pnpm is required for Memory integration")
+        run([pnpm, "--filter", "@goutou/mobile", "run", "smoke:memory"])
+        print(
+            "PASS: Phase 8E signed JWT / Memory controls / guarded mutations / "
+            "PostgreSQL / Expo Web"
+        )
+        print("ANDROID NATIVE MEMORY: separate evidence; never inferred from Web")
     if DATABASE_FOUNDATION:
         print("PASS: PostgreSQL migration and integration gate")
     elif BACKEND_FOUNDATION:
@@ -544,7 +577,9 @@ def verify() -> None:
                 print("PASS: Phase 7D focused integration and real browser gates")
             else:
                 print("DEFERRED: Phase 7D final acceptance")
-            if MOBILE_IMPORT:
+            if MOBILE_MEMORY:
+                print("DEFERRED: Phase 8F whole Phase 8 final/native fault evidence")
+            elif MOBILE_IMPORT:
                 print("DEFERRED: Phase 8E Memory; whole Phase 8 final/native fault evidence")
             elif MOBILE_AGENT_CHAT:
                 print("DEFERRED: Phase 8D Import/History, Phase 8E Memory; native final evidence")
@@ -570,7 +605,9 @@ def verify() -> None:
             if PHASE == 7:
                 print("PASS: Phase 7 Expo React Native MVP")
                 suffix = (
-                    " and Phase 8A/8B/8C/8D"
+                    " and Phase 8A/8B/8C/8D/8E"
+                    if MOBILE_MEMORY
+                    else " and Phase 8A/8B/8C/8D"
                     if MOBILE_IMPORT
                     else " and Phase 8A/8B/8C"
                     if MOBILE_AGENT_CHAT

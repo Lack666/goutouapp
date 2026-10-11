@@ -143,6 +143,13 @@ export function ConnectedChatScreen({ connection }: { connection: Connection }) 
                     需要通过正式 Memory 确认服务处理；此页不执行授权、撤销或删除。
                   </BodyText>
                 )}
+                {view.memoryStatus && (
+                  <PrimaryButton
+                    label="前往 Memory 控制与确认"
+                    variant="quiet"
+                    onPress={() => router.push('/settings')}
+                  />
+                )}
                 {view.warnings.map((warning, i) => (
                   <BodyText key={i}>{warning}</BodyText>
                 ))}

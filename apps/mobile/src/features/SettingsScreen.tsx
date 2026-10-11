@@ -22,6 +22,7 @@ import { useTheme, type ThemePreference } from '../theme/ThemeProvider';
 import { tokens } from '../theme/tokens';
 import { useConnection } from '../session/ConnectionProvider';
 import { DevelopmentSessionControls } from '../components/DevelopmentSessionControls';
+import { ConnectedMemoryPanel } from './ConnectedMemoryPanel';
 
 const preferences: readonly { id: ThemePreference; label: string }[] = [
   { id: 'system', label: '跟随系统' },
@@ -37,6 +38,7 @@ export default function SettingsScreen() {
   );
 }
 function ConnectedSettingsScreen() {
+  const connection = useConnection()!;
   const { back } = useLocalNavigation();
   const { preference, setPreference } = useTheme();
   return (
@@ -54,9 +56,7 @@ function ConnectedSettingsScreen() {
         ))}
       </SectionCard>
       <DevelopmentSessionControls />
-      <SectionCard title="记忆服务尚未接入">
-        <BodyText>开发会话不代表 Memory 授权；真实记忆读取与变更仍未开放。</BodyText>
-      </SectionCard>
+      <ConnectedMemoryPanel connection={connection} />
     </ScreenContainer>
   );
 }

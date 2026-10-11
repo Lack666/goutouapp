@@ -1,16 +1,24 @@
-# Generated Mobile API client — Phase 8B/8C
+# Generated Mobile API client — Phase 8B–8E
+
+Phase8E explicitly enables the13 existing Memory operations on the same generated
+36-operation client/session/transport. memoryAdapter validates public DTOs and
+projects camelCase ViewModels; memoryErrors retains only safe public codes.
+Owner/epoch/cancellation guards apply to reads and writes. Server confirmation
+and idempotency remain authoritative. No generated schema/client edits or new
+dependency are needed. See [Memory contract audit](MOBILE_MEMORY_INTEGRATION.md).
 
 Phase8D also enables the existing generated ImportJob/binding/ready/finalize/cancel
 and RelationshipMessage history routes through the same transport/session. Narrow
 binary FormData serialization bridges the generator's binary-as-string field;
 no second token manager or wire DTO. Import errors read only allowlisted public
-codes. Memory routes remain disabled. See [8D](PHASE_8D_ACCEPTANCE.md) and
+codes. Memory routes were disabled at8D acceptance. See [8D](PHASE_8D_ACCEPTANCE.md) and
 [import contract](MOBILE_IMPORT_UI.md). The earlier deferred-import text below
 describes the8C historical boundary, superseded by8D.
 
 Phase8C reuses the unchanged generated client for Agent REST and public Agent
 History. App composition explicitly enables these paths and POST SSE in the same
-authenticated transport. Import/Memory operations stay disabled. Native streaming
+authenticated transport. Import/Memory were disabled at8C acceptance;8D/8E now
+explicitly enable the existing methods. Native streaming
 uses installed expo/fetch with the same session/epoch/origin; the OpenAPI SSE string
 has a separately audited V1 union. See [Chat](MOBILE_AGENT_CHAT.md) and
 [streaming](MOBILE_STREAMING.md). The resource-only allowlist below is the8B default.

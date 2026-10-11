@@ -21,7 +21,7 @@ as implemented by a placeholder directory or a golden expectation.
 | 5 | Chat Import and Relationship Data Pipeline | PASS (5A–5D) |
 | 6 | User-facing memory controls and retention policy integration | PASS (6A–6D) |
 | 7 | Expo React Native MVP | PASS (7A–7D) |
-| 8 | Mobile API integration, generated client and stream consumption | IN PROGRESS / NOT YET COMPLETE (8A–8D engineering PASS) |
+| 8 | Mobile API integration, generated client and stream consumption | IN PROGRESS / NOT YET COMPLETE (8A–8E engineering PASS) |
 | 9 | Security, privacy, reliability and deletion | PENDING |
 | 10 | Optional hybrid RAG with pgvector | PENDING |
 | 11 | Agent eval and observability | PENDING |
@@ -68,6 +68,26 @@ as implemented by a placeholder directory or a golden expectation.
 
 ## Implementation log
 
+### Phase 8E — Memory Controls and Guarded Mutations Mobile Integration
+
+- Current scope is8E only; whole8 remains IN PROGRESS,8F not started.
+- 8D evidence repaired and closed first under marker7/8D: complete root exit0
+  independently recorded, backend556/Mobile298, Demo22/Connected3+3+4, unchanged
+  OpenAPI36 and Golden83. Original Mobile296 plus2 arrival-order tests;217→219
+  traced to commit5083062 durable logout tests. Exact anonymous Android fixture
+  cleanup deferred while the existing device is unavailable.
+- Implementation uses existing generated13 Memory APIs, JWT/session/epoch,
+  authoritative consent/pause/retention inspection, guarded latest Undo and
+  one/Person/all server challenges with explicit confirmation/durable receipts.
+  Immutable session attempts safely replay original targets; no local journal
+  or MemoryStore. Chat navigates only; Demo and production Agent behavior preserved.
+- New48 focused cases and real Memory HTTP/Expo Web gates are added to full root.
+  Complete pre-marker root exited0 (556/346/48/36,Demo22,Connected3/3/4/5).
+  Marker advanced only to7/8E; complete post-marker root also exited0 with the
+  same556/346/48/36 and22/3/3/4/5 results. Applicable8E gates PASS. Native
+  Memory is NOT RUN and carried to8F; never inferred from Chrome.
+  See [Memory](MOBILE_MEMORY_INTEGRATION.md) and [8E report](PHASE_8E_ACCEPTANCE.md).
+
 ### Phase 8D — Chat Import and History Mobile Integration
 
 - 2026-10-10 starts at clean5083062/marker7/8C. Audited actual Import routes,
@@ -97,7 +117,7 @@ as implemented by a placeholder directory or a golden expectation.
   expiry cleared editable Job/file UI. Web is not substituted for native evidence.
 - Marker advances only to7/8D after applicable engineering gates. Accepted-marker
   full root rerun passed the same296/77/556 and22/3/3/4 regression gates.
-  Whole Phase8 remains incomplete;8E is not started.
+  Whole Phase8 remained incomplete;at8D acceptance8E was not started.
   See [8D acceptance](PHASE_8D_ACCEPTANCE.md), [API audit](PHASE_8D_API_AUDIT.md),
   [Import/native steps](MOBILE_IMPORT_UI.md), [History](MOBILE_HISTORY_UI.md) and
   [ADR0034](adr/0034-mobile-import-and-relationship-history.md). Stop after8D.

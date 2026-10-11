@@ -55,7 +55,10 @@ historical chat time. The future adapter must provide validated aware timestamps
 
 ## Window, navigation and reset
 
-One FlatList owns header, rows, footer and empty state, with no parent ScrollView.
+One FlatList owns header, rows and empty state, with no parent ScrollView.
+The shared pagination footer now sits outside the virtualized list in the same
+flex container (8D evidence repair before8E), so layout changes cannot move the
+More button during a press. Demo and Connected use the same stable control.
 Initial/batch render is 12 and windowSize is 5. Local data windows start at 30;
 **查看更多（Demo）** extends the prefix by at most 30 until exhausted. Filtering/
 sorting is memoized, and loading more slices a larger prefix without re-reading

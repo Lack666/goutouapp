@@ -18,7 +18,7 @@ idempotency around the standalone runtime.
 
 ```mermaid
 flowchart LR
-  Mobile[React Native + Expo] -->|8B resources; 8C Agent REST/SSE; 8D binary import/history| Server[FastAPI server]
+  Mobile[React Native + Expo] -->|8B resources; 8C Agent REST/SSE; 8D import/history; 8E guarded Memory| Server[FastAPI server]
   Server --> Database[(PostgreSQL)]
   Server -->|AgentService| Runtime[Independent LangGraph Agent Runtime]
   Runtime -->|deterministic reference loader| Knowledge[Preserved goutoujunshi Skill]
@@ -34,6 +34,12 @@ flowchart LR
   any external Agent Harness such as Codex or Claude Code.
 - `knowledge/goutoujunshi` preserves the upstream Skill. Its content is not
   modified as part of app development.
+- Phase8E MemoryController uses the same generated transport/session, public DTO
+  adapters and server Memory services. Consent/retention/confirmation/receipts
+  stay server authoritative; session-only immutable key/target attempts enable
+  safe recovery without a client MemoryStore or journal. See
+  [Mobile Memory](MOBILE_MEMORY_INTEGRATION.md). Production Agent behavior and
+  frozen knowledge are unchanged; native and whole Phase8 acceptance remain8F.
 - Mobile and server are separate deployments. Phase 8 will integrate REST and
   the actual Phase 4 POST SSE transport; the original WebSocket direction is
   not implemented. PostgreSQL belongs to the server side. Phase 7A–7D are local only.

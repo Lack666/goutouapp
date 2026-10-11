@@ -21,6 +21,7 @@ import { AgentChatController } from '../data/agentChatController';
 import { streamFetch } from '../api/streamFetch';
 import { ImportController } from '../data/importController';
 import { HistoryController } from '../data/historyController';
+import { MemoryController } from '../data/memoryController';
 
 export interface Connection {
   session: DevelopmentSession;
@@ -28,6 +29,7 @@ export interface Connection {
   chat: AgentChatController;
   imports: ImportController;
   history: HistoryController;
+  memory: MemoryController;
 }
 export function createConnection(baseURL: string, localDevelopment: boolean): Connection {
   const session = new DevelopmentSession(createPlatformTokenStorage());
@@ -41,6 +43,8 @@ export function createConnection(baseURL: string, localDevelopment: boolean): Co
     streamFetch,
     60_000,
     true,
+    120_000,
+    true,
   );
   return {
     session,
@@ -48,6 +52,7 @@ export function createConnection(baseURL: string, localDevelopment: boolean): Co
     chat: new AgentChatController(transport, session, randomUUID),
     imports: new ImportController(transport, session),
     history: new HistoryController(transport, session),
+    memory: new MemoryController(transport, session, randomUUID),
   };
 }
 const Context = createContext<Connection | null>(null);
@@ -101,11 +106,13 @@ export function ConnectionProvider({
         )
           void connection.imports.inspect();
         void connection.history.resume();
+        void connection.memory.resume();
       } else {
         connection.chat.pause();
         // Opening the system picker itself changes AppState; retain its guarded result.
         if (connection.imports.snapshot().upload !== 'selecting') connection.imports.pause();
         connection.history.pause();
+        connection.memory.pause();
       }
     });
     return () => subscription.remove();

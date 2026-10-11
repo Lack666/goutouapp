@@ -62,34 +62,47 @@ export function HistoryList({
   connected?: boolean;
 }) {
   return (
-    <FlatList
-      testID="history-list"
-      accessibilityLabel="历史消息列表"
-      style={{ flex: 1 }}
-      contentContainerStyle={{
-        padding: 16,
-        maxWidth: tokens.layout.maxWidth,
-        width: '100%',
-        alignSelf: 'center',
-      }}
-      data={items}
-      keyExtractor={historyKey}
-      renderItem={({ item }) => <HistoryRow item={item} />}
-      initialNumToRender={12}
-      maxToRenderPerBatch={12}
-      windowSize={5}
-      ListHeaderComponent={header}
-      ListFooterComponent={footer}
-      ListEmptyComponent={
-        <EmptyState
-          title="还没有历史记录"
-          description={
-            connected
-              ? '当前范围尚无已读取的服务器消息。'
-              : '当前本地演示窗口为空；不是服务器保存的历史。'
-          }
-        />
-      }
-    />
+    <View style={{ flex: 1 }}>
+      <FlatList
+        testID="history-list"
+        accessibilityLabel="历史消息列表"
+        style={{ flex: 1 }}
+        contentContainerStyle={{
+          padding: 16,
+          maxWidth: tokens.layout.maxWidth,
+          width: '100%',
+          alignSelf: 'center',
+        }}
+        data={items}
+        keyExtractor={historyKey}
+        renderItem={({ item }) => <HistoryRow item={item} />}
+        initialNumToRender={12}
+        maxToRenderPerBatch={12}
+        windowSize={5}
+        ListHeaderComponent={header}
+        ListEmptyComponent={
+          <EmptyState
+            title="还没有历史记录"
+            description={
+              connected
+                ? '当前范围尚无已读取的服务器消息。'
+                : '当前本地演示窗口为空；不是服务器保存的历史。'
+            }
+          />
+        }
+      />
+      {footer && (
+        <View
+          style={{
+            paddingHorizontal: 16,
+            maxWidth: tokens.layout.maxWidth,
+            width: '100%',
+            alignSelf: 'center',
+          }}
+        >
+          {footer}
+        </View>
+      )}
+    </View>
   );
 }

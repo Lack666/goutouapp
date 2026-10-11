@@ -81,6 +81,32 @@ export class ResourceController {
   }
   private page<K extends ResourceKind>(kind: K, page: ResourcePage<ResourceModels[K]>) {
     this.view = { ...this.view, pages: { ...this.view.pages, [kind]: page } };
+    // Person and Relationship pages may finish in either order. A late Person
+    // page enriches names only; it must not refresh/reset the selected scope.
+    if (kind === 'persons' && page.status === 'ready') {
+      const relationships = this.view.pages.relationships;
+      this.view = {
+        ...this.view,
+        pages: {
+          ...this.view.pages,
+          relationships: {
+            ...relationships,
+            items: relationships.items.map((relationship) => {
+              const person = this.view.pages.persons.items.find(
+                (item) => item.id === relationship.person.id,
+              );
+              return person
+                ? {
+                    ...relationship,
+                    displayName: person.nickname ?? '对象名称未读取',
+                    person: { id: person.id, nickname: person.nickname },
+                  }
+                : relationship;
+            }),
+          },
+        },
+      };
+    }
     this.emit();
   }
   private detail<K extends ResourceKind>(kind: K, detail: ResourceDetail<ResourceModels[K]>) {

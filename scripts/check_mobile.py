@@ -1,8 +1,9 @@
-"""Mobile static, Phase 7 regression and Phase 8B/8C/8D connected gates."""
+"""Mobile static, Phase 7 regression and Phase 8B/8C/8D/8E connected gates."""
 
 from __future__ import annotations
 
 import json
+import os
 import re
 import shutil
 import subprocess
@@ -76,6 +77,8 @@ def main() -> None:
             commands.append([pnpm, "--filter", "@goutou/mobile", "run", name])
     if (MOBILE / "src/data/importController.ts").is_file():
         commands.append([pnpm, "--filter", "@goutou/mobile", "run", "test:imports"])
+    if (MOBILE / "src/data/memoryController.ts").is_file():
+        commands.append([pnpm, "--filter", "@goutou/mobile", "run", "test:memory"])
     feature_ui = (MOBILE / "src/features/ChatScreen.tsx").is_file()
     if feature_ui:
         commands.append([pnpm, "--filter", "@goutou/mobile", "run", "test:features"])
@@ -95,7 +98,13 @@ def main() -> None:
         commands.append([pnpm, "--filter", "@goutou/mobile", "run", "test:integration"])
     for command in commands:
         print("+", " ".join(command), flush=True)
-        subprocess.run(command, cwd=ROOT, check=True)
+        env = None
+        if command[-1] == "expo-doctor":
+            preload = ROOT / "scripts/expo_doctor_fetch.cjs"
+            options = os.environ.get("NODE_OPTIONS", "")
+            node_options = f'{options} --require "{preload.as_posix()}"'.strip()
+            env = {**os.environ, "NODE_OPTIONS": node_options}
+        subprocess.run(command, cwd=ROOT, env=env, check=True)
     peers = subprocess.run(
         [pnpm, "peers", "check"], cwd=ROOT, capture_output=True, text=True, check=True
     )

@@ -2,6 +2,7 @@ import { createApiClient } from './generated/client';
 import { ApiError, httpError } from './errors';
 import { agentHTTPError } from './agentErrors';
 import { importHTTPError } from './importErrors';
+import { memoryHTTPError } from './memoryErrors';
 import type { components, UUID } from './generated/client';
 import type { AgentEvent } from './agentEvents';
 import { consumeSSE } from './sseParser';
@@ -43,6 +44,7 @@ export class ApiTransport {
     private readonly agentTimeoutMs = 60_000,
     private readonly importEnabled = false,
     private readonly importTimeoutMs = 120_000,
+    private readonly memoryEnabled = false,
   ) {
     this.baseURL = validateBaseURL(baseURL, localDevelopment);
     this.client = createApiClient({
@@ -102,6 +104,17 @@ export class ApiTransport {
                 ? 'GET'
                 : null;
     const isImport = importMethod !== null;
+    const memoryMethod =
+      /^\/api\/v1\/(memory\/control|memories(?:\/[0-9a-f-]{36})?|memory\/undo\/preview|memory\/mutations\/[0-9a-f-]{36})$/i.test(
+        path,
+      )
+        ? 'GET'
+        : /^\/api\/v1\/memory\/(consent|pause|resume|undo|deletions\/(one|person|all)\/prepare|deletions\/[0-9a-f-]{36}\/execute)$/i.test(
+              path,
+            )
+          ? 'POST'
+          : null;
+    const isMemory = memoryMethod !== null;
     if (
       !(
         /^\/api\/v1\/(persons|relationships|conversations)(\/[0-9a-f-]{36})?$/i.test(path) &&
@@ -112,7 +125,8 @@ export class ApiTransport {
         isAgent &&
         request.method === (path.endsWith('/messages') ? 'GET' : 'POST')
       ) &&
-      !(this.importEnabled && isImport && request.method === importMethod)
+      !(this.importEnabled && isImport && request.method === importMethod) &&
+      !(this.memoryEnabled && isMemory && request.method === memoryMethod)
     )
       throw new ApiError('validation');
     const epoch = this.session.epoch();
@@ -134,7 +148,7 @@ export class ApiTransport {
     try {
       const token = this.session.credential();
       if (epoch !== this.session.epoch()) throw new ApiError('cancelled');
-      if ((isAgent || isImport) && !token) throw new ApiError('unauthorized');
+      if ((isAgent || isImport || isMemory) && !token) throw new ApiError('unauthorized');
       if (controller.signal.aborted) throw new ApiError('cancelled');
       const headers = new Headers(request.headers);
       headers.delete('Authorization');
@@ -167,6 +181,8 @@ export class ApiTransport {
           throw agentHTTPError(response.status, await Promise.race([response.text(), cancelled]));
         if (isImport && response.status !== 401)
           throw importHTTPError(response.status, await Promise.race([response.text(), cancelled]));
+        if (isMemory && response.status !== 401)
+          throw memoryHTTPError(response.status, await Promise.race([response.text(), cancelled]));
         throw httpError(response.status);
       }
       const result = await consume(response, controller.signal, <V>(promise: Promise<V>) =>

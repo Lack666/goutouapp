@@ -1,5 +1,17 @@
 # Phase 8D acceptance — 2026-10-10 (Asia/Shanghai)
 
+2026-10-11 evidence reconciliation before8E: independently reran complete root
+under marker7/8D after fixing discovered preflight blockers; actual process exit0
+and independent exit file0. Backend556/Mobile298 (retained296 +2 arrival-order
+regressions), Demo22 and real resources3/Agent3/Import4, Doctor21, OpenAPI/generated,
+Alembic/Golden83/secret/all earlier gates passed. Full log:
+`.cache/phase8e-preflight-8d-baseline.log`, exit:
+`.cache/phase8e-preflight-8d-baseline.exit`.217→219 were exactly the2 durable
+logout tests in commit5083062. Old fixture cleanup is CLEANUP DEFERRED because
+adb is unavailable; no file deleted. Repairs/earlier failed attempts are recorded
+in [8E preflight](PHASE_8E_ACCEPTANCE.md); old PASS is not substituted for this run.
+The report below preserves its historical8D disposition.
+
 PHASE: Phase 8D — Chat Import and History Mobile Integration
 
 STATUS: PASS — applicable8D CODE/TEST/DOC/DEMO/REGRESSION gates, including

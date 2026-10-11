@@ -46,7 +46,8 @@ function ConnectedHomeScreen() {
           onPress={() => router.push('/history')}
         />
         <BodyText muted>
-          Agent 对话、微信 Markdown 导入与两种服务器历史已接入。Memory 控制仍未开放联网操作。
+          Agent 对话、微信 Markdown 导入、两种服务器历史与 Memory
+          控制已接入。记忆变更需在设置中明确确认。
         </BodyText>
       </SectionCard>
     </ScreenContainer>

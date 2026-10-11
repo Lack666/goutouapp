@@ -1,4 +1,13 @@
-# Mobile architecture — Phase 7A–7D and Phase 8B/8C
+# Mobile architecture — Phase 7A–7D and Phase 8B–8E
+
+Phase8E adds one MemoryController and ConnectedMemoryPanel to the existing
+ConnectionProvider/DevelopmentSession/ApiTransport composition. Generated public
+adapters project control, bounded record/expiry inspection, latest Undo, deletion
+challenges and durable receipts. Server authority and immutable submitted key/
+target pairs govern recovery; no local MemoryStore, consent database or journal.
+Chat navigates to Settings without executing Memory operations. Demo remains
+local. See [Memory](MOBILE_MEMORY_INTEGRATION.md) and [8E](PHASE_8E_ACCEPTANCE.md).
+The earlier Phase8C descriptions below retain their historical boundaries.
 
 Phase8C extends the8B composition with one AgentChatController using the same
 transport/session/resources. Generated Agent REST/History and native expo/fetch POST

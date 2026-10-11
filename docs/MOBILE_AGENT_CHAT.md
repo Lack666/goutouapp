@@ -1,5 +1,12 @@
 # Connected Agent Chat — Phase 8C
 
+Phase8E adds “前往 Memory 控制与确认” when Chat has a server memory_status,
+including pending_confirmation. This navigates only to Connected Settings;
+Chat never grants consent or automatically runs Undo/delete. It preserves the
+actual server status and existing REST/SSE/history/retry behavior. See
+[Memory integration](MOBILE_MEMORY_INTEGRATION.md); earlier deferred-Memory text
+below describes the historical8C boundary.
+
 Phase8D adds separate imported RelationshipMessage History; this Chat controller,
 AgentService input and Conversation Message contract remain unchanged. Import
 creates no Agent answer or Memory. No imported transcript is sent to a provider.
@@ -77,10 +84,12 @@ and no old action is automatically resent. A persisted history row cannot recons
 an operation key or prove that optional memory finalization ended. Production recovery
 and reconciliation remain future reliability work.
 
-Memory status and pending confirmation are read-only public receipts; no grant,
-revoke,pause,resume,undo or delete transport is enabled. Pending confirmation explains
-the formal confirmation service; chat cannot bypass it. Structured FIU/Profile DTOs,
-real provider quality, Import networking and Memory controls remain deferred.
+Chat Memory status and pending confirmation remain read-only public receipts.
+Chat performs no grant/revoke/pause/resume/Undo/delete;8E Settings uses the formal
+Memory APIs through the shared transport. Pending confirmation links to that
+service and Chat cannot bypass it. At8C Import networking and Memory controls
+were deferred;8D/8E now implement them. Structured FIU/Profile DTOs and real
+provider quality remain deferred.
 
 See [streaming](MOBILE_STREAMING.md), [Agent API](AGENT_API.md),
 [idempotency](IDEMPOTENCY.md) and [acceptance](PHASE_8C_ACCEPTANCE.md).

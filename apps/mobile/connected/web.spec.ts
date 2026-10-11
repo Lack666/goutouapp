@@ -26,9 +26,15 @@ test('real Expo Web owned resource creation, lost response retry, contexts and A
 }) => {
   const errors: string[] = [];
   const requests: string[] = [];
+  const memoryRequests: { method: string; path: string }[] = [];
   page.on('pageerror', (error) => errors.push(error.name));
   page.on('request', (request) => {
-    if (request.url().startsWith(backend.baseURL)) requests.push(new URL(request.url()).pathname);
+    if (request.url().startsWith(backend.baseURL)) {
+      const path = new URL(request.url()).pathname;
+      requests.push(path);
+      if (/^\/api\/v1\/(memory\/|memories)/.test(path))
+        memoryRequests.push({ method: request.method(), path });
+    }
   });
   await page.goto('/settings');
   await connect(page, backend.a);
@@ -117,9 +123,13 @@ test('real Expo Web owned resource creation, lost response retry, contexts and A
     requests.every(
       (path) =>
         /^\/api\/v1\/(persons|relationships|conversations)(\/[a-f0-9-]{36})?$/.test(path) ||
-        /^\/api\/v1\/(conversations|relationships)\/[a-f0-9-]{36}\/messages$/.test(path), // 8C/8D pages read separate formal histories; no Agent POST/upload/Memory in this regression.
+        /^\/api\/v1\/(conversations|relationships)\/[a-f0-9-]{36}\/messages$/.test(path) ||
+        ['/api/v1/memory/control', '/api/v1/memories', '/api/v1/memory/undo/preview'].includes(
+          path,
+        ), // 8E Settings inspects Memory; all mutations remain forbidden in this resource regression.
     ),
   ).toBe(true);
+  expect(memoryRequests.every((request) => request.method === 'GET')).toBe(true);
   expect(errors).toEqual([]);
   expect(await backend.counts()).toEqual({ persons: 3, relationships: 2, conversations: 2 });
 });

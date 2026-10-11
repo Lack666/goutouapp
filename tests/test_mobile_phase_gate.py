@@ -84,7 +84,21 @@ class MobilePhaseGateTests(unittest.TestCase):
                 verifier.phase_marker_check()
 
     def test_8e_is_not_implemented_by_8d(self) -> None:
+        with patch.multiple(verifier, PHASE=7, SUBPHASE="8E", MOBILE_MEMORY=False):
+            with self.assertRaisesRegex(RuntimeError, "Memory gates"):
+                verifier.phase_marker_check()
+
+    def test_8e_keeps_whole_phase_eight_incomplete(self) -> None:
         with patch.multiple(verifier, PHASE=7, SUBPHASE="8E"):
+            verifier.phase_marker_check()
+
+    def test_8e_cannot_skip_import_history(self) -> None:
+        with patch.multiple(verifier, PHASE=7, SUBPHASE="8E", MOBILE_IMPORT=False):
+            with self.assertRaisesRegex(RuntimeError, "Import/History gates"):
+                verifier.phase_marker_check()
+
+    def test_8f_is_not_implemented_by_8e(self) -> None:
+        with patch.multiple(verifier, PHASE=7, SUBPHASE="8F"):
             with self.assertRaisesRegex(RuntimeError, "all Mobile subphase gates"):
                 verifier.phase_marker_check()
 
