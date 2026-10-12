@@ -527,3 +527,24 @@ Native UI actions and host-side Agent fixture preparation are distinct evidence.
 Loopback Metro and adb reverse replace a LAN listener for this host's acceptance.
 The prior sections retain their historical phase boundaries. Current acceptance
 and recovery limits are in PHASE_8_FINAL_ACCEPTANCE and the Phase 9 handoff.
+
+## Phase 8F closeout observation boundary (2026-10-12)
+
+The opt-in native SSE observer attaches to the existing `expo/fetch` response
+and accepted parser callbacks, with actual React-committed phase/progress.
+It exports bounded relative event/UI metadata, Reader operation counts,
+terminal state and a Run-consistency boolean. Run IDs stay private to that
+comparison; payloads, Memory, prompts and credentials are excluded. Platform
+files keep Web/Node inert and gate Android on both development mode and an
+explicit public, non-secret acceptance flag. It adds no transport replacement,
+model token stream, endpoint, Graph node or production logging pipeline.
+
+Disposable native fixtures wrap the unchanged ASGI application for controlled
+postcommit response loss, stream EOF and held GET responses, using private pipe
+commands and actual signed-owner verification. A delayed keyless Mock provides
+observable semantic event intervals. The fixture is outside production App
+composition. Native resource/Agent mutations, host REST preconditions, client
+observations and SQL/receipt witnesses are kept distinct in complete executions.
+The Phase8 marker checks hashed complete native transcripts and an independent
+pre-marker root exit before accepting8/8F. Durable pending-operation storage,
+automatic crash reconciliation and production identity remain future work.

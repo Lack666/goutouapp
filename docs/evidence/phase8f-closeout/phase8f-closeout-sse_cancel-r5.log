@@ -1,0 +1,27 @@
+{"android_api": "37"}
+{"fixture": "ready", "baseURL": "http://127.0.0.1:8024", "commands": "state, tap [label,direction?], login a|b|expired, seed, evidence, stage, cleanup, back, home, stop"}
+{"command": "open", "status": "done"}
+{"command": "tap", "status": "done"}
+{"case": "8F-SSE-CANCEL"}
+{"command": "case", "status": "done"}
+{"person": "f295a701-42ea-4d77-9636-1d3e6aefced7", "relationship": "936714d7-ee99-4d32-a066-8bf397ac7f65", "conversation": "172cc0a3-7316-4cf4-821c-19354480a442"}
+{"command": "seed", "status": "done"}
+{"command": "login", "status": "done"}
+{"command": "route", "status": "done"}
+{"command": "fault", "status": "done"}
+{"command": "input", "status": "done"}
+{"command": "tap", "status": "done"}
+{"command": "tap", "status": "done"}
+[{"text": "", "label": "Tools", "bounds": "[937,219][1005,287]", "enabled": "true"}, {"text": "", "label": "对话消息列表", "bounds": "[0,142][1080,1909]", "enabled": "true"}, {"text": "Agent 对话 · 服务器记录", "label": "", "bounds": "[107,142][973,50]", "enabled": "true"}, {"text": "当前 Conversation：172cc0a3-7316-4cf4-821c-19354480a442", "label": "", "bounds": "[107,142][973,214]", "enabled": "true"}, {"text": "关系范围：936714d7-ee99-4d32-a066-8bf397ac7f65", "label": "", "bounds": "[107,245][973,377]", "enabled": "true"}, {"text": "Agent 状态：运行中", "label": "", "bounds": "[107,409][973,475]", "enabled": "true"}, {"text": "NATIVE-SSE {\"reader\":{\"reads\":6,\"cancels\":0,\"releases\":0},\"events\":[{\"type\":\"run_started\",\"ms\":102},{\"type\":\"status\",\"ms\":157},{\"type\":\"status\",\"ms\":212},{\"type\":\"status\",\"ms\":5054}],\"ui\":[{\"phase\":\"running\",\"progress\":null,\"ms\":128},{\"phase\":\"running\",\"progress\":\"preparing\",\"ms\":184},{\"phase\":\"running\",\"progress\":\"checking_safety\",\"ms\":239},{\"phase\":\"running\",\"progress\":\"understanding_request\",\"ms\":5080}],\"consistentRun\":true,\"terminal\":null}", "label": "", "bounds": "[107,506][973,1298]", "enabled": "true"}, {"text": "理解请求", "label": "", "bounds": "[107,1330][973,1396]", "enabled": "true"}, {"text": "run_id：445b2d2b-dc6e-42bb-8baa-3ed961a47afb", "label": "", "bounds": "[107,1427][973,1559]", "enabled": "true"}, {"text": "operation_key：c7caea9e-51cf-414d-aceb-4768a6529458", "label": "", "bounds": "[107,1591][973,1723]", "enabled": "true"}, {"text": "展示服务器提交的完整文本回答。安全与事实判断由服务器负责；此页没有公开结构化 FIU 数据。", "label": "", "bounds": "[107,1754][973,1909]", "enabled": "true"}, {"text": "", "label": "停止等待", "bounds": "[108,1984][972,1909]", "enabled": "true"}, {"text": "停止等待", "label": "", "bounds": "[152,2018][928,1909]", "enabled": "true"}, {"text": "", "label": "刷新 Agent 历史", "bounds": "[108,2147][972,1909]", "enabled": "true"}, {"text": "刷新 Agent 历史", "label": "", "bounds": "[152,2181][928,1909]", "enabled": "true"}, {"text": "", "label": "加载更多 Agent 历史", "bounds": "[108,2310][972,1909]", "enabled": "false"}, {"text": "加载更多 Agent 历史", "label": "", "bounds": "[152,2344][928,1909]", "enabled": "true"}, {"text": "写下想梳理的内容，发送到服务器", "label": "Agent 消息输入", "bounds": "[31,1943][1048,2102]", "enabled": "false"}, {"text": "Connected · 0/2000 · 服务器确认后进入正式记录", "label": "", "bounds": "[31,2121][1048,2177]", "enabled": "true"}, {"text": "", "label": "发送 Agent 消息", "bounds": "[32,2199][854,2331]", "enabled": "false"}, {"text": "发送 Agent 消息", "label": "", "bounds": "[76,2233][810,2296]", "enabled": "true"}, {"text": "", "label": "清空", "bounds": "[876,2199][1050,2331]", "enabled": "false"}, {"text": "清空", "label": "", "bounds": "[920,2233][1004,2296]", "enabled": "true"}]
+{"native_sse": {"reader": {"reads": 6, "cancels": 0, "releases": 0}, "events": [{"type": "run_started", "ms": 102}, {"type": "status", "ms": 157}, {"type": "status", "ms": 212}, {"type": "status", "ms": 5054}], "ui": [{"phase": "running", "progress": null, "ms": 128}, {"phase": "running", "progress": "preparing", "ms": 184}, {"phase": "running", "progress": "checking_safety", "ms": 239}, {"phase": "running", "progress": "understanding_request", "ms": 5080}], "consistentRun": true, "terminal": null}}
+{"command": "observe", "status": "done"}
+{"command": "assert_ui", "status": "failed"}
+Traceback (most recent call last):
+  File "F:\狗头军师app化\goutouapp\scripts\phase8_android_demo.py", line 779, in <module>
+    main()
+    ~~~~^^
+  File "F:\狗头军师app化\goutouapp\scripts\phase8_android_demo.py", line 759, in main
+    raise RuntimeError(
+        "Native sequence failed; inspect sanitized evidence"
+    ) from None
+RuntimeError: Native sequence failed; inspect sanitized evidence

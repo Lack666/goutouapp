@@ -1,0 +1,302 @@
+[
+  {
+    "execution": {
+      "steps_file": "F:\\\u72d7\u5934\u519b\u5e08app\u5316\\goutouapp\\.cache\\phase8f-closeout-final1-sse_cancel.steps.json",
+      "steps": [
+        "restart",
+        "open settings",
+        "tap [\"\u6e05\u9664\u5f53\u524d\u5f00\u53d1\u4f1a\u8bdd\",\"down\"]",
+        "case 8F-SSE-CANCEL",
+        "seed",
+        "login a",
+        "route [\"chat\",\"current\"]",
+        "fault slow_run",
+        "input [\"Agent \u6d88\u606f\u8f93\u5165\",\"Synthetic cancel waiting\"]",
+        "tap [\"\u53d1\u9001 Agent \u6d88\u606f\"]",
+        "tap [\"\u505c\u6b62\u7b49\u5f85\"]",
+        "state",
+        "observe",
+        "assert_ui \"\u65e0\u6cd5\u786e\u8ba4\u8be5\u8bf7\u6c42\u662f\u5426\u5df2\u5b8c\u6210\u3002\"",
+        "observe cancelled",
+        "wait 8",
+        "observe cancelled",
+        "assert_observer_same",
+        "evidence",
+        "assert_db [\"agent.runs.length\",1]",
+        "assert_db [\"agent.messages.length\",1]",
+        "assert_db [\"agent.memories\",0]",
+        "tap [\"\u6e05\u9664\u5f53\u524d\u5f00\u53d1\u4f1a\u8bdd\",\"down\"]",
+        "stop"
+      ],
+      "helper_sha256": "0960ee5ba32a7b9ceb657fac1b0e21d3bc5b4dd768d15b5a2fe0c5663b8a4c0d",
+      "device": "emulator-5554"
+    }
+  },
+  {
+    "command": "restart",
+    "status": "done"
+  },
+  {
+    "command": "open",
+    "status": "done"
+  },
+  {
+    "command": "tap",
+    "status": "done"
+  },
+  {
+    "case": "8F-SSE-CANCEL"
+  },
+  {
+    "command": "case",
+    "status": "done"
+  },
+  {
+    "command": "seed",
+    "status": "done"
+  },
+  {
+    "command": "login",
+    "status": "done"
+  },
+  {
+    "command": "route",
+    "status": "done"
+  },
+  {
+    "fault": {
+      "armed": "slow_run"
+    }
+  },
+  {
+    "command": "fault",
+    "status": "done"
+  },
+  {
+    "command": "input",
+    "status": "done"
+  },
+  {
+    "command": "tap",
+    "status": "done"
+  },
+  {
+    "command": "tap",
+    "status": "done"
+  },
+  {
+    "ui_state": [
+      {
+        "text": "",
+        "label": "Tools",
+        "bounds": "[937,219][1005,287]",
+        "enabled": "true"
+      },
+      {
+        "text": "",
+        "label": "\u5bf9\u8bdd\u6d88\u606f\u5217\u8868",
+        "bounds": "[0,142][1080,1909]",
+        "enabled": "true"
+      },
+      {
+        "text": "Agent \u5bf9\u8bdd \u00b7 \u670d\u52a1\u5668\u8bb0\u5f55",
+        "label": "",
+        "bounds": "[107,142][973,82]",
+        "enabled": "true"
+      },
+      {
+        "text": "\u5f53\u524d Conversation\uff1afb1dd61b-f2a3-4e1d-a468-feb20049e4f3",
+        "label": "",
+        "bounds": "[107,142][973,246]",
+        "enabled": "true"
+      },
+      {
+        "text": "\u5173\u7cfb\u8303\u56f4\uff1add581694-ebfa-4555-9797-d2da0c52b6a8",
+        "label": "",
+        "bounds": "[107,277][973,409]",
+        "enabled": "true"
+      },
+      {
+        "text": "Agent \u72b6\u6001\uff1a\u8fd0\u884c\u4e2d",
+        "label": "",
+        "bounds": "[107,441][973,507]",
+        "enabled": "true"
+      },
+      {
+        "text": "NATIVE-SSE {\"reader\":{\"reads\":3,\"cancels\":0,\"releases\":0},\"events\":[{\"type\":\"run_started\",\"ms\":109},{\"type\":\"status\",\"ms\":110},{\"type\":\"status\",\"ms\":110},{\"type\":\"status\",\"ms\":5078}],\"ui\":[{\"phase\":\"running\",\"progress\":\"checking_safety\",\"ms\":137},{\"phase\":\"running\",\"progress\":\"understanding_request\",\"ms\":5104}],\"consistentRun\":true,\"terminal\":null}",
+        "label": "",
+        "bounds": "[107,538][973,1198]",
+        "enabled": "true"
+      },
+      {
+        "text": "\u7406\u89e3\u8bf7\u6c42",
+        "label": "",
+        "bounds": "[107,1230][973,1296]",
+        "enabled": "true"
+      },
+      {
+        "text": "run_id\uff1a7da107f3-4f7c-481d-bd03-7a7cfd0be1e0",
+        "label": "",
+        "bounds": "[107,1327][973,1459]",
+        "enabled": "true"
+      },
+      {
+        "text": "operation_key\uff1a54cde2b3-17c8-4216-8a58-f07f59f5a768",
+        "label": "",
+        "bounds": "[107,1491][973,1623]",
+        "enabled": "true"
+      },
+      {
+        "text": "\u5c55\u793a\u670d\u52a1\u5668\u63d0\u4ea4\u7684\u5b8c\u6574\u6587\u672c\u56de\u7b54\u3002\u5b89\u5168\u4e0e\u4e8b\u5b9e\u5224\u65ad\u7531\u670d\u52a1\u5668\u8d1f\u8d23\uff1b\u6b64\u9875\u6ca1\u6709\u516c\u5f00\u7ed3\u6784\u5316 FIU \u6570\u636e\u3002",
+        "label": "",
+        "bounds": "[107,1654][973,1852]",
+        "enabled": "true"
+      },
+      {
+        "text": "",
+        "label": "\u505c\u6b62\u7b49\u5f85",
+        "bounds": "[108,1884][972,1909]",
+        "enabled": "true"
+      },
+      {
+        "text": "\u505c\u6b62\u7b49\u5f85",
+        "label": "",
+        "bounds": "[152,1918][928,1909]",
+        "enabled": "true"
+      },
+      {
+        "text": "",
+        "label": "\u5237\u65b0 Agent \u5386\u53f2",
+        "bounds": "[108,2047][972,1909]",
+        "enabled": "true"
+      },
+      {
+        "text": "\u5237\u65b0 Agent \u5386\u53f2",
+        "label": "",
+        "bounds": "[152,2081][928,1909]",
+        "enabled": "true"
+      },
+      {
+        "text": "",
+        "label": "\u52a0\u8f7d\u66f4\u591a Agent \u5386\u53f2",
+        "bounds": "[108,2210][972,1909]",
+        "enabled": "false"
+      },
+      {
+        "text": "\u52a0\u8f7d\u66f4\u591a Agent \u5386\u53f2",
+        "label": "",
+        "bounds": "[152,2244][928,1909]",
+        "enabled": "true"
+      },
+      {
+        "text": "",
+        "label": "\u4f7f\u7528 POST SSE",
+        "bounds": "[108,2372][485,1909]",
+        "enabled": "false"
+      },
+      {
+        "text": "\u4f7f\u7528 POST SSE",
+        "label": "",
+        "bounds": "[152,2406][440,1909]",
+        "enabled": "true"
+      },
+      {
+        "text": "",
+        "label": "\u4f7f\u7528 REST",
+        "bounds": "[506,2372][792,1909]",
+        "enabled": "false"
+      },
+      {
+        "text": "\u4f7f\u7528 REST",
+        "label": "",
+        "bounds": "[550,2406][747,1909]",
+        "enabled": "true"
+      },
+      {
+        "text": "\u5199\u4e0b\u60f3\u68b3\u7406\u7684\u5185\u5bb9\uff0c\u53d1\u9001\u5230\u670d\u52a1\u5668",
+        "label": "Agent \u6d88\u606f\u8f93\u5165",
+        "bounds": "[31,1943][1048,2102]",
+        "enabled": "false"
+      },
+      {
+        "text": "Connected \u00b7 0/2000 \u00b7 \u670d\u52a1\u5668\u786e\u8ba4\u540e\u8fdb\u5165\u6b63\u5f0f\u8bb0\u5f55",
+        "label": "",
+        "bounds": "[31,2121][1048,2177]",
+        "enabled": "true"
+      },
+      {
+        "text": "",
+        "label": "\u53d1\u9001 Agent \u6d88\u606f",
+        "bounds": "[32,2199][854,2331]",
+        "enabled": "false"
+      },
+      {
+        "text": "\u53d1\u9001 Agent \u6d88\u606f",
+        "label": "",
+        "bounds": "[76,2233][810,2296]",
+        "enabled": "true"
+      },
+      {
+        "text": "",
+        "label": "\u6e05\u7a7a",
+        "bounds": "[876,2199][1050,2331]",
+        "enabled": "false"
+      },
+      {
+        "text": "\u6e05\u7a7a",
+        "label": "",
+        "bounds": "[920,2233][1004,2296]",
+        "enabled": "true"
+      }
+    ]
+  },
+  {
+    "native_sse": {
+      "reader": {
+        "reads": 3,
+        "cancels": 0,
+        "releases": 0
+      },
+      "events": [
+        {
+          "type": "run_started",
+          "ms": 109
+        },
+        {
+          "type": "status",
+          "ms": 110
+        },
+        {
+          "type": "status",
+          "ms": 110
+        },
+        {
+          "type": "status",
+          "ms": 5078
+        }
+      ],
+      "ui": [
+        {
+          "phase": "running",
+          "progress": "checking_safety",
+          "ms": 137
+        },
+        {
+          "phase": "running",
+          "progress": "understanding_request",
+          "ms": 5104
+        }
+      ],
+      "consistentRun": true,
+      "terminal": null
+    }
+  },
+  {
+    "command": "observe",
+    "status": "done"
+  },
+  {
+    "command": "assert_ui",
+    "status": "failed"
+  }
+]

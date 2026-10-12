@@ -1,0 +1,35 @@
+{"android_api": "37"}
+{"fixture": "ready", "baseURL": "http://127.0.0.1:8024", "commands": "state, tap [label,direction?], login a|b|expired, seed, evidence, stage, cleanup, back, home, stop"}
+{"command": "open", "status": "done"}
+{"command": "tap", "status": "done"}
+{"case": "8F-SSE-DISCONNECT"}
+{"command": "case", "status": "done"}
+{"person": "0de8df5a-2dac-4ad7-a749-2cdaf769800c", "relationship": "976fbc37-c779-49b6-bf4f-e462234bda53", "conversation": "eb723e12-6a65-4b07-8be4-d2a9e4c7c565"}
+{"command": "seed", "status": "done"}
+{"command": "login", "status": "done"}
+{"command": "route", "status": "done"}
+{"command": "fault", "status": "done"}
+{"command": "input", "status": "done"}
+{"command": "tap", "status": "done"}
+{"command": "wait", "status": "done"}
+{"native_sse": {"reader": {"reads": 4, "cancels": 1, "releases": 1}, "events": [{"type": "run_started", "ms": 100}, {"type": "status", "ms": 151}], "ui": [{"phase": "running", "progress": null, "ms": 124}, {"phase": "running", "progress": "preparing", "ms": 179}, {"phase": "running_unknown", "progress": null, "ms": 263}], "consistentRun": true, "terminal": "disconnected"}}
+{"command": "observe", "status": "done"}
+{"assert_ui": "\u8fde\u63a5\u5728\u7ec8\u6b62\u4e8b\u4ef6\u524d\u7ed3\u675f\uff0c\u65e0\u6cd5\u786e\u8ba4\u8be5\u8bf7\u6c42\u662f\u5426\u5df2\u5b8c\u6210\u3002", "status": "PASS"}
+{"command": "assert_ui", "status": "done"}
+{"agent": {"calls": [], "runs": [{"id": "b1fb0a74-e775-420a-94eb-693f18bfee85", "owner": "a45cd7f1-7b0e-4003-8a42-13e1c8f0ad72", "conversation": "eb723e12-6a65-4b07-8be4-d2a9e4c7c565", "status": "failed", "key": "6594defc-b9be-4770-84e8-b92bb045fff2"}], "messages": [{"id": "c11ef626-d015-4bdf-859a-a6b8c0128b25", "conversation": "eb723e12-6a65-4b07-8be4-d2a9e4c7c565", "role": "user"}], "memories": 0}, "memory": {"memories": 0, "receipts": 0, "agent_messages": 1, "relationship_messages": 0, "recall_counts": [], "calls": 0, "controls": []}, "import": {"jobs": [], "messages": 0, "agent_messages": 1, "memories": 0, "active_artifacts": 0}, "resources": {"persons": 1, "relationships": 1, "conversations": 1}, "wire": {"requests": [{"method": "POST", "path": "/api/v1/persons", "bearer": true, "json": true, "cursor": false, "host_setup": true, "status": 201}, {"method": "POST", "path": "/api/v1/relationships", "bearer": true, "json": true, "cursor": false, "host_setup": true, "status": 201}, {"method": "POST", "path": "/api/v1/conversations", "bearer": true, "json": true, "cursor": false, "host_setup": true, "status": 201}, {"method": "GET", "path": "/api/v1/persons", "bearer": true, "json": false, "cursor": false, "host_setup": false, "status": 200}, {"method": "GET", "path": "/api/v1/memory/control", "bearer": true, "json": false, "cursor": false, "host_setup": false, "status": 200}, {"method": "GET", "path": "/api/v1/persons", "bearer": true, "json": false, "cursor": false, "host_setup": false, "status": 200}, {"method": "GET", "path": "/api/v1/relationships", "bearer": true, "json": false, "cursor": false, "host_setup": false, "status": 200}, {"method": "GET", "path": "/api/v1/memories", "bearer": true, "json": false, "cursor": false, "host_setup": false, "status": 200}, {"method": "GET", "path": "/api/v1/memory/undo/preview", "bearer": true, "json": false, "cursor": false, "host_setup": false, "status": 200}, {"method": "GET", "path": "/api/v1/conversations/eb723e12-6a65-4b07-8be4-d2a9e4c7c565", "bearer": true, "json": false, "cursor": false, "host_setup": false, "status": 200}, {"method": "GET", "path": "/api/v1/memory/control", "bearer": true, "json": false, "cursor": false, "host_setup": false, "status": 200}, {"method": "GET", "path": "/api/v1/conversations/eb723e12-6a65-4b07-8be4-d2a9e4c7c565/messages", "bearer": true, "json": false, "cursor": false, "host_setup": false, "status": 200}, {"method": "GET", "path": "/api/v1/memories", "bearer": true, "json": false, "cursor": false, "host_setup": false, "status": 200}, {"method": "GET", "path": "/api/v1/memory/undo/preview", "bearer": true, "json": false, "cursor": false, "host_setup": false, "status": 200}, {"method": "POST", "path": "/api/v1/conversations/eb723e12-6a65-4b07-8be4-d2a9e4c7c565/agent-runs/stream", "bearer": true, "json": true, "cursor": false, "host_setup": false, "status": 200}], "faults": [{"fault": "sse_disconnect", "path": "/api/v1/conversations/eb723e12-6a65-4b07-8be4-d2a9e4c7c565/agent-runs/stream", "status": 200}]}}
+{"command": "evidence", "status": "done"}
+{"command": "tap", "status": "done"}
+{"command": "wait", "status": "done"}
+{"command": "assert_ui", "status": "failed"}
+Traceback (most recent call last):
+  File "F:\狗头军师app化\goutouapp\scripts\phase8_android_demo.py", line 703, in <module>
+    fixture.stdin.flush()
+    
+  File "F:\狗头军师app化\goutouapp\scripts\phase8_android_demo.py", line 683, in main
+        raise ValueError("Unknown demo command")
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    if action != "state":
+    ^^^^^^^^^^^^^^^^^^^^^
+        evidence.append({"command": action, "status": "done"})
+        ^^^^^^^^^^^
+RuntimeError: Native sequence failed; inspect sanitized evidence

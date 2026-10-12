@@ -1,0 +1,23 @@
+{
+  "native_fixture_8024_listeners": [],
+  "stopped_native_helpers": [
+    {
+      "port": 8092,
+      "pid": 35688,
+      "identity_verified": true
+    },
+    {
+      "port": 8093,
+      "pid": 5016,
+      "identity_verified": true
+    }
+  ],
+  "removed_reverse": [
+    "tcp:8022",
+    "tcp:8092",
+    "tcp:8093"
+  ],
+  "avd_preserved": true,
+  "postgres_preserved": true,
+  "downloads_untouched": true
+}

@@ -1,0 +1,335 @@
+[
+  {
+    "command": "open",
+    "status": "done"
+  },
+  {
+    "command": "tap",
+    "status": "done"
+  },
+  {
+    "case": "8F-SSE-FAILED"
+  },
+  {
+    "command": "case",
+    "status": "done"
+  },
+  {
+    "command": "seed",
+    "status": "done"
+  },
+  {
+    "command": "login",
+    "status": "done"
+  },
+  {
+    "command": "route",
+    "status": "done"
+  },
+  {
+    "fault": {
+      "armed": "provider_failed"
+    }
+  },
+  {
+    "command": "fault",
+    "status": "done"
+  },
+  {
+    "command": "input",
+    "status": "done"
+  },
+  {
+    "command": "tap",
+    "status": "done"
+  },
+  {
+    "command": "wait",
+    "status": "done"
+  },
+  {
+    "native_sse": {
+      "reader": {
+        "reads": 5,
+        "cancels": 1,
+        "releases": 1
+      },
+      "events": [
+        {
+          "type": "run_started",
+          "ms": 100
+        },
+        {
+          "type": "status",
+          "ms": 153
+        },
+        {
+          "type": "status",
+          "ms": 207
+        },
+        {
+          "type": "failed",
+          "ms": 870
+        }
+      ],
+      "ui": [
+        {
+          "phase": "running",
+          "progress": null,
+          "ms": 125
+        },
+        {
+          "phase": "running",
+          "progress": "preparing",
+          "ms": 179
+        },
+        {
+          "phase": "running",
+          "progress": "checking_safety",
+          "ms": 234
+        },
+        {
+          "phase": "failed",
+          "progress": null,
+          "ms": 903
+        }
+      ],
+      "consistentRun": true,
+      "terminal": "failed"
+    }
+  },
+  {
+    "command": "observe",
+    "status": "done"
+  },
+  {
+    "assert_ui": "Agent \u72b6\u6001\uff1a\u8fd0\u884c\u5931\u8d25",
+    "status": "PASS"
+  },
+  {
+    "command": "assert_ui",
+    "status": "done"
+  },
+  {
+    "database": {
+      "agent": {
+        "calls": [],
+        "runs": [
+          {
+            "id": "9cef5d4c-d7c4-4195-a92d-eebf6c94b47a",
+            "owner": "1a4dcecf-68c5-4345-819b-9e1b0612795f",
+            "conversation": "ae0d97e7-a53d-40f0-9485-7a3ea17f2625",
+            "status": "failed",
+            "key": "a4a7f208-51f1-4373-8d77-7621964503a7"
+          }
+        ],
+        "messages": [
+          {
+            "id": "a183801d-2747-4c17-b7ae-c28d95a3db54",
+            "conversation": "ae0d97e7-a53d-40f0-9485-7a3ea17f2625",
+            "role": "user"
+          }
+        ],
+        "memories": 0
+      },
+      "memory": {
+        "memories": 0,
+        "receipts": 0,
+        "agent_messages": 1,
+        "relationship_messages": 0,
+        "recall_counts": [],
+        "calls": 0,
+        "controls": []
+      },
+      "import": {
+        "jobs": [],
+        "messages": 0,
+        "agent_messages": 1,
+        "memories": 0,
+        "active_artifacts": 0
+      },
+      "resources": {
+        "persons": 1,
+        "relationships": 1,
+        "conversations": 1
+      },
+      "wire": {
+        "requests": [
+          {
+            "method": "POST",
+            "path": "/api/v1/persons",
+            "bearer": true,
+            "json": true,
+            "cursor": false,
+            "host_setup": true,
+            "status": 201
+          },
+          {
+            "method": "POST",
+            "path": "/api/v1/relationships",
+            "bearer": true,
+            "json": true,
+            "cursor": false,
+            "host_setup": true,
+            "status": 201
+          },
+          {
+            "method": "POST",
+            "path": "/api/v1/conversations",
+            "bearer": true,
+            "json": true,
+            "cursor": false,
+            "host_setup": true,
+            "status": 201
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/persons",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memory/control",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/persons",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/relationships",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memories",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memory/undo/preview",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/conversations/ae0d97e7-a53d-40f0-9485-7a3ea17f2625",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memory/control",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/conversations/ae0d97e7-a53d-40f0-9485-7a3ea17f2625/messages",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memories",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memory/undo/preview",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "status": 200
+          },
+          {
+            "method": "POST",
+            "path": "/api/v1/conversations/ae0d97e7-a53d-40f0-9485-7a3ea17f2625/agent-runs/stream",
+            "bearer": true,
+            "json": true,
+            "cursor": false,
+            "host_setup": false,
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/conversations/ae0d97e7-a53d-40f0-9485-7a3ea17f2625/messages",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "status": 200
+          }
+        ],
+        "faults": []
+      }
+    }
+  },
+  {
+    "command": "evidence",
+    "status": "done"
+  },
+  {
+    "assert_db": "agent.runs.length",
+    "expected": 1,
+    "actual": 1,
+    "status": "PASS"
+  },
+  {
+    "command": "assert_db",
+    "status": "done"
+  },
+  {
+    "assert_db": "agent.runs.0.status",
+    "expected": "failed",
+    "actual": "failed",
+    "status": "PASS"
+  },
+  {
+    "command": "assert_db",
+    "status": "done"
+  },
+  {
+    "command": "assert_db",
+    "status": "failed"
+  }
+]

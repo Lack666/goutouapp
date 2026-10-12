@@ -1,0 +1,46 @@
+[
+  {
+    "command": "restart",
+    "status": "done"
+  },
+  {
+    "command": "tap",
+    "status": "done"
+  },
+  {
+    "case": "8F-SSE-NORMAL"
+  },
+  {
+    "command": "case",
+    "status": "done"
+  },
+  {
+    "command": "seed",
+    "status": "done"
+  },
+  {
+    "command": "login",
+    "status": "done"
+  },
+  {
+    "command": "route",
+    "status": "done"
+  },
+  {
+    "assert_ui": "\u5f53\u524d Conversation\uff1ac802df1d-71a9-4c7e-a128-6f1c40771b80",
+    "status": "PASS"
+  },
+  {
+    "command": "assert_ui",
+    "status": "done"
+  },
+  {
+    "command": "input",
+    "status": "done"
+  },
+  {
+    "command": "tap",
+    "status": "failed",
+    "control": "[\"\u53d1\u9001 Agent \u6d88\u606f\"]"
+  }
+]

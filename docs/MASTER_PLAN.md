@@ -21,7 +21,7 @@ as implemented by a placeholder directory or a golden expectation.
 | 5 | Chat Import and Relationship Data Pipeline | PASS (5A–5D) |
 | 6 | User-facing memory controls and retention policy integration | PASS (6A–6D) |
 | 7 | Expo React Native MVP | PASS (7A–7D) |
-| 8 | Mobile API integration, generated client and stream consumption | IN PROGRESS / NOT YET COMPLETE (8A–8E engineering PASS) |
+| 8 | Mobile API integration, generated client and stream consumption | PASS (8A–8F, including native closeout) |
 | 9 | Security, privacy, reliability and deletion | PENDING |
 | 10 | Optional hybrid RAG with pgvector | PENDING |
 | 11 | Agent eval and observability | PENDING |
@@ -67,6 +67,24 @@ as implemented by a placeholder directory or a golden expectation.
 12. Locked dependencies, CI, Docker/Compose, EAS preview and release checklist.
 
 ## Implementation log
+
+### Phase 8F Closeout — Android native acceptance (2026-10-12)
+
+- Sixteen complete independent native cases close SSE, UI resource creation,
+  original-key REST replay, signed Owner/Relationship isolation, guarded Memory
+  faults/restart/control/deletion and import/history lifecycle. Historical failed
+  suites remain FAIL; complete corrected scenes are separately hashed and recorded.
+- Direct Android development-only Reader/parser/render observations replace the
+  unavailable debugger probe. No payload/credential logging, production endpoint,
+  Graph behavior, dependency or frozen Skill change. The observer panel and native
+  acceptance viewport search were corrected without removing business assertions.
+- Final pre-marker full root exit0 under7/8E: backend558, Mobile355, repository47,
+  Golden83; Web22/3/3/4/5/1, OpenAPI36 and Doctor21/21. The complete matrix and
+  evidence gate verified native artifacts/independent exits before advancing8/8F.
+- Phase8 is PASS; Phase9 remains PENDING and not started. Post-marker root results
+  are recorded in the [Closeout Addendum](PHASE_8_FINAL_ACCEPTANCE.md#closeout-addendum--2026-10-12)
+  and [native matrix](PHASE_8F_CLOSEOUT_MATRIX.json). Earlier implementation logs
+  below retain their original phase states and limitations.
 
 ### Phase 8F — Full Mobile Integration and Phase 8 Final Acceptance (in progress)
 

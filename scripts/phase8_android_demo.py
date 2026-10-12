@@ -16,7 +16,7 @@ import sys
 import time
 import xml.etree.ElementTree as ET
 from pathlib import Path
-from uuid import uuid4
+from uuid import UUID, uuid4
 
 import httpx
 
@@ -33,6 +33,9 @@ def main() -> None:
         "--steps", type=Path, help="JSON array of synthetic commands; no credentials"
     )
     parser.add_argument("--report", type=Path, help="Sanitized metadata report within .cache")
+    parser.add_argument(
+        "--closeout", action="store_true", help="Enable disposable native observer/fault fixture"
+    )
     args = parser.parse_args()
     target = args.report.resolve() if args.report else None
     if target and not target.is_relative_to((ROOT / ".cache").resolve()):
@@ -59,6 +62,7 @@ def main() -> None:
 
     if adb("shell", "getprop", "sys.boot_completed").strip() != b"1":
         raise RuntimeError("Android boot is incomplete")
+    screen_height = int(re.findall(rb"\d+x(\d+)", adb("shell", "wm", "size"))[-1])
     print(
         json.dumps(
             {"android_api": adb("shell", "getprop", "ro.build.version.sdk").decode().strip()}
@@ -67,6 +71,8 @@ def main() -> None:
     )
     env = {**os.environ, "GOUTOU_MEMORY_E2E": "1", "GOUTOU_IMPORT_E2E": "1", "PYTHONUTF8": "1"}
     env["GOUTOU_MEMORY_PORT"] = str(args.port)
+    if args.closeout:
+        env["GOUTOU_NATIVE_ACCEPTANCE"] = "1"
     with subprocess.Popen(
         [sys.executable, "apps/server/mobile_connected_fixture.py"],
         cwd=ROOT,
@@ -84,6 +90,8 @@ def main() -> None:
         credentials = json.loads(first)
         identity = "a"
         context: dict[str, str] = {}
+        bookmarks: dict[str, dict[str, str]] = {}
+        identity_boundary = 0
 
         def nodes():
             raw = adb("exec-out", "uiautomator", "dump", "/dev/tty").decode("utf-8")
@@ -94,7 +102,13 @@ def main() -> None:
             )
 
         def tap(label: str, direction="up"):
-            for attempt in range(12):
+            initial_direction = direction
+            for attempt in range(24):
+                direction = (
+                    initial_direction
+                    if attempt < 12
+                    else ("down" if initial_direction == "up" else "up")
+                )
                 current = nodes()
                 labelled = [node for node in current if node.get("content-desc") == label]
                 for node in labelled or current:
@@ -104,15 +118,13 @@ def main() -> None:
                     if (
                         node.get("enabled") != "false"
                         and x2 > x1
-                        and y2 > y1
+                        and y2 - y1 >= 40
                         and 140 <= y1
-                        and y2 <= 2320
+                        and y2 <= screen_height - 64
                     ):
                         adb("shell", "input", "tap", str((x1 + x2) // 2), str((y1 + y2) // 2))
                         return
-                    direction = "up" if y1 > 1600 else "down"
-                if attempt == 5:
-                    direction = "down" if direction == "up" else "up"
+                    direction = "up" if y2 > screen_height - 64 else "down"
                 adb(
                     "shell",
                     "input",
@@ -131,6 +143,47 @@ def main() -> None:
             fixture.stdin.flush()
             return json.loads(fixture.stdout.readline())
 
+        def find(fragment: str, visible=False):
+            lower_section = fragment.startswith(
+                ("Mutation 状态：", "Confirmation ID：", "Mutation ID：", "删除后撤销授权：")
+            )
+            for attempt in range(24):
+                preferred_up = None
+                for node in nodes():
+                    if node.get("password") == "true":
+                        continue
+                    text = node.get("text", "") or node.get("content-desc", "")
+                    if fragment in text:
+                        bounds = list(map(int, re.findall(r"\d+", node.get("bounds", ""))))
+                        if not visible or (
+                            len(bounds) == 4
+                            and bounds[3] - bounds[1] >= 40
+                            and bounds[1] >= 140
+                            and bounds[3] <= screen_height - 64
+                        ):
+                            return text
+                        if len(bounds) == 4:
+                            preferred_up = bounds[1] > 1000
+                # Most assertions inspect a header after FlatList scrolled to
+                # its committed message. Search upward in content first.
+                up = (
+                    preferred_up
+                    if preferred_up is not None
+                    else (lower_section if attempt < 12 else not lower_section)
+                )
+                adb(
+                    "shell",
+                    "input",
+                    "swipe",
+                    "90",
+                    "1750" if up else "600",
+                    "90",
+                    "600" if up else "1750",
+                    "350",
+                )
+                time.sleep(0.25)
+            raise RuntimeError("Expected synthetic UI evidence is unavailable")
+
         print(
             json.dumps(
                 {
@@ -144,10 +197,22 @@ def main() -> None:
             ),
             flush=True,
         )
-        evidence: list[dict] = []
+        evidence: list[dict] = [
+            {
+                "execution": {
+                    "steps_file": str(args.steps) if args.steps else "interactive",
+                    "steps": inputs if args.steps else None,
+                    "helper_sha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
+                    "device": args.serial,
+                }
+            }
+        ]
         try:
             for line in inputs:
                 action, _, parameter = line.strip().partition(" ")
+                if action != "login":
+                    for key, value in context.items():
+                        parameter = parameter.replace("{" + key + "}", value)
                 if action == "stop":
                     break
                 try:
@@ -178,6 +243,148 @@ def main() -> None:
                             output = output.replace(credential, "[redacted]")
                         evidence.append({"ui_state": json.loads(output)})
                         print(output, flush=True)
+                    elif action == "case":
+                        if not re.fullmatch(r"8F-[A-Z0-9-]+", parameter):
+                            raise ValueError("Invalid acceptance test ID")
+                        evidence.append({"case": parameter})
+                        print(json.dumps({"case": parameter}), flush=True)
+                    elif action == "wait":
+                        seconds = float(parameter)
+                        if not 0 <= seconds <= 30:
+                            raise ValueError("Bounded native wait required")
+                        time.sleep(seconds)
+                    elif action in {"assert_ui", "assert_visible_ui"}:
+                        actual = find(json.loads(parameter), visible=action == "assert_visible_ui")
+                        evidence.append({action: actual, "status": "PASS"})
+                        print(json.dumps(evidence[-1]), flush=True)
+                    elif action == "assert_absent":
+                        fragments = json.loads(parameter)
+                        texts = [
+                            n.get("text", "") + n.get("content-desc", "")
+                            for n in nodes()
+                            if n.get("password") != "true"
+                        ]
+                        if any(fragment in text for fragment in fragments for text in texts):
+                            raise RuntimeError("Old synthetic owner/scope data is visible")
+                        evidence.append({"assert_absent": fragments, "status": "PASS"})
+                    elif action == "observe":
+                        text = find("NATIVE-SSE ")
+                        observation = json.loads(text.split("NATIVE-SSE ", 1)[1])
+                        evidence.append({"native_sse": observation})
+                        print(json.dumps(evidence[-1]), flush=True)
+                        if parameter:
+                            if (
+                                observation["terminal"] != parameter
+                                or not observation["consistentRun"]
+                            ):
+                                raise RuntimeError("Native SSE terminal/Run consistency failed")
+                            if (
+                                not observation["reader"]["reads"]
+                                or not observation["reader"]["cancels"]
+                                or not observation["reader"]["releases"]
+                            ):
+                                raise RuntimeError("Native Reader cleanup evidence missing")
+                            types = [value["type"] for value in observation["events"]]
+                            if parameter == "completed":
+                                if (
+                                    types[0] != "run_started"
+                                    or types[-1] != "completed"
+                                    or "status" not in types
+                                    or "final_response" not in types
+                                ):
+                                    raise RuntimeError("Native event sequence failed")
+                                final_ms = next(
+                                    value["ms"]
+                                    for value in observation["events"]
+                                    if value["type"] == "final_response"
+                                )
+                                if not any(
+                                    value["phase"] == "running"
+                                    and value["progress"]
+                                    and value["ms"] < final_ms
+                                    for value in observation["ui"]
+                                ):
+                                    raise RuntimeError(
+                                        "No rendered native progress before final response"
+                                    )
+                            if parameter == "failed" and "failed" not in types:
+                                raise RuntimeError("Missing failed event")
+                    elif action == "fault":
+                        if not args.closeout:
+                            raise ValueError("Faults require disposable Closeout mode")
+                        evidence.append({"fault": command("fault " + parameter)})
+                    elif action == "assert_observer_same":
+                        snapshots = [
+                            value["native_sse"] for value in evidence if "native_sse" in value
+                        ]
+                        if len(snapshots) < 2 or snapshots[-2] != snapshots[-1]:
+                            raise RuntimeError(
+                                "Late SSE processing changed cancelled screen metadata"
+                            )
+                        evidence.append(
+                            {
+                                "assert_observer_same": "No late events or rendered state changes",
+                                "status": "PASS",
+                            }
+                        )
+                    elif action == "adopt":
+                        with httpx.Client(
+                            base_url=credentials["baseURL"],
+                            headers={"Authorization": "Bearer " + credentials[identity]},
+                        ) as client:
+                            for kind, key in (
+                                ("persons", "person"),
+                                ("relationships", "relationship"),
+                                ("conversations", "conversation"),
+                            ):
+                                result = client.get("/api/v1/" + kind)
+                                if result.status_code != 200:
+                                    raise RuntimeError("Owned resource witness read failed")
+                                items = result.json()["items"]
+                                if len(items) == 1:
+                                    context[key] = items[0]["id"]
+                        evidence.append(
+                            {"owned_resource_witness": dict(context), "transport": "host GET only"}
+                        )
+                        print(json.dumps(evidence[-1]), flush=True)
+                    elif action == "bookmark":
+                        bookmarks[parameter] = dict(context)
+                    elif action == "scope":
+                        if parameter == "missing":
+                            bookmarks[parameter] = {
+                                key: str(uuid4())
+                                for key in ("person", "relationship", "conversation")
+                            }
+                        context = dict(bookmarks[parameter])
+                    elif action == "route":
+                        path, name = json.loads(parameter)
+                        if path not in {"chat", "relationship", "history", "import"}:
+                            raise ValueError("Invalid native route")
+                        selected = bookmarks.get(name, context)
+                        relationship = str(UUID(selected["relationship"]))
+                        query = "?relationshipId=" + relationship
+                        if path == "chat":
+                            query += "&conversationId=" + str(UUID(selected["conversation"]))
+                        adb(
+                            "shell",
+                            "am",
+                            "start",
+                            "-a",
+                            "android.intent.action.VIEW",
+                            "-d",
+                            "'exp://127.0.0.1:8092/--/" + path + query + "'",
+                            "-p",
+                            "host.exp.exponent",
+                        )
+                        time.sleep(1)
+                    elif action == "expire_confirmation":
+                        text = find("Confirmation ID：")
+                        identifier = re.search(
+                            r"[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}", text
+                        ).group()
+                        evidence.append({"expiry": command("expire_confirmation " + identifier)})
+                    elif action == "stale_memory":
+                        evidence.append({"stale": command("stale_memory " + context["memory"])})
                     elif action == "login":
                         if parameter not in {"a", "b", "expired"}:
                             raise ValueError("Only disposable fixture identities are allowed")
@@ -201,6 +408,8 @@ def main() -> None:
                         if parameter != "expired":
                             # Authentication is acknowledged only after SecureStore write.
                             tap("开发会话已连接", "down")
+                        if args.closeout:
+                            identity_boundary = len(command("wire_evidence")["requests"])
                     elif action == "seed":
                         if identity == "expired":
                             raise ValueError("Expired identity cannot seed resources")
@@ -217,7 +426,10 @@ def main() -> None:
                                     raise RuntimeError("Synthetic resource creation failed")
                                 return result.json()["id"]
 
-                            person = create("persons", {"display_name": "8F Native synthetic"})
+                            name = parameter or "8F Native synthetic"
+                            if len(name) > 40 or (parameter and not parameter.isascii()):
+                                raise ValueError("Bounded synthetic resource name required")
+                            person = create("persons", {"display_name": name})
                             relationship = create(
                                 "relationships",
                                 {
@@ -251,6 +463,82 @@ def main() -> None:
                             if result.status_code != 200 or not result.json()["items"]:
                                 raise RuntimeError("Synthetic memory unavailable")
                             context["memory"] = result.json()["items"][0]["id"]
+                    elif action == "history_setup":
+                        count, tag = json.loads(parameter)
+                        if not 1 <= count <= 301 or not tag.isascii() or len(tag) > 30:
+                            raise ValueError("Bounded synthetic history required")
+                        content = "".join(
+                            f"## 2024-01-01 08:00:00 {'我' if i % 2 == 0 else '匿名同学'}\n\n"
+                            f"Synthetic {tag} history occurrence.\n\n"
+                            for i in range(count)
+                        ).encode()
+                        with httpx.Client(
+                            base_url=credentials["baseURL"],
+                            headers={"Authorization": "Bearer " + credentials[identity]},
+                            timeout=30,
+                        ) as client:
+
+                            def checked(result):
+                                if result.status_code not in {200, 201}:
+                                    raise RuntimeError("Synthetic history setup failed")
+                                return result.json()
+
+                            job = checked(
+                                client.post(
+                                    "/api/v1/chat-imports",
+                                    data={
+                                        "source_timezone": "Asia/Shanghai",
+                                        "source_format": "wechat_markdown_v1",
+                                    },
+                                    files={
+                                        "file": ("closeout-synthetic.md", content, "text/markdown")
+                                    },
+                                )
+                            )
+                            path = "/api/v1/chat-imports/" + job["id"]
+                            for label, kind in (("我", "self"), ("匿名同学", "person")):
+                                job = checked(
+                                    client.put(
+                                        path + "/speakers",
+                                        json={
+                                            "raw_speaker_label": label,
+                                            "binding_kind": kind,
+                                            "person_id": context["person"]
+                                            if kind == "person"
+                                            else None,
+                                            "expected_revision": job["binding_revision"],
+                                        },
+                                    )
+                                )
+                            job = checked(
+                                client.put(
+                                    path + "/relationship",
+                                    json={
+                                        "relationship_id": context["relationship"],
+                                        "expected_revision": job["binding_revision"],
+                                    },
+                                )
+                            )
+                            job = checked(client.post(path + "/ready"))
+                            receipt = checked(
+                                client.post(
+                                    path + "/finalize",
+                                    json={"expected_revision": job["binding_revision"]},
+                                )
+                            )
+                            context["job"] = job["id"]
+                            evidence.append(
+                                {
+                                    "history_setup": {
+                                        "transport": "host REST preconditions",
+                                        "count": count,
+                                        "relationship": context["relationship"],
+                                        "job": job["id"],
+                                        "receipt_status": receipt["status"],
+                                    }
+                                }
+                            )
+                            print(json.dumps(evidence[-1]), flush=True)
                     elif action == "confirm_file":
                         for node in nodes():
                             if (
@@ -304,6 +592,11 @@ def main() -> None:
                             "-p",
                             "host.exp.exponent",
                         )
+                    elif action == "receipt_id":
+                        proof = command("memory_evidence")
+                        if not proof["mutations"]:
+                            raise RuntimeError("No authoritative mutation witness")
+                        context["receipt"] = proof["mutations"][-1]["id"]
                         time.sleep(1)
                     elif action == "save":
                         if not context or parameter not in {"一", "二", "三", "四", "五"}:
@@ -313,6 +606,7 @@ def main() -> None:
                         with httpx.Client(
                             base_url=credentials["baseURL"],
                             headers={"Authorization": "Bearer " + credentials[identity]},
+                            timeout=30,
                         ) as client:
                             result = client.post(
                                 f"/api/v1/conversations/{context['conversation']}/agent-runs",
@@ -339,9 +633,92 @@ def main() -> None:
                             "agent": command("agent_evidence"),
                             "memory": command("memory_evidence"),
                             "import": command("import_evidence"),
+                            "resources": command("counts"),
                         }
+                        if args.closeout:
+                            proof["wire"] = command("wire_evidence")
                         evidence.append({"database": proof})
                         print(json.dumps(proof), flush=True)
+                    elif action == "assert_db":
+                        path, expected = json.loads(parameter)
+                        actual = next(
+                            value["database"] for value in reversed(evidence) if "database" in value
+                        )
+                        for key in path.split("."):
+                            if isinstance(actual, list):
+                                actual = len(actual) if key == "length" else actual[int(key)]
+                            else:
+                                actual = actual[key]
+                        if actual != expected:
+                            raise RuntimeError("Database witness assertion failed")
+                        evidence.append(
+                            {
+                                "assert_db": path,
+                                "expected": expected,
+                                "actual": actual,
+                                "status": "PASS",
+                            }
+                        )
+                    elif action == "assert_same":
+                        snapshots = [
+                            value["database"]["agent"] for value in evidence if "database" in value
+                        ]
+                        if len(snapshots) < 2 or snapshots[-2] != snapshots[-1]:
+                            raise RuntimeError(
+                                "Replay changed persisted run/messages/provider calls/Memory"
+                            )
+                        evidence.append(
+                            {
+                                "assert_same": "Run/message IDs, keys, calls and Memory unchanged",
+                                "status": "PASS",
+                            }
+                        )
+                    elif action == "assert_identity":
+                        proof = command("wire_evidence")
+                        requests = [
+                            value
+                            for value in proof["requests"][identity_boundary:]
+                            if not value["host_setup"]
+                        ]
+                        if not requests or any(
+                            value["verified_owner"] != identity for value in requests
+                        ):
+                            raise RuntimeError(
+                                "Native requests used an old or unverified owner credential"
+                            )
+                        evidence.append(
+                            {
+                                "native_identity": identity,
+                                "requests_checked": len(requests),
+                                "status": "PASS",
+                            }
+                        )
+                    elif action == "foreign":
+                        if identity != "b":
+                            raise ValueError("Foreign witness uses independent B identity")
+                        with httpx.Client(
+                            base_url=credentials["baseURL"],
+                            headers={"Authorization": "Bearer " + credentials["b"]},
+                        ) as client:
+                            proof = {}
+                            for kind, key in (
+                                ("persons", "person"),
+                                ("relationships", "relationship"),
+                                ("conversations", "conversation"),
+                                ("memories", "memory"),
+                                ("chat-imports", "job"),
+                            ):
+                                if key in context:
+                                    status = client.get(
+                                        "/api/v1/" + kind + "/" + context[key]
+                                    ).status_code
+                                    proof[kind] = status
+                                    if status != 404:
+                                        raise RuntimeError(
+                                            "Real owner validation did not fail closed"
+                                        )
+                            evidence.append({"foreign_owner_http": proof})
+                            print(json.dumps(evidence[-1]), flush=True)
                     elif action == "stage":
                         content = "".join(
                             f"## 2024-01-01 08:00:00 {'我' if index % 2 == 0 else '匿名同学🥰'}"

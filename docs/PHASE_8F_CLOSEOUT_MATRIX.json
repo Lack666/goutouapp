@@ -1,0 +1,3414 @@
+{
+  "phase": "8F",
+  "status": "PASS",
+  "started_from": "460564a",
+  "device": "Pixel_10 / emulator-5554 / Android17 API37 / Expo Go57.0.9",
+  "rules": "Each PASS is one complete independent scene. Batches closeout-final1 and closeout-final2 remain FAIL; closeout-final3 is a separate two-scene run. No partial scene splice or uninterrupted native journey claim.",
+  "open_p0_p1": [],
+  "tests": [
+    {
+      "id": "8F-SSE-NORMAL",
+      "scene": "sse_normal",
+      "gate": "A",
+      "preconditions": "Delayed Mock plus final-response barrier; fresh signed A JWT; native dev observer; isolated PostgreSQL fixture; fresh CLI JWT for each business identity; SecureStore acknowledgement",
+      "steps": [
+        "restart",
+        "tap [\"清除当前开发会话\",\"down\"]",
+        "case 8F-SSE-NORMAL",
+        "seed",
+        "login a",
+        "route [\"chat\",\"current\"]",
+        "assert_ui \"当前 Conversation：{conversation}\"",
+        "fault hold_final",
+        "input [\"Agent 消息输入\",\"Synthetic native SSE acceptance\"]",
+        "tap [\"发送 Agent 消息\"]",
+        "wait 6",
+        "assert_visible_ui \"整理回答\"",
+        "state",
+        "observe",
+        "fault release_final",
+        "wait 3",
+        "observe completed",
+        "assert_ui \"合成验收🌱\"",
+        "assert_ui \"Agent 状态：运行完成\"",
+        "evidence",
+        "assert_db [\"agent.runs.length\",1]",
+        "assert_db [\"agent.messages.length\",2]",
+        "assert_db [\"agent.memories\",0]",
+        "tap [\"清除当前开发会话\",\"down\"]",
+        "stop"
+      ],
+      "expected": "Actual native POST Bearer/JSON, same Run events started/status/final/completed, visible progress before final, Chinese/Emoji, Reader cleanup",
+      "actual": {
+        "completed_commands": 24,
+        "ui_assertions": [
+          {
+            "assert_ui": "当前 Conversation：db5defdf-c190-4ba7-b901-8dbb86d6fb8e",
+            "status": "PASS"
+          },
+          {
+            "assert_visible_ui": "整理回答",
+            "status": "PASS"
+          },
+          {
+            "assert_ui": "观察接下来双方的真实互动，再决定是否调整投入。旧信息可能变化，请结合现在的情况判断。 合成验收🌱",
+            "status": "PASS"
+          },
+          {
+            "assert_ui": "Agent 状态：运行完成",
+            "status": "PASS"
+          }
+        ],
+        "native_sse": [
+          {
+            "reader": {
+              "reads": 7,
+              "cancels": 0,
+              "releases": 0
+            },
+            "events": [
+              {
+                "type": "run_started",
+                "ms": 101
+              },
+              {
+                "type": "status",
+                "ms": 101
+              },
+              {
+                "type": "status",
+                "ms": 102
+              },
+              {
+                "type": "status",
+                "ms": 860
+              },
+              {
+                "type": "status",
+                "ms": 2478
+              },
+              {
+                "type": "status",
+                "ms": 2540
+              },
+              {
+                "type": "status",
+                "ms": 3288
+              },
+              {
+                "type": "status",
+                "ms": 4094
+              }
+            ],
+            "ui": [
+              {
+                "phase": "running",
+                "progress": "checking_safety",
+                "ms": 132
+              },
+              {
+                "phase": "running",
+                "progress": "understanding_request",
+                "ms": 892
+              },
+              {
+                "phase": "running",
+                "progress": "loading_context",
+                "ms": 2509
+              },
+              {
+                "phase": "running",
+                "progress": "analyzing",
+                "ms": 2574
+              },
+              {
+                "phase": "running",
+                "progress": "planning",
+                "ms": 3316
+              },
+              {
+                "phase": "running",
+                "progress": "composing",
+                "ms": 4120
+              }
+            ],
+            "consistentRun": true,
+            "terminal": null
+          },
+          {
+            "reader": {
+              "reads": 8,
+              "cancels": 1,
+              "releases": 1
+            },
+            "events": [
+              {
+                "type": "run_started",
+                "ms": 101
+              },
+              {
+                "type": "status",
+                "ms": 101
+              },
+              {
+                "type": "status",
+                "ms": 102
+              },
+              {
+                "type": "status",
+                "ms": 860
+              },
+              {
+                "type": "status",
+                "ms": 2478
+              },
+              {
+                "type": "status",
+                "ms": 2540
+              },
+              {
+                "type": "status",
+                "ms": 3288
+              },
+              {
+                "type": "status",
+                "ms": 4094
+              },
+              {
+                "type": "final_response",
+                "ms": 49817
+              },
+              {
+                "type": "completed",
+                "ms": 49921
+              }
+            ],
+            "ui": [
+              {
+                "phase": "running",
+                "progress": "checking_safety",
+                "ms": 132
+              },
+              {
+                "phase": "running",
+                "progress": "understanding_request",
+                "ms": 892
+              },
+              {
+                "phase": "running",
+                "progress": "loading_context",
+                "ms": 2509
+              },
+              {
+                "phase": "running",
+                "progress": "analyzing",
+                "ms": 2574
+              },
+              {
+                "phase": "running",
+                "progress": "planning",
+                "ms": 3316
+              },
+              {
+                "phase": "running",
+                "progress": "composing",
+                "ms": 4120
+              },
+              {
+                "phase": "committed",
+                "progress": "composing",
+                "ms": 49888
+              },
+              {
+                "phase": "completed",
+                "progress": null,
+                "ms": 49979
+              }
+            ],
+            "consistentRun": true,
+            "terminal": "completed"
+          }
+        ],
+        "database_summary": {
+          "runs": 1,
+          "agent_messages": 2,
+          "memories": 0,
+          "receipts": 0,
+          "relationship_messages": 0,
+          "controls": [],
+          "resources": {
+            "persons": 1,
+            "relationships": 1,
+            "conversations": 1
+          },
+          "wire_faults": []
+        },
+        "identity_checks": [],
+        "foreign_owner": [],
+        "native_bubble_counts": []
+      },
+      "server_evidence": {
+        "snapshots": 1,
+        "database_assertions": [
+          {
+            "assert_db": "agent.runs.length",
+            "expected": 1,
+            "actual": 1,
+            "status": "PASS"
+          },
+          {
+            "assert_db": "agent.messages.length",
+            "expected": 2,
+            "actual": 2,
+            "status": "PASS"
+          },
+          {
+            "assert_db": "agent.memories",
+            "expected": 0,
+            "actual": 0,
+            "status": "PASS"
+          }
+        ],
+        "reference": "Full report contains real SQL IDs, receipts, signed-owner wire metadata and native/host transport labels"
+      },
+      "status": "PASS",
+      "exit_code": 0,
+      "artifacts": {
+        "log": {
+          "path": "docs/evidence/phase8f-closeout/phase8f-closeout-final2-sse_normal.log",
+          "sha256": "caf75263b450fb44350214bfd1c60ebeca45e1abcab25a6548d79cd596ccd34d"
+        },
+        "report": {
+          "path": "docs/evidence/phase8f-closeout/phase8f-closeout-final2-sse_normal.json",
+          "sha256": "3275fdaae4a3e3353f4ea92bae5cb0eccb5fc5b7e6a4b0e6d10d72ea23301546"
+        },
+        "steps": {
+          "path": "docs/evidence/phase8f-closeout/phase8f-closeout-final2-sse_normal.steps.json",
+          "sha256": "e98213bc6dd3ac6eea4c9bc45cddcf370e6263427c051ca962613c67382a5d13"
+        },
+        "exit": {
+          "path": "docs/evidence/phase8f-closeout/phase8f-closeout-final2-sse_normal.exit",
+          "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+        }
+      }
+    },
+    {
+      "id": "8F-SSE-FAILED",
+      "scene": "sse_failed",
+      "gate": "A",
+      "preconditions": "Fresh independent A; one-shot Mock provider failure; isolated PostgreSQL fixture; fresh CLI JWT for each business identity; SecureStore acknowledgement",
+      "steps": [
+        "restart",
+        "open settings",
+        "tap [\"清除当前开发会话\",\"down\"]",
+        "case 8F-SSE-FAILED",
+        "seed",
+        "login a",
+        "route [\"chat\",\"current\"]",
+        "fault provider_failed",
+        "input [\"Agent 消息输入\",\"Synthetic native controlled failure\"]",
+        "tap [\"发送 Agent 消息\"]",
+        "wait 3",
+        "observe failed",
+        "assert_ui \"Agent 状态：运行失败\"",
+        "evidence",
+        "assert_db [\"agent.runs.length\",1]",
+        "assert_db [\"agent.runs.0.status\",\"failed\"]",
+        "assert_db [\"agent.messages.length\",1]",
+        "assert_db [\"agent.messages.0.role\",\"user\"]",
+        "assert_db [\"agent.memories\",0]",
+        "tap [\"清除当前开发会话\",\"down\"]",
+        "stop"
+      ],
+      "expected": "Client receives failed event and failed UI; one failed Run, one persisted user message, no assistant or Memory",
+      "actual": {
+        "completed_commands": 20,
+        "ui_assertions": [
+          {
+            "assert_ui": "Agent 状态：运行失败",
+            "status": "PASS"
+          }
+        ],
+        "native_sse": [
+          {
+            "reader": {
+              "reads": 2,
+              "cancels": 1,
+              "releases": 1
+            },
+            "events": [
+              {
+                "type": "run_started",
+                "ms": 158
+              },
+              {
+                "type": "status",
+                "ms": 158
+              },
+              {
+                "type": "status",
+                "ms": 158
+              },
+              {
+                "type": "failed",
+                "ms": 863
+              }
+            ],
+            "ui": [
+              {
+                "phase": "running",
+                "progress": "checking_safety",
+                "ms": 189
+              },
+              {
+                "phase": "failed",
+                "progress": null,
+                "ms": 895
+              }
+            ],
+            "consistentRun": true,
+            "terminal": "failed"
+          }
+        ],
+        "database_summary": {
+          "runs": 1,
+          "agent_messages": 1,
+          "memories": 0,
+          "receipts": 0,
+          "relationship_messages": 0,
+          "controls": [],
+          "resources": {
+            "persons": 1,
+            "relationships": 1,
+            "conversations": 1
+          },
+          "wire_faults": []
+        },
+        "identity_checks": [],
+        "foreign_owner": [],
+        "native_bubble_counts": []
+      },
+      "server_evidence": {
+        "snapshots": 1,
+        "database_assertions": [
+          {
+            "assert_db": "agent.runs.length",
+            "expected": 1,
+            "actual": 1,
+            "status": "PASS"
+          },
+          {
+            "assert_db": "agent.runs.0.status",
+            "expected": "failed",
+            "actual": "failed",
+            "status": "PASS"
+          },
+          {
+            "assert_db": "agent.messages.length",
+            "expected": 1,
+            "actual": 1,
+            "status": "PASS"
+          },
+          {
+            "assert_db": "agent.messages.0.role",
+            "expected": "user",
+            "actual": "user",
+            "status": "PASS"
+          },
+          {
+            "assert_db": "agent.memories",
+            "expected": 0,
+            "actual": 0,
+            "status": "PASS"
+          }
+        ],
+        "reference": "Full report contains real SQL IDs, receipts, signed-owner wire metadata and native/host transport labels"
+      },
+      "status": "PASS",
+      "exit_code": 0,
+      "artifacts": {
+        "log": {
+          "path": "docs/evidence/phase8f-closeout/phase8f-closeout-final1-sse_failed.log",
+          "sha256": "ea97b624201da45dbca36aab8cb40a893e7f8c77f2b82bd388caf9dad8c087c1"
+        },
+        "report": {
+          "path": "docs/evidence/phase8f-closeout/phase8f-closeout-final1-sse_failed.json",
+          "sha256": "6103adb35862144ce9860da4c37dce20c9b1b2e2ff1d7de9bfbc5b00af3985cf"
+        },
+        "steps": {
+          "path": "docs/evidence/phase8f-closeout/phase8f-closeout-final1-sse_failed.steps.json",
+          "sha256": "352e28459a0b35c1c1add6bbd20e4a5830bdc9e18d239e0e8cd1af802025d4d6"
+        },
+        "exit": {
+          "path": "docs/evidence/phase8f-closeout/phase8f-closeout-final1-sse_failed.exit",
+          "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+        }
+      }
+    },
+    {
+      "id": "8F-SSE-DISCONNECT",
+      "scene": "sse_disconnect",
+      "gate": "A",
+      "preconditions": "Fresh independent A; fixture stream EOF after first status; isolated PostgreSQL fixture; fresh CLI JWT for each business identity; SecureStore acknowledgement",
+      "steps": [
+        "restart",
+        "open settings",
+        "tap [\"清除当前开发会话\",\"down\"]",
+        "case 8F-SSE-DISCONNECT",
+        "seed",
+        "login a",
+        "route [\"chat\",\"current\"]",
+        "fault sse_disconnect",
+        "input [\"Agent 消息输入\",\"Synthetic native stream EOF\"]",
+        "tap [\"发送 Agent 消息\"]",
+        "wait 8",
+        "observe disconnected",
+        "assert_ui \"无法确认该请求是否已完成。\"",
+        "evidence",
+        "assert_db [\"agent.runs.length\",1]",
+        "assert_db [\"agent.memories\",0]",
+        "tap [\"清除当前开发会话\",\"down\"]",
+        "stop"
+      ],
+      "expected": "Client shows Unknown rather than success; Reader cancelled/released; server applies existing disconnect policy",
+      "actual": {
+        "completed_commands": 17,
+        "ui_assertions": [
+          {
+            "assert_ui": "连接在终止事件前结束，无法确认该请求是否已完成。",
+            "status": "PASS"
+          }
+        ],
+        "native_sse": [
+          {
+            "reader": {
+              "reads": 2,
+              "cancels": 1,
+              "releases": 1
+            },
+            "events": [
+              {
+                "type": "run_started",
+                "ms": 92
+              },
+              {
+                "type": "status",
+                "ms": 92
+              }
+            ],
+            "ui": [
+              {
+                "phase": "running",
+                "progress": "preparing",
+                "ms": 120
+              },
+              {
+                "phase": "running_unknown",
+                "progress": null,
+                "ms": 211
+              }
+            ],
+            "consistentRun": true,
+            "terminal": "disconnected"
+          }
+        ],
+        "database_summary": {
+          "runs": 1,
+          "agent_messages": 1,
+          "memories": 0,
+          "receipts": 0,
+          "relationship_messages": 0,
+          "controls": [],
+          "resources": {
+            "persons": 1,
+            "relationships": 1,
+            "conversations": 1
+          },
+          "wire_faults": [
+            {
+              "fault": "sse_disconnect",
+              "path": "/api/v1/conversations/863db90f-367d-4bfc-9db3-88e0b6d150aa/agent-runs/stream",
+              "status": 200
+            }
+          ]
+        },
+        "identity_checks": [],
+        "foreign_owner": [],
+        "native_bubble_counts": []
+      },
+      "server_evidence": {
+        "snapshots": 1,
+        "database_assertions": [
+          {
+            "assert_db": "agent.runs.length",
+            "expected": 1,
+            "actual": 1,
+            "status": "PASS"
+          },
+          {
+            "assert_db": "agent.memories",
+            "expected": 0,
+            "actual": 0,
+            "status": "PASS"
+          }
+        ],
+        "reference": "Full report contains real SQL IDs, receipts, signed-owner wire metadata and native/host transport labels"
+      },
+      "status": "PASS",
+      "exit_code": 0,
+      "artifacts": {
+        "log": {
+          "path": "docs/evidence/phase8f-closeout/phase8f-closeout-final1-sse_disconnect.log",
+          "sha256": "e0bfa3bc833e044d2f3c02d63f68188b9b5c6eb34e507ceb897a5f566dec1a2f"
+        },
+        "report": {
+          "path": "docs/evidence/phase8f-closeout/phase8f-closeout-final1-sse_disconnect.json",
+          "sha256": "9bdd914d03a8f5e51685c727b073dcdbe7ed813804a107e1e5a8f0e84b415b28"
+        },
+        "steps": {
+          "path": "docs/evidence/phase8f-closeout/phase8f-closeout-final1-sse_disconnect.steps.json",
+          "sha256": "683f22b1715afedfad45f55dc51b503fcdaf0114a2141e71776a62d65ca9bd7d"
+        },
+        "exit": {
+          "path": "docs/evidence/phase8f-closeout/phase8f-closeout-final1-sse_disconnect.exit",
+          "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+        }
+      }
+    },
+    {
+      "id": "8F-SSE-CANCEL",
+      "scene": "sse_cancel",
+      "gate": "A",
+      "preconditions": "Fresh independent A; slow Mock; isolated PostgreSQL fixture; fresh CLI JWT for each business identity; SecureStore acknowledgement",
+      "steps": [
+        "restart",
+        "open settings",
+        "tap [\"清除当前开发会话\",\"down\"]",
+        "case 8F-SSE-CANCEL",
+        "seed",
+        "login a",
+        "route [\"chat\",\"current\"]",
+        "fault slow_run",
+        "input [\"Agent 消息输入\",\"Synthetic cancel waiting\"]",
+        "tap [\"发送 Agent 消息\"]",
+        "tap [\"停止等待\"]",
+        "state",
+        "observe",
+        "assert_ui \"无法确认该请求是否已完成。\"",
+        "observe cancelled",
+        "wait 8",
+        "observe cancelled",
+        "assert_observer_same",
+        "evidence",
+        "assert_db [\"agent.runs.length\",1]",
+        "assert_db [\"agent.messages.length\",1]",
+        "assert_db [\"agent.memories\",0]",
+        "tap [\"清除当前开发会话\",\"down\"]",
+        "stop"
+      ],
+      "expected": "Actual Stop waiting aborts Reader; Unknown UI; observer unchanged after delayed work; no extra message or Memory",
+      "actual": {
+        "completed_commands": 23,
+        "ui_assertions": [
+          {
+            "assert_ui": "已停止等待，无法确认该请求是否已完成。",
+            "status": "PASS"
+          }
+        ],
+        "native_sse": [
+          {
+            "reader": {
+              "reads": 3,
+              "cancels": 2,
+              "releases": 1
+            },
+            "events": [
+              {
+                "type": "run_started",
+                "ms": 99
+              },
+              {
+                "type": "status",
+                "ms": 99
+              },
+              {
+                "type": "status",
+                "ms": 99
+              },
+              {
+                "type": "status",
+                "ms": 5064
+              }
+            ],
+            "ui": [
+              {
+                "phase": "running",
+                "progress": "checking_safety",
+                "ms": 131
+              },
+              {
+                "phase": "running",
+                "progress": "understanding_request",
+                "ms": 5090
+              },
+              {
+                "phase": "running_unknown",
+                "progress": "understanding_request",
+                "ms": 5381
+              }
+            ],
+            "consistentRun": true,
+            "terminal": "cancelled"
+          },
+          {
+            "reader": {
+              "reads": 3,
+              "cancels": 2,
+              "releases": 1
+            },
+            "events": [
+              {
+                "type": "run_started",
+                "ms": 99
+              },
+              {
+                "type": "status",
+                "ms": 99
+              },
+              {
+                "type": "status",
+                "ms": 99
+              },
+              {
+                "type": "status",
+                "ms": 5064
+              }
+            ],
+            "ui": [
+              {
+                "phase": "running",
+                "progress": "checking_safety",
+                "ms": 131
+              },
+              {
+                "phase": "running",
+                "progress": "understanding_request",
+                "ms": 5090
+              },
+              {
+                "phase": "running_unknown",
+                "progress": "understanding_request",
+                "ms": 5381
+              }
+            ],
+            "consistentRun": true,
+            "terminal": "cancelled"
+          },
+          {
+            "reader": {
+              "reads": 3,
+              "cancels": 2,
+              "releases": 1
+            },
+            "events": [
+              {
+                "type": "run_started",
+                "ms": 99
+              },
+              {
+                "type": "status",
+                "ms": 99
+              },
+              {
+                "type": "status",
+                "ms": 99
+              },
+              {
+                "type": "status",
+                "ms": 5064
+              }
+            ],
+            "ui": [
+              {
+                "phase": "running",
+                "progress": "checking_safety",
+                "ms": 131
+              },
+              {
+                "phase": "running",
+                "progress": "understanding_request",
+                "ms": 5090
+              },
+              {
+                "phase": "running_unknown",
+                "progress": "understanding_request",
+                "ms": 5381
+              }
+            ],
+            "consistentRun": true,
+            "terminal": "cancelled"
+          }
+        ],
+        "database_summary": {
+          "runs": 1,
+          "agent_messages": 1,
+          "memories": 0,
+          "receipts": 0,
+          "relationship_messages": 0,
+          "controls": [],
+          "resources": {
+            "persons": 1,
+            "relationships": 1,
+            "conversations": 1
+          },
+          "wire_faults": []
+        },
+        "identity_checks": [],
+        "foreign_owner": [],
+        "native_bubble_counts": []
+      },
+      "server_evidence": {
+        "snapshots": 1,
+        "database_assertions": [
+          {
+            "assert_db": "agent.runs.length",
+            "expected": 1,
+            "actual": 1,
+            "status": "PASS"
+          },
+          {
+            "assert_db": "agent.messages.length",
+            "expected": 1,
+            "actual": 1,
+            "status": "PASS"
+          },
+          {
+            "assert_db": "agent.memories",
+            "expected": 0,
+            "actual": 0,
+            "status": "PASS"
+          }
+        ],
+        "reference": "Full report contains real SQL IDs, receipts, signed-owner wire metadata and native/host transport labels"
+      },
+      "status": "PASS",
+      "exit_code": 0,
+      "artifacts": {
+        "log": {
+          "path": "docs/evidence/phase8f-closeout/phase8f-closeout-final2-sse_cancel.log",
+          "sha256": "d83a22967a2847561115acb3cffbd9e002e96572c98601b20d7b07d1c60cb229"
+        },
+        "report": {
+          "path": "docs/evidence/phase8f-closeout/phase8f-closeout-final2-sse_cancel.json",
+          "sha256": "68a7d34eb4b388de7622bd9fad02f8aa78f986fc7d4c73768aaca6407c78f350"
+        },
+        "steps": {
+          "path": "docs/evidence/phase8f-closeout/phase8f-closeout-final2-sse_cancel.steps.json",
+          "sha256": "fe6bd3ad70559f6354c55496c168b77594f8aa4e5b481118555f465e6eebdead"
+        },
+        "exit": {
+          "path": "docs/evidence/phase8f-closeout/phase8f-closeout-final2-sse_cancel.exit",
+          "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+        }
+      }
+    },
+    {
+      "id": "8F-SSE-BACK-LOGOUT",
+      "scene": "sse_back_logout",
+      "gate": "A",
+      "preconditions": "Fresh independent A/B; slow Mock and existing disconnect policy; isolated PostgreSQL fixture; fresh CLI JWT for each business identity; SecureStore acknowledgement",
+      "steps": [
+        "restart",
+        "open settings",
+        "tap [\"清除当前开发会话\",\"down\"]",
+        "case 8F-SSE-BACK-LOGOUT",
+        "seed",
+        "login a",
+        "route [\"chat\",\"current\"]",
+        "fault slow_run",
+        "input [\"Agent 消息输入\",\"Synthetic native Back\"]",
+        "tap [\"发送 Agent 消息\"]",
+        "back",
+        "wait 8",
+        "assert_ui \"Memory 控制 · 服务器权威状态\"",
+        "route [\"chat\",\"current\"]",
+        "assert_ui \"无法确认该请求是否已完成。\"",
+        "observe cancelled",
+        "tap [\"重试原操作（REST）\"]",
+        "assert_ui \"Agent 状态：运行失败\"",
+        "fault slow_run",
+        "input [\"Agent 消息输入\",\"Synthetic native Logout\"]",
+        "tap [\"发送 Agent 消息\"]",
+        "tap [\"清除当前开发会话\",\"down\"]",
+        "wait 8",
+        "assert_ui \"未连接：没有开发凭证\"",
+        "evidence",
+        "login b",
+        "wait 3",
+        "assert_ui \"当前范围没有有效记忆。\"",
+        "evidence",
+        "foreign",
+        "tap [\"清除当前开发会话\",\"down\"]",
+        "stop"
+      ],
+      "expected": "Android Back and Logout cancel old stream; B gets no A state; original-key REST confirms known failed outcome before explicit new attempt",
+      "actual": {
+        "completed_commands": 31,
+        "ui_assertions": [
+          {
+            "assert_ui": "Memory 控制 · 服务器权威状态",
+            "status": "PASS"
+          },
+          {
+            "assert_ui": "无法确认该请求是否已完成。请查询历史或重试原操作。",
+            "status": "PASS"
+          },
+          {
+            "assert_ui": "Agent 状态：运行失败",
+            "status": "PASS"
+          },
+          {
+            "assert_ui": "未连接：没有开发凭证",
+            "status": "PASS"
+          },
+          {
+            "assert_ui": "当前范围没有有效记忆。",
+            "status": "PASS"
+          }
+        ],
+        "native_sse": [
+          {
+            "reader": {
+              "reads": 2,
+              "cancels": 2,
+              "releases": 1
+            },
+            "events": [
+              {
+                "type": "run_started",
+                "ms": 89
+              },
+              {
+                "type": "status",
+                "ms": 89
+              },
+              {
+                "type": "status",
+                "ms": 89
+              }
+            ],
+            "ui": [
+              {
+                "phase": "running",
+                "progress": "checking_safety",
+                "ms": 117
+              },
+              {
+                "phase": "idle",
+                "progress": null,
+                "ms": 34989
+              },
+              {
+                "phase": "running_unknown",
+                "progress": null,
+                "ms": 35170
+              }
+            ],
+            "consistentRun": true,
+            "terminal": "cancelled"
+          }
+        ],
+        "database_summary": {
+          "runs": 2,
+          "agent_messages": 2,
+          "memories": 0,
+          "receipts": 0,
+          "relationship_messages": 0,
+          "controls": [],
+          "resources": {
+            "persons": 1,
+            "relationships": 1,
+            "conversations": 1
+          },
+          "wire_faults": []
+        },
+        "identity_checks": [],
+        "foreign_owner": [
+          {
+            "foreign_owner_http": {
+              "persons": 404,
+              "relationships": 404,
+              "conversations": 404
+            }
+          }
+        ],
+        "native_bubble_counts": []
+      },
+      "server_evidence": {
+        "snapshots": 2,
+        "database_assertions": [],
+        "reference": "Full report contains real SQL IDs, receipts, signed-owner wire metadata and native/host transport labels"
+      },
+      "status": "PASS",
+      "exit_code": 0,
+      "artifacts": {
+        "log": {
+          "path": "docs/evidence/phase8f-closeout/phase8f-closeout-final1-sse_back_logout.log",
+          "sha256": "9288287b5493f1fea9fd685fa10888ec0471cbbe98407686db948495bd7a3d5a"
+        },
+        "report": {
+          "path": "docs/evidence/phase8f-closeout/phase8f-closeout-final1-sse_back_logout.json",
+          "sha256": "0d571dcfa6f3c171a5149ec9ba105afabcd865b6a0a42a481289b2e327fc3d87"
+        },
+        "steps": {
+          "path": "docs/evidence/phase8f-closeout/phase8f-closeout-final1-sse_back_logout.steps.json",
+          "sha256": "6aaa11cf91d00fbfbee2833e7d5c9cb7608d9e7f048342da49eb4de5e0a8a990"
+        },
+        "exit": {
+          "path": "docs/evidence/phase8f-closeout/phase8f-closeout-final1-sse_back_logout.exit",
+          "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+        }
+      }
+    },
+    {
+      "id": "8F-RESOURCE-CREATE",
+      "scene": "resource_create",
+      "gate": "B",
+      "preconditions": "Empty disposable database; fresh A JWT; no host create preconditions; isolated PostgreSQL fixture; fresh CLI JWT for each business identity; SecureStore acknowledgement",
+      "steps": [
+        "restart",
+        "open settings",
+        "tap [\"清除当前开发会话\",\"down\"]",
+        "case 8F-RESOURCE-CREATE",
+        "login a",
+        "open relationship",
+        "input [\"Person 显示名称\",\"8FNativeCreate\"]",
+        "tap [\"创建新 Person\"]",
+        "assert_ui \"服务器已确认保存 persons\"",
+        "adopt",
+        "tap [\"查看 persons 8FNativeCreate\",\"down\"]",
+        "assert_ui \"UUID：{person}\"",
+        "tap [\"使用 Person 8FNativeCreate\"]",
+        "input [\"关系类型（必填）\",\"unknown\"]",
+        "input [\"关系状态（必填）\",\"unknown\"]",
+        "tap [\"创建新 Relationship\"]",
+        "assert_ui \"服务器已确认保存 relationships\"",
+        "adopt",
+        "tap [\"查看 relationships 8FNativeCreate\",\"down\"]",
+        "assert_ui \"UUID：{relationship}\"",
+        "assert_ui \"所属 Person：8FNativeCreate · {person}\"",
+        "tap [\"绑定 Relationship {relationship}\"]",
+        "tap [\"创建新 Conversation\"]",
+        "assert_ui \"服务器已确认保存 conversations\"",
+        "adopt",
+        "tap [\"查看 conversations {conversation}\",\"down\"]",
+        "assert_ui \"UUID：{conversation}\"",
+        "assert_ui \"绑定关系：{relationship}\"",
+        "open settings",
+        "open relationship",
+        "tap [\"刷新 persons\",\"down\"]",
+        "tap [\"查看 persons 8FNativeCreate\"]",
+        "assert_ui \"UUID：{person}\"",
+        "tap [\"刷新 relationships\"]",
+        "tap [\"查看 relationships 8FNativeCreate\"]",
+        "assert_ui \"UUID：{relationship}\"",
+        "tap [\"刷新 conversations\"]",
+        "tap [\"查看 conversations {conversation}\"]",
+        "assert_ui \"UUID：{conversation}\"",
+        "state",
+        "evidence",
+        "assert_db [\"resources.persons\",1]",
+        "assert_db [\"resources.relationships\",1]",
+        "assert_db [\"resources.conversations\",1]",
+        "tap [\"清除当前开发会话\",\"down\"]",
+        "stop"
+      ],
+      "expected": "Android creates and gets Person/Relationship/Conversation, reloads and gets stable owned IDs; SQL one of each",
+      "actual": {
+        "completed_commands": 45,
+        "ui_assertions": [
+          {
+            "assert_ui": "服务器已确认保存 persons",
+            "status": "PASS"
+          },
+          {
+            "assert_ui": "UUID：cc267b0c-5518-4cdc-8e6b-e961d535cd6f",
+            "status": "PASS"
+          },
+          {
+            "assert_ui": "服务器已确认保存 relationships",
+            "status": "PASS"
+          },
+          {
+            "assert_ui": "UUID：57722b7b-df8e-4302-991e-ea1cada76669",
+            "status": "PASS"
+          },
+          {
+            "assert_ui": "所属 Person：8FNativeCreate · cc267b0c-5518-4cdc-8e6b-e961d535cd6f",
+            "status": "PASS"
+          },
+          {
+            "assert_ui": "服务器已确认保存 conversations",
+            "status": "PASS"
+          },
+          {
+            "assert_ui": "UUID：cfe144b1-d607-43aa-bd36-ebfa46a2b10b",
+            "status": "PASS"
+          },
+          {
+            "assert_ui": "绑定关系：57722b7b-df8e-4302-991e-ea1cada76669",
+            "status": "PASS"
+          },
+          {
+            "assert_ui": "UUID：cc267b0c-5518-4cdc-8e6b-e961d535cd6f",
+            "status": "PASS"
+          },
+          {
+            "assert_ui": "UUID：57722b7b-df8e-4302-991e-ea1cada76669",
+            "status": "PASS"
+          },
+          {
+            "assert_ui": "UUID：cfe144b1-d607-43aa-bd36-ebfa46a2b10b",
+            "status": "PASS"
+          }
+        ],
+        "native_sse": [],
+        "database_summary": {
+          "runs": 0,
+          "agent_messages": 0,
+          "memories": 0,
+          "receipts": 0,
+          "relationship_messages": 0,
+          "controls": [],
+          "resources": {
+            "persons": 1,
+            "relationships": 1,
+            "conversations": 1
+          },
+          "wire_faults": []
+        },
+        "identity_checks": [],
+        "foreign_owner": [],
+        "native_bubble_counts": []
+      },
+      "server_evidence": {
+        "snapshots": 1,
+        "database_assertions": [
+          {
+            "assert_db": "resources.persons",
+            "expected": 1,
+            "actual": 1,
+            "status": "PASS"
+          },
+          {
+            "assert_db": "resources.relationships",
+            "expected": 1,
+            "actual": 1,
+            "status": "PASS"
+          },
+          {
+            "assert_db": "resources.conversations",
+            "expected": 1,
+            "actual": 1,
+            "status": "PASS"
+          }
+        ],
+        "reference": "Full report contains real SQL IDs, receipts, signed-owner wire metadata and native/host transport labels"
+      },
+      "status": "PASS",
+      "exit_code": 0,
+      "artifacts": {
+        "log": {
+          "path": "docs/evidence/phase8f-closeout/phase8f-closeout-final2-resource_create.log",
+          "sha256": "f95eaae40c8516914548bb00eb0b6118a70722caa183108bafac8555fc316195"
+        },
+        "report": {
+          "path": "docs/evidence/phase8f-closeout/phase8f-closeout-final2-resource_create.json",
+          "sha256": "ae99026d41bfaa0266f1c3113336b9f3eb2d464df4c58d4a428ab1d92f8ce4cc"
+        },
+        "steps": {
+          "path": "docs/evidence/phase8f-closeout/phase8f-closeout-final2-resource_create.steps.json",
+          "sha256": "528ea0afdb4130178fc2250907eda45e74f3630ba4028488c920556370321432"
+        },
+        "exit": {
+          "path": "docs/evidence/phase8f-closeout/phase8f-closeout-final2-resource_create.exit",
+          "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+        }
+      }
+    },
+    {
+      "id": "8F-REST-REPLAY",
+      "scene": "rest_replay",
+      "gate": "C",
+      "preconditions": "Fresh A; one-shot response loss after real Agent REST commit; isolated PostgreSQL fixture; fresh CLI JWT for each business identity; SecureStore acknowledgement",
+      "steps": [
+        "restart",
+        "open settings",
+        "tap [\"清除当前开发会话\",\"down\"]",
+        "case 8F-REST-REPLAY",
+        "seed",
+        "login a",
+        "tap [\"授权长期记忆\"]",
+        "tap [\"恢复记忆\"]",
+        "route [\"chat\",\"current\"]",
+        "assert_ui \"当前 Conversation：{conversation}\"",
+        "tap [\"使用 REST\"]",
+        "fault agent_drop",
+        "input [\"Agent 消息输入\",\"Synthetic native REST replay\"]",
+        "tap [\"发送 Agent 消息\"]",
+        "wait 8",
+        "assert_ui \"无法确认该请求是否已完成。\"",
+        "evidence",
+        "assert_db [\"agent.runs.length\",1]",
+        "assert_db [\"agent.messages.length\",2]",
+        "assert_db [\"agent.calls.length\",6]",
+        "assert_db [\"agent.memories\",0]",
+        "tap [\"重试原操作（REST）\"]",
+        "wait 3",
+        "assert_ui \"Agent 状态：运行完成\"",
+        "assert_ui \"合成验收🌱\"",
+        "state",
+        "evidence",
+        "assert_same",
+        "assert_db [\"agent.calls.length\",6]",
+        "assert_db [\"agent.memories\",0]",
+        "tap [\"清除当前开发会话\",\"down\"]",
+        "stop"
+      ],
+      "expected": "Unknown after response loss; Android retries original key; same Run/messages/provider calls/Memory, one user/assistant bubble",
+      "actual": {
+        "completed_commands": 31,
+        "ui_assertions": [
+          {
+            "assert_ui": "当前 Conversation：c576eb5d-b344-4cbc-b338-ae2000408bca",
+            "status": "PASS"
+          },
+          {
+            "assert_ui": "Agent 状态：无法确认该请求是否已完成。",
+            "status": "PASS"
+          },
+          {
+            "assert_ui": "Agent 状态：运行完成",
+            "status": "PASS"
+          },
+          {
+            "assert_ui": "观察接下来双方的真实互动，再决定是否调整投入。旧信息可能变化，请结合现在的情况判断。 合成验收🌱",
+            "status": "PASS"
+          }
+        ],
+        "native_sse": [],
+        "database_summary": {
+          "runs": 1,
+          "agent_messages": 2,
+          "memories": 0,
+          "receipts": 0,
+          "relationship_messages": 0,
+          "controls": [
+            {
+              "owner": "ec68736c-1fc9-4ac7-a411-1ab437d6c383",
+              "consent_enabled": true,
+              "paused": false
+            }
+          ],
+          "resources": {
+            "persons": 1,
+            "relationships": 1,
+            "conversations": 1
+          },
+          "wire_faults": [
+            {
+              "fault": "agent_drop",
+              "path": "/api/v1/conversations/c576eb5d-b344-4cbc-b338-ae2000408bca/agent-runs",
+              "status": 200
+            }
+          ]
+        },
+        "identity_checks": [],
+        "foreign_owner": [],
+        "native_bubble_counts": [
+          {
+            "user": 1,
+            "assistant": 1
+          }
+        ]
+      },
+      "server_evidence": {
+        "snapshots": 2,
+        "database_assertions": [
+          {
+            "assert_db": "agent.runs.length",
+            "expected": 1,
+            "actual": 1,
+            "status": "PASS"
+          },
+          {
+            "assert_db": "agent.messages.length",
+            "expected": 2,
+            "actual": 2,
+            "status": "PASS"
+          },
+          {
+            "assert_db": "agent.calls.length",
+            "expected": 6,
+            "actual": 6,
+            "status": "PASS"
+          },
+          {
+            "assert_db": "agent.memories",
+            "expected": 0,
+            "actual": 0,
+            "status": "PASS"
+          },
+          {
+            "assert_db": "agent.calls.length",
+            "expected": 6,
+            "actual": 6,
+            "status": "PASS"
+          },
+          {
+            "assert_db": "agent.memories",
+            "expected": 0,
+            "actual": 0,
+            "status": "PASS"
+          }
+        ],
+        "reference": "Full report contains real SQL IDs, receipts, signed-owner wire metadata and native/host transport labels"
+      },
+      "status": "PASS",
+      "exit_code": 0,
+      "artifacts": {
+        "log": {
+          "path": "docs/evidence/phase8f-closeout/phase8f-closeout-final3-rest_replay.log",
+          "sha256": "cb1032ff51e3443f728c6c91a4114884a0269aaba17e064ee87e8744559a1569"
+        },
+        "report": {
+          "path": "docs/evidence/phase8f-closeout/phase8f-closeout-final3-rest_replay.json",
+          "sha256": "43976f03df4c217d4719b363b5386edfa6c40314d7bcf6efb3d84afae1f582b9"
+        },
+        "steps": {
+          "path": "docs/evidence/phase8f-closeout/phase8f-closeout-final3-rest_replay.steps.json",
+          "sha256": "19b7f1449a618041d85fc961d4e6369a30bdf8d332ab7d9cf0f99642ed581e2b"
+        },
+        "exit": {
+          "path": "docs/evidence/phase8f-closeout/phase8f-closeout-final3-rest_replay.exit",
+          "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+        }
+      }
+    },
+    {
+      "id": "8F-OWNER-ISOLATION",
+      "scene": "owner_isolation",
+      "gate": "D",
+      "preconditions": "Independent signed A/B; native A resource create plus labelled synthetic REST setup; isolated PostgreSQL fixture; fresh CLI JWT for each business identity; SecureStore acknowledgement",
+      "steps": [
+        "restart",
+        "open settings",
+        "tap [\"清除当前开发会话\",\"down\"]",
+        "case 8F-OWNER-ISOLATION",
+        "login a",
+        "open relationship",
+        "input [\"Person 显示名称\",\"OwnerANative\"]",
+        "tap [\"创建新 Person\"]",
+        "assert_ui \"服务器已确认保存 persons\"",
+        "seed OwnerAScope",
+        "history_setup [101,\"OwnerA\"]",
+        "bookmark a",
+        "route [\"chat\",\"a\"]",
+        "input [\"Agent 消息输入\",\"Synthetic owner A chat\"]",
+        "tap [\"发送 Agent 消息\"]",
+        "wait 8",
+        "assert_ui \"Agent 状态：运行完成\"",
+        "open settings",
+        "tap [\"授权长期记忆\"]",
+        "tap [\"恢复记忆\"]",
+        "save 一",
+        "tap [\"重新读取 Memory 权威状态\",\"down\"]",
+        "memory_id",
+        "tap [\"查看记忆 {memory}\"]",
+        "assert_ui \"Memory ID：{memory}\"",
+        "bookmark a",
+        "route [\"history\",\"a\"]",
+        "assert_ui \"范围：{relationship} · 已读取 100 条\"",
+        "tap [\"加载更多服务器历史\"]",
+        "assert_ui \"范围：{relationship} · 已读取 101 条\"",
+        "open settings",
+        "tap [\"准备删除记忆 {memory}\"]",
+        "assert_ui \"Mutation 状态：等待你明确确认\"",
+        "state",
+        "fault hold_memory",
+        "tap [\"重新读取 Memory 权威状态\",\"down\"]",
+        "evidence",
+        "tap [\"清除当前开发会话\",\"down\"]",
+        "assert_ui \"未连接：没有开发凭证\"",
+        "login b",
+        "fault release_get",
+        "wait 4",
+        "assert_ui \"当前范围没有有效记忆。\"",
+        "assert_ui \"Mutation 状态：尚未准备操作\"",
+        "assert_absent [\"Confirmation ID：\",\"{memory}\",\"OwnerANative\"]",
+        "state",
+        "open relationship",
+        "assert_ui \"当前用户没有 persons\"",
+        "assert_ui \"当前用户没有 relationships\"",
+        "assert_ui \"当前用户没有 conversations\"",
+        "assert_absent [\"OwnerANative\",\"OwnerAScope\",\"{person}\",\"{conversation}\"]",
+        "route [\"history\",\"a\"]",
+        "assert_ui \"资源不存在或不属于当前会话。\"",
+        "assert_ui \"已读取 0 条\"",
+        "assert_absent [\"Synthetic OwnerA history occurrence.\"]",
+        "state",
+        "route [\"chat\",\"a\"]",
+        "assert_ui \"资源不存在或不属于当前会话。\"",
+        "assert_ui \"尚无服务器确认的 Agent 消息。\"",
+        "assert_absent [\"Synthetic owner A chat\",\"合成验收🌱\",\"operation_key：\"]",
+        "state",
+        "foreign",
+        "evidence",
+        "assert_db [\"memory.memories\",1]",
+        "assert_db [\"memory.receipts\",0]",
+        "assert_db [\"memory.relationship_messages\",101]",
+        "assert_identity",
+        "tap [\"清除当前开发会话\",\"down\"]",
+        "stop"
+      ],
+      "expected": "A views Chat/Memory/paged Relationship history and confirmation; Logout B clears scopes/cursor/challenge; delayed A result cannot overwrite B; real foreign resources404",
+      "actual": {
+        "completed_commands": 68,
+        "ui_assertions": [
+          {
+            "assert_ui": "服务器已确认保存 persons",
+            "status": "PASS"
+          },
+          {
+            "assert_ui": "Agent 状态：运行完成",
+            "status": "PASS"
+          },
+          {
+            "assert_ui": "Memory ID：4e1b6a11-12e2-4878-af15-6530fc27299b",
+            "status": "PASS"
+          },
+          {
+            "assert_ui": "范围：c1edcda2-f4b7-4ba4-8524-24a8c34432d5 · 已读取 100 条",
+            "status": "PASS"
+          },
+          {
+            "assert_ui": "范围：c1edcda2-f4b7-4ba4-8524-24a8c34432d5 · 已读取 101 条",
+            "status": "PASS"
+          },
+          {
+            "assert_ui": "Mutation 状态：等待你明确确认",
+            "status": "PASS"
+          },
+          {
+            "assert_ui": "未连接：没有开发凭证",
+            "status": "PASS"
+          },
+          {
+            "assert_ui": "当前范围没有有效记忆。",
+            "status": "PASS"
+          },
+          {
+            "assert_ui": "Mutation 状态：尚未准备操作",
+            "status": "PASS"
+          },
+          {
+            "assert_absent": [
+              "Confirmation ID：",
+              "4e1b6a11-12e2-4878-af15-6530fc27299b",
+              "OwnerANative"
+            ],
+            "status": "PASS"
+          },
+          {
+            "assert_ui": "当前用户没有 persons",
+            "status": "PASS"
+          },
+          {
+            "assert_ui": "当前用户没有 relationships",
+            "status": "PASS"
+          },
+          {
+            "assert_ui": "当前用户没有 conversations",
+            "status": "PASS"
+          },
+          {
+            "assert_absent": [
+              "OwnerANative",
+              "OwnerAScope",
+              "b2b7aeaf-fdb3-4d15-a832-c8a8acfeadc5",
+              "338e1455-9b3a-4fa2-b82a-c75c26d5e93c"
+            ],
+            "status": "PASS"
+          },
+          {
+            "assert_ui": "资源不存在或不属于当前会话。",
+            "status": "PASS"
+          },
+          {
+            "assert_ui": "范围：未选择或不可用 · 已读取 0 条",
+            "status": "PASS"
+          },
+          {
+            "assert_absent": [
+              "Synthetic OwnerA history occurrence."
+            ],
+            "status": "PASS"
+          },
+          {
+            "assert_ui": "资源不存在或不属于当前会话。",
+            "status": "PASS"
+          },
+          {
+            "assert_ui": "尚无服务器确认的 Agent 消息。",
+            "status": "PASS"
+          },
+          {
+            "assert_absent": [
+              "Synthetic owner A chat",
+              "合成验收🌱",
+              "operation_key："
+            ],
+            "status": "PASS"
+          }
+        ],
+        "native_sse": [],
+        "database_summary": {
+          "runs": 2,
+          "agent_messages": 4,
+          "memories": 1,
+          "receipts": 0,
+          "relationship_messages": 101,
+          "controls": [
+            {
+              "owner": "cf9a1b76-af20-4bcc-a0b2-5ebf386112c0",
+              "consent_enabled": true,
+              "paused": false
+            }
+          ],
+          "resources": {
+            "persons": 2,
+            "relationships": 1,
+            "conversations": 1
+          },
+          "wire_faults": [
+            {
+              "fault": "held_get",
+              "path": "/api/v1/memories"
+            }
+          ]
+        },
+        "identity_checks": [
+          {
+            "native_identity": "b",
+            "requests_checked": 14,
+            "status": "PASS"
+          }
+        ],
+        "foreign_owner": [
+          {
+            "foreign_owner_http": {
+              "persons": 404,
+              "relationships": 404,
+              "conversations": 404,
+              "memories": 404,
+              "chat-imports": 404
+            }
+          }
+        ],
+        "native_bubble_counts": []
+      },
+      "server_evidence": {
+        "snapshots": 2,
+        "database_assertions": [
+          {
+            "assert_db": "memory.memories",
+            "expected": 1,
+            "actual": 1,
+            "status": "PASS"
+          },
+          {
+            "assert_db": "memory.receipts",
+            "expected": 0,
+            "actual": 0,
+            "status": "PASS"
+          },
+          {
+            "assert_db": "memory.relationship_messages",
+            "expected": 101,
+            "actual": 101,
+            "status": "PASS"
+          }
+        ],
+        "reference": "Full report contains real SQL IDs, receipts, signed-owner wire metadata and native/host transport labels"
+      },
+      "status": "PASS",
+      "exit_code": 0,
+      "artifacts": {
+        "log": {
+          "path": "docs/evidence/phase8f-closeout/phase8f-closeout-final1-owner_isolation.log",
+          "sha256": "c44157b2e84cb83ee789043a7745cd392ce023b62310de94ddd413041d4a25cf"
+        },
+        "report": {
+          "path": "docs/evidence/phase8f-closeout/phase8f-closeout-final1-owner_isolation.json",
+          "sha256": "77da468015f1aa892e402a250e9ebd9fee01b88d6884be0ee6621e72913f4293"
+        },
+        "steps": {
+          "path": "docs/evidence/phase8f-closeout/phase8f-closeout-final1-owner_isolation.steps.json",
+          "sha256": "64bc2fc41a8108e437125276b10692c5c4ca1d9cb3026609173e4574bec18b30"
+        },
+        "exit": {
+          "path": "docs/evidence/phase8f-closeout/phase8f-closeout-final1-owner_isolation.exit",
+          "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+        }
+      }
+    },
+    {
+      "id": "8F-RELATIONSHIP-ISOLATION",
+      "scene": "relationship_isolation",
+      "gate": "E",
+      "preconditions": "Two distinct owned Persons/Relationships/Conversations with101/3 imported messages; isolated PostgreSQL fixture; fresh CLI JWT for each business identity; SecureStore acknowledgement",
+      "steps": [
+        "restart",
+        "open settings",
+        "tap [\"清除当前开发会话\",\"down\"]",
+        "case 8F-RELATIONSHIP-ISOLATION",
+        "seed ScopeA",
+        "history_setup [101,\"ScopeA\"]",
+        "bookmark a",
+        "seed ScopeB",
+        "history_setup [3,\"ScopeB\"]",
+        "bookmark b",
+        "login a",
+        "scope a",
+        "route [\"import\",\"a\"]",
+        "input [\"已有 ImportJob UUID\",\"{job}\"]",
+        "tap [\"读取已有 Job（不上传）\"]",
+        "assert_ui \"Job ID：{job}\"",
+        "assert_ui \"Relationship：{relationship}\"",
+        "route [\"history\",\"a\"]",
+        "assert_ui \"范围：{relationship} · 已读取 100 条\"",
+        "tap [\"加载更多服务器历史\"]",
+        "assert_ui \"范围：{relationship} · 已读取 101 条\"",
+        "state",
+        "back",
+        "scope b",
+        "route [\"relationship\",\"b\"]",
+        "assert_ui \"所属 Person：ScopeB · {person}\"",
+        "route [\"history\",\"b\"]",
+        "assert_ui \"范围：{relationship} · 已读取 3 条\"",
+        "assert_absent [\"Synthetic ScopeA history occurrence.\"]",
+        "state",
+        "tap [\"进入真实导入\"]",
+        "assert_ui \"文件状态：未选择\"",
+        "assert_absent [\"Job ID：\",\"Synthetic ScopeA\"]",
+        "state",
+        "route [\"chat\",\"b\"]",
+        "assert_ui \"当前 Conversation：{conversation}\"",
+        "assert_ui \"关系范围：{relationship}\"",
+        "input [\"Agent 消息输入\",\"Synthetic Scope B chat\"]",
+        "tap [\"发送 Agent 消息\"]",
+        "wait 8",
+        "assert_ui \"Agent 状态：运行完成\"",
+        "scope a",
+        "route [\"history\",\"a\"]",
+        "assert_ui \"范围：{relationship} · 已读取 100 条\"",
+        "home",
+        "route [\"history\",\"a\"]",
+        "assert_ui \"范围：{relationship} · 已读取 100 条\"",
+        "back",
+        "fault hold_history",
+        "route [\"history\",\"a\"]",
+        "scope b",
+        "route [\"history\",\"b\"]",
+        "assert_ui \"范围：{relationship} · 已读取 3 条\"",
+        "fault release_get",
+        "wait 3",
+        "assert_ui \"范围：{relationship} · 已读取 3 条\"",
+        "assert_absent [\"Synthetic ScopeA history occurrence.\"]",
+        "route [\"import\",\"b\"]",
+        "assert_ui \"文件状态：未选择\"",
+        "state",
+        "evidence",
+        "assert_db [\"import.messages\",104]",
+        "assert_db [\"agent.messages.length\",2]",
+        "scope missing",
+        "route [\"history\",\"missing\"]",
+        "assert_ui \"资源不存在或不属于当前会话。\"",
+        "assert_ui \"已读取 0 条\"",
+        "route [\"import\",\"missing\"]",
+        "assert_ui \"资源不存在或不属于当前会话。\"",
+        "state",
+        "evidence",
+        "tap [\"清除当前开发会话\",\"down\"]",
+        "stop"
+      ],
+      "expected": "A History More Return, B History Import Chat, A; cursor, bindings and message sources reset; held A response cannot overwrite B; missing scope fails closed",
+      "actual": {
+        "completed_commands": 72,
+        "ui_assertions": [
+          {
+            "assert_ui": "Job ID：6c325b11-095c-470f-8d26-3ee0cabfbd8d",
+            "status": "PASS"
+          },
+          {
+            "assert_ui": "Relationship：25014d17-7033-445c-91e1-4f161b0a8977",
+            "status": "PASS"
+          },
+          {
+            "assert_ui": "范围：25014d17-7033-445c-91e1-4f161b0a8977 · 已读取 100 条",
+            "status": "PASS"
+          },
+          {
+            "assert_ui": "范围：25014d17-7033-445c-91e1-4f161b0a8977 · 已读取 101 条",
+            "status": "PASS"
+          },
+          {
+            "assert_ui": "所属 Person：ScopeB · c08c9626-6a91-4127-9d95-846e9c8fd862",
+            "status": "PASS"
+          },
+          {
+            "assert_ui": "范围：c9924c14-697e-48c1-9d09-2c34b6b652dc · 已读取 3 条",
+            "status": "PASS"
+          },
+          {
+            "assert_absent": [
+              "Synthetic ScopeA history occurrence."
+            ],
+            "status": "PASS"
+          },
+          {
+            "assert_ui": "文件状态：未选择",
+            "status": "PASS"
+          },
+          {
+            "assert_absent": [
+              "Job ID：",
+              "Synthetic ScopeA"
+            ],
+            "status": "PASS"
+          },
+          {
+            "assert_ui": "当前 Conversation：7057ab42-09ba-4224-954f-37717e80f3af",
+            "status": "PASS"
+          },
+          {
+            "assert_ui": "关系范围：c9924c14-697e-48c1-9d09-2c34b6b652dc",
+            "status": "PASS"
+          },
+          {
+            "assert_ui": "Agent 状态：运行完成",
+            "status": "PASS"
+          },
+          {
+            "assert_ui": "范围：25014d17-7033-445c-91e1-4f161b0a8977 · 已读取 100 条",
+            "status": "PASS"
+          },
+          {
+            "assert_ui": "范围：25014d17-7033-445c-91e1-4f161b0a8977 · 已读取 100 条",
+            "status": "PASS"
+          },
+          {
+            "assert_ui": "范围：c9924c14-697e-48c1-9d09-2c34b6b652dc · 已读取 3 条",
+            "status": "PASS"
+          },
+          {
+            "assert_ui": "范围：c9924c14-697e-48c1-9d09-2c34b6b652dc · 已读取 3 条",
+            "status": "PASS"
+          },
+          {
+            "assert_absent": [
+              "Synthetic ScopeA history occurrence."
+            ],
+            "status": "PASS"
+          },
+          {
+            "assert_ui": "文件状态：未选择",
+            "status": "PASS"
+          },
+          {
+            "assert_ui": "资源不存在或不属于当前会话。",
+            "status": "PASS"
+          },
+          {
+            "assert_ui": "范围：未选择或不可用 · 已读取 0 条",
+            "status": "PASS"
+          },
+          {
+            "assert_ui": "资源不存在或不属于当前会话。",
+            "status": "PASS"
+          }
+        ],
+        "native_sse": [],
+        "database_summary": {
+          "runs": 1,
+          "agent_messages": 2,
+          "memories": 0,
+          "receipts": 0,
+          "relationship_messages": 104,
+          "controls": [],
+          "resources": {
+            "persons": 2,
+            "relationships": 2,
+            "conversations": 2
+          },
+          "wire_faults": [
+            {
+              "fault": "held_get",
+              "path": "/api/v1/relationships/25014d17-7033-445c-91e1-4f161b0a8977/messages"
+            }
+          ]
+        },
+        "identity_checks": [],
+        "foreign_owner": [],
+        "native_bubble_counts": []
+      },
+      "server_evidence": {
+        "snapshots": 2,
+        "database_assertions": [
+          {
+            "assert_db": "import.messages",
+            "expected": 104,
+            "actual": 104,
+            "status": "PASS"
+          },
+          {
+            "assert_db": "agent.messages.length",
+            "expected": 2,
+            "actual": 2,
+            "status": "PASS"
+          }
+        ],
+        "reference": "Full report contains real SQL IDs, receipts, signed-owner wire metadata and native/host transport labels"
+      },
+      "status": "PASS",
+      "exit_code": 0,
+      "artifacts": {
+        "log": {
+          "path": "docs/evidence/phase8f-closeout/phase8f-closeout-final1-relationship_isolation.log",
+          "sha256": "b4842bc557fefb96827ebb9963fac786d28e0f6bdfdbccfa62d8576e59d7cbab"
+        },
+        "report": {
+          "path": "docs/evidence/phase8f-closeout/phase8f-closeout-final1-relationship_isolation.json",
+          "sha256": "25045056f319a2917710effbc7890f9e6b36f10a1d42b68d8cb73ec7840cca3e"
+        },
+        "steps": {
+          "path": "docs/evidence/phase8f-closeout/phase8f-closeout-final1-relationship_isolation.steps.json",
+          "sha256": "06417a3129f8cef9d639215d28de2dd0e0e7a3df178952bd88dd983bb0713a32"
+        },
+        "exit": {
+          "path": "docs/evidence/phase8f-closeout/phase8f-closeout-final1-relationship_isolation.exit",
+          "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+        }
+      }
+    },
+    {
+      "id": "8F-MEMORY-CHALLENGE",
+      "scene": "memory_challenge",
+      "gate": "F",
+      "preconditions": "Fresh A; native consent; one synthetic eligible Memory; fixture expiry/stale changes; isolated PostgreSQL fixture; fresh CLI JWT for each business identity; SecureStore acknowledgement",
+      "steps": [
+        "restart",
+        "open settings",
+        "tap [\"清除当前开发会话\",\"down\"]",
+        "case 8F-MEMORY-CHALLENGE",
+        "seed",
+        "login a",
+        "tap [\"授权长期记忆\"]",
+        "tap [\"恢复记忆\"]",
+        "save 一",
+        "tap [\"重新读取 Memory 权威状态\",\"down\"]",
+        "memory_id",
+        "tap [\"查看记忆 {memory}\"]",
+        "assert_ui \"Memory ID：{memory}\"",
+        "tap [\"准备删除记忆 {memory}\"]",
+        "assert_ui \"Mutation 状态：等待你明确确认\"",
+        "back",
+        "open settings",
+        "assert_ui \"Mutation 状态：尚未准备操作\"",
+        "evidence",
+        "assert_db [\"memory.memories\",1]",
+        "assert_db [\"memory.receipts\",0]",
+        "tap [\"准备删除记忆 {memory}\",\"down\"]",
+        "expire_confirmation",
+        "tap [\"确认执行服务器删除\"]",
+        "assert_ui \"Mutation 状态：服务器确认已过期\"",
+        "evidence",
+        "assert_db [\"memory.memories\",1]",
+        "assert_db [\"memory.receipts\",0]",
+        "tap [\"重新读取 Memory 权威状态\",\"down\"]",
+        "tap [\"准备删除记忆 {memory}\"]",
+        "stale_memory",
+        "tap [\"确认执行服务器删除\"]",
+        "assert_ui \"Mutation 状态：目标已变化或操作冲突\"",
+        "tap [\"重新读取 Memory 权威状态\",\"down\"]",
+        "evidence",
+        "assert_db [\"memory.memories\",1]",
+        "assert_db [\"memory.receipts\",0]",
+        "assert_db [\"memory.agent_messages\",2]",
+        "tap [\"清除当前开发会话\",\"down\"]",
+        "stop"
+      ],
+      "expected": "Prepare cancel/expired/stale challenges leave Memory1 and receipts0; no unconfirmed deletion",
+      "actual": {
+        "completed_commands": 39,
+        "ui_assertions": [
+          {
+            "assert_ui": "Memory ID：58913486-0fe4-4b8c-87e2-0a84dc4d5ebb",
+            "status": "PASS"
+          },
+          {
+            "assert_ui": "Mutation 状态：等待你明确确认",
+            "status": "PASS"
+          },
+          {
+            "assert_ui": "Mutation 状态：尚未准备操作",
+            "status": "PASS"
+          },
+          {
+            "assert_ui": "Mutation 状态：服务器确认已过期",
+            "status": "PASS"
+          },
+          {
+            "assert_ui": "Mutation 状态：目标已变化或操作冲突",
+            "status": "PASS"
+          }
+        ],
+        "native_sse": [],
+        "database_summary": {
+          "runs": 1,
+          "agent_messages": 2,
+          "memories": 1,
+          "receipts": 0,
+          "relationship_messages": 0,
+          "controls": [
+            {
+              "owner": "10dc039d-9667-4562-9570-17041a8beab3",
+              "consent_enabled": true,
+              "paused": false
+            }
+          ],
+          "resources": {
+            "persons": 1,
+            "relationships": 1,
+            "conversations": 1
+          },
+          "wire_faults": []
+        },
+        "identity_checks": [],
+        "foreign_owner": [],
+        "native_bubble_counts": []
+      },
+      "server_evidence": {
+        "snapshots": 3,
+        "database_assertions": [
+          {
+            "assert_db": "memory.memories",
+            "expected": 1,
+            "actual": 1,
+            "status": "PASS"
+          },
+          {
+            "assert_db": "memory.receipts",
+            "expected": 0,
+            "actual": 0,
+            "status": "PASS"
+          },
+          {
+            "assert_db": "memory.memories",
+            "expected": 1,
+            "actual": 1,
+            "status": "PASS"
+          },
+          {
+            "assert_db": "memory.receipts",
+            "expected": 0,
+            "actual": 0,
+            "status": "PASS"
+          },
+          {
+            "assert_db": "memory.memories",
+            "expected": 1,
+            "actual": 1,
+            "status": "PASS"
+          },
+          {
+            "assert_db": "memory.receipts",
+            "expected": 0,
+            "actual": 0,
+            "status": "PASS"
+          },
+          {
+            "assert_db": "memory.agent_messages",
+            "expected": 2,
+            "actual": 2,
+            "status": "PASS"
+          }
+        ],
+        "reference": "Full report contains real SQL IDs, receipts, signed-owner wire metadata and native/host transport labels"
+      },
+      "status": "PASS",
+      "exit_code": 0,
+      "artifacts": {
+        "log": {
+          "path": "docs/evidence/phase8f-closeout/phase8f-closeout-final1-memory_challenge.log",
+          "sha256": "c1509dd2053584d2fa05544672c582ac744196a0b95fa67352071d7d1585fad2"
+        },
+        "report": {
+          "path": "docs/evidence/phase8f-closeout/phase8f-closeout-final1-memory_challenge.json",
+          "sha256": "c5d4446ba588dd9528644a63149c539f1cb861ffe7aed7197ae8487f3e379db3"
+        },
+        "steps": {
+          "path": "docs/evidence/phase8f-closeout/phase8f-closeout-final1-memory_challenge.steps.json",
+          "sha256": "52d1e0a7cf31889fda5aa92c60179efb96a94761fb0b5218a8495255633197df"
+        },
+        "exit": {
+          "path": "docs/evidence/phase8f-closeout/phase8f-closeout-final1-memory_challenge.exit",
+          "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+        }
+      }
+    },
+    {
+      "id": "8F-MEMORY-REPLAY",
+      "scene": "memory_replay",
+      "gate": "F",
+      "preconditions": "Fresh A; native consent; two synthetic Memory plus3 RelationshipMessages; committed execute loss; isolated PostgreSQL fixture; fresh CLI JWT for each business identity; SecureStore acknowledgement",
+      "steps": [
+        "restart",
+        "open settings",
+        "tap [\"清除当前开发会话\",\"down\"]",
+        "case 8F-MEMORY-REPLAY",
+        "seed",
+        "login a",
+        "tap [\"授权长期记忆\"]",
+        "tap [\"恢复记忆\"]",
+        "save 一",
+        "save 二",
+        "history_setup [3,\"MemoryWitness\"]",
+        "tap [\"重新读取 Memory 权威状态\",\"down\"]",
+        "memory_id",
+        "tap [\"准备删除记忆 {memory}\"]",
+        "assert_ui \"Mutation 状态：等待你明确确认\"",
+        "fault memory_drop",
+        "tap [\"确认执行服务器删除\"]",
+        "assert_ui \"Mutation 状态：操作结果未知\"",
+        "evidence",
+        "assert_db [\"memory.memories\",1]",
+        "assert_db [\"memory.receipts\",1]",
+        "assert_db [\"memory.agent_messages\",4]",
+        "assert_db [\"memory.relationship_messages\",3]",
+        "tap [\"安全重试原 Memory 操作\"]",
+        "assert_ui \"Mutation 状态：正式回执已确认\"",
+        "assert_ui \"本次响应 replayed：是\"",
+        "receipt_id",
+        "input [\"已知 Mutation ID\",\"{receipt}\"]",
+        "tap [\"查询服务器持久化回执\"]",
+        "assert_ui \"Mutation ID：{receipt}\"",
+        "tap [\"重新读取 Memory 权威状态\",\"down\"]",
+        "evidence",
+        "assert_db [\"memory.memories\",1]",
+        "assert_db [\"memory.receipts\",1]",
+        "assert_db [\"memory.agent_messages\",4]",
+        "assert_db [\"memory.relationship_messages\",3]",
+        "tap [\"清除当前开发会话\",\"down\"]",
+        "stop"
+      ],
+      "expected": "Unknown then same operation-key replay confirms durable receipt; Memory1/receipt1/Agent4/Relationship3; later receipt GET/refresh does not mutate",
+      "actual": {
+        "completed_commands": 37,
+        "ui_assertions": [
+          {
+            "assert_ui": "Mutation 状态：等待你明确确认",
+            "status": "PASS"
+          },
+          {
+            "assert_ui": "Mutation 状态：操作结果未知",
+            "status": "PASS"
+          },
+          {
+            "assert_ui": "Mutation 状态：正式回执已确认",
+            "status": "PASS"
+          },
+          {
+            "assert_ui": "本次响应 replayed：是 · primary_store_only：是",
+            "status": "PASS"
+          },
+          {
+            "assert_ui": "Mutation ID：6cbcb190-f533-4ad6-a251-9ac918009abc",
+            "status": "PASS"
+          }
+        ],
+        "native_sse": [],
+        "database_summary": {
+          "runs": 2,
+          "agent_messages": 4,
+          "memories": 1,
+          "receipts": 1,
+          "relationship_messages": 3,
+          "controls": [
+            {
+              "owner": "e8c216a8-fc89-4aae-afc3-4ce98b8ded9b",
+              "consent_enabled": true,
+              "paused": false
+            }
+          ],
+          "resources": {
+            "persons": 1,
+            "relationships": 1,
+            "conversations": 1
+          },
+          "wire_faults": [
+            {
+              "fault": "memory_drop",
+              "path": "/api/v1/memory/deletions/94c7d31b-9378-48c6-b5c3-2ddf31657181/execute",
+              "status": 200
+            }
+          ]
+        },
+        "identity_checks": [],
+        "foreign_owner": [],
+        "native_bubble_counts": []
+      },
+      "server_evidence": {
+        "snapshots": 2,
+        "database_assertions": [
+          {
+            "assert_db": "memory.memories",
+            "expected": 1,
+            "actual": 1,
+            "status": "PASS"
+          },
+          {
+            "assert_db": "memory.receipts",
+            "expected": 1,
+            "actual": 1,
+            "status": "PASS"
+          },
+          {
+            "assert_db": "memory.agent_messages",
+            "expected": 4,
+            "actual": 4,
+            "status": "PASS"
+          },
+          {
+            "assert_db": "memory.relationship_messages",
+            "expected": 3,
+            "actual": 3,
+            "status": "PASS"
+          },
+          {
+            "assert_db": "memory.memories",
+            "expected": 1,
+            "actual": 1,
+            "status": "PASS"
+          },
+          {
+            "assert_db": "memory.receipts",
+            "expected": 1,
+            "actual": 1,
+            "status": "PASS"
+          },
+          {
+            "assert_db": "memory.agent_messages",
+            "expected": 4,
+            "actual": 4,
+            "status": "PASS"
+          },
+          {
+            "assert_db": "memory.relationship_messages",
+            "expected": 3,
+            "actual": 3,
+            "status": "PASS"
+          }
+        ],
+        "reference": "Full report contains real SQL IDs, receipts, signed-owner wire metadata and native/host transport labels"
+      },
+      "status": "PASS",
+      "exit_code": 0,
+      "artifacts": {
+        "log": {
+          "path": "docs/evidence/phase8f-closeout/phase8f-closeout-final1-memory_replay.log",
+          "sha256": "19bae056236194ee6f62c36ccea99aabcc6581905b005f449c4579458b41f265"
+        },
+        "report": {
+          "path": "docs/evidence/phase8f-closeout/phase8f-closeout-final1-memory_replay.json",
+          "sha256": "c400957bb00dc1e236bc255d5f82bce62578b372112a89f2619574cc7f1e8461"
+        },
+        "steps": {
+          "path": "docs/evidence/phase8f-closeout/phase8f-closeout-final1-memory_replay.steps.json",
+          "sha256": "5298481aaea107fcb8be3bf27058ab25afbfdfd2699782724408435ecfc84390"
+        },
+        "exit": {
+          "path": "docs/evidence/phase8f-closeout/phase8f-closeout-final1-memory_replay.exit",
+          "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+        }
+      }
+    },
+    {
+      "id": "8F-MEMORY-RESTART",
+      "scene": "memory_restart",
+      "gate": "F",
+      "preconditions": "Fresh A; two synthetic Memory plus3 RelationshipMessages; committed execute loss before force-stop; isolated PostgreSQL fixture; fresh CLI JWT for each business identity; SecureStore acknowledgement",
+      "steps": [
+        "restart",
+        "open settings",
+        "tap [\"清除当前开发会话\",\"down\"]",
+        "case 8F-MEMORY-RESTART",
+        "seed",
+        "login a",
+        "tap [\"授权长期记忆\"]",
+        "tap [\"恢复记忆\"]",
+        "save 一",
+        "save 二",
+        "tap [\"重新读取 Memory 权威状态\",\"down\"]",
+        "memory_id",
+        "tap [\"准备删除记忆 {memory}\"]",
+        "fault memory_drop",
+        "tap [\"确认执行服务器删除\"]",
+        "assert_ui \"Mutation 状态：操作结果未知\"",
+        "evidence",
+        "assert_db [\"memory.memories\",1]",
+        "assert_db [\"memory.receipts\",1]",
+        "receipt_id",
+        "restart",
+        "tap [\"开发会话已连接\",\"down\"]",
+        "tap [\"重新读取 Memory 权威状态\"]",
+        "assert_ui \"当前窗口：1 条\"",
+        "assert_ui \"Mutation 状态：尚未准备操作\"",
+        "assert_ui \"重启后丢失原操作标识\"",
+        "assert_ui \"尚无已确认的服务器回执。\"",
+        "state",
+        "evidence",
+        "assert_db [\"memory.memories\",1]",
+        "assert_db [\"memory.receipts\",1]",
+        "input [\"已知 Mutation ID\",\"{receipt}\"]",
+        "tap [\"查询服务器持久化回执\"]",
+        "assert_ui \"Mutation ID：{receipt}\"",
+        "assert_ui \"Mutation 状态：尚未准备操作\"",
+        "evidence",
+        "assert_db [\"memory.memories\",1]",
+        "assert_db [\"memory.receipts\",1]",
+        "assert_db [\"memory.agent_messages\",4]",
+        "tap [\"清除当前开发会话\",\"down\"]",
+        "stop"
+      ],
+      "expected": "Unknown before process death; authenticated restart authority Memory1, no pending confirmation or automatic deletion; lost-key notice; known receipt can be read only",
+      "actual": {
+        "completed_commands": 40,
+        "ui_assertions": [
+          {
+            "assert_ui": "Mutation 状态：操作结果未知",
+            "status": "PASS"
+          },
+          {
+            "assert_ui": "当前窗口：1 条 · 最多 200 条",
+            "status": "PASS"
+          },
+          {
+            "assert_ui": "Mutation 状态：尚未准备操作",
+            "status": "PASS"
+          },
+          {
+            "assert_ui": "操作恢复信息仅保留在本次会话内。重启后丢失原操作标识，不能自动安全重试未确认的操作；请读取服务器权威状态或查询已知回执。记录消失本身不能证明操作成功。",
+            "status": "PASS"
+          },
+          {
+            "assert_ui": "尚无已确认的服务器回执。",
+            "status": "PASS"
+          },
+          {
+            "assert_ui": "Mutation ID：cfc50fac-c4ec-40de-abe3-2de0f18d4273",
+            "status": "PASS"
+          },
+          {
+            "assert_ui": "Mutation 状态：尚未准备操作",
+            "status": "PASS"
+          }
+        ],
+        "native_sse": [],
+        "database_summary": {
+          "runs": 2,
+          "agent_messages": 4,
+          "memories": 1,
+          "receipts": 1,
+          "relationship_messages": 0,
+          "controls": [
+            {
+              "owner": "57975122-9c55-4a2f-93d7-1c5b51cae8ef",
+              "consent_enabled": true,
+              "paused": false
+            }
+          ],
+          "resources": {
+            "persons": 1,
+            "relationships": 1,
+            "conversations": 1
+          },
+          "wire_faults": [
+            {
+              "fault": "memory_drop",
+              "path": "/api/v1/memory/deletions/62965ea1-8842-44b4-bcca-2d1acf8ab039/execute",
+              "status": 200
+            }
+          ]
+        },
+        "identity_checks": [],
+        "foreign_owner": [],
+        "native_bubble_counts": []
+      },
+      "server_evidence": {
+        "snapshots": 3,
+        "database_assertions": [
+          {
+            "assert_db": "memory.memories",
+            "expected": 1,
+            "actual": 1,
+            "status": "PASS"
+          },
+          {
+            "assert_db": "memory.receipts",
+            "expected": 1,
+            "actual": 1,
+            "status": "PASS"
+          },
+          {
+            "assert_db": "memory.memories",
+            "expected": 1,
+            "actual": 1,
+            "status": "PASS"
+          },
+          {
+            "assert_db": "memory.receipts",
+            "expected": 1,
+            "actual": 1,
+            "status": "PASS"
+          },
+          {
+            "assert_db": "memory.memories",
+            "expected": 1,
+            "actual": 1,
+            "status": "PASS"
+          },
+          {
+            "assert_db": "memory.receipts",
+            "expected": 1,
+            "actual": 1,
+            "status": "PASS"
+          },
+          {
+            "assert_db": "memory.agent_messages",
+            "expected": 4,
+            "actual": 4,
+            "status": "PASS"
+          }
+        ],
+        "reference": "Full report contains real SQL IDs, receipts, signed-owner wire metadata and native/host transport labels"
+      },
+      "status": "PASS",
+      "exit_code": 0,
+      "artifacts": {
+        "log": {
+          "path": "docs/evidence/phase8f-closeout/phase8f-closeout-final1-memory_restart.log",
+          "sha256": "e5ce23db1162787e38e39dbd73cca6106b62adb39e8bb3948e5a9f5b4ca85fec"
+        },
+        "report": {
+          "path": "docs/evidence/phase8f-closeout/phase8f-closeout-final1-memory_restart.json",
+          "sha256": "da9d735372684bf1f3cded55c7e39010c3f22dcc8cd539971b30ea500314aaa5"
+        },
+        "steps": {
+          "path": "docs/evidence/phase8f-closeout/phase8f-closeout-final1-memory_restart.steps.json",
+          "sha256": "0403dd8e1894374f3c7c99227fb8c57ac64611414b2705035f7f0979364c3c22"
+        },
+        "exit": {
+          "path": "docs/evidence/phase8f-closeout/phase8f-closeout-final1-memory_restart.exit",
+          "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+        }
+      }
+    },
+    {
+      "id": "8F-MEMORY-SMOKE-PRESERVE",
+      "scene": "memory_smoke_preserve",
+      "gate": "F",
+      "preconditions": "Fresh A; native consent; three synthetic Memories in two scopes plus3 RelationshipMessages; isolated PostgreSQL fixture; fresh CLI JWT for each business identity; SecureStore acknowledgement",
+      "steps": [
+        "restart",
+        "open settings",
+        "tap [\"清除当前开发会话\",\"down\"]",
+        "case 8F-MEMORY-SMOKE-PRESERVE",
+        "seed MemoryA",
+        "bookmark a",
+        "seed MemoryB",
+        "bookmark b",
+        "login a",
+        "assert_ui \"Consent：未授权\"",
+        "tap [\"授权长期记忆\"]",
+        "tap [\"恢复记忆\"]",
+        "scope a",
+        "save 一",
+        "save 二",
+        "history_setup [3,\"PreserveWitness\"]",
+        "scope b",
+        "save 三",
+        "tap [\"重新读取 Memory 权威状态\",\"down\"]",
+        "assert_ui \"当前窗口：3 条\"",
+        "tap [\"暂停记忆\",\"down\"]",
+        "assert_ui \"Pause：已暂停\"",
+        "evidence",
+        "assert_db [\"memory.controls.0.paused\",true]",
+        "tap [\"恢复记忆\"]",
+        "assert_ui \"Pause：未暂停\"",
+        "tap [\"撤销长期记忆授权\"]",
+        "assert_ui \"Consent：未授权\"",
+        "evidence",
+        "assert_db [\"memory.memories\",3]",
+        "assert_db [\"memory.controls.0.consent_enabled\",false]",
+        "tap [\"授权长期记忆\"]",
+        "assert_ui \"Consent：已授权\"",
+        "tap [\"恢复记忆\"]",
+        "assert_ui \"Pause：未暂停\"",
+        "tap [\"检查最新 Undo 并准备确认\"]",
+        "state",
+        "assert_ui \"Mutation 状态：等待你明确确认\"",
+        "state",
+        "tap [\"确认撤销该最新操作\"]",
+        "assert_ui \"Mutation 状态：正式回执已确认\"",
+        "evidence",
+        "assert_db [\"memory.memories\",2]",
+        "assert_db [\"memory.receipts\",1]",
+        "assert_db [\"memory.agent_messages\",6]",
+        "assert_db [\"memory.relationship_messages\",3]",
+        "scope a",
+        "memory_id",
+        "tap [\"查看记忆 {memory}\",\"down\"]",
+        "assert_ui \"Memory ID：{memory}\"",
+        "tap [\"准备删除记忆 {memory}\"]",
+        "tap [\"确认执行服务器删除\"]",
+        "assert_ui \"Mutation 状态：正式回执已确认\"",
+        "evidence",
+        "assert_db [\"memory.memories\",1]",
+        "assert_db [\"memory.receipts\",2]",
+        "assert_db [\"memory.agent_messages\",6]",
+        "assert_db [\"memory.relationship_messages\",3]",
+        "tap [\"全部删除后保留授权\"]",
+        "tap [\"准备删除全部本人记忆\"]",
+        "assert_ui \"删除后撤销授权：否\"",
+        "tap [\"确认执行服务器删除\"]",
+        "assert_ui \"Mutation 状态：正式回执已确认\"",
+        "receipt_id",
+        "input [\"已知 Mutation ID\",\"{receipt}\"]",
+        "tap [\"查询服务器持久化回执\"]",
+        "assert_ui \"Mutation ID：{receipt}\"",
+        "tap [\"重新读取 Memory 权威状态\",\"down\"]",
+        "evidence",
+        "assert_db [\"memory.memories\",0]",
+        "assert_db [\"memory.receipts\",3]",
+        "assert_db [\"memory.controls.0.consent_enabled\",true]",
+        "assert_db [\"memory.controls.0.paused\",false]",
+        "assert_db [\"memory.agent_messages\",6]",
+        "assert_db [\"memory.relationship_messages\",3]",
+        "tap [\"清除当前开发会话\",\"down\"]",
+        "stop"
+      ],
+      "expected": "Inspect Grant Pause Resume Revoke Undo/Delete/Receipt/Refresh; only selected Memory removed; all-delete preserve ends Memory0/receipts3/consent true/paused false/Agent6/Relationship3",
+      "actual": {
+        "completed_commands": 76,
+        "ui_assertions": [
+          {
+            "assert_ui": "Consent：未授权",
+            "status": "PASS"
+          },
+          {
+            "assert_ui": "当前窗口：3 条 · 最多 200 条",
+            "status": "PASS"
+          },
+          {
+            "assert_ui": "Pause：已暂停",
+            "status": "PASS"
+          },
+          {
+            "assert_ui": "Pause：未暂停",
+            "status": "PASS"
+          },
+          {
+            "assert_ui": "Consent：未授权",
+            "status": "PASS"
+          },
+          {
+            "assert_ui": "Consent：已授权",
+            "status": "PASS"
+          },
+          {
+            "assert_ui": "Pause：未暂停",
+            "status": "PASS"
+          },
+          {
+            "assert_ui": "Mutation 状态：等待你明确确认",
+            "status": "PASS"
+          },
+          {
+            "assert_ui": "Mutation 状态：正式回执已确认",
+            "status": "PASS"
+          },
+          {
+            "assert_ui": "Memory ID：a142c77c-beda-4905-afd9-e622fcc98aca",
+            "status": "PASS"
+          },
+          {
+            "assert_ui": "Mutation 状态：正式回执已确认",
+            "status": "PASS"
+          },
+          {
+            "assert_ui": "删除后撤销授权：否",
+            "status": "PASS"
+          },
+          {
+            "assert_ui": "Mutation 状态：正式回执已确认",
+            "status": "PASS"
+          },
+          {
+            "assert_ui": "Mutation ID：37859883-a028-4a4c-9bda-656dc4fe73a7",
+            "status": "PASS"
+          }
+        ],
+        "native_sse": [],
+        "database_summary": {
+          "runs": 3,
+          "agent_messages": 6,
+          "memories": 0,
+          "receipts": 3,
+          "relationship_messages": 3,
+          "controls": [
+            {
+              "owner": "dde8f23f-6da3-451c-a2ed-7bd1eb5f8ec7",
+              "consent_enabled": true,
+              "paused": false
+            }
+          ],
+          "resources": {
+            "persons": 2,
+            "relationships": 2,
+            "conversations": 2
+          },
+          "wire_faults": []
+        },
+        "identity_checks": [],
+        "foreign_owner": [],
+        "native_bubble_counts": []
+      },
+      "server_evidence": {
+        "snapshots": 5,
+        "database_assertions": [
+          {
+            "assert_db": "memory.controls.0.paused",
+            "expected": true,
+            "actual": true,
+            "status": "PASS"
+          },
+          {
+            "assert_db": "memory.memories",
+            "expected": 3,
+            "actual": 3,
+            "status": "PASS"
+          },
+          {
+            "assert_db": "memory.controls.0.consent_enabled",
+            "expected": false,
+            "actual": false,
+            "status": "PASS"
+          },
+          {
+            "assert_db": "memory.memories",
+            "expected": 2,
+            "actual": 2,
+            "status": "PASS"
+          },
+          {
+            "assert_db": "memory.receipts",
+            "expected": 1,
+            "actual": 1,
+            "status": "PASS"
+          },
+          {
+            "assert_db": "memory.agent_messages",
+            "expected": 6,
+            "actual": 6,
+            "status": "PASS"
+          },
+          {
+            "assert_db": "memory.relationship_messages",
+            "expected": 3,
+            "actual": 3,
+            "status": "PASS"
+          },
+          {
+            "assert_db": "memory.memories",
+            "expected": 1,
+            "actual": 1,
+            "status": "PASS"
+          },
+          {
+            "assert_db": "memory.receipts",
+            "expected": 2,
+            "actual": 2,
+            "status": "PASS"
+          },
+          {
+            "assert_db": "memory.agent_messages",
+            "expected": 6,
+            "actual": 6,
+            "status": "PASS"
+          },
+          {
+            "assert_db": "memory.relationship_messages",
+            "expected": 3,
+            "actual": 3,
+            "status": "PASS"
+          },
+          {
+            "assert_db": "memory.memories",
+            "expected": 0,
+            "actual": 0,
+            "status": "PASS"
+          },
+          {
+            "assert_db": "memory.receipts",
+            "expected": 3,
+            "actual": 3,
+            "status": "PASS"
+          },
+          {
+            "assert_db": "memory.controls.0.consent_enabled",
+            "expected": true,
+            "actual": true,
+            "status": "PASS"
+          },
+          {
+            "assert_db": "memory.controls.0.paused",
+            "expected": false,
+            "actual": false,
+            "status": "PASS"
+          },
+          {
+            "assert_db": "memory.agent_messages",
+            "expected": 6,
+            "actual": 6,
+            "status": "PASS"
+          },
+          {
+            "assert_db": "memory.relationship_messages",
+            "expected": 3,
+            "actual": 3,
+            "status": "PASS"
+          }
+        ],
+        "reference": "Full report contains real SQL IDs, receipts, signed-owner wire metadata and native/host transport labels"
+      },
+      "status": "PASS",
+      "exit_code": 0,
+      "artifacts": {
+        "log": {
+          "path": "docs/evidence/phase8f-closeout/phase8f-closeout-final3-memory_smoke_preserve.log",
+          "sha256": "af2290fb71c53927809f56d31474457b57ed21f2f804499a706dc6fd492ccf17"
+        },
+        "report": {
+          "path": "docs/evidence/phase8f-closeout/phase8f-closeout-final3-memory_smoke_preserve.json",
+          "sha256": "c5f0fa704a0059e7e37f570c3309733acc55b7f71a978ccf3dfb3389d1b7d1f2"
+        },
+        "steps": {
+          "path": "docs/evidence/phase8f-closeout/phase8f-closeout-final3-memory_smoke_preserve.steps.json",
+          "sha256": "568aba4fcc87b9b8f7cffcf9f2dde834aec923cd334ffd01c8d66abe529bfd6a"
+        },
+        "exit": {
+          "path": "docs/evidence/phase8f-closeout/phase8f-closeout-final3-memory_smoke_preserve.exit",
+          "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+        }
+      }
+    },
+    {
+      "id": "8F-MEMORY-SMOKE-REVOKE",
+      "scene": "memory_smoke_revoke",
+      "gate": "F",
+      "preconditions": "Independent fresh B; native consent; one synthetic Memory plus3 RelationshipMessages; isolated PostgreSQL fixture; fresh CLI JWT for each business identity; SecureStore acknowledgement",
+      "steps": [
+        "restart",
+        "open settings",
+        "tap [\"清除当前开发会话\",\"down\"]",
+        "case 8F-MEMORY-SMOKE-REVOKE",
+        "login b",
+        "seed MemoryRevoke",
+        "tap [\"授权长期记忆\"]",
+        "tap [\"恢复记忆\"]",
+        "save 一",
+        "history_setup [3,\"RevokeWitness\"]",
+        "tap [\"重新读取 Memory 权威状态\",\"down\"]",
+        "assert_ui \"当前窗口：1 条\"",
+        "tap [\"全部删除后撤销授权\"]",
+        "tap [\"准备删除全部本人记忆\"]",
+        "assert_ui \"删除后撤销授权：是\"",
+        "tap [\"确认执行服务器删除\"]",
+        "assert_ui \"Mutation 状态：正式回执已确认\"",
+        "assert_ui \"Consent：未授权\"",
+        "receipt_id",
+        "input [\"已知 Mutation ID\",\"{receipt}\"]",
+        "tap [\"查询服务器持久化回执\"]",
+        "assert_ui \"Mutation ID：{receipt}\"",
+        "tap [\"重新读取 Memory 权威状态\",\"down\"]",
+        "evidence",
+        "assert_db [\"memory.memories\",0]",
+        "assert_db [\"memory.receipts\",1]",
+        "assert_db [\"memory.controls.0.consent_enabled\",false]",
+        "assert_db [\"memory.controls.0.paused\",true]",
+        "assert_db [\"memory.agent_messages\",2]",
+        "assert_db [\"memory.relationship_messages\",3]",
+        "assert_identity",
+        "tap [\"清除当前开发会话\",\"down\"]",
+        "stop"
+      ],
+      "expected": "Confirmed all-delete revoke ends Memory0/receipt1/consent false/paused true/Agent2/Relationship3; authority refresh and receipt agree",
+      "actual": {
+        "completed_commands": 32,
+        "ui_assertions": [
+          {
+            "assert_ui": "当前窗口：1 条 · 最多 200 条",
+            "status": "PASS"
+          },
+          {
+            "assert_ui": "删除后撤销授权：是",
+            "status": "PASS"
+          },
+          {
+            "assert_ui": "Mutation 状态：正式回执已确认",
+            "status": "PASS"
+          },
+          {
+            "assert_ui": "Consent：未授权",
+            "status": "PASS"
+          },
+          {
+            "assert_ui": "Mutation ID：e0bf1559-c378-4cce-ba89-3d74bb895f81",
+            "status": "PASS"
+          }
+        ],
+        "native_sse": [],
+        "database_summary": {
+          "runs": 1,
+          "agent_messages": 2,
+          "memories": 0,
+          "receipts": 1,
+          "relationship_messages": 3,
+          "controls": [
+            {
+              "owner": "abafc6fb-630e-450d-889d-dc33ef2abbd6",
+              "consent_enabled": false,
+              "paused": true
+            }
+          ],
+          "resources": {
+            "persons": 0,
+            "relationships": 0,
+            "conversations": 0
+          },
+          "wire_faults": []
+        },
+        "identity_checks": [
+          {
+            "native_identity": "b",
+            "requests_checked": 16,
+            "status": "PASS"
+          }
+        ],
+        "foreign_owner": [],
+        "native_bubble_counts": []
+      },
+      "server_evidence": {
+        "snapshots": 1,
+        "database_assertions": [
+          {
+            "assert_db": "memory.memories",
+            "expected": 0,
+            "actual": 0,
+            "status": "PASS"
+          },
+          {
+            "assert_db": "memory.receipts",
+            "expected": 1,
+            "actual": 1,
+            "status": "PASS"
+          },
+          {
+            "assert_db": "memory.controls.0.consent_enabled",
+            "expected": false,
+            "actual": false,
+            "status": "PASS"
+          },
+          {
+            "assert_db": "memory.controls.0.paused",
+            "expected": true,
+            "actual": true,
+            "status": "PASS"
+          },
+          {
+            "assert_db": "memory.agent_messages",
+            "expected": 2,
+            "actual": 2,
+            "status": "PASS"
+          },
+          {
+            "assert_db": "memory.relationship_messages",
+            "expected": 3,
+            "actual": 3,
+            "status": "PASS"
+          }
+        ],
+        "reference": "Full report contains real SQL IDs, receipts, signed-owner wire metadata and native/host transport labels"
+      },
+      "status": "PASS",
+      "exit_code": 0,
+      "artifacts": {
+        "log": {
+          "path": "docs/evidence/phase8f-closeout/phase8f-closeout-final1-memory_smoke_revoke.log",
+          "sha256": "e51d63ace834caafe4230cbfdb97d2f48af74ca9917ffceca0be6309ccae6dff"
+        },
+        "report": {
+          "path": "docs/evidence/phase8f-closeout/phase8f-closeout-final1-memory_smoke_revoke.json",
+          "sha256": "aa1294b89d4755fda85e268f5ede14c1cec1fbfdab03f9af60cb3c8186300e3c"
+        },
+        "steps": {
+          "path": "docs/evidence/phase8f-closeout/phase8f-closeout-final1-memory_smoke_revoke.steps.json",
+          "sha256": "fc67eba30a2e6631f5f99785160281a9e315f8fe32bc1591093a3e9cd0f1b652"
+        },
+        "exit": {
+          "path": "docs/evidence/phase8f-closeout/phase8f-closeout-final1-memory_smoke_revoke.exit",
+          "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+        }
+      }
+    },
+    {
+      "id": "8F-IMPORT-HISTORY-LIFECYCLE",
+      "scene": "import_history_lifecycle",
+      "gate": "G",
+      "preconditions": "Independent synthetic301-message host REST precondition; retained actual native picker/import evidence; isolated PostgreSQL fixture; fresh CLI JWT for each business identity; SecureStore acknowledgement",
+      "steps": [
+        "restart",
+        "open settings",
+        "tap [\"清除当前开发会话\",\"down\"]",
+        "case 8F-IMPORT-HISTORY-LIFECYCLE",
+        "seed LifecycleScope",
+        "history_setup [301,\"Lifecycle\"]",
+        "bookmark a",
+        "login a",
+        "route [\"history\",\"a\"]",
+        "assert_ui \"范围：{relationship} · 已读取 100 条\"",
+        "tap [\"加载更多服务器历史\"]",
+        "assert_ui \"范围：{relationship} · 已读取 200 条\"",
+        "state",
+        "home",
+        "route [\"history\",\"a\"]",
+        "assert_ui \"范围：{relationship} · 已读取 100 条\"",
+        "back",
+        "open settings",
+        "assert_ui \"开发会话已连接\"",
+        "tap [\"清除当前开发会话\",\"down\"]",
+        "open history",
+        "assert_ui \"已读取 0 条\"",
+        "assert_absent [\"Synthetic Lifecycle history occurrence.\",\"LifecycleScope\"]",
+        "state",
+        "evidence",
+        "assert_db [\"import.messages\",301]",
+        "assert_db [\"import.active_artifacts\",0]",
+        "assert_db [\"agent.messages.length\",0]",
+        "assert_db [\"memory.memories\",0]",
+        "stop"
+      ],
+      "expected": "Real native100→200→background/foreground100→Back→Logout; old history absent; SQL301 and zero active artifacts; no evident blocking interaction",
+      "actual": {
+        "completed_commands": 29,
+        "ui_assertions": [
+          {
+            "assert_ui": "范围：e11c6fee-04c6-4819-84b3-34d60316e286 · 已读取 100 条",
+            "status": "PASS"
+          },
+          {
+            "assert_ui": "范围：e11c6fee-04c6-4819-84b3-34d60316e286 · 已读取 200 条",
+            "status": "PASS"
+          },
+          {
+            "assert_ui": "范围：e11c6fee-04c6-4819-84b3-34d60316e286 · 已读取 100 条",
+            "status": "PASS"
+          },
+          {
+            "assert_ui": "开发会话已连接",
+            "status": "PASS"
+          },
+          {
+            "assert_ui": "范围：未选择或不可用 · 已读取 0 条",
+            "status": "PASS"
+          },
+          {
+            "assert_absent": [
+              "Synthetic Lifecycle history occurrence.",
+              "LifecycleScope"
+            ],
+            "status": "PASS"
+          }
+        ],
+        "native_sse": [],
+        "database_summary": {
+          "runs": 0,
+          "agent_messages": 0,
+          "memories": 0,
+          "receipts": 0,
+          "relationship_messages": 301,
+          "controls": [],
+          "resources": {
+            "persons": 1,
+            "relationships": 1,
+            "conversations": 1
+          },
+          "wire_faults": []
+        },
+        "identity_checks": [],
+        "foreign_owner": [],
+        "native_bubble_counts": []
+      },
+      "server_evidence": {
+        "snapshots": 1,
+        "database_assertions": [
+          {
+            "assert_db": "import.messages",
+            "expected": 301,
+            "actual": 301,
+            "status": "PASS"
+          },
+          {
+            "assert_db": "import.active_artifacts",
+            "expected": 0,
+            "actual": 0,
+            "status": "PASS"
+          },
+          {
+            "assert_db": "agent.messages.length",
+            "expected": 0,
+            "actual": 0,
+            "status": "PASS"
+          },
+          {
+            "assert_db": "memory.memories",
+            "expected": 0,
+            "actual": 0,
+            "status": "PASS"
+          }
+        ],
+        "reference": "Full report contains real SQL IDs, receipts, signed-owner wire metadata and native/host transport labels"
+      },
+      "status": "PASS",
+      "exit_code": 0,
+      "artifacts": {
+        "log": {
+          "path": "docs/evidence/phase8f-closeout/phase8f-closeout-final2-import_history_lifecycle.log",
+          "sha256": "73aba7ed91f2c2dcd34eed543726453742b39a1b5f1b6affae6cc188a68c3c84"
+        },
+        "report": {
+          "path": "docs/evidence/phase8f-closeout/phase8f-closeout-final2-import_history_lifecycle.json",
+          "sha256": "2bdad7f5218b2d5100c05356c1531b69578b0bd4969149c6d30c1fba3301852c"
+        },
+        "steps": {
+          "path": "docs/evidence/phase8f-closeout/phase8f-closeout-final2-import_history_lifecycle.steps.json",
+          "sha256": "e15405b72fd6ab0beb84a6420b8bd7076d317b82b4ba980bc217d068733dbedf"
+        },
+        "exit": {
+          "path": "docs/evidence/phase8f-closeout/phase8f-closeout-final2-import_history_lifecycle.exit",
+          "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+        }
+      }
+    },
+    {
+      "id": "8F-TOKEN-EXPIRY",
+      "scene": "token_expiry",
+      "gate": "H",
+      "preconditions": "Separate genuinely expired signed A credential; empty disposable database; isolated PostgreSQL fixture; fresh CLI JWT for each business identity; SecureStore acknowledgement",
+      "steps": [
+        "restart",
+        "open settings",
+        "tap [\"清除当前开发会话\",\"down\"]",
+        "case 8F-TOKEN-EXPIRY",
+        "login expired",
+        "assert_ui \"开发凭证已过期\"",
+        "assert_absent [\"开发会话已连接\",\"Confirmation ID：\"]",
+        "state",
+        "evidence",
+        "assert_db [\"agent.runs.length\",0]",
+        "assert_db [\"memory.memories\",0]",
+        "tap [\"清除当前开发会话\",\"down\"]",
+        "restart",
+        "assert_ui \"未连接：没有开发凭证\"",
+        "state",
+        "stop"
+      ],
+      "expected": "Android denies expired credential, clears session/confirmation and restores no credential after restart",
+      "actual": {
+        "completed_commands": 15,
+        "ui_assertions": [
+          {
+            "assert_ui": "开发凭证已过期，请重新获取",
+            "status": "PASS"
+          },
+          {
+            "assert_absent": [
+              "开发会话已连接",
+              "Confirmation ID："
+            ],
+            "status": "PASS"
+          },
+          {
+            "assert_ui": "未连接：没有开发凭证",
+            "status": "PASS"
+          }
+        ],
+        "native_sse": [],
+        "database_summary": {
+          "runs": 0,
+          "agent_messages": 0,
+          "memories": 0,
+          "receipts": 0,
+          "relationship_messages": 0,
+          "controls": [],
+          "resources": {
+            "persons": 0,
+            "relationships": 0,
+            "conversations": 0
+          },
+          "wire_faults": []
+        },
+        "identity_checks": [],
+        "foreign_owner": [],
+        "native_bubble_counts": []
+      },
+      "server_evidence": {
+        "snapshots": 1,
+        "database_assertions": [
+          {
+            "assert_db": "agent.runs.length",
+            "expected": 0,
+            "actual": 0,
+            "status": "PASS"
+          },
+          {
+            "assert_db": "memory.memories",
+            "expected": 0,
+            "actual": 0,
+            "status": "PASS"
+          }
+        ],
+        "reference": "Full report contains real SQL IDs, receipts, signed-owner wire metadata and native/host transport labels"
+      },
+      "status": "PASS",
+      "exit_code": 0,
+      "artifacts": {
+        "log": {
+          "path": "docs/evidence/phase8f-closeout/phase8f-closeout-final1-token_expiry.log",
+          "sha256": "bc4c297a67f8919a6d2c658a03ebe0ff6923450e93d7de3700d1ebcc5599bd9c"
+        },
+        "report": {
+          "path": "docs/evidence/phase8f-closeout/phase8f-closeout-final1-token_expiry.json",
+          "sha256": "7ba013e596a708361d495cc1fb90bb52915dfd39b99ef2e689e049856ac96fa3"
+        },
+        "steps": {
+          "path": "docs/evidence/phase8f-closeout/phase8f-closeout-final1-token_expiry.steps.json",
+          "sha256": "179e21c8fe74a5457ba3dafa83bf37ed3709a8b5de49937384b83eb1428ebfaf"
+        },
+        "exit": {
+          "path": "docs/evidence/phase8f-closeout/phase8f-closeout-final1-token_expiry.exit",
+          "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+        }
+      }
+    }
+  ],
+  "historical_failures": [
+    {
+      "execution": "phase8f-closeout-final1-memory_smoke_preserve",
+      "status": "FAIL",
+      "exit_code": 1,
+      "artifacts": [
+        {
+          "path": "docs/evidence/phase8f-closeout/phase8f-closeout-final1-memory_smoke_preserve.exit",
+          "sha256": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04"
+        },
+        {
+          "path": "docs/evidence/phase8f-closeout/phase8f-closeout-final1-memory_smoke_preserve.log",
+          "sha256": "4bcdd07fcb4851934e050feca3780291132e738a6bd52dfea65c7d66ec387f2a"
+        },
+        {
+          "path": "docs/evidence/phase8f-closeout/phase8f-closeout-final1-memory_smoke_preserve.json",
+          "sha256": "105104a384c66f52b7550944f1cb87ad241747662ffc5993fa5d7f2d427d3d0e"
+        },
+        {
+          "path": "docs/evidence/phase8f-closeout/phase8f-closeout-final1-memory_smoke_preserve.steps.json",
+          "sha256": "469af2b4d0d4efe4df0498a44b12fa7a074519f9cae4b969c0f8a6747ba09f61"
+        }
+      ]
+    },
+    {
+      "execution": "phase8f-closeout-final1-resource_create",
+      "status": "FAIL",
+      "exit_code": 1,
+      "artifacts": [
+        {
+          "path": "docs/evidence/phase8f-closeout/phase8f-closeout-final1-resource_create.exit",
+          "sha256": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04"
+        },
+        {
+          "path": "docs/evidence/phase8f-closeout/phase8f-closeout-final1-resource_create.log",
+          "sha256": "1ccb9e86840c76567f4f1b0bcf18a4e73330e28dab953a2c276194c00327fb6b"
+        },
+        {
+          "path": "docs/evidence/phase8f-closeout/phase8f-closeout-final1-resource_create.json",
+          "sha256": "2ce2d667d85560fcb7454970d14505f45d5764c02d15334186a47c9cdb18c52f"
+        },
+        {
+          "path": "docs/evidence/phase8f-closeout/phase8f-closeout-final1-resource_create.steps.json",
+          "sha256": "528ea0afdb4130178fc2250907eda45e74f3630ba4028488c920556370321432"
+        }
+      ]
+    },
+    {
+      "execution": "phase8f-closeout-final1-runner",
+      "status": "FAIL",
+      "exit_code": 1,
+      "artifacts": [
+        {
+          "path": "docs/evidence/phase8f-closeout/phase8f-closeout-final1-runner.exit",
+          "sha256": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04"
+        },
+        {
+          "path": "docs/evidence/phase8f-closeout/phase8f-closeout-final1-runner.log",
+          "sha256": "65b9ff97e4e6e12a30537b82e8a4da39b782d6b683073564744ecec40dfca11c"
+        }
+      ]
+    },
+    {
+      "execution": "phase8f-closeout-final1-sse_cancel",
+      "status": "FAIL",
+      "exit_code": 1,
+      "artifacts": [
+        {
+          "path": "docs/evidence/phase8f-closeout/phase8f-closeout-final1-sse_cancel.exit",
+          "sha256": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04"
+        },
+        {
+          "path": "docs/evidence/phase8f-closeout/phase8f-closeout-final1-sse_cancel.log",
+          "sha256": "ceca489edccd6b5bfe1e5592962f5ddfcebe1f2fcbf1b54a51e1b8c2d31c5eb9"
+        },
+        {
+          "path": "docs/evidence/phase8f-closeout/phase8f-closeout-final1-sse_cancel.json",
+          "sha256": "33cac7a6348051234340500ffebe13063c93f6ec29b1eeb0e51b1611a1eae042"
+        },
+        {
+          "path": "docs/evidence/phase8f-closeout/phase8f-closeout-final1-sse_cancel.steps.json",
+          "sha256": "fe6bd3ad70559f6354c55496c168b77594f8aa4e5b481118555f465e6eebdead"
+        }
+      ]
+    },
+    {
+      "execution": "phase8f-closeout-final2-memory_smoke_preserve",
+      "status": "FAIL",
+      "exit_code": 1,
+      "artifacts": [
+        {
+          "path": "docs/evidence/phase8f-closeout/phase8f-closeout-final2-memory_smoke_preserve.exit",
+          "sha256": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04"
+        },
+        {
+          "path": "docs/evidence/phase8f-closeout/phase8f-closeout-final2-memory_smoke_preserve.log",
+          "sha256": "4121f59263a91ffd84b5c75083566662f0fdf82804b0980954d1dc38fca471a9"
+        },
+        {
+          "path": "docs/evidence/phase8f-closeout/phase8f-closeout-final2-memory_smoke_preserve.json",
+          "sha256": "89de7c8db8b1e22d4c57ac7585902a51891ebc31bea47add314dbd455ad5e5ac"
+        },
+        {
+          "path": "docs/evidence/phase8f-closeout/phase8f-closeout-final2-memory_smoke_preserve.steps.json",
+          "sha256": "568aba4fcc87b9b8f7cffcf9f2dde834aec923cd334ffd01c8d66abe529bfd6a"
+        }
+      ]
+    },
+    {
+      "execution": "phase8f-closeout-final2-rest_replay",
+      "status": "FAIL",
+      "exit_code": 1,
+      "artifacts": [
+        {
+          "path": "docs/evidence/phase8f-closeout/phase8f-closeout-final2-rest_replay.exit",
+          "sha256": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04"
+        },
+        {
+          "path": "docs/evidence/phase8f-closeout/phase8f-closeout-final2-rest_replay.log",
+          "sha256": "6efc64ca13d93606e7800c828353d9e6ccd7a8603447e06ce2547e907438cf89"
+        },
+        {
+          "path": "docs/evidence/phase8f-closeout/phase8f-closeout-final2-rest_replay.json",
+          "sha256": "35582b578b683f1381f5b276c0fe953743f30f3899c6f93ce39255b756c8640f"
+        },
+        {
+          "path": "docs/evidence/phase8f-closeout/phase8f-closeout-final2-rest_replay.steps.json",
+          "sha256": "26b299f5c2b57e3f9c4fc0a9e3ac8237e723da04aeb61c808581a1787ad26d14"
+        }
+      ]
+    },
+    {
+      "execution": "phase8f-closeout-final2-runner",
+      "status": "FAIL",
+      "exit_code": 1,
+      "artifacts": [
+        {
+          "path": "docs/evidence/phase8f-closeout/phase8f-closeout-final2-runner.exit",
+          "sha256": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04"
+        },
+        {
+          "path": "docs/evidence/phase8f-closeout/phase8f-closeout-final2-runner.log",
+          "sha256": "5a93a3f62625dc9550835bde8d37200edf38ac9f44d074f69f1c66712070b30c"
+        }
+      ]
+    },
+    {
+      "execution": "phase8f-closeout-pre-marker",
+      "status": "FAIL",
+      "exit_code": 1,
+      "artifacts": [
+        {
+          "path": "docs/evidence/phase8f-closeout/phase8f-closeout-pre-marker.exit",
+          "sha256": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04"
+        },
+        {
+          "path": "docs/evidence/phase8f-closeout/phase8f-closeout-pre-marker.log",
+          "sha256": "dc1b08dac34f2ab5e35d9b190976720cb22c9e961633a19fc598641e77f8b3c9"
+        }
+      ]
+    },
+    {
+      "execution": "phase8f-closeout-rest_replay-r3",
+      "status": "FAIL",
+      "exit_code": 1,
+      "artifacts": [
+        {
+          "path": "docs/evidence/phase8f-closeout/phase8f-closeout-rest_replay-r3.exit",
+          "sha256": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04"
+        },
+        {
+          "path": "docs/evidence/phase8f-closeout/phase8f-closeout-rest_replay-r3.log",
+          "sha256": "dcecbd450beaf6b2aaea75dbddb76dc1d707aa44c892f70b835b6473a16a6bf4"
+        },
+        {
+          "path": "docs/evidence/phase8f-closeout/phase8f-closeout-rest_replay-r3.json",
+          "sha256": "6fb1de40e91a257f3f58ee4ebd2b7ddc8f66dd5fdf7cb107380f78d4c9652ab1"
+        }
+      ]
+    },
+    {
+      "execution": "phase8f-closeout-sse-normal-r2",
+      "status": "FAIL",
+      "exit_code": 1,
+      "artifacts": [
+        {
+          "path": "docs/evidence/phase8f-closeout/phase8f-closeout-sse-normal-r2.exit",
+          "sha256": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04"
+        },
+        {
+          "path": "docs/evidence/phase8f-closeout/phase8f-closeout-sse-normal-r2.log",
+          "sha256": "cc46b8f75fd643d601660cee06e7eb71d7cee0b138603f8b980fdc5ff0c39bf3"
+        },
+        {
+          "path": "docs/evidence/phase8f-closeout/phase8f-closeout-sse-normal-r2.json",
+          "sha256": "054375ddfffd625075ed8c38760430fd8895dfe9a8946bdcdc85caed3dbc8c3f"
+        }
+      ]
+    },
+    {
+      "execution": "phase8f-closeout-sse-normal",
+      "status": "FAIL",
+      "exit_code": 1,
+      "artifacts": [
+        {
+          "path": "docs/evidence/phase8f-closeout/phase8f-closeout-sse-normal.exit",
+          "sha256": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04"
+        },
+        {
+          "path": "docs/evidence/phase8f-closeout/phase8f-closeout-sse-normal.log",
+          "sha256": "da7c05a4207475f64c1d381d65c9600bce269cf016c58d87dce4992b63ff3cd5"
+        },
+        {
+          "path": "docs/evidence/phase8f-closeout/phase8f-closeout-sse-normal.json",
+          "sha256": "7672d6b44db75ee114ff8e6fad4097ed402fa56baf4f68e948a2649532ef8ebb"
+        }
+      ]
+    },
+    {
+      "execution": "phase8f-closeout-sse_cancel-r4",
+      "status": "FAIL",
+      "exit_code": 1,
+      "artifacts": [
+        {
+          "path": "docs/evidence/phase8f-closeout/phase8f-closeout-sse_cancel-r4.exit",
+          "sha256": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04"
+        },
+        {
+          "path": "docs/evidence/phase8f-closeout/phase8f-closeout-sse_cancel-r4.log",
+          "sha256": "5bfea1789f9a0fda796a255ac6beaaf0bf7eb1e77493c4c1daec69695eb2a055"
+        },
+        {
+          "path": "docs/evidence/phase8f-closeout/phase8f-closeout-sse_cancel-r4.json",
+          "sha256": "df0614bbbdda05eb9ec4cfe44b462c2b3ac04f19f78ad6c40544455602c21be6"
+        }
+      ]
+    },
+    {
+      "execution": "phase8f-closeout-sse_cancel-r5",
+      "status": "FAIL",
+      "exit_code": 1,
+      "artifacts": [
+        {
+          "path": "docs/evidence/phase8f-closeout/phase8f-closeout-sse_cancel-r5.exit",
+          "sha256": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04"
+        },
+        {
+          "path": "docs/evidence/phase8f-closeout/phase8f-closeout-sse_cancel-r5.log",
+          "sha256": "b202ea6a712418f557788cd3111d83c2cdaf6857a4b4c9532ec6c5f4bea2559d"
+        },
+        {
+          "path": "docs/evidence/phase8f-closeout/phase8f-closeout-sse_cancel-r5.json",
+          "sha256": "bb5c56ec1f655ead3010723c01f4dc86448f32e3e06dc2f14ed6f57031f81f4c"
+        }
+      ]
+    },
+    {
+      "execution": "phase8f-closeout-sse_disconnect-r2",
+      "status": "FAIL",
+      "exit_code": 1,
+      "artifacts": [
+        {
+          "path": "docs/evidence/phase8f-closeout/phase8f-closeout-sse_disconnect-r2.exit",
+          "sha256": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04"
+        },
+        {
+          "path": "docs/evidence/phase8f-closeout/phase8f-closeout-sse_disconnect-r2.log",
+          "sha256": "f5a237e27b1a23999e72d1fa2f106498c699094b31efd4980a45a8d51846f161"
+        },
+        {
+          "path": "docs/evidence/phase8f-closeout/phase8f-closeout-sse_disconnect-r2.json",
+          "sha256": "d49a65aa75076735f2fd7a4623a1c72e2e9730d68b175d5d09361aa89e492a24"
+        }
+      ]
+    },
+    {
+      "execution": "phase8f-closeout-sse_failed",
+      "status": "FAIL",
+      "exit_code": 1,
+      "artifacts": [
+        {
+          "path": "docs/evidence/phase8f-closeout/phase8f-closeout-sse_failed.exit",
+          "sha256": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04"
+        },
+        {
+          "path": "docs/evidence/phase8f-closeout/phase8f-closeout-sse_failed.log",
+          "sha256": "15b46213569fa0ea229c9fe478839f579d7eb6a288dead31cdcdf2430abb78bd"
+        },
+        {
+          "path": "docs/evidence/phase8f-closeout/phase8f-closeout-sse_failed.json",
+          "sha256": "ce1f5d3232b14069964b0f159c61cac2629b5ed0f89c6d52bf5176c051312c52"
+        }
+      ]
+    }
+  ],
+  "pre_marker": {
+    "command": ".\\make.cmd verify",
+    "marker": {
+      "completed_phase": 7,
+      "completed_subphase": "8E"
+    },
+    "exit_code": 0,
+    "log": {
+      "path": "docs/evidence/phase8f-closeout/phase8f-closeout-pre-marker-r4.log",
+      "sha256": "2c2eba0db33f93b9c6c88bd1392e64b0434220250d145cbc42beed05e4b4356b"
+    },
+    "exit": {
+      "path": "docs/evidence/phase8f-closeout/phase8f-closeout-pre-marker-r4.exit",
+      "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+    }
+  },
+  "retained_native_import": [
+    {
+      "execution": "phase8f-native-import-attempt3",
+      "status": "PASS",
+      "artifacts": [
+        {
+          "path": "docs/evidence/phase8f-closeout/phase8f-native-import-attempt3.log",
+          "sha256": "2f9b7fd1ef9fabfcefb1253bc2b6e12c7e493880288ef6eec580abe9d5ae883f"
+        },
+        {
+          "path": "docs/evidence/phase8f-closeout/phase8f-native-import-attempt3.json",
+          "sha256": "c3d9652d451ca9749fa5b08dcf686bd4768876235de742a7ee347e2bebf1e1cb"
+        },
+        {
+          "path": "docs/evidence/phase8f-closeout/phase8f-native-import-attempt3.exit",
+          "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+        }
+      ]
+    },
+    {
+      "execution": "phase8f-native-pagination",
+      "status": "PASS",
+      "artifacts": [
+        {
+          "path": "docs/evidence/phase8f-closeout/phase8f-native-pagination.log",
+          "sha256": "4faae3e38863f117e7fe9819dbe8c5179aeb16d696d19622cf790f3aa3822811"
+        },
+        {
+          "path": "docs/evidence/phase8f-closeout/phase8f-native-pagination.json",
+          "sha256": "b3151cdac4e8d38dc9485b501a27c09a6b2df8496704cd33912d726e251b296e"
+        },
+        {
+          "path": "docs/evidence/phase8f-closeout/phase8f-native-pagination.exit",
+          "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+        }
+      ]
+    },
+    {
+      "execution": "phase8f-native-lifecycle",
+      "status": "PASS",
+      "artifacts": [
+        {
+          "path": "docs/evidence/phase8f-closeout/phase8f-native-lifecycle.log",
+          "sha256": "9dd05f3024514ab21ba6bf4bcf911bf5a08c87a6e1904b01154e203094aaa2a8"
+        },
+        {
+          "path": "docs/evidence/phase8f-closeout/phase8f-native-lifecycle.json",
+          "sha256": "4f48df03395a400c032b178412e7e0cb94f12dd0c9f10d61b0edf802146ec1ba"
+        },
+        {
+          "path": "docs/evidence/phase8f-closeout/phase8f-native-lifecycle.exit",
+          "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+        }
+      ]
+    }
+  ],
+  "post_marker": {
+    "command": ".\\make.cmd verify",
+    "marker": {
+      "completed_phase": 8,
+      "completed_subphase": "8F"
+    },
+    "exit_code": 0,
+    "log": {
+      "path": "docs/evidence/phase8f-closeout/phase8f-closeout-post-marker.log",
+      "sha256": "d0491064f86b54cb3d26491e1737a275f8098ba9acb0a266ae37ada55de2a078"
+    },
+    "exit": {
+      "path": "docs/evidence/phase8f-closeout/phase8f-closeout-post-marker.exit",
+      "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+    }
+  },
+  "cleanup": {
+    "path": "docs/evidence/phase8f-closeout/phase8f-closeout-cleanup.json",
+    "sha256": "11244180f04867d888e7e2eb76d473443402c4f518dcd7d980cb370a8c21a9f3"
+  },
+  "final_status": "Phase 8/8F PASS; Phase 9 PENDING and not started"
+}

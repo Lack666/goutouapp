@@ -1,9 +1,9 @@
 # 狗头军师 App
 
 Phase 8A–8E 已完成工程验收：生成客户端、开发 JWT、真实资源、Agent REST/POST SSE、
-聊天导入与分域历史、Memory 控制及受保护操作。Phase 8F 正在补齐跨模块与 Android
-最终验收；Phase 8 整体仍为 IN PROGRESS，标记保持 `7 / 8E`。
-当前证据与未关闭项目见 [Phase 8 最终验收](docs/PHASE_8_FINAL_ACCEPTANCE.md)，
+聊天导入与分域历史、Memory 控制及受保护操作。Phase 8F 已完成 Android 原生收口，
+Phase 8 为 PASS，标记为 `8 / 8F`；Phase 9 为 PENDING，未开始实现。
+当前证据见 [Phase 8 Closeout Addendum](docs/PHASE_8_FINAL_ACCEPTANCE.md#closeout-addendum--2026-10-12)，
 后续范围见 [Phase 9 交接](docs/PHASE_9_SECURITY_RELIABILITY_HANDOFF.md)。
 
 这是将 [goutoujunshi Skill](https://github.com/shengjidaguai-china/goutoujunshi)
@@ -24,7 +24,9 @@ Phase 8A 已实现服务端 Person/Relationship/Conversation 公共资源与 Age
 Phase 8B 接入 OpenAPI 生成客户端、开发 JWT 会话与真实 owned 资源；Demo 保留。
 Phase 8C 已接入 Agent REST/SSE；8D 接入真实文件导入与关系聊天历史。
 Phase 8E 已接入真实 Memory 控制、Guarded Undo/Delete 和持久回执。
-Phase 8 整体仍为 IN PROGRESS / NOT YET COMPLETE；8F 最终验收未全部关闭。
+Phase 8F 已关闭 SSE、资源创建、同键重试、Owner/Relationship 隔离、Memory 故障与重启、
+Import/History 生命周期验收；16 个完整独立原生场景及全部已完成阶段回归通过。
+完整矩阵与原始失败记录见 [Closeout Matrix](docs/PHASE_8F_CLOSEOUT_MATRIX.json)。
 阶段状态以代码和验收结果为准，参见 [Master Plan](docs/MASTER_PLAN.md)
 和 [Phase 6 最终验收报告](docs/PHASE_6_FINAL_ACCEPTANCE.md)、
 [Phase 7A 验收报告](docs/PHASE_7A_ACCEPTANCE.md)、
@@ -102,14 +104,17 @@ uv --cache-dir .cache/uv --no-managed-python run --locked python scripts/export_
 8B 开发接入：按 [开发会话](docs/MOBILE_DEV_AUTH.md)获取 15 分钟 CLI JWT，
 Settings 中主动隐藏录入并验证，Relationship 页面创建/列出/查看三个资源。
 Android/iOS 使用 SecureStore，Web 只存内存；过期/401/退出清除凭证及全部资源作用域。
-公开配置仅为 `EXPO_PUBLIC_API_BASE_URL`，不能放 JWT/模型/签名/数据库密钥。
+公开配置包括 `EXPO_PUBLIC_API_BASE_URL` 和仅限 Android 开发验收的 Observer 开关，
+不能放 JWT/模型/签名/数据库密钥；Release、iOS、Web 的 Observer 均关闭。
 详见 [客户端](docs/MOBILE_API_CLIENT.md)、[资源与 Android 步骤](docs/MOBILE_RESOURCE_INTEGRATION.md)
 和 [8B 验收](docs/PHASE_8B_ACCEPTANCE.md)。
 
 `pnpm --filter @goutou/mobile smoke:connected` 使用隔离 PostgreSQL，实际 CLI JWT、
 FastAPI 和 Chrome 验证资源、同 UUID 重试、分页与用户切换。Root verify 同时运行
-旧 Demo 的 22 个浏览器场景和新 connected gate。Android connected 本阶段为 NOT RUN，
-模拟器未建立稳定 adb；Doctor/Android JS 导出不算原生网络成功，Phase 8 最终仍需该证据。
+旧 Demo 的 22 个浏览器场景和新 connected gate。8B 时 Android connected 为 NOT RUN，
+该历史缺项已在 8F Closeout 用实际 Pixel_10/API37/Expo Go57 原生执行关闭。
+Doctor/Android JS 导出仍不代替原生网络证据；流程见
+[Android Closeout Procedure](docs/PHASE_8_FINAL_ANDROID_DEMO.md#closeout-procedure--2026-10-12)。
 
 ## 上游署名
 

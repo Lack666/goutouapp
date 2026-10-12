@@ -1,3 +1,7 @@
 # Preserve canonical OpenAPI generation input bytes on every checkout.
 docs/contracts/*.json text eol=lf
 apps/mobile/src/api/generated/*.ts text eol=lf
+# Native acceptance hashes cover the original execution bytes, including newlines.
+docs/evidence/phase8f-closeout/** -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+# Original console output includes intentional whitespace; do not rewrite hashed logs.
+docs/evidence/phase8f-closeout/*.log whitespace=-blank-at-eol,-blank-at-eof,-space-before-tab,cr-at-eol

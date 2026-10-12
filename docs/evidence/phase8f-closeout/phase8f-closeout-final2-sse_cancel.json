@@ -1,0 +1,695 @@
+[
+  {
+    "execution": {
+      "steps_file": "F:\\\u72d7\u5934\u519b\u5e08app\u5316\\goutouapp\\.cache\\phase8f-closeout-final2-sse_cancel.steps.json",
+      "steps": [
+        "restart",
+        "open settings",
+        "tap [\"\u6e05\u9664\u5f53\u524d\u5f00\u53d1\u4f1a\u8bdd\",\"down\"]",
+        "case 8F-SSE-CANCEL",
+        "seed",
+        "login a",
+        "route [\"chat\",\"current\"]",
+        "fault slow_run",
+        "input [\"Agent \u6d88\u606f\u8f93\u5165\",\"Synthetic cancel waiting\"]",
+        "tap [\"\u53d1\u9001 Agent \u6d88\u606f\"]",
+        "tap [\"\u505c\u6b62\u7b49\u5f85\"]",
+        "state",
+        "observe",
+        "assert_ui \"\u65e0\u6cd5\u786e\u8ba4\u8be5\u8bf7\u6c42\u662f\u5426\u5df2\u5b8c\u6210\u3002\"",
+        "observe cancelled",
+        "wait 8",
+        "observe cancelled",
+        "assert_observer_same",
+        "evidence",
+        "assert_db [\"agent.runs.length\",1]",
+        "assert_db [\"agent.messages.length\",1]",
+        "assert_db [\"agent.memories\",0]",
+        "tap [\"\u6e05\u9664\u5f53\u524d\u5f00\u53d1\u4f1a\u8bdd\",\"down\"]",
+        "stop"
+      ],
+      "helper_sha256": "4ad5515a2deb61d55ab131881ea277b59d85a154979a26d5054f4453b63790c2",
+      "device": "emulator-5554"
+    }
+  },
+  {
+    "command": "restart",
+    "status": "done"
+  },
+  {
+    "command": "open",
+    "status": "done"
+  },
+  {
+    "command": "tap",
+    "status": "done"
+  },
+  {
+    "case": "8F-SSE-CANCEL"
+  },
+  {
+    "command": "case",
+    "status": "done"
+  },
+  {
+    "command": "seed",
+    "status": "done"
+  },
+  {
+    "command": "login",
+    "status": "done"
+  },
+  {
+    "command": "route",
+    "status": "done"
+  },
+  {
+    "fault": {
+      "armed": "slow_run"
+    }
+  },
+  {
+    "command": "fault",
+    "status": "done"
+  },
+  {
+    "command": "input",
+    "status": "done"
+  },
+  {
+    "command": "tap",
+    "status": "done"
+  },
+  {
+    "command": "tap",
+    "status": "done"
+  },
+  {
+    "ui_state": [
+      {
+        "text": "",
+        "label": "Tools",
+        "bounds": "[937,219][1005,287]",
+        "enabled": "true"
+      },
+      {
+        "text": "",
+        "label": "\u5bf9\u8bdd\u6d88\u606f\u5217\u8868",
+        "bounds": "[0,142][1080,1909]",
+        "enabled": "true"
+      },
+      {
+        "text": "Agent \u5bf9\u8bdd \u00b7 \u670d\u52a1\u5668\u8bb0\u5f55",
+        "label": "",
+        "bounds": "[107,142][973,114]",
+        "enabled": "true"
+      },
+      {
+        "text": "\u5f53\u524d Conversation\uff1a1641aa4c-bef8-4ca2-afff-68daab15da3d",
+        "label": "",
+        "bounds": "[107,146][973,278]",
+        "enabled": "true"
+      },
+      {
+        "text": "\u5173\u7cfb\u8303\u56f4\uff1a03c1a3b1-1ad9-4395-bcb7-1c1934826297",
+        "label": "",
+        "bounds": "[107,309][973,441]",
+        "enabled": "true"
+      },
+      {
+        "text": "\u5df2\u505c\u6b62\u7b49\u5f85\uff0c\u65e0\u6cd5\u786e\u8ba4\u8be5\u8bf7\u6c42\u662f\u5426\u5df2\u5b8c\u6210\u3002",
+        "label": "",
+        "bounds": "[107,473][973,539]",
+        "enabled": "true"
+      },
+      {
+        "text": "Agent \u72b6\u6001\uff1a\u65e0\u6cd5\u786e\u8ba4\u8be5\u8bf7\u6c42\u662f\u5426\u5df2\u5b8c\u6210\u3002",
+        "label": "",
+        "bounds": "[107,570][973,636]",
+        "enabled": "true"
+      },
+      {
+        "text": "",
+        "label": "NATIVE-SSE {\"reader\":{\"reads\":3,\"cancels\":2,\"releases\":1},\"events\":[{\"type\":\"run_started\",\"ms\":99},{\"type\":\"status\",\"ms\":99},{\"type\":\"status\",\"ms\":99},{\"type\":\"status\",\"ms\":5064}],\"ui\":[{\"phase\":\"running\",\"progress\":\"checking_safety\",\"ms\":131},{\"phase\":\"running\",\"progress\":\"understanding_request\",\"ms\":5090},{\"phase\":\"running_unknown\",\"progress\":\"understanding_request\",\"ms\":5381}],\"consistentRun\":true,\"terminal\":\"cancelled\"}",
+        "bounds": "[108,668][972,794]",
+        "enabled": "true"
+      },
+      {
+        "text": "Native SSE \u00b7 cancelled \u00b7 reads:3",
+        "label": "",
+        "bounds": "[108,668][972,734]",
+        "enabled": "true"
+      },
+      {
+        "text": "\u7406\u89e3\u8bf7\u6c42",
+        "label": "",
+        "bounds": "[107,825][973,891]",
+        "enabled": "true"
+      },
+      {
+        "text": "run_id\uff1abee786aa-02e4-4e11-8847-f98032119357",
+        "label": "",
+        "bounds": "[107,923][973,1055]",
+        "enabled": "true"
+      },
+      {
+        "text": "operation_key\uff1a9f7eea37-b059-4fea-b87b-5dcef75fae4a",
+        "label": "",
+        "bounds": "[107,1086][973,1218]",
+        "enabled": "true"
+      },
+      {
+        "text": "\u5c55\u793a\u670d\u52a1\u5668\u63d0\u4ea4\u7684\u5b8c\u6574\u6587\u672c\u56de\u7b54\u3002\u5b89\u5168\u4e0e\u4e8b\u5b9e\u5224\u65ad\u7531\u670d\u52a1\u5668\u8d1f\u8d23\uff1b\u6b64\u9875\u6ca1\u6709\u516c\u5f00\u7ed3\u6784\u5316 FIU \u6570\u636e\u3002",
+        "label": "",
+        "bounds": "[107,1250][973,1448]",
+        "enabled": "true"
+      },
+      {
+        "text": "",
+        "label": "\u91cd\u8bd5\u539f\u64cd\u4f5c\uff08REST\uff09",
+        "bounds": "[108,1480][972,1612]",
+        "enabled": "true"
+      },
+      {
+        "text": "\u91cd\u8bd5\u539f\u64cd\u4f5c\uff08REST\uff09",
+        "label": "",
+        "bounds": "[152,1514][928,1577]",
+        "enabled": "true"
+      },
+      {
+        "text": "",
+        "label": "\u91cd\u8bd5\u539f\u64cd\u4f5c\uff08SSE\uff09",
+        "bounds": "[108,1632][972,1763]",
+        "enabled": "true"
+      },
+      {
+        "text": "\u91cd\u8bd5\u539f\u64cd\u4f5c\uff08SSE\uff09",
+        "label": "",
+        "bounds": "[152,1666][928,1729]",
+        "enabled": "true"
+      },
+      {
+        "text": "\u91cd\u8bd5\u4fdd\u7559\u539f\u8bf7\u6c42\u4e0e key\u3002\u8d85\u65f6\u6216\u505c\u6b62\u7b49\u5f85\u4e0d\u4ee3\u8868\u670d\u52a1\u5668\u5df2\u53d6\u6d88\uff1b\u5386\u53f2\u4e0d\u80fd\u8bc1\u660e\u67d0\u6b21\u8fd0\u884c\u5df2\u7ec8\u6b62\u3002\u5931\u8d25\u540e\u53d1\u9001\u65b0\u6d88\u606f\u4f1a\u521b\u5efa\u65b0 key\u3002",
+        "label": "",
+        "bounds": "[108,1784][974,1909]",
+        "enabled": "true"
+      },
+      {
+        "text": "",
+        "label": "\u5237\u65b0 Agent \u5386\u53f2",
+        "bounds": "[108,2014][972,1909]",
+        "enabled": "true"
+      },
+      {
+        "text": "\u5237\u65b0 Agent \u5386\u53f2",
+        "label": "",
+        "bounds": "[152,2048][928,1909]",
+        "enabled": "true"
+      },
+      {
+        "text": "",
+        "label": "\u52a0\u8f7d\u66f4\u591a Agent \u5386\u53f2",
+        "bounds": "[108,2176][972,1909]",
+        "enabled": "false"
+      },
+      {
+        "text": "\u52a0\u8f7d\u66f4\u591a Agent \u5386\u53f2",
+        "label": "",
+        "bounds": "[152,2210][928,1909]",
+        "enabled": "true"
+      },
+      {
+        "text": "",
+        "label": "\u4f7f\u7528 POST SSE",
+        "bounds": "[108,2339][485,1909]",
+        "enabled": "true"
+      },
+      {
+        "text": "\u4f7f\u7528 POST SSE",
+        "label": "",
+        "bounds": "[152,2373][440,1909]",
+        "enabled": "true"
+      },
+      {
+        "text": "",
+        "label": "\u4f7f\u7528 REST",
+        "bounds": "[506,2339][792,1909]",
+        "enabled": "true"
+      },
+      {
+        "text": "\u4f7f\u7528 REST",
+        "label": "",
+        "bounds": "[550,2373][747,1909]",
+        "enabled": "true"
+      },
+      {
+        "text": "\u5199\u4e0b\u60f3\u68b3\u7406\u7684\u5185\u5bb9\uff0c\u53d1\u9001\u5230\u670d\u52a1\u5668",
+        "label": "Agent \u6d88\u606f\u8f93\u5165",
+        "bounds": "[31,1943][1048,2102]",
+        "enabled": "false"
+      },
+      {
+        "text": "Connected \u00b7 0/2000 \u00b7 \u670d\u52a1\u5668\u786e\u8ba4\u540e\u8fdb\u5165\u6b63\u5f0f\u8bb0\u5f55",
+        "label": "",
+        "bounds": "[31,2121][1048,2177]",
+        "enabled": "true"
+      },
+      {
+        "text": "",
+        "label": "\u53d1\u9001 Agent \u6d88\u606f",
+        "bounds": "[32,2199][854,2331]",
+        "enabled": "false"
+      },
+      {
+        "text": "\u53d1\u9001 Agent \u6d88\u606f",
+        "label": "",
+        "bounds": "[76,2233][810,2296]",
+        "enabled": "true"
+      },
+      {
+        "text": "",
+        "label": "\u6e05\u7a7a",
+        "bounds": "[876,2199][1050,2331]",
+        "enabled": "false"
+      },
+      {
+        "text": "\u6e05\u7a7a",
+        "label": "",
+        "bounds": "[920,2233][1004,2296]",
+        "enabled": "true"
+      }
+    ]
+  },
+  {
+    "native_sse": {
+      "reader": {
+        "reads": 3,
+        "cancels": 2,
+        "releases": 1
+      },
+      "events": [
+        {
+          "type": "run_started",
+          "ms": 99
+        },
+        {
+          "type": "status",
+          "ms": 99
+        },
+        {
+          "type": "status",
+          "ms": 99
+        },
+        {
+          "type": "status",
+          "ms": 5064
+        }
+      ],
+      "ui": [
+        {
+          "phase": "running",
+          "progress": "checking_safety",
+          "ms": 131
+        },
+        {
+          "phase": "running",
+          "progress": "understanding_request",
+          "ms": 5090
+        },
+        {
+          "phase": "running_unknown",
+          "progress": "understanding_request",
+          "ms": 5381
+        }
+      ],
+      "consistentRun": true,
+      "terminal": "cancelled"
+    }
+  },
+  {
+    "command": "observe",
+    "status": "done"
+  },
+  {
+    "assert_ui": "\u5df2\u505c\u6b62\u7b49\u5f85\uff0c\u65e0\u6cd5\u786e\u8ba4\u8be5\u8bf7\u6c42\u662f\u5426\u5df2\u5b8c\u6210\u3002",
+    "status": "PASS"
+  },
+  {
+    "command": "assert_ui",
+    "status": "done"
+  },
+  {
+    "native_sse": {
+      "reader": {
+        "reads": 3,
+        "cancels": 2,
+        "releases": 1
+      },
+      "events": [
+        {
+          "type": "run_started",
+          "ms": 99
+        },
+        {
+          "type": "status",
+          "ms": 99
+        },
+        {
+          "type": "status",
+          "ms": 99
+        },
+        {
+          "type": "status",
+          "ms": 5064
+        }
+      ],
+      "ui": [
+        {
+          "phase": "running",
+          "progress": "checking_safety",
+          "ms": 131
+        },
+        {
+          "phase": "running",
+          "progress": "understanding_request",
+          "ms": 5090
+        },
+        {
+          "phase": "running_unknown",
+          "progress": "understanding_request",
+          "ms": 5381
+        }
+      ],
+      "consistentRun": true,
+      "terminal": "cancelled"
+    }
+  },
+  {
+    "command": "observe",
+    "status": "done"
+  },
+  {
+    "command": "wait",
+    "status": "done"
+  },
+  {
+    "native_sse": {
+      "reader": {
+        "reads": 3,
+        "cancels": 2,
+        "releases": 1
+      },
+      "events": [
+        {
+          "type": "run_started",
+          "ms": 99
+        },
+        {
+          "type": "status",
+          "ms": 99
+        },
+        {
+          "type": "status",
+          "ms": 99
+        },
+        {
+          "type": "status",
+          "ms": 5064
+        }
+      ],
+      "ui": [
+        {
+          "phase": "running",
+          "progress": "checking_safety",
+          "ms": 131
+        },
+        {
+          "phase": "running",
+          "progress": "understanding_request",
+          "ms": 5090
+        },
+        {
+          "phase": "running_unknown",
+          "progress": "understanding_request",
+          "ms": 5381
+        }
+      ],
+      "consistentRun": true,
+      "terminal": "cancelled"
+    }
+  },
+  {
+    "command": "observe",
+    "status": "done"
+  },
+  {
+    "assert_observer_same": "No late events or rendered state changes",
+    "status": "PASS"
+  },
+  {
+    "command": "assert_observer_same",
+    "status": "done"
+  },
+  {
+    "database": {
+      "agent": {
+        "calls": [
+          "SafetyResult"
+        ],
+        "runs": [
+          {
+            "id": "bee786aa-02e4-4e11-8847-f98032119357",
+            "owner": "c3d10134-bf24-429c-976f-2b658b25007d",
+            "conversation": "1641aa4c-bef8-4ca2-afff-68daab15da3d",
+            "status": "failed",
+            "key": "9f7eea37-b059-4fea-b87b-5dcef75fae4a"
+          }
+        ],
+        "messages": [
+          {
+            "id": "46ee2f32-b3b9-44cc-a090-76b32128538f",
+            "conversation": "1641aa4c-bef8-4ca2-afff-68daab15da3d",
+            "role": "user"
+          }
+        ],
+        "memories": 0
+      },
+      "memory": {
+        "memories": 0,
+        "receipts": 0,
+        "records": [],
+        "mutations": [],
+        "agent_messages": 1,
+        "relationship_messages": 0,
+        "recall_counts": [],
+        "calls": 1,
+        "controls": []
+      },
+      "import": {
+        "jobs": [],
+        "messages": 0,
+        "agent_messages": 1,
+        "memories": 0,
+        "active_artifacts": 0
+      },
+      "resources": {
+        "persons": 1,
+        "relationships": 1,
+        "conversations": 1
+      },
+      "wire": {
+        "requests": [
+          {
+            "method": "POST",
+            "path": "/api/v1/persons",
+            "bearer": true,
+            "json": true,
+            "cursor": false,
+            "host_setup": true,
+            "verified_owner": "a",
+            "status": 201
+          },
+          {
+            "method": "POST",
+            "path": "/api/v1/relationships",
+            "bearer": true,
+            "json": true,
+            "cursor": false,
+            "host_setup": true,
+            "verified_owner": "a",
+            "status": 201
+          },
+          {
+            "method": "POST",
+            "path": "/api/v1/conversations",
+            "bearer": true,
+            "json": true,
+            "cursor": false,
+            "host_setup": true,
+            "verified_owner": "a",
+            "status": 201
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/persons",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/persons",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/relationships",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memory/control",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memories",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memory/undo/preview",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/conversations/1641aa4c-bef8-4ca2-afff-68daab15da3d",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memory/control",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/conversations/1641aa4c-bef8-4ca2-afff-68daab15da3d/messages",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memories",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memory/undo/preview",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "POST",
+            "path": "/api/v1/conversations/1641aa4c-bef8-4ca2-afff-68daab15da3d/agent-runs/stream",
+            "bearer": true,
+            "json": true,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          }
+        ],
+        "faults": []
+      }
+    }
+  },
+  {
+    "command": "evidence",
+    "status": "done"
+  },
+  {
+    "assert_db": "agent.runs.length",
+    "expected": 1,
+    "actual": 1,
+    "status": "PASS"
+  },
+  {
+    "command": "assert_db",
+    "status": "done"
+  },
+  {
+    "assert_db": "agent.messages.length",
+    "expected": 1,
+    "actual": 1,
+    "status": "PASS"
+  },
+  {
+    "command": "assert_db",
+    "status": "done"
+  },
+  {
+    "assert_db": "agent.memories",
+    "expected": 0,
+    "actual": 0,
+    "status": "PASS"
+  },
+  {
+    "command": "assert_db",
+    "status": "done"
+  },
+  {
+    "command": "tap",
+    "status": "done"
+  }
+]

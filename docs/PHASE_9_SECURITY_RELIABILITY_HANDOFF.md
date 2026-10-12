@@ -59,3 +59,21 @@ offline synchronization framework without a demonstrated requirement.
 Other exclusions: release APK/EAS pipeline, real LLM behavioral quality,
 imported-chat-to-Agent analysis, public structured FIU/Profile and optional RAG.
 Maintain MockLLM/keyless regression and the frozen upstream snapshot.
+
+## Phase 8F Closeout evidence boundary
+
+The Closeout Addendum records separate real native tests for postcommit REST
+and Memory response loss, original-key replay, force-stop/restart and
+authoritative reload. Restart deliberately loses the volatile pending mutation
+descriptor: the App clears confirmation, reads current Memory/control and
+discloses incomplete reconciliation. A manually supplied known receipt ID can
+be inspected without recreating or executing a deletion. These conservative
+behaviors satisfy Phase8 acceptance when their complete native scenes pass;
+they do not deliver a durable outbox or automatic crash reconciliation.
+
+The direct SSE observer is Android development acceptance tooling. Production
+node observability, token/cost accounting and production identity are not
+implemented by this observer. Fixture fault injection adds no production
+endpoint or authentication bypass. Future Phase9 work must keep exact keys,
+owner/scope invalidation, server challenges and persisted receipts authoritative.
+Phase9 remains PENDING and has not started in this closeout.

@@ -1,0 +1,22 @@
+[
+  "open settings",
+  "tap [\"清除当前开发会话\",\"down\"]",
+  "case 8F-SSE-FAILED",
+  "seed",
+  "login a",
+  "route [\"chat\",\"current\"]",
+  "fault provider_failed",
+  "input [\"Agent 消息输入\",\"Synthetic native controlled failure\"]",
+  "tap [\"发送 Agent 消息\"]",
+  "wait 3",
+  "observe failed",
+  "assert_ui \"Agent 状态：运行失败\"",
+  "evidence",
+  "assert_db [\"agent.runs.length\",1]",
+  "assert_db [\"agent.runs.0.status\",\"failed\"]",
+  "assert_db [\"agent.messages.length\",1]",
+  "assert_db [\"agent.messages.0.role\",\"user\"]",
+  "assert_db [\"agent.memories\",0]",
+  "tap [\"清除当前开发会话\",\"down\"]",
+  "stop"
+]

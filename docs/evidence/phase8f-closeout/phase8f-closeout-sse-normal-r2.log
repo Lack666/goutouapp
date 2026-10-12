@@ -1,0 +1,26 @@
+{"android_api": "37"}
+{"fixture": "ready", "baseURL": "http://127.0.0.1:8024", "commands": "state, tap [label,direction?], login a|b|expired, seed, evidence, stage, cleanup, back, home, stop"}
+{"command": "restart", "status": "done"}
+{"command": "tap", "status": "done"}
+{"case": "8F-SSE-NORMAL"}
+{"command": "case", "status": "done"}
+{"person": "7c516061-0c01-4a19-a0e5-de789686309e", "relationship": "f6c15a48-e3d2-4a20-a961-7c014dd54905", "conversation": "c802df1d-71a9-4c7e-a128-6f1c40771b80"}
+{"command": "seed", "status": "done"}
+{"command": "login", "status": "done"}
+{"command": "route", "status": "done"}
+{"assert_ui": "\u5f53\u524d Conversation\uff1ac802df1d-71a9-4c7e-a128-6f1c40771b80", "status": "PASS"}
+{"command": "assert_ui", "status": "done"}
+{"command": "input", "status": "done"}
+{"command": "tap", "status": "failed"}
+Traceback (most recent call last):
+  File "F:\狗头军师app化\goutouapp\scripts\phase8_android_demo.py", line 594, in <module>
+    if __name__ == "__main__":
+        ^^^^^^
+  File "F:\狗头军师app化\goutouapp\scripts\phase8_android_demo.py", line 574, in main
+    if args.steps:
+        ^^^^^^^^^^
+        raise RuntimeError(
+        ^^^^^^^^^^^^^^^^^^^
+            "Native sequence failed; inspect sanitized evidence"
+            ^^^^^^^
+RuntimeError: Native sequence failed; inspect sanitized evidence

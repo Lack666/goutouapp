@@ -28,7 +28,7 @@ class MobilePhaseGateTests(unittest.TestCase):
                 verifier.phase_marker_check()
 
     def test_phase_eight_is_not_claimed_by_mobile_mvp(self) -> None:
-        with patch.multiple(verifier, PHASE=8):
+        with patch.multiple(verifier, PHASE=8, SUBPHASE="7D"):
             with self.assertRaisesRegex(RuntimeError, "Phase 8"):
                 verifier.phase_marker_check()
 

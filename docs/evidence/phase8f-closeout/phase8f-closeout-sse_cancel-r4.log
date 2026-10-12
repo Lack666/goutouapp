@@ -1,0 +1,24 @@
+{"android_api": "37"}
+{"fixture": "ready", "baseURL": "http://127.0.0.1:8024", "commands": "state, tap [label,direction?], login a|b|expired, seed, evidence, stage, cleanup, back, home, stop"}
+{"command": "open", "status": "done"}
+{"command": "tap", "status": "done"}
+{"case": "8F-SSE-CANCEL"}
+{"command": "case", "status": "done"}
+{"person": "b28d4303-6003-4752-94c3-754fdfc1efb6", "relationship": "8d9ccd98-2eff-4615-a60e-efc91a707abc", "conversation": "68eba4de-a8a5-4a0a-849a-e669b420c513"}
+{"command": "seed", "status": "done"}
+{"command": "login", "status": "done"}
+{"command": "route", "status": "done"}
+{"command": "fault", "status": "done"}
+{"command": "input", "status": "done"}
+{"command": "tap", "status": "done"}
+{"command": "tap", "status": "done"}
+{"command": "assert_ui", "status": "failed"}
+Traceback (most recent call last):
+  File "F:\狗头军师app化\goutouapp\scripts\phase8_android_demo.py", line 760, in <module>
+    "Native sequence failed; inspect sanitized evidence"
+    
+  File "F:\狗头军师app化\goutouapp\scripts\phase8_android_demo.py", line 740, in main
+        or hashlib.sha256(adb("exec-out", "cat", DEVICE_FILE)).digest()
+        != hashlib.sha256(local.read_bytes()).digest()
+    ):
+RuntimeError: Native sequence failed; inspect sanitized evidence

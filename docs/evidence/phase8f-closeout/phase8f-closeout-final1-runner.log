@@ -1,0 +1,30 @@
+{"scene": "sse_normal", "status": "START", "log": "F:\\\u72d7\u5934\u519b\u5e08app\u5316\\goutouapp\\.cache\\phase8f-closeout-final1-sse_normal.log"}
+{"scene": "sse_normal", "exit": 0, "seconds": 157.3, "base": "F:\\\u72d7\u5934\u519b\u5e08app\u5316\\goutouapp\\.cache\\phase8f-closeout-final1-sse_normal"}
+{"scene": "sse_failed", "status": "START", "log": "F:\\\u72d7\u5934\u519b\u5e08app\u5316\\goutouapp\\.cache\\phase8f-closeout-final1-sse_failed.log"}
+{"scene": "sse_failed", "exit": 0, "seconds": 81.8, "base": "F:\\\u72d7\u5934\u519b\u5e08app\u5316\\goutouapp\\.cache\\phase8f-closeout-final1-sse_failed"}
+{"scene": "sse_disconnect", "status": "START", "log": "F:\\\u72d7\u5934\u519b\u5e08app\u5316\\goutouapp\\.cache\\phase8f-closeout-final1-sse_disconnect.log"}
+{"scene": "sse_disconnect", "exit": 0, "seconds": 111.1, "base": "F:\\\u72d7\u5934\u519b\u5e08app\u5316\\goutouapp\\.cache\\phase8f-closeout-final1-sse_disconnect"}
+{"scene": "sse_cancel", "status": "START", "log": "F:\\\u72d7\u5934\u519b\u5e08app\u5316\\goutouapp\\.cache\\phase8f-closeout-final1-sse_cancel.log"}
+{"scene": "sse_cancel", "exit": 1, "seconds": 122.0, "base": "F:\\\u72d7\u5934\u519b\u5e08app\u5316\\goutouapp\\.cache\\phase8f-closeout-final1-sse_cancel"}
+{"scene": "sse_back_logout", "status": "START", "log": "F:\\\u72d7\u5934\u519b\u5e08app\u5316\\goutouapp\\.cache\\phase8f-closeout-final1-sse_back_logout.log"}
+{"scene": "sse_back_logout", "exit": 0, "seconds": 197.4, "base": "F:\\\u72d7\u5934\u519b\u5e08app\u5316\\goutouapp\\.cache\\phase8f-closeout-final1-sse_back_logout"}
+{"scene": "resource_create", "status": "START", "log": "F:\\\u72d7\u5934\u519b\u5e08app\u5316\\goutouapp\\.cache\\phase8f-closeout-final1-resource_create.log"}
+{"scene": "resource_create", "exit": 1, "seconds": 188.5, "base": "F:\\\u72d7\u5934\u519b\u5e08app\u5316\\goutouapp\\.cache\\phase8f-closeout-final1-resource_create"}
+{"scene": "rest_replay", "status": "START", "log": "F:\\\u72d7\u5934\u519b\u5e08app\u5316\\goutouapp\\.cache\\phase8f-closeout-final1-rest_replay.log"}
+{"scene": "rest_replay", "exit": 0, "seconds": 133.7, "base": "F:\\\u72d7\u5934\u519b\u5e08app\u5316\\goutouapp\\.cache\\phase8f-closeout-final1-rest_replay"}
+{"scene": "owner_isolation", "status": "START", "log": "F:\\\u72d7\u5934\u519b\u5e08app\u5316\\goutouapp\\.cache\\phase8f-closeout-final1-owner_isolation.log"}
+{"scene": "owner_isolation", "exit": 0, "seconds": 464.3, "base": "F:\\\u72d7\u5934\u519b\u5e08app\u5316\\goutouapp\\.cache\\phase8f-closeout-final1-owner_isolation"}
+{"scene": "relationship_isolation", "status": "START", "log": "F:\\\u72d7\u5934\u519b\u5e08app\u5316\\goutouapp\\.cache\\phase8f-closeout-final1-relationship_isolation.log"}
+{"scene": "relationship_isolation", "exit": 0, "seconds": 314.3, "base": "F:\\\u72d7\u5934\u519b\u5e08app\u5316\\goutouapp\\.cache\\phase8f-closeout-final1-relationship_isolation"}
+{"scene": "memory_challenge", "status": "START", "log": "F:\\\u72d7\u5934\u519b\u5e08app\u5316\\goutouapp\\.cache\\phase8f-closeout-final1-memory_challenge.log"}
+{"scene": "memory_challenge", "exit": 0, "seconds": 296.9, "base": "F:\\\u72d7\u5934\u519b\u5e08app\u5316\\goutouapp\\.cache\\phase8f-closeout-final1-memory_challenge"}
+{"scene": "memory_replay", "status": "START", "log": "F:\\\u72d7\u5934\u519b\u5e08app\u5316\\goutouapp\\.cache\\phase8f-closeout-final1-memory_replay.log"}
+{"scene": "memory_replay", "exit": 0, "seconds": 252.7, "base": "F:\\\u72d7\u5934\u519b\u5e08app\u5316\\goutouapp\\.cache\\phase8f-closeout-final1-memory_replay"}
+{"scene": "memory_restart", "status": "START", "log": "F:\\\u72d7\u5934\u519b\u5e08app\u5316\\goutouapp\\.cache\\phase8f-closeout-final1-memory_restart.log"}
+{"scene": "memory_restart", "exit": 0, "seconds": 290.5, "base": "F:\\\u72d7\u5934\u519b\u5e08app\u5316\\goutouapp\\.cache\\phase8f-closeout-final1-memory_restart"}
+{"scene": "memory_smoke_preserve", "status": "START", "log": "F:\\\u72d7\u5934\u519b\u5e08app\u5316\\goutouapp\\.cache\\phase8f-closeout-final1-memory_smoke_preserve.log"}
+{"scene": "memory_smoke_preserve", "exit": 1, "seconds": 268.6, "base": "F:\\\u72d7\u5934\u519b\u5e08app\u5316\\goutouapp\\.cache\\phase8f-closeout-final1-memory_smoke_preserve"}
+{"scene": "memory_smoke_revoke", "status": "START", "log": "F:\\\u72d7\u5934\u519b\u5e08app\u5316\\goutouapp\\.cache\\phase8f-closeout-final1-memory_smoke_revoke.log"}
+{"scene": "memory_smoke_revoke", "exit": 0, "seconds": 199.6, "base": "F:\\\u72d7\u5934\u519b\u5e08app\u5316\\goutouapp\\.cache\\phase8f-closeout-final1-memory_smoke_revoke"}
+{"scene": "token_expiry", "status": "START", "log": "F:\\\u72d7\u5934\u519b\u5e08app\u5316\\goutouapp\\.cache\\phase8f-closeout-final1-token_expiry.log"}
+{"scene": "token_expiry", "exit": 0, "seconds": 148.0, "base": "F:\\\u72d7\u5934\u519b\u5e08app\u5316\\goutouapp\\.cache\\phase8f-closeout-final1-token_expiry"}

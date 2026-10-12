@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import shutil
 import subprocess
@@ -128,11 +129,105 @@ RESOURCE_GATE_FILES = (
     "docs/RESOURCE_API.md",
     "docs/PHASE_8A_ACCEPTANCE.md",
 )
+NATIVE_CLOSEOUT_SCENES = {
+    "sse_normal",
+    "sse_failed",
+    "sse_disconnect",
+    "sse_cancel",
+    "sse_back_logout",
+    "resource_create",
+    "rest_replay",
+    "owner_isolation",
+    "relationship_isolation",
+    "memory_challenge",
+    "memory_replay",
+    "memory_restart",
+    "memory_smoke_preserve",
+    "memory_smoke_revoke",
+    "import_history_lifecycle",
+    "token_expiry",
+}
+
+
+def native_closeout_check() -> None:
+    """A report alone cannot satisfy the completed Phase 8 marker."""
+    matrix = json.loads((ROOT / "docs/PHASE_8F_CLOSEOUT_MATRIX.json").read_text("utf-8"))
+
+    def artifact(descriptor: dict) -> Path:
+        path = (ROOT / descriptor["path"]).resolve()
+        if not path.is_relative_to(ROOT.resolve()) or not path.is_file():
+            raise RuntimeError("Phase 8 native artifact is missing or outside the repository")
+        if hashlib.sha256(path.read_bytes()).hexdigest() != descriptor["sha256"]:
+            raise RuntimeError("Phase 8 native artifact hash mismatch")
+        return path
+
+    if matrix.get("status") != "PASS" or matrix.get("open_p0_p1") != []:
+        raise RuntimeError("Phase 8 requires completed native acceptance without open P0/P1")
+    tests = matrix["tests"]
+    if (
+        len(tests) != len(NATIVE_CLOSEOUT_SCENES)
+        or {test["scene"] for test in tests} != NATIVE_CLOSEOUT_SCENES
+    ):
+        raise RuntimeError("Phase 8 native acceptance scene coverage is incomplete")
+    for test in tests:
+        if test["status"] != "PASS" or test["exit_code"] != 0:
+            raise RuntimeError("Phase 8 native scene did not pass independently")
+        for field in ("id", "preconditions", "steps", "expected", "actual", "server_evidence"):
+            if not test.get(field):
+                raise RuntimeError(f"Phase 8 native scene lacks {field}")
+        artifacts = test["artifacts"]
+        paths = {name: artifact(artifacts[name]) for name in ("log", "exit", "report", "steps")}
+        if paths["exit"].read_text("utf-8").strip() != "0":
+            raise RuntimeError("Phase 8 native execution exit evidence is not zero")
+        report = json.loads(paths["report"].read_text("utf-8"))
+        steps = json.loads(paths["steps"].read_text("utf-8"))
+        completed = [
+            row["command"] if row.get("status") == "done" else "state"
+            for row in report
+            if row.get("status") == "done" or "ui_state" in row
+        ]
+        expected = [step.partition(" ")[0] for step in steps if step != "stop"]
+        if report[0]["execution"]["steps"] != steps or completed != expected:
+            raise RuntimeError("Phase 8 native report is not one complete independent execution")
+        if any(row.get("status") in {"FAIL", "failed"} for row in report):
+            raise RuntimeError("Phase 8 native report contains a failure")
+    pre_marker = matrix["pre_marker"]
+    artifact(pre_marker["log"])
+    if (
+        pre_marker["exit_code"] != 0
+        or artifact(pre_marker["exit"]).read_text("utf-8").strip() != "0"
+    ):
+        raise RuntimeError("Phase 8 requires an independently successful pre-marker root verify")
 
 
 def phase_marker_check() -> None:
-    if PHASE > 7:
-        raise RuntimeError("Phase 8+ verification is not implemented")
+    if PHASE > 8 or (PHASE == 8 and SUBPHASE != "8F"):
+        raise RuntimeError("Phase 8 requires 8F closeout; Phase 9+ verification is not implemented")
+    if PHASE == 8:
+        if not all(
+            (
+                MOBILE_FOUNDATION,
+                MOBILE_FEATURE_UI,
+                MOBILE_CONTROLS_UI,
+                MOBILE_FINAL_UI,
+                PUBLIC_RESOURCES_API,
+                MOBILE_CONNECTED,
+                MOBILE_AGENT_CHAT,
+                MOBILE_IMPORT,
+                MOBILE_MEMORY,
+            )
+        ):
+            raise RuntimeError("Phase 8 requires all Mobile and integration gates")
+        for name in (
+            *RESOURCE_GATE_FILES,
+            *CONNECTED_GATE_FILES,
+            *AGENT_CHAT_GATE_FILES,
+            *IMPORT_GATE_FILES,
+            *MEMORY_GATE_FILES,
+        ):
+            if not (ROOT / name).is_file():
+                raise RuntimeError(f"Missing Phase 8 gate: {name}")
+        native_closeout_check()
     if PHASE == 7:
         if SUBPHASE not in {"7D", "8A", "8B", "8C", "8D", "8E"} or not all(
             (MOBILE_FOUNDATION, MOBILE_FEATURE_UI, MOBILE_CONTROLS_UI, MOBILE_FINAL_UI)
@@ -339,6 +434,7 @@ def lint() -> None:
         "scripts/check_mobile.py",
         "scripts/export_openapi.py",
         "scripts/phase8_android_demo.py",
+        "scripts/phase8_native_closeout.py",
     )
     uv_run(
         "ruff",
@@ -359,6 +455,7 @@ def lint() -> None:
         "scripts/check_mobile.py",
         "scripts/export_openapi.py",
         "scripts/phase8_android_demo.py",
+        "scripts/phase8_native_closeout.py",
     )
 
 
@@ -546,7 +643,7 @@ def verify() -> None:
         print("PASS: Deterministic OpenAPI generation input and Phase 7D compatibility")
     if not MOBILE_FOUNDATION:
         print("DEFERRED: Mobile lint/typecheck begin at Phase 7")
-    if PHASE in {5, 6, 7}:
+    if PHASE in {5, 6, 7, 8}:
         if not all(
             (
                 AGENT_CONTRACTS,
@@ -587,7 +684,11 @@ def verify() -> None:
             else:
                 print("DEFERRED: Phase 7D final acceptance")
             if MOBILE_MEMORY:
-                print("DEFERRED: Phase 8F whole Phase 8 final/native fault evidence")
+                print(
+                    "PASS: Phase 8F independently recorded Android native acceptance"
+                    if PHASE == 8
+                    else "DEFERRED: Phase 8F whole Phase 8 final/native fault evidence"
+                )
             elif MOBILE_IMPORT:
                 print("DEFERRED: Phase 8E Memory; whole Phase 8 final/native fault evidence")
             elif MOBILE_AGENT_CHAT:
@@ -597,7 +698,7 @@ def verify() -> None:
         else:
             print("DEFERRED: Mobile")
         print("DEFERRED: RAG")
-        if PHASE in {6, 7}:
+        if PHASE in {6, 7, 8}:
             if not all(
                 (MEMORY_CONTROL_API, MEMORY_MUTATION_API, MEMORY_RETENTION, MEMORY_PHASE6_E2E)
             ):
@@ -611,7 +712,10 @@ def verify() -> None:
                 suffix += " and 7C focused gate"
             if MOBILE_FINAL_UI:
                 suffix += " and 7D integration/runtime gates"
-            if PHASE == 7:
+            if PHASE == 8:
+                print("PASS: Phase 7 Expo React Native MVP")
+                print("PASS: all active Phase 0..8 gates; Phase 9 PENDING / NOT STARTED")
+            elif PHASE == 7:
                 print("PASS: Phase 7 Expo React Native MVP")
                 suffix = (
                     " and Phase 8A/8B/8C/8D/8E"

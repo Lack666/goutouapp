@@ -77,6 +77,7 @@ def main():
         TemporaryDirectory(prefix="goutou-mobile-artifacts-") as artifacts,
     ):
         final_mode = os.environ.get("GOUTOU_FINAL_E2E") == "1"
+        native_mode = os.environ.get("GOUTOU_NATIVE_ACCEPTANCE") == "1"
         agent_mode = os.environ.get("GOUTOU_AGENT_E2E") == "1"
         import_mode = final_mode or os.environ.get("GOUTOU_IMPORT_E2E") == "1"
         memory_mode = final_mode or os.environ.get("GOUTOU_MEMORY_E2E") == "1"
@@ -140,6 +141,10 @@ def main():
         )
         app = create_app(settings)
         provider = Phase6Mock() if memory_mode else ChatDemoMock() if agent_mode else None
+        if native_mode:
+            from native_acceptance_support import NativeAcceptanceMock, NativeAcceptanceWire
+
+            provider = NativeAcceptanceMock()
         if provider:
             app.state.agent_service = AgentService(
                 app.state.database.session,
@@ -158,7 +163,10 @@ def main():
         listen = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         listen.bind(("127.0.0.1", port))
         listen.listen(128)
-        server = uvicorn.Server(uvicorn.Config(app, log_config=None, access_log=False))
+        wire = (
+            NativeAcceptanceWire(app, {str(owner): "a", str(other): "b"}) if native_mode else None
+        )
+        server = uvicorn.Server(uvicorn.Config(wire or app, log_config=None, access_log=False))
         thread = threading.Thread(target=server.run, kwargs={"sockets": [listen]}, daemon=True)
         thread.start()
         try:
@@ -184,6 +192,36 @@ def main():
             for command in sys.stdin:
                 if command.strip() == "stop":
                     break
+                if native_mode and command.startswith("fault "):
+                    fault = command.strip().split()[1]
+                    if fault == "provider_failed":
+                        provider.fail_next = True
+                    elif fault == "slow_run":
+                        provider.delay = 5
+                    elif fault == "normal_run":
+                        provider.delay = 0.8
+                    elif fault == "hold_final":
+                        provider.response_release.clear()
+                    elif fault == "release_final":
+                        provider.response_release.set()
+                    elif fault == "hold_memory":
+                        wire.hold("/api/v1/memories")
+                    elif fault == "hold_history":
+                        wire.hold("/messages")
+                    elif fault == "release_get":
+                        wire.release.set()
+                    else:
+                        wire.arm(fault)
+                    print(json.dumps({"armed": fault}), flush=True)
+                if native_mode and command.strip() == "wire_evidence":
+                    print(json.dumps(wire.evidence()), flush=True)
+                if native_mode and command.startswith("stale_memory "):
+                    with Session(engine) as db, db.begin():
+                        row = db.get(MemoryRecordRow, UUID(command.strip().split()[1]))
+                        if row is None:
+                            raise ValueError("Synthetic stale target not found")
+                        row.updated_at = datetime.now(UTC) + timedelta(seconds=1)
+                    print(json.dumps({"stale": True}), flush=True)
                 if command.strip() in {"renew_token a", "renew_token b"}:
                     user = owner if command.strip().endswith(" a") else other
                     # This response is private pipe data, never reporter output.
@@ -219,6 +257,33 @@ def main():
                                     "receipts": db.scalar(
                                         select(func.count()).select_from(MemoryMutationRow)
                                     ),
+                                    "records": [
+                                        {
+                                            "id": str(row.id),
+                                            "owner": str(row.owner_user_id),
+                                            "person": str(row.person_id),
+                                            "relationship": str(row.relationship_id),
+                                        }
+                                        for row in db.scalars(
+                                            select(MemoryRecordRow).order_by(MemoryRecordRow.id)
+                                        )
+                                    ],
+                                    "mutations": [
+                                        {
+                                            "id": str(row.id),
+                                            "owner": str(row.owner_user_id),
+                                            "key": row.operation_key,
+                                            "action": row.action,
+                                            "status": row.status,
+                                            "affected": row.affected_count,
+                                            "target": str(row.target_id),
+                                        }
+                                        for row in db.scalars(
+                                            select(MemoryMutationRow).order_by(
+                                                MemoryMutationRow.performed_at
+                                            )
+                                        )
+                                    ],
                                     "agent_messages": db.scalar(
                                         select(func.count()).select_from(Message)
                                     ),
@@ -320,6 +385,9 @@ def main():
                             flush=True,
                         )
         finally:
+            if wire:
+                wire.release.set()
+                provider.response_release.set()
             server.should_exit = True
             thread.join(timeout=10)
             listen.close()

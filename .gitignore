@@ -20,4 +20,5 @@ test-results/
 *.sqlite3-wal
 *.sqlite3-shm
 *.log
+!docs/evidence/phase8f-closeout/*.log
 !knowledge/goutoujunshi/assets/reference-library-135.png

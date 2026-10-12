@@ -1,0 +1,3680 @@
+[
+  {
+    "execution": {
+      "steps_file": "F:\\\u72d7\u5934\u519b\u5e08app\u5316\\goutouapp\\.cache\\phase8f-closeout-final3-memory_smoke_preserve.steps.json",
+      "steps": [
+        "restart",
+        "open settings",
+        "tap [\"\u6e05\u9664\u5f53\u524d\u5f00\u53d1\u4f1a\u8bdd\",\"down\"]",
+        "case 8F-MEMORY-SMOKE-PRESERVE",
+        "seed MemoryA",
+        "bookmark a",
+        "seed MemoryB",
+        "bookmark b",
+        "login a",
+        "assert_ui \"Consent\uff1a\u672a\u6388\u6743\"",
+        "tap [\"\u6388\u6743\u957f\u671f\u8bb0\u5fc6\"]",
+        "tap [\"\u6062\u590d\u8bb0\u5fc6\"]",
+        "scope a",
+        "save \u4e00",
+        "save \u4e8c",
+        "history_setup [3,\"PreserveWitness\"]",
+        "scope b",
+        "save \u4e09",
+        "tap [\"\u91cd\u65b0\u8bfb\u53d6 Memory \u6743\u5a01\u72b6\u6001\",\"down\"]",
+        "assert_ui \"\u5f53\u524d\u7a97\u53e3\uff1a3 \u6761\"",
+        "tap [\"\u6682\u505c\u8bb0\u5fc6\",\"down\"]",
+        "assert_ui \"Pause\uff1a\u5df2\u6682\u505c\"",
+        "evidence",
+        "assert_db [\"memory.controls.0.paused\",true]",
+        "tap [\"\u6062\u590d\u8bb0\u5fc6\"]",
+        "assert_ui \"Pause\uff1a\u672a\u6682\u505c\"",
+        "tap [\"\u64a4\u9500\u957f\u671f\u8bb0\u5fc6\u6388\u6743\"]",
+        "assert_ui \"Consent\uff1a\u672a\u6388\u6743\"",
+        "evidence",
+        "assert_db [\"memory.memories\",3]",
+        "assert_db [\"memory.controls.0.consent_enabled\",false]",
+        "tap [\"\u6388\u6743\u957f\u671f\u8bb0\u5fc6\"]",
+        "assert_ui \"Consent\uff1a\u5df2\u6388\u6743\"",
+        "tap [\"\u6062\u590d\u8bb0\u5fc6\"]",
+        "assert_ui \"Pause\uff1a\u672a\u6682\u505c\"",
+        "tap [\"\u68c0\u67e5\u6700\u65b0 Undo \u5e76\u51c6\u5907\u786e\u8ba4\"]",
+        "state",
+        "assert_ui \"Mutation \u72b6\u6001\uff1a\u7b49\u5f85\u4f60\u660e\u786e\u786e\u8ba4\"",
+        "state",
+        "tap [\"\u786e\u8ba4\u64a4\u9500\u8be5\u6700\u65b0\u64cd\u4f5c\"]",
+        "assert_ui \"Mutation \u72b6\u6001\uff1a\u6b63\u5f0f\u56de\u6267\u5df2\u786e\u8ba4\"",
+        "evidence",
+        "assert_db [\"memory.memories\",2]",
+        "assert_db [\"memory.receipts\",1]",
+        "assert_db [\"memory.agent_messages\",6]",
+        "assert_db [\"memory.relationship_messages\",3]",
+        "scope a",
+        "memory_id",
+        "tap [\"\u67e5\u770b\u8bb0\u5fc6 {memory}\",\"down\"]",
+        "assert_ui \"Memory ID\uff1a{memory}\"",
+        "tap [\"\u51c6\u5907\u5220\u9664\u8bb0\u5fc6 {memory}\"]",
+        "tap [\"\u786e\u8ba4\u6267\u884c\u670d\u52a1\u5668\u5220\u9664\"]",
+        "assert_ui \"Mutation \u72b6\u6001\uff1a\u6b63\u5f0f\u56de\u6267\u5df2\u786e\u8ba4\"",
+        "evidence",
+        "assert_db [\"memory.memories\",1]",
+        "assert_db [\"memory.receipts\",2]",
+        "assert_db [\"memory.agent_messages\",6]",
+        "assert_db [\"memory.relationship_messages\",3]",
+        "tap [\"\u5168\u90e8\u5220\u9664\u540e\u4fdd\u7559\u6388\u6743\"]",
+        "tap [\"\u51c6\u5907\u5220\u9664\u5168\u90e8\u672c\u4eba\u8bb0\u5fc6\"]",
+        "assert_ui \"\u5220\u9664\u540e\u64a4\u9500\u6388\u6743\uff1a\u5426\"",
+        "tap [\"\u786e\u8ba4\u6267\u884c\u670d\u52a1\u5668\u5220\u9664\"]",
+        "assert_ui \"Mutation \u72b6\u6001\uff1a\u6b63\u5f0f\u56de\u6267\u5df2\u786e\u8ba4\"",
+        "receipt_id",
+        "input [\"\u5df2\u77e5 Mutation ID\",\"{receipt}\"]",
+        "tap [\"\u67e5\u8be2\u670d\u52a1\u5668\u6301\u4e45\u5316\u56de\u6267\"]",
+        "assert_ui \"Mutation ID\uff1a{receipt}\"",
+        "tap [\"\u91cd\u65b0\u8bfb\u53d6 Memory \u6743\u5a01\u72b6\u6001\",\"down\"]",
+        "evidence",
+        "assert_db [\"memory.memories\",0]",
+        "assert_db [\"memory.receipts\",3]",
+        "assert_db [\"memory.controls.0.consent_enabled\",true]",
+        "assert_db [\"memory.controls.0.paused\",false]",
+        "assert_db [\"memory.agent_messages\",6]",
+        "assert_db [\"memory.relationship_messages\",3]",
+        "tap [\"\u6e05\u9664\u5f53\u524d\u5f00\u53d1\u4f1a\u8bdd\",\"down\"]",
+        "stop"
+      ],
+      "helper_sha256": "0596da9edd05897bd245f4af5cc136aa3dde177dcf593cb5174ff9cfa4caf8b7",
+      "device": "emulator-5554"
+    }
+  },
+  {
+    "command": "restart",
+    "status": "done"
+  },
+  {
+    "command": "open",
+    "status": "done"
+  },
+  {
+    "command": "tap",
+    "status": "done"
+  },
+  {
+    "case": "8F-MEMORY-SMOKE-PRESERVE"
+  },
+  {
+    "command": "case",
+    "status": "done"
+  },
+  {
+    "command": "seed",
+    "status": "done"
+  },
+  {
+    "command": "bookmark",
+    "status": "done"
+  },
+  {
+    "command": "seed",
+    "status": "done"
+  },
+  {
+    "command": "bookmark",
+    "status": "done"
+  },
+  {
+    "command": "login",
+    "status": "done"
+  },
+  {
+    "assert_ui": "Consent\uff1a\u672a\u6388\u6743",
+    "status": "PASS"
+  },
+  {
+    "command": "assert_ui",
+    "status": "done"
+  },
+  {
+    "command": "tap",
+    "status": "done"
+  },
+  {
+    "command": "tap",
+    "status": "done"
+  },
+  {
+    "command": "scope",
+    "status": "done"
+  },
+  {
+    "command": "save",
+    "status": "done"
+  },
+  {
+    "command": "save",
+    "status": "done"
+  },
+  {
+    "history_setup": {
+      "transport": "host REST preconditions",
+      "count": 3,
+      "relationship": "e76ba17f-2771-4e97-acb2-bca646e20e84",
+      "job": "5f17d0b3-5271-4243-aac3-ca5faabd133c",
+      "receipt_status": "imported"
+    }
+  },
+  {
+    "command": "history_setup",
+    "status": "done"
+  },
+  {
+    "command": "scope",
+    "status": "done"
+  },
+  {
+    "command": "save",
+    "status": "done"
+  },
+  {
+    "command": "tap",
+    "status": "done"
+  },
+  {
+    "assert_ui": "\u5f53\u524d\u7a97\u53e3\uff1a3 \u6761 \u00b7 \u6700\u591a 200 \u6761",
+    "status": "PASS"
+  },
+  {
+    "command": "assert_ui",
+    "status": "done"
+  },
+  {
+    "command": "tap",
+    "status": "done"
+  },
+  {
+    "assert_ui": "Pause\uff1a\u5df2\u6682\u505c",
+    "status": "PASS"
+  },
+  {
+    "command": "assert_ui",
+    "status": "done"
+  },
+  {
+    "database": {
+      "agent": {
+        "calls": [
+          "SafetyResult",
+          "ScenarioResult",
+          "FactExtractionResult",
+          "AnalysisResult",
+          "ActionPlan",
+          "ResponseResult",
+          "MemoryCandidateBatch",
+          "SafetyResult",
+          "ScenarioResult",
+          "FactExtractionResult",
+          "AnalysisResult",
+          "ActionPlan",
+          "ResponseResult",
+          "MemoryCandidateBatch",
+          "SafetyResult",
+          "ScenarioResult",
+          "FactExtractionResult",
+          "AnalysisResult",
+          "ActionPlan",
+          "ResponseResult",
+          "MemoryCandidateBatch"
+        ],
+        "runs": [
+          {
+            "id": "21188b4e-fb25-4454-be9e-a9bda7454ab6",
+            "owner": "dde8f23f-6da3-451c-a2ed-7bd1eb5f8ec7",
+            "conversation": "f0426797-8c30-46e8-8a71-28170b7a43d6",
+            "status": "completed",
+            "key": "945219db-3bc1-4b5e-8be2-d9fcaea6f853"
+          },
+          {
+            "id": "3c2c409b-0bb6-476d-b52a-38935f812432",
+            "owner": "dde8f23f-6da3-451c-a2ed-7bd1eb5f8ec7",
+            "conversation": "1b67934c-f141-4721-b897-61ef2c962efb",
+            "status": "completed",
+            "key": "f02bb007-5a3a-41dc-af61-ea1c9be258b8"
+          },
+          {
+            "id": "6bec1bcc-0c38-40e9-a6d7-c0322ef8c120",
+            "owner": "dde8f23f-6da3-451c-a2ed-7bd1eb5f8ec7",
+            "conversation": "f0426797-8c30-46e8-8a71-28170b7a43d6",
+            "status": "completed",
+            "key": "bee4f50f-4033-4cda-8e37-2b1edeea0c56"
+          }
+        ],
+        "messages": [
+          {
+            "id": "62806b96-b806-4979-a01a-3780466dfab2",
+            "conversation": "f0426797-8c30-46e8-8a71-28170b7a43d6",
+            "role": "user"
+          },
+          {
+            "id": "60c8a4b1-c0a6-4596-9fcb-fd8f11f241fd",
+            "conversation": "f0426797-8c30-46e8-8a71-28170b7a43d6",
+            "role": "assistant"
+          },
+          {
+            "id": "2146e923-ca62-4e86-a8bb-e450cd627cb8",
+            "conversation": "f0426797-8c30-46e8-8a71-28170b7a43d6",
+            "role": "user"
+          },
+          {
+            "id": "ee35a3c7-5e71-402f-9814-ae032356c946",
+            "conversation": "f0426797-8c30-46e8-8a71-28170b7a43d6",
+            "role": "assistant"
+          },
+          {
+            "id": "b9baccd2-9c0b-4e7e-9b55-f2f034594a03",
+            "conversation": "1b67934c-f141-4721-b897-61ef2c962efb",
+            "role": "user"
+          },
+          {
+            "id": "73421403-6bda-448a-9e6f-d2f8655e6f8c",
+            "conversation": "1b67934c-f141-4721-b897-61ef2c962efb",
+            "role": "assistant"
+          }
+        ],
+        "memories": 3
+      },
+      "memory": {
+        "memories": 3,
+        "receipts": 0,
+        "records": [
+          {
+            "id": "478ddd96-6e54-4c24-a692-1d079758a30c",
+            "owner": "dde8f23f-6da3-451c-a2ed-7bd1eb5f8ec7",
+            "person": "ee0e63ff-08fd-4699-b140-425830660c02",
+            "relationship": "e76ba17f-2771-4e97-acb2-bca646e20e84"
+          },
+          {
+            "id": "6f82644c-48d4-432b-9f9f-0614bb4ef7d2",
+            "owner": "dde8f23f-6da3-451c-a2ed-7bd1eb5f8ec7",
+            "person": "02c2a36a-ac00-4f7a-b609-5d930a42b163",
+            "relationship": "8c201d7e-afc6-4879-800d-669d302f65e6"
+          },
+          {
+            "id": "a142c77c-beda-4905-afd9-e622fcc98aca",
+            "owner": "dde8f23f-6da3-451c-a2ed-7bd1eb5f8ec7",
+            "person": "ee0e63ff-08fd-4699-b140-425830660c02",
+            "relationship": "e76ba17f-2771-4e97-acb2-bca646e20e84"
+          }
+        ],
+        "mutations": [],
+        "agent_messages": 6,
+        "relationship_messages": 3,
+        "recall_counts": [
+          0,
+          1,
+          0
+        ],
+        "calls": 21,
+        "controls": [
+          {
+            "owner": "dde8f23f-6da3-451c-a2ed-7bd1eb5f8ec7",
+            "consent_enabled": true,
+            "paused": true
+          }
+        ]
+      },
+      "import": {
+        "jobs": [
+          {
+            "id": "5f17d0b3-5271-4243-aac3-ca5faabd133c",
+            "status": "imported",
+            "revision": 3
+          }
+        ],
+        "messages": 3,
+        "agent_messages": 6,
+        "memories": 3,
+        "active_artifacts": 0
+      },
+      "resources": {
+        "persons": 2,
+        "relationships": 2,
+        "conversations": 2
+      },
+      "wire": {
+        "requests": [
+          {
+            "method": "POST",
+            "path": "/api/v1/persons",
+            "bearer": true,
+            "json": true,
+            "cursor": false,
+            "host_setup": true,
+            "verified_owner": "a",
+            "status": 201
+          },
+          {
+            "method": "POST",
+            "path": "/api/v1/relationships",
+            "bearer": true,
+            "json": true,
+            "cursor": false,
+            "host_setup": true,
+            "verified_owner": "a",
+            "status": 201
+          },
+          {
+            "method": "POST",
+            "path": "/api/v1/conversations",
+            "bearer": true,
+            "json": true,
+            "cursor": false,
+            "host_setup": true,
+            "verified_owner": "a",
+            "status": 201
+          },
+          {
+            "method": "POST",
+            "path": "/api/v1/persons",
+            "bearer": true,
+            "json": true,
+            "cursor": false,
+            "host_setup": true,
+            "verified_owner": "a",
+            "status": 201
+          },
+          {
+            "method": "POST",
+            "path": "/api/v1/relationships",
+            "bearer": true,
+            "json": true,
+            "cursor": false,
+            "host_setup": true,
+            "verified_owner": "a",
+            "status": 201
+          },
+          {
+            "method": "POST",
+            "path": "/api/v1/conversations",
+            "bearer": true,
+            "json": true,
+            "cursor": false,
+            "host_setup": true,
+            "verified_owner": "a",
+            "status": 201
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/persons",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memory/control",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/relationships",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/persons",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memories",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memory/undo/preview",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "POST",
+            "path": "/api/v1/memory/consent",
+            "bearer": true,
+            "json": true,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memory/control",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "POST",
+            "path": "/api/v1/memory/resume",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memory/control",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "POST",
+            "path": "/api/v1/conversations/f0426797-8c30-46e8-8a71-28170b7a43d6/agent-runs",
+            "bearer": true,
+            "json": true,
+            "cursor": false,
+            "host_setup": true,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "POST",
+            "path": "/api/v1/conversations/f0426797-8c30-46e8-8a71-28170b7a43d6/agent-runs",
+            "bearer": true,
+            "json": true,
+            "cursor": false,
+            "host_setup": true,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "POST",
+            "path": "/api/v1/chat-imports",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": true,
+            "verified_owner": "a",
+            "status": 201
+          },
+          {
+            "method": "PUT",
+            "path": "/api/v1/chat-imports/5f17d0b3-5271-4243-aac3-ca5faabd133c/speakers",
+            "bearer": true,
+            "json": true,
+            "cursor": false,
+            "host_setup": true,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "PUT",
+            "path": "/api/v1/chat-imports/5f17d0b3-5271-4243-aac3-ca5faabd133c/speakers",
+            "bearer": true,
+            "json": true,
+            "cursor": false,
+            "host_setup": true,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "PUT",
+            "path": "/api/v1/chat-imports/5f17d0b3-5271-4243-aac3-ca5faabd133c/relationship",
+            "bearer": true,
+            "json": true,
+            "cursor": false,
+            "host_setup": true,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "POST",
+            "path": "/api/v1/chat-imports/5f17d0b3-5271-4243-aac3-ca5faabd133c/ready",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": true,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "POST",
+            "path": "/api/v1/chat-imports/5f17d0b3-5271-4243-aac3-ca5faabd133c/finalize",
+            "bearer": true,
+            "json": true,
+            "cursor": false,
+            "host_setup": true,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "POST",
+            "path": "/api/v1/conversations/1b67934c-f141-4721-b897-61ef2c962efb/agent-runs",
+            "bearer": true,
+            "json": true,
+            "cursor": false,
+            "host_setup": true,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memory/control",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memories",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memory/undo/preview",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "POST",
+            "path": "/api/v1/memory/pause",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memory/control",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          }
+        ],
+        "faults": []
+      }
+    }
+  },
+  {
+    "command": "evidence",
+    "status": "done"
+  },
+  {
+    "assert_db": "memory.controls.0.paused",
+    "expected": true,
+    "actual": true,
+    "status": "PASS"
+  },
+  {
+    "command": "assert_db",
+    "status": "done"
+  },
+  {
+    "command": "tap",
+    "status": "done"
+  },
+  {
+    "assert_ui": "Pause\uff1a\u672a\u6682\u505c",
+    "status": "PASS"
+  },
+  {
+    "command": "assert_ui",
+    "status": "done"
+  },
+  {
+    "command": "tap",
+    "status": "done"
+  },
+  {
+    "assert_ui": "Consent\uff1a\u672a\u6388\u6743",
+    "status": "PASS"
+  },
+  {
+    "command": "assert_ui",
+    "status": "done"
+  },
+  {
+    "database": {
+      "agent": {
+        "calls": [
+          "SafetyResult",
+          "ScenarioResult",
+          "FactExtractionResult",
+          "AnalysisResult",
+          "ActionPlan",
+          "ResponseResult",
+          "MemoryCandidateBatch",
+          "SafetyResult",
+          "ScenarioResult",
+          "FactExtractionResult",
+          "AnalysisResult",
+          "ActionPlan",
+          "ResponseResult",
+          "MemoryCandidateBatch",
+          "SafetyResult",
+          "ScenarioResult",
+          "FactExtractionResult",
+          "AnalysisResult",
+          "ActionPlan",
+          "ResponseResult",
+          "MemoryCandidateBatch"
+        ],
+        "runs": [
+          {
+            "id": "21188b4e-fb25-4454-be9e-a9bda7454ab6",
+            "owner": "dde8f23f-6da3-451c-a2ed-7bd1eb5f8ec7",
+            "conversation": "f0426797-8c30-46e8-8a71-28170b7a43d6",
+            "status": "completed",
+            "key": "945219db-3bc1-4b5e-8be2-d9fcaea6f853"
+          },
+          {
+            "id": "3c2c409b-0bb6-476d-b52a-38935f812432",
+            "owner": "dde8f23f-6da3-451c-a2ed-7bd1eb5f8ec7",
+            "conversation": "1b67934c-f141-4721-b897-61ef2c962efb",
+            "status": "completed",
+            "key": "f02bb007-5a3a-41dc-af61-ea1c9be258b8"
+          },
+          {
+            "id": "6bec1bcc-0c38-40e9-a6d7-c0322ef8c120",
+            "owner": "dde8f23f-6da3-451c-a2ed-7bd1eb5f8ec7",
+            "conversation": "f0426797-8c30-46e8-8a71-28170b7a43d6",
+            "status": "completed",
+            "key": "bee4f50f-4033-4cda-8e37-2b1edeea0c56"
+          }
+        ],
+        "messages": [
+          {
+            "id": "62806b96-b806-4979-a01a-3780466dfab2",
+            "conversation": "f0426797-8c30-46e8-8a71-28170b7a43d6",
+            "role": "user"
+          },
+          {
+            "id": "60c8a4b1-c0a6-4596-9fcb-fd8f11f241fd",
+            "conversation": "f0426797-8c30-46e8-8a71-28170b7a43d6",
+            "role": "assistant"
+          },
+          {
+            "id": "2146e923-ca62-4e86-a8bb-e450cd627cb8",
+            "conversation": "f0426797-8c30-46e8-8a71-28170b7a43d6",
+            "role": "user"
+          },
+          {
+            "id": "ee35a3c7-5e71-402f-9814-ae032356c946",
+            "conversation": "f0426797-8c30-46e8-8a71-28170b7a43d6",
+            "role": "assistant"
+          },
+          {
+            "id": "b9baccd2-9c0b-4e7e-9b55-f2f034594a03",
+            "conversation": "1b67934c-f141-4721-b897-61ef2c962efb",
+            "role": "user"
+          },
+          {
+            "id": "73421403-6bda-448a-9e6f-d2f8655e6f8c",
+            "conversation": "1b67934c-f141-4721-b897-61ef2c962efb",
+            "role": "assistant"
+          }
+        ],
+        "memories": 3
+      },
+      "memory": {
+        "memories": 3,
+        "receipts": 0,
+        "records": [
+          {
+            "id": "478ddd96-6e54-4c24-a692-1d079758a30c",
+            "owner": "dde8f23f-6da3-451c-a2ed-7bd1eb5f8ec7",
+            "person": "ee0e63ff-08fd-4699-b140-425830660c02",
+            "relationship": "e76ba17f-2771-4e97-acb2-bca646e20e84"
+          },
+          {
+            "id": "6f82644c-48d4-432b-9f9f-0614bb4ef7d2",
+            "owner": "dde8f23f-6da3-451c-a2ed-7bd1eb5f8ec7",
+            "person": "02c2a36a-ac00-4f7a-b609-5d930a42b163",
+            "relationship": "8c201d7e-afc6-4879-800d-669d302f65e6"
+          },
+          {
+            "id": "a142c77c-beda-4905-afd9-e622fcc98aca",
+            "owner": "dde8f23f-6da3-451c-a2ed-7bd1eb5f8ec7",
+            "person": "ee0e63ff-08fd-4699-b140-425830660c02",
+            "relationship": "e76ba17f-2771-4e97-acb2-bca646e20e84"
+          }
+        ],
+        "mutations": [],
+        "agent_messages": 6,
+        "relationship_messages": 3,
+        "recall_counts": [
+          0,
+          1,
+          0
+        ],
+        "calls": 21,
+        "controls": [
+          {
+            "owner": "dde8f23f-6da3-451c-a2ed-7bd1eb5f8ec7",
+            "consent_enabled": false,
+            "paused": true
+          }
+        ]
+      },
+      "import": {
+        "jobs": [
+          {
+            "id": "5f17d0b3-5271-4243-aac3-ca5faabd133c",
+            "status": "imported",
+            "revision": 3
+          }
+        ],
+        "messages": 3,
+        "agent_messages": 6,
+        "memories": 3,
+        "active_artifacts": 0
+      },
+      "resources": {
+        "persons": 2,
+        "relationships": 2,
+        "conversations": 2
+      },
+      "wire": {
+        "requests": [
+          {
+            "method": "POST",
+            "path": "/api/v1/persons",
+            "bearer": true,
+            "json": true,
+            "cursor": false,
+            "host_setup": true,
+            "verified_owner": "a",
+            "status": 201
+          },
+          {
+            "method": "POST",
+            "path": "/api/v1/relationships",
+            "bearer": true,
+            "json": true,
+            "cursor": false,
+            "host_setup": true,
+            "verified_owner": "a",
+            "status": 201
+          },
+          {
+            "method": "POST",
+            "path": "/api/v1/conversations",
+            "bearer": true,
+            "json": true,
+            "cursor": false,
+            "host_setup": true,
+            "verified_owner": "a",
+            "status": 201
+          },
+          {
+            "method": "POST",
+            "path": "/api/v1/persons",
+            "bearer": true,
+            "json": true,
+            "cursor": false,
+            "host_setup": true,
+            "verified_owner": "a",
+            "status": 201
+          },
+          {
+            "method": "POST",
+            "path": "/api/v1/relationships",
+            "bearer": true,
+            "json": true,
+            "cursor": false,
+            "host_setup": true,
+            "verified_owner": "a",
+            "status": 201
+          },
+          {
+            "method": "POST",
+            "path": "/api/v1/conversations",
+            "bearer": true,
+            "json": true,
+            "cursor": false,
+            "host_setup": true,
+            "verified_owner": "a",
+            "status": 201
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/persons",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memory/control",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/relationships",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/persons",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memories",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memory/undo/preview",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "POST",
+            "path": "/api/v1/memory/consent",
+            "bearer": true,
+            "json": true,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memory/control",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "POST",
+            "path": "/api/v1/memory/resume",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memory/control",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "POST",
+            "path": "/api/v1/conversations/f0426797-8c30-46e8-8a71-28170b7a43d6/agent-runs",
+            "bearer": true,
+            "json": true,
+            "cursor": false,
+            "host_setup": true,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "POST",
+            "path": "/api/v1/conversations/f0426797-8c30-46e8-8a71-28170b7a43d6/agent-runs",
+            "bearer": true,
+            "json": true,
+            "cursor": false,
+            "host_setup": true,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "POST",
+            "path": "/api/v1/chat-imports",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": true,
+            "verified_owner": "a",
+            "status": 201
+          },
+          {
+            "method": "PUT",
+            "path": "/api/v1/chat-imports/5f17d0b3-5271-4243-aac3-ca5faabd133c/speakers",
+            "bearer": true,
+            "json": true,
+            "cursor": false,
+            "host_setup": true,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "PUT",
+            "path": "/api/v1/chat-imports/5f17d0b3-5271-4243-aac3-ca5faabd133c/speakers",
+            "bearer": true,
+            "json": true,
+            "cursor": false,
+            "host_setup": true,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "PUT",
+            "path": "/api/v1/chat-imports/5f17d0b3-5271-4243-aac3-ca5faabd133c/relationship",
+            "bearer": true,
+            "json": true,
+            "cursor": false,
+            "host_setup": true,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "POST",
+            "path": "/api/v1/chat-imports/5f17d0b3-5271-4243-aac3-ca5faabd133c/ready",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": true,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "POST",
+            "path": "/api/v1/chat-imports/5f17d0b3-5271-4243-aac3-ca5faabd133c/finalize",
+            "bearer": true,
+            "json": true,
+            "cursor": false,
+            "host_setup": true,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "POST",
+            "path": "/api/v1/conversations/1b67934c-f141-4721-b897-61ef2c962efb/agent-runs",
+            "bearer": true,
+            "json": true,
+            "cursor": false,
+            "host_setup": true,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memory/control",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memories",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memory/undo/preview",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "POST",
+            "path": "/api/v1/memory/pause",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memory/control",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "POST",
+            "path": "/api/v1/memory/resume",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memory/control",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "POST",
+            "path": "/api/v1/memory/consent",
+            "bearer": true,
+            "json": true,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memory/control",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          }
+        ],
+        "faults": []
+      }
+    }
+  },
+  {
+    "command": "evidence",
+    "status": "done"
+  },
+  {
+    "assert_db": "memory.memories",
+    "expected": 3,
+    "actual": 3,
+    "status": "PASS"
+  },
+  {
+    "command": "assert_db",
+    "status": "done"
+  },
+  {
+    "assert_db": "memory.controls.0.consent_enabled",
+    "expected": false,
+    "actual": false,
+    "status": "PASS"
+  },
+  {
+    "command": "assert_db",
+    "status": "done"
+  },
+  {
+    "command": "tap",
+    "status": "done"
+  },
+  {
+    "assert_ui": "Consent\uff1a\u5df2\u6388\u6743",
+    "status": "PASS"
+  },
+  {
+    "command": "assert_ui",
+    "status": "done"
+  },
+  {
+    "command": "tap",
+    "status": "done"
+  },
+  {
+    "assert_ui": "Pause\uff1a\u672a\u6682\u505c",
+    "status": "PASS"
+  },
+  {
+    "command": "assert_ui",
+    "status": "done"
+  },
+  {
+    "command": "tap",
+    "status": "done"
+  },
+  {
+    "ui_state": [
+      {
+        "text": "",
+        "label": "Tools",
+        "bounds": "[937,219][1005,287]",
+        "enabled": "true"
+      },
+      {
+        "text": "\u521b\u5efa\uff1a2026-10-12T06:18:49.711520Z \u00b7 \u66f4\u65b0\uff1a2026-10-12T06:18:49.711520Z",
+        "label": "",
+        "bounds": "[107,142][973,65]",
+        "enabled": "true"
+      },
+      {
+        "text": "\u8fc7\u671f\uff1a2026-11-18T06:18:49.711520Z \u00b7 \u72b6\u6001\uff1a\u6709\u6548",
+        "label": "",
+        "bounds": "[107,142][973,228]",
+        "enabled": "true"
+      },
+      {
+        "text": "\u6765\u6e90\uff1auser_explicit \u00b7 Saved from an explicit user statement",
+        "label": "",
+        "bounds": "[107,260][973,392]",
+        "enabled": "true"
+      },
+      {
+        "text": "Saved memories describe past information and may no longer be accurate.",
+        "label": "",
+        "bounds": "[107,423][973,555]",
+        "enabled": "true"
+      },
+      {
+        "text": "",
+        "label": "\u67e5\u770b\u8bb0\u5fc6 478ddd96-6e54-4c24-a692-1d079758a30c",
+        "bounds": "[108,587][972,781]",
+        "enabled": "true"
+      },
+      {
+        "text": "\u67e5\u770b\u8bb0\u5fc6 478ddd96-6e54-4c24-a692-1d079758a30c",
+        "label": "",
+        "bounds": "[152,621][928,747]",
+        "enabled": "true"
+      },
+      {
+        "text": "",
+        "label": "\u51c6\u5907\u5220\u9664\u8bb0\u5fc6 478ddd96-6e54-4c24-a692-1d079758a30c",
+        "bounds": "[108,813][972,1007]",
+        "enabled": "true"
+      },
+      {
+        "text": "\u51c6\u5907\u5220\u9664\u8bb0\u5fc6 478ddd96-6e54-4c24-a692-1d079758a30c",
+        "label": "",
+        "bounds": "[152,847][928,973]",
+        "enabled": "true"
+      },
+      {
+        "text": "Guarded Undo \u00b7 \u6700\u65b0\u670d\u52a1\u5668\u64cd\u4f5c",
+        "label": "",
+        "bounds": "[107,1179][973,1256]",
+        "enabled": "true"
+      },
+      {
+        "text": "Undo \u53ea\u9488\u5bf9\u5f53\u524d\u7528\u6237\u6700\u65b0\u64cd\u4f5c\uff1b\u4e0d\u4f1a\u81ea\u52a8\u5bfb\u627e\u6216\u64a4\u9500\u66f4\u65e9\u7684\u8bb0\u5f55\u3002\u9884\u89c8\u4e0d\u6267\u884c\u64a4\u9500\u3002",
+        "label": "",
+        "bounds": "[107,1288][973,1420]",
+        "enabled": "true"
+      },
+      {
+        "text": "",
+        "label": "\u68c0\u67e5\u6700\u65b0 Undo \u5e76\u51c6\u5907\u786e\u8ba4",
+        "bounds": "[108,1452][972,1583]",
+        "enabled": "true"
+      },
+      {
+        "text": "\u68c0\u67e5\u6700\u65b0 Undo \u5e76\u51c6\u5907\u786e\u8ba4",
+        "label": "",
+        "bounds": "[152,1486][928,1549]",
+        "enabled": "true"
+      },
+      {
+        "text": "\u6700\u65b0 operation ID\uff1a5ba13b95-68da-4909-8044-f684a9bb41b5",
+        "label": "",
+        "bounds": "[107,1614][973,1746]",
+        "enabled": "true"
+      },
+      {
+        "text": "\u76ee\u6807 Memory\uff1a6f82644c-48d4-432b-9f9f-0614bb4ef7d2 \u00b7 \u7c7b\u578b\uff1arelationship",
+        "label": "",
+        "bounds": "[107,1777][973,1975]",
+        "enabled": "true"
+      },
+      {
+        "text": "Person\uff1a02c2a36a-ac00-4f7a-b609-5d930a42b163 \u00b7 Relationship\uff1a8c201d7e-afc6-4879-800d-669d302f65e6 \u00b7 \u521b\u5efa\uff1a2026-10-12T06:19:01.315475Z",
+        "label": "",
+        "bounds": "[107,2007][973,2337]",
+        "enabled": "true"
+      }
+    ]
+  },
+  {
+    "assert_ui": "Mutation \u72b6\u6001\uff1a\u7b49\u5f85\u4f60\u660e\u786e\u786e\u8ba4",
+    "status": "PASS"
+  },
+  {
+    "command": "assert_ui",
+    "status": "done"
+  },
+  {
+    "ui_state": [
+      {
+        "text": "",
+        "label": "Tools",
+        "bounds": "[937,219][1005,287]",
+        "enabled": "true"
+      },
+      {
+        "text": "",
+        "label": "\u5168\u90e8\u5220\u9664\u540e\u64a4\u9500\u6388\u6743",
+        "bounds": "[108,142][972,15]",
+        "enabled": "true"
+      },
+      {
+        "text": "",
+        "label": "\u51c6\u5907\u5220\u9664\u5168\u90e8\u672c\u4eba\u8bb0\u5fc6",
+        "bounds": "[108,142][972,177]",
+        "enabled": "false"
+      },
+      {
+        "text": "\u51c6\u5907\u5220\u9664\u5168\u90e8\u672c\u4eba\u8bb0\u5fc6",
+        "label": "",
+        "bounds": "[152,142][928,143]",
+        "enabled": "true"
+      },
+      {
+        "text": "\u4fee\u6539\u6388\u6743\u9009\u62e9\u4f1a\u4f7f\u65e7\u786e\u8ba4\u5931\u6548\uff0c\u9700\u91cd\u65b0\u5411\u670d\u52a1\u5668\u51c6\u5907\u3002\u5220\u9664\u5305\u542b\u8303\u56f4\u5185\u7684\u8fc7\u671f\u4e3b\u5e93\u8bb0\u5f55\u53ca Undo \u5386\u53f2\uff1b\u786e\u8ba4\u548c\u56de\u6267\u5143\u6570\u636e\u6309\u7b56\u7565\u4fdd\u7559\u3002\u4e3b\u5e93\u5220\u9664\u4e0d\u4ee3\u8868\u5907\u4efd\u3001\u65e5\u5fd7\u6216\u5916\u90e8\u63d0\u4f9b\u5546\u526f\u672c\u5373\u65f6\u64e6\u9664\uff0c\u4e5f\u4e0d\u4ee3\u8868\u5220\u9664\u6240\u6709\u4e2a\u4eba\u8d44\u6599\u3002",
+        "label": "",
+        "bounds": "[107,209][973,539]",
+        "enabled": "true"
+      },
+      {
+        "text": "\u64cd\u4f5c\u786e\u8ba4\u4e0e\u6062\u590d",
+        "label": "",
+        "bounds": "[107,712][973,789]",
+        "enabled": "true"
+      },
+      {
+        "text": "Mutation \u72b6\u6001\uff1a\u7b49\u5f85\u4f60\u660e\u786e\u786e\u8ba4",
+        "label": "",
+        "bounds": "[107,821][973,887]",
+        "enabled": "true"
+      },
+      {
+        "text": "",
+        "label": "\u786e\u8ba4\u64a4\u9500\u8be5\u6700\u65b0\u64cd\u4f5c",
+        "bounds": "[108,919][972,1050]",
+        "enabled": "true"
+      },
+      {
+        "text": "\u786e\u8ba4\u64a4\u9500\u8be5\u6700\u65b0\u64cd\u4f5c",
+        "label": "",
+        "bounds": "[152,953][928,1016]",
+        "enabled": "true"
+      },
+      {
+        "text": "",
+        "label": "\u5b89\u5168\u91cd\u8bd5\u539f Memory \u64cd\u4f5c",
+        "bounds": "[108,1081][972,1212]",
+        "enabled": "false"
+      },
+      {
+        "text": "\u5b89\u5168\u91cd\u8bd5\u539f Memory \u64cd\u4f5c",
+        "label": "",
+        "bounds": "[152,1115][928,1178]",
+        "enabled": "true"
+      },
+      {
+        "text": "\u64cd\u4f5c\u6062\u590d\u4fe1\u606f\u4ec5\u4fdd\u7559\u5728\u672c\u6b21\u4f1a\u8bdd\u5185\u3002\u91cd\u542f\u540e\u4e22\u5931\u539f\u64cd\u4f5c\u6807\u8bc6\uff0c\u4e0d\u80fd\u81ea\u52a8\u5b89\u5168\u91cd\u8bd5\u672a\u786e\u8ba4\u7684\u64cd\u4f5c\uff1b\u8bf7\u8bfb\u53d6\u670d\u52a1\u5668\u6743\u5a01\u72b6\u6001\u6216\u67e5\u8be2\u5df2\u77e5\u56de\u6267\u3002\u8bb0\u5f55\u6d88\u5931\u672c\u8eab\u4e0d\u80fd\u8bc1\u660e\u64cd\u4f5c\u6210\u529f\u3002",
+        "label": "",
+        "bounds": "[107,1244][973,1508]",
+        "enabled": "true"
+      },
+      {
+        "text": "\u6301\u4e45\u5316 Mutation Receipt",
+        "label": "",
+        "bounds": "[107,1681][973,1758]",
+        "enabled": "true"
+      },
+      {
+        "text": "",
+        "label": "\u5df2\u77e5 Mutation ID",
+        "bounds": "[107,1790][973,1910]",
+        "enabled": "true"
+      },
+      {
+        "text": "",
+        "label": "\u67e5\u8be2\u670d\u52a1\u5668\u6301\u4e45\u5316\u56de\u6267",
+        "bounds": "[108,1941][972,2073]",
+        "enabled": "false"
+      },
+      {
+        "text": "\u67e5\u8be2\u670d\u52a1\u5668\u6301\u4e45\u5316\u56de\u6267",
+        "label": "",
+        "bounds": "[152,1975][928,2038]",
+        "enabled": "true"
+      },
+      {
+        "text": "\u5c1a\u65e0\u5df2\u786e\u8ba4\u7684\u670d\u52a1\u5668\u56de\u6267\u3002",
+        "label": "",
+        "bounds": "[107,2103][973,2169]",
+        "enabled": "true"
+      }
+    ]
+  },
+  {
+    "command": "tap",
+    "status": "done"
+  },
+  {
+    "assert_ui": "Mutation \u72b6\u6001\uff1a\u6b63\u5f0f\u56de\u6267\u5df2\u786e\u8ba4",
+    "status": "PASS"
+  },
+  {
+    "command": "assert_ui",
+    "status": "done"
+  },
+  {
+    "database": {
+      "agent": {
+        "calls": [
+          "SafetyResult",
+          "ScenarioResult",
+          "FactExtractionResult",
+          "AnalysisResult",
+          "ActionPlan",
+          "ResponseResult",
+          "MemoryCandidateBatch",
+          "SafetyResult",
+          "ScenarioResult",
+          "FactExtractionResult",
+          "AnalysisResult",
+          "ActionPlan",
+          "ResponseResult",
+          "MemoryCandidateBatch",
+          "SafetyResult",
+          "ScenarioResult",
+          "FactExtractionResult",
+          "AnalysisResult",
+          "ActionPlan",
+          "ResponseResult",
+          "MemoryCandidateBatch"
+        ],
+        "runs": [
+          {
+            "id": "21188b4e-fb25-4454-be9e-a9bda7454ab6",
+            "owner": "dde8f23f-6da3-451c-a2ed-7bd1eb5f8ec7",
+            "conversation": "f0426797-8c30-46e8-8a71-28170b7a43d6",
+            "status": "completed",
+            "key": "945219db-3bc1-4b5e-8be2-d9fcaea6f853"
+          },
+          {
+            "id": "3c2c409b-0bb6-476d-b52a-38935f812432",
+            "owner": "dde8f23f-6da3-451c-a2ed-7bd1eb5f8ec7",
+            "conversation": "1b67934c-f141-4721-b897-61ef2c962efb",
+            "status": "completed",
+            "key": "f02bb007-5a3a-41dc-af61-ea1c9be258b8"
+          },
+          {
+            "id": "6bec1bcc-0c38-40e9-a6d7-c0322ef8c120",
+            "owner": "dde8f23f-6da3-451c-a2ed-7bd1eb5f8ec7",
+            "conversation": "f0426797-8c30-46e8-8a71-28170b7a43d6",
+            "status": "completed",
+            "key": "bee4f50f-4033-4cda-8e37-2b1edeea0c56"
+          }
+        ],
+        "messages": [
+          {
+            "id": "62806b96-b806-4979-a01a-3780466dfab2",
+            "conversation": "f0426797-8c30-46e8-8a71-28170b7a43d6",
+            "role": "user"
+          },
+          {
+            "id": "60c8a4b1-c0a6-4596-9fcb-fd8f11f241fd",
+            "conversation": "f0426797-8c30-46e8-8a71-28170b7a43d6",
+            "role": "assistant"
+          },
+          {
+            "id": "2146e923-ca62-4e86-a8bb-e450cd627cb8",
+            "conversation": "f0426797-8c30-46e8-8a71-28170b7a43d6",
+            "role": "user"
+          },
+          {
+            "id": "ee35a3c7-5e71-402f-9814-ae032356c946",
+            "conversation": "f0426797-8c30-46e8-8a71-28170b7a43d6",
+            "role": "assistant"
+          },
+          {
+            "id": "b9baccd2-9c0b-4e7e-9b55-f2f034594a03",
+            "conversation": "1b67934c-f141-4721-b897-61ef2c962efb",
+            "role": "user"
+          },
+          {
+            "id": "73421403-6bda-448a-9e6f-d2f8655e6f8c",
+            "conversation": "1b67934c-f141-4721-b897-61ef2c962efb",
+            "role": "assistant"
+          }
+        ],
+        "memories": 2
+      },
+      "memory": {
+        "memories": 2,
+        "receipts": 1,
+        "records": [
+          {
+            "id": "478ddd96-6e54-4c24-a692-1d079758a30c",
+            "owner": "dde8f23f-6da3-451c-a2ed-7bd1eb5f8ec7",
+            "person": "ee0e63ff-08fd-4699-b140-425830660c02",
+            "relationship": "e76ba17f-2771-4e97-acb2-bca646e20e84"
+          },
+          {
+            "id": "a142c77c-beda-4905-afd9-e622fcc98aca",
+            "owner": "dde8f23f-6da3-451c-a2ed-7bd1eb5f8ec7",
+            "person": "ee0e63ff-08fd-4699-b140-425830660c02",
+            "relationship": "e76ba17f-2771-4e97-acb2-bca646e20e84"
+          }
+        ],
+        "mutations": [
+          {
+            "id": "e8dbcc57-5c3b-4632-8be2-e562de9f9700",
+            "owner": "dde8f23f-6da3-451c-a2ed-7bd1eb5f8ec7",
+            "key": "memory-49b1e048-78e3-4dc0-97b3-dca132396605",
+            "action": "undo",
+            "status": "undone",
+            "affected": 1,
+            "target": "6f82644c-48d4-432b-9f9f-0614bb4ef7d2"
+          }
+        ],
+        "agent_messages": 6,
+        "relationship_messages": 3,
+        "recall_counts": [
+          0,
+          1,
+          0
+        ],
+        "calls": 21,
+        "controls": [
+          {
+            "owner": "dde8f23f-6da3-451c-a2ed-7bd1eb5f8ec7",
+            "consent_enabled": true,
+            "paused": false
+          }
+        ]
+      },
+      "import": {
+        "jobs": [
+          {
+            "id": "5f17d0b3-5271-4243-aac3-ca5faabd133c",
+            "status": "imported",
+            "revision": 3
+          }
+        ],
+        "messages": 3,
+        "agent_messages": 6,
+        "memories": 2,
+        "active_artifacts": 0
+      },
+      "resources": {
+        "persons": 2,
+        "relationships": 2,
+        "conversations": 2
+      },
+      "wire": {
+        "requests": [
+          {
+            "method": "POST",
+            "path": "/api/v1/persons",
+            "bearer": true,
+            "json": true,
+            "cursor": false,
+            "host_setup": true,
+            "verified_owner": "a",
+            "status": 201
+          },
+          {
+            "method": "POST",
+            "path": "/api/v1/relationships",
+            "bearer": true,
+            "json": true,
+            "cursor": false,
+            "host_setup": true,
+            "verified_owner": "a",
+            "status": 201
+          },
+          {
+            "method": "POST",
+            "path": "/api/v1/conversations",
+            "bearer": true,
+            "json": true,
+            "cursor": false,
+            "host_setup": true,
+            "verified_owner": "a",
+            "status": 201
+          },
+          {
+            "method": "POST",
+            "path": "/api/v1/persons",
+            "bearer": true,
+            "json": true,
+            "cursor": false,
+            "host_setup": true,
+            "verified_owner": "a",
+            "status": 201
+          },
+          {
+            "method": "POST",
+            "path": "/api/v1/relationships",
+            "bearer": true,
+            "json": true,
+            "cursor": false,
+            "host_setup": true,
+            "verified_owner": "a",
+            "status": 201
+          },
+          {
+            "method": "POST",
+            "path": "/api/v1/conversations",
+            "bearer": true,
+            "json": true,
+            "cursor": false,
+            "host_setup": true,
+            "verified_owner": "a",
+            "status": 201
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/persons",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memory/control",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/relationships",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/persons",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memories",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memory/undo/preview",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "POST",
+            "path": "/api/v1/memory/consent",
+            "bearer": true,
+            "json": true,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memory/control",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "POST",
+            "path": "/api/v1/memory/resume",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memory/control",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "POST",
+            "path": "/api/v1/conversations/f0426797-8c30-46e8-8a71-28170b7a43d6/agent-runs",
+            "bearer": true,
+            "json": true,
+            "cursor": false,
+            "host_setup": true,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "POST",
+            "path": "/api/v1/conversations/f0426797-8c30-46e8-8a71-28170b7a43d6/agent-runs",
+            "bearer": true,
+            "json": true,
+            "cursor": false,
+            "host_setup": true,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "POST",
+            "path": "/api/v1/chat-imports",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": true,
+            "verified_owner": "a",
+            "status": 201
+          },
+          {
+            "method": "PUT",
+            "path": "/api/v1/chat-imports/5f17d0b3-5271-4243-aac3-ca5faabd133c/speakers",
+            "bearer": true,
+            "json": true,
+            "cursor": false,
+            "host_setup": true,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "PUT",
+            "path": "/api/v1/chat-imports/5f17d0b3-5271-4243-aac3-ca5faabd133c/speakers",
+            "bearer": true,
+            "json": true,
+            "cursor": false,
+            "host_setup": true,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "PUT",
+            "path": "/api/v1/chat-imports/5f17d0b3-5271-4243-aac3-ca5faabd133c/relationship",
+            "bearer": true,
+            "json": true,
+            "cursor": false,
+            "host_setup": true,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "POST",
+            "path": "/api/v1/chat-imports/5f17d0b3-5271-4243-aac3-ca5faabd133c/ready",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": true,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "POST",
+            "path": "/api/v1/chat-imports/5f17d0b3-5271-4243-aac3-ca5faabd133c/finalize",
+            "bearer": true,
+            "json": true,
+            "cursor": false,
+            "host_setup": true,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "POST",
+            "path": "/api/v1/conversations/1b67934c-f141-4721-b897-61ef2c962efb/agent-runs",
+            "bearer": true,
+            "json": true,
+            "cursor": false,
+            "host_setup": true,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memory/control",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memories",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memory/undo/preview",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "POST",
+            "path": "/api/v1/memory/pause",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memory/control",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "POST",
+            "path": "/api/v1/memory/resume",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memory/control",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "POST",
+            "path": "/api/v1/memory/consent",
+            "bearer": true,
+            "json": true,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memory/control",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "POST",
+            "path": "/api/v1/memory/consent",
+            "bearer": true,
+            "json": true,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memory/control",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "POST",
+            "path": "/api/v1/memory/resume",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memory/control",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memory/undo/preview",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "POST",
+            "path": "/api/v1/memory/undo",
+            "bearer": true,
+            "json": true,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memory/control",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memories",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memory/undo/preview",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          }
+        ],
+        "faults": []
+      }
+    }
+  },
+  {
+    "command": "evidence",
+    "status": "done"
+  },
+  {
+    "assert_db": "memory.memories",
+    "expected": 2,
+    "actual": 2,
+    "status": "PASS"
+  },
+  {
+    "command": "assert_db",
+    "status": "done"
+  },
+  {
+    "assert_db": "memory.receipts",
+    "expected": 1,
+    "actual": 1,
+    "status": "PASS"
+  },
+  {
+    "command": "assert_db",
+    "status": "done"
+  },
+  {
+    "assert_db": "memory.agent_messages",
+    "expected": 6,
+    "actual": 6,
+    "status": "PASS"
+  },
+  {
+    "command": "assert_db",
+    "status": "done"
+  },
+  {
+    "assert_db": "memory.relationship_messages",
+    "expected": 3,
+    "actual": 3,
+    "status": "PASS"
+  },
+  {
+    "command": "assert_db",
+    "status": "done"
+  },
+  {
+    "command": "scope",
+    "status": "done"
+  },
+  {
+    "command": "memory_id",
+    "status": "done"
+  },
+  {
+    "command": "tap",
+    "status": "done"
+  },
+  {
+    "assert_ui": "Memory ID\uff1aa142c77c-beda-4905-afd9-e622fcc98aca",
+    "status": "PASS"
+  },
+  {
+    "command": "assert_ui",
+    "status": "done"
+  },
+  {
+    "command": "tap",
+    "status": "done"
+  },
+  {
+    "command": "tap",
+    "status": "done"
+  },
+  {
+    "assert_ui": "Mutation \u72b6\u6001\uff1a\u6b63\u5f0f\u56de\u6267\u5df2\u786e\u8ba4",
+    "status": "PASS"
+  },
+  {
+    "command": "assert_ui",
+    "status": "done"
+  },
+  {
+    "database": {
+      "agent": {
+        "calls": [
+          "SafetyResult",
+          "ScenarioResult",
+          "FactExtractionResult",
+          "AnalysisResult",
+          "ActionPlan",
+          "ResponseResult",
+          "MemoryCandidateBatch",
+          "SafetyResult",
+          "ScenarioResult",
+          "FactExtractionResult",
+          "AnalysisResult",
+          "ActionPlan",
+          "ResponseResult",
+          "MemoryCandidateBatch",
+          "SafetyResult",
+          "ScenarioResult",
+          "FactExtractionResult",
+          "AnalysisResult",
+          "ActionPlan",
+          "ResponseResult",
+          "MemoryCandidateBatch"
+        ],
+        "runs": [
+          {
+            "id": "21188b4e-fb25-4454-be9e-a9bda7454ab6",
+            "owner": "dde8f23f-6da3-451c-a2ed-7bd1eb5f8ec7",
+            "conversation": "f0426797-8c30-46e8-8a71-28170b7a43d6",
+            "status": "completed",
+            "key": "945219db-3bc1-4b5e-8be2-d9fcaea6f853"
+          },
+          {
+            "id": "3c2c409b-0bb6-476d-b52a-38935f812432",
+            "owner": "dde8f23f-6da3-451c-a2ed-7bd1eb5f8ec7",
+            "conversation": "1b67934c-f141-4721-b897-61ef2c962efb",
+            "status": "completed",
+            "key": "f02bb007-5a3a-41dc-af61-ea1c9be258b8"
+          },
+          {
+            "id": "6bec1bcc-0c38-40e9-a6d7-c0322ef8c120",
+            "owner": "dde8f23f-6da3-451c-a2ed-7bd1eb5f8ec7",
+            "conversation": "f0426797-8c30-46e8-8a71-28170b7a43d6",
+            "status": "completed",
+            "key": "bee4f50f-4033-4cda-8e37-2b1edeea0c56"
+          }
+        ],
+        "messages": [
+          {
+            "id": "62806b96-b806-4979-a01a-3780466dfab2",
+            "conversation": "f0426797-8c30-46e8-8a71-28170b7a43d6",
+            "role": "user"
+          },
+          {
+            "id": "60c8a4b1-c0a6-4596-9fcb-fd8f11f241fd",
+            "conversation": "f0426797-8c30-46e8-8a71-28170b7a43d6",
+            "role": "assistant"
+          },
+          {
+            "id": "2146e923-ca62-4e86-a8bb-e450cd627cb8",
+            "conversation": "f0426797-8c30-46e8-8a71-28170b7a43d6",
+            "role": "user"
+          },
+          {
+            "id": "ee35a3c7-5e71-402f-9814-ae032356c946",
+            "conversation": "f0426797-8c30-46e8-8a71-28170b7a43d6",
+            "role": "assistant"
+          },
+          {
+            "id": "b9baccd2-9c0b-4e7e-9b55-f2f034594a03",
+            "conversation": "1b67934c-f141-4721-b897-61ef2c962efb",
+            "role": "user"
+          },
+          {
+            "id": "73421403-6bda-448a-9e6f-d2f8655e6f8c",
+            "conversation": "1b67934c-f141-4721-b897-61ef2c962efb",
+            "role": "assistant"
+          }
+        ],
+        "memories": 1
+      },
+      "memory": {
+        "memories": 1,
+        "receipts": 2,
+        "records": [
+          {
+            "id": "478ddd96-6e54-4c24-a692-1d079758a30c",
+            "owner": "dde8f23f-6da3-451c-a2ed-7bd1eb5f8ec7",
+            "person": "ee0e63ff-08fd-4699-b140-425830660c02",
+            "relationship": "e76ba17f-2771-4e97-acb2-bca646e20e84"
+          }
+        ],
+        "mutations": [
+          {
+            "id": "e8dbcc57-5c3b-4632-8be2-e562de9f9700",
+            "owner": "dde8f23f-6da3-451c-a2ed-7bd1eb5f8ec7",
+            "key": "memory-49b1e048-78e3-4dc0-97b3-dca132396605",
+            "action": "undo",
+            "status": "undone",
+            "affected": 1,
+            "target": "6f82644c-48d4-432b-9f9f-0614bb4ef7d2"
+          },
+          {
+            "id": "8d6f112a-02fb-4b4f-b7d6-b94f8c929f6b",
+            "owner": "dde8f23f-6da3-451c-a2ed-7bd1eb5f8ec7",
+            "key": "memory-394abc11-ca0c-4ab8-a020-dcd112ba0811",
+            "action": "delete_one",
+            "status": "deleted",
+            "affected": 1,
+            "target": "a142c77c-beda-4905-afd9-e622fcc98aca"
+          }
+        ],
+        "agent_messages": 6,
+        "relationship_messages": 3,
+        "recall_counts": [
+          0,
+          1,
+          0
+        ],
+        "calls": 21,
+        "controls": [
+          {
+            "owner": "dde8f23f-6da3-451c-a2ed-7bd1eb5f8ec7",
+            "consent_enabled": true,
+            "paused": false
+          }
+        ]
+      },
+      "import": {
+        "jobs": [
+          {
+            "id": "5f17d0b3-5271-4243-aac3-ca5faabd133c",
+            "status": "imported",
+            "revision": 3
+          }
+        ],
+        "messages": 3,
+        "agent_messages": 6,
+        "memories": 1,
+        "active_artifacts": 0
+      },
+      "resources": {
+        "persons": 2,
+        "relationships": 2,
+        "conversations": 2
+      },
+      "wire": {
+        "requests": [
+          {
+            "method": "POST",
+            "path": "/api/v1/persons",
+            "bearer": true,
+            "json": true,
+            "cursor": false,
+            "host_setup": true,
+            "verified_owner": "a",
+            "status": 201
+          },
+          {
+            "method": "POST",
+            "path": "/api/v1/relationships",
+            "bearer": true,
+            "json": true,
+            "cursor": false,
+            "host_setup": true,
+            "verified_owner": "a",
+            "status": 201
+          },
+          {
+            "method": "POST",
+            "path": "/api/v1/conversations",
+            "bearer": true,
+            "json": true,
+            "cursor": false,
+            "host_setup": true,
+            "verified_owner": "a",
+            "status": 201
+          },
+          {
+            "method": "POST",
+            "path": "/api/v1/persons",
+            "bearer": true,
+            "json": true,
+            "cursor": false,
+            "host_setup": true,
+            "verified_owner": "a",
+            "status": 201
+          },
+          {
+            "method": "POST",
+            "path": "/api/v1/relationships",
+            "bearer": true,
+            "json": true,
+            "cursor": false,
+            "host_setup": true,
+            "verified_owner": "a",
+            "status": 201
+          },
+          {
+            "method": "POST",
+            "path": "/api/v1/conversations",
+            "bearer": true,
+            "json": true,
+            "cursor": false,
+            "host_setup": true,
+            "verified_owner": "a",
+            "status": 201
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/persons",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memory/control",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/relationships",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/persons",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memories",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memory/undo/preview",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "POST",
+            "path": "/api/v1/memory/consent",
+            "bearer": true,
+            "json": true,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memory/control",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "POST",
+            "path": "/api/v1/memory/resume",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memory/control",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "POST",
+            "path": "/api/v1/conversations/f0426797-8c30-46e8-8a71-28170b7a43d6/agent-runs",
+            "bearer": true,
+            "json": true,
+            "cursor": false,
+            "host_setup": true,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "POST",
+            "path": "/api/v1/conversations/f0426797-8c30-46e8-8a71-28170b7a43d6/agent-runs",
+            "bearer": true,
+            "json": true,
+            "cursor": false,
+            "host_setup": true,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "POST",
+            "path": "/api/v1/chat-imports",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": true,
+            "verified_owner": "a",
+            "status": 201
+          },
+          {
+            "method": "PUT",
+            "path": "/api/v1/chat-imports/5f17d0b3-5271-4243-aac3-ca5faabd133c/speakers",
+            "bearer": true,
+            "json": true,
+            "cursor": false,
+            "host_setup": true,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "PUT",
+            "path": "/api/v1/chat-imports/5f17d0b3-5271-4243-aac3-ca5faabd133c/speakers",
+            "bearer": true,
+            "json": true,
+            "cursor": false,
+            "host_setup": true,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "PUT",
+            "path": "/api/v1/chat-imports/5f17d0b3-5271-4243-aac3-ca5faabd133c/relationship",
+            "bearer": true,
+            "json": true,
+            "cursor": false,
+            "host_setup": true,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "POST",
+            "path": "/api/v1/chat-imports/5f17d0b3-5271-4243-aac3-ca5faabd133c/ready",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": true,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "POST",
+            "path": "/api/v1/chat-imports/5f17d0b3-5271-4243-aac3-ca5faabd133c/finalize",
+            "bearer": true,
+            "json": true,
+            "cursor": false,
+            "host_setup": true,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "POST",
+            "path": "/api/v1/conversations/1b67934c-f141-4721-b897-61ef2c962efb/agent-runs",
+            "bearer": true,
+            "json": true,
+            "cursor": false,
+            "host_setup": true,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memory/control",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memories",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memory/undo/preview",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "POST",
+            "path": "/api/v1/memory/pause",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memory/control",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "POST",
+            "path": "/api/v1/memory/resume",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memory/control",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "POST",
+            "path": "/api/v1/memory/consent",
+            "bearer": true,
+            "json": true,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memory/control",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "POST",
+            "path": "/api/v1/memory/consent",
+            "bearer": true,
+            "json": true,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memory/control",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "POST",
+            "path": "/api/v1/memory/resume",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memory/control",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memory/undo/preview",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "POST",
+            "path": "/api/v1/memory/undo",
+            "bearer": true,
+            "json": true,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memory/control",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memories",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memory/undo/preview",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memories",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": true,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memories/a142c77c-beda-4905-afd9-e622fcc98aca",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "POST",
+            "path": "/api/v1/memory/deletions/one/prepare",
+            "bearer": true,
+            "json": true,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "POST",
+            "path": "/api/v1/memory/deletions/e8a2872c-ca6d-46e6-adf6-9d6e314e31d5/execute",
+            "bearer": true,
+            "json": true,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memory/control",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memories",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memory/undo/preview",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          }
+        ],
+        "faults": []
+      }
+    }
+  },
+  {
+    "command": "evidence",
+    "status": "done"
+  },
+  {
+    "assert_db": "memory.memories",
+    "expected": 1,
+    "actual": 1,
+    "status": "PASS"
+  },
+  {
+    "command": "assert_db",
+    "status": "done"
+  },
+  {
+    "assert_db": "memory.receipts",
+    "expected": 2,
+    "actual": 2,
+    "status": "PASS"
+  },
+  {
+    "command": "assert_db",
+    "status": "done"
+  },
+  {
+    "assert_db": "memory.agent_messages",
+    "expected": 6,
+    "actual": 6,
+    "status": "PASS"
+  },
+  {
+    "command": "assert_db",
+    "status": "done"
+  },
+  {
+    "assert_db": "memory.relationship_messages",
+    "expected": 3,
+    "actual": 3,
+    "status": "PASS"
+  },
+  {
+    "command": "assert_db",
+    "status": "done"
+  },
+  {
+    "command": "tap",
+    "status": "done"
+  },
+  {
+    "command": "tap",
+    "status": "done"
+  },
+  {
+    "assert_ui": "\u5220\u9664\u540e\u64a4\u9500\u6388\u6743\uff1a\u5426",
+    "status": "PASS"
+  },
+  {
+    "command": "assert_ui",
+    "status": "done"
+  },
+  {
+    "command": "tap",
+    "status": "done"
+  },
+  {
+    "assert_ui": "Mutation \u72b6\u6001\uff1a\u6b63\u5f0f\u56de\u6267\u5df2\u786e\u8ba4",
+    "status": "PASS"
+  },
+  {
+    "command": "assert_ui",
+    "status": "done"
+  },
+  {
+    "command": "receipt_id",
+    "status": "done"
+  },
+  {
+    "command": "input",
+    "status": "done"
+  },
+  {
+    "command": "tap",
+    "status": "done"
+  },
+  {
+    "assert_ui": "Mutation ID\uff1a37859883-a028-4a4c-9bda-656dc4fe73a7",
+    "status": "PASS"
+  },
+  {
+    "command": "assert_ui",
+    "status": "done"
+  },
+  {
+    "command": "tap",
+    "status": "done"
+  },
+  {
+    "database": {
+      "agent": {
+        "calls": [
+          "SafetyResult",
+          "ScenarioResult",
+          "FactExtractionResult",
+          "AnalysisResult",
+          "ActionPlan",
+          "ResponseResult",
+          "MemoryCandidateBatch",
+          "SafetyResult",
+          "ScenarioResult",
+          "FactExtractionResult",
+          "AnalysisResult",
+          "ActionPlan",
+          "ResponseResult",
+          "MemoryCandidateBatch",
+          "SafetyResult",
+          "ScenarioResult",
+          "FactExtractionResult",
+          "AnalysisResult",
+          "ActionPlan",
+          "ResponseResult",
+          "MemoryCandidateBatch"
+        ],
+        "runs": [
+          {
+            "id": "21188b4e-fb25-4454-be9e-a9bda7454ab6",
+            "owner": "dde8f23f-6da3-451c-a2ed-7bd1eb5f8ec7",
+            "conversation": "f0426797-8c30-46e8-8a71-28170b7a43d6",
+            "status": "completed",
+            "key": "945219db-3bc1-4b5e-8be2-d9fcaea6f853"
+          },
+          {
+            "id": "3c2c409b-0bb6-476d-b52a-38935f812432",
+            "owner": "dde8f23f-6da3-451c-a2ed-7bd1eb5f8ec7",
+            "conversation": "1b67934c-f141-4721-b897-61ef2c962efb",
+            "status": "completed",
+            "key": "f02bb007-5a3a-41dc-af61-ea1c9be258b8"
+          },
+          {
+            "id": "6bec1bcc-0c38-40e9-a6d7-c0322ef8c120",
+            "owner": "dde8f23f-6da3-451c-a2ed-7bd1eb5f8ec7",
+            "conversation": "f0426797-8c30-46e8-8a71-28170b7a43d6",
+            "status": "completed",
+            "key": "bee4f50f-4033-4cda-8e37-2b1edeea0c56"
+          }
+        ],
+        "messages": [
+          {
+            "id": "62806b96-b806-4979-a01a-3780466dfab2",
+            "conversation": "f0426797-8c30-46e8-8a71-28170b7a43d6",
+            "role": "user"
+          },
+          {
+            "id": "60c8a4b1-c0a6-4596-9fcb-fd8f11f241fd",
+            "conversation": "f0426797-8c30-46e8-8a71-28170b7a43d6",
+            "role": "assistant"
+          },
+          {
+            "id": "2146e923-ca62-4e86-a8bb-e450cd627cb8",
+            "conversation": "f0426797-8c30-46e8-8a71-28170b7a43d6",
+            "role": "user"
+          },
+          {
+            "id": "ee35a3c7-5e71-402f-9814-ae032356c946",
+            "conversation": "f0426797-8c30-46e8-8a71-28170b7a43d6",
+            "role": "assistant"
+          },
+          {
+            "id": "b9baccd2-9c0b-4e7e-9b55-f2f034594a03",
+            "conversation": "1b67934c-f141-4721-b897-61ef2c962efb",
+            "role": "user"
+          },
+          {
+            "id": "73421403-6bda-448a-9e6f-d2f8655e6f8c",
+            "conversation": "1b67934c-f141-4721-b897-61ef2c962efb",
+            "role": "assistant"
+          }
+        ],
+        "memories": 0
+      },
+      "memory": {
+        "memories": 0,
+        "receipts": 3,
+        "records": [],
+        "mutations": [
+          {
+            "id": "e8dbcc57-5c3b-4632-8be2-e562de9f9700",
+            "owner": "dde8f23f-6da3-451c-a2ed-7bd1eb5f8ec7",
+            "key": "memory-49b1e048-78e3-4dc0-97b3-dca132396605",
+            "action": "undo",
+            "status": "undone",
+            "affected": 1,
+            "target": "6f82644c-48d4-432b-9f9f-0614bb4ef7d2"
+          },
+          {
+            "id": "8d6f112a-02fb-4b4f-b7d6-b94f8c929f6b",
+            "owner": "dde8f23f-6da3-451c-a2ed-7bd1eb5f8ec7",
+            "key": "memory-394abc11-ca0c-4ab8-a020-dcd112ba0811",
+            "action": "delete_one",
+            "status": "deleted",
+            "affected": 1,
+            "target": "a142c77c-beda-4905-afd9-e622fcc98aca"
+          },
+          {
+            "id": "37859883-a028-4a4c-9bda-656dc4fe73a7",
+            "owner": "dde8f23f-6da3-451c-a2ed-7bd1eb5f8ec7",
+            "key": "memory-992f463b-2d40-4527-81a9-5484bc2ac73c",
+            "action": "delete_all",
+            "status": "deleted",
+            "affected": 1,
+            "target": "None"
+          }
+        ],
+        "agent_messages": 6,
+        "relationship_messages": 3,
+        "recall_counts": [
+          0,
+          1,
+          0
+        ],
+        "calls": 21,
+        "controls": [
+          {
+            "owner": "dde8f23f-6da3-451c-a2ed-7bd1eb5f8ec7",
+            "consent_enabled": true,
+            "paused": false
+          }
+        ]
+      },
+      "import": {
+        "jobs": [
+          {
+            "id": "5f17d0b3-5271-4243-aac3-ca5faabd133c",
+            "status": "imported",
+            "revision": 3
+          }
+        ],
+        "messages": 3,
+        "agent_messages": 6,
+        "memories": 0,
+        "active_artifacts": 0
+      },
+      "resources": {
+        "persons": 2,
+        "relationships": 2,
+        "conversations": 2
+      },
+      "wire": {
+        "requests": [
+          {
+            "method": "POST",
+            "path": "/api/v1/persons",
+            "bearer": true,
+            "json": true,
+            "cursor": false,
+            "host_setup": true,
+            "verified_owner": "a",
+            "status": 201
+          },
+          {
+            "method": "POST",
+            "path": "/api/v1/relationships",
+            "bearer": true,
+            "json": true,
+            "cursor": false,
+            "host_setup": true,
+            "verified_owner": "a",
+            "status": 201
+          },
+          {
+            "method": "POST",
+            "path": "/api/v1/conversations",
+            "bearer": true,
+            "json": true,
+            "cursor": false,
+            "host_setup": true,
+            "verified_owner": "a",
+            "status": 201
+          },
+          {
+            "method": "POST",
+            "path": "/api/v1/persons",
+            "bearer": true,
+            "json": true,
+            "cursor": false,
+            "host_setup": true,
+            "verified_owner": "a",
+            "status": 201
+          },
+          {
+            "method": "POST",
+            "path": "/api/v1/relationships",
+            "bearer": true,
+            "json": true,
+            "cursor": false,
+            "host_setup": true,
+            "verified_owner": "a",
+            "status": 201
+          },
+          {
+            "method": "POST",
+            "path": "/api/v1/conversations",
+            "bearer": true,
+            "json": true,
+            "cursor": false,
+            "host_setup": true,
+            "verified_owner": "a",
+            "status": 201
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/persons",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memory/control",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/relationships",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/persons",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memories",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memory/undo/preview",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "POST",
+            "path": "/api/v1/memory/consent",
+            "bearer": true,
+            "json": true,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memory/control",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "POST",
+            "path": "/api/v1/memory/resume",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memory/control",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "POST",
+            "path": "/api/v1/conversations/f0426797-8c30-46e8-8a71-28170b7a43d6/agent-runs",
+            "bearer": true,
+            "json": true,
+            "cursor": false,
+            "host_setup": true,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "POST",
+            "path": "/api/v1/conversations/f0426797-8c30-46e8-8a71-28170b7a43d6/agent-runs",
+            "bearer": true,
+            "json": true,
+            "cursor": false,
+            "host_setup": true,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "POST",
+            "path": "/api/v1/chat-imports",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": true,
+            "verified_owner": "a",
+            "status": 201
+          },
+          {
+            "method": "PUT",
+            "path": "/api/v1/chat-imports/5f17d0b3-5271-4243-aac3-ca5faabd133c/speakers",
+            "bearer": true,
+            "json": true,
+            "cursor": false,
+            "host_setup": true,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "PUT",
+            "path": "/api/v1/chat-imports/5f17d0b3-5271-4243-aac3-ca5faabd133c/speakers",
+            "bearer": true,
+            "json": true,
+            "cursor": false,
+            "host_setup": true,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "PUT",
+            "path": "/api/v1/chat-imports/5f17d0b3-5271-4243-aac3-ca5faabd133c/relationship",
+            "bearer": true,
+            "json": true,
+            "cursor": false,
+            "host_setup": true,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "POST",
+            "path": "/api/v1/chat-imports/5f17d0b3-5271-4243-aac3-ca5faabd133c/ready",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": true,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "POST",
+            "path": "/api/v1/chat-imports/5f17d0b3-5271-4243-aac3-ca5faabd133c/finalize",
+            "bearer": true,
+            "json": true,
+            "cursor": false,
+            "host_setup": true,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "POST",
+            "path": "/api/v1/conversations/1b67934c-f141-4721-b897-61ef2c962efb/agent-runs",
+            "bearer": true,
+            "json": true,
+            "cursor": false,
+            "host_setup": true,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memory/control",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memories",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memory/undo/preview",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "POST",
+            "path": "/api/v1/memory/pause",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memory/control",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "POST",
+            "path": "/api/v1/memory/resume",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memory/control",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "POST",
+            "path": "/api/v1/memory/consent",
+            "bearer": true,
+            "json": true,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memory/control",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "POST",
+            "path": "/api/v1/memory/consent",
+            "bearer": true,
+            "json": true,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memory/control",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "POST",
+            "path": "/api/v1/memory/resume",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memory/control",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memory/undo/preview",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "POST",
+            "path": "/api/v1/memory/undo",
+            "bearer": true,
+            "json": true,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memory/control",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memories",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memory/undo/preview",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memories",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": true,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memories/a142c77c-beda-4905-afd9-e622fcc98aca",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "POST",
+            "path": "/api/v1/memory/deletions/one/prepare",
+            "bearer": true,
+            "json": true,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "POST",
+            "path": "/api/v1/memory/deletions/e8a2872c-ca6d-46e6-adf6-9d6e314e31d5/execute",
+            "bearer": true,
+            "json": true,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memory/control",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memories",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memory/undo/preview",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "POST",
+            "path": "/api/v1/memory/deletions/all/prepare",
+            "bearer": true,
+            "json": true,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "POST",
+            "path": "/api/v1/memory/deletions/504a9a82-bac5-4da8-9df9-7facf9dfc970/execute",
+            "bearer": true,
+            "json": true,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memory/control",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memories",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memory/undo/preview",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memory/mutations/37859883-a028-4a4c-9bda-656dc4fe73a7",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memory/control",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memories",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memory/undo/preview",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          }
+        ],
+        "faults": []
+      }
+    }
+  },
+  {
+    "command": "evidence",
+    "status": "done"
+  },
+  {
+    "assert_db": "memory.memories",
+    "expected": 0,
+    "actual": 0,
+    "status": "PASS"
+  },
+  {
+    "command": "assert_db",
+    "status": "done"
+  },
+  {
+    "assert_db": "memory.receipts",
+    "expected": 3,
+    "actual": 3,
+    "status": "PASS"
+  },
+  {
+    "command": "assert_db",
+    "status": "done"
+  },
+  {
+    "assert_db": "memory.controls.0.consent_enabled",
+    "expected": true,
+    "actual": true,
+    "status": "PASS"
+  },
+  {
+    "command": "assert_db",
+    "status": "done"
+  },
+  {
+    "assert_db": "memory.controls.0.paused",
+    "expected": false,
+    "actual": false,
+    "status": "PASS"
+  },
+  {
+    "command": "assert_db",
+    "status": "done"
+  },
+  {
+    "assert_db": "memory.agent_messages",
+    "expected": 6,
+    "actual": 6,
+    "status": "PASS"
+  },
+  {
+    "command": "assert_db",
+    "status": "done"
+  },
+  {
+    "assert_db": "memory.relationship_messages",
+    "expected": 3,
+    "actual": 3,
+    "status": "PASS"
+  },
+  {
+    "command": "assert_db",
+    "status": "done"
+  },
+  {
+    "command": "tap",
+    "status": "done"
+  }
+]

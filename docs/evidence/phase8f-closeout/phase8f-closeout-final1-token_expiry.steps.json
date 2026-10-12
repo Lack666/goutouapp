@@ -1,0 +1,18 @@
+[
+  "restart",
+  "open settings",
+  "tap [\"\u6e05\u9664\u5f53\u524d\u5f00\u53d1\u4f1a\u8bdd\",\"down\"]",
+  "case 8F-TOKEN-EXPIRY",
+  "login expired",
+  "assert_ui \"\u5f00\u53d1\u51ed\u8bc1\u5df2\u8fc7\u671f\"",
+  "assert_absent [\"\u5f00\u53d1\u4f1a\u8bdd\u5df2\u8fde\u63a5\",\"Confirmation ID\uff1a\"]",
+  "state",
+  "evidence",
+  "assert_db [\"agent.runs.length\",0]",
+  "assert_db [\"memory.memories\",0]",
+  "tap [\"\u6e05\u9664\u5f53\u524d\u5f00\u53d1\u4f1a\u8bdd\",\"down\"]",
+  "restart",
+  "assert_ui \"\u672a\u8fde\u63a5\uff1a\u6ca1\u6709\u5f00\u53d1\u51ed\u8bc1\"",
+  "state",
+  "stop"
+]

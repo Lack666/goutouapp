@@ -1,0 +1,892 @@
+[
+  {
+    "execution": {
+      "steps_file": "F:\\\u72d7\u5934\u519b\u5e08app\u5316\\goutouapp\\.cache\\phase8f-closeout-final2-import_history_lifecycle.steps.json",
+      "steps": [
+        "restart",
+        "open settings",
+        "tap [\"\u6e05\u9664\u5f53\u524d\u5f00\u53d1\u4f1a\u8bdd\",\"down\"]",
+        "case 8F-IMPORT-HISTORY-LIFECYCLE",
+        "seed LifecycleScope",
+        "history_setup [301,\"Lifecycle\"]",
+        "bookmark a",
+        "login a",
+        "route [\"history\",\"a\"]",
+        "assert_ui \"\u8303\u56f4\uff1a{relationship} \u00b7 \u5df2\u8bfb\u53d6 100 \u6761\"",
+        "tap [\"\u52a0\u8f7d\u66f4\u591a\u670d\u52a1\u5668\u5386\u53f2\"]",
+        "assert_ui \"\u8303\u56f4\uff1a{relationship} \u00b7 \u5df2\u8bfb\u53d6 200 \u6761\"",
+        "state",
+        "home",
+        "route [\"history\",\"a\"]",
+        "assert_ui \"\u8303\u56f4\uff1a{relationship} \u00b7 \u5df2\u8bfb\u53d6 100 \u6761\"",
+        "back",
+        "open settings",
+        "assert_ui \"\u5f00\u53d1\u4f1a\u8bdd\u5df2\u8fde\u63a5\"",
+        "tap [\"\u6e05\u9664\u5f53\u524d\u5f00\u53d1\u4f1a\u8bdd\",\"down\"]",
+        "open history",
+        "assert_ui \"\u5df2\u8bfb\u53d6 0 \u6761\"",
+        "assert_absent [\"Synthetic Lifecycle history occurrence.\",\"LifecycleScope\"]",
+        "state",
+        "evidence",
+        "assert_db [\"import.messages\",301]",
+        "assert_db [\"import.active_artifacts\",0]",
+        "assert_db [\"agent.messages.length\",0]",
+        "assert_db [\"memory.memories\",0]",
+        "stop"
+      ],
+      "helper_sha256": "0596da9edd05897bd245f4af5cc136aa3dde177dcf593cb5174ff9cfa4caf8b7",
+      "device": "emulator-5554"
+    }
+  },
+  {
+    "command": "restart",
+    "status": "done"
+  },
+  {
+    "command": "open",
+    "status": "done"
+  },
+  {
+    "command": "tap",
+    "status": "done"
+  },
+  {
+    "case": "8F-IMPORT-HISTORY-LIFECYCLE"
+  },
+  {
+    "command": "case",
+    "status": "done"
+  },
+  {
+    "command": "seed",
+    "status": "done"
+  },
+  {
+    "history_setup": {
+      "transport": "host REST preconditions",
+      "count": 301,
+      "relationship": "e11c6fee-04c6-4819-84b3-34d60316e286",
+      "job": "3cab4339-fcac-4527-9f9d-525e95bd3d8e",
+      "receipt_status": "imported"
+    }
+  },
+  {
+    "command": "history_setup",
+    "status": "done"
+  },
+  {
+    "command": "bookmark",
+    "status": "done"
+  },
+  {
+    "command": "login",
+    "status": "done"
+  },
+  {
+    "command": "route",
+    "status": "done"
+  },
+  {
+    "assert_ui": "\u8303\u56f4\uff1ae11c6fee-04c6-4819-84b3-34d60316e286 \u00b7 \u5df2\u8bfb\u53d6 100 \u6761",
+    "status": "PASS"
+  },
+  {
+    "command": "assert_ui",
+    "status": "done"
+  },
+  {
+    "command": "tap",
+    "status": "done"
+  },
+  {
+    "assert_ui": "\u8303\u56f4\uff1ae11c6fee-04c6-4819-84b3-34d60316e286 \u00b7 \u5df2\u8bfb\u53d6 200 \u6761",
+    "status": "PASS"
+  },
+  {
+    "command": "assert_ui",
+    "status": "done"
+  },
+  {
+    "ui_state": [
+      {
+        "text": "",
+        "label": "Tools",
+        "bounds": "[937,219][1005,287]",
+        "enabled": "true"
+      },
+      {
+        "text": "",
+        "label": "\u5386\u53f2\u6d88\u606f\u5217\u8868",
+        "bounds": "[0,142][1080,1827]",
+        "enabled": "true"
+      },
+      {
+        "text": "\u5386\u53f2\u7c7b\u578b",
+        "label": "",
+        "bounds": "[107,142][973,152]",
+        "enabled": "true"
+      },
+      {
+        "text": "",
+        "label": "\u5173\u7cfb\u804a\u5929",
+        "bounds": "[108,184][972,315]",
+        "enabled": "true"
+      },
+      {
+        "text": "\u5173\u7cfb\u804a\u5929",
+        "label": "",
+        "bounds": "[152,218][928,281]",
+        "enabled": "true"
+      },
+      {
+        "text": "",
+        "label": "AI \u5bf9\u8bdd",
+        "bounds": "[108,347][972,478]",
+        "enabled": "true"
+      },
+      {
+        "text": "AI \u5bf9\u8bdd",
+        "label": "",
+        "bounds": "[152,381][928,444]",
+        "enabled": "true"
+      },
+      {
+        "text": "AI \u5bf9\u8bdd\u662f Conversation user/assistant\uff1b\u5173\u7cfb\u804a\u5929\u662f\u5bfc\u5165\u7684 self/person/system\uff0c\u4e24\u8005\u5206\u522b\u8bfb\u53d6\u3002",
+        "label": "",
+        "bounds": "[107,509][973,707]",
+        "enabled": "true"
+      },
+      {
+        "text": "\u5173\u7cfb\u8303\u56f4 \u00b7 \u670d\u52a1\u5668\u8d44\u6e90",
+        "label": "",
+        "bounds": "[107,838][973,915]",
+        "enabled": "true"
+      },
+      {
+        "text": "LifecycleScope",
+        "label": "",
+        "bounds": "[107,947][973,1013]",
+        "enabled": "true"
+      },
+      {
+        "text": "",
+        "label": "\u9009\u62e9LifecycleScope \u00b7 e11c6fee-04c6-4819-84b3-34d60316e286",
+        "bounds": "[108,1045][972,1239]",
+        "enabled": "true"
+      },
+      {
+        "text": "\u9009\u62e9LifecycleScope \u00b7 e11c6fee-04c6-4819-84b3-34d60316e286",
+        "label": "",
+        "bounds": "[152,1079][928,1205]",
+        "enabled": "true"
+      },
+      {
+        "text": "\u670d\u52a1\u5668\u5386\u53f2\u72b6\u6001",
+        "label": "",
+        "bounds": "[107,1370][973,1447]",
+        "enabled": "true"
+      },
+      {
+        "text": "\u8303\u56f4\uff1ae11c6fee-04c6-4819-84b3-34d60316e286 \u00b7 \u5df2\u8bfb\u53d6 200 \u6761",
+        "label": "",
+        "bounds": "[107,1479][973,1677]",
+        "enabled": "true"
+      },
+      {
+        "text": "ready",
+        "label": "",
+        "bounds": "[107,1708][973,1774]",
+        "enabled": "true"
+      },
+      {
+        "text": "",
+        "label": "\u5237\u65b0\u670d\u52a1\u5668\u5386\u53f2",
+        "bounds": "[108,1806][972,1827]",
+        "enabled": "true"
+      },
+      {
+        "text": "\u5237\u65b0\u670d\u52a1\u5668\u5386\u53f2",
+        "label": "",
+        "bounds": "[152,1840][928,1827]",
+        "enabled": "true"
+      },
+      {
+        "text": "\u65f6\u95f4\u6765\u81ea\u5386\u53f2\u8bb0\u5f55\u3002\u539f\u59cb\u804a\u5929\u65f6\u95f4\u53ca\u6e90\u65f6\u533a\u5355\u72ec\u663e\u793a\uff1b\u5bfc\u5165\u5b8c\u6210\u65f6\u95f4\u4e0d\u4f5c\u4e3a\u804a\u5929\u65e5\u671f\u3002\u9875\u9762\u4e3a\u5b9e\u65f6\u5206\u9875\u89c6\u56fe\uff0c\u65b0\u5bfc\u5165\u540e\u8bf7\u5237\u65b0\u3002",
+        "label": "",
+        "bounds": "[107,1968][973,1827]",
+        "enabled": "true"
+      },
+      {
+        "text": "",
+        "label": "\u8fdb\u5165\u771f\u5b9e\u5bfc\u5165",
+        "bounds": "[108,2198][972,1827]",
+        "enabled": "true"
+      },
+      {
+        "text": "\u8fdb\u5165\u771f\u5b9e\u5bfc\u5165",
+        "label": "",
+        "bounds": "[152,2232][928,1827]",
+        "enabled": "true"
+      },
+      {
+        "text": "",
+        "label": "\u7ba1\u7406\u771f\u5b9e\u8d44\u6e90",
+        "bounds": "[108,2361][972,1827]",
+        "enabled": "true"
+      },
+      {
+        "text": "\u7ba1\u7406\u771f\u5b9e\u8d44\u6e90",
+        "label": "",
+        "bounds": "[152,2395][928,1827]",
+        "enabled": "true"
+      },
+      {
+        "text": "\u6709\u754c\u5206\u9875",
+        "label": "",
+        "bounds": "[107,1892][973,1969]",
+        "enabled": "true"
+      },
+      {
+        "text": "",
+        "label": "\u52a0\u8f7d\u66f4\u591a\u670d\u52a1\u5668\u5386\u53f2",
+        "bounds": "[108,2001][972,2132]",
+        "enabled": "true"
+      },
+      {
+        "text": "\u52a0\u8f7d\u66f4\u591a\u670d\u52a1\u5668\u5386\u53f2",
+        "label": "",
+        "bounds": "[152,2035][928,2098]",
+        "enabled": "true"
+      },
+      {
+        "text": "\u6bcf\u6b21\u6700\u591a 100 \u6761\uff0c\u6309\u6b63\u5f0f Message ID \u5408\u5e76\uff1b\u540c\u65f6\u95f4\u6216\u540c\u5185\u5bb9\u7684\u4e0d\u540c\u6d88\u606f\u5168\u90e8\u4fdd\u7559\u3002",
+        "label": "",
+        "bounds": "[107,2163][973,2295]",
+        "enabled": "true"
+      }
+    ]
+  },
+  {
+    "command": "home",
+    "status": "done"
+  },
+  {
+    "command": "route",
+    "status": "done"
+  },
+  {
+    "assert_ui": "\u8303\u56f4\uff1ae11c6fee-04c6-4819-84b3-34d60316e286 \u00b7 \u5df2\u8bfb\u53d6 100 \u6761",
+    "status": "PASS"
+  },
+  {
+    "command": "assert_ui",
+    "status": "done"
+  },
+  {
+    "command": "back",
+    "status": "done"
+  },
+  {
+    "command": "open",
+    "status": "done"
+  },
+  {
+    "assert_ui": "\u5f00\u53d1\u4f1a\u8bdd\u5df2\u8fde\u63a5",
+    "status": "PASS"
+  },
+  {
+    "command": "assert_ui",
+    "status": "done"
+  },
+  {
+    "command": "tap",
+    "status": "done"
+  },
+  {
+    "command": "open",
+    "status": "done"
+  },
+  {
+    "assert_ui": "\u8303\u56f4\uff1a\u672a\u9009\u62e9\u6216\u4e0d\u53ef\u7528 \u00b7 \u5df2\u8bfb\u53d6 0 \u6761",
+    "status": "PASS"
+  },
+  {
+    "command": "assert_ui",
+    "status": "done"
+  },
+  {
+    "assert_absent": [
+      "Synthetic Lifecycle history occurrence.",
+      "LifecycleScope"
+    ],
+    "status": "PASS"
+  },
+  {
+    "command": "assert_absent",
+    "status": "done"
+  },
+  {
+    "ui_state": [
+      {
+        "text": "",
+        "label": "Tools",
+        "bounds": "[937,219][1005,287]",
+        "enabled": "true"
+      },
+      {
+        "text": "",
+        "label": "\u5386\u53f2\u6d88\u606f\u5217\u8868",
+        "bounds": "[0,142][1080,1827]",
+        "enabled": "true"
+      },
+      {
+        "text": "\u8bbe\u5907\u51ed\u8bc1\u4f7f\u7528\u7cfb\u7edf\u5b89\u5168\u5b58\u50a8\uff1b\u6062\u590d\u65f6\u91cd\u65b0\u9a8c\u8bc1\u3002",
+        "label": "",
+        "bounds": "[107,142][973,102]",
+        "enabled": "true"
+      },
+      {
+        "text": "",
+        "label": "\u6e05\u9664\u5f53\u524d\u5f00\u53d1\u4f1a\u8bdd",
+        "bounds": "[108,142][972,265]",
+        "enabled": "true"
+      },
+      {
+        "text": "\u6e05\u9664\u5f53\u524d\u5f00\u53d1\u4f1a\u8bdd",
+        "label": "",
+        "bounds": "[152,168][928,231]",
+        "enabled": "true"
+      },
+      {
+        "text": "\u5386\u53f2\u7c7b\u578b",
+        "label": "",
+        "bounds": "[107,396][973,473]",
+        "enabled": "true"
+      },
+      {
+        "text": "",
+        "label": "\u5173\u7cfb\u804a\u5929",
+        "bounds": "[108,505][972,636]",
+        "enabled": "true"
+      },
+      {
+        "text": "\u5173\u7cfb\u804a\u5929",
+        "label": "",
+        "bounds": "[152,539][928,602]",
+        "enabled": "true"
+      },
+      {
+        "text": "",
+        "label": "AI \u5bf9\u8bdd",
+        "bounds": "[108,668][972,799]",
+        "enabled": "true"
+      },
+      {
+        "text": "AI \u5bf9\u8bdd",
+        "label": "",
+        "bounds": "[152,702][928,765]",
+        "enabled": "true"
+      },
+      {
+        "text": "AI \u5bf9\u8bdd\u662f Conversation user/assistant\uff1b\u5173\u7cfb\u804a\u5929\u662f\u5bfc\u5165\u7684 self/person/system\uff0c\u4e24\u8005\u5206\u522b\u8bfb\u53d6\u3002",
+        "label": "",
+        "bounds": "[107,830][973,1028]",
+        "enabled": "true"
+      },
+      {
+        "text": "\u5173\u7cfb\u8303\u56f4 \u00b7 \u670d\u52a1\u5668\u8d44\u6e90",
+        "label": "",
+        "bounds": "[107,1159][973,1236]",
+        "enabled": "true"
+      },
+      {
+        "text": "\u5c1a\u672a\u9009\u62e9\u5173\u7cfb",
+        "label": "",
+        "bounds": "[107,1268][973,1334]",
+        "enabled": "true"
+      },
+      {
+        "text": "\u670d\u52a1\u5668\u5386\u53f2\u72b6\u6001",
+        "label": "",
+        "bounds": "[107,1496][973,1573]",
+        "enabled": "true"
+      },
+      {
+        "text": "\u8303\u56f4\uff1a\u672a\u9009\u62e9\u6216\u4e0d\u53ef\u7528 \u00b7 \u5df2\u8bfb\u53d6 0 \u6761",
+        "label": "",
+        "bounds": "[107,1605][973,1671]",
+        "enabled": "true"
+      },
+      {
+        "text": "idle",
+        "label": "",
+        "bounds": "[107,1702][973,1768]",
+        "enabled": "true"
+      },
+      {
+        "text": "",
+        "label": "\u5237\u65b0\u670d\u52a1\u5668\u5386\u53f2",
+        "bounds": "[108,1800][972,1827]",
+        "enabled": "false"
+      },
+      {
+        "text": "\u5237\u65b0\u670d\u52a1\u5668\u5386\u53f2",
+        "label": "",
+        "bounds": "[152,1834][928,1827]",
+        "enabled": "true"
+      },
+      {
+        "text": "\u65f6\u95f4\u6765\u81ea\u5386\u53f2\u8bb0\u5f55\u3002\u539f\u59cb\u804a\u5929\u65f6\u95f4\u53ca\u6e90\u65f6\u533a\u5355\u72ec\u663e\u793a\uff1b\u5bfc\u5165\u5b8c\u6210\u65f6\u95f4\u4e0d\u4f5c\u4e3a\u804a\u5929\u65e5\u671f\u3002\u9875\u9762\u4e3a\u5b9e\u65f6\u5206\u9875\u89c6\u56fe\uff0c\u65b0\u5bfc\u5165\u540e\u8bf7\u5237\u65b0\u3002",
+        "label": "",
+        "bounds": "[107,1962][973,1827]",
+        "enabled": "true"
+      },
+      {
+        "text": "",
+        "label": "\u8fdb\u5165\u771f\u5b9e\u5bfc\u5165",
+        "bounds": "[108,2192][972,1827]",
+        "enabled": "true"
+      },
+      {
+        "text": "\u8fdb\u5165\u771f\u5b9e\u5bfc\u5165",
+        "label": "",
+        "bounds": "[152,2226][928,1827]",
+        "enabled": "true"
+      },
+      {
+        "text": "",
+        "label": "\u7ba1\u7406\u771f\u5b9e\u8d44\u6e90",
+        "bounds": "[108,2355][972,1827]",
+        "enabled": "true"
+      },
+      {
+        "text": "\u7ba1\u7406\u771f\u5b9e\u8d44\u6e90",
+        "label": "",
+        "bounds": "[152,2389][928,1827]",
+        "enabled": "true"
+      },
+      {
+        "text": "\u6709\u754c\u5206\u9875",
+        "label": "",
+        "bounds": "[107,1892][973,1969]",
+        "enabled": "true"
+      },
+      {
+        "text": "",
+        "label": "\u52a0\u8f7d\u66f4\u591a\u670d\u52a1\u5668\u5386\u53f2",
+        "bounds": "[108,2001][972,2132]",
+        "enabled": "false"
+      },
+      {
+        "text": "\u52a0\u8f7d\u66f4\u591a\u670d\u52a1\u5668\u5386\u53f2",
+        "label": "",
+        "bounds": "[152,2035][928,2098]",
+        "enabled": "true"
+      },
+      {
+        "text": "\u6bcf\u6b21\u6700\u591a 100 \u6761\uff0c\u6309\u6b63\u5f0f Message ID \u5408\u5e76\uff1b\u540c\u65f6\u95f4\u6216\u540c\u5185\u5bb9\u7684\u4e0d\u540c\u6d88\u606f\u5168\u90e8\u4fdd\u7559\u3002",
+        "label": "",
+        "bounds": "[107,2163][973,2295]",
+        "enabled": "true"
+      }
+    ]
+  },
+  {
+    "database": {
+      "agent": {
+        "calls": [],
+        "runs": [],
+        "messages": [],
+        "memories": 0
+      },
+      "memory": {
+        "memories": 0,
+        "receipts": 0,
+        "records": [],
+        "mutations": [],
+        "agent_messages": 0,
+        "relationship_messages": 301,
+        "recall_counts": [],
+        "calls": 0,
+        "controls": []
+      },
+      "import": {
+        "jobs": [
+          {
+            "id": "3cab4339-fcac-4527-9f9d-525e95bd3d8e",
+            "status": "imported",
+            "revision": 3
+          }
+        ],
+        "messages": 301,
+        "agent_messages": 0,
+        "memories": 0,
+        "active_artifacts": 0
+      },
+      "resources": {
+        "persons": 1,
+        "relationships": 1,
+        "conversations": 1
+      },
+      "wire": {
+        "requests": [
+          {
+            "method": "GET",
+            "path": "/api/v1/persons",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "invalid",
+            "status": 401
+          },
+          {
+            "method": "POST",
+            "path": "/api/v1/persons",
+            "bearer": true,
+            "json": true,
+            "cursor": false,
+            "host_setup": true,
+            "verified_owner": "a",
+            "status": 201
+          },
+          {
+            "method": "POST",
+            "path": "/api/v1/relationships",
+            "bearer": true,
+            "json": true,
+            "cursor": false,
+            "host_setup": true,
+            "verified_owner": "a",
+            "status": 201
+          },
+          {
+            "method": "POST",
+            "path": "/api/v1/conversations",
+            "bearer": true,
+            "json": true,
+            "cursor": false,
+            "host_setup": true,
+            "verified_owner": "a",
+            "status": 201
+          },
+          {
+            "method": "POST",
+            "path": "/api/v1/chat-imports",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": true,
+            "verified_owner": "a",
+            "status": 201
+          },
+          {
+            "method": "PUT",
+            "path": "/api/v1/chat-imports/3cab4339-fcac-4527-9f9d-525e95bd3d8e/speakers",
+            "bearer": true,
+            "json": true,
+            "cursor": false,
+            "host_setup": true,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "PUT",
+            "path": "/api/v1/chat-imports/3cab4339-fcac-4527-9f9d-525e95bd3d8e/speakers",
+            "bearer": true,
+            "json": true,
+            "cursor": false,
+            "host_setup": true,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "PUT",
+            "path": "/api/v1/chat-imports/3cab4339-fcac-4527-9f9d-525e95bd3d8e/relationship",
+            "bearer": true,
+            "json": true,
+            "cursor": false,
+            "host_setup": true,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "POST",
+            "path": "/api/v1/chat-imports/3cab4339-fcac-4527-9f9d-525e95bd3d8e/ready",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": true,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "POST",
+            "path": "/api/v1/chat-imports/3cab4339-fcac-4527-9f9d-525e95bd3d8e/finalize",
+            "bearer": true,
+            "json": true,
+            "cursor": false,
+            "host_setup": true,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/persons",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memory/control",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/relationships",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/persons",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memories",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memory/undo/preview",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/relationships/e11c6fee-04c6-4819-84b3-34d60316e286",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/conversations",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memory/control",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/relationships/e11c6fee-04c6-4819-84b3-34d60316e286/messages",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memories",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memory/undo/preview",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/relationships/e11c6fee-04c6-4819-84b3-34d60316e286/messages",
+            "bearer": true,
+            "json": false,
+            "cursor": true,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/relationships/e11c6fee-04c6-4819-84b3-34d60316e286",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memory/control",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/relationships/e11c6fee-04c6-4819-84b3-34d60316e286/messages",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memories",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memory/undo/preview",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memory/control",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memories",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memory/undo/preview",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          }
+        ],
+        "faults": []
+      }
+    }
+  },
+  {
+    "command": "evidence",
+    "status": "done"
+  },
+  {
+    "assert_db": "import.messages",
+    "expected": 301,
+    "actual": 301,
+    "status": "PASS"
+  },
+  {
+    "command": "assert_db",
+    "status": "done"
+  },
+  {
+    "assert_db": "import.active_artifacts",
+    "expected": 0,
+    "actual": 0,
+    "status": "PASS"
+  },
+  {
+    "command": "assert_db",
+    "status": "done"
+  },
+  {
+    "assert_db": "agent.messages.length",
+    "expected": 0,
+    "actual": 0,
+    "status": "PASS"
+  },
+  {
+    "command": "assert_db",
+    "status": "done"
+  },
+  {
+    "assert_db": "memory.memories",
+    "expected": 0,
+    "actual": 0,
+    "status": "PASS"
+  },
+  {
+    "command": "assert_db",
+    "status": "done"
+  }
+]

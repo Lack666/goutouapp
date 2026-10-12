@@ -1,0 +1,55 @@
+{"android_api": "37"}
+{"fixture": "ready", "baseURL": "http://127.0.0.1:8024", "commands": "state, tap [label,direction?], login a|b|expired, seed, evidence, stage, cleanup, back, home, stop"}
+{"command": "restart", "status": "done"}
+{"command": "open", "status": "done"}
+{"command": "tap", "status": "done"}
+{"case": "8F-RESOURCE-CREATE"}
+{"command": "case", "status": "done"}
+{"command": "login", "status": "done"}
+{"command": "open", "status": "done"}
+{"command": "input", "status": "done"}
+{"command": "tap", "status": "done"}
+{"assert_ui": "\u670d\u52a1\u5668\u5df2\u786e\u8ba4\u4fdd\u5b58 persons", "status": "PASS"}
+{"command": "assert_ui", "status": "done"}
+{"owned_resource_witness": {"person": "55af0609-718e-48f7-93d9-bb22b22c6902"}, "transport": "host GET only"}
+{"command": "adopt", "status": "done"}
+{"command": "tap", "status": "done"}
+{"assert_ui": "UUID\uff1a55af0609-718e-48f7-93d9-bb22b22c6902", "status": "PASS"}
+{"command": "assert_ui", "status": "done"}
+{"command": "tap", "status": "done"}
+{"command": "input", "status": "done"}
+{"command": "input", "status": "done"}
+{"command": "tap", "status": "done"}
+{"assert_ui": "\u670d\u52a1\u5668\u5df2\u786e\u8ba4\u4fdd\u5b58 relationships", "status": "PASS"}
+{"command": "assert_ui", "status": "done"}
+{"owned_resource_witness": {"person": "55af0609-718e-48f7-93d9-bb22b22c6902", "relationship": "e32d2d48-3492-4478-9c7c-4325bb6b2ab8"}, "transport": "host GET only"}
+{"command": "adopt", "status": "done"}
+{"command": "tap", "status": "done"}
+{"assert_ui": "UUID\uff1ae32d2d48-3492-4478-9c7c-4325bb6b2ab8", "status": "PASS"}
+{"command": "assert_ui", "status": "done"}
+{"assert_ui": "\u6240\u5c5e Person\uff1a8FNativeCreate \u00b7 55af0609-718e-48f7-93d9-bb22b22c6902", "status": "PASS"}
+{"command": "assert_ui", "status": "done"}
+{"command": "tap", "status": "done"}
+{"command": "tap", "status": "done"}
+{"assert_ui": "\u670d\u52a1\u5668\u5df2\u786e\u8ba4\u4fdd\u5b58 conversations", "status": "PASS"}
+{"command": "assert_ui", "status": "done"}
+{"owned_resource_witness": {"person": "55af0609-718e-48f7-93d9-bb22b22c6902", "relationship": "e32d2d48-3492-4478-9c7c-4325bb6b2ab8", "conversation": "8d60e305-803c-44e2-8041-46006e732c22"}, "transport": "host GET only"}
+{"command": "adopt", "status": "done"}
+{"command": "tap", "status": "done"}
+{"assert_ui": "UUID\uff1a8d60e305-803c-44e2-8041-46006e732c22", "status": "PASS"}
+{"command": "assert_ui", "status": "done"}
+{"assert_ui": "\u7ed1\u5b9a\u5173\u7cfb\uff1ae32d2d48-3492-4478-9c7c-4325bb6b2ab8", "status": "PASS"}
+{"command": "assert_ui", "status": "done"}
+{"command": "open", "status": "done"}
+{"command": "open", "status": "done"}
+{"command": "tap", "status": "done"}
+{"command": "tap", "status": "failed"}
+Traceback (most recent call last):
+  File "F:\狗头军师app化\goutouapp\scripts\phase8_android_demo.py", line 779, in <module>
+    main()
+    ~~~~^^
+  File "F:\狗头军师app化\goutouapp\scripts\phase8_android_demo.py", line 759, in main
+    raise RuntimeError(
+        "Native sequence failed; inspect sanitized evidence"
+    ) from None
+RuntimeError: Native sequence failed; inspect sanitized evidence

@@ -10,6 +10,7 @@ import { useTheme } from '../theme/ThemeProvider';
 import { useRelationshipScope, useLocalNavigation } from '../navigation/scope';
 import { useResourceView, useSessionView, type Connection } from '../session/ConnectionProvider';
 import type { ProgressStatus } from '../api/agentEvents';
+import { nativeSseObserver } from '../diagnostics/nativeSseObserver';
 const progressLabels: Record<ProgressStatus, string> = {
   preparing: '准备运行',
   checking_safety: '检查安全',
@@ -45,6 +46,15 @@ export function ConnectedChatScreen({ connection }: { connection: Connection }) 
     connection.chat.snapshot,
     connection.chat.snapshot,
   );
+  const observation = useSyncExternalStore(
+    nativeSseObserver.subscribe,
+    nativeSseObserver.snapshot,
+    nativeSseObserver.snapshot,
+  );
+  // Runs after React commits the actual screen state, not from a server log.
+  useEffect(() => {
+    nativeSseObserver.ui(view.phase, view.progress);
+  }, [view.phase, view.progress]);
   const conversation =
     params.conversationId === undefined
       ? resources.selectedConversationId
@@ -132,6 +142,18 @@ export function ConnectedChatScreen({ connection }: { connection: Connection }) 
                   />
                 )}
                 <BodyText live>Agent 状态：{phaseLabels[view.phase]}</BodyText>
+                {nativeSseObserver.enabled && observation && (
+                  <View
+                    accessible
+                    accessibilityLabel={`NATIVE-SSE ${JSON.stringify(observation)}`}
+                    style={{ height: 48, overflow: 'hidden' }}
+                  >
+                    <BodyText muted>
+                      Native SSE · {observation.terminal ?? 'pending'} · reads:
+                      {observation.reader.reads}
+                    </BodyText>
+                  </View>
+                )}
                 {view.progress && <BodyText live>{progressLabels[view.progress]}</BodyText>}
                 {view.runId && <BodyText>run_id：{view.runId}</BodyText>}
                 {view.operationKey && <BodyText>operation_key：{view.operationKey}</BodyText>}

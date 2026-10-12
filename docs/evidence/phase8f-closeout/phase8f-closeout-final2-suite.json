@@ -1,0 +1,38 @@
+[
+  {
+    "scene": "sse_cancel",
+    "exit": 0,
+    "seconds": 117.7,
+    "base": "F:\\\u72d7\u5934\u519b\u5e08app\u5316\\goutouapp\\.cache\\phase8f-closeout-final2-sse_cancel"
+  },
+  {
+    "scene": "memory_smoke_preserve",
+    "exit": 1,
+    "seconds": 269.2,
+    "base": "F:\\\u72d7\u5934\u519b\u5e08app\u5316\\goutouapp\\.cache\\phase8f-closeout-final2-memory_smoke_preserve"
+  },
+  {
+    "scene": "resource_create",
+    "exit": 0,
+    "seconds": 215.3,
+    "base": "F:\\\u72d7\u5934\u519b\u5e08app\u5316\\goutouapp\\.cache\\phase8f-closeout-final2-resource_create"
+  },
+  {
+    "scene": "sse_normal",
+    "exit": 0,
+    "seconds": 195.2,
+    "base": "F:\\\u72d7\u5934\u519b\u5e08app\u5316\\goutouapp\\.cache\\phase8f-closeout-final2-sse_normal"
+  },
+  {
+    "scene": "rest_replay",
+    "exit": 1,
+    "seconds": 115.0,
+    "base": "F:\\\u72d7\u5934\u519b\u5e08app\u5316\\goutouapp\\.cache\\phase8f-closeout-final2-rest_replay"
+  },
+  {
+    "scene": "import_history_lifecycle",
+    "exit": 0,
+    "seconds": 178.2,
+    "base": "F:\\\u72d7\u5934\u519b\u5e08app\u5316\\goutouapp\\.cache\\phase8f-closeout-final2-import_history_lifecycle"
+  }
+]

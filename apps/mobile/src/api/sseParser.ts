@@ -1,5 +1,6 @@
 import { ApiError } from './errors';
 import { validateAgentEvent, type AgentEvent } from './agentEvents';
+import { nativeSseObserver } from '../diagnostics/nativeSseObserver';
 
 export class SSEParser {
   private readonly decoder = new TextDecoder('utf-8', { fatal: true });
@@ -102,8 +103,10 @@ export async function consumeSSE(
     throw new ApiError('protocol');
   }
   const reader = response.body.getReader();
+  const observation = nativeSseObserver.ticket(response);
   let terminal = false;
   const cancel = () => {
+    nativeSseObserver.reader(observation, 'cancels');
     void reader.cancel().catch(() => undefined);
   };
   signal.addEventListener('abort', cancel);
@@ -111,10 +114,12 @@ export async function consumeSSE(
     if (signal.aborted) throw new ApiError('cancelled');
     if (terminal) throw new ApiError('protocol');
     onEvent(event);
+    nativeSseObserver.event(observation, event);
     if (event.event === 'completed' || event.event === 'failed') terminal = true;
   });
   try {
     while (!terminal) {
+      nativeSseObserver.reader(observation, 'reads');
       const result = await wait(reader.read());
       if (signal.aborted) throw new ApiError('cancelled');
       if (result.done) {
@@ -125,11 +130,15 @@ export async function consumeSSE(
     }
     // A terminal event is the protocol's completion, not a requirement to wait for socket EOF.
     parser.finish();
+  } catch (error) {
+    nativeSseObserver.interrupted(observation, signal.aborted);
+    throw error;
   } finally {
     signal.removeEventListener('abort', cancel);
     cancel();
     try {
       reader.releaseLock();
+      nativeSseObserver.reader(observation, 'releases');
     } catch {
       /* A native pending read can settle after cancellation. */
     }

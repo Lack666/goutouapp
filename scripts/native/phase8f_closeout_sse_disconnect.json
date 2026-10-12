@@ -1,0 +1,19 @@
+[
+  "open settings",
+  "tap [\"清除当前开发会话\",\"down\"]",
+  "case 8F-SSE-DISCONNECT",
+  "seed",
+  "login a",
+  "route [\"chat\",\"current\"]",
+  "fault sse_disconnect",
+  "input [\"Agent 消息输入\",\"Synthetic native stream EOF\"]",
+  "tap [\"发送 Agent 消息\"]",
+  "wait 8",
+  "observe disconnected",
+  "assert_ui \"无法确认该请求是否已完成。\"",
+  "evidence",
+  "assert_db [\"agent.runs.length\",1]",
+  "assert_db [\"agent.memories\",0]",
+  "tap [\"清除当前开发会话\",\"down\"]",
+  "stop"
+]

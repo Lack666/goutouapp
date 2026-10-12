@@ -177,3 +177,57 @@ Disposable database cleanup is
 performed when the fixture stops; preserve failed logs and independent exits.
 Remove only this session's ADB reverse mappings and temporary loopback helpers.
 Do not wipe the existing AVD or kill unrelated user processes.
+
+## Closeout procedure — 2026-10-12
+
+The historical missing-evidence list above records the first 8F run. The
+Closeout Addendum and `PHASE_8F_CLOSEOUT_MATRIX.json` record subsequent independent
+executions without changing those historical results.
+
+Use the existing Pixel_10/API37/Expo Go57 device. The closeout used
+`emulator-5554`; no AVD wipe, Downloads deletion or production API changes.
+Native reverse mappings are device8022→host8024 and device8092/8093→host8093,
+with a loopback-only IPv4→IPv6 relay to Metro8092. Keep native fixture8024
+separate from the Connected Memory Web fixture8022.
+
+Enable `EXPO_PUBLIC_NATIVE_ACCEPTANCE_OBSERVER=1` only in the local Metro
+environment. `__DEV__` and Android checks additionally disable the observer
+in release builds, iOS and Web. It records accepted client parser events,
+Reader calls, relative milliseconds, actual React-committed phase/progress,
+Run consistency and terminal state. Snapshots never expose IDs, bodies, JWT,
+Memory, prompts or provider keys; event/UI arrays each have a64-entry bound.
+The compact accessibility-labelled panel exposes metadata to the native helper
+without moving controls as observations grow. Reader calls and events are
+counted separately. Progress is held before `final_response` by a fixture-only
+MockLLM barrier, and verified in the visible Android viewport before release.
+No CDP Runtime.evaluate or simulated token deltas are used.
+
+`scripts/phase8_native_closeout.py --adb <absolute-adb.exe> --serial emulator-5554
+--batch <new-name>` runs every independent scene; `--scenes` selects full
+individual scenes. Run it through `uv run --locked python` with the existing
+`TEST_DATABASE_URL`. Each scene force-stops/reopens Expo Go, uses a disposable
+database and freshly issued signed CLI JWT, waits for SecureStore acknowledgement,
+and writes a complete log, immutable step snapshot, metadata report and separate
+exit file in `.cache`. Existing paths cannot be overwritten. Every execution
+uses the real App, generated client, authorization and service/database paths.
+Fault arms are private fixture-pipe commands, never public App endpoints.
+
+`seed`, `save`, and `history_setup` are explicitly labelled host REST preconditions.
+They do not count as native creation, Agent send or file picking. Resource-create
+and Agent replay scenes use Android UI for their business mutations. Memory
+scenes use real native Prepare/Execute/Receipt against synthetic host-prepared
+Memory. Import regression retains the earlier actual picker/301-upload evidence
+and adds scope, cursor, Back, Logout and background/foreground checks.
+
+CI Metro does not hot-reload changed source. Restart only this task's verified
+Metro process with `--clear` before testing an updated native bundle; inspect
+the actual manifest's launch asset through the loopback relay. A DevTools
+dotslash installation failure fell back to bundled DevTools and did not prevent
+the native bundle from compiling. Do not mistake stale bundle behavior for
+the latest implementation, or restart Metro during an active UI scene.
+
+Failed scenes retain their logs and exits. Fix the cause and rerun the entire
+independent scene with a new batch name. A selection of complete scene passes
+closes individual matrix items; it does not turn a failed suite into exit0 or
+claim one uninterrupted native six-surface journey. All artifacts are hashed
+in the matrix; the Phase8 marker gate rejects incomplete execution transcripts.
