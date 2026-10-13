@@ -76,7 +76,11 @@ def check(root=ROOT, *, completed=False):
         # A later authorized phase changes the broad server fingerprint. Keep the
         # historical 9C matrix/evidence immutable; require a separately hashed
         # fresh COMPLETE 9C regression on the current source instead of waiving it.
-        replacement = root / "docs/PHASE_9D_MATRIX.json"
+        replacement = root / "docs/PHASE_9E_MATRIX.json"
+        evidence_phase, expected_phase = "phase9e", "9E"
+        if not replacement.is_file():
+            replacement = root / "docs/PHASE_9D_MATRIX.json"
+            evidence_phase, expected_phase = "phase9d", "9D"
         if not replacement.is_file():
             raise RuntimeError("9C tested source fingerprint drift")
         newer = json.loads(replacement.read_text("utf-8"))
@@ -85,7 +89,7 @@ def check(root=ROOT, *, completed=False):
             (root / "docs/PHASE_9C_MATRIX.json").read_bytes().replace(b"\r\n", b"\n")
         ).hexdigest()
         if (
-            newer.get("phase") != "9D"
+            newer.get("phase") != expected_phase
             or record.get("source_fingerprint") != current_fingerprint
             or record.get("historical_matrix_sha256") != original_hash
             or record.get("exit_code") != 0
@@ -95,7 +99,7 @@ def check(root=ROOT, *, completed=False):
             descriptor = record[field]
             path = (root / descriptor["path"]).resolve()
             if (
-                not path.is_relative_to((root / "docs/evidence/phase9d").resolve())
+                not path.is_relative_to((root / "docs/evidence" / evidence_phase).resolve())
                 or not path.is_file()
                 or hashlib.sha256(path.read_bytes()).hexdigest() != descriptor["sha256"]
             ):

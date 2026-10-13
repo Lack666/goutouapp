@@ -245,6 +245,7 @@ class AgentService:
             with self._session_factory() as db, db.begin():
                 if records.get_user(db, actor.user_id) is None:
                     raise AgentServiceError(AgentServiceErrorCode.USER_NOT_FOUND)
+                records.lock_conversation_run_slot(db, conversation_id)
                 conversation = records.get_conversation(db, actor.user_id, conversation_id)
                 if conversation is None:
                     code = (
@@ -254,7 +255,6 @@ class AgentService:
                     )
                     raise AgentServiceError(code)
                 bound_relationship = conversation.relationship_id
-                records.lock_conversation_run_slot(db, conversation_id)
                 if operation_key is not None:
                     existing = records.get_agent_operation(
                         db, actor.user_id, conversation_id, operation_key

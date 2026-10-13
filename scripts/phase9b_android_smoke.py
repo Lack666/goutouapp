@@ -20,7 +20,9 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--adb", required=True)
     parser.add_argument("--serial", required=True)
-    parser.add_argument("--batch", required=True, choices=("r1", "r2", "r3"))
+    parser.add_argument(
+        "--batch", required=True, choices=("r1", "r2", "r3", "9e-r1", "9e-r2", "9e-r3", "9e-r4")
+    )
     parser.add_argument("--scenes", nargs="+", choices=SCENES, default=list(SCENES))
     args = parser.parse_args()
     exits = []

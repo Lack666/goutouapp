@@ -14,6 +14,7 @@ from app.core.logging import LOGGER_NAME
 from app.db.session import DatabaseUnavailable
 from app.schemas.error import ErrorDetail, ErrorResponse
 from app.services.agent_service import AgentServiceError, AgentServiceErrorCode
+from app.services.erasure import ErasureError
 from app.services.import_jobs import ImportJobError, ImportJobErrorCode
 from app.services.import_merge import ImportMergeError, ImportMergeErrorCode
 from app.services.import_workflow import ImportWorkflowError, ImportWorkflowErrorCode
@@ -44,6 +45,18 @@ def error_response(
 
 
 def register_error_handlers(app: FastAPI) -> None:
+    @app.exception_handler(ErasureError)
+    async def erasure_error(_request: Request, exc: ErasureError) -> JSONResponse:
+        if exc.code == "invalid_credential":
+            return error_response(
+                401, exc.code, "Valid Bearer credential required", {"WWW-Authenticate": "Bearer"}
+            )
+        if exc.code in {"not_found", "confirmation_not_found"}:
+            return error_response(404, exc.code, "Resource not found")
+        if exc.code == "persistence_failure":
+            return error_response(503, exc.code, "Erasure unavailable")
+        return error_response(409, exc.code, "Erasure requires authoritative review")
+
     @app.exception_handler(ResourceError)
     async def resource_error(_request: Request, exc: ResourceError) -> JSONResponse:
         if exc.code == ResourceErrorCode.UNAUTHORIZED:
@@ -147,6 +160,8 @@ def register_error_handlers(app: FastAPI) -> None:
 
     @app.exception_handler(ImportMergeError)
     async def import_merge_error(_request: Request, exc: ImportMergeError) -> JSONResponse:
+        if exc.code == ImportMergeErrorCode.DATASET_DELETED:
+            return error_response(409, "dataset_deleted", "Dataset was deleted")
         if exc.code == ImportMergeErrorCode.JOB_NOT_FOUND:
             return error_response(404, "job_not_found", "Import resource not found")
         if exc.code == ImportMergeErrorCode.REVISION_CONFLICT:

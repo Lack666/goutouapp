@@ -1,4 +1,52 @@
-# Data deletion contract — Phase 9D
+# Data deletion contract — current Phase9E
+
+## Current9E contract (supersedes dated9D absence claims below)
+
+Backend-only guarded canonical Dataset and Conversation erasure is implemented:
+see [API](ERASURE_API.md), [ADR0040](adr/0040-guarded-dataset-and-conversation-erasure.md)
+and machine-readable [capability matrix](DATA_DELETION_MATRIX.json). Three signed
+operations use strict exact structured target/Relationship, five-minute server
+challenge and canonical UTC snapshot, explicit caller execution, durable receipt
+and authoritative refresh. No confirm boolean, fuzzy body matching or SQL cascade
+can replace this service. Owner row and existing domain locks serialize writes.
+Pending/running/completed-unresolved runs block Conversation deletion.
+
+Primary formal messages are physically removed; target tombstones, Run operation
+keys and canonical import dedup/receipt metadata remain. Dataset speaker labels
+are removed with its messages. Other Conversations/Relationships/Datasets and all
+Memory survive. Same-key exact replay returns the old receipt before target lookup;
+changed payload conflicts. Tombstones cannot be recreated via the public resource
+creation path. Old Agent REST/SSE keys return404; original/duplicate/new identical
+same-scope import finalize returns409 dataset_deleted. Different transcripts/scopes
+remain valid. Historical Job imported summaries are receipts, not surviving data.
+
+Person/Relationship self-service deletion is unavailable even when empty; associated
+Memory, import/provenance and multiple Relationship FKs are not silently enlarged.
+Full Owner/account erasure remains a formal unfinished R-09 prerequisite: requires
+production identity/revocation, run barriers, dependency enumeration, retained
+key policy, caches/exports/provider/copy handling and backup reconciliation. Do not
+claim App can delete all personal data. App has no chat erasure controller; current
+Settings/History explain the boundary. Known external API deletion is reflected by
+fresh/focused History reads; existing lifecycle clears models/cursors on leave/logout.
+
+Erasure challenges expire after5min and are physically cleaned in bounded existing
+maintenance batches after expiry+24h. Erasure receipts/tombstones remain owner lifetime
+(no account erasure policy yet); they contain identifiers/counts/hashes/time, never
+another body. Memory retention and mutation controls remain unchanged. Canonical raw
+artifacts already undergo terminal finalize cleanup; failures still retry under9D.
+Formal-message erasure receipts do not certify physical raw-source/backup deletion.
+
+Controlled native PostgreSQL restore freezes a complete current primary and checks
+exact immutable Conversation/Dataset IDs and scope; propagates tombstones and
+removes only their restored formal bodies/speakers; copies immutable current erasure
+receipts and invalidates restored challenges. All current Agent keys must still match.
+Missing/mismatched primary/receipt/target/key, missing post-backup tombstone fences or
+any error means NO RELEASE. Repeated application preserves other owners and Memory.
+No independent journal is implemented; main-database loss still blocks production
+disaster recovery. Production copy encryption/35d rotation/key custody/scheduler
+installation remain undeployed. Old private backups are not rewritten by DELETE.
+
+## Historical9D contract (retained context)
 
 Authority is the authenticated signed subject and structured IDs. API absence is
 a product gap, not implicit authorization for raw SQL.9D adds no public endpoint,

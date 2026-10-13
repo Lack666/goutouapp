@@ -1,6 +1,8 @@
 # Preserve canonical OpenAPI generation input bytes on every checkout.
 docs/contracts/*.json text eol=lf
 apps/mobile/src/api/generated/*.ts text eol=lf
+# Mobile Prettier requires LF even when Windows global core.autocrlf is true.
+apps/mobile/** text=auto eol=lf
 # Native acceptance hashes cover the original execution bytes, including newlines.
 docs/evidence/phase8f-closeout/** -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
 # Original console output includes intentional whitespace; do not rewrite hashed logs.
@@ -10,3 +12,4 @@ docs/evidence/phase9a/** -text whitespace=-blank-at-eol,-blank-at-eof,-space-bef
 docs/evidence/phase9b/** -text whitespace=-blank-at-eol,-blank-at-eof,-space-before-tab,cr-at-eol
 docs/evidence/phase9c/** -text whitespace=-blank-at-eol,-blank-at-eof,-space-before-tab,cr-at-eol
 docs/evidence/phase9d/** -text whitespace=-blank-at-eol,-blank-at-eof,-space-before-tab,cr-at-eol
+docs/evidence/phase9e/** -text whitespace=-blank-at-eol,-blank-at-eof,-space-before-tab,cr-at-eol

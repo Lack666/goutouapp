@@ -147,6 +147,55 @@ it('empty formal history stays empty and refresh after import reads actual new r
   await history.load();
   expect(history.snapshot().items).toHaveLength(1);
 });
+it('refresh after external Dataset erasure drops cached rows and the old cursor', async () => {
+  let erased = false;
+  const { transport, session, requests } = await setup(async (r) =>
+    r.url.includes('/messages')
+      ? json({ items: erased ? [] : [message(1)], next_cursor: erased ? null : 'old-page' })
+      : undefined,
+  );
+  const history = new HistoryController(transport, session, 1);
+  await history.open('relationship', rel);
+  expect(history.snapshot().cursor).toBe('old-page');
+  erased = true;
+  await history.load();
+  expect(history.snapshot().items).toEqual([]);
+  expect(history.snapshot().cursor).toBeNull();
+  expect(
+    new URL(requests.filter((r) => r.url.includes('/messages')).at(-1)!.url).searchParams.has(
+      'cursor',
+    ),
+  ).toBe(false);
+});
+it('reopening an externally erased Conversation clears its cached body and denies the old scope', async () => {
+  let erased = false;
+  const { transport, session } = await setup(async (r) => {
+    if (!r.url.includes('/conversations/')) return undefined;
+    if (erased) return json({ error: { code: 'not_found', message: 'private' } }, 404);
+    if (!r.url.includes('/messages')) return json({ id: other, relationship_id: null });
+    return json({
+      items: [
+        {
+          id: id(1),
+          conversation_id: other,
+          role: 'assistant',
+          content: 'synthetic answer',
+          created_at: '2024-01-01T00:00:00Z',
+        },
+      ],
+      next_cursor: 'old-page',
+    });
+  });
+  const history = new HistoryController(transport, session, 1);
+  await history.open('agent', other);
+  expect(history.snapshot().items).toHaveLength(1);
+  erased = true;
+  await history.open('agent', other);
+  expect(history.snapshot().status).toBe('error');
+  expect(history.snapshot().items).toEqual([]);
+  expect(history.snapshot().cursor).toBeNull();
+  expect(history.snapshot().parentId).toBeNull();
+});
 it('switching relationship aborts old pages, resets cursors and rejects ignored-abort late responses', async () => {
   let resolve!: (value: Response) => void;
   let captured: AbortSignal | undefined;

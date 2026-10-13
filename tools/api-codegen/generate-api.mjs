@@ -69,7 +69,7 @@ if (
   if (process.argv.includes("--check")) {
     assertCurrent(generated, await readFile(output, "utf8"));
     process.stdout.write(
-      "PASS: deterministic generated client (36 operations)\n",
+      "PASS: deterministic generated client (39 operations)\n",
     );
   } else {
     await mkdir(

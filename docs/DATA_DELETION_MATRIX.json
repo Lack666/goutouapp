@@ -1,0 +1,102 @@
+{
+  "phase": "9E",
+  "delivery": "Backend-only",
+  "domains": {
+    "account": {
+      "self_service": "Unavailable",
+      "authorized_actor": "No public Owner/account erasure API",
+      "confirmation": "Not implemented",
+      "affected_resources": "Would require every owned domain and identity/provider/copy lifecycle",
+      "primary_rows": "No full account deletion",
+      "retained_metadata": "Existing owner and all formal references remain",
+      "import_dedup": "Unchanged",
+      "memory_effect": "Unchanged",
+      "backup_effect": "Full primary-loss/public erasure acceptance blocked R-09",
+      "ui_api_limit": "No App claim of complete personal-data deletion"
+    },
+    "person": {
+      "self_service": "Unavailable, including empty Person",
+      "authorized_actor": "No public Person deletion API",
+      "confirmation": "Not implemented",
+      "affected_resources": "Existing multiple Relationships, speaker bindings, Memory and provenance FKs",
+      "primary_rows": "Retained; RESTRICT unchanged",
+      "retained_metadata": "Person UUID and profile remain",
+      "import_dedup": "Unchanged",
+      "memory_effect": "Unchanged",
+      "backup_effect": "Retained by local restore; future explicit lifecycle task",
+      "ui_api_limit": "No DELETE endpoint/button; no widened cascade"
+    },
+    "relationship": {
+      "self_service": "Unavailable, including empty Relationship",
+      "authorized_actor": "No public Relationship deletion API",
+      "confirmation": "Not implemented",
+      "affected_resources": "Conversation, Dataset and Memory references must be independently specified",
+      "primary_rows": "Retained; RESTRICT unchanged",
+      "retained_metadata": "Relationship UUID and metadata remain",
+      "import_dedup": "Unchanged",
+      "memory_effect": "Unchanged",
+      "backup_effect": "Retained by local restore; future explicit lifecycle task",
+      "ui_api_limit": "No DELETE endpoint/button"
+    },
+    "conversation": {
+      "self_service": "Backend-only guarded API; no App self-service",
+      "authorized_actor": "Signed owner",
+      "confirmation": "Five-minute server snapshot challenge; explicit execute and operation key",
+      "affected_resources": "Exact Conversation and all its formal Messages, across roles; associated run body metadata",
+      "primary_rows": "Messages physically removed; warnings/memory_status scrubbed; Conversation tombstoned",
+      "retained_metadata": "Conversation scope UUID; Run ID/status/key/fingerprint/error code; counts and timestamps; immutable erasure receipt",
+      "import_dedup": "Independent of imported Dataset",
+      "memory_effect": "Existing Memory/consent/undo retained; run references may remain",
+      "backup_effect": "Frozen current primary exact tombstone/key/receipt reconciliation; missing authoritative target/key/receipt denies release",
+      "ui_api_limit": "Old history/REST/SSE 404, create old UUID 409; pending/running/unresolved Memory run blocks; cached clients must refresh"
+    },
+    "agent_history": {
+      "self_service": "Backend-only via containing Conversation; no per-message/run erasure",
+      "authorized_actor": "Signed Conversation owner",
+      "confirmation": "Same Conversation challenge",
+      "affected_resources": "All Messages in exact Conversation; Run links SET NULL and outcome metadata scrubbed",
+      "primary_rows": "No message body remains; run dedup metadata retained",
+      "retained_metadata": "Run operation keys/status/fingerprint and Conversation tombstone protect replay",
+      "import_dedup": "Independent",
+      "memory_effect": "No Memory erasure",
+      "backup_effect": "Same Conversation/key reconciliation; post-backup keys cannot be omitted",
+      "ui_api_limit": "No standalone Agent history DELETE; old run key cannot recreate answer"
+    },
+    "dataset": {
+      "self_service": "Backend-only guarded API; no App self-service",
+      "authorized_actor": "Signed canonical imported Job owner and exact Relationship",
+      "confirmation": "Five-minute exact dataset_job_id/relationship_id snapshot challenge",
+      "affected_resources": "All RelationshipMessages and speaker labels in exact canonical Job",
+      "primary_rows": "Formal RelationshipMessages/speakers physically removed; imported canonical Job tombstoned",
+      "retained_metadata": "Job UUID/scope/fingerprint/import counts/times and durable erasure receipt; no message/speaker body",
+      "import_dedup": "Imported status and partial unique scope index retained; original/duplicate/new identical finalize rejected",
+      "memory_effect": "Memory/consent/undo and Conversation domain retained",
+      "backup_effect": "Current primary exact target/scope/receipt required; old backup must already contain canonical imported fence or release fails closed",
+      "ui_api_limit": "No Job UUID reuse; other transcripts/owners/Relationships remain independent; inspect metadata is historical receipt"
+    },
+    "relationship_message": {
+      "self_service": "Backend-only through containing Dataset; no per-message erasure",
+      "authorized_actor": "Signed canonical Dataset owner",
+      "confirmation": "Same exact Dataset challenge",
+      "affected_resources": "Only rows with exact owner/Relationship/import_job_id",
+      "primary_rows": "Physically removed",
+      "retained_metadata": "No raw speaker label/content; Dataset receipt and dedup fences retained",
+      "import_dedup": "Same Dataset scope fence",
+      "memory_effect": "Independent of Memory and Agent chat",
+      "backup_effect": "Dataset reconciliation removes restored rows; no arbitrary hash-wide deletion",
+      "ui_api_limit": "History list and old cursor filter tombstone; cached client must refresh"
+    },
+    "memory": {
+      "self_service": "Existing separate guarded Memory control, including App controls",
+      "authorized_actor": "Signed owner; subject scoped",
+      "confirmation": "Existing server challenge and immutable guarded receipt",
+      "affected_resources": "Explicit selected Memory scope only",
+      "primary_rows": "Existing Phase6/9D guarded erasure and bounded retention semantics",
+      "retained_metadata": "Existing control/version/receipt minimum; undo handling unchanged",
+      "import_dedup": "No Dataset erase or re-import",
+      "memory_effect": "Only selected Memory; chat/import histories retained",
+      "backup_effect": "Existing 9D exact authority reconciliation and challenge invalidation retained",
+      "ui_api_limit": "Memory deletion is not Conversation, Dataset, Person, Relationship or account erasure"
+    }
+  }
+}

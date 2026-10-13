@@ -1,6 +1,7 @@
 """Minimal Phase 2B tables. Import this module to register all metadata."""
 
 from app.db.models.admission import AdmissionState, UploadReservation
+from app.db.models.erasure import ErasureConfirmation, ErasureReceipt
 from app.db.models.import_jobs import (
     ChatImportArtifact,
     ChatImportJob,
@@ -22,6 +23,8 @@ from app.db.models.records import (
 )
 
 __all__ = [
+    "ErasureConfirmation",
+    "ErasureReceipt",
     "AdmissionState",
     "UploadReservation",
     "ChatImportArtifact",

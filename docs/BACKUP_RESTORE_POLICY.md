@@ -1,4 +1,31 @@
-# Backup / restore policy — Phase 9D
+# Backup / restore policy — current Phase9E
+
+Current9E supplement: the current-primary SHARE write freeze also includes the
+new erasure challenge/receipt tables and target tombstones. Exact restored resource
+ID/owner/Relationship (and Dataset transcript fingerprint) must match current
+primary. Deleted target message/speaker rows are physically removed, tombstone
+timestamps applied and current immutable receipts copied. All restored erasure
+challenges are invalidated. Missing current metadata or a post-backup tombstone for
+a target absent from the backup blocks release; never drop a fence to release data.
+Repeated reconciliation is safe. Current Agent key checks and Memory controls/
+receipt/undo rules remain. New post-backup data still is not recovered.
+
+No independent deletion journal/WAL authority is implemented. Primary missing,
+unavailable, tampered receipt, lagging target or any restore error keeps released=false
+and the disposable target inaccessible to API listeners. Tests include actual native
+dump/restore, erasure receipt replay and Owner B/Memory preservation. No independent
+authority means production full-primary-loss recovery remains unavailable.
+
+Production policy remains future: daily encrypted copies, maximum35d verified
+rotation, separate rotated/revocable key custody, least-privilege audited operators,
+complete copy inventory, integrity validation, fail-closed cutover and error alerts.
+Old copies after a deletion request stay inaccessible to normal users, expire by
+copy policy and must be reconciled before serving; copied exports/provider/log data
+have separate lifecycle obligations. None of this deployment is certified here.
+Local unencrypted anonymous dumps are disposable test evidence, not safe production
+backups. No public release or live cutover switch is introduced.
+
+## Retained9D deployment boundary and procedure
 
 Current capability: synthetic-only PostgreSQL logical dump, isolated restore and
 authoritative-primary Memory reconciliation with real native PostgreSQL tools.
@@ -81,3 +108,8 @@ rollback/failure, owner isolation, current controls, Agent recall and empty arti
 The command `apps/server/backup_restore_demo.py` runs an independent synthetic
 drill and prints only fixed/count evidence. Binaries can be selected using
 PG_BIN_DIR;9D tests use the existing local16.15 binaries matching the test server.
+
+9E-01 (P1, fixed): a deleted Dataset must already be a canonical `imported`
+Job in the backup. A pre-finalize `ready` Job lacks the partial unique-index
+re-import fence; reconciliation refuses release rather than synthesizing newer
+import history. Covered by `test_restore_cannot_drop_post_backup_imported_dataset_fence`.

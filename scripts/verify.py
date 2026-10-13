@@ -57,6 +57,7 @@ UPLOAD_SECURITY = (ROOT / "apps/server/tests/test_upload_security.py").is_file()
 AUTHORIZATION_SECURITY = (ROOT / "apps/server/tests/test_authorization_security.py").is_file()
 RESOURCE_ADMISSION = (ROOT / "apps/server/tests/test_resource_admission.py").is_file()
 DATA_LIFECYCLE = (ROOT / "apps/server/tests/test_data_lifecycle.py").is_file()
+DATA_ERASURE = (ROOT / "apps/server/tests/test_erasure.py").is_file()
 MEMORY_GATE_FILES = (
     "apps/mobile/src/api/memoryAdapter.ts",
     "apps/mobile/src/api/memoryErrors.ts",
@@ -205,32 +206,40 @@ def native_closeout_check() -> None:
 
 
 def phase_marker_check() -> None:
-    if PHASE > 8 or (PHASE == 8 and SUBPHASE not in {"8F", "9A", "9B", "9C", "9D"}):
-        raise RuntimeError("Phase 8 requires 8F closeout; only Phase 9A/9B/9C/9D are implemented")
-    if SUBPHASE in {"9A", "9B", "9C", "9D"}:
+    if PHASE > 8 or (PHASE == 8 and SUBPHASE not in {"8F", "9A", "9B", "9C", "9D", "9E"}):
+        raise RuntimeError(
+            "Phase 8 requires 8F closeout; only Phase 9A/9B/9C/9D/9E are implemented"
+        )
+    if SUBPHASE in {"9A", "9B", "9C", "9D", "9E"}:
         if PHASE != 8 or not UPLOAD_SECURITY:
             raise RuntimeError("Phase 9A requires completed Phase 8 and security gates")
         from check_security_9a import check
 
         check(completed=True)
-    if SUBPHASE in {"9B", "9C", "9D"}:
+    if SUBPHASE in {"9B", "9C", "9D", "9E"}:
         if PHASE != 8 or not AUTHORIZATION_SECURITY:
             raise RuntimeError("Phase 9B requires completed Phase 8/9A and security gates")
         from check_security_9b import check as check_9b
 
         check_9b(completed=True)
-    if SUBPHASE in {"9C", "9D"}:
+    if SUBPHASE in {"9C", "9D", "9E"}:
         if PHASE != 8 or not RESOURCE_ADMISSION:
             raise RuntimeError("Phase9C requires completed8/9B and resource security gates")
         from check_security_9c import check as check_9c
 
         check_9c(completed=True)
-    if SUBPHASE == "9D":
+    if SUBPHASE in {"9D", "9E"}:
         if PHASE != 8 or not DATA_LIFECYCLE:
             raise RuntimeError("Phase9D requires completed8/9C and lifecycle gates")
         from check_security_9d import check as check_9d
 
         check_9d(completed=True)
+    if SUBPHASE == "9E":
+        if PHASE != 8 or not DATA_ERASURE:
+            raise RuntimeError("Phase9E requires completed8/9D and erasure gates")
+        from check_security_9e import check as check_9e
+
+        check_9e(completed=True)
     if PHASE == 8:
         if not all(
             (
@@ -439,6 +448,10 @@ def tests() -> None:
             "apps/server/tests/test_backup_restore.py",
         )
         uv_run("python", "apps/server/backup_restore_demo.py")
+    if DATA_ERASURE:
+        uv_run("python", "scripts/check_security_9e.py")
+        uv_run("pytest", "-q", "apps/server/tests/test_erasure.py")
+        uv_run("python", "apps/server/erasure_demo.py")
     if MEMORY_CONTROL_API:
         uv_run("pytest", "-q", "apps/server/tests/test_memory_control.py")
         uv_run("python", "apps/server/memory_control_demo.py")
@@ -496,6 +509,7 @@ def lint() -> None:
         "scripts/check_security_9b.py",
         "scripts/check_security_9c.py",
         "scripts/check_security_9d.py",
+        "scripts/check_security_9e.py",
         "scripts/phase9b_android_smoke.py",
     )
     uv_run(
@@ -525,6 +539,7 @@ def lint() -> None:
         "scripts/check_security_9b.py",
         "scripts/check_security_9c.py",
         "scripts/check_security_9d.py",
+        "scripts/check_security_9e.py",
         "scripts/phase9b_android_smoke.py",
     )
 
@@ -793,6 +808,8 @@ def verify() -> None:
                         print("PASS: Phase9C shared resource admission/upload reliability gates")
                     if DATA_LIFECYCLE:
                         print("PASS: Phase9D lifecycle/maintenance/controlled restore gates")
+                    if DATA_ERASURE:
+                        print("PASS: Phase9E guarded dataset/conversation erasure gates")
                     print("Phase 9 IN PROGRESS; remaining security/privacy/reliability deferred")
                 else:
                     print("Phase 9 PENDING / NOT STARTED")

@@ -65,8 +65,14 @@ afterEach(() => {
 });
 
 describe('generated client and safe transport', () => {
-  it('defines exactly the authoritative 36 operations with Bearer protected resources', () => {
-    expect(operationInventory).toHaveLength(36);
+  it('preserves 36 operations and adds three signed guarded erasure operations', () => {
+    expect(operationInventory).toHaveLength(39);
+    expect(operationInventory.filter((op) => !op.path.startsWith('/api/v1/erasures'))).toHaveLength(
+      36,
+    );
+    const erasures = operationInventory.filter((op) => op.path.startsWith('/api/v1/erasures'));
+    expect(erasures).toHaveLength(3);
+    expect(erasures.every((op) => op.bearer)).toBe(true);
     expect(
       operationInventory.filter((op) => op.path === '/api/v1/persons').every((op) => op.bearer),
     ).toBe(true);

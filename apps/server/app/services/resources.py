@@ -109,6 +109,8 @@ class ResourceService:
         if record is not None:
             if record.user_id != owner:
                 raise ResourceError(ResourceErrorCode.NOT_FOUND)
+            if isinstance(record, Conversation) and record.deleted_at is not None:
+                raise ResourceError(ResourceErrorCode.CREATION_CONFLICT)
             for field, value in body.model_dump().items():
                 if getattr(record, field) != value:
                     raise ResourceError(ResourceErrorCode.CREATION_CONFLICT)

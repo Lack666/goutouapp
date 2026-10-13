@@ -1,6 +1,7 @@
 import { ApiError, httpError } from './errors';
 
 const messages: Record<string, string> = {
+  dataset_deleted: '该正式聊天批次已删除；旧任务和相同批次不能重新导入。请刷新历史。',
   invalid_upload: '文件或历史分页信息无效，请核对格式和源时区。',
   upload_too_large: '文件超过服务器大小限制。',
   unsupported_format: '仅支持版本化微信 Markdown v1。',

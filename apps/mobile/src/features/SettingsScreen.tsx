@@ -56,6 +56,9 @@ function ConnectedSettingsScreen() {
         ))}
       </SectionCard>
       <DevelopmentSessionControls />
+      <BodyText muted>
+        当前 App 仅开放记忆删除；聊天历史、Person、Relationship 和完整账户尚无自助删除入口。
+      </BodyText>
       <ConnectedMemoryPanel connection={connection} />
     </ScreenContainer>
   );

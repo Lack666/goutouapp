@@ -18,11 +18,17 @@ from app.db.models import (
     AgentRun,
     ChatImportArtifact,
     ChatImportJob,
+    ChatImportSpeaker,
+    Conversation,
+    ErasureConfirmation,
+    ErasureReceipt,
     MemoryConfirmationRow,
     MemoryControlRow,
     MemoryMutationRow,
     MemoryOperationRow,
     MemoryRecordRow,
+    Message,
+    RelationshipMessage,
     UploadReservation,
     User,
 )
@@ -156,6 +162,89 @@ class QuarantinedRestore:
                 )
                 if not set(current.execute(keyed)) <= set(db.execute(keyed)):
                     raise RecoveryError()
+                # Exact immutable resource IDs from the frozen primary; no replay
+                # of a broad historical scope. Missing post-backup tombstone fences
+                # cannot safely be reconstructed and keep this restore quarantined.
+                erased_counts = {"dataset_messages_removed": 0, "agent_messages_removed": 0}
+                for model, owner_column, scope_columns in (
+                    (Conversation, Conversation.user_id, (Conversation.relationship_id,)),
+                    (
+                        ChatImportJob,
+                        ChatImportJob.owner_user_id,
+                        (ChatImportJob.bound_relationship_id, ChatImportJob.transcript_fingerprint),
+                    ),
+                ):
+                    columns = (model.id, owner_column, *scope_columns, model.deleted_at)
+                    authoritative_targets = {
+                        row[0]: tuple(row)
+                        for row in current.execute(select(*columns).where(owner_column.in_(owners)))
+                    }
+                    restored_targets = {
+                        row[0]: tuple(row)
+                        for row in db.execute(select(*columns).where(owner_column.in_(owners)))
+                    }
+                    for target_id, row in restored_targets.items():
+                        now_row = authoritative_targets.get(target_id)
+                        if now_row is None or row[:-1] != now_row[:-1]:
+                            raise RecoveryError()
+                        if row[-1] is not None and row[-1] != now_row[-1]:
+                            raise RecoveryError()
+                    for target_id, row in authoritative_targets.items():
+                        if row[-1] is None:
+                            continue
+                        if target_id not in restored_targets:
+                            raise RecoveryError()
+                        if model is ChatImportJob and (
+                            db.get(ChatImportJob, target_id).status != "imported"
+                            or current.scalar(
+                                select(ChatImportJob.status).where(ChatImportJob.id == target_id)
+                            )
+                            != "imported"
+                        ):
+                            # deleted_at alone is insufficient: the partial unique
+                            # index/replay fence exists only on canonical imported
+                            # Jobs. A ready pre-import backup cannot be released.
+                            raise RecoveryError()
+                        if model is Conversation:
+                            erased_counts["agent_messages_removed"] += db.execute(
+                                delete(Message).where(Message.conversation_id == target_id)
+                            ).rowcount
+                            db.execute(
+                                update(AgentRun)
+                                .where(AgentRun.conversation_id == target_id)
+                                .values(memory_status=None, result_warnings=None)
+                            )
+                        else:
+                            erased_counts["dataset_messages_removed"] += db.execute(
+                                delete(RelationshipMessage).where(
+                                    RelationshipMessage.import_job_id == target_id,
+                                    RelationshipMessage.owner_user_id == row[1],
+                                    RelationshipMessage.relationship_id == row[2],
+                                )
+                            ).rowcount
+                            db.execute(
+                                delete(ChatImportSpeaker).where(
+                                    ChatImportSpeaker.job_id == target_id,
+                                    ChatImportSpeaker.owner_user_id == row[1],
+                                )
+                            )
+                        db.execute(
+                            update(model)
+                            .where(model.id == target_id)
+                            .values(deleted_at=row[-1], updated_at=row[-1])
+                        )
+                erasure_receipts = list(
+                    current.execute(select(ErasureReceipt.__table__)).mappings()
+                )
+                authoritative_receipts = {row["id"]: dict(row) for row in erasure_receipts}
+                for row in db.execute(select(ErasureReceipt.__table__)).mappings():
+                    if authoritative_receipts.get(row["id"]) != dict(row):
+                        raise RecoveryError()
+                db.execute(delete(ErasureReceipt))
+                copied = [dict(row) for row in erasure_receipts if row["owner_user_id"] in owners]
+                if copied:
+                    db.execute(ErasureReceipt.__table__.insert(), copied)
+                db.execute(delete(ErasureConfirmation))
                 columns = (
                     "owner_user_id",
                     "id",
@@ -231,6 +320,7 @@ class QuarantinedRestore:
                     )
                 )
                 counts = {
+                    **erased_counts,
                     "memory_removed": removed,
                     "memory_retained": len(retained),
                     "pending_imports_cancelled": cancelled,

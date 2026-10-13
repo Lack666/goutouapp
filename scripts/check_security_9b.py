@@ -38,18 +38,23 @@ def mobile_fingerprint(root=ROOT):
     return hashlib.sha256(json.dumps(hashes, sort_keys=True).encode()).hexdigest()
 
 
-def artifact(descriptor, root=ROOT):
+def artifact(descriptor, root=ROOT, *, evidence_phase="phase9b"):
     path = (root / descriptor["path"]).resolve()
-    if not path.is_relative_to((root / "docs/evidence/phase9b").resolve()) or not path.is_file():
+    if (
+        not path.is_relative_to((root / "docs/evidence" / evidence_phase).resolve())
+        or not path.is_file()
+    ):
         raise RuntimeError("9B evidence missing or outside phase9b")
     if hashlib.sha256(path.read_bytes()).hexdigest() != descriptor["sha256"]:
         raise RuntimeError("9B evidence hash mismatch")
     return path
 
 
-def native_check(matrix, root=ROOT):
+def native_check(matrix, root=ROOT, *, historical=False, evidence_phase="phase9b"):
     native = matrix["native"]
-    if native.get("status") != "PASS" or native["mobile_fingerprint"] != mobile_fingerprint(root):
+    if native.get("status") != "PASS" or (
+        not historical and native["mobile_fingerprint"] != mobile_fingerprint(root)
+    ):
         raise RuntimeError("9B requires fresh Android PASS for current source/dependencies")
     if {row["scene"] for row in native["scenes"]} != SCENES or len(native["scenes"]) != len(SCENES):
         raise RuntimeError("9B Android smoke coverage incomplete")
@@ -59,7 +64,7 @@ def native_check(matrix, root=ROOT):
         if row["exit_code"] != 0 or row["status"] != "PASS":
             raise RuntimeError("9B native independent scene failed")
         paths = {
-            name: artifact(row["artifacts"][name], root)
+            name: artifact(row["artifacts"][name], root, evidence_phase=evidence_phase)
             for name in ("steps", "report", "log", "exit")
         }
         if paths["exit"].read_text("utf-8").strip() != "0":
@@ -95,7 +100,25 @@ def check(root=ROOT, *, completed=False):
     matrix = json.loads((root / "docs/PHASE_9B_MATRIX.json").read_text("utf-8"))
     if matrix.get("phase") != "9B" or matrix.get("open_p0_p1") != []:
         raise RuntimeError("Invalid 9B acceptance scope/findings")
-    native_check(matrix, root)
+    if matrix["native"]["mobile_fingerprint"] == mobile_fingerprint(root):
+        native_check(matrix, root)
+    else:
+        # Preserve all historical transcripts and require five NEW complete native
+        # scenes on the changed generated/client source. No Web substitution.
+        native_check(matrix, root, historical=True)
+        replacement = root / "docs/PHASE_9E_MATRIX.json"
+        if not replacement.is_file():
+            raise RuntimeError("9B requires fresh Android PASS for current source/dependencies")
+        newer = json.loads(replacement.read_text("utf-8"))
+        original_hash = hashlib.sha256(
+            (root / "docs/PHASE_9B_MATRIX.json").read_bytes().replace(b"\r\n", b"\n")
+        ).hexdigest()
+        if (
+            newer.get("phase") != "9E"
+            or newer.get("historical_native_matrix_sha256") != original_hash
+        ):
+            raise RuntimeError("9B native historical authority drift")
+        native_check(newer, root, evidence_phase="phase9e")
     if not completed:
         return
     if matrix.get("status") != "PASS":

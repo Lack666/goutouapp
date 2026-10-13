@@ -22,6 +22,8 @@ def resource_page[Resource: (Person, Relationship, Conversation)](
     db: Session, model: type[Resource], owner: UUID, position: Position | None, limit: int
 ) -> list[Resource]:
     query = select(model).where(model.user_id == owner)
+    if model is Conversation:
+        query = query.where(Conversation.deleted_at.is_(None))
     if position is not None:
         query = query.where(tuple_(model.created_at, model.id) > position)
     return list(db.scalars(query.order_by(model.created_at, model.id).limit(limit + 1)))
@@ -36,6 +38,7 @@ def message_page(
         .where(
             Conversation.user_id == owner,
             Conversation.id == conversation_id,
+            Conversation.deleted_at.is_(None),
             Message.role.in_(("user", "assistant")),
         )
     )

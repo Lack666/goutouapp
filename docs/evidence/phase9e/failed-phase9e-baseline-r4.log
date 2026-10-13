@@ -1,0 +1,461 @@
+Python 3.14.7
+git: git version 2.55.0.windows.5 (D:\Git\cmd\git.EXE)
+uv: uv 0.12.11 (4b53f66b7 2026-09-08 x86_64-pc-windows-msvc) (C:\Users\VOS-User\.local\bin\uv.EXE)
+node: v24.15.0 (C:\Program Files\nodejs\node.EXE)
+pnpm: 11.25.0 (C:\Users\VOS-User\AppData\Roaming\npm\pnpm.CMD)
+make: .\make.CMD
+docker: Docker version 29.8.0, build 88096ef (D:\Docker\Desktop\resources\bin\docker.EXE)
+Completed phase: 8
+Completed subphase: 9D
++ E:\python\python.exe -m unittest discover -s tests -v
+test_http_failures_and_failed_official_fallback_are_not_success (test_expo_doctor_network.DoctorNetworkTests.test_http_failures_and_failed_official_fallback_are_not_success) ... ok
+test_only_public_legacy_schema_get_uses_real_official_response (test_expo_doctor_network.DoctorNetworkTests.test_only_public_legacy_schema_get_uses_real_official_response) ... ok
+test_other_paths_private_headers_methods_and_errors_never_fallback (test_expo_doctor_network.DoctorNetworkTests.test_other_paths_private_headers_methods_and_errors_never_fallback) ... ok
+test_request_private_headers_and_url_credentials_do_not_fallback (test_expo_doctor_network.DoctorNetworkTests.test_request_private_headers_and_url_credentials_do_not_fallback) ... ok
+test_tls_abort_unknown_and_custom_transport_do_not_fallback (test_expo_doctor_network.DoctorNetworkTests.test_tls_abort_unknown_and_custom_transport_do_not_fallback) ... ok
+test_full_static_dataset (test_golden_dataset.GoldenDatasetTests.test_full_static_dataset) ... ok
+test_invalid_source_and_reference_are_rejected (test_golden_dataset.GoldenDatasetTests.test_invalid_source_and_reference_are_rejected) ... ok
+test_pair_contrast_must_change (test_golden_dataset.GoldenDatasetTests.test_pair_contrast_must_change) ... ok
+test_safety_precedence_and_memory_consent_are_rejected_if_removed (test_golden_dataset.GoldenDatasetTests.test_safety_precedence_and_memory_consent_are_rejected_if_removed) ... ok
+test_unknown_behavior_is_rejected (test_golden_dataset.GoldenDatasetTests.test_unknown_behavior_is_rejected) ... ok
+test_7c_does_not_complete_phase_seven (test_mobile_phase_gate.MobilePhaseGateTests.test_7c_does_not_complete_phase_seven) ... ok
+test_8a_cannot_skip_phase_seven (test_mobile_phase_gate.MobilePhaseGateTests.test_8a_cannot_skip_phase_seven) ... ok
+test_8a_keeps_phase_seven_complete_and_phase_eight_incomplete (test_mobile_phase_gate.MobilePhaseGateTests.test_8a_keeps_phase_seven_complete_and_phase_eight_incomplete) ... ok
+test_8a_requires_resource_gate (test_mobile_phase_gate.MobilePhaseGateTests.test_8a_requires_resource_gate) ... ok
+test_8b_cannot_skip_phase_seven (test_mobile_phase_gate.MobilePhaseGateTests.test_8b_cannot_skip_phase_seven) ... ok
+test_8b_keeps_phase_eight_incomplete (test_mobile_phase_gate.MobilePhaseGateTests.test_8b_keeps_phase_eight_incomplete) ... ok
+test_8b_requires_connected_implementation (test_mobile_phase_gate.MobilePhaseGateTests.test_8b_requires_connected_implementation) ... ok
+test_8c_cannot_skip_phase_seven (test_mobile_phase_gate.MobilePhaseGateTests.test_8c_cannot_skip_phase_seven) ... ok
+test_8c_is_not_supported_by_8b (test_mobile_phase_gate.MobilePhaseGateTests.test_8c_is_not_supported_by_8b) ... ok
+test_8c_keeps_phase_eight_incomplete (test_mobile_phase_gate.MobilePhaseGateTests.test_8c_keeps_phase_eight_incomplete) ... ok
+test_8d_cannot_skip_agent_chat (test_mobile_phase_gate.MobilePhaseGateTests.test_8d_cannot_skip_agent_chat) ... ok
+test_8d_is_not_supported_by_8c (test_mobile_phase_gate.MobilePhaseGateTests.test_8d_is_not_supported_by_8c) ... ok
+test_8d_keeps_whole_phase_eight_incomplete (test_mobile_phase_gate.MobilePhaseGateTests.test_8d_keeps_whole_phase_eight_incomplete) ... ok
+test_8e_cannot_skip_import_history (test_mobile_phase_gate.MobilePhaseGateTests.test_8e_cannot_skip_import_history) ... ok
+test_8e_is_not_implemented_by_8d (test_mobile_phase_gate.MobilePhaseGateTests.test_8e_is_not_implemented_by_8d) ... ok
+test_8e_keeps_whole_phase_eight_incomplete (test_mobile_phase_gate.MobilePhaseGateTests.test_8e_keeps_whole_phase_eight_incomplete) ... ok
+test_8f_is_not_implemented_by_8e (test_mobile_phase_gate.MobilePhaseGateTests.test_8f_is_not_implemented_by_8e) ... ok
+test_complete_7d_marker_is_supported (test_mobile_phase_gate.MobilePhaseGateTests.test_complete_7d_marker_is_supported) ... ok
+test_missing_integration_gate_prevents_completion (test_mobile_phase_gate.MobilePhaseGateTests.test_missing_integration_gate_prevents_completion) ... ok
+test_phase_eight_is_not_claimed_by_mobile_mvp (test_mobile_phase_gate.MobilePhaseGateTests.test_phase_eight_is_not_claimed_by_mobile_mvp) ... ok
+test_complete_independent_evidence_is_accepted (test_native_closeout_gate.NativeCloseoutGateTests.test_complete_independent_evidence_is_accepted) ... ok
+test_evidence_changed_after_manifest_is_rejected (test_native_closeout_gate.NativeCloseoutGateTests.test_evidence_changed_after_manifest_is_rejected) ... ok
+test_external_artifacts_are_rejected (test_native_closeout_gate.NativeCloseoutGateTests.test_external_artifacts_are_rejected) ... ok
+test_future_phase_is_rejected (test_native_closeout_gate.NativeCloseoutGateTests.test_future_phase_is_rejected) ... ok
+test_missing_native_scene_is_rejected (test_native_closeout_gate.NativeCloseoutGateTests.test_missing_native_scene_is_rejected) ... ok
+test_native_state_snapshot_is_an_execution_step (test_native_closeout_gate.NativeCloseoutGateTests.test_native_state_snapshot_is_an_execution_step) ... ok
+test_one_failed_scene_blocks_closure (test_native_closeout_gate.NativeCloseoutGateTests.test_one_failed_scene_blocks_closure) ... ok
+test_partial_execution_cannot_be_spliced_into_pass (test_native_closeout_gate.NativeCloseoutGateTests.test_partial_execution_cannot_be_spliced_into_pass) ... ok
+test_pre_marker_failure_blocks_closure (test_native_closeout_gate.NativeCloseoutGateTests.test_pre_marker_failure_blocks_closure) ... ok
+test_env_template_and_ignore_rules (test_repository.RepositoryTests.test_env_template_and_ignore_rules) ... ok
+test_license_and_reference_inventory (test_repository.RepositoryTests.test_license_and_reference_inventory) ... ok
+test_monorepo_boundaries (test_repository.RepositoryTests.test_monorepo_boundaries) ... ok
+test_phase_one_dataset_when_enabled (test_repository.RepositoryTests.test_phase_one_dataset_when_enabled) ... ok
+test_upstream_inventory_and_hashes (test_repository.RepositoryTests.test_upstream_inventory_and_hashes) ... ok
+test_9b_marker_keeps_9a_and_phase8_native_gates (test_security_9b_tooling.NativeSecurityGateTests.test_9b_marker_keeps_9a_and_phase8_native_gates) ... ok
+test_actual_complete_native_transcripts_validate (test_security_9b_tooling.NativeSecurityGateTests.test_actual_complete_native_transcripts_validate) ... ok
+test_altered_artifact_and_outside_evidence_path_are_rejected (test_security_9b_tooling.NativeSecurityGateTests.test_altered_artifact_and_outside_evidence_path_are_rejected) ... ok
+test_missing_scene_old_dependencies_and_nonzero_exit_are_rejected (test_security_9b_tooling.NativeSecurityGateTests.test_missing_scene_old_dependencies_and_nonzero_exit_are_rejected) ... ok
+test_old_and_current_evidence_is_read_only_and_pattern_clean (test_security_9b_tooling.PrivacyToolingTests.test_old_and_current_evidence_is_read_only_and_pattern_clean) ... ok
+test_powershell_timeout_python_and_native_failure_output_is_private (test_security_9b_tooling.PrivacyToolingTests.test_powershell_timeout_python_and_native_failure_output_is_private) ... ok
+test_9c_marker_retains_all_prior_security_and_native_gates (test_security_9c_tooling.Security9CGateTests.test_9c_marker_retains_all_prior_security_and_native_gates) ... ok
+test_actual_complete_local_evidence_passes (test_security_9c_tooling.Security9CGateTests.test_actual_complete_local_evidence_passes) ... ok
+test_completed_marker_needs_independent_pre_exit_and_pass (test_security_9c_tooling.Security9CGateTests.test_completed_marker_needs_independent_pre_exit_and_pass) ... ok
+test_evidence_corruption_and_outside_paths_fail (test_security_9c_tooling.Security9CGateTests.test_evidence_corruption_and_outside_paths_fail) ... ok
+test_missing_worker_coverage_or_public_waiver_fails (test_security_9c_tooling.Security9CGateTests.test_missing_worker_coverage_or_public_waiver_fails) ... ok
+test_new_source_drift_invalidates_evidence (test_security_9c_tooling.Security9CGateTests.test_new_source_drift_invalidates_evidence) ... ok
+test_9d_keeps_all_old_security_and_native_gates_and_rejects_next_phase (test_security_9d_tooling.Security9DGateTests.test_9d_keeps_all_old_security_and_native_gates_and_rejects_next_phase) ... ok
+test_actual_local_native_restore_evidence_and_production_limits (test_security_9d_tooling.Security9DGateTests.test_actual_local_native_restore_evidence_and_production_limits) ... ok
+test_current_9c_source_needs_fresh_complete_regression_and_original_hash (test_security_9d_tooling.Security9DGateTests.test_current_9c_source_needs_fresh_complete_regression_and_original_hash) ... ok
+test_evidence_hash_path_and_nonzero_exit_fail_closed (test_security_9d_tooling.Security9DGateTests.test_evidence_hash_path_and_nonzero_exit_fail_closed) ... ok
+test_marker_requires_success_and_independent_pre_post (test_security_9d_tooling.Security9DGateTests.test_marker_requires_success_and_independent_pre_post) ... ok
+test_no_production_waiver_incomplete_scope_or_missing_coverage (test_security_9d_tooling.Security9DGateTests.test_no_production_waiver_incomplete_scope_or_missing_coverage) ... ok
+test_old_baseline_is_not_current_stage_pre_or_post_root_proof (test_security_9d_tooling.Security9DGateTests.test_old_baseline_is_not_current_stage_pre_or_post_root_proof) ... ok
+test_actual_risk_register_is_valid (test_security_gate.SecurityGateTests.test_actual_risk_register_is_valid) ... ok
+test_completed_marker_requires_immutable_successful_evidence (test_security_gate.SecurityGateTests.test_completed_marker_requires_immutable_successful_evidence) ... ok
+test_missing_field_duplicate_id_and_fake_test_are_rejected (test_security_gate.SecurityGateTests.test_missing_field_duplicate_id_and_fake_test_are_rejected) ... ok
+test_only_8_9a_is_allowed_and_phase8_evidence_stays_required (test_security_gate.SecurityGateTests.test_only_8_9a_is_allowed_and_phase8_evidence_stays_required) ... ok
+test_unresolved_p1_cannot_be_waived (test_security_gate.SecurityGateTests.test_unresolved_p1_cannot_be_waived) ... ok
+test_fake_credentials_are_detected_without_returning_values (test_security_tooling.SecurityToolingTests.test_fake_credentials_are_detected_without_returning_values) ... ok
+test_history_privacy_screen (test_security_tooling.SecurityToolingTests.test_history_privacy_screen) ... ok
+test_private_subprocess_failures_hide_arguments_and_output (test_security_tooling.SecurityToolingTests.test_private_subprocess_failures_hide_arguments_and_output) ... ok
+test_contract_identifies_frozen_source_and_required_sections (test_skill_contract.SkillContractTests.test_contract_identifies_frozen_source_and_required_sections) ... ok
+test_every_upstream_reference_is_traceable_in_contract (test_skill_contract.SkillContractTests.test_every_upstream_reference_is_traceable_in_contract) ... ok
+test_scenarios_examples_and_anti_patterns_are_substantive (test_skill_contract.SkillContractTests.test_scenarios_examples_and_anti_patterns_are_substantive) ... ok
+
+----------------------------------------------------------------------
+Ran 74 tests in 1.368s
+
+OK
++ E:\python\python.exe knowledge/goutoujunshi/scripts/validate_skill.py
+goutoujunshi validation passed
++ uv --cache-dir F:\狗头军师app化\goutouapp\.cache\phase9e-baseline-repo\.cache\uv --no-managed-python run --locked python scripts/check_db_migrations.py
++ alembic upgrade head
++ alembic downgrade base
++ alembic upgrade head
++ alembic check
+No new upgrade operations detected.
+PASS: isolated Alembic upgrade head / downgrade base / upgrade head / check
++ uv --cache-dir F:\狗头军师app化\goutouapp\.cache\phase9e-baseline-repo\.cache\uv --no-managed-python run --locked pytest -q apps/server/tests/test_llm_mock.py apps/server/tests/test_llm_openai_compatible.py
+................................                                         [100%]
+32 passed in 0.59s
++ uv --cache-dir F:\狗头军师app化\goutouapp\.cache\phase9e-baseline-repo\.cache\uv --no-managed-python run --locked pytest -q apps/server/tests/test_backend_integration.py
+.......                                                                  [100%]
+7 passed in 5.16s
++ uv --cache-dir F:\狗头军师app化\goutouapp\.cache\phase9e-baseline-repo\.cache\uv --no-managed-python run --locked pytest -q apps/server/tests/test_agent_contracts.py
+........................................................................ [ 81%]
+................                                                         [100%]
+88 passed in 0.28s
++ uv --cache-dir F:\狗头军师app化\goutouapp\.cache\phase9e-baseline-repo\.cache\uv --no-managed-python run --locked pytest -q apps/server/tests/test_agent_runtime.py
+........                                                                 [100%]
+8 passed in 0.54s
++ uv --cache-dir F:\狗头军师app化\goutouapp\.cache\phase9e-baseline-repo\.cache\uv --no-managed-python run --locked pytest -q apps/server/tests/test_agent_semantic.py
+........                                                                 [100%]
+8 passed in 0.97s
++ uv --cache-dir F:\狗头军师app化\goutouapp\.cache\phase9e-baseline-repo\.cache\uv --no-managed-python run --locked pytest -q apps/server/tests/test_agent_knowledge.py
+..................                                                       [100%]
+18 passed in 0.69s
++ uv --cache-dir F:\狗头军师app化\goutouapp\.cache\phase9e-baseline-repo\.cache\uv --no-managed-python run --locked python scripts/check_knowledge_routing.py
+Golden deterministic knowledge routing passed: 83 cases
++ uv --cache-dir F:\狗头军师app化\goutouapp\.cache\phase9e-baseline-repo\.cache\uv --no-managed-python run --locked pytest -q apps/server/tests/test_agent_analysis.py
+........                                                                 [100%]
+8 passed in 0.89s
++ uv --cache-dir F:\狗头军师app化\goutouapp\.cache\phase9e-baseline-repo\.cache\uv --no-managed-python run --locked python scripts/check_analysis_replay.py
+Golden structural analysis Mock replay passed: 30 cases
++ uv --cache-dir F:\狗头军师app化\goutouapp\.cache\phase9e-baseline-repo\.cache\uv --no-managed-python run --locked pytest -q apps/server/tests/test_agent_action_response.py
+................                                                         [100%]
+16 passed in 0.94s
++ uv --cache-dir F:\狗头军师app化\goutouapp\.cache\phase9e-baseline-repo\.cache\uv --no-managed-python run --locked python scripts/check_action_response_replay.py
+Golden Phase 3F action/response Mock replay passed: 38 cases
++ uv --cache-dir F:\狗头军师app化\goutouapp\.cache\phase9e-baseline-repo\.cache\uv --no-managed-python run --locked pytest -q apps/server/tests/test_agent_memory.py
+...........                                                              [100%]
+11 passed in 0.64s
++ uv --cache-dir F:\狗头军师app化\goutouapp\.cache\phase9e-baseline-repo\.cache\uv --no-managed-python run --locked pytest -q apps/server/tests/test_memory_database.py
+.....                                                                    [100%]
+5 passed in 0.93s
++ uv --cache-dir F:\狗头军师app化\goutouapp\.cache\phase9e-baseline-repo\.cache\uv --no-managed-python run --locked python scripts/check_memory_replay.py
+Golden Phase 3G memory runtime replay passed: 14 cases
++ uv --cache-dir F:\狗头军师app化\goutouapp\.cache\phase9e-baseline-repo\.cache\uv --no-managed-python run --locked pytest -q apps/server/tests/test_agent_streaming.py
+..........                                                               [100%]
+10 passed in 0.49s
++ uv --cache-dir F:\狗头军师app化\goutouapp\.cache\phase9e-baseline-repo\.cache\uv --no-managed-python run --locked pytest -q apps/server/tests/test_phase3_e2e.py
+........                                                                 [100%]
+8 passed in 0.49s
++ uv --cache-dir F:\狗头军师app化\goutouapp\.cache\phase9e-baseline-repo\.cache\uv --no-managed-python run --locked pytest -q apps/server/tests/test_agent_service.py
+............                                                             [100%]
+12 passed in 1.24s
++ uv --cache-dir F:\狗头军师app化\goutouapp\.cache\phase9e-baseline-repo\.cache\uv --no-managed-python run --locked python apps/server/agent_service_demo.py
+{"run_id": "ed6b201e-5547-40f8-aad6-8784c4540f52", "conversation_id": "7d9157cf-0b4d-495e-88c7-da9fa1e58461", "status": "completed", "persisted_roles": ["user", "assistant"], "answer_persisted": true}
++ uv --cache-dir F:\狗头军师app化\goutouapp\.cache\phase9e-baseline-repo\.cache\uv --no-managed-python run --locked pytest -q apps/server/tests/test_auth_jwt.py apps/server/tests/test_agent_rest_contract.py apps/server/tests/test_agent_rest.py
+...............................................                          [100%]
+47 passed in 2.87s
++ uv --cache-dir F:\狗头军师app化\goutouapp\.cache\phase9e-baseline-repo\.cache\uv --no-managed-python run --locked python apps/server/agent_rest_demo.py
+{"http_status": 200, "invalid_signature_status": 401, "run_id": "4e73f319-a93b-49c4-98f0-e55abb9d7dd4", "verified_subject": "944bdb91-b059-4096-9b68-8051f0fe3843", "persisted_roles": ["user", "assistant"], "answer_persisted": true}
++ uv --cache-dir F:\狗头军师app化\goutouapp\.cache\phase9e-baseline-repo\.cache\uv --no-managed-python run --locked pytest -q apps/server/tests/test_agent_stream_contract.py apps/server/tests/test_agent_stream_api.py apps/server/tests/test_agent_stream_disconnect.py
+................                                                         [100%]
+16 passed in 2.93s
++ uv --cache-dir F:\狗头军师app化\goutouapp\.cache\phase9e-baseline-repo\.cache\uv --no-managed-python run --locked python apps/server/agent_stream_demo.py
+received_event=run_started
+received_event=status
+received_event=status
+received_event=status
+received_event=status
+received_event=final_response
+received_event=completed
+replay_event=final_response
+replay_event=completed
+{"http_status": 200, "run_id": "b0c6b9b8-875e-4530-9e71-e0d13cea3b1d", "event_types": ["run_started", "status", "status", "status", "status", "final_response", "completed"], "completed_was_persisted_when_received": true, "stream_replay_events": ["final_response", "completed"], "sync_retry_same_response": true, "sync_to_stream_replay_events": ["final_response", "completed"], "one_run_per_operation": true}
++ uv --cache-dir F:\狗头军师app化\goutouapp\.cache\phase9e-baseline-repo\.cache\uv --no-managed-python run --locked pytest -q apps/server/tests/test_phase4_idempotency.py
+.................                                                        [100%]
+17 passed in 2.54s
++ uv --cache-dir F:\狗头军师app化\goutouapp\.cache\phase9e-baseline-repo\.cache\uv --no-managed-python run --locked pytest -q apps/server/tests/test_chat_import.py
+...................                                                      [100%]
+19 passed in 0.29s
++ uv --cache-dir F:\狗头军师app化\goutouapp\.cache\phase9e-baseline-repo\.cache\uv --no-managed-python run --locked python apps/server/chat_import_demo.py
+{"format": "wechat_markdown_v1", "parser_version": "1", "schema_version": "1", "message_count": 4, "speaker_counts": [{"label": "\u6021\u5b9d\ud83e\udd70", "count": 3}, {"label": "\u6211", "count": 1}], "first_timestamp_utc": "2023-11-08T23:51:23+00:00", "last_timestamp_utc": "2023-11-09T00:23:26+00:00", "warning_count": 0, "error_count": 0, "fatal_count": 0, "issue_codes": [], "issues_truncated": 0, "source_fingerprint": "798065c51948aebba421d7f3fd8cc89d5e8e99d32066ead8b13b7c6ef76fcf3c", "transcript_fingerprint": "7481a2a5d11eefb7547ed7eacb82505a5bceeaeb7194e637396da40bedd25d72"}
++ uv --cache-dir F:\狗头军师app化\goutouapp\.cache\phase9e-baseline-repo\.cache\uv --no-managed-python run --locked pytest -q apps/server/tests/test_import_jobs.py
+......                                                                   [100%]
+6 passed in 0.79s
++ uv --cache-dir F:\狗头军师app化\goutouapp\.cache\phase9e-baseline-repo\.cache\uv --no-managed-python run --locked python apps/server/import_job_demo.py
+{"status": "ready", "speaker_inventory": [{"label": "\u6021\u5b9d\ud83e\udd70", "count": 3}, {"label": "\u6211", "count": 1}], "binding_revision": 3, "persisted_after_new_session": true, "formal_message_count": 0}
++ uv --cache-dir F:\狗头军师app化\goutouapp\.cache\phase9e-baseline-repo\.cache\uv --no-managed-python run --locked pytest -q apps/server/tests/test_import_merge.py
+........                                                                 [100%]
+8 passed in 2.99s
++ uv --cache-dir F:\狗头军师app化\goutouapp\.cache\phase9e-baseline-repo\.cache\uv --no-managed-python run --locked python apps/server/import_merge_demo.py
+{"job_id": "8f78d33a-3ab4-4561-8010-fd21f172e203", "status": "imported", "imported_count": 4, "ignored_count": 0, "first_timestamp_utc": "2023-11-08T23:51:23+00:00", "last_timestamp_utc": "2023-11-09T00:23:26+00:00", "persisted_after_new_session": true, "agent_message_count": 0, "replay_status": "already_imported", "replay_duplicate_writes": 0}
++ uv --cache-dir F:\狗头军师app化\goutouapp\.cache\phase9e-baseline-repo\.cache\uv --no-managed-python run --locked pytest -q apps/server/tests/test_import_api.py
+..........                                                               [100%]
+10 passed in 4.85s
++ uv --cache-dir F:\狗头军师app化\goutouapp\.cache\phase9e-baseline-repo\.cache\uv --no-managed-python run --locked python apps/server/import_api_demo.py
+{"upload_status": 201, "speaker_count": 2, "ready_status": "ready", "imported_message_count": 2, "paginated_first_page_count": 1, "raw_artifacts_remaining": 0, "result": "PASS"}
++ uv --cache-dir F:\狗头军师app化\goutouapp\.cache\phase9e-baseline-repo\.cache\uv --no-managed-python run --locked python scripts/check_security_9a.py
+PASS: Phase 9A security documents, risks and linked test coverage
++ uv --cache-dir F:\狗头军师app化\goutouapp\.cache\phase9e-baseline-repo\.cache\uv --no-managed-python run --locked python scripts/audit_phase8_evidence.py
+{
+  "files": 131,
+  "inventory_sha256": "159f8343692c0c78f23ca164fc4444026edd41dd102ba8ff9042db0a10ac8c83",
+  "findings": []
+}
++ uv --cache-dir F:\狗头军师app化\goutouapp\.cache\phase9e-baseline-repo\.cache\uv --no-managed-python run --locked pytest -q apps/server/tests/test_upload_security.py
+.............................................                            [100%]
+45 passed in 8.36s
++ uv --cache-dir F:\狗头军师app化\goutouapp\.cache\phase9e-baseline-repo\.cache\uv --no-managed-python run --locked python scripts/audit_authorization.py
+PASS: 36 reviewed operations; 3 public
++ uv --cache-dir F:\狗头军师app化\goutouapp\.cache\phase9e-baseline-repo\.cache\uv --no-managed-python run --locked python scripts/audit_evidence_privacy.py
+{
+  "groups": {
+    "phase8f-closeout": 131,
+    "phase9a": 21,
+    "phase9b": 37,
+    "phase9c": 14,
+    "phase9d": 53
+  },
+  "file_types": {
+    ".json": 75,
+    ".exit": 90,
+    ".log": 91
+  },
+  "files": 256,
+  "findings": [],
+  "inventory_sha256": "b5ba5d4f2c0067dad60df41adfd3c853c9ce2f1a80e46496e71afc15b7d088b1",
+  "limit": "Pattern screening only; provenance and manual sampling are separate documented work"
+}
++ uv --cache-dir F:\狗头军师app化\goutouapp\.cache\phase9e-baseline-repo\.cache\uv --no-managed-python run --locked python scripts/check_security_9b.py
+PASS: Phase 9B authorization/privacy/native/deployment gates
++ uv --cache-dir F:\狗头军师app化\goutouapp\.cache\phase9e-baseline-repo\.cache\uv --no-managed-python run --locked pytest -q apps/server/tests/test_authorization_security.py apps/server/tests/test_privacy_logging.py
+.........................................                                [100%]
+41 passed in 6.40s
++ uv --cache-dir F:\狗头军师app化\goutouapp\.cache\phase9e-baseline-repo\.cache\uv --no-managed-python run --locked python scripts/check_security_9c.py
+PASS: Phase9C shared admission/body deadlines/recovery/privacy gates
++ uv --cache-dir F:\狗头军师app化\goutouapp\.cache\phase9e-baseline-repo\.cache\uv --no-managed-python run --locked pytest -q apps/server/tests/test_resource_admission.py
+...........................                                              [100%]
+27 passed in 46.76s
++ uv --cache-dir F:\狗头军师app化\goutouapp\.cache\phase9e-baseline-repo\.cache\uv --no-managed-python run --locked python scripts/check_security_9d.py
+PASS: Phase9D primary lifecycle/periodic maintenance/native controlled restore gates
++ uv --cache-dir F:\狗头军师app化\goutouapp\.cache\phase9e-baseline-repo\.cache\uv --no-managed-python run --locked pytest -q apps/server/tests/test_data_lifecycle.py apps/server/tests/test_backup_restore.py
+............................................                             [100%]
+44 passed in 26.99s
++ uv --cache-dir F:\狗头军师app化\goutouapp\.cache\phase9e-baseline-repo\.cache\uv --no-managed-python run --locked python apps/server/backup_restore_demo.py
+{"postgresql": true, "native_dump_restore": true, "owners": 2, "imported_occurrences": 2, "maintenance_iterations": 3, "maintenance_failures": 0, "deleted_memory_recalled": 0, "retained_owner_recalled": 1, "original_receipt_replayed": true, "restored_artifact_files": 0, "production_deployed": false, "memory_removed": 1, "memory_retained": 1, "pending_imports_cancelled": 0, "current_receipts": 1}
++ uv --cache-dir F:\狗头军师app化\goutouapp\.cache\phase9e-baseline-repo\.cache\uv --no-managed-python run --locked pytest -q apps/server/tests/test_memory_control.py
+.......                                                                  [100%]
+7 passed in 2.41s
++ uv --cache-dir F:\狗头军师app化\goutouapp\.cache\phase9e-baseline-repo\.cache\uv --no-managed-python run --locked python apps/server/memory_control_demo.py
+{"initial_consent": false, "grant_effective": true, "agent_write": "saved", "inspect_count": 1, "pause_blocks_write_and_recall": true, "resume_recall_count": 1, "revoke_blocks_write_and_recall": true, "record_retained": true}
++ uv --cache-dir F:\狗头军师app化\goutouapp\.cache\phase9e-baseline-repo\.cache\uv --no-managed-python run --locked python apps/server/memory_control_http_demo.py
+{"initial_http_status": 200, "grant_effective": true, "pause_blocks_recall": true, "resume_restores_recall": true, "inspect_http_status": 200, "inspect_count": 0}
++ uv --cache-dir F:\狗头军师app化\goutouapp\.cache\phase9e-baseline-repo\.cache\uv --no-managed-python run --locked pytest -q apps/server/tests/test_memory_mutation.py
+..........                                                               [100%]
+10 passed in 1.78s
++ uv --cache-dir F:\狗头军师app化\goutouapp\.cache\phase9e-baseline-repo\.cache\uv --no-managed-python run --locked python apps/server/memory_destructive_control_demo.py
+{"saved_count": 2, "undo_preview_available": true, "undo_status": "undone", "undo_retry_replayed": true, "older_memory_survived_retry": true, "delete_confirmation_count": 1, "delete_affected_count": 1, "inspect_after_delete_count": 0, "agent_recall_after_delete_count": 0}
++ uv --cache-dir F:\狗头军师app化\goutouapp\.cache\phase9e-baseline-repo\.cache\uv --no-managed-python run --locked python apps/server/memory_destructive_http_demo.py
+{"preview_http_status": 200, "undo_http_status": 200, "undo_retry_replayed": true, "older_memory_survived_retry": true, "confirmation_http_status": 200, "delete_http_status": 200, "inspect_after_delete_count": 0}
++ uv --cache-dir F:\狗头军师app化\goutouapp\.cache\phase9e-baseline-repo\.cache\uv --no-managed-python run --locked pytest -q apps/server/tests/test_memory_retention.py
+..........................                                               [100%]
+26 passed in 4.99s
++ uv --cache-dir F:\狗头军师app化\goutouapp\.cache\phase9e-baseline-repo\.cache\uv --no-managed-python run --locked python apps/server/memory_retention_demo.py
+{"consent_explicit": true, "agent_recall_active_count": 1, "expired_record_excluded_before_cleanup": true, "dry_run_eligible_records": 1, "dry_run_did_not_mutate": true, "physical_records_removed": 1, "undo_history_removed": 1, "new_session_inspect_active_count": 1, "second_cleanup_removed": 0, "consumed_challenges_removed": 1, "receipt_replay_after_challenge_cleanup": true, "new_memory_survives_receipt_retry": true, "automatic_scheduling": "NOT DEPLOYED"}
++ uv --cache-dir F:\狗头军师app化\goutouapp\.cache\phase9e-baseline-repo\.cache\uv --no-managed-python run --locked pytest -q apps/server/tests/test_phase6_e2e.py
+................................                                         [100%]
+32 passed in 8.68s
++ uv --cache-dir F:\狗头军师app化\goutouapp\.cache\phase9e-baseline-repo\.cache\uv --no-managed-python run --locked python apps/server/memory_phase6_e2e_demo.py
+{"real_socket": true, "real_signed_jwt": true, "real_postgresql": true, "saved_via_rest_and_sse_count": 2, "pause_blocks_recall_and_write": true, "undo_replay_preserves_older_record": true, "delete_receipt_id": "19666791-10c6-40c0-ad85-acf826f7bb85", "expired_excluded_before_cleanup": true, "cleanup_record_count": 1, "cleanup_undo_count": 1, "expired_duplicate_resave_new_id": true, "final_inspect_count": 0, "status": "PASS"}
++ uv --cache-dir F:\狗头军师app化\goutouapp\.cache\phase9e-baseline-repo\.cache\uv --no-managed-python run --locked python scripts/export_openapi.py --check
+PASS: deterministic OpenAPI, 36 operations, all 26 Phase 7D contracts preserved
++ uv --cache-dir F:\狗头军师app化\goutouapp\.cache\phase9e-baseline-repo\.cache\uv --no-managed-python run --locked pytest -q apps/server/tests/test_resource_contract.py apps/server/tests/test_resource_api.py
+........................................................................ [ 74%]
+.........................                                                [100%]
+97 passed in 13.97s
++ uv --cache-dir F:\狗头军师app化\goutouapp\.cache\phase9e-baseline-repo\.cache\uv --no-managed-python run --locked python apps/server/resource_api_demo.py
+{"agent_status": "completed", "history_pages_repeat_without_loss": true, "owned_resource_counts": {"conversations": 1, "persons": 1, "relationships": 1}, "owner_neutral_denials": 3, "persisted_history_roles": ["user", "assistant"], "postgresql": true, "real_socket": true, "response_loss_retries": 3, "signed_jwt": true}
++ uv --cache-dir F:\狗头军师app化\goutouapp\.cache\phase9e-baseline-repo\.cache\uv --no-managed-python run --locked pytest -q apps/server/tests
+........................................................................ [ 10%]
+........................................................................ [ 20%]
+........................................................................ [ 30%]
+........................................................................ [ 40%]
+........................................................................ [ 50%]
+........................................................................ [ 60%]
+........................................................................ [ 70%]
+........................................................................ [ 80%]
+........................................................................ [ 90%]
+...................................................................      [100%]
+715 passed in 131.50s (0:02:11)
++ E:\python\python.exe evals/validate.py
+Golden annotation validation passed: {'cases': 83, 'categories': 27, 'scenarios': 19, 'high_risk': 16, 'minimal_pairs': 6}
++ git -c safe.directory=F:/狗头军师app化/goutouapp/.cache/phase9e-baseline-repo diff --check
++ git -c safe.directory=F:/狗头军师app化/goutouapp/.cache/phase9e-baseline-repo diff --cached --check
+Repository secret boundary check passed
++ uv --cache-dir F:\狗头军师app化\goutouapp\.cache\phase9e-baseline-repo\.cache\uv --no-managed-python run --locked ruff check apps/server evals/phase3c_semantic.py evals/phase3d_routing.py evals/phase3e_analysis.py evals/phase3f_action_response.py evals/phase3g_memory.py scripts/verify.py scripts/check_knowledge_routing.py scripts/check_analysis_replay.py scripts/check_action_response_replay.py scripts/check_memory_replay.py scripts/check_db_migrations.py scripts/check_mobile.py scripts/export_openapi.py scripts/phase8_android_demo.py scripts/phase8_native_closeout.py scripts/check_security_9a.py scripts/audit_phase8_evidence.py scripts/audit_authorization.py scripts/audit_evidence_privacy.py scripts/check_security_9b.py scripts/check_security_9c.py scripts/check_security_9d.py scripts/phase9b_android_smoke.py
+All checks passed!
++ uv --cache-dir F:\狗头军师app化\goutouapp\.cache\phase9e-baseline-repo\.cache\uv --no-managed-python run --locked ruff format --check apps/server evals/phase3c_semantic.py evals/phase3d_routing.py evals/phase3e_analysis.py evals/phase3f_action_response.py evals/phase3g_memory.py scripts/verify.py scripts/check_knowledge_routing.py scripts/check_analysis_replay.py scripts/check_action_response_replay.py scripts/check_memory_replay.py scripts/check_db_migrations.py scripts/check_mobile.py scripts/export_openapi.py scripts/phase8_android_demo.py scripts/phase8_native_closeout.py scripts/check_security_9a.py scripts/audit_phase8_evidence.py scripts/audit_authorization.py scripts/audit_evidence_privacy.py scripts/check_security_9b.py scripts/check_security_9c.py scripts/check_security_9d.py scripts/phase9b_android_smoke.py
+197 files already formatted
++ E:\python\python.exe scripts/check_mobile.py
+PASS: project pnpm 11.25.0
+PASS: Mobile six routes, strict contracts, fixture and secret/network boundaries
++ C:\Users\VOS-User\AppData\Roaming\npm\pnpm.CMD install --frozen-lockfile --offline
+Scope: all 3 workspace projects
+Already up to date
+Done in 306ms using pnpm v11.25.0
++ C:\Users\VOS-User\AppData\Roaming\npm\pnpm.CMD --filter @goutou/mobile run compatibility
+$ expo install --check
+Dependencies are up to date
++ C:\Users\VOS-User\AppData\Roaming\npm\pnpm.CMD --filter @goutou/mobile run typecheck
+$ tsc --noEmit
++ C:\Users\VOS-User\AppData\Roaming\npm\pnpm.CMD --filter @goutou/mobile run lint
+$ eslint .
++ C:\Users\VOS-User\AppData\Roaming\npm\pnpm.CMD --filter @goutou/mobile run format:check
+$ prettier --check .
+Checking formatting...
+[warn] .prettierrc.json
+[warn] agent-connected/http.spec.ts
+[warn] agent-connected/web.spec.ts
+[warn] app.json
+[warn] app/_layout.tsx
+[warn] app/+not-found.tsx
+[warn] app/chat.tsx
+[warn] app/history.tsx
+[warn] app/import.tsx
+[warn] app/index.tsx
+[warn] app/relationship.tsx
+[warn] app/settings.tsx
+[warn] assets/README.md
+[warn] connected/fixture.ts
+[warn] connected/http.spec.ts
+[warn] connected/web.spec.ts
+[warn] eslint.config.js
+[warn] final-connected/web.spec.ts
+[warn] import-connected/http.spec.ts
+[warn] import-connected/support.ts
+[warn] import-connected/web.spec.ts
+[warn] jest.config.js
+[warn] memory-connected/http.spec.ts
+[warn] memory-connected/support.ts
+[warn] memory-connected/web.spec.ts
+[warn] package.json
+[warn] playwright.agent.config.ts
+[warn] playwright.config.ts
+[warn] playwright.connected.config.ts
+[warn] playwright.final.config.ts
+[warn] playwright.import.config.ts
+[warn] playwright.memory.config.ts
+[warn] README.md
+[warn] smoke/controls.spec.ts
+[warn] smoke/features.spec.ts
+[warn] smoke/integration.spec.ts
+[warn] smoke/web.spec.ts
+[warn] src/api/agentErrors.ts
+[warn] src/api/agentEvents.ts
+[warn] src/api/errors.ts
+[warn] src/api/importAdapter.ts
+[warn] src/api/importErrors.ts
+[warn] src/api/memoryAdapter.ts
+[warn] src/api/memoryErrors.ts
+[warn] src/api/resourceAdapter.ts
+[warn] src/api/sseParser.ts
+[warn] src/api/streamFetch.native.ts
+[warn] src/api/streamFetch.ts
+[warn] src/api/transport.ts
+[warn] src/api/uuid.ts
+[warn] src/components/ChatComposer.tsx
+[warn] src/components/ChatMessageList.tsx
+[warn] src/components/ChatRunPreview.tsx
+[warn] src/components/DevelopmentSessionControls.tsx
+[warn] src/components/HistoryList.tsx
+[warn] src/components/RelationshipSelector.tsx
+[warn] src/components/SpeakerBindingControls.tsx
+[warn] src/components/StatePreview.tsx
+[warn] src/components/ui.tsx
+[warn] src/contracts/chat.ts
+[warn] src/contracts/connectedImport.ts
+[warn] src/contracts/connectedMemory.ts
+[warn] src/contracts/history.ts
+[warn] src/contracts/import.ts
+[warn] src/contracts/relationship.ts
+[warn] src/contracts/resources.ts
+[warn] src/contracts/settings.ts
+[warn] src/contracts/shell.ts
+[warn] src/data/agentChatController.ts
+[warn] src/data/connectedSource.ts
+[warn] src/data/controlFixtures.ts
+[warn] src/data/DataSourceProvider.tsx
+[warn] src/data/demoSource.ts
+[warn] src/data/featureFixtures.ts
+[warn] src/data/filePicker.native.ts
+[warn] src/data/filePicker.ts
+[warn] src/data/historyController.ts
+[warn] src/data/importController.ts
+[warn] src/data/memoryController.ts
+[warn] src/data/resourceController.ts
+[warn] src/diagnostics/nativeSseObserver.native.ts
+[warn] src/diagnostics/nativeSseObserver.ts
+[warn] src/diagnostics/nativeSseObserverCore.ts
+[warn] src/features/ChatScreen.tsx
+[warn] src/features/ConnectedChatScreen.tsx
+[warn] src/features/ConnectedHistoryScreen.tsx
+[warn] src/features/ConnectedImportScreen.tsx
+[warn] src/features/ConnectedMemoryPanel.tsx
+[warn] src/features/ConnectedPendingScreen.tsx
+[warn] src/features/ConnectedResourcesScreen.tsx
+[warn] src/features/HistoryScreen.tsx
+[warn] src/features/HomeScreen.tsx
+[warn] src/features/ImportScreen.tsx
+[warn] src/features/RelationshipScreen.tsx
+[warn] src/features/SettingsScreen.tsx
+[warn] src/hooks/useSurface.ts
+[warn] src/navigation/routes.ts
+[warn] src/navigation/scope.ts
+[warn] src/session/ConnectionProvider.tsx
+[warn] src/session/developmentSession.ts
+[warn] src/session/storage.ts
+[warn] src/session/tokenStorage.native.ts
+[warn] src/session/tokenStorage.ts
+[warn] src/theme/ThemeProvider.tsx
+[warn] src/theme/tokens.ts
+[warn] tests/agentChat.test.ts
+[warn] tests/authPrivacy.test.ts
+[warn] tests/chat.test.tsx
+[warn] tests/connected.test.ts
+[warn] tests/connectedChatUI.test.tsx
+[warn] tests/connectedHistory.test.ts
+[warn] tests/connectedImport.test.ts
+[warn] tests/connectedImportUI.test.tsx
+[warn] tests/connectedMemory.test.ts
+[warn] tests/connectedMemoryUI.test.tsx
+[warn] tests/controls.test.tsx
+[warn] tests/filePicker.test.ts
+[warn] tests/fullMobileIntegration.test.ts
+[warn] tests/generated.contracts.ts
+[warn] tests/history.test.tsx
+[warn] tests/import.test.tsx
+[warn] tests/importSupport.ts
+[warn] tests/integration.test.tsx
+[warn] tests/memorySupport.ts
+[warn] tests/nativeSseObserver.test.ts
+[warn] tests/relationship.test.tsx
+[warn] tests/resourceAdmission.test.ts
+[warn] tests/resourceNames.test.ts
+[warn] tests/sessionIsolation.test.ts
+[warn] tests/settings.test.tsx
+[warn] tests/setup.ts
+[warn] tests/shell.test.tsx
+[warn] tests/sseParser.test.ts
+[warn] tests/testApp.tsx
+[warn] tests/uploadSecurity.test.ts
+[warn] tsconfig.json
+[warn] Code style issues found in 136 files. Run Prettier with --write to fix.
+F:\狗头军师app化\goutouapp\.cache\phase9e-baseline-repo\apps\mobile:
+[ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL] @goutou/mobile@0.1.0 format:check: `prettier --check .`
+Exit status 1
+Traceback (most recent call last):
+  File "F:\狗头军师app化\goutouapp\.cache\phase9e-baseline-repo\scripts\check_mobile.py", line 126, in <module>
+    main()
+    ~~~~^^
+  File "F:\狗头军师app化\goutouapp\.cache\phase9e-baseline-repo\scripts\check_mobile.py", line 109, in main
+    subprocess.run(command, cwd=ROOT, env=env, check=True)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\python\Lib\subprocess.py", line 578, in run
+    raise CalledProcessError(retcode, process.args,
+                             output=stdout, stderr=stderr)
+subprocess.CalledProcessError: Command '['C:\\Users\\VOS-User\\AppData\\Roaming\\npm\\pnpm.CMD', '--filter', '@goutou/mobile', 'run', 'format:check']' returned non-zero exit status 1.
+FAIL: Command '['E:\\python\\python.exe', 'scripts/check_mobile.py']' returned non-zero exit status 1.

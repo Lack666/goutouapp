@@ -180,6 +180,8 @@ class ImportWorkflowService:
     ) -> ImportMergeResult:
         with self._sessions() as db:
             job = self._owned_job(db, actor, job_id)
+            if job.deleted_at is not None:
+                raise ImportMergeError(ImportMergeErrorCode.DATASET_DELETED)
             if job.binding_revision != expected_revision:
                 raise ImportMergeError(ImportMergeErrorCode.REVISION_CONFLICT)
             if job.status == "imported":
@@ -214,6 +216,8 @@ class ImportWorkflowService:
             # A concurrent finalize may have imported and removed this same artifact.
             with self._sessions() as db:
                 current = self._owned_job(db, actor, job_id)
+                if current.deleted_at is not None:
+                    raise ImportMergeError(ImportMergeErrorCode.DATASET_DELETED) from None
                 if current.status == "imported" and current.binding_revision == expected_revision:
                     return ImportMergeService._receipt(
                         current, current, ImportMergeStatus.ALREADY_IMPORTED, 0

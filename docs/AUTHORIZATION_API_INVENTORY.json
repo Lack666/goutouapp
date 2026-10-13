@@ -1,6 +1,6 @@
 {
-  "phase": "9B",
-  "operations": 36,
+  "phase": "9E",
+  "operations": 39,
   "public": 3,
   "inventory": [
     {
@@ -468,6 +468,108 @@
       "regression_tests": [
         "apps/server/tests/test_authorization_security.py",
         "apps/server/tests/test_resource_api.py"
+      ],
+      "bearer_openapi": true
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/erasures/execute",
+      "operation_id": "execute_erasure_api_v1_erasures_execute_post",
+      "classification": "Guarded Mutation Endpoint",
+      "authenticated": true,
+      "jwt_requirement": "fixed HS256 / sub(UUID), exp, iss, aud; service validates existing User or owned FK-backed resource",
+      "owner_source": "Verified AuthenticatedActor.user_id only",
+      "resource_id": [],
+      "body_resource_ids": [
+        "target_id",
+        "relationship_id",
+        "confirmation_id"
+      ],
+      "parent_resource_validation": "Signed existing owner; exact canonical Dataset/Conversation and Relationship; owner-bound snapshot/expiry challenge and durable original-key receipt",
+      "foreign_resource_response": "owner-neutral not-found; foreign confirmation 409 indistinguishable from unavailable; no foreign run/receipt ID",
+      "sensitive_fields": "Owned public DTO only; content/answer/names/labels/keys and subject/challenge owner IDs where existing contract allows. No ORM/raw artifact/private evidence projection.",
+      "response_contract": {
+        "application/json": {
+          "schema": {
+            "$ref": "#/components/schemas/ErasureResult"
+          }
+        }
+      },
+      "mutation_side_effects": "Exact target Message removal, durable tombstone and receipt; Memory preserved",
+      "router": "apps/server/app/api/v1/erasure.py::execute_erasure",
+      "service_repository_review": [
+        "apps/server/app/services/erasure.py"
+      ],
+      "regression_tests": [
+        "apps/server/tests/test_authorization_security.py",
+        "apps/server/tests/test_erasure.py"
+      ],
+      "bearer_openapi": true
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/erasures/prepare",
+      "operation_id": "prepare_erasure_api_v1_erasures_prepare_post",
+      "classification": "Owner-scoped Endpoint",
+      "authenticated": true,
+      "jwt_requirement": "fixed HS256 / sub(UUID), exp, iss, aud; service validates existing User or owned FK-backed resource",
+      "owner_source": "Verified AuthenticatedActor.user_id only",
+      "resource_id": [],
+      "body_resource_ids": [
+        "target_id",
+        "relationship_id"
+      ],
+      "parent_resource_validation": "Signed existing owner; exact canonical Dataset/Conversation and Relationship; owner-bound snapshot/expiry challenge and durable original-key receipt",
+      "foreign_resource_response": "owner-neutral not-found; foreign confirmation 409 indistinguishable from unavailable; no foreign run/receipt ID",
+      "sensitive_fields": "Owned public DTO only; content/answer/names/labels/keys and subject/challenge owner IDs where existing contract allows. No ORM/raw artifact/private evidence projection.",
+      "response_contract": {
+        "application/json": {
+          "schema": {
+            "$ref": "#/components/schemas/ErasureChallenge"
+          }
+        }
+      },
+      "mutation_side_effects": "Owner-bound short-lived exact-snapshot challenge",
+      "router": "apps/server/app/api/v1/erasure.py::prepare_erasure",
+      "service_repository_review": [
+        "apps/server/app/services/erasure.py"
+      ],
+      "regression_tests": [
+        "apps/server/tests/test_authorization_security.py",
+        "apps/server/tests/test_erasure.py"
+      ],
+      "bearer_openapi": true
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/erasures/receipts/{receipt_id}",
+      "operation_id": "get_erasure_receipt_api_v1_erasures_receipts__receipt_id__get",
+      "classification": "Owner-scoped Endpoint",
+      "authenticated": true,
+      "jwt_requirement": "fixed HS256 / sub(UUID), exp, iss, aud; service validates existing User or owned FK-backed resource",
+      "owner_source": "Verified AuthenticatedActor.user_id only",
+      "resource_id": [
+        "receipt_id"
+      ],
+      "body_resource_ids": [],
+      "parent_resource_validation": "Signed existing owner; exact canonical Dataset/Conversation and Relationship; owner-bound snapshot/expiry challenge and durable original-key receipt",
+      "foreign_resource_response": "owner-neutral not-found; foreign confirmation 409 indistinguishable from unavailable; no foreign run/receipt ID",
+      "sensitive_fields": "Owned public DTO only; content/answer/names/labels/keys and subject/challenge owner IDs where existing contract allows. No ORM/raw artifact/private evidence projection.",
+      "response_contract": {
+        "application/json": {
+          "schema": {
+            "$ref": "#/components/schemas/ErasureResult"
+          }
+        }
+      },
+      "mutation_side_effects": "none",
+      "router": "apps/server/app/api/v1/erasure.py::get_erasure_receipt",
+      "service_repository_review": [
+        "apps/server/app/services/erasure.py"
+      ],
+      "regression_tests": [
+        "apps/server/tests/test_authorization_security.py",
+        "apps/server/tests/test_erasure.py"
       ],
       "bearer_openapi": true
     },

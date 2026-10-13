@@ -1,0 +1,40 @@
+F                                                                        [100%]
+================================== FAILURES ===================================
+_________ test_restore_cannot_drop_post_backup_imported_dataset_fence _________
+
+erasure_api = (Engine(postgresql+psycopg://postgres@127.0.0.1:15434/goutou_test_99acca18ea19), <starlette.testclient.TestClient obje...': 'ready', ...}, WindowsPath('F:/狗头军师app化/goutouapp/.cache/phase9e-fence-repro/test_restore_cannot_drop_post_0'), ...)
+
+    def test_restore_cannot_drop_post_backup_imported_dataset_fence(erasure_api):
+        engine, client, a, _, _, temp, _ = erasure_api
+        ready = bind(client, a[0], upload(client, a[0], content=transcript(6)).json(), a[1], a[2])
+        archive = temp / "ready-before-import.dump"
+        dump_synthetic(engine, archive)
+        try:
+            assert finalize(client, a[0], ready).status_code == 200
+            body = {"domain": "dataset", "target_id": ready["id"], "relationship_id": str(a[2])}
+            challenge = client.post(BASE + "/prepare", headers=headers(a[0]), json=body).json()
+            assert (
+                execute(
+                    erasure_api,
+                    {
+                        **body,
+                        "confirmation_id": challenge["confirmation_id"],
+                        "operation_key": uuid4().hex,
+                    },
+                ).status_code
+                == 200
+            )
+            root = temp / "restored-before-import"
+            root.mkdir()
+            with restore_synthetic(engine, archive, root) as restore:
+                # The backup had a ready Job, without the canonical imported unique
+                # index fence. Merely copying deleted_at then cancelling the Job
+                # would permit a new same-transcript Job to resurrect the dataset.
+>               with pytest.raises(RecoveryError):
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E               Failed: DID NOT RAISE RecoveryError
+
+apps\server\tests\test_erasure.py:561: Failed
+=========================== short test summary info ===========================
+FAILED apps/server/tests/test_erasure.py::test_restore_cannot_drop_post_backup_imported_dataset_fence
+1 failed in 3.55s

@@ -29,6 +29,7 @@ class ImportMergeErrorCode(StrEnum):
     TRANSCRIPT_MISMATCH = "transcript_mismatch"
     BINDING_INVALID = "binding_invalid"
     PERSISTENCE_FAILED = "persistence_failed"
+    DATASET_DELETED = "dataset_deleted"
 
 
 class ImportMergeError(Exception):
@@ -182,6 +183,8 @@ class ImportMergeService:
                 )
                 if job is None:
                     raise ImportMergeError(ImportMergeErrorCode.JOB_NOT_FOUND)
+                if job.deleted_at is not None:
+                    raise ImportMergeError(ImportMergeErrorCode.DATASET_DELETED)
                 if job.binding_revision != expected_revision:
                     raise ImportMergeError(ImportMergeErrorCode.REVISION_CONFLICT)
                 if job.status not in (ImportJobStatus.READY, ImportJobStatus.IMPORTED):
@@ -270,6 +273,8 @@ class ImportMergeService:
                     .limit(1)
                 )
                 if prior is not None:
+                    if prior.deleted_at is not None:
+                        raise ImportMergeError(ImportMergeErrorCode.DATASET_DELETED)
                     return self._receipt(job, prior, ImportMergeStatus.ALREADY_IMPORTED, 0)
                 counts = {s.binding_kind: 0 for s in speakers}
                 for speaker in speakers:
@@ -338,6 +343,9 @@ def list_relationship_messages(
         .where(
             RelationshipMessage.owner_user_id == actor.user_id,
             RelationshipMessage.relationship_id == relationship_id,
+            RelationshipMessage.import_job_id.in_(
+                select(ChatImportJob.id).where(ChatImportJob.deleted_at.is_(None))
+            ),
         )
         .order_by(
             RelationshipMessage.timestamp_utc,
@@ -384,6 +392,9 @@ def page_relationship_messages(
     query = select(RelationshipMessage).where(
         RelationshipMessage.owner_user_id == actor.user_id,
         RelationshipMessage.relationship_id == relationship_id,
+        RelationshipMessage.import_job_id.in_(
+            select(ChatImportJob.id).where(ChatImportJob.deleted_at.is_(None))
+        ),
     )
     scope = sha256(f"import-history-v2:{actor.user_id}:{relationship_id}".encode()).hexdigest()
     if cursor is not None:

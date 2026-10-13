@@ -1,4 +1,37 @@
-# Data lifecycle inventory — Phase 9D
+# Data lifecycle inventory — current Phase9E
+
+Current schema:19 application tables, migration20261013_02. The dated9D inventory
+below describes the original17-table baseline. Current overrides are authoritative:
+
+- Conversation/Agent Message: guarded exact Conversation deletion physically removes
+  Messages, hides tombstone from owned lists/detail/history/run access, preserves
+  Conversation UUID/scope and AgentRun ID/status/key/fingerprint. Run message pointers
+  become null; outcome warnings/memory status cleared. No running/unresolved run force.
+- RelationshipMessage/Dataset: guarded exact canonical imported Job deletion removes
+  formal occurrences and canonical speakers/bindings, keeps Job dedup/import metadata
+  and deleted_at. Imported status/unique index preserves the same-transcript fence.
+  Cancel remains unfinished-Job-only. Historical inspect is not proof of live messages.
+- Erasure confirmations (`erasure_confirmations`): signed owner, exact domain/target/
+  Relationship/snapshot/counts, five-minute validity; expiry+24h bounded cleanup.
+  RESTRICT owner FK; no private body; all invalidated during controlled recovery.
+- Erasure receipts (`erasure_receipts`): signed successful transaction, unique owner/key,
+  fingerprint/challenge/domain/target/scope/count/time. RESTRICT owner FK; no private
+  body; durable owner lifetime fence, no time cleanup. Current receipts replace old
+  backup state after integrity comparison. Missing history blocks restore release.
+- Person/Relationship/account: no self-service erase, including empty resources;
+  audited RESTRICT dependencies and UUID retry contracts prohibit inferred cascade.
+  Account lifecycle/identity/all-copy erasure remains formally unfinished.
+- Every table is in logical DB backups; erasure affects current primary only. Old
+  dumps remain private/quarantined until exact target reconciliation. Raw artifacts
+  stay on existing9D physical cleanup/retry/accounting path, separate from history.
+- Mobile cache: existing History open/focus/refresh loads server truth; leave/logout/
+  epoch clears state. App has no chat erasure controller; disclosure added to Settings
+  and History. Generated39-operation client/allowlisted errors are not a mobile flow.
+
+All ten capability dimensions are in DATA_DELETION_MATRIX.json; execution evidence
+is PHASE_9E_ACCEPTANCE/MATRIX and test_erasure.py plus all retained tests.
+
+## Historical9D baseline inventory
 
 All entries describe actual repository storage. Sensitivity: restricted means
 private relationship/authorization data; confidential means pseudonymous metadata.

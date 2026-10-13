@@ -85,9 +85,9 @@ class SecurityGateTests(unittest.TestCase):
             with self.assertRaisesRegex(RuntimeError, "native evidence"):
                 verifier.phase_marker_check()
             security_check.assert_called_once()
-        # Explicit 9D authorization advances the future-stage rejection to 9E.
+        # Explicit 9E authorization advances the future-stage rejection to 9F.
         # The native/security assertions above remain mandatory for 9A.
-        for phase, subphase in ((9, "9A"), (8, "9E"), (7, "9A")):
+        for phase, subphase in ((9, "9A"), (8, "9F"), (7, "9A")):
             with patch.multiple(verifier, PHASE=phase, SUBPHASE=subphase):
                 with self.assertRaises(RuntimeError):
                     verifier.phase_marker_check()

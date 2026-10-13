@@ -1,0 +1,60 @@
+F                                                                        [100%]
+================================== FAILURES ===================================
+____________ test_new_agent_run_and_erasure_lock_order_remain_live ____________
+
+erasure_api = (Engine(postgresql+psycopg://postgres@127.0.0.1:15434/goutou_test_e9105ece3788), <starlette.testclient.TestClient obje... WindowsPath('C:/Users/VOS-User/AppData/Local/Temp/pytest-of-VOS-User/pytest-87/test_new_agent_run_and_erasure0'), ...)
+
+    def test_new_agent_run_and_erasure_lock_order_remain_live(erasure_api):
+        from app.schemas.erasure import ErasureTarget
+    
+        engine, _, a, *_ = erasure_api
+        service = ErasureService(lambda: Session(engine))
+        with ThreadPoolExecutor(max_workers=1) as workers:
+            with Session(engine) as agent, agent.begin():
+                records.lock_conversation_run_slot(agent, a[3])
+                future = workers.submit(
+                    service.prepare,
+                    actor_from_verified_identity(a[0]),
+                    ErasureTarget(**target(erasure_api, "conversation")),
+                )
+                deadline = time.monotonic() + 5
+                waiting = False
+                while time.monotonic() < deadline:
+                    with Session(engine) as probe:
+                        waiting = bool(
+                            probe.scalar(
+                                text(
+                                    "SELECT count(*) FROM pg_locks WHERE locktype='advisory' "
+                                    "AND NOT granted AND database=(SELECT oid FROM pg_database "
+                                    "WHERE datname=current_database())"
+                                )
+                            )
+                        )
+                    if waiting:
+                        break
+                    time.sleep(0.02)
+                assert waiting
+                # Actual Run FK checks take KEY SHARE on User. Owner serialization
+                # must allow that while erasure waits for this Conversation slot.
+                agent.add(
+                    AgentRun(
+                        user_id=a[0],
+                        conversation_id=a[3],
+                        status="pending",
+                        operation_key="synthetic-new-run-race",
+                        request_fingerprint="f" * 64,
+                    )
+                )
+                agent.flush()
+            with pytest.raises(ErasureError) as error:
+                future.result(timeout=5)
+>           assert error.value.code == "target_busy"
+E           AssertionError: assert 'persistence_failure' == 'target_busy'
+E             
+E             - target_busy
+E             + persistence_failure
+
+apps\server\tests\test_erasure.py:655: AssertionError
+=========================== short test summary info ===========================
+FAILED apps/server/tests/test_erasure.py::test_new_agent_run_and_erasure_lock_order_remain_live
+1 failed in 2.57s

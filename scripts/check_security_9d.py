@@ -103,7 +103,20 @@ def check(root=ROOT, *, completed=False):
     if matrix.get("phase") != "9D" or matrix.get("open_p0_p1") != []:
         raise RuntimeError("9D scope/blockers invalid")
     if matrix.get("source_fingerprint") != source_fingerprint(root):
-        raise RuntimeError("9D tested source fingerprint drift")
+        replacement = root / "docs/PHASE_9E_MATRIX.json"
+        if not replacement.is_file():
+            raise RuntimeError("9D tested source fingerprint drift")
+        from check_security_9e import revalidation
+
+        newer = json.loads(replacement.read_text("utf-8"))
+        revalidation(
+            newer,
+            root,
+            "lifecycle_revalidation",
+            source_fingerprint(root),
+            "docs/PHASE_9D_MATRIX.json",
+            "44 passed",
+        )
     if matrix.get("production_acceptable") is not False or not matrix.get("production_blockers"):
         raise RuntimeError("9D cannot certify production deployment")
     scope = matrix["recovery_scope"]

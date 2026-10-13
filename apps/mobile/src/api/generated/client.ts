@@ -1,5 +1,5 @@
 // Generated from docs/contracts/openapi.json. DO NOT EDIT.
-// Input SHA256: 492f8273938c3d248f2ce636f1de309645f9fd6357c72465cdabb83b945ed8b1
+// Input SHA256: 29729974a979c3bd880a63770bf142444c6fcc8485de9e792f62c9315bcef9f5
 import createClient, { type ClientOptions } from 'openapi-fetch';
 export type UUID = `${string}-${string}-${string}-${string}-${string}`;
 export interface paths {
@@ -200,6 +200,57 @@ export interface paths {
     };
     /** List Agent Messages */
     get: operations['list_agent_messages_api_v1_conversations__conversation_id__messages_get'];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/api/v1/erasures/execute': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    /** Execute Erasure */
+    post: operations['execute_erasure_api_v1_erasures_execute_post'];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/api/v1/erasures/prepare': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    /** Prepare Erasure */
+    post: operations['prepare_erasure_api_v1_erasures_prepare_post'];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/api/v1/erasures/receipts/{receipt_id}': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /** Get Erasure Receipt */
+    get: operations['get_erasure_receipt_api_v1_erasures_receipts__receipt_id__get'];
     put?: never;
     post?: never;
     delete?: never;
@@ -730,6 +781,129 @@ export interface components {
        * Format: uuid
        */
       person_id: UUID;
+    };
+    /** ErasureChallenge */
+    ErasureChallenge: {
+      /**
+       * Confirmation Id
+       * Format: uuid
+       */
+      confirmation_id: UUID;
+      /**
+       * Domain
+       * @enum {string}
+       */
+      domain: 'dataset' | 'conversation';
+      /**
+       * Expires At
+       * Format: date-time
+       */
+      expires_at: string;
+      /**
+       * Memory Affected
+       * @default false
+       * @constant
+       */
+      memory_affected: false;
+      /** Message Count */
+      message_count: number;
+      /** Relationship Id */
+      relationship_id?: UUID | null;
+      /**
+       * Retained Metadata
+       * @default Target tombstone, original operation keys and metadata-only receipts
+       */
+      retained_metadata: string;
+      /** Run Count */
+      run_count: number;
+      /**
+       * Target Id
+       * Format: uuid
+       */
+      target_id: UUID;
+    };
+    /** ErasureExecute */
+    ErasureExecute: {
+      /**
+       * Confirmation Id
+       * Format: uuid
+       */
+      confirmation_id: UUID;
+      /**
+       * Domain
+       * @enum {string}
+       */
+      domain: 'dataset' | 'conversation';
+      /** Operation Key */
+      operation_key: string;
+      /** Relationship Id */
+      relationship_id?: UUID | null;
+      /**
+       * Target Id
+       * Format: uuid
+       */
+      target_id: UUID;
+    };
+    /** ErasureResult */
+    ErasureResult: {
+      /**
+       * Confirmation Id
+       * Format: uuid
+       */
+      confirmation_id: UUID;
+      /**
+       * Domain
+       * @enum {string}
+       */
+      domain: 'dataset' | 'conversation';
+      /**
+       * Memory Affected
+       * @default false
+       * @constant
+       */
+      memory_affected: false;
+      /** Message Count */
+      message_count: number;
+      /**
+       * Performed At
+       * Format: date-time
+       */
+      performed_at: string;
+      /**
+       * Receipt Id
+       * Format: uuid
+       */
+      receipt_id: UUID;
+      /** Relationship Id */
+      relationship_id?: UUID | null;
+      /** Run Count */
+      run_count: number;
+      /**
+       * Status
+       * @default deleted
+       * @constant
+       */
+      status: 'deleted';
+      /**
+       * Target Id
+       * Format: uuid
+       */
+      target_id: UUID;
+    };
+    /** ErasureTarget */
+    ErasureTarget: {
+      /**
+       * Domain
+       * @enum {string}
+       */
+      domain: 'dataset' | 'conversation';
+      /** Relationship Id */
+      relationship_id?: UUID | null;
+      /**
+       * Target Id
+       * Format: uuid
+       */
+      target_id: UUID;
     };
     /** ErrorDetail */
     ErrorDetail: {
@@ -2500,6 +2674,292 @@ export interface operations {
         };
         content: {
           'application/json': components['schemas']['AgentMessagePage'];
+        };
+      };
+      /** @description Invalid request */
+      400: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponse'];
+        };
+      };
+      /** @description Authentication required */
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponse'];
+        };
+      };
+      /** @description Resource not found */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponse'];
+        };
+      };
+      /** @description Active run or idempotency conflict */
+      409: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponse'];
+        };
+      };
+      /** @description Validation error */
+      422: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponse'];
+        };
+      };
+      /** @description Internal server error */
+      500: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponse'];
+        };
+      };
+      /** @description Agent execution failed */
+      502: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponse'];
+        };
+      };
+      /** @description Dependency unavailable */
+      503: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponse'];
+        };
+      };
+    };
+  };
+  execute_erasure_api_v1_erasures_execute_post: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        'application/json': components['schemas']['ErasureExecute'];
+      };
+    };
+    responses: {
+      /** @description Successful Response */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErasureResult'];
+        };
+      };
+      /** @description Invalid request */
+      400: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponse'];
+        };
+      };
+      /** @description Authentication required */
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponse'];
+        };
+      };
+      /** @description Resource not found */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponse'];
+        };
+      };
+      /** @description Active run or idempotency conflict */
+      409: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponse'];
+        };
+      };
+      /** @description Validation error */
+      422: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponse'];
+        };
+      };
+      /** @description Internal server error */
+      500: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponse'];
+        };
+      };
+      /** @description Agent execution failed */
+      502: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponse'];
+        };
+      };
+      /** @description Dependency unavailable */
+      503: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponse'];
+        };
+      };
+    };
+  };
+  prepare_erasure_api_v1_erasures_prepare_post: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        'application/json': components['schemas']['ErasureTarget'];
+      };
+    };
+    responses: {
+      /** @description Successful Response */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErasureChallenge'];
+        };
+      };
+      /** @description Invalid request */
+      400: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponse'];
+        };
+      };
+      /** @description Authentication required */
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponse'];
+        };
+      };
+      /** @description Resource not found */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponse'];
+        };
+      };
+      /** @description Active run or idempotency conflict */
+      409: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponse'];
+        };
+      };
+      /** @description Validation error */
+      422: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponse'];
+        };
+      };
+      /** @description Internal server error */
+      500: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponse'];
+        };
+      };
+      /** @description Agent execution failed */
+      502: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponse'];
+        };
+      };
+      /** @description Dependency unavailable */
+      503: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponse'];
+        };
+      };
+    };
+  };
+  get_erasure_receipt_api_v1_erasures_receipts__receipt_id__get: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        receipt_id: UUID;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Successful Response */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErasureResult'];
         };
       };
       /** @description Invalid request */
@@ -4828,6 +5288,24 @@ export const operationInventory = [
     method: 'get',
     path: '/api/v1/conversations/{conversation_id}/messages',
     operationId: 'list_agent_messages_api_v1_conversations__conversation_id__messages_get',
+    bearer: true,
+  },
+  {
+    method: 'post',
+    path: '/api/v1/erasures/execute',
+    operationId: 'execute_erasure_api_v1_erasures_execute_post',
+    bearer: true,
+  },
+  {
+    method: 'post',
+    path: '/api/v1/erasures/prepare',
+    operationId: 'prepare_erasure_api_v1_erasures_prepare_post',
+    bearer: true,
+  },
+  {
+    method: 'get',
+    path: '/api/v1/erasures/receipts/{receipt_id}',
+    operationId: 'get_erasure_receipt_api_v1_erasures_receipts__receipt_id__get',
     bearer: true,
   },
   {

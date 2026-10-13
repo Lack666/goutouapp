@@ -1,5 +1,16 @@
 # Security risk register — Phase 9A
 
+Current9E authority: PHASE_9E_RISK_ASSESSMENT.json. R-09 gains tested guarded canonical
+Dataset and Conversation deletion, metadata-only durable receipts and replay fences;
+full-account/Person/Relationship erasure, production identity and App chat deletion
+remain formally unfinished. R-06 restore extends exact primary reconciliation to
+both targets; no independent journal or primary-loss production recovery. R-07 local
+admission topology remains tested; deployed ingress/host sizing/supervision stay
+blocked. R-08 imported analysis/provider integration remains absent and blocked
+pending explicit source/authorization/retention contracts. All four include controls,
+test evidence, remaining work, development/production risk and next task. Public
+production acceptableFALSE; prior JSON/matrices/evidence remain immutable history.
+
 Current9D authority: [PHASE_9D_RISK_ASSESSMENT.json](PHASE_9D_RISK_ASSESSMENT.json).
 R-06 is mitigated for tested local periodic primary maintenance/retry/resource
 reconciliation and native synthetic restore with an intact authoritative current

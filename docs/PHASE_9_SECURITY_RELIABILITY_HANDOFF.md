@@ -1,4 +1,26 @@
+Current9E acceptance PASS, marker8/9E: independent original9D baseline and
+complete current-source root pre/post exits0; Backend754/Mobile374/repository80,
+OpenAPI39, erasure39/lifecycle44/admission27 and five fresh Android scenes PASS.
+9E-01/P1 and9E-02/P2 fixed. Backend-only; App chat deletion and full account/
+Person/Relationship erasure remain absent. Production scheduler, encryption/rotation,
+identity/admission and independent primary-loss authority remain NOT DEPLOYED.
+R-06/R-07/R-08/R-09 block public exposure; production acceptableFALSE.
+PHASE_9E_ACCEPTANCE/MATRIX is current evidence authority; Phase9 IN PROGRESS,
+10–12 PENDING. Stop here; next scope requires explicit instruction.
+
 # Phase 9 — Security, Privacy, Reliability and Deletion handoff
+
+Current explicit task is9E User Data Erasure and Security Reliability Closeout.
+Only8/9D →8/9E can advance after independent full pre/post root gates; whole9 remains
+IN PROGRESS while production/full-account prerequisites persist. Backend-only signed
+Dataset/Conversation erasure, tombstones, exact-target restore, generated client,
+safe errors and UI limitation disclosure are this scope. No RAG/real provider/chat,
+release or Phase10–12. Current evidence authority: PHASE_9E_ACCEPTANCE/MATRIX.
+Formal next-task blockers: full Owner erasure and production identity/revocation,
+Person/Relationship lifecycle, App guarded deletion flow/native acceptance, independent
+authoritative deletion/control/key recovery with serving barrier, encrypted copy/key
+custody/rotation, installed monitored scheduler, R-07 ingress/host supervision and
+future R-08 provider boundary. Passing9E does not close whole9. Stop after9E.
 
 Latest authorization: Phase9D Data Deletion, Retention and Backup/Restore
 Consistency, after clean60f12d6/8-9C. MASTER_PLAN registers the minimum scope.

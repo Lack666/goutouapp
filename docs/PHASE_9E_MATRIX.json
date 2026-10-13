@@ -1,0 +1,601 @@
+{
+  "phase": "9E",
+  "status": "PASS",
+  "acceptance_state": "closed",
+  "baseline_commit": "dce4737",
+  "open_p0_p1": [],
+  "delivery": "Backend-only",
+  "app_self_service_erasure": false,
+  "full_account_erasure": false,
+  "production_disaster_recovery": false,
+  "production_scheduler": false,
+  "independent_deletion_journal": false,
+  "authoritative_current_primary_required": true,
+  "source_fingerprint": "92d33f110c959742c9137c37cb8b4d5de9994e882877e7c5d48fa16a0d81cc29",
+  "historical_native_matrix_sha256": "876ee7685da85f6811653220149d5f994d88a1da900238606b68620900e68909",
+  "recorded_at_utc": "2026-10-13T14:28:32.071591+00:00",
+  "coverage": {
+    "dataset": [
+      "apps/server/tests/test_erasure.py::test_exact_primary_deletion_replay_restart_and_domain_independence"
+    ],
+    "conversation": [
+      "apps/server/tests/test_erasure.py::test_running_and_unresolved_memory_work_blocks_deletion",
+      "apps/server/tests/test_erasure.py::test_exact_primary_deletion_replay_restart_and_domain_independence",
+      "apps/server/tests/test_erasure.py::test_new_agent_run_and_erasure_lock_order_remain_live"
+    ],
+    "associations": [
+      "apps/server/tests/test_erasure.py::test_person_relationship_account_gaps_are_explicit_no_public_erasure"
+    ],
+    "account_gap": [
+      "apps/server/tests/test_erasure.py::test_person_relationship_account_gaps_are_explicit_no_public_erasure"
+    ],
+    "confirmation": [
+      "apps/server/tests/test_erasure.py::test_challenge_exact_target_and_same_key_changed_payload",
+      "apps/server/tests/test_erasure.py::test_expiry_consumption_missing_and_snapshot_change",
+      "apps/server/tests/test_erasure.py::test_client_confirm_boolean_and_expired_token_cannot_bypass"
+    ],
+    "replay": [
+      "apps/server/tests/test_erasure.py::test_duplicate_parallel_execute_single_durable_receipt",
+      "apps/server/tests/test_erasure.py::test_signed_two_process_http_commit_response_discard_and_replay",
+      "apps/server/tests/test_erasure.py::test_expired_erasure_challenge_cleanup_keeps_original_receipt"
+    ],
+    "changed_target": [
+      "apps/server/tests/test_erasure.py::test_challenge_exact_target_and_same_key_changed_payload",
+      "apps/server/tests/test_erasure.py::test_expiry_consumption_missing_and_snapshot_change"
+    ],
+    "owner": [
+      "apps/server/tests/test_erasure.py::test_foreign_target_challenge_and_receipt_denied",
+      "apps/server/tests/test_erasure.py::test_signed_two_process_http_commit_response_discard_and_replay"
+    ],
+    "history_cursor": [
+      "apps/server/tests/test_erasure.py::test_dataset_cursor_refresh_and_agent_key_replay",
+      "apps/mobile/tests/connectedHistory.test.ts"
+    ],
+    "import_replay": [
+      "apps/server/tests/test_erasure.py::test_import_duplicate_deleted_dataset_cannot_resurrect_other_scope_survives"
+    ],
+    "agent_replay": [
+      "apps/server/tests/test_erasure.py::test_dataset_cursor_refresh_and_agent_key_replay"
+    ],
+    "memory": [
+      "apps/server/tests/test_erasure.py::test_exact_primary_deletion_replay_restart_and_domain_independence"
+    ],
+    "restore": [
+      "apps/server/tests/test_erasure.py::test_real_old_backup_reconciles_exact_targets_receipt_and_memory",
+      "apps/server/tests/test_erasure.py::test_restore_cannot_drop_post_backup_imported_dataset_fence"
+    ],
+    "missing_primary": [
+      "apps/server/tests/test_erasure.py::test_erasure_restore_without_complete_authority_fails_closed"
+    ],
+    "maintenance": [
+      "apps/server/tests/test_erasure.py::test_expired_erasure_challenge_cleanup_keeps_original_receipt",
+      "apps/server/tests/test_data_lifecycle.py"
+    ],
+    "backup": [
+      "apps/server/tests/test_backup_restore.py",
+      "apps/server/tests/test_erasure.py::test_real_old_backup_reconciles_exact_targets_receipt_and_memory"
+    ],
+    "privacy": [
+      "apps/server/tests/test_erasure.py::test_receipt_failure_rolls_back_all_effects_and_redacts",
+      "apps/server/tests/test_privacy_logging.py",
+      "tests/test_security_9b_tooling.py"
+    ],
+    "mobile": [
+      "apps/mobile/tests/erasureContract.test.ts",
+      "apps/mobile/tests/connectedHistory.test.ts"
+    ],
+    "native_regression": [
+      "scripts/phase9b_android_smoke.py"
+    ],
+    "quota": [
+      "apps/server/tests/test_resource_admission.py",
+      "apps/server/tests/test_data_lifecycle.py"
+    ]
+  },
+  "baseline": {
+    "exit_code": 0,
+    "log": {
+      "path": "docs/evidence/phase9e/baseline.log",
+      "sha256": "680a4586db1e07de3d5f37dfe6ac2d518e1421e7a9bdfb7ae18bccd5b933aa91"
+    },
+    "exit": {
+      "path": "docs/evidence/phase9e/baseline.exit",
+      "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+    }
+  },
+  "focused": {
+    "exit_code": 0,
+    "log": {
+      "path": "docs/evidence/phase9e/focused.log",
+      "sha256": "8acad108fe52a4398c436988743e524f365fd206df171de77d7174614b1585bb"
+    },
+    "exit": {
+      "path": "docs/evidence/phase9e/focused.exit",
+      "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+    }
+  },
+  "admission_revalidation": {
+    "exit_code": 0,
+    "log": {
+      "path": "docs/evidence/phase9e/admission_revalidation.log",
+      "sha256": "f143cdf2ff16e943c0dd47962389c47eeb813f8dfdb49f64258c9b1118b41614"
+    },
+    "exit": {
+      "path": "docs/evidence/phase9e/admission_revalidation.exit",
+      "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+    },
+    "source_fingerprint": "c6fb7308d4b7e45fe798169dde6ccbaa90f6eb12ea006f43d7cac522c10ea17c",
+    "historical_matrix_sha256": "86bc4b9ce89c3c94d804291b9b6c6791d6b380550b529fac2ef60053bff78fa2"
+  },
+  "lifecycle_revalidation": {
+    "exit_code": 0,
+    "log": {
+      "path": "docs/evidence/phase9e/lifecycle_revalidation.log",
+      "sha256": "f35a05a3640a575d5a0aeaa0e35ebce5644a1e73bc4b7ed6dec73a1760568ce0"
+    },
+    "exit": {
+      "path": "docs/evidence/phase9e/lifecycle_revalidation.exit",
+      "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+    },
+    "source_fingerprint": "4b486d3e9a9adee019fba6159af81785f0a7b83c747796ecef6386b6c05a00fa",
+    "historical_matrix_sha256": "298bdcdad4a2dc99a51da61cf7d183abf1e3402b72fdd5e5f48f86b5e8236903"
+  },
+  "demo": {
+    "exit_code": 0,
+    "log": {
+      "path": "docs/evidence/phase9e/demo.log",
+      "sha256": "5ea7dbd117093f794b83d5acdcdef38b7287c5d94e3d2b9885d39110a6e42375"
+    },
+    "exit": {
+      "path": "docs/evidence/phase9e/demo.exit",
+      "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+    }
+  },
+  "mobile": {
+    "exit_code": 0,
+    "log": {
+      "path": "docs/evidence/phase9e/mobile.log",
+      "sha256": "96571330f6d0b423259cdeb28880effb4c6a564b3a10c5180d58cc274151f45c"
+    },
+    "exit": {
+      "path": "docs/evidence/phase9e/mobile.exit",
+      "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+    }
+  },
+  "native": {
+    "status": "PASS",
+    "synthetic_only": true,
+    "device": "Pixel_10 / emulator-5554 / Android17 API37 / Expo Go57.0.9",
+    "mobile_fingerprint": "095f8f350c36955117d186db3fba9c062f10c8f8384a264fd8fdf6eab1a73822",
+    "fingerprint_rule": "SHA256 map of locked package/lock and Mobile src/app; CRLF normalized for text",
+    "dependencies": {
+      "expo": "57.0.28",
+      "expo-router": "57.0.26",
+      "expo-crypto": "57.0.4",
+      "expo-secure-store": "57.0.4",
+      "expo-document-picker": "57.0.3",
+      "react-native": "0.86.3"
+    },
+    "scenes": [
+      {
+        "scene": "resource_create",
+        "status": "PASS",
+        "exit_code": 0,
+        "artifacts": {
+          "steps": {
+            "path": "docs/evidence/phase9e/android-resource_create.steps.json",
+            "sha256": "e0f55db5b89259604c55415ff9a0cd7f81f3fa1062c24a83b52ff090e6e38097"
+          },
+          "report": {
+            "path": "docs/evidence/phase9e/android-resource_create.json",
+            "sha256": "df9df766a887b62a68c2c92fe5c326536698fd1e3bd58f390c7dc423a7996d18"
+          },
+          "log": {
+            "path": "docs/evidence/phase9e/android-resource_create.log",
+            "sha256": "bb7a49fd4f944909093110dcf6d1475286e80b289587f45ebd90bfabe061315b"
+          },
+          "exit": {
+            "path": "docs/evidence/phase9e/android-resource_create.exit",
+            "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+          }
+        }
+      },
+      {
+        "scene": "sse_normal",
+        "status": "PASS",
+        "exit_code": 0,
+        "artifacts": {
+          "steps": {
+            "path": "docs/evidence/phase9e/android-sse_normal.steps.json",
+            "sha256": "68b07361d3fd4eb549801917fbfb297d4bc8d699d784004d2ce58396fe57bfad"
+          },
+          "report": {
+            "path": "docs/evidence/phase9e/android-sse_normal.json",
+            "sha256": "3973403ed4c718c185252453c52d95c7a275badf7d02b07d3c5549c3e97a4491"
+          },
+          "log": {
+            "path": "docs/evidence/phase9e/android-sse_normal.log",
+            "sha256": "adfb2929a995bdbe3334851fc20ccfb3762eac9fd0ffaab0be04b5dfd291023c"
+          },
+          "exit": {
+            "path": "docs/evidence/phase9e/android-sse_normal.exit",
+            "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+          }
+        }
+      },
+      {
+        "scene": "memory_smoke_revoke",
+        "status": "PASS",
+        "exit_code": 0,
+        "artifacts": {
+          "steps": {
+            "path": "docs/evidence/phase9e/android-memory_smoke_revoke.steps.json",
+            "sha256": "605fbe95c53c6552cb89bc344a71346416c0df3e2bb5927994ce4a1fef642537"
+          },
+          "report": {
+            "path": "docs/evidence/phase9e/android-memory_smoke_revoke.json",
+            "sha256": "214408c91f82a3955f5360e56ff3622a161df6fb1c3465a6c48746b6803ee210"
+          },
+          "log": {
+            "path": "docs/evidence/phase9e/android-memory_smoke_revoke.log",
+            "sha256": "092cc673bc1bd5671ba98b77d0430abdd2ad56c58730b5a2debbe226ca61807c"
+          },
+          "exit": {
+            "path": "docs/evidence/phase9e/android-memory_smoke_revoke.exit",
+            "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+          }
+        }
+      },
+      {
+        "scene": "session",
+        "status": "PASS",
+        "exit_code": 0,
+        "artifacts": {
+          "steps": {
+            "path": "docs/evidence/phase9e/android-session.steps.json",
+            "sha256": "8d84af6416af2eea2e4cfa57f47a1d1f1a1d52a77d8174574d9b08e511069b55"
+          },
+          "report": {
+            "path": "docs/evidence/phase9e/android-session.json",
+            "sha256": "10ad3836798fbab26edd1ba853f3bdd393b1e9e41faa54a9b0230fbfd7673f43"
+          },
+          "log": {
+            "path": "docs/evidence/phase9e/android-session.log",
+            "sha256": "55ebf87bfc3d1147ffc1da51b82f91306a9a5532e3a8dc914d67e0b10154dfd7"
+          },
+          "exit": {
+            "path": "docs/evidence/phase9e/android-session.exit",
+            "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+          }
+        }
+      },
+      {
+        "scene": "import_history",
+        "status": "PASS",
+        "exit_code": 0,
+        "artifacts": {
+          "steps": {
+            "path": "docs/evidence/phase9e/android-import_history.steps.json",
+            "sha256": "4c02c12405aeaeb3ce22e365360c97a12a2accafd0927799a68cd8f8c08521ab"
+          },
+          "report": {
+            "path": "docs/evidence/phase9e/android-import_history.json",
+            "sha256": "d24eb47ba200860bff8fe2e359d5ae672ecf60ba217d0a566ca5ea1dbbdbb819"
+          },
+          "log": {
+            "path": "docs/evidence/phase9e/android-import_history.log",
+            "sha256": "d1a251d830a0f67c9d8dd35b8e77553e077c74374b2dc0f1ea45eddb03d1e69d"
+          },
+          "exit": {
+            "path": "docs/evidence/phase9e/android-import_history.exit",
+            "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+          }
+        }
+      }
+    ],
+    "rules": "Fresh complete independent executions on updated dependencies and cleared Metro. Existing 8F step/helper IDs reused as procedure only, never old evidence. No partial splice. Host REST Memory setup is identified separately from native operations.",
+    "failed_attempts": [
+      {
+        "scene": "session_failed_r1",
+        "status": "FAIL",
+        "exit_code": 1,
+        "artifacts": {
+          "steps": {
+            "path": "docs/evidence/phase9b/android-session_failed_r1.steps.json",
+            "sha256": "d10332f4f22543eb841f01eed6ef772eec211b6778a968237fec6843850321af"
+          },
+          "report": {
+            "path": "docs/evidence/phase9b/android-session_failed_r1.json",
+            "sha256": "080b9b2968b636cf88866d813bd86b2ea4e6bce734b7e2849a3e4a6001ce3fbd"
+          },
+          "log": {
+            "path": "docs/evidence/phase9b/android-session_failed_r1.log",
+            "sha256": "75cf9fafefd7c8259e02d705139b95131a949b4e280e82cdc59db7760a73db35"
+          },
+          "exit": {
+            "path": "docs/evidence/phase9b/android-session_failed_r1.exit",
+            "sha256": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04"
+          }
+        }
+      }
+    ],
+    "failure_resolution": "r1 session UI isolation passed but identity probe had no requests after acknowledged-login boundary; added explicit B authority refresh and reran entire scene r2. Failed r1 preserved, not counted PASS.",
+    "cleanup": {
+      "path": "docs/evidence/phase9b/native-cleanup.json",
+      "sha256": "d36cfc3f1412546f2370985d1275814be5b13f4774dba6eb7e6a6dad5743ca3b"
+    }
+  },
+  "fixed_findings": [
+    {
+      "id": "9E-01",
+      "severity": "P1",
+      "status": "fixed",
+      "problem": "Old ready Job backup could lose canonical imported partial-index fence and permit erased Dataset re-import after reconciliation.",
+      "control": "Require canonical imported status on restored and current exact deleted Dataset; otherwise RecoveryError and released=false.",
+      "test": "apps/server/tests/test_erasure.py::test_restore_cannot_drop_post_backup_imported_dataset_fence",
+      "reproduction_exit": 1,
+      "fixed_exit": 0
+    },
+    {
+      "id": "9E-02",
+      "severity": "P2",
+      "status": "fixed",
+      "problem": "Owner FOR UPDATE versus AgentRun FK KEY SHARE creates a lock cycle while erasure waits for Conversation slot.",
+      "control": "FOR NO KEY UPDATE still serializes owner mutations and permits FK checks; new pending Run commits and erasure rejects target_busy.",
+      "test": "apps/server/tests/test_erasure.py::test_new_agent_run_and_erasure_lock_order_remain_live",
+      "reproduction_exit": 1,
+      "fixed_exit": 0
+    }
+  ],
+  "finding_reproduction": {
+    "exit_code": 1,
+    "log": {
+      "path": "docs/evidence/phase9e/finding-9e-01-reproduction.log",
+      "sha256": "5f926776d25e2120cc4c79c341eaf252d9c59fdbebf9faea044dcb4f0137490b"
+    },
+    "exit": {
+      "path": "docs/evidence/phase9e/finding-9e-01-reproduction.exit",
+      "sha256": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04"
+    }
+  },
+  "finding_fixed": {
+    "exit_code": 0,
+    "log": {
+      "path": "docs/evidence/phase9e/finding-9e-01-fixed.log",
+      "sha256": "8df97626ecfb205bfde3770fde6a2a9fa173f555b9e60be24331910fb63b632a"
+    },
+    "exit": {
+      "path": "docs/evidence/phase9e/finding-9e-01-fixed.exit",
+      "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+    }
+  },
+  "lock_reproduction": {
+    "exit_code": 1,
+    "log": {
+      "path": "docs/evidence/phase9e/finding-9e-02-reproduction.log",
+      "sha256": "47e9b671a72d8665965be18763f3981a49e8f780387d9086ae293e376b9c8d1e"
+    },
+    "exit": {
+      "path": "docs/evidence/phase9e/finding-9e-02-reproduction.exit",
+      "sha256": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04"
+    }
+  },
+  "lock_fixed": {
+    "exit_code": 0,
+    "log": {
+      "path": "docs/evidence/phase9e/finding-9e-02-fixed.log",
+      "sha256": "67fa0370b33009be0c9a22d143287f79dfbe5f3ac1d69d1e9700702673c48882"
+    },
+    "exit": {
+      "path": "docs/evidence/phase9e/finding-9e-02-fixed.exit",
+      "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+    }
+  },
+  "failed_invocations": [
+    {
+      "run": "initial baseline",
+      "exit": 1,
+      "reason": "Stale local .env PostgreSQL5433/role; isolated loopback15434 environment override used; no env mutation."
+    },
+    {
+      "run": "original checkout baseline r1",
+      "exit": 1,
+      "reason": "Concurrent admission response incomplete under host load; unchanged tests rerun."
+    },
+    {
+      "run": "original checkout baseline r2",
+      "exit": 1,
+      "reason": "Backend715 passed; pnpm refused cross-checkout node_modules junction. Installed original frozen lock in isolated checkout."
+    },
+    {
+      "run": "original checkout baseline r3",
+      "exit": 1,
+      "reason": "Backend715 passed; inherited core.autocrlf changed Mobile LF to CRLF and failed Prettier. Re-exported original index bytes with autocrlf=false; no logic/test changes."
+    },
+    {
+      "run": "original checkout baseline r4",
+      "exit": 1,
+      "reason": "Git index export did not replace cached-stat matching CRLF files; applied explicit LF-only normalization to tracked Mobile text matching original normalized Git blobs."
+    },
+    {
+      "run": "original checkout baseline r5",
+      "exit": "interrupted",
+      "reason": "Inline helper shell quoting failed; interrupted this invocation, used a standalone script before fresh r6."
+    },
+    {
+      "run": "original checkout baseline r6",
+      "exit": 1,
+      "reason": "Backend715 and format check passed; Windows Jest micromatch treated the .cache parent escape as a pattern and found no tests. Moved isolated checkout to _phase9e_baseline, regenerated original locked dependency links, verified original Mobile tests before fresh full run."
+    },
+    {
+      "run": "focused1",
+      "exit": 1,
+      "reason": "Timezone-dependent snapshot repr and wrongly constructed expired token fixture; canonical UTC snapshot and exp=0 fixed."
+    },
+    {
+      "run": "foreign binding fixture",
+      "exit": 1,
+      "reason": "The existing composite FK correctly refused the deliberately foreign binding before API inspection; corrected regression to assert both DB rejection and API404 without weakening ownership."
+    },
+    {
+      "run": "demo1",
+      "exit": 1,
+      "reason": "Reporting used absent loop.iterations; corrected to loop.executions; all semantics rerun."
+    },
+    {
+      "run": "native r3",
+      "exit": 1,
+      "reason": "ADB reverse missing; whole five-scene batch9e-r1 rerun after restore."
+    },
+    {
+      "run": "native9e-r1 import_history",
+      "exit": 1,
+      "reason": "All301 formal rows read; clipped FlatList header accessibility bounds confused scroll helper at refresh. Fixed helper viewport-based scrolling without relaxing UI assertions; complete scene rerun9e-r2."
+    },
+    {
+      "run": "native9e-r3 session",
+      "exit": 1,
+      "reason": "Final after-restart no-token assertion failed after immediate force-stop. Session steps now additionally wait for durable no-token acknowledgement before restart; original after-restart assertion retained, complete scene rerun9e-r4."
+    },
+    {
+      "run": "9E-01 reproduction",
+      "exit": 1,
+      "reason": "Confirmed P1 ready-backup canonical Dataset fence loss; fixed fail-closed and rerun."
+    },
+    {
+      "run": "pre-marker first",
+      "exit": 1,
+      "reason": "Every protected route returned401; old33-operation count assertion omitted the three newly authorized erasure routes. Original33 assertion retained plus exact3 and total36."
+    },
+    {
+      "run": "pre-marker r2",
+      "exit": 1,
+      "reason": "753 passed; new test fixture left intentionally expired erasure challenges in shared synthetic DB and contaminated original Memory-only grace count. Added only owner-scoped new-fixture transient challenge cleanup; original Memory assertions and durable receipts unchanged."
+    },
+    {
+      "run": "pre-marker r3",
+      "exit": 1,
+      "reason": "Backend754 passed. Strict Mobile noUncheckedIndexedAccess rejected potentially undefined whitelist lookup. Added fixed-message fallback without relaxing compiler checks; repeated type/lint/format/Mobile374 and five complete final-source native scenes (four9e-r3, session9e-r4)."
+    }
+  ],
+  "failed_execution_artifacts": [
+    {
+      "run": "phase9e-baseline-r3",
+      "exit_code": 1,
+      "log": {
+        "path": "docs/evidence/phase9e/failed-phase9e-baseline-r3.log",
+        "sha256": "1d1853439d3d5c83bc7d9db4e0cb3fad9f415c51a704b1f482fa5e429e08d6f2"
+      },
+      "exit": {
+        "path": "docs/evidence/phase9e/failed-phase9e-baseline-r3.exit",
+        "sha256": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04"
+      }
+    },
+    {
+      "run": "phase9e-baseline-r4",
+      "exit_code": 1,
+      "log": {
+        "path": "docs/evidence/phase9e/failed-phase9e-baseline-r4.log",
+        "sha256": "4946003a9eb4d6289c3c9e61c5822dc6c5186716b798b638a6220ab41f471dbf"
+      },
+      "exit": {
+        "path": "docs/evidence/phase9e/failed-phase9e-baseline-r4.exit",
+        "sha256": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04"
+      }
+    },
+    {
+      "run": "phase9e-native1",
+      "exit_code": 1,
+      "log": {
+        "path": "docs/evidence/phase9e/failed-phase9e-native1.log",
+        "sha256": "8fde903458c8ccce3135b41030b1b099af148f25dc258a8006a96403b3148997"
+      },
+      "exit": {
+        "path": "docs/evidence/phase9e/failed-phase9e-native1.exit",
+        "sha256": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04"
+      }
+    },
+    {
+      "run": "phase9e-native2",
+      "exit_code": 1,
+      "log": {
+        "path": "docs/evidence/phase9e/failed-phase9e-native2.log",
+        "sha256": "0d3399c8eab19b2dc61f4cf0a6823d27628799ef75848ab5f5e368bd07b8ce69"
+      },
+      "exit": {
+        "path": "docs/evidence/phase9e/failed-phase9e-native2.exit",
+        "sha256": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04"
+      }
+    },
+    {
+      "run": "phase9e-pre-marker",
+      "exit_code": 1,
+      "log": {
+        "path": "docs/evidence/phase9e/failed-phase9e-pre-marker.log",
+        "sha256": "00446d81aca7c83f80bcceb067aa2fda7d853c4e149b86f45a23df81f8ad0ea1"
+      },
+      "exit": {
+        "path": "docs/evidence/phase9e/failed-phase9e-pre-marker.exit",
+        "sha256": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04"
+      }
+    },
+    {
+      "run": "phase9e-pre-marker-r2",
+      "exit_code": 1,
+      "log": {
+        "path": "docs/evidence/phase9e/failed-phase9e-pre-marker-r2.log",
+        "sha256": "12b8b8ea49c02c6b13f62965ecf5350e9d778536ffa0b13590b5a03385ef3784"
+      },
+      "exit": {
+        "path": "docs/evidence/phase9e/failed-phase9e-pre-marker-r2.exit",
+        "sha256": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04"
+      }
+    },
+    {
+      "run": "phase9e-pre-marker-r3",
+      "exit_code": 1,
+      "log": {
+        "path": "docs/evidence/phase9e/failed-phase9e-pre-marker-r3.log",
+        "sha256": "7d89d6612e024ff6db44ed51ee5119c170180540b5bdd729a59b034b928f6e75"
+      },
+      "exit": {
+        "path": "docs/evidence/phase9e/failed-phase9e-pre-marker-r3.exit",
+        "sha256": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04"
+      }
+    },
+    {
+      "run": "phase9e-native4",
+      "exit_code": 1,
+      "log": {
+        "path": "docs/evidence/phase9e/failed-phase9e-native4.log",
+        "sha256": "97ac1fa6b5fb9c57ecf9439ee73b2b4012531d8219ec45640bb4258a42f3214f"
+      },
+      "exit": {
+        "path": "docs/evidence/phase9e/failed-phase9e-native4.exit",
+        "sha256": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04"
+      }
+    }
+  ],
+  "pre_marker": {
+    "exit_code": 0,
+    "log": {
+      "path": "docs/evidence/phase9e/pre-marker.log",
+      "sha256": "50f5203fb5e8218d38f393dbe2f9190c305813ca54a5c8c04997888170717c02"
+    },
+    "exit": {
+      "path": "docs/evidence/phase9e/pre-marker.exit",
+      "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+    }
+  },
+  "post_marker": {
+    "exit_code": 0,
+    "log": {
+      "path": "docs/evidence/phase9e/post-marker.log",
+      "sha256": "b19adb74987958e3f1dd352b4b60d2a8d59818d449b619a3f1093dfe93b164b7"
+    },
+    "exit": {
+      "path": "docs/evidence/phase9e/post-marker.exit",
+      "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+    }
+  }
+}

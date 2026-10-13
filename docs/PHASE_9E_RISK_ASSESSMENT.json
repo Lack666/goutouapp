@@ -1,0 +1,132 @@
+{
+  "phase": "9E",
+  "production_acceptable": false,
+  "open_p0_p1": [],
+  "risks": [
+    {
+      "id": "R-06",
+      "status": "mitigated_local_production_open",
+      "controls": [
+        "Bounded Memory/challenge expiry and artifact retry/cursor",
+        "Root OS lock and physical admission reconciliation",
+        "Native isolated dump/restore with frozen current primary and exact target/receipt/key reconciliation"
+      ],
+      "tests": [
+        "apps/server/tests/test_data_lifecycle.py",
+        "apps/server/tests/test_backup_restore.py",
+        "apps/server/tests/test_erasure.py::test_real_old_backup_reconciles_exact_targets_receipt_and_memory",
+        "apps/server/tests/test_erasure.py::test_erasure_restore_without_complete_authority_fails_closed"
+      ],
+      "remaining": [
+        "Installed monitored production scheduler and supervisor",
+        "Encrypted copies, key custody and verified 35d rotation",
+        "Independent current deletion/control/key authority and production cutover barrier",
+        "Primary-loss production disaster recovery"
+      ],
+      "development_risk": "Opt-in local scheduling can stop; dumps contain anonymous synthetic bodies and are removed after drill; missing primary means no release.",
+      "production_risk": "Undeployed copy encryption/rotation and scheduling cannot certify deletion or disaster recovery.",
+      "blocks_public_exposure": true,
+      "next_task": "Explicit Phase9 production lifecycle/backup/scheduler acceptance before public release"
+    },
+    {
+      "id": "R-07",
+      "status": "mitigated_local_production_open",
+      "controls": [
+        "Signed early upload admission",
+        "Shared owner/global rate, upload/finalize/storage/pending quotas",
+        "Receive deadlines and OS-fenced reconciliation",
+        "New erasure uses existing protected-request rate gate"
+      ],
+      "tests": [
+        "apps/server/tests/test_resource_admission.py",
+        "apps/server/tests/test_data_lifecycle.py",
+        "apps/server/tests/test_erasure.py::test_signed_two_process_http_commit_response_discard_and_replay"
+      ],
+      "remaining": [
+        "Deployed TLS/ingress/header/connection/non-upload body limits",
+        "Host free-space/RSS/pool/worker sizing and storage ACLs",
+        "Supervisor, alerts and real public topology acceptance"
+      ],
+      "development_risk": "Loopback tested; actual accounted bytes are not a total disk/RSS bound; hung workers retain slots.",
+      "production_risk": "Local tests do not certify public DDoS availability, arbitrary non-upload bodies or host supervision.",
+      "blocks_public_exposure": true,
+      "next_task": "Explicit Phase9 deployed ingress/topology and host-capacity validation"
+    },
+    {
+      "id": "R-08",
+      "status": "future_integration_blocked",
+      "controls": [
+        "Imported RelationshipMessage never enters Agent/Memory/provider automatically",
+        "Keyless Mock only in acceptance",
+        "Frozen behavior and Golden83 retained"
+      ],
+      "tests": [
+        "apps/server/tests/test_phase6_e2e.py",
+        "apps/server/tests/test_import_merge.py",
+        "apps/server/tests/test_erasure.py::test_exact_primary_deletion_replay_restart_and_domain_independence"
+      ],
+      "remaining": [
+        "Future explicit source selection and analysis consent",
+        "Bounded untrusted transcript envelope and injection evaluation",
+        "Provider region/retention/erasure/data-custody contract before real invocation"
+      ],
+      "development_risk": "Current imported-chat analysis is unavailable; no claims about real provider deletion.",
+      "production_risk": "No real provider/imported analysis may be enabled before the boundary is independently accepted.",
+      "blocks_public_exposure": true,
+      "next_task": "Only explicitly authorized future imported-analysis/provider boundary work; no Phase10/11 inference"
+    },
+    {
+      "id": "R-09",
+      "status": "partial_erasure_production_open",
+      "controls": [
+        "Signed owner/target/Relationship server confirmations",
+        "Atomic primary message erasure and durable tombstone/receipt",
+        "Same-key replay and canonical duplicate import fences",
+        "History excludes tombstones; Memory independent",
+        "Exact current-primary restore and fail-closed missing authority",
+        "Backend-only UI disclosure"
+      ],
+      "tests": [
+        "apps/server/tests/test_erasure.py",
+        "apps/server/tests/test_authorization_security.py",
+        "apps/server/tests/test_memory_mutation.py",
+        "apps/mobile/tests/erasureContract.test.ts",
+        "apps/mobile/tests/connectedHistory.test.ts"
+      ],
+      "remaining": [
+        "Full Owner/account data erasure is formally unfinished",
+        "Person/Relationship deletion unavailable even when empty",
+        "Production identity, revocation and session lifecycle",
+        "App guarded chat erasure entry and actual native deletion acceptance",
+        "Durable client pending-operation recovery and all-copy/export/provider policy",
+        "Independent authoritative recovery serving barrier"
+      ],
+      "development_risk": "Development JWT is not production account management; primary history deletion does not erase all metadata/copies; App self-service chat deletion absent.",
+      "production_risk": "Advertising full personal-data erasure or production account/deletion lifecycle would be unsupported.",
+      "blocks_public_exposure": true,
+      "next_task": "Explicit remaining Phase9 identity/full-erasure/App/reconciliation contracts and acceptance"
+    }
+  ],
+  "fixed_findings": [
+    {
+      "id": "9E-01",
+      "severity": "P1",
+      "status": "fixed",
+      "problem": "Old ready Job backup could lose canonical imported partial-index fence and permit erased Dataset re-import after reconciliation.",
+      "control": "Require canonical imported status on restored and current exact deleted Dataset; otherwise RecoveryError and released=false.",
+      "test": "apps/server/tests/test_erasure.py::test_restore_cannot_drop_post_backup_imported_dataset_fence",
+      "reproduction_exit": 1,
+      "fixed_exit": 0
+    },
+    {
+      "id": "9E-02",
+      "severity": "P2",
+      "status": "fixed",
+      "problem": "Owner FOR UPDATE versus AgentRun FK KEY SHARE creates a lock cycle while erasure waits for Conversation slot.",
+      "control": "FOR NO KEY UPDATE still serializes owner mutations and permits FK checks; new pending Run commits and erasure rejects target_busy.",
+      "test": "apps/server/tests/test_erasure.py::test_new_agent_run_and_erasure_lock_order_remain_live",
+      "reproduction_exit": 1,
+      "fixed_exit": 0
+    }
+  ]
+}

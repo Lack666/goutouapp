@@ -1,0 +1,767 @@
+[
+  {
+    "execution": {
+      "steps_file": "F:\\\u72d7\u5934\u519b\u5e08app\u5316\\goutouapp\\.cache\\phase9b-android-9e-r3-sse_normal.steps.json",
+      "steps": [
+        "restart",
+        "tap [\"\u6e05\u9664\u5f53\u524d\u5f00\u53d1\u4f1a\u8bdd\",\"down\"]",
+        "case 8F-SSE-NORMAL",
+        "seed",
+        "login a",
+        "route [\"chat\",\"current\"]",
+        "assert_ui \"\u5f53\u524d Conversation\uff1a{conversation}\"",
+        "fault hold_final",
+        "input [\"Agent \u6d88\u606f\u8f93\u5165\",\"Synthetic native SSE acceptance\"]",
+        "tap [\"\u53d1\u9001 Agent \u6d88\u606f\"]",
+        "wait 6",
+        "assert_visible_ui \"\u6574\u7406\u56de\u7b54\"",
+        "state",
+        "observe",
+        "fault release_final",
+        "wait 3",
+        "observe completed",
+        "assert_ui \"\u5408\u6210\u9a8c\u6536\ud83c\udf31\"",
+        "assert_ui \"Agent \u72b6\u6001\uff1a\u8fd0\u884c\u5b8c\u6210\"",
+        "evidence",
+        "assert_db [\"agent.runs.length\",1]",
+        "assert_db [\"agent.messages.length\",2]",
+        "assert_db [\"agent.memories\",0]",
+        "tap [\"\u6e05\u9664\u5f53\u524d\u5f00\u53d1\u4f1a\u8bdd\",\"down\"]",
+        "stop"
+      ],
+      "helper_sha256": "90f9ffef02925ff2b8e292fdbf711db8a7cce92318e28fa98de8a718cde074ca",
+      "device": "emulator-5554"
+    }
+  },
+  {
+    "command": "restart",
+    "status": "done"
+  },
+  {
+    "command": "tap",
+    "status": "done"
+  },
+  {
+    "case": "8F-SSE-NORMAL"
+  },
+  {
+    "command": "case",
+    "status": "done"
+  },
+  {
+    "command": "seed",
+    "status": "done"
+  },
+  {
+    "command": "login",
+    "status": "done"
+  },
+  {
+    "command": "route",
+    "status": "done"
+  },
+  {
+    "assert_ui": "\u5f53\u524d Conversation\uff1ad9647596-1c45-41b2-917c-60096594dae0",
+    "status": "PASS"
+  },
+  {
+    "command": "assert_ui",
+    "status": "done"
+  },
+  {
+    "fault": {
+      "armed": "hold_final"
+    }
+  },
+  {
+    "command": "fault",
+    "status": "done"
+  },
+  {
+    "command": "input",
+    "status": "done"
+  },
+  {
+    "command": "tap",
+    "status": "done"
+  },
+  {
+    "command": "wait",
+    "status": "done"
+  },
+  {
+    "assert_visible_ui": "\u6574\u7406\u56de\u7b54",
+    "status": "PASS"
+  },
+  {
+    "command": "assert_visible_ui",
+    "status": "done"
+  },
+  {
+    "ui_state": [
+      {
+        "text": "",
+        "label": "Tools",
+        "bounds": "[937,219][1005,287]",
+        "enabled": "true"
+      },
+      {
+        "text": "",
+        "label": "\u5bf9\u8bdd\u6d88\u606f\u5217\u8868",
+        "bounds": "[0,142][1080,1909]",
+        "enabled": "true"
+      },
+      {
+        "text": "\u4ec5\u4f9b\u5f00\u53d1\u8054\u8c03\u3002\u7531\u5f00\u53d1\u8005\u4e3b\u52a8\u5f55\u5165\u540e\u7aef CLI \u7684\u77ed\u671f\u51ed\u8bc1\uff0c15 \u5206\u949f\u540e\u91cd\u65b0\u83b7\u53d6\u3002",
+        "label": "",
+        "bounds": "[107,142][973,77]",
+        "enabled": "true"
+      },
+      {
+        "text": "",
+        "label": "\u4f7f\u7528 Demo Mode",
+        "bounds": "[108,142][972,240]",
+        "enabled": "true"
+      },
+      {
+        "text": "\u4f7f\u7528 Demo Mode",
+        "label": "",
+        "bounds": "[152,143][928,206]",
+        "enabled": "true"
+      },
+      {
+        "text": "",
+        "label": "\u4f7f\u7528 Connected Development Mode",
+        "bounds": "[108,271][972,402]",
+        "enabled": "true"
+      },
+      {
+        "text": "\u4f7f\u7528 Connected Development Mode",
+        "label": "",
+        "bounds": "[152,305][928,368]",
+        "enabled": "true"
+      },
+      {
+        "text": "\u8bbe\u5907\u51ed\u8bc1\u4f7f\u7528\u7cfb\u7edf\u5b89\u5168\u5b58\u50a8\uff1b\u6062\u590d\u65f6\u91cd\u65b0\u9a8c\u8bc1\u3002",
+        "label": "",
+        "bounds": "[107,434][973,566]",
+        "enabled": "true"
+      },
+      {
+        "text": "",
+        "label": "\u6e05\u9664\u5f53\u524d\u5f00\u53d1\u4f1a\u8bdd",
+        "bounds": "[108,598][972,729]",
+        "enabled": "true"
+      },
+      {
+        "text": "\u6e05\u9664\u5f53\u524d\u5f00\u53d1\u4f1a\u8bdd",
+        "label": "",
+        "bounds": "[152,632][928,695]",
+        "enabled": "true"
+      },
+      {
+        "text": "Agent \u5bf9\u8bdd \u00b7 \u670d\u52a1\u5668\u8bb0\u5f55",
+        "label": "",
+        "bounds": "[107,860][973,937]",
+        "enabled": "true"
+      },
+      {
+        "text": "\u5f53\u524d Conversation\uff1ad9647596-1c45-41b2-917c-60096594dae0",
+        "label": "",
+        "bounds": "[107,969][973,1101]",
+        "enabled": "true"
+      },
+      {
+        "text": "\u5173\u7cfb\u8303\u56f4\uff1a787cb4ae-b973-402c-ad60-68680484d7c7",
+        "label": "",
+        "bounds": "[107,1132][973,1264]",
+        "enabled": "true"
+      },
+      {
+        "text": "Agent \u72b6\u6001\uff1a\u8fd0\u884c\u4e2d",
+        "label": "",
+        "bounds": "[107,1296][973,1362]",
+        "enabled": "true"
+      },
+      {
+        "text": "",
+        "label": "NATIVE-SSE {\"reader\":{\"reads\":7,\"cancels\":0,\"releases\":0},\"events\":[{\"type\":\"run_started\",\"ms\":935},{\"type\":\"status\",\"ms\":935},{\"type\":\"status\",\"ms\":935},{\"type\":\"status\",\"ms\":1757},{\"type\":\"status\",\"ms\":2882},{\"type\":\"status\",\"ms\":3431},{\"type\":\"status\",\"ms\":4026},{\"type\":\"status\",\"ms\":4743}],\"ui\":[{\"phase\":\"running\",\"progress\":\"checking_safety\",\"ms\":1312},{\"phase\":\"running\",\"progress\":\"understanding_request\",\"ms\":2399},{\"phase\":\"running\",\"progress\":\"loading_context\",\"ms\":3130},{\"phase\":\"running\",\"progress\":\"analyzing\",\"ms\":3762},{\"phase\":\"running\",\"progress\":\"planning\",\"ms\":4403},{\"phase\":\"running\",\"progress\":\"composing\",\"ms\":5024}],\"consistentRun\":true,\"terminal\":null}",
+        "bounds": "[108,1394][972,1520]",
+        "enabled": "true"
+      },
+      {
+        "text": "Native SSE \u00b7 pending \u00b7 reads:7",
+        "label": "",
+        "bounds": "[108,1394][972,1460]",
+        "enabled": "true"
+      },
+      {
+        "text": "\u6574\u7406\u56de\u7b54",
+        "label": "",
+        "bounds": "[107,1551][973,1617]",
+        "enabled": "true"
+      },
+      {
+        "text": "run_id\uff1aae4466f7-2e71-44aa-b208-773779bbdded",
+        "label": "",
+        "bounds": "[107,1648][973,1780]",
+        "enabled": "true"
+      },
+      {
+        "text": "operation_key\uff1a51982b28-b66d-43a8-9ede-907a2d96efe5",
+        "label": "",
+        "bounds": "[107,1812][973,1909]",
+        "enabled": "true"
+      },
+      {
+        "text": "\u5c55\u793a\u670d\u52a1\u5668\u63d0\u4ea4\u7684\u5b8c\u6574\u6587\u672c\u56de\u7b54\u3002\u5b89\u5168\u4e0e\u4e8b\u5b9e\u5224\u65ad\u7531\u670d\u52a1\u5668\u8d1f\u8d23\uff1b\u6b64\u9875\u6ca1\u6709\u516c\u5f00\u7ed3\u6784\u5316 FIU \u6570\u636e\u3002",
+        "label": "",
+        "bounds": "[107,1975][973,1909]",
+        "enabled": "true"
+      },
+      {
+        "text": "",
+        "label": "\u505c\u6b62\u7b49\u5f85",
+        "bounds": "[108,2205][972,1909]",
+        "enabled": "true"
+      },
+      {
+        "text": "\u505c\u6b62\u7b49\u5f85",
+        "label": "",
+        "bounds": "[152,2239][928,1909]",
+        "enabled": "true"
+      },
+      {
+        "text": "",
+        "label": "\u5237\u65b0 Agent \u5386\u53f2",
+        "bounds": "[108,2368][972,1909]",
+        "enabled": "true"
+      },
+      {
+        "text": "\u5237\u65b0 Agent \u5386\u53f2",
+        "label": "",
+        "bounds": "[152,2402][928,1909]",
+        "enabled": "true"
+      },
+      {
+        "text": "\u5199\u4e0b\u60f3\u68b3\u7406\u7684\u5185\u5bb9\uff0c\u53d1\u9001\u5230\u670d\u52a1\u5668",
+        "label": "Agent \u6d88\u606f\u8f93\u5165",
+        "bounds": "[31,1943][1048,2102]",
+        "enabled": "false"
+      },
+      {
+        "text": "Connected \u00b7 0/2000 \u00b7 \u670d\u52a1\u5668\u786e\u8ba4\u540e\u8fdb\u5165\u6b63\u5f0f\u8bb0\u5f55",
+        "label": "",
+        "bounds": "[31,2121][1048,2177]",
+        "enabled": "true"
+      },
+      {
+        "text": "",
+        "label": "\u53d1\u9001 Agent \u6d88\u606f",
+        "bounds": "[32,2199][854,2331]",
+        "enabled": "false"
+      },
+      {
+        "text": "\u53d1\u9001 Agent \u6d88\u606f",
+        "label": "",
+        "bounds": "[76,2233][810,2296]",
+        "enabled": "true"
+      },
+      {
+        "text": "",
+        "label": "\u6e05\u7a7a",
+        "bounds": "[876,2199][1050,2331]",
+        "enabled": "false"
+      },
+      {
+        "text": "\u6e05\u7a7a",
+        "label": "",
+        "bounds": "[920,2233][1004,2296]",
+        "enabled": "true"
+      }
+    ]
+  },
+  {
+    "native_sse": {
+      "reader": {
+        "reads": 7,
+        "cancels": 0,
+        "releases": 0
+      },
+      "events": [
+        {
+          "type": "run_started",
+          "ms": 935
+        },
+        {
+          "type": "status",
+          "ms": 935
+        },
+        {
+          "type": "status",
+          "ms": 935
+        },
+        {
+          "type": "status",
+          "ms": 1757
+        },
+        {
+          "type": "status",
+          "ms": 2882
+        },
+        {
+          "type": "status",
+          "ms": 3431
+        },
+        {
+          "type": "status",
+          "ms": 4026
+        },
+        {
+          "type": "status",
+          "ms": 4743
+        }
+      ],
+      "ui": [
+        {
+          "phase": "running",
+          "progress": "checking_safety",
+          "ms": 1312
+        },
+        {
+          "phase": "running",
+          "progress": "understanding_request",
+          "ms": 2399
+        },
+        {
+          "phase": "running",
+          "progress": "loading_context",
+          "ms": 3130
+        },
+        {
+          "phase": "running",
+          "progress": "analyzing",
+          "ms": 3762
+        },
+        {
+          "phase": "running",
+          "progress": "planning",
+          "ms": 4403
+        },
+        {
+          "phase": "running",
+          "progress": "composing",
+          "ms": 5024
+        }
+      ],
+      "consistentRun": true,
+      "terminal": null
+    }
+  },
+  {
+    "command": "observe",
+    "status": "done"
+  },
+  {
+    "fault": {
+      "armed": "release_final"
+    }
+  },
+  {
+    "command": "fault",
+    "status": "done"
+  },
+  {
+    "command": "wait",
+    "status": "done"
+  },
+  {
+    "native_sse": {
+      "reader": {
+        "reads": 8,
+        "cancels": 1,
+        "releases": 1
+      },
+      "events": [
+        {
+          "type": "run_started",
+          "ms": 935
+        },
+        {
+          "type": "status",
+          "ms": 935
+        },
+        {
+          "type": "status",
+          "ms": 935
+        },
+        {
+          "type": "status",
+          "ms": 1757
+        },
+        {
+          "type": "status",
+          "ms": 2882
+        },
+        {
+          "type": "status",
+          "ms": 3431
+        },
+        {
+          "type": "status",
+          "ms": 4026
+        },
+        {
+          "type": "status",
+          "ms": 4743
+        },
+        {
+          "type": "final_response",
+          "ms": 59418
+        },
+        {
+          "type": "completed",
+          "ms": 59929
+        }
+      ],
+      "ui": [
+        {
+          "phase": "running",
+          "progress": "checking_safety",
+          "ms": 1312
+        },
+        {
+          "phase": "running",
+          "progress": "understanding_request",
+          "ms": 2399
+        },
+        {
+          "phase": "running",
+          "progress": "loading_context",
+          "ms": 3130
+        },
+        {
+          "phase": "running",
+          "progress": "analyzing",
+          "ms": 3762
+        },
+        {
+          "phase": "running",
+          "progress": "planning",
+          "ms": 4403
+        },
+        {
+          "phase": "running",
+          "progress": "composing",
+          "ms": 5024
+        },
+        {
+          "phase": "committed",
+          "progress": "composing",
+          "ms": 59691
+        },
+        {
+          "phase": "completed",
+          "progress": null,
+          "ms": 60335
+        }
+      ],
+      "consistentRun": true,
+      "terminal": "completed"
+    }
+  },
+  {
+    "command": "observe",
+    "status": "done"
+  },
+  {
+    "assert_ui": "\u89c2\u5bdf\u63a5\u4e0b\u6765\u53cc\u65b9\u7684\u771f\u5b9e\u4e92\u52a8\uff0c\u518d\u51b3\u5b9a\u662f\u5426\u8c03\u6574\u6295\u5165\u3002\u65e7\u4fe1\u606f\u53ef\u80fd\u53d8\u5316\uff0c\u8bf7\u7ed3\u5408\u73b0\u5728\u7684\u60c5\u51b5\u5224\u65ad\u3002 \u5408\u6210\u9a8c\u6536\ud83c\udf31",
+    "status": "PASS"
+  },
+  {
+    "command": "assert_ui",
+    "status": "done"
+  },
+  {
+    "assert_ui": "Agent \u72b6\u6001\uff1a\u8fd0\u884c\u5b8c\u6210",
+    "status": "PASS"
+  },
+  {
+    "command": "assert_ui",
+    "status": "done"
+  },
+  {
+    "database": {
+      "agent": {
+        "calls": [
+          "SafetyResult",
+          "ScenarioResult",
+          "FactExtractionResult",
+          "AnalysisResult",
+          "ActionPlan",
+          "ResponseResult"
+        ],
+        "runs": [
+          {
+            "id": "ae4466f7-2e71-44aa-b208-773779bbdded",
+            "owner": "a108c4c9-c0fe-484d-b108-84cd91a52d36",
+            "conversation": "d9647596-1c45-41b2-917c-60096594dae0",
+            "status": "completed",
+            "key": "51982b28-b66d-43a8-9ede-907a2d96efe5"
+          }
+        ],
+        "messages": [
+          {
+            "id": "b784334a-97eb-4239-8281-c757e732412b",
+            "conversation": "d9647596-1c45-41b2-917c-60096594dae0",
+            "role": "user"
+          },
+          {
+            "id": "7850e3d4-1092-4289-86b1-90e4e081bcc1",
+            "conversation": "d9647596-1c45-41b2-917c-60096594dae0",
+            "role": "assistant"
+          }
+        ],
+        "memories": 0
+      },
+      "memory": {
+        "memories": 0,
+        "receipts": 0,
+        "records": [],
+        "mutations": [],
+        "agent_messages": 2,
+        "relationship_messages": 0,
+        "recall_counts": [
+          0
+        ],
+        "calls": 6,
+        "controls": []
+      },
+      "import": {
+        "jobs": [],
+        "messages": 0,
+        "agent_messages": 2,
+        "memories": 0,
+        "active_artifacts": 0
+      },
+      "resources": {
+        "persons": 1,
+        "relationships": 1,
+        "conversations": 1
+      },
+      "wire": {
+        "requests": [
+          {
+            "method": "GET",
+            "path": "/api/v1/persons",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "invalid",
+            "status": 401
+          },
+          {
+            "method": "POST",
+            "path": "/api/v1/persons",
+            "bearer": true,
+            "json": true,
+            "cursor": false,
+            "host_setup": true,
+            "verified_owner": "a",
+            "status": 201
+          },
+          {
+            "method": "POST",
+            "path": "/api/v1/relationships",
+            "bearer": true,
+            "json": true,
+            "cursor": false,
+            "host_setup": true,
+            "verified_owner": "a",
+            "status": 201
+          },
+          {
+            "method": "POST",
+            "path": "/api/v1/conversations",
+            "bearer": true,
+            "json": true,
+            "cursor": false,
+            "host_setup": true,
+            "verified_owner": "a",
+            "status": 201
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/persons",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memory/control",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/persons",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/relationships",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memories",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memory/undo/preview",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/conversations/d9647596-1c45-41b2-917c-60096594dae0",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memory/control",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/conversations/d9647596-1c45-41b2-917c-60096594dae0/messages",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memories",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memory/undo/preview",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "POST",
+            "path": "/api/v1/conversations/d9647596-1c45-41b2-917c-60096594dae0/agent-runs/stream",
+            "bearer": true,
+            "json": true,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/conversations/d9647596-1c45-41b2-917c-60096594dae0/messages",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          }
+        ],
+        "faults": []
+      }
+    }
+  },
+  {
+    "command": "evidence",
+    "status": "done"
+  },
+  {
+    "assert_db": "agent.runs.length",
+    "expected": 1,
+    "actual": 1,
+    "status": "PASS"
+  },
+  {
+    "command": "assert_db",
+    "status": "done"
+  },
+  {
+    "assert_db": "agent.messages.length",
+    "expected": 2,
+    "actual": 2,
+    "status": "PASS"
+  },
+  {
+    "command": "assert_db",
+    "status": "done"
+  },
+  {
+    "assert_db": "agent.memories",
+    "expected": 0,
+    "actual": 0,
+    "status": "PASS"
+  },
+  {
+    "command": "assert_db",
+    "status": "done"
+  },
+  {
+    "command": "tap",
+    "status": "done"
+  }
+]

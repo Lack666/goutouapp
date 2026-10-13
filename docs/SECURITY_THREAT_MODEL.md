@@ -1,5 +1,19 @@
 # Security threat model — Phase 9A
 
+Current9E supplement B3/B4/B8: signed owner-only canonical Dataset/Conversation
+challenges bind target/Relationship/snapshot/counts/expiry. Execute stores durable
+receipt and tombstone while physically deleting exact formal messages; no body
+matching, cascade enlargement, Memory deletion or client-confirm bypass. Owner and
+domain locks fence duplicate/concurrent work; active/unresolved AgentRuns block.
+Cross-owner challenges/receipts and stale snapshots fail; original keys replay only
+metadata. Deleted Conversation creation/Agent access and deleted Dataset exact-scope
+reimport are fenced. Current-primary recovery propagates exact target tombstones,
+copies immutable receipts, invalidates challenges and rejects missing/tampered/lagging
+authority. Independent journal, production identity/full-account erasure, monitored
+scheduler/encrypted copy custody/rotation and live cutover remain absent. R-06/07/08/09
+reviewed separately in PHASE_9E_RISK_ASSESSMENT; App erasure is Backend-only. Older
+paragraphs remain dated assessments, not current capability or production claims.
+
 Current9D supplement (B5/B8/B9): scheduled local maintenance executes bounded
 Memory expiry/challenge cleanup, all-state Job-locked raw-source cleanup and9C
 actual-file quota reconciliation with OS-owned multi-process exclusion. Failure,

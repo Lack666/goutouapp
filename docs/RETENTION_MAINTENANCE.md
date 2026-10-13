@@ -1,4 +1,20 @@
-# Retention maintenance — Phase 9D
+# Retention maintenance — current Phase9E
+
+9E extends existing bounded challenge cleanup to erasure_confirmations:5min validity
+plus24h grace, at most configured batch_size per challenge domain per transaction,
+sorted owner locks and post-lock eligibility rechecks. Receipts/tombstones are never
+removed. Existing Memory expiry, all-state Artifact cleanup, retry, cursor, OS root
+lock and admission reconciliation remain. CleanupCounts.confirmation_challenges
+includes both domains; successful erasure replay survives challenge cleanup.
+
+Local isolated scheduled execution, worker crash/restart, competing processes/root
+contention, cleanup failure/retry and capacity recovery are rerun in test_data_lifecycle
+and test_resource_admission. Independent erasure_demo schedules three actual local
+cycles and native dump/restore. This is opt-in local loop execution, not an installed
+production scheduler. OS registration, host supervision/alerts/backlog monitoring
+and production deployment remain NOT DEPLOYED.
+
+## Retained9D bounded maintenance procedure
 
 Memory expiry, access exclusion and physical deletion are separate events.
 New Memory defaults180d; SQL/standalone recall and default lists exclude expiry

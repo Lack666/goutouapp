@@ -57,6 +57,7 @@ function ConnectedHistorySession({
               onBack={nav.back}
             />
             <DevelopmentSessionControls />
+            <BodyText muted>当前 App 尚无聊天历史删除入口；删除记忆不会清除聊天历史。</BodyText>
             <SectionCard title="历史类型">
               <PrimaryButton
                 label="关系聊天"

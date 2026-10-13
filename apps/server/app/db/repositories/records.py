@@ -81,7 +81,9 @@ def create_conversation(
 def get_conversation(db: Session, user_id: UUID, conversation_id: UUID) -> Conversation | None:
     return db.scalar(
         select(Conversation).where(
-            Conversation.user_id == user_id, Conversation.id == conversation_id
+            Conversation.user_id == user_id,
+            Conversation.id == conversation_id,
+            Conversation.deleted_at.is_(None),
         )
     )
 
@@ -96,6 +98,7 @@ def list_conversations(db: Session, user_id: UUID) -> list[Conversation]:
         db.scalars(
             select(Conversation)
             .where(Conversation.user_id == user_id)
+            .where(Conversation.deleted_at.is_(None))
             .order_by(Conversation.created_at, Conversation.id)
         )
     )

@@ -1,5 +1,18 @@
 # Architecture direction
 
+Current9E: transport-independent ErasureService adds three signed exact-target
+challenge/execute/receipt operations. Conversation and canonical imported Job keep
+deleted_at tombstones/key/dedup fences; formal messages and canonical Dataset labels
+are physically removed without touching Memory. Existing owner/Conversation/Job/scope
+locks serialize destructive effects; running or unresolved runs block deletion.
+Migration20261013_02 adds two metadata-only tables. Current-primary controlled restore
+propagates exact target deletion and immutable receipts, invalidates old challenges,
+and remains fail-closed without complete current primary/key/target/receipt evidence.
+No independent journal or production account/full-erasure lifecycle is claimed.
+Generated Mobile39-operation client and safe errors updated; Settings/History expose
+the Backend-only boundary with no executable deletion controller. See ADR0040 and
+ERASURE_API. Frozen Runtime reasoning/knowledge/Golden/dependencies are unchanged.
+
 Phase9D composes existing owner-serialized Memory retention, Job-locked Artifact
 cleanup and9C physical resource reconciliation in an opt-in periodic operator loop.
 A root-scoped OS file lock excludes competing maintenance processes; death releases

@@ -110,6 +110,15 @@ def main() -> None:
                     else ("down" if initial_direction == "up" else "up")
                 )
                 current = nodes()
+                # FlatList may publish inverted bounds for clipped header nodes.
+                # Use its actual viewport, not the full screen (the fixed paging
+                # footer is outside that scrollable region).
+                viewport_bottom = screen_height - 64
+                for candidate in current:
+                    if candidate.get("content-desc") == "历史消息列表":
+                        viewport = list(map(int, re.findall(r"\d+", candidate.get("bounds", ""))))
+                        if len(viewport) == 4 and viewport[3] > viewport[1]:
+                            viewport_bottom = viewport[3]
                 labelled = [node for node in current if node.get("content-desc") == label]
                 for node in labelled or current:
                     if label not in {node.get("text"), node.get("content-desc")}:
@@ -124,7 +133,7 @@ def main() -> None:
                     ):
                         adb("shell", "input", "tap", str((x1 + x2) // 2), str((y1 + y2) // 2))
                         return
-                    direction = "up" if y2 > screen_height - 64 else "down"
+                    direction = "up" if max(y1, y2) > viewport_bottom - 64 else "down"
                 adb(
                     "shell",
                     "input",

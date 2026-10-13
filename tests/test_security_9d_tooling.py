@@ -121,7 +121,7 @@ class Security9DGateTests(unittest.TestCase):
                 verifier.phase_marker_check()
             for gate in (a, b, c, d):
                 gate.assert_called_once_with(completed=True)
-        for phase, subphase in ((8, "9E"), (9, None), (10, None)):
+        for phase, subphase in ((8, "9F"), (9, None), (10, None)):
             with patch.multiple(verifier, PHASE=phase, SUBPHASE=subphase), self.assertRaises(RuntimeError):
                 verifier.phase_marker_check()
 

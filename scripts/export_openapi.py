@@ -24,6 +24,11 @@ NEW_OPERATIONS = {
         ("get", f"/api/v1/{domain}/{{{domain[:-1] if domain != 'persons' else 'person'}_id}}"),
     )
 } | {("get", "/api/v1/conversations/{conversation_id}/messages")}
+NEW_OPERATIONS |= {
+    ("post", "/api/v1/erasures/prepare"),
+    ("post", "/api/v1/erasures/execute"),
+    ("get", "/api/v1/erasures/receipts/{receipt_id}"),
+}
 DTO_FIELDS = {
     "PersonCreateRequest": {"id", "display_name"},
     "RelationshipCreateRequest": {"id", "person_id", "relationship_type", "status"},
@@ -102,8 +107,10 @@ def audit(spec, baseline):
     expected_additions = {f"{method.upper()} {path}" for method, path in NEW_OPERATIONS}
     if set(actual["operations"]) - set(baseline["operations"]) != expected_additions:
         raise RuntimeError("Unexpected resource operation inventory")
-    if len(baseline["operations"]) != 26 or len(actual["operations"]) != 36:
-        raise RuntimeError("Expected 26 preserved and ten new operations")
+    if len(baseline["operations"]) != 26 or len(actual["operations"]) != 39:
+        raise RuntimeError(
+            "Expected 26 preserved, ten resource and three guarded erasure operations"
+        )
     schemas = spec["components"]["schemas"]
     for name, fields in DTO_FIELDS.items():
         schema = schemas[name]

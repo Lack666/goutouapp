@@ -103,11 +103,17 @@ def test_jwt_negative_contract(security_api, case):
 def test_every_sensitive_operation_requires_real_bearer(security_api):
     app, client, _a, _b = security_api
     count = 0
+    original_count = 0
+    erasure_count = 0
     for path, operations in app.openapi()["paths"].items():
         for method, operation in operations.items():
             if not operation.get("security"):
                 continue
             count += 1
+            if path.startswith("/api/v1/erasures"):
+                erasure_count += 1
+            else:
+                original_count += 1
             target = path
             for parameter in operation.get("parameters", []):
                 if parameter["in"] == "path":
@@ -122,7 +128,9 @@ def test_every_sensitive_operation_requires_real_bearer(security_api):
             )
             response = client.request(method, target, **kwargs)
             assert response.status_code == 401
-    assert count == 33
+    assert original_count == 33
+    assert erasure_count == 3
+    assert count == 36
 
 
 @pytest.mark.parametrize("environment", ["test", "staging", "production"])

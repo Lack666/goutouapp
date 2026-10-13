@@ -1,3 +1,13 @@
+## Current Phase9E boundary
+
+Backend-only guarded Dataset/Conversation erasure is documented in [ERASURE_API](ERASURE_API.md).
+OpenAPI now has39 operations; the original36 contracts are preserved. Deleted
+Conversation history/Agent REST/SSE returns404; erased canonical Dataset finalize
+returns409 `dataset_deleted`, including duplicate same-scope transcripts.
+App History/Settings disclose the absence of self-service chat/import/account
+erasure. Existing Memory controls do not erase either history domain. External
+erasure requires authoritative history refresh/reopen to clear cached rows/cursors.
+
 # Chat import HTTP API — Phase 5D
 
 Phase9C resource supplement: early JWT/known-User admission before Multipart,

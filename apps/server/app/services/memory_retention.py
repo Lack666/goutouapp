@@ -8,6 +8,7 @@ from sqlalchemy import delete, func, select, text
 from sqlalchemy.orm import Session
 
 from app.db.models import (
+    ErasureConfirmation,
     MemoryConfirmationRow,
     MemoryMutationRow,
     MemoryOperationRow,
@@ -64,6 +65,11 @@ class MemoryRetentionService:
                 select(func.count())
                 .select_from(MemoryConfirmationRow)
                 .where(MemoryConfirmationRow.expires_at <= self.policy.challenge_cutoff(now))
+            )
+            + db.scalar(
+                select(func.count())
+                .select_from(ErasureConfirmation)
+                .where(ErasureConfirmation.expires_at <= self.policy.challenge_cutoff(now))
             ),
             mutation_receipts_retained=db.scalar(
                 select(func.count()).select_from(MemoryMutationRow)
@@ -87,7 +93,13 @@ class MemoryRetentionService:
             .order_by(MemoryConfirmationRow.expires_at, MemoryConfirmationRow.id)
             .limit(size)
         ).all()
-        owners = sorted({row.owner_user_id for row in [*memories, *challenges]})
+        erasures = db.execute(
+            select(ErasureConfirmation.id, ErasureConfirmation.owner_user_id)
+            .where(ErasureConfirmation.expires_at <= cutoff)
+            .order_by(ErasureConfirmation.expires_at, ErasureConfirmation.id)
+            .limit(size)
+        ).all()
+        owners = sorted({row.owner_user_id for row in [*memories, *challenges, *erasures]})
         # Sorted acquisition prevents multi-owner maintenance deadlocks.
         for owner in owners:
             db.scalar(select(User.id).where(User.id == owner).with_for_update())
@@ -109,6 +121,12 @@ class MemoryRetentionService:
             delete(MemoryConfirmationRow).where(
                 MemoryConfirmationRow.id.in_([row.id for row in challenges]),
                 MemoryConfirmationRow.expires_at <= cutoff,
+            )
+        ).rowcount
+        removed_challenges += db.execute(
+            delete(ErasureConfirmation).where(
+                ErasureConfirmation.id.in_([row.id for row in erasures]),
+                ErasureConfirmation.expires_at <= cutoff,
             )
         ).rowcount
         return CleanupCounts(

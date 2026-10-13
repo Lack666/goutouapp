@@ -33,6 +33,7 @@
   "assert_db [\"memory.memories\",1]",
   "assert_db [\"memory.receipts\",0]",
   "tap [\"清除当前开发会话\",\"down\"]",
+  "assert_ui \"未连接：没有开发凭证\"",
   "restart",
   "assert_ui \"未连接：没有开发凭证\"",
   "state",

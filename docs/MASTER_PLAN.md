@@ -22,12 +22,25 @@ as implemented by a placeholder directory or a golden expectation.
 | 6 | User-facing memory controls and retention policy integration | PASS (6A–6D) |
 | 7 | Expo React Native MVP | PASS (7A–7D) |
 | 8 | Mobile API integration, generated client and stream consumption | PASS (8A–8F, including native closeout) |
-| 9 | Security, privacy, reliability and deletion | IN PROGRESS (9A–9D PASS) |
+| 9 | Security, privacy, reliability and deletion | IN PROGRESS (9A–9E PASS) |
 | 10 | Optional hybrid RAG with pgvector | PENDING |
 | 11 | Agent eval and observability | PENDING |
 | 12 | CI/CD, EAS preview, release preparation | PENDING |
 
 ## Exit criteria by phase
+
+Explicit authorization (2026-10-13): **9E — User Data Erasure and Security
+Reliability Closeout** follows completed9D. Implement signed owner-scoped,
+server-confirmed exact canonical Dataset and Conversation deletion, physical
+message removal with durable tombstones/receipts, retry and restore fences;
+audit Person/Relationship/account gaps and R-06/07/08/09. Backend-only delivery
+is permitted and must be labelled; no App self-service erasure claim. Preserve
+all0–9D tests, native evidence and frozen behavior. Require actual PostgreSQL
+JWT E2E, maintenance processes, native dump/restore, generated client and full
+independent pre/post root exits0. Advance8/9D to8/9E only after complete pre-marker
+exit0, then require complete post-marker exit0 before closing9E. Phase9 stays
+IN PROGRESS while production/full-account deletion prerequisites remain.
+Stop after9E; Phase10–12, real provider, real chat and RAG are outside scope.
 
 Phase 9 subdivision (explicit authorization, 2026-10-13): 9A remains the
 completed upload-security baseline. **9B — Authentication, Ownership and Privacy
@@ -846,3 +859,18 @@ and ADR0038. Public production acceptance remains FALSE; ingress/host sizing/
 supervision/monitored retention and R-06/R-09 backup/deletion/identity tasks remain.
 Next work requires explicit authorization under the current Phase9 handoff.
 Stop after9C; no later subphase, real provider, RAG or release work started.
+
+### Phase 9E — User Data Erasure and Security Reliability Closeout
+
+PASS with Backend-only signed exact Dataset/Conversation guarded erasure, physical
+formal message removal and durable tombstone/key/receipt fences. Marker8/9E;
+Phase9 overall IN PROGRESS;10–12 PENDING. Independent original-source9D baseline
+and final current-source complete root pre/post exits0. Backend754, Mobile374,
+repository80, erasure39, lifecycle44, admission27, Golden83, Web22/3/3/4/5/1,
+OpenAPI39, Doctor21/21; fresh five-scene Android regression PASS.
+9E-01/P1 restore imported-fence loss and9E-02/P2 owner/FK lock cycle fixed and
+regression covered. No App self-service chat erasure, full account/Person/
+Relationship erasure, independent deletion journal or production primary-loss
+recovery; deployed scheduler/encrypted rotation/identity/ingress remain blockers.
+See PHASE_9E_ACCEPTANCE/MATRIX, DATA_DELETION_MATRIX, ERASURE_API and ADR0040.
+Stop after9E; further Phase9 scope requires explicit instruction.
