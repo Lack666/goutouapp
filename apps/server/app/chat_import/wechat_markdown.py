@@ -97,6 +97,12 @@ def _iter_lines(
         if not isinstance(chunk, (str, bytes)) or (kind is not None and type(chunk) is not kind):
             raise TypeError("Source must contain one consistent text or byte chunk type")
         kind = type(chunk)
+        if (isinstance(chunk, bytes) and b"\x00" in chunk) or (
+            isinstance(chunk, str) and "\x00" in chunk
+        ):
+            # Check chunks even when an oversized logical line is discarded.
+            # PostgreSQL text cannot represent NUL; reject the complete dataset.
+            raise UnicodeError
         if isinstance(chunk, bytes):
             source_hash.update(chunk)
             decoded = decoder.decode(chunk)
@@ -247,11 +253,12 @@ class WeChatMarkdownParser:
             location = SourceLocation(header.number, last_line)
             if block_bad:
                 return
-            trimmed = list(body)
-            while trimmed and not trimmed[0].strip():
-                trimmed.pop(0)
-            while trimmed and not trimmed[-1].strip():
-                trimmed.pop()
+            start, end = 0, len(body)
+            while start < end and not body[start].strip():
+                start += 1
+            while end > start and not body[end - 1].strip():
+                end -= 1
+            trimmed = body[start:end]
             content = "\n".join(trimmed)
             if not content.strip():
                 issue(IssueSeverity.ERROR, IssueCode.EMPTY_BODY, location)
@@ -379,7 +386,10 @@ class WeChatMarkdownParser:
                         )
                         speaker = None
                         continue
-                    utc, time_issue = _utc_from_local(local, zone)
+                    try:
+                        utc, time_issue = _utc_from_local(local, zone)
+                    except (OverflowError, ValueError):
+                        utc, time_issue = None, IssueCode.INVALID_TIMESTAMP
                     if time_issue:
                         issue(
                             IssueSeverity.ERROR,

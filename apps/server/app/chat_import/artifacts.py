@@ -69,10 +69,14 @@ class _LocalWriter:
         os.fsync(self._file.fileno())
         self._file.close()
         final = self._store._path(self._key)
-        if final.exists() or final.is_symlink():
+        try:
+            # Atomic exclusive publication on the same filesystem. A check
+            # followed by POSIX rename could overwrite a concurrent final file.
+            os.link(self._path, final)
+        except OSError as exc:
             self.abort()
-            raise ArtifactStoreError
-        self._path.rename(final)
+            raise ArtifactStoreError from exc
+        self._path.unlink()
         self._done = True
         return ArtifactStat(self._key, self._size, self._hash.hexdigest())
 

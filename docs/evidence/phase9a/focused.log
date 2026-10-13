@@ -1,0 +1,8 @@
+WARNING goutoujunshi.server Import artifact cleanup deferred; maintenance retry required
+ERROR goutoujunshi.server Unhandled server error
+...................................{"security_demo": "100MiB signed HTTP upload/cancel", "file_bytes": 104857600, "python_traced_peak_bytes": 2092986, "elapsed_seconds": 0.943, "artifact_files_after_cancel": 0, "measurement": "Python allocations only; excludes OS page cache/PostgreSQL/RSS"}
+ERROR goutoujunshi.server Unhandled server error
+WARNING goutoujunshi.server Import artifact cleanup deferred; maintenance retry required
+WARNING goutoujunshi.server Import artifact cleanup deferred; maintenance retry required
+....s...............................................
+86 passed, 1 skipped in 8.44s

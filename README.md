@@ -2,7 +2,8 @@
 
 Phase 8A–8E 已完成工程验收：生成客户端、开发 JWT、真实资源、Agent REST/POST SSE、
 聊天导入与分域历史、Memory 控制及受保护操作。Phase 8F 已完成 Android 原生收口，
-Phase 8 为 PASS，标记为 `8 / 8F`；Phase 9 为 PENDING，未开始实现。
+Phase 8 为 PASS；Phase 9A 已完成，标记为 `8 / 9A`，Phase 9 整体保持 IN PROGRESS。
+9A 状态、阶段标记与独立 pre/post 验证结果见 [9A 验收报告](docs/PHASE_9A_ACCEPTANCE.md)。
 当前证据见 [Phase 8 Closeout Addendum](docs/PHASE_8_FINAL_ACCEPTANCE.md#closeout-addendum--2026-10-12)，
 后续范围见 [Phase 9 交接](docs/PHASE_9_SECURITY_RELIABILITY_HANDOFF.md)。
 

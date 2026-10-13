@@ -1,8 +1,11 @@
 # Phase 9 — Security, Privacy, Reliability and Deletion handoff
 
-This is documentation prepared during Phase 8F, not implementation or approval
-to start Phase 9. Phase 8 remains IN PROGRESS; incomplete Android evidence in
-[final acceptance](PHASE_8_FINAL_ACCEPTANCE.md) must first be resolved.
+Current handoff, 2026-10-13: Phase8 is PASS at committed8/8F, backed by the
+[final closeout addendum](PHASE_8_FINAL_ACCEPTANCE.md) and native hash matrix.
+The user authorized Phase9A only. Its current acceptance and completion marker
+are recorded in [9A acceptance](PHASE_9A_ACCEPTANCE.md); Phase9 overall remains
+IN PROGRESS. Original Phase8F limits below remain historical context and are
+not an instruction to rerun or reopen Phase8 product implementation.
 
 The following are separate existing contract limits. Classification as P2
 applies only while the stated conservative behavior remains true; confirmed
@@ -76,4 +79,37 @@ node observability, token/cost accounting and production identity are not
 implemented by this observer. Fixture fault injection adds no production
 endpoint or authentication bypass. Future Phase9 work must keep exact keys,
 owner/scope invalidation, server challenges and persisted receipts authoritative.
-Phase9 remains PENDING and has not started in this closeout.
+At the time of that Phase8F closeout, Phase9 was pending and had not started.
+
+## After Phase9A: executable remaining work
+
+No formal9B–9E subdivision existed before9A; future labels/scope require the
+next explicit instruction. Do not infer completion of Phase9 from9A. Keep
+Mock/keyless tests and all prior native/OpenAPI/frozen gates.
+
+- R-06: operational artifact maintenance, bounded backlog and generic failure
+  alerts; test process death, cleanup faults, missed schedule and backlog drain.
+  Add production backup/key custody/rotation and quarantined restore drill before
+  recovery/deletion claims. Query-time expiry is not physical cleanup.
+- R-07: define active-body deadline, concurrent admission, owner/global file and
+  Job quotas and reverse-proxy rate/body controls before untrusted exposure.
+  Stress worst-case unique speaker inventories and aggregate disk/heap/DB/slow
+  connections, including unauthenticated form spooling. This9A demo only proves
+  bounded single-file behavior and controlled small concurrency. Public exposure
+  with present aggregate limits would beP1 and must not be accepted.
+- R-09: broader full-system object authorization and identity/revocation audit;
+  preserve development issuer boundaries until explicit production auth work.
+  Define user/history/cache/account deletion and tombstone/retry semantics without
+  weakening existing Memory guards. Audit deployed collectors and retention.
+- Existing pending-request/outbox/run-lookup limits remain conservative unknown
+  outcomes. Decide minimum scoped descriptors and reconciliation contracts before
+  implementing automatic replay; test postcommit loss and restart with original keys.
+- R-08: imported history remains outside Agent and providers. Future analysis
+  requires explicit owned source/consent, bounded untrusted envelopes and injection
+  evaluation; no unsolicited pipeline or provider integration in this handoff.
+
+9A fixed R-01–R-04 blockers and R-05 trim cost. Real Windows symlink refusal passed
+in approved host execution after the sandbox-only skip; private root ACL/reparse
+protection remains an operational assumption.
+Read-only historical131-file evidence screening found no credential pattern hits;
+this is not a general proof about arbitrary prose. Keep original evidence unchanged.

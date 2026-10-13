@@ -24,6 +24,17 @@ ROOT = Path(__file__).resolve().parents[1]
 DEVICE_FILE = "/sdcard/Download/phase8f-synthetic.md"
 
 
+def run_private_command(parts: list[str], *, timeout: float = 20) -> bytes:
+    """Never let subprocess exceptions serialize private native input arguments."""
+    try:
+        value = subprocess.run(parts, capture_output=True, timeout=timeout, check=False)
+    except (subprocess.SubprocessError, OSError):
+        raise RuntimeError("Android command unavailable; private arguments suppressed") from None
+    if value.returncode:
+        raise RuntimeError("Android command failed; private arguments suppressed")
+    return value.stdout
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--adb", required=True, type=Path)
@@ -47,18 +58,7 @@ def main() -> None:
         raise ValueError("Steps must be a JSON array of command strings")
 
     def adb(*parts: str) -> bytes:
-        try:
-            value = subprocess.run(
-                [str(args.adb), "-s", args.serial, *parts],
-                capture_output=True,
-                timeout=20,
-                check=False,
-            )
-        except subprocess.TimeoutExpired:
-            raise RuntimeError("Android command timed out; private arguments suppressed") from None
-        if value.returncode:
-            raise RuntimeError("Android command failed; private arguments suppressed")
-        return value.stdout
+        return run_private_command([str(args.adb), "-s", args.serial, *parts])
 
     if adb("shell", "getprop", "sys.boot_completed").strip() != b"1":
         raise RuntimeError("Android boot is incomplete")

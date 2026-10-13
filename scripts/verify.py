@@ -53,6 +53,7 @@ MOBILE_CONNECTED = (ROOT / "apps/mobile/src/data/resourceController.ts").is_file
 MOBILE_AGENT_CHAT = (ROOT / "apps/mobile/src/data/agentChatController.ts").is_file()
 MOBILE_IMPORT = (ROOT / "apps/mobile/src/data/importController.ts").is_file()
 MOBILE_MEMORY = (ROOT / "apps/mobile/src/data/memoryController.ts").is_file()
+UPLOAD_SECURITY = (ROOT / "apps/server/tests/test_upload_security.py").is_file()
 MEMORY_GATE_FILES = (
     "apps/mobile/src/api/memoryAdapter.ts",
     "apps/mobile/src/api/memoryErrors.ts",
@@ -201,8 +202,14 @@ def native_closeout_check() -> None:
 
 
 def phase_marker_check() -> None:
-    if PHASE > 8 or (PHASE == 8 and SUBPHASE != "8F"):
-        raise RuntimeError("Phase 8 requires 8F closeout; Phase 9+ verification is not implemented")
+    if PHASE > 8 or (PHASE == 8 and SUBPHASE not in {"8F", "9A"}):
+        raise RuntimeError("Phase 8 requires 8F closeout; only Phase 9A subphase is implemented")
+    if SUBPHASE == "9A":
+        if PHASE != 8 or not UPLOAD_SECURITY:
+            raise RuntimeError("Phase 9A requires completed Phase 8 and security gates")
+        from check_security_9a import check
+
+        check(completed=True)
     if PHASE == 8:
         if not all(
             (
@@ -385,6 +392,10 @@ def tests() -> None:
     if CHAT_IMPORT_API:
         uv_run("pytest", "-q", "apps/server/tests/test_import_api.py")
         uv_run("python", "apps/server/import_api_demo.py")
+    if UPLOAD_SECURITY:
+        uv_run("python", "scripts/check_security_9a.py")
+        uv_run("python", "scripts/audit_phase8_evidence.py")
+        uv_run("pytest", "-q", "apps/server/tests/test_upload_security.py")
     if MEMORY_CONTROL_API:
         uv_run("pytest", "-q", "apps/server/tests/test_memory_control.py")
         uv_run("python", "apps/server/memory_control_demo.py")
@@ -435,6 +446,8 @@ def lint() -> None:
         "scripts/export_openapi.py",
         "scripts/phase8_android_demo.py",
         "scripts/phase8_native_closeout.py",
+        "scripts/check_security_9a.py",
+        "scripts/audit_phase8_evidence.py",
     )
     uv_run(
         "ruff",
@@ -456,6 +469,8 @@ def lint() -> None:
         "scripts/export_openapi.py",
         "scripts/phase8_android_demo.py",
         "scripts/phase8_native_closeout.py",
+        "scripts/check_security_9a.py",
+        "scripts/audit_phase8_evidence.py",
     )
 
 
@@ -714,7 +729,12 @@ def verify() -> None:
                 suffix += " and 7D integration/runtime gates"
             if PHASE == 8:
                 print("PASS: Phase 7 Expo React Native MVP")
-                print("PASS: all active Phase 0..8 gates; Phase 9 PENDING / NOT STARTED")
+                print("PASS: all active Phase 0..8 gates")
+                if UPLOAD_SECURITY:
+                    print("PASS: Phase 9A security focused/regression gates")
+                    print("Phase 9 IN PROGRESS; remaining security/privacy/reliability deferred")
+                else:
+                    print("Phase 9 PENDING / NOT STARTED")
             elif PHASE == 7:
                 print("PASS: Phase 7 Expo React Native MVP")
                 suffix = (

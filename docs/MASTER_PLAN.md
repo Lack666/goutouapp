@@ -22,7 +22,7 @@ as implemented by a placeholder directory or a golden expectation.
 | 6 | User-facing memory controls and retention policy integration | PASS (6A–6D) |
 | 7 | Expo React Native MVP | PASS (7A–7D) |
 | 8 | Mobile API integration, generated client and stream consumption | PASS (8A–8F, including native closeout) |
-| 9 | Security, privacy, reliability and deletion | PENDING |
+| 9 | Security, privacy, reliability and deletion | IN PROGRESS (9A PASS; remaining work pending) |
 | 10 | Optional hybrid RAG with pgvector | PENDING |
 | 11 | Agent eval and observability | PENDING |
 | 12 | CI/CD, EAS preview, release preparation | PENDING |
@@ -67,6 +67,22 @@ as implemented by a placeholder directory or a golden expectation.
 12. Locked dependencies, CI, Docker/Compose, EAS preview and release checklist.
 
 ## Implementation log
+
+### Phase 9A — threat model and upload boundary (2026-10-13)
+
+- PASS: CODE/TEST/DOC/DEMO/REGRESSION and independent pre/post root exits0;
+  Backend603, Mobile358, repository55, Golden83, Web22 and Connected3/3/4/5/1.
+- Scope is9A only, after committed8/8F closure. No earlier formal9A–9E marker
+  scheme existed; verifier accepts only completed_phase8/completed_subphase9A,
+  retaining the entire Phase8 native evidence gate and rejecting completed Phase9.
+- Verify existing actual byte/file/format/owner/lifecycle controls; repair NUL/UTC
+  parse errors, exception-log disclosure, cleanup faults and publication race.
+  Add signed PostgreSQL negative tests, real TCP interruption and100MiB resource
+  measurement, synthetic log redaction and read-only historical evidence screening.
+- Status and actual pre/post-marker exits are authoritative in
+  [9A acceptance](PHASE_9A_ACCEPTANCE.md). Risk register records deployment-only
+  prerequisites without claiming production rate limits, scheduling or backups.
+  Phase9 overall remains IN PROGRESS; Phase10–12 stay pending. Stop after9A.
 
 ### Phase 8F Closeout — Android native acceptance (2026-10-12)
 

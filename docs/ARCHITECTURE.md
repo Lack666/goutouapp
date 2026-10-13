@@ -1,5 +1,15 @@
 # Architecture direction
 
+Current Phase9A boundary: existing transport/services/independent Runtime remain.
+Security review and minimal upload/parser/artifact/log fixes introduce no Agent
+node, analysis pipeline, provider integration, schema or new endpoint.
+Existing Expo SDK57 dependencies receive compatibility patches documented in
+[the patch audit](PHASE_9A_DEPENDENCY_AUDIT.md).
+See [threat model](SECURITY_THREAT_MODEL.md), [upload contract](UPLOAD_SECURITY_BOUNDARY.md)
+and [ADR0036](adr/0036-upload-security-and-private-error-logs.md). Phase9 overall
+remains IN PROGRESS; aggregate admission controls and deployed retention/backup
+automation are explicitly absent. The historical phase sections below remain dated.
+
 Phase 0 fixes the system boundaries. Phase 2A implements the FastAPI HTTP
 foundation; Phase 2B adds PostgreSQL persistence; Phase 2C adds the internal
 LLM Provider boundary; Phase 2D verifies their composition. Phase 3A defines

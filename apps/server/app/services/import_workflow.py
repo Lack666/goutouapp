@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import logging
 from collections.abc import Callable, Iterator
 from datetime import UTC, datetime, timedelta
 from enum import StrEnum
@@ -20,6 +21,7 @@ from app.chat_import.artifacts import (
     ArtifactStoreError,
     ImportArtifactStore,
 )
+from app.core.logging import LOGGER_NAME
 from app.db.models import ChatImportArtifact, ChatImportJob
 from app.services.agent_service import AuthenticatedActor
 from app.services.import_jobs import (
@@ -28,7 +30,19 @@ from app.services.import_jobs import (
     ImportJobService,
     ImportJobView,
 )
-from app.services.import_merge import ImportMergeResult, ImportMergeService, ImportMergeStatus
+from app.services.import_merge import (
+    ImportMergeError,
+    ImportMergeErrorCode,
+    ImportMergeResult,
+    ImportMergeService,
+    ImportMergeStatus,
+)
+
+
+def _cleanup_warning() -> None:
+    logging.getLogger(LOGGER_NAME).warning(
+        "Import artifact cleanup deferred; maintenance retry required"
+    )
 
 
 class ImportWorkflowErrorCode(StrEnum):
@@ -102,11 +116,13 @@ class ImportWorkflowService:
                 db.add(row)
                 db.flush()
                 return ImportJobService(db).create(actor, parsed, artifact_id=row.id)
-        except BaseException:
+        except BaseException as exc:
             try:
                 self._store.delete(artifact.key)
             except (OSError, ArtifactStoreError):
-                pass  # Orphan maintenance retries deletion after a crash/fault.
+                _cleanup_warning()
+            if isinstance(exc, SQLAlchemyError):
+                raise ImportMergeError(ImportMergeErrorCode.PERSISTENCE_FAILED) from None
             raise
 
     def _owned_job(self, db: Session, actor: AuthenticatedActor, job_id: UUID) -> ChatImportJob:
@@ -144,14 +160,10 @@ class ImportWorkflowService:
         with self._sessions() as db:
             job = self._owned_job(db, actor, job_id)
             if job.binding_revision != expected_revision:
-                from app.services.import_merge import ImportMergeError, ImportMergeErrorCode
-
                 raise ImportMergeError(ImportMergeErrorCode.REVISION_CONFLICT)
             if job.status == "imported":
                 return ImportMergeService._receipt(job, job, ImportMergeStatus.ALREADY_IMPORTED, 0)
             if job.status != "ready":
-                from app.services.import_merge import ImportMergeError, ImportMergeErrorCode
-
                 raise ImportMergeError(ImportMergeErrorCode.JOB_NOT_READY)
             artifact = self._artifact(db, actor, job)
             if artifact.state != "active" or artifact.expires_at <= datetime.now(UTC):
@@ -202,6 +214,7 @@ class ImportWorkflowService:
         except (OSError, ArtifactStoreError, SQLAlchemyError):
             # Formal receipt is already durable. Maintenance can reconcile an
             # active metadata row or orphaned file without reimporting data.
+            _cleanup_warning()
             return
 
     def cancel(self, actor: AuthenticatedActor, job_id: UUID) -> ImportJobView:
@@ -241,7 +254,11 @@ class ImportWorkflowService:
             try:
                 self._store.delete(key)
                 removed += 1
-            except OSError:
-                pass  # An orphan scan on a later run can retry.
-        orphans = self._store.cleanup_expired(live_keys, now - timedelta(hours=1))
+            except (OSError, ArtifactStoreError):
+                _cleanup_warning()
+        try:
+            orphans = self._store.cleanup_expired(live_keys, now - timedelta(hours=1))
+        except (OSError, ArtifactStoreError):
+            _cleanup_warning()
+            orphans = 0
         return removed, orphans

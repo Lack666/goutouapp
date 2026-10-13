@@ -1,0 +1,79 @@
+{
+  "phase": "9A",
+  "status": "PASS",
+  "acceptance_stage": "closed_after_independent_post_marker",
+  "completed_phase": 8,
+  "completed_subphase": "9A",
+  "open_p0_p1": [],
+  "gates": {
+    "CODE": "PASS",
+    "TEST": "PASS",
+    "DOC": "PASS",
+    "DEMO": "PASS",
+    "REGRESSION": "PASS"
+  },
+  "results": {
+    "backend": 603,
+    "mobile": 358,
+    "repository": 55,
+    "golden": 83,
+    "web": 22,
+    "connected_web": [
+      3,
+      3,
+      4,
+      5,
+      1
+    ],
+    "openapi_operations": 36,
+    "expo_doctor": "21/21",
+    "focused": 88,
+    "new_backend_security": 45
+  },
+  "focused": {
+    "exit_code": 0,
+    "log": {
+      "path": "docs/evidence/phase9a/focused-approved.log",
+      "sha256": "f5e0761edb7db9c8c91fe72320b8dbc1900c895622a4c85e354b1a34e050907c"
+    },
+    "exit": {
+      "path": "docs/evidence/phase9a/focused-approved.exit",
+      "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+    }
+  },
+  "pre_marker": {
+    "exit_code": 0,
+    "log": {
+      "path": "docs/evidence/phase9a/pre-marker-r6.log",
+      "sha256": "cdd1f3f5f63b6524599928bbec579c824bb173f143ec2ebd62de932c19b2c24e"
+    },
+    "exit": {
+      "path": "docs/evidence/phase9a/pre-marker-r6.exit",
+      "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+    }
+  },
+  "historical_evidence_inventory_sha256": "159f8343692c0c78f23ca164fc4444026edd41dd102ba8ff9042db0a10ac8c83",
+  "limits": [
+    "Development scope only",
+    "No new Android build for Expo patch graph",
+    "No aggregate upload admission/quota/body deadline",
+    "No deployed artifact scheduler/backup/restore",
+    "Imported data remains outside Agent/provider"
+  ],
+  "post_marker": {
+    "exit_code": 0,
+    "log": {
+      "path": "docs/evidence/phase9a/post-marker.log",
+      "sha256": "c90d582b4cc58439f0d6e0b67125aeffe02d900b13c52cce0de8fc933fce9261"
+    },
+    "exit": {
+      "path": "docs/evidence/phase9a/post-marker.exit",
+      "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+    }
+  },
+  "new_evidence_privacy_screen": {
+    "files": 10,
+    "findings": [],
+    "scope": "Credential patterns; not arbitrary sensitive prose proof"
+  }
+}
