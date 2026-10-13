@@ -1,0 +1,15 @@
+$ playwright test --config playwright.agent.config.ts
+[WebServer] (node:1620) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:9732) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 3 tests using 1 worker
+
+(node:32132) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 agent-connected\http.spec.ts:10:5 › real SSE answer committed but terminal frame lost: same-key REST recovers one persisted answer (313ms)
+  ok 2 agent-connected\http.spec.ts:55:5 › real signed REST/SSE cross replay, lost response, PostgreSQL IDs, history and owner isolation (500ms)
+  ok 3 agent-connected\web.spec.ts:10:5 › Phase 8C Agent Chat Connected Demo: real POST SSE, history, safe replay, logout and B isolation (5.9s)
+
+  3 passed (12.7s)

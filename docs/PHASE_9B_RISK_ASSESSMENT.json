@@ -1,0 +1,53 @@
+{
+  "phase": "9B",
+  "baseline": "14eb9d4 / 8-9A",
+  "deployment_scope": "controlled local development with signed synthetic identities",
+  "production_acceptable": false,
+  "open_p0_p1": [],
+  "fixed_findings": [
+    {
+      "id": "9B-01",
+      "severity": "P2",
+      "finding": "Malformed Memory cursor type caused 500",
+      "fix": "Typed bounded versioned decoding",
+      "test": "apps/server/tests/test_authorization_security.py::test_malformed_memory_cursor_is_controlled"
+    },
+    {
+      "id": "9B-02",
+      "severity": "P2",
+      "finding": "Position cursors accepted other navigation scopes; SQL remained owned",
+      "fix": "v2 exact owner/filter binding",
+      "test": "apps/server/tests/test_authorization_security.py::test_memory_cursor_binds_owner_person_and_relationship"
+    },
+    {
+      "id": "9B-03",
+      "severity": "P2",
+      "finding": "Transport could deliver stale callbacks; App controllers already guarded",
+      "fix": "Per-event SSE epoch rejection",
+      "test": "apps/mobile/tests/authPrivacy.test.ts"
+    }
+  ],
+  "production_blockers": [
+    "R-07: global/owner rate limit, concurrent admission, storage/Job quota and active-body deadline absent; untrusted public exposure would be P1",
+    "R-06: monitored retention scheduler, encrypted backup custody/rotation and quarantined restore drill undeployed",
+    "R-09: production issuer/refresh/revocation, collector retention and full account/history/cache deletion absent"
+  ],
+  "deferred": [
+    "R-06",
+    "R-07",
+    "R-08",
+    "R-09",
+    "volatile pending descriptors and incomplete crash reconciliation"
+  ],
+  "r07_single_request_disk_budget": "<=201 MiB combined default spool/artifact plus filesystem overhead; N requests multiply it",
+  "r07_pool": "Default SQLAlchemy QueuePool per process; no worker/owner aggregate admission; bounded real-pool saturation test returns503",
+  "r07_design": "Before exposure: trusted proxy rate/body/active-deadline controls; reject bounded429/503 before spooling; owner/global concurrent reservations; atomic spool+artifact storage quota reservations; monitored free-space thresholds; bounded DB pools aligned with workers; release on all exits plus process-death reconciliation; validate aggregate and slow-client faults before opening ingress",
+  "scope_limit": "Observed project listeners/defaults are loopback; arbitrary host firewall/router/tunnel/third-party configurations are not certified",
+  "validation_environment_limit": {
+    "severity": "P2",
+    "status": "unconfirmed_transient",
+    "finding": "One Windows Playwright worker unexpected native exit3221226505 during first post-marker run",
+    "evidence": "failed post-marker attempt, unchanged Agent3/3 recheck and independent complete successful post-marker",
+    "remaining": "Root cause unconfirmed; investigate runtime/CI stability if repeated; no test assertions or dependencies changed"
+  }
+}

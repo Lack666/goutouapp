@@ -385,15 +385,24 @@ def page_relationship_messages(
         RelationshipMessage.owner_user_id == actor.user_id,
         RelationshipMessage.relationship_id == relationship_id,
     )
+    scope = sha256(f"import-history-v2:{actor.user_id}:{relationship_id}".encode()).hexdigest()
     if cursor is not None:
         try:
-            payload = json.loads(urlsafe_b64decode(cursor.encode("ascii") + b"=="))
-            if not isinstance(payload, list) or len(payload) != 4:
+            if not 1 <= len(cursor) <= 512:
                 raise ValueError
-            stamp = datetime.fromisoformat(payload[0])
-            job_id = UUID(payload[1])
-            source_index = int(payload[2])
-            row_id = UUID(payload[3])
+            payload = json.loads(urlsafe_b64decode(cursor.encode("ascii") + b"=="))
+            if (
+                not isinstance(payload, list)
+                or len(payload) != 6
+                or payload[:2] != [2, scope]
+                or not all(isinstance(payload[index], str) for index in (2, 3, 5))
+                or type(payload[4]) is not int
+            ):
+                raise ValueError
+            stamp = datetime.fromisoformat(payload[2])
+            job_id = UUID(payload[3])
+            source_index = payload[4]
+            row_id = UUID(payload[5])
             if stamp.tzinfo is None or source_index < 1:
                 raise ValueError
         except (ValueError, TypeError, UnicodeError, IndexError) as exc:
@@ -443,6 +452,8 @@ def page_relationship_messages(
         last = selected[-1]
         raw = json.dumps(
             [
+                2,
+                scope,
                 last.timestamp_utc.isoformat(),
                 str(last.import_job_id),
                 last.source_index,

@@ -60,3 +60,11 @@ Cross-file partial-overlap deduplication and analysis of imported history are
 deferred. See [Artifact lifecycle](IMPORT_ARTIFACTS.md),
 [Imported messages](IMPORTED_MESSAGES.md) and
 [Phase 5D acceptance](PHASE_5D_ACCEPTANCE.md).
+
+## Phase 9B navigation supplement
+
+History cursors now use opaque v2 positions bound to owner and Relationship.
+Malformed, old or mismatched-scope cursors return existing invalid pagination400;
+Refresh obtains a current cursor. Owner queries remain independent authority.
+Ordering/page sizes/public DTOs are unchanged; this is not a fixed snapshot.
+All9A upload guards remain. See ADR0037 and authorization audit.

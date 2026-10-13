@@ -113,3 +113,27 @@ in approved host execution after the sandbox-only skip; private root ACL/reparse
 protection remains an operational assumption.
 Read-only historical131-file evidence screening found no credential pattern hits;
 this is not a general proof about arbitrary prose. Keep original evidence unchanged.
+
+## Explicit Phase 9B authorization and remaining work
+
+The user's2026-10-13 instruction formally establishes9B Authentication, Ownership
+and Privacy Boundary Hardening without conflicting with prior plans. MASTER_PLAN
+and marker checker agree: only8/9B may follow8/9A after fresh updated-dependency
+Android smoke and independent complete pre/post root exits0. Phase9 overall stays
+IN PROGRESS; no9C–9E labels/scope are inferred. Existing8F/9A evidence stays required.
+
+9B scopes full public JWT/object/session/error audit, minimal cursor/late-event/log
+fixes, historical privacy review and production risk gates. New reports provide
+coverage and limits. Production identities/revocation, monitored retention,
+backup/restore/deletion propagation, global admission/quotas/active deadlines,
+full account/history/cache deletion and conservative pending reconciliation
+remain next explicitly authorized Phase9 work. R-07 must close before untrusted
+public ingress; no production acceptance or real-model integration is granted.
+Stop after9B. Phase10–12, RAG, provider and release work remain pending.
+
+9B acceptance now PASS: fresh updated-dependency Android5 scenes, signed security
+41/focused218, full backend644/Mobile359/repository61 and independent root pre/post
+exits0. Current marker8/9B; Phase9 overall IN PROGRESS. Next work remains exactly
+the authorized-future items above, not an automatic9C/Phase10 start.
+One Windows Playwright worker native exit remains an unconfirmed P2 environment
+follow-up; unchanged3/3 recheck and full root rerun passed. Failed evidence retained.

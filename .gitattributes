@@ -7,3 +7,4 @@ docs/evidence/phase8f-closeout/** -text whitespace=blank-at-eol,blank-at-eof,spa
 docs/evidence/phase8f-closeout/*.log whitespace=-blank-at-eol,-blank-at-eof,-space-before-tab,cr-at-eol
 # Phase 9A evidence retains original execution bytes for its hash gate.
 docs/evidence/phase9a/** -text whitespace=-blank-at-eol,-blank-at-eof,-space-before-tab,cr-at-eol
+docs/evidence/phase9b/** -text whitespace=-blank-at-eol,-blank-at-eof,-space-before-tab,cr-at-eol

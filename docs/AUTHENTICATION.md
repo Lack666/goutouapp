@@ -1,5 +1,14 @@
 # Phase 4B authentication
 
+Phase9B audit supplement: policy remains unchanged. New signed negative tests
+cover missing/signature/expiry/nbf/format/algorithm/unsigned/tamper/subject/
+issuer/audience/required claims and non-finite dates. All33 sensitive operations
+reject missing Bearer; services reject unknown subjects or return owner-neutral
+not-found for FK-backed resources. Development CLI is refused in test/staging/
+production and is never a public endpoint. Existing local15-minute CLI tokens
+provide no production refresh/revocation assurance. Full operation/service audit:
+[AUTHORIZATION_SECURITY_AUDIT.md](AUTHORIZATION_SECURITY_AUDIT.md).
+
 The Agent REST endpoint accepts one `Authorization: Bearer <JWT>` credential.
 The Phase 4C POST streaming endpoint uses the identical FastAPI dependency and
 verifier before any SSE headers are sent; it does not accept URL query tokens

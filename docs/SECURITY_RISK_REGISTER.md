@@ -60,3 +60,44 @@ Host-level root redirection remains an OS trust assumption. Historical privacy
 regex screening is reproducible but cannot prove
 absence of all sensitive free text; provenance review ties the 8F UI data to
 synthetic fixture/preconditions. Historical evidence is unchanged.
+
+## Phase 9B current assessment
+
+9A JSON remains its historical risk baseline. Current supplemental authority:
+[PHASE_9B_RISK_ASSESSMENT.json](PHASE_9B_RISK_ASSESSMENT.json). No confirmed open
+P0/P1 under controlled local use. Fixed P2: malformed Memory cursor500 (9B-01),
+unbound position cursors (9B-02, owned SQL never broadened), reusable Transport
+late callback (9B-03, existing App controllers already guarded). Tests reproduce
+each issue; fixed logging whitelist additionally hardens future diagnostics.
+
+R-09's current public object/session/error audit is now addressed by9B; production
+issuer/refresh/revocation, full account/history/cache deletion, collector retention
+and durable reconciliation remain. R-06 scheduler/backup/restore and R-08 future
+provider/import analysis controls remain deferred.
+
+R-07 production acceptance is FALSE. Repository APP_HOST and Compose Postgres
+default loopback. Observed project listeners: PG127.0.0.1:15434, fixture
+127.0.0.1:8024, Metro::1:8092, relay127.0.0.1:8093; no project API listener was
+present before smoke. This does not certify arbitrary tunnels/firewall/router
+state. There is no evidence of actual project public exposure in this environment.
+
+Default per-upload spool+artifact budget <=201MiB plus filesystem overhead;
+N simultaneous uploads multiply it (20 can approach4020MiB). Orphans/other jobs
+add storage. SQLAlchemy default pool bounds one process only; workers multiply
+connections, and unauthenticated ready can consume DB capacity. ENOSPC begin
+returns generic500/no Job/artifact; real small-pool saturation returns503. No
+remaining capacity, aggregation or slow-client resilience claim follows.
+
+Minimum next design: trusted ingress owner/IP/global rates and body/active
+deadlines; reject429/503 before form spooling; owner/global concurrent reservations;
+atomic storage reservations for spool+artifact+retained jobs; monitored free-space
+thresholds; bounded DB pool/worker alignment; release on all exits and reconcile
+process death. Test aggregate legal uploads, malicious slow bodies, disk/pool
+failure and cleanup before public ingress. Private development can defer this
+implementation; public untrusted exposure without it becomes blockingP1.
+
+9B validation environment P2: one Windows Playwright worker terminated natively
+with code3221226505 during first post-marker run. Unchanged Agent3/3 and fresh
+full post-marker0 subsequently passed. Cause unconfirmed; preserve evidence and
+investigate host/runtime/CI stability if repeated. This is not a claimed fixed
+product defect or a waiver of failed verification.

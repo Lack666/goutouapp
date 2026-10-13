@@ -162,3 +162,11 @@ with generic failed memory status/warning, through REST and SSE.
 
 The full signed socket demo is `apps/server/memory_phase6_e2e_demo.py`.
 See [final acceptance](PHASE_6_FINAL_ACCEPTANCE.md).
+
+## Phase 9B navigation supplement
+
+Memory cursors now use opaque v2 positions bound to owner and exact optional
+Person/Relationship filters. Typed components prevent malformed UUID500; old,
+malformed or mismatched cursors return existing invalid_scope400. Refresh obtains
+a new cursor. Owned queries authorize independently; no snapshot/token authority.
+Public DTOs, consent, guards, key replay and deletion policy are unchanged.

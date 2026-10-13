@@ -1,0 +1,261 @@
+{
+  "phase": "9B",
+  "status": "PASS",
+  "open_p0_p1": [],
+  "baseline": "14eb9d4",
+  "recorded_at_utc": "2026-10-13T04:22:15.533956+00:00",
+  "native": {
+    "status": "PASS",
+    "synthetic_only": true,
+    "device": "Pixel_10 / emulator-5554 / Android17 API37 / Expo Go57.0.9",
+    "mobile_fingerprint": "ea2a489bef04c3ab3e77b8a1d8d3f38a43d3c58fb1e50e3a0d0c69b794a8ed7b",
+    "fingerprint_rule": "SHA256 map of locked package/lock and Mobile src/app; CRLF normalized for text",
+    "dependencies": {
+      "expo": "57.0.28",
+      "expo-router": "57.0.26",
+      "expo-crypto": "57.0.4",
+      "expo-secure-store": "57.0.4",
+      "expo-document-picker": "57.0.3",
+      "react-native": "0.86.3"
+    },
+    "scenes": [
+      {
+        "scene": "resource_create",
+        "status": "PASS",
+        "exit_code": 0,
+        "artifacts": {
+          "steps": {
+            "path": "docs/evidence/phase9b/android-resource_create.steps.json",
+            "sha256": "528ea0afdb4130178fc2250907eda45e74f3630ba4028488c920556370321432"
+          },
+          "report": {
+            "path": "docs/evidence/phase9b/android-resource_create.json",
+            "sha256": "21a93c692ece1d8cf9c82353bc1875b5b3d1f87dbe7031bca317915a2c801698"
+          },
+          "log": {
+            "path": "docs/evidence/phase9b/android-resource_create.log",
+            "sha256": "30f281a56d26053d6d210fa8c61792cfbd8610b8a80dfc24e865815afe0a4b34"
+          },
+          "exit": {
+            "path": "docs/evidence/phase9b/android-resource_create.exit",
+            "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+          }
+        }
+      },
+      {
+        "scene": "sse_normal",
+        "status": "PASS",
+        "exit_code": 0,
+        "artifacts": {
+          "steps": {
+            "path": "docs/evidence/phase9b/android-sse_normal.steps.json",
+            "sha256": "e98213bc6dd3ac6eea4c9bc45cddcf370e6263427c051ca962613c67382a5d13"
+          },
+          "report": {
+            "path": "docs/evidence/phase9b/android-sse_normal.json",
+            "sha256": "ddb5a4185cbc3a1de67a21f0ba9059e1e480696a36fdd974a26b8b1ebba41d3d"
+          },
+          "log": {
+            "path": "docs/evidence/phase9b/android-sse_normal.log",
+            "sha256": "44d4ad9cadbd65e427c96f1933e61ba558ec1584d80be33183d581c1d366ba0d"
+          },
+          "exit": {
+            "path": "docs/evidence/phase9b/android-sse_normal.exit",
+            "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+          }
+        }
+      },
+      {
+        "scene": "memory_smoke_revoke",
+        "status": "PASS",
+        "exit_code": 0,
+        "artifacts": {
+          "steps": {
+            "path": "docs/evidence/phase9b/android-memory_smoke_revoke.steps.json",
+            "sha256": "fc67eba30a2e6631f5f99785160281a9e315f8fe32bc1591093a3e9cd0f1b652"
+          },
+          "report": {
+            "path": "docs/evidence/phase9b/android-memory_smoke_revoke.json",
+            "sha256": "89bef8102c8a529af5825853d1420bc5c883587648136f700aabfc62caf48c23"
+          },
+          "log": {
+            "path": "docs/evidence/phase9b/android-memory_smoke_revoke.log",
+            "sha256": "388a10713d0150af241a7f0f855669b2985294c0bf594bc578e6dfa7e6260ca6"
+          },
+          "exit": {
+            "path": "docs/evidence/phase9b/android-memory_smoke_revoke.exit",
+            "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+          }
+        }
+      },
+      {
+        "scene": "import_history",
+        "status": "PASS",
+        "exit_code": 0,
+        "artifacts": {
+          "steps": {
+            "path": "docs/evidence/phase9b/android-import_history.steps.json",
+            "sha256": "4c02c12405aeaeb3ce22e365360c97a12a2accafd0927799a68cd8f8c08521ab"
+          },
+          "report": {
+            "path": "docs/evidence/phase9b/android-import_history.json",
+            "sha256": "d595749d14f51d5f4a5cf965822adbcf801a903aa0e6ec83932b7f3060b30477"
+          },
+          "log": {
+            "path": "docs/evidence/phase9b/android-import_history.log",
+            "sha256": "357895d0563ee65677311d89409fc1d92653d6c3cee044032a083d6b56b24d07"
+          },
+          "exit": {
+            "path": "docs/evidence/phase9b/android-import_history.exit",
+            "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+          }
+        }
+      },
+      {
+        "scene": "session",
+        "status": "PASS",
+        "exit_code": 0,
+        "artifacts": {
+          "steps": {
+            "path": "docs/evidence/phase9b/android-session.steps.json",
+            "sha256": "9809a845e5b354c338b8e7837d864094aabfe1659cc726488df2e9b58e0dce57"
+          },
+          "report": {
+            "path": "docs/evidence/phase9b/android-session.json",
+            "sha256": "bb7742fc7d12348c87d0bdf7d05a7292cc37085b2dbb230703fe18308e724a29"
+          },
+          "log": {
+            "path": "docs/evidence/phase9b/android-session.log",
+            "sha256": "bd38bac82d86d6a7d6c740ad9a6c0f291633eae997064cdb67d82573cb3cd598"
+          },
+          "exit": {
+            "path": "docs/evidence/phase9b/android-session.exit",
+            "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+          }
+        }
+      }
+    ],
+    "rules": "Fresh complete independent executions on updated dependencies and cleared Metro. Existing 8F step/helper IDs reused as procedure only, never old evidence. No partial splice. Host REST Memory setup is identified separately from native operations.",
+    "failed_attempts": [
+      {
+        "scene": "session_failed_r1",
+        "status": "FAIL",
+        "exit_code": 1,
+        "artifacts": {
+          "steps": {
+            "path": "docs/evidence/phase9b/android-session_failed_r1.steps.json",
+            "sha256": "d10332f4f22543eb841f01eed6ef772eec211b6778a968237fec6843850321af"
+          },
+          "report": {
+            "path": "docs/evidence/phase9b/android-session_failed_r1.json",
+            "sha256": "080b9b2968b636cf88866d813bd86b2ea4e6bce734b7e2849a3e4a6001ce3fbd"
+          },
+          "log": {
+            "path": "docs/evidence/phase9b/android-session_failed_r1.log",
+            "sha256": "75cf9fafefd7c8259e02d705139b95131a949b4e280e82cdc59db7760a73db35"
+          },
+          "exit": {
+            "path": "docs/evidence/phase9b/android-session_failed_r1.exit",
+            "sha256": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04"
+          }
+        }
+      }
+    ],
+    "failure_resolution": "r1 session UI isolation passed but identity probe had no requests after acknowledged-login boundary; added explicit B authority refresh and reran entire scene r2. Failed r1 preserved, not counted PASS.",
+    "cleanup": {
+      "path": "docs/evidence/phase9b/native-cleanup.json",
+      "sha256": "d36cfc3f1412546f2370985d1275814be5b13f4774dba6eb7e6a6dad5743ca3b"
+    }
+  },
+  "focused": {
+    "exit_code": 0,
+    "log": {
+      "path": "docs/evidence/phase9b/focused.log",
+      "sha256": "b5d9e266dd466f0b280e7990e3de20b0b631ecbb3bd0d884bed0ada8554d504b"
+    },
+    "exit": {
+      "path": "docs/evidence/phase9b/focused.exit",
+      "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+    }
+  },
+  "results": {
+    "backend": 644,
+    "mobile": 359,
+    "repository": 61,
+    "new_backend_security": 41,
+    "focused": 218,
+    "golden": 83,
+    "web": 22,
+    "connected_web": [
+      3,
+      3,
+      4,
+      5,
+      1
+    ],
+    "openapi_operations": 36,
+    "expo_doctor": "21/21"
+  },
+  "acceptance_stage": "closed_after_independent_post_marker",
+  "completed_phase": 8,
+  "completed_subphase": "9B",
+  "pre_marker": {
+    "exit_code": 0,
+    "log": {
+      "path": "docs/evidence/phase9b/pre-marker.log",
+      "sha256": "44317cfd7b46ece78c2d6327cc7890576621e493c6638beb73e97cf79107ba82"
+    },
+    "exit": {
+      "path": "docs/evidence/phase9b/pre-marker.exit",
+      "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+    }
+  },
+  "post_marker": {
+    "exit_code": 0,
+    "log": {
+      "path": "docs/evidence/phase9b/post-marker.log",
+      "sha256": "61c4e5d188dc0da39988ba620f1ef377fdfbfbcb30c072b2e3957e6341da6554"
+    },
+    "exit": {
+      "path": "docs/evidence/phase9b/post-marker.exit",
+      "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+    }
+  },
+  "gates": {
+    "CODE": "PASS",
+    "TEST": "PASS",
+    "DOC": "PASS",
+    "DEMO": "PASS",
+    "REGRESSION": "PASS"
+  },
+  "post_marker_attempts": [
+    {
+      "exit_code": 1,
+      "log": {
+        "path": "docs/evidence/phase9b/post-marker-attempt1.log",
+        "sha256": "30e994bd72ac9ea01f234be1351d8dcc5d9697eb712a443b5f00d5d21589c90a"
+      },
+      "exit": {
+        "path": "docs/evidence/phase9b/post-marker-attempt1.exit",
+        "sha256": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04"
+      },
+      "failure": "Connected Agent Playwright worker unexpected Windows exit3221226505; no assertion diagnosis"
+    }
+  ],
+  "worker_recheck": {
+    "exit_code": 0,
+    "log": {
+      "path": "docs/evidence/phase9b/agent-worker-recheck.log",
+      "sha256": "b1a35de864fb6144d932ecd41dee70e061f305214fd1ada6ff1dee6855485d13"
+    },
+    "exit": {
+      "path": "docs/evidence/phase9b/agent-worker-recheck.exit",
+      "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+    },
+    "tests": "3/3 unchanged Connected Agent PASS",
+    "runtime_metadata": {
+      "path": "docs/evidence/phase9b/worker-runtime-metadata.json",
+      "sha256": "72f85e1af1c9bc7602d07416d92069fb336844d604192e74a3399a92b3366d79"
+    }
+  }
+}

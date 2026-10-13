@@ -1,5 +1,16 @@
 # Architecture direction
 
+Current Phase9B supplements the existing boundaries with exact owner/filter
+v2 Memory/Import History navigation cursors, per-event transport session epochs
+and a fixed application-log whitelist. DTOs, operations and Runtime behavior
+remain unchanged. Old opaque cursors require Refresh; SQL authorizes separately.
+Fresh actual Android smoke of locked SDK57 updates is mandatory for9B, alongside
+signed A/B PostgreSQL tests and independent pre/post root verification. See
+[authorization audit](AUTHORIZATION_SECURITY_AUDIT.md),
+[logging policy](PRIVACY_LOGGING_POLICY.md) and [ADR0037](adr/0037-scoped-navigation-and-per-event-session-guards.md).
+Phase9 overall remains IN PROGRESS; public deployment is blocked by R-07 and
+production identity/retention/backup prerequisites. Older sections are historical.
+
 Current Phase9A boundary: existing transport/services/independent Runtime remain.
 Security review and minimal upload/parser/artifact/log fixes introduce no Agent
 node, analysis pipeline, provider integration, schema or new endpoint.

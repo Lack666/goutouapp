@@ -68,6 +68,7 @@ export class ApiTransport {
     onEvent: (event: AgentEvent) => void,
     signal: AbortSignal,
   ) {
+    const epoch = this.session.epoch();
     return this.perform(
       new Request(`${this.baseURL}/api/v1/conversations/${conversationId}/agent-runs/stream`, {
         method: 'POST',
@@ -76,7 +77,16 @@ export class ApiTransport {
         signal,
       }),
       this.streamingFetcher,
-      (response, signal, wait) => consumeSSE(response, signal, onEvent, wait),
+      (response, signal, wait) =>
+        consumeSSE(
+          response,
+          signal,
+          (event) => {
+            if (epoch !== this.session.epoch() || signal.aborted) throw new ApiError('cancelled');
+            onEvent(event);
+          },
+          wait,
+        ),
     );
   }
   private async perform<T>(

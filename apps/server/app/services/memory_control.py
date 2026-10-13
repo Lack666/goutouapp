@@ -5,6 +5,7 @@ import binascii
 import json
 from datetime import datetime
 from enum import StrEnum
+from hashlib import sha256
 from uuid import UUID
 
 from pydantic import BaseModel, ConfigDict
@@ -71,12 +72,16 @@ class MemoryListResult(PublicModel):
     )
 
 
-def _encode_cursor(created_at: datetime, record_id: UUID) -> str:
-    raw = json.dumps([created_at.isoformat(), str(record_id)], separators=(",", ":"))
+def _cursor_scope(owner: UUID, person: UUID | None, relationship: UUID | None) -> str:
+    return sha256(f"memory-v2:{owner}:{person}:{relationship}".encode()).hexdigest()
+
+
+def _encode_cursor(created_at: datetime, record_id: UUID, scope: str) -> str:
+    raw = json.dumps([2, scope, created_at.isoformat(), str(record_id)], separators=(",", ":"))
     return base64.urlsafe_b64encode(raw.encode()).decode().rstrip("=")
 
 
-def _decode_cursor(value: str | None) -> tuple[datetime, UUID] | None:
+def _decode_cursor(value: str | None, scope: str) -> tuple[datetime, UUID] | None:
     if value is None:
         return None
     if not value or len(value) > 256:
@@ -84,9 +89,14 @@ def _decode_cursor(value: str | None) -> tuple[datetime, UUID] | None:
     try:
         raw = base64.b64decode(value + "=" * (-len(value) % 4), altchars=b"-_", validate=True)
         pair = json.loads(raw)
-        if not isinstance(pair, list) or len(pair) != 2:
+        if (
+            not isinstance(pair, list)
+            or len(pair) != 4
+            or pair[:2] != [2, scope]
+            or not all(isinstance(part, str) for part in pair[2:])
+        ):
             raise ValueError
-        timestamp, record_id = datetime.fromisoformat(pair[0]), UUID(pair[1])
+        timestamp, record_id = datetime.fromisoformat(pair[2]), UUID(pair[3])
         if timestamp.tzinfo is None:
             raise ValueError
         return timestamp, record_id
@@ -190,7 +200,8 @@ class MemoryControlService:
         owner_id = self._owner(actor)
         if not isinstance(limit, int) or isinstance(limit, bool) or not 1 <= limit <= 50:
             raise MemoryControlError(MemoryControlErrorCode.INVALID_SCOPE)
-        after = _decode_cursor(cursor)
+        scope = _cursor_scope(owner_id, person_id, relationship_id)
+        after = _decode_cursor(cursor, scope)
         try:
             if person_id is not None and not self._store.person_exists(owner_id, person_id):
                 raise MemoryControlError(MemoryControlErrorCode.PERSON_NOT_FOUND)
@@ -211,7 +222,9 @@ class MemoryControlService:
             raise MemoryControlError(MemoryControlErrorCode.PERSISTENCE_FAILURE) from exc
         page = records[:limit]
         next_cursor = (
-            _encode_cursor(page[-1].created_at, page[-1].id) if len(records) > limit else None
+            _encode_cursor(page[-1].created_at, page[-1].id, scope)
+            if len(records) > limit
+            else None
         )
         return MemoryListResult(
             items=[self._record_view(item) for item in page],

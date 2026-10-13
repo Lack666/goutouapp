@@ -1,0 +1,1237 @@
+{
+  "phase": "9B",
+  "operations": 36,
+  "public": 3,
+  "inventory": [
+    {
+      "method": "POST",
+      "path": "/api/v1/chat-imports",
+      "operation_id": "upload_chat_import_api_v1_chat_imports_post",
+      "classification": "Owner-scoped Endpoint",
+      "authenticated": true,
+      "jwt_requirement": "fixed HS256 / sub(UUID), exp, iss, aud; service validates existing User or owned FK-backed resource",
+      "owner_source": "Verified AuthenticatedActor.user_id only",
+      "resource_id": [],
+      "body_resource_ids": [],
+      "parent_resource_validation": "Owned Job lock before revision/state/target validation; Person and Relationship validated by owner and matching Person; History validates owned Relationship; cursor binds owner/relationship",
+      "foreign_resource_response": "owner-neutral not-found; foreign confirmation 409 indistinguishable from unavailable; no foreign run/receipt ID",
+      "sensitive_fields": "Owned public DTO only; content/answer/names/labels/keys and subject/challenge owner IDs where existing contract allows. No ORM/raw artifact/private evidence projection.",
+      "response_contract": {
+        "application/json": {
+          "schema": {
+            "$ref": "#/components/schemas/ImportJobResponse"
+          }
+        }
+      },
+      "mutation_side_effects": "Private random-key artifact and owned Job/speakers",
+      "router": "apps/server/app/api/v1/chat_imports.py::upload_chat_import",
+      "service_repository_review": [
+        "apps/server/app/services/import_jobs.py",
+        "apps/server/app/services/import_workflow.py",
+        "apps/server/app/services/import_merge.py",
+        "apps/server/app/db/repositories/records.py"
+      ],
+      "regression_tests": [
+        "apps/server/tests/test_authorization_security.py",
+        "apps/server/tests/test_import_api.py"
+      ],
+      "bearer_openapi": true
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/chat-imports/{job_id}",
+      "operation_id": "inspect_chat_import_api_v1_chat_imports__job_id__get",
+      "classification": "Owner-scoped Endpoint",
+      "authenticated": true,
+      "jwt_requirement": "fixed HS256 / sub(UUID), exp, iss, aud; service validates existing User or owned FK-backed resource",
+      "owner_source": "Verified AuthenticatedActor.user_id only",
+      "resource_id": [
+        "job_id"
+      ],
+      "body_resource_ids": [],
+      "parent_resource_validation": "Owned Job lock before revision/state/target validation; Person and Relationship validated by owner and matching Person; History validates owned Relationship; cursor binds owner/relationship",
+      "foreign_resource_response": "owner-neutral not-found; foreign confirmation 409 indistinguishable from unavailable; no foreign run/receipt ID",
+      "sensitive_fields": "Owned public DTO only; content/answer/names/labels/keys and subject/challenge owner IDs where existing contract allows. No ORM/raw artifact/private evidence projection.",
+      "response_contract": {
+        "application/json": {
+          "schema": {
+            "$ref": "#/components/schemas/ImportJobResponse"
+          }
+        }
+      },
+      "mutation_side_effects": "none",
+      "router": "apps/server/app/api/v1/chat_imports.py::inspect_chat_import",
+      "service_repository_review": [
+        "apps/server/app/services/import_jobs.py",
+        "apps/server/app/services/import_workflow.py",
+        "apps/server/app/services/import_merge.py",
+        "apps/server/app/db/repositories/records.py"
+      ],
+      "regression_tests": [
+        "apps/server/tests/test_authorization_security.py",
+        "apps/server/tests/test_import_api.py"
+      ],
+      "bearer_openapi": true
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/chat-imports/{job_id}/cancel",
+      "operation_id": "cancel_chat_import_api_v1_chat_imports__job_id__cancel_post",
+      "classification": "Owner-scoped Endpoint",
+      "authenticated": true,
+      "jwt_requirement": "fixed HS256 / sub(UUID), exp, iss, aud; service validates existing User or owned FK-backed resource",
+      "owner_source": "Verified AuthenticatedActor.user_id only",
+      "resource_id": [
+        "job_id"
+      ],
+      "body_resource_ids": [],
+      "parent_resource_validation": "Owned Job lock before revision/state/target validation; Person and Relationship validated by owner and matching Person; History validates owned Relationship; cursor binds owner/relationship",
+      "foreign_resource_response": "owner-neutral not-found; foreign confirmation 409 indistinguishable from unavailable; no foreign run/receipt ID",
+      "sensitive_fields": "Owned public DTO only; content/answer/names/labels/keys and subject/challenge owner IDs where existing contract allows. No ORM/raw artifact/private evidence projection.",
+      "response_contract": {
+        "application/json": {
+          "schema": {
+            "$ref": "#/components/schemas/ImportJobResponse"
+          }
+        }
+      },
+      "mutation_side_effects": "Owned Job cancellation and raw artifact cleanup",
+      "router": "apps/server/app/api/v1/chat_imports.py::cancel_chat_import",
+      "service_repository_review": [
+        "apps/server/app/services/import_jobs.py",
+        "apps/server/app/services/import_workflow.py",
+        "apps/server/app/services/import_merge.py",
+        "apps/server/app/db/repositories/records.py"
+      ],
+      "regression_tests": [
+        "apps/server/tests/test_authorization_security.py",
+        "apps/server/tests/test_import_api.py"
+      ],
+      "bearer_openapi": true
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/chat-imports/{job_id}/finalize",
+      "operation_id": "finalize_chat_import_api_v1_chat_imports__job_id__finalize_post",
+      "classification": "Owner-scoped Endpoint",
+      "authenticated": true,
+      "jwt_requirement": "fixed HS256 / sub(UUID), exp, iss, aud; service validates existing User or owned FK-backed resource",
+      "owner_source": "Verified AuthenticatedActor.user_id only",
+      "resource_id": [
+        "job_id"
+      ],
+      "body_resource_ids": [],
+      "parent_resource_validation": "Owned Job lock before revision/state/target validation; Person and Relationship validated by owner and matching Person; History validates owned Relationship; cursor binds owner/relationship",
+      "foreign_resource_response": "owner-neutral not-found; foreign confirmation 409 indistinguishable from unavailable; no foreign run/receipt ID",
+      "sensitive_fields": "Owned public DTO only; content/answer/names/labels/keys and subject/challenge owner IDs where existing contract allows. No ORM/raw artifact/private evidence projection.",
+      "response_contract": {
+        "application/json": {
+          "schema": {
+            "$ref": "#/components/schemas/ImportReceiptResponse"
+          }
+        }
+      },
+      "mutation_side_effects": "Owned atomic RelationshipMessage merge and durable receipt; raw artifact cleanup",
+      "router": "apps/server/app/api/v1/chat_imports.py::finalize_chat_import",
+      "service_repository_review": [
+        "apps/server/app/services/import_jobs.py",
+        "apps/server/app/services/import_workflow.py",
+        "apps/server/app/services/import_merge.py",
+        "apps/server/app/db/repositories/records.py"
+      ],
+      "regression_tests": [
+        "apps/server/tests/test_authorization_security.py",
+        "apps/server/tests/test_import_api.py"
+      ],
+      "bearer_openapi": true
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/chat-imports/{job_id}/ready",
+      "operation_id": "mark_chat_import_ready_api_v1_chat_imports__job_id__ready_post",
+      "classification": "Owner-scoped Endpoint",
+      "authenticated": true,
+      "jwt_requirement": "fixed HS256 / sub(UUID), exp, iss, aud; service validates existing User or owned FK-backed resource",
+      "owner_source": "Verified AuthenticatedActor.user_id only",
+      "resource_id": [
+        "job_id"
+      ],
+      "body_resource_ids": [],
+      "parent_resource_validation": "Owned Job lock before revision/state/target validation; Person and Relationship validated by owner and matching Person; History validates owned Relationship; cursor binds owner/relationship",
+      "foreign_resource_response": "owner-neutral not-found; foreign confirmation 409 indistinguishable from unavailable; no foreign run/receipt ID",
+      "sensitive_fields": "Owned public DTO only; content/answer/names/labels/keys and subject/challenge owner IDs where existing contract allows. No ORM/raw artifact/private evidence projection.",
+      "response_contract": {
+        "application/json": {
+          "schema": {
+            "$ref": "#/components/schemas/ImportJobResponse"
+          }
+        }
+      },
+      "mutation_side_effects": "Owned Job binding/revision/readiness only",
+      "router": "apps/server/app/api/v1/chat_imports.py::mark_chat_import_ready",
+      "service_repository_review": [
+        "apps/server/app/services/import_jobs.py",
+        "apps/server/app/services/import_workflow.py",
+        "apps/server/app/services/import_merge.py",
+        "apps/server/app/db/repositories/records.py"
+      ],
+      "regression_tests": [
+        "apps/server/tests/test_authorization_security.py",
+        "apps/server/tests/test_import_api.py"
+      ],
+      "bearer_openapi": true
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/chat-imports/{job_id}/relationship",
+      "operation_id": "bind_relationship_api_v1_chat_imports__job_id__relationship_put",
+      "classification": "Owner-scoped Endpoint",
+      "authenticated": true,
+      "jwt_requirement": "fixed HS256 / sub(UUID), exp, iss, aud; service validates existing User or owned FK-backed resource",
+      "owner_source": "Verified AuthenticatedActor.user_id only",
+      "resource_id": [
+        "job_id"
+      ],
+      "body_resource_ids": [
+        "relationship_id"
+      ],
+      "parent_resource_validation": "Owned Job lock before revision/state/target validation; Person and Relationship validated by owner and matching Person; History validates owned Relationship; cursor binds owner/relationship",
+      "foreign_resource_response": "owner-neutral not-found; foreign confirmation 409 indistinguishable from unavailable; no foreign run/receipt ID",
+      "sensitive_fields": "Owned public DTO only; content/answer/names/labels/keys and subject/challenge owner IDs where existing contract allows. No ORM/raw artifact/private evidence projection.",
+      "response_contract": {
+        "application/json": {
+          "schema": {
+            "$ref": "#/components/schemas/ImportJobResponse"
+          }
+        }
+      },
+      "mutation_side_effects": "Owned Job binding/revision/readiness only",
+      "router": "apps/server/app/api/v1/chat_imports.py::bind_relationship",
+      "service_repository_review": [
+        "apps/server/app/services/import_jobs.py",
+        "apps/server/app/services/import_workflow.py",
+        "apps/server/app/services/import_merge.py",
+        "apps/server/app/db/repositories/records.py"
+      ],
+      "regression_tests": [
+        "apps/server/tests/test_authorization_security.py",
+        "apps/server/tests/test_import_api.py"
+      ],
+      "bearer_openapi": true
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/chat-imports/{job_id}/speakers",
+      "operation_id": "bind_speaker_api_v1_chat_imports__job_id__speakers_put",
+      "classification": "Owner-scoped Endpoint",
+      "authenticated": true,
+      "jwt_requirement": "fixed HS256 / sub(UUID), exp, iss, aud; service validates existing User or owned FK-backed resource",
+      "owner_source": "Verified AuthenticatedActor.user_id only",
+      "resource_id": [
+        "job_id"
+      ],
+      "body_resource_ids": [
+        "person_id"
+      ],
+      "parent_resource_validation": "Owned Job lock before revision/state/target validation; Person and Relationship validated by owner and matching Person; History validates owned Relationship; cursor binds owner/relationship",
+      "foreign_resource_response": "owner-neutral not-found; foreign confirmation 409 indistinguishable from unavailable; no foreign run/receipt ID",
+      "sensitive_fields": "Owned public DTO only; content/answer/names/labels/keys and subject/challenge owner IDs where existing contract allows. No ORM/raw artifact/private evidence projection.",
+      "response_contract": {
+        "application/json": {
+          "schema": {
+            "$ref": "#/components/schemas/ImportJobResponse"
+          }
+        }
+      },
+      "mutation_side_effects": "Owned Job binding/revision/readiness only",
+      "router": "apps/server/app/api/v1/chat_imports.py::bind_speaker",
+      "service_repository_review": [
+        "apps/server/app/services/import_jobs.py",
+        "apps/server/app/services/import_workflow.py",
+        "apps/server/app/services/import_merge.py",
+        "apps/server/app/db/repositories/records.py"
+      ],
+      "regression_tests": [
+        "apps/server/tests/test_authorization_security.py",
+        "apps/server/tests/test_import_api.py"
+      ],
+      "bearer_openapi": true
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/conversations",
+      "operation_id": "list_conversations_api_v1_conversations_get",
+      "classification": "Owner-scoped Endpoint",
+      "authenticated": true,
+      "jwt_requirement": "fixed HS256 / sub(UUID), exp, iss, aud; service validates existing User or owned FK-backed resource",
+      "owner_source": "Verified AuthenticatedActor.user_id only",
+      "resource_id": [],
+      "body_resource_ids": [],
+      "parent_resource_validation": "Relationship create validates owned Person; Conversation create validates owned Relationship; Message history validates owned Conversation; cursor binds owner/domain/parent",
+      "foreign_resource_response": "owner-neutral not-found; foreign confirmation 409 indistinguishable from unavailable; no foreign run/receipt ID",
+      "sensitive_fields": "Owned public DTO only; content/answer/names/labels/keys and subject/challenge owner IDs where existing contract allows. No ORM/raw artifact/private evidence projection.",
+      "response_contract": {
+        "application/json": {
+          "schema": {
+            "$ref": "#/components/schemas/ConversationPage"
+          }
+        }
+      },
+      "mutation_side_effects": "none",
+      "router": "apps/server/app/api/v1/resources.py::list_conversations",
+      "service_repository_review": [
+        "apps/server/app/services/resources.py",
+        "apps/server/app/db/repositories/resources.py",
+        "apps/server/app/db/repositories/records.py"
+      ],
+      "regression_tests": [
+        "apps/server/tests/test_authorization_security.py",
+        "apps/server/tests/test_resource_api.py"
+      ],
+      "bearer_openapi": true
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/conversations",
+      "operation_id": "create_conversation_api_v1_conversations_post",
+      "classification": "Owner-scoped Endpoint",
+      "authenticated": true,
+      "jwt_requirement": "fixed HS256 / sub(UUID), exp, iss, aud; service validates existing User or owned FK-backed resource",
+      "owner_source": "Verified AuthenticatedActor.user_id only",
+      "resource_id": [],
+      "body_resource_ids": [
+        "id",
+        "relationship_id"
+      ],
+      "parent_resource_validation": "Relationship create validates owned Person; Conversation create validates owned Relationship; Message history validates owned Conversation; cursor binds owner/domain/parent",
+      "foreign_resource_response": "owner-neutral not-found; foreign confirmation 409 indistinguishable from unavailable; no foreign run/receipt ID",
+      "sensitive_fields": "Owned public DTO only; content/answer/names/labels/keys and subject/challenge owner IDs where existing contract allows. No ORM/raw artifact/private evidence projection.",
+      "response_contract": {
+        "application/json": {
+          "schema": {
+            "$ref": "#/components/schemas/ConversationResponse"
+          }
+        }
+      },
+      "mutation_side_effects": "Create one owned conversations row, or replay exact reserved UUID without new side effects",
+      "router": "apps/server/app/api/v1/resources.py::create_conversation",
+      "service_repository_review": [
+        "apps/server/app/services/resources.py",
+        "apps/server/app/db/repositories/resources.py",
+        "apps/server/app/db/repositories/records.py"
+      ],
+      "regression_tests": [
+        "apps/server/tests/test_authorization_security.py",
+        "apps/server/tests/test_resource_api.py"
+      ],
+      "bearer_openapi": true
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/conversations/{conversation_id}",
+      "operation_id": "get_conversation_api_v1_conversations__conversation_id__get",
+      "classification": "Owner-scoped Endpoint",
+      "authenticated": true,
+      "jwt_requirement": "fixed HS256 / sub(UUID), exp, iss, aud; service validates existing User or owned FK-backed resource",
+      "owner_source": "Verified AuthenticatedActor.user_id only",
+      "resource_id": [
+        "conversation_id"
+      ],
+      "body_resource_ids": [],
+      "parent_resource_validation": "Relationship create validates owned Person; Conversation create validates owned Relationship; Message history validates owned Conversation; cursor binds owner/domain/parent",
+      "foreign_resource_response": "owner-neutral not-found; foreign confirmation 409 indistinguishable from unavailable; no foreign run/receipt ID",
+      "sensitive_fields": "Owned public DTO only; content/answer/names/labels/keys and subject/challenge owner IDs where existing contract allows. No ORM/raw artifact/private evidence projection.",
+      "response_contract": {
+        "application/json": {
+          "schema": {
+            "$ref": "#/components/schemas/ConversationResponse"
+          }
+        }
+      },
+      "mutation_side_effects": "none",
+      "router": "apps/server/app/api/v1/resources.py::get_conversation",
+      "service_repository_review": [
+        "apps/server/app/services/resources.py",
+        "apps/server/app/db/repositories/resources.py",
+        "apps/server/app/db/repositories/records.py"
+      ],
+      "regression_tests": [
+        "apps/server/tests/test_authorization_security.py",
+        "apps/server/tests/test_resource_api.py"
+      ],
+      "bearer_openapi": true
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/conversations/{conversation_id}/agent-runs",
+      "operation_id": "create_agent_run_api_v1_conversations__conversation_id__agent_runs_post",
+      "classification": "Owner-scoped Endpoint",
+      "authenticated": true,
+      "jwt_requirement": "fixed HS256 / sub(UUID), exp, iss, aud; service validates existing User or owned FK-backed resource",
+      "owner_source": "Verified AuthenticatedActor.user_id only",
+      "resource_id": [
+        "conversation_id"
+      ],
+      "body_resource_ids": [
+        "expected_relationship_id"
+      ],
+      "parent_resource_validation": "Owned Conversation before run/key lookup; expected Relationship must equal Conversation binding; optional Person must equal owned Relationship Person; run/history SQL is owner/conversation filtered",
+      "foreign_resource_response": "owner-neutral not-found; foreign confirmation 409 indistinguishable from unavailable; no foreign run/receipt ID",
+      "sensitive_fields": "Owned public DTO only; content/answer/names/labels/keys and subject/challenge owner IDs where existing contract allows. No ORM/raw artifact/private evidence projection.",
+      "response_contract": {
+        "application/json": {
+          "schema": {
+            "$ref": "#/components/schemas/AgentRunResponse"
+          }
+        }
+      },
+      "mutation_side_effects": "Owned AgentRun/user/assistant Messages; optional explicitly consented scoped Memory; exact owner/conversation/key replay",
+      "router": "apps/server/app/api/v1/agent_runs.py::create_agent_run",
+      "service_repository_review": [
+        "apps/server/app/services/agent_service.py",
+        "apps/server/app/db/repositories/records.py"
+      ],
+      "regression_tests": [
+        "apps/server/tests/test_authorization_security.py",
+        "apps/server/tests/test_phase4_idempotency.py"
+      ],
+      "bearer_openapi": true
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/conversations/{conversation_id}/agent-runs/stream",
+      "operation_id": "stream_agent_run_api_v1_conversations__conversation_id__agent_runs_stream_post",
+      "classification": "Owner-scoped Endpoint",
+      "authenticated": true,
+      "jwt_requirement": "fixed HS256 / sub(UUID), exp, iss, aud; service validates existing User or owned FK-backed resource",
+      "owner_source": "Verified AuthenticatedActor.user_id only",
+      "resource_id": [
+        "conversation_id"
+      ],
+      "body_resource_ids": [
+        "expected_relationship_id"
+      ],
+      "parent_resource_validation": "Owned Conversation before run/key lookup; expected Relationship must equal Conversation binding; optional Person must equal owned Relationship Person; run/history SQL is owner/conversation filtered",
+      "foreign_resource_response": "owner-neutral not-found; foreign confirmation 409 indistinguishable from unavailable; no foreign run/receipt ID",
+      "sensitive_fields": "Owned public DTO only; content/answer/names/labels/keys and subject/challenge owner IDs where existing contract allows. No ORM/raw artifact/private evidence projection.",
+      "response_contract": {
+        "application/json": {
+          "schema": {}
+        },
+        "text/event-stream": {
+          "schema": {
+            "type": "string"
+          }
+        }
+      },
+      "mutation_side_effects": "Owned AgentRun/user/assistant Messages; optional explicitly consented scoped Memory; exact owner/conversation/key replay",
+      "router": "apps/server/app/api/v1/agent_runs.py::stream_agent_run",
+      "service_repository_review": [
+        "apps/server/app/services/agent_service.py",
+        "apps/server/app/db/repositories/records.py"
+      ],
+      "regression_tests": [
+        "apps/server/tests/test_authorization_security.py",
+        "apps/server/tests/test_phase4_idempotency.py"
+      ],
+      "bearer_openapi": true
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/conversations/{conversation_id}/messages",
+      "operation_id": "list_agent_messages_api_v1_conversations__conversation_id__messages_get",
+      "classification": "Owner-scoped Endpoint",
+      "authenticated": true,
+      "jwt_requirement": "fixed HS256 / sub(UUID), exp, iss, aud; service validates existing User or owned FK-backed resource",
+      "owner_source": "Verified AuthenticatedActor.user_id only",
+      "resource_id": [
+        "conversation_id"
+      ],
+      "body_resource_ids": [],
+      "parent_resource_validation": "Relationship create validates owned Person; Conversation create validates owned Relationship; Message history validates owned Conversation; cursor binds owner/domain/parent",
+      "foreign_resource_response": "owner-neutral not-found; foreign confirmation 409 indistinguishable from unavailable; no foreign run/receipt ID",
+      "sensitive_fields": "Owned public DTO only; content/answer/names/labels/keys and subject/challenge owner IDs where existing contract allows. No ORM/raw artifact/private evidence projection.",
+      "response_contract": {
+        "application/json": {
+          "schema": {
+            "$ref": "#/components/schemas/AgentMessagePage"
+          }
+        }
+      },
+      "mutation_side_effects": "none",
+      "router": "apps/server/app/api/v1/resources.py::list_agent_messages",
+      "service_repository_review": [
+        "apps/server/app/services/resources.py",
+        "apps/server/app/db/repositories/resources.py",
+        "apps/server/app/db/repositories/records.py"
+      ],
+      "regression_tests": [
+        "apps/server/tests/test_authorization_security.py",
+        "apps/server/tests/test_resource_api.py"
+      ],
+      "bearer_openapi": true
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/memories",
+      "operation_id": "inspect_memories_api_v1_memories_get",
+      "classification": "Owner-scoped Endpoint",
+      "authenticated": true,
+      "jwt_requirement": "fixed HS256 / sub(UUID), exp, iss, aud; service validates existing User or owned FK-backed resource",
+      "owner_source": "Verified AuthenticatedActor.user_id only",
+      "resource_id": [],
+      "body_resource_ids": [],
+      "parent_resource_validation": "Existing actor User; owned record/Person/Relationship; exact optional scope; owned challenge snapshot/count/expiry/consumption and owned receipt/key; cursor binds exact owner/filters",
+      "foreign_resource_response": "owner-neutral not-found; foreign confirmation 409 indistinguishable from unavailable; no foreign run/receipt ID",
+      "sensitive_fields": "Owned public DTO only; content/answer/names/labels/keys and subject/challenge owner IDs where existing contract allows. No ORM/raw artifact/private evidence projection.",
+      "response_contract": {
+        "application/json": {
+          "schema": {
+            "$ref": "#/components/schemas/MemoryListResult"
+          }
+        }
+      },
+      "mutation_side_effects": "none",
+      "router": "apps/server/app/api/v1/memory.py::inspect_memories",
+      "service_repository_review": [
+        "apps/server/app/services/memory_control.py",
+        "apps/server/app/services/memory_mutation.py",
+        "apps/server/app/db/repositories/memory.py"
+      ],
+      "regression_tests": [
+        "apps/server/tests/test_authorization_security.py",
+        "apps/server/tests/test_phase6_e2e.py"
+      ],
+      "bearer_openapi": true
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/memories/{memory_id}",
+      "operation_id": "inspect_memory_api_v1_memories__memory_id__get",
+      "classification": "Owner-scoped Endpoint",
+      "authenticated": true,
+      "jwt_requirement": "fixed HS256 / sub(UUID), exp, iss, aud; service validates existing User or owned FK-backed resource",
+      "owner_source": "Verified AuthenticatedActor.user_id only",
+      "resource_id": [
+        "memory_id"
+      ],
+      "body_resource_ids": [],
+      "parent_resource_validation": "Existing actor User; owned record/Person/Relationship; exact optional scope; owned challenge snapshot/count/expiry/consumption and owned receipt/key; cursor binds exact owner/filters",
+      "foreign_resource_response": "owner-neutral not-found; foreign confirmation 409 indistinguishable from unavailable; no foreign run/receipt ID",
+      "sensitive_fields": "Owned public DTO only; content/answer/names/labels/keys and subject/challenge owner IDs where existing contract allows. No ORM/raw artifact/private evidence projection.",
+      "response_contract": {
+        "application/json": {
+          "schema": {
+            "$ref": "#/components/schemas/MemoryRecordView"
+          }
+        }
+      },
+      "mutation_side_effects": "none",
+      "router": "apps/server/app/api/v1/memory.py::inspect_memory",
+      "service_repository_review": [
+        "apps/server/app/services/memory_control.py",
+        "apps/server/app/services/memory_mutation.py",
+        "apps/server/app/db/repositories/memory.py"
+      ],
+      "regression_tests": [
+        "apps/server/tests/test_authorization_security.py",
+        "apps/server/tests/test_phase6_e2e.py"
+      ],
+      "bearer_openapi": true
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/memory/consent",
+      "operation_id": "change_consent_api_v1_memory_consent_post",
+      "classification": "Owner-scoped Endpoint",
+      "authenticated": true,
+      "jwt_requirement": "fixed HS256 / sub(UUID), exp, iss, aud; service validates existing User or owned FK-backed resource",
+      "owner_source": "Verified AuthenticatedActor.user_id only",
+      "resource_id": [],
+      "body_resource_ids": [],
+      "parent_resource_validation": "Existing actor User; owned record/Person/Relationship; exact optional scope; owned challenge snapshot/count/expiry/consumption and owned receipt/key; cursor binds exact owner/filters",
+      "foreign_resource_response": "owner-neutral not-found; foreign confirmation 409 indistinguishable from unavailable; no foreign run/receipt ID",
+      "sensitive_fields": "Owned public DTO only; content/answer/names/labels/keys and subject/challenge owner IDs where existing contract allows. No ORM/raw artifact/private evidence projection.",
+      "response_contract": {
+        "application/json": {
+          "schema": {
+            "$ref": "#/components/schemas/MemoryControlView"
+          }
+        }
+      },
+      "mutation_side_effects": "Owner consent/pause state only",
+      "router": "apps/server/app/api/v1/memory.py::change_consent",
+      "service_repository_review": [
+        "apps/server/app/services/memory_control.py",
+        "apps/server/app/services/memory_mutation.py",
+        "apps/server/app/db/repositories/memory.py"
+      ],
+      "regression_tests": [
+        "apps/server/tests/test_authorization_security.py",
+        "apps/server/tests/test_phase6_e2e.py"
+      ],
+      "bearer_openapi": true
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/memory/control",
+      "operation_id": "inspect_control_api_v1_memory_control_get",
+      "classification": "Owner-scoped Endpoint",
+      "authenticated": true,
+      "jwt_requirement": "fixed HS256 / sub(UUID), exp, iss, aud; service validates existing User or owned FK-backed resource",
+      "owner_source": "Verified AuthenticatedActor.user_id only",
+      "resource_id": [],
+      "body_resource_ids": [],
+      "parent_resource_validation": "Existing actor User; owned record/Person/Relationship; exact optional scope; owned challenge snapshot/count/expiry/consumption and owned receipt/key; cursor binds exact owner/filters",
+      "foreign_resource_response": "owner-neutral not-found; foreign confirmation 409 indistinguishable from unavailable; no foreign run/receipt ID",
+      "sensitive_fields": "Owned public DTO only; content/answer/names/labels/keys and subject/challenge owner IDs where existing contract allows. No ORM/raw artifact/private evidence projection.",
+      "response_contract": {
+        "application/json": {
+          "schema": {
+            "$ref": "#/components/schemas/MemoryControlView"
+          }
+        }
+      },
+      "mutation_side_effects": "none",
+      "router": "apps/server/app/api/v1/memory.py::inspect_control",
+      "service_repository_review": [
+        "apps/server/app/services/memory_control.py",
+        "apps/server/app/services/memory_mutation.py",
+        "apps/server/app/db/repositories/memory.py"
+      ],
+      "regression_tests": [
+        "apps/server/tests/test_authorization_security.py",
+        "apps/server/tests/test_phase6_e2e.py"
+      ],
+      "bearer_openapi": true
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/memory/deletions/all/prepare",
+      "operation_id": "prepare_delete_all_api_v1_memory_deletions_all_prepare_post",
+      "classification": "Owner-scoped Endpoint",
+      "authenticated": true,
+      "jwt_requirement": "fixed HS256 / sub(UUID), exp, iss, aud; service validates existing User or owned FK-backed resource",
+      "owner_source": "Verified AuthenticatedActor.user_id only",
+      "resource_id": [],
+      "body_resource_ids": [],
+      "parent_resource_validation": "Existing actor User; owned record/Person/Relationship; exact optional scope; owned challenge snapshot/count/expiry/consumption and owned receipt/key; cursor binds exact owner/filters",
+      "foreign_resource_response": "owner-neutral not-found; foreign confirmation 409 indistinguishable from unavailable; no foreign run/receipt ID",
+      "sensitive_fields": "Owned public DTO only; content/answer/names/labels/keys and subject/challenge owner IDs where existing contract allows. No ORM/raw artifact/private evidence projection.",
+      "response_contract": {
+        "application/json": {
+          "schema": {
+            "$ref": "#/components/schemas/MemoryConfirmationChallenge"
+          }
+        }
+      },
+      "mutation_side_effects": "Owner-only confirmation metadata, no deletion",
+      "router": "apps/server/app/api/v1/memory.py::prepare_delete_all",
+      "service_repository_review": [
+        "apps/server/app/services/memory_control.py",
+        "apps/server/app/services/memory_mutation.py",
+        "apps/server/app/db/repositories/memory.py"
+      ],
+      "regression_tests": [
+        "apps/server/tests/test_authorization_security.py",
+        "apps/server/tests/test_phase6_e2e.py"
+      ],
+      "bearer_openapi": true
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/memory/deletions/one/prepare",
+      "operation_id": "prepare_delete_one_api_v1_memory_deletions_one_prepare_post",
+      "classification": "Owner-scoped Endpoint",
+      "authenticated": true,
+      "jwt_requirement": "fixed HS256 / sub(UUID), exp, iss, aud; service validates existing User or owned FK-backed resource",
+      "owner_source": "Verified AuthenticatedActor.user_id only",
+      "resource_id": [],
+      "body_resource_ids": [
+        "memory_id",
+        "person_id",
+        "relationship_id"
+      ],
+      "parent_resource_validation": "Existing actor User; owned record/Person/Relationship; exact optional scope; owned challenge snapshot/count/expiry/consumption and owned receipt/key; cursor binds exact owner/filters",
+      "foreign_resource_response": "owner-neutral not-found; foreign confirmation 409 indistinguishable from unavailable; no foreign run/receipt ID",
+      "sensitive_fields": "Owned public DTO only; content/answer/names/labels/keys and subject/challenge owner IDs where existing contract allows. No ORM/raw artifact/private evidence projection.",
+      "response_contract": {
+        "application/json": {
+          "schema": {
+            "$ref": "#/components/schemas/MemoryConfirmationChallenge"
+          }
+        }
+      },
+      "mutation_side_effects": "Owner-only confirmation metadata, no deletion",
+      "router": "apps/server/app/api/v1/memory.py::prepare_delete_one",
+      "service_repository_review": [
+        "apps/server/app/services/memory_control.py",
+        "apps/server/app/services/memory_mutation.py",
+        "apps/server/app/db/repositories/memory.py"
+      ],
+      "regression_tests": [
+        "apps/server/tests/test_authorization_security.py",
+        "apps/server/tests/test_phase6_e2e.py"
+      ],
+      "bearer_openapi": true
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/memory/deletions/person/prepare",
+      "operation_id": "prepare_delete_person_api_v1_memory_deletions_person_prepare_post",
+      "classification": "Owner-scoped Endpoint",
+      "authenticated": true,
+      "jwt_requirement": "fixed HS256 / sub(UUID), exp, iss, aud; service validates existing User or owned FK-backed resource",
+      "owner_source": "Verified AuthenticatedActor.user_id only",
+      "resource_id": [],
+      "body_resource_ids": [
+        "person_id"
+      ],
+      "parent_resource_validation": "Existing actor User; owned record/Person/Relationship; exact optional scope; owned challenge snapshot/count/expiry/consumption and owned receipt/key; cursor binds exact owner/filters",
+      "foreign_resource_response": "owner-neutral not-found; foreign confirmation 409 indistinguishable from unavailable; no foreign run/receipt ID",
+      "sensitive_fields": "Owned public DTO only; content/answer/names/labels/keys and subject/challenge owner IDs where existing contract allows. No ORM/raw artifact/private evidence projection.",
+      "response_contract": {
+        "application/json": {
+          "schema": {
+            "$ref": "#/components/schemas/MemoryConfirmationChallenge"
+          }
+        }
+      },
+      "mutation_side_effects": "Owner-only confirmation metadata, no deletion",
+      "router": "apps/server/app/api/v1/memory.py::prepare_delete_person",
+      "service_repository_review": [
+        "apps/server/app/services/memory_control.py",
+        "apps/server/app/services/memory_mutation.py",
+        "apps/server/app/db/repositories/memory.py"
+      ],
+      "regression_tests": [
+        "apps/server/tests/test_authorization_security.py",
+        "apps/server/tests/test_phase6_e2e.py"
+      ],
+      "bearer_openapi": true
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/memory/deletions/{confirmation_id}/execute",
+      "operation_id": "execute_delete_api_v1_memory_deletions__confirmation_id__execute_post",
+      "classification": "Guarded Mutation Endpoint",
+      "authenticated": true,
+      "jwt_requirement": "fixed HS256 / sub(UUID), exp, iss, aud; service validates existing User or owned FK-backed resource",
+      "owner_source": "Verified AuthenticatedActor.user_id only",
+      "resource_id": [
+        "confirmation_id"
+      ],
+      "body_resource_ids": [],
+      "parent_resource_validation": "Existing actor User; owned record/Person/Relationship; exact optional scope; owned challenge snapshot/count/expiry/consumption and owned receipt/key; cursor binds exact owner/filters",
+      "foreign_resource_response": "owner-neutral not-found; foreign confirmation 409 indistinguishable from unavailable; no foreign run/receipt ID",
+      "sensitive_fields": "Owned public DTO only; content/answer/names/labels/keys and subject/challenge owner IDs where existing contract allows. No ORM/raw artifact/private evidence projection.",
+      "response_contract": {
+        "application/json": {
+          "schema": {
+            "$ref": "#/components/schemas/MemoryMutationReceipt"
+          }
+        }
+      },
+      "mutation_side_effects": "Owned guarded primary Memory/undo deletion and receipt",
+      "router": "apps/server/app/api/v1/memory.py::execute_delete",
+      "service_repository_review": [
+        "apps/server/app/services/memory_control.py",
+        "apps/server/app/services/memory_mutation.py",
+        "apps/server/app/db/repositories/memory.py"
+      ],
+      "regression_tests": [
+        "apps/server/tests/test_authorization_security.py",
+        "apps/server/tests/test_phase6_e2e.py"
+      ],
+      "bearer_openapi": true
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/memory/mutations/{mutation_id}",
+      "operation_id": "inspect_mutation_api_v1_memory_mutations__mutation_id__get",
+      "classification": "Owner-scoped Endpoint",
+      "authenticated": true,
+      "jwt_requirement": "fixed HS256 / sub(UUID), exp, iss, aud; service validates existing User or owned FK-backed resource",
+      "owner_source": "Verified AuthenticatedActor.user_id only",
+      "resource_id": [
+        "mutation_id"
+      ],
+      "body_resource_ids": [],
+      "parent_resource_validation": "Existing actor User; owned record/Person/Relationship; exact optional scope; owned challenge snapshot/count/expiry/consumption and owned receipt/key; cursor binds exact owner/filters",
+      "foreign_resource_response": "owner-neutral not-found; foreign confirmation 409 indistinguishable from unavailable; no foreign run/receipt ID",
+      "sensitive_fields": "Owned public DTO only; content/answer/names/labels/keys and subject/challenge owner IDs where existing contract allows. No ORM/raw artifact/private evidence projection.",
+      "response_contract": {
+        "application/json": {
+          "schema": {
+            "$ref": "#/components/schemas/MemoryMutationReceipt"
+          }
+        }
+      },
+      "mutation_side_effects": "none",
+      "router": "apps/server/app/api/v1/memory.py::inspect_mutation",
+      "service_repository_review": [
+        "apps/server/app/services/memory_control.py",
+        "apps/server/app/services/memory_mutation.py",
+        "apps/server/app/db/repositories/memory.py"
+      ],
+      "regression_tests": [
+        "apps/server/tests/test_authorization_security.py",
+        "apps/server/tests/test_phase6_e2e.py"
+      ],
+      "bearer_openapi": true
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/memory/pause",
+      "operation_id": "pause_api_v1_memory_pause_post",
+      "classification": "Owner-scoped Endpoint",
+      "authenticated": true,
+      "jwt_requirement": "fixed HS256 / sub(UUID), exp, iss, aud; service validates existing User or owned FK-backed resource",
+      "owner_source": "Verified AuthenticatedActor.user_id only",
+      "resource_id": [],
+      "body_resource_ids": [],
+      "parent_resource_validation": "Existing actor User; owned record/Person/Relationship; exact optional scope; owned challenge snapshot/count/expiry/consumption and owned receipt/key; cursor binds exact owner/filters",
+      "foreign_resource_response": "owner-neutral not-found; foreign confirmation 409 indistinguishable from unavailable; no foreign run/receipt ID",
+      "sensitive_fields": "Owned public DTO only; content/answer/names/labels/keys and subject/challenge owner IDs where existing contract allows. No ORM/raw artifact/private evidence projection.",
+      "response_contract": {
+        "application/json": {
+          "schema": {
+            "$ref": "#/components/schemas/MemoryControlView"
+          }
+        }
+      },
+      "mutation_side_effects": "Owner consent/pause state only",
+      "router": "apps/server/app/api/v1/memory.py::pause",
+      "service_repository_review": [
+        "apps/server/app/services/memory_control.py",
+        "apps/server/app/services/memory_mutation.py",
+        "apps/server/app/db/repositories/memory.py"
+      ],
+      "regression_tests": [
+        "apps/server/tests/test_authorization_security.py",
+        "apps/server/tests/test_phase6_e2e.py"
+      ],
+      "bearer_openapi": true
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/memory/resume",
+      "operation_id": "resume_api_v1_memory_resume_post",
+      "classification": "Owner-scoped Endpoint",
+      "authenticated": true,
+      "jwt_requirement": "fixed HS256 / sub(UUID), exp, iss, aud; service validates existing User or owned FK-backed resource",
+      "owner_source": "Verified AuthenticatedActor.user_id only",
+      "resource_id": [],
+      "body_resource_ids": [],
+      "parent_resource_validation": "Existing actor User; owned record/Person/Relationship; exact optional scope; owned challenge snapshot/count/expiry/consumption and owned receipt/key; cursor binds exact owner/filters",
+      "foreign_resource_response": "owner-neutral not-found; foreign confirmation 409 indistinguishable from unavailable; no foreign run/receipt ID",
+      "sensitive_fields": "Owned public DTO only; content/answer/names/labels/keys and subject/challenge owner IDs where existing contract allows. No ORM/raw artifact/private evidence projection.",
+      "response_contract": {
+        "application/json": {
+          "schema": {
+            "$ref": "#/components/schemas/MemoryControlView"
+          }
+        }
+      },
+      "mutation_side_effects": "Owner consent/pause state only",
+      "router": "apps/server/app/api/v1/memory.py::resume",
+      "service_repository_review": [
+        "apps/server/app/services/memory_control.py",
+        "apps/server/app/services/memory_mutation.py",
+        "apps/server/app/db/repositories/memory.py"
+      ],
+      "regression_tests": [
+        "apps/server/tests/test_authorization_security.py",
+        "apps/server/tests/test_phase6_e2e.py"
+      ],
+      "bearer_openapi": true
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/memory/undo",
+      "operation_id": "undo_memory_api_v1_memory_undo_post",
+      "classification": "Guarded Mutation Endpoint",
+      "authenticated": true,
+      "jwt_requirement": "fixed HS256 / sub(UUID), exp, iss, aud; service validates existing User or owned FK-backed resource",
+      "owner_source": "Verified AuthenticatedActor.user_id only",
+      "resource_id": [],
+      "body_resource_ids": [
+        "expected_operation_id"
+      ],
+      "parent_resource_validation": "Existing actor User; owned record/Person/Relationship; exact optional scope; owned challenge snapshot/count/expiry/consumption and owned receipt/key; cursor binds exact owner/filters",
+      "foreign_resource_response": "owner-neutral not-found; foreign confirmation 409 indistinguishable from unavailable; no foreign run/receipt ID",
+      "sensitive_fields": "Owned public DTO only; content/answer/names/labels/keys and subject/challenge owner IDs where existing contract allows. No ORM/raw artifact/private evidence projection.",
+      "response_contract": {
+        "application/json": {
+          "schema": {
+            "$ref": "#/components/schemas/MemoryMutationReceipt"
+          }
+        }
+      },
+      "mutation_side_effects": "Owned guarded primary Memory/undo deletion and receipt",
+      "router": "apps/server/app/api/v1/memory.py::undo_memory",
+      "service_repository_review": [
+        "apps/server/app/services/memory_control.py",
+        "apps/server/app/services/memory_mutation.py",
+        "apps/server/app/db/repositories/memory.py"
+      ],
+      "regression_tests": [
+        "apps/server/tests/test_authorization_security.py",
+        "apps/server/tests/test_phase6_e2e.py"
+      ],
+      "bearer_openapi": true
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/memory/undo/preview",
+      "operation_id": "preview_undo_api_v1_memory_undo_preview_get",
+      "classification": "Owner-scoped Endpoint",
+      "authenticated": true,
+      "jwt_requirement": "fixed HS256 / sub(UUID), exp, iss, aud; service validates existing User or owned FK-backed resource",
+      "owner_source": "Verified AuthenticatedActor.user_id only",
+      "resource_id": [],
+      "body_resource_ids": [],
+      "parent_resource_validation": "Existing actor User; owned record/Person/Relationship; exact optional scope; owned challenge snapshot/count/expiry/consumption and owned receipt/key; cursor binds exact owner/filters",
+      "foreign_resource_response": "owner-neutral not-found; foreign confirmation 409 indistinguishable from unavailable; no foreign run/receipt ID",
+      "sensitive_fields": "Owned public DTO only; content/answer/names/labels/keys and subject/challenge owner IDs where existing contract allows. No ORM/raw artifact/private evidence projection.",
+      "response_contract": {
+        "application/json": {
+          "schema": {
+            "$ref": "#/components/schemas/UndoPreview"
+          }
+        }
+      },
+      "mutation_side_effects": "none",
+      "router": "apps/server/app/api/v1/memory.py::preview_undo",
+      "service_repository_review": [
+        "apps/server/app/services/memory_control.py",
+        "apps/server/app/services/memory_mutation.py",
+        "apps/server/app/db/repositories/memory.py"
+      ],
+      "regression_tests": [
+        "apps/server/tests/test_authorization_security.py",
+        "apps/server/tests/test_phase6_e2e.py"
+      ],
+      "bearer_openapi": true
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/persons",
+      "operation_id": "list_persons_api_v1_persons_get",
+      "classification": "Owner-scoped Endpoint",
+      "authenticated": true,
+      "jwt_requirement": "fixed HS256 / sub(UUID), exp, iss, aud; service validates existing User or owned FK-backed resource",
+      "owner_source": "Verified AuthenticatedActor.user_id only",
+      "resource_id": [],
+      "body_resource_ids": [],
+      "parent_resource_validation": "Relationship create validates owned Person; Conversation create validates owned Relationship; Message history validates owned Conversation; cursor binds owner/domain/parent",
+      "foreign_resource_response": "owner-neutral not-found; foreign confirmation 409 indistinguishable from unavailable; no foreign run/receipt ID",
+      "sensitive_fields": "Owned public DTO only; content/answer/names/labels/keys and subject/challenge owner IDs where existing contract allows. No ORM/raw artifact/private evidence projection.",
+      "response_contract": {
+        "application/json": {
+          "schema": {
+            "$ref": "#/components/schemas/PersonPage"
+          }
+        }
+      },
+      "mutation_side_effects": "none",
+      "router": "apps/server/app/api/v1/resources.py::list_persons",
+      "service_repository_review": [
+        "apps/server/app/services/resources.py",
+        "apps/server/app/db/repositories/resources.py",
+        "apps/server/app/db/repositories/records.py"
+      ],
+      "regression_tests": [
+        "apps/server/tests/test_authorization_security.py",
+        "apps/server/tests/test_resource_api.py"
+      ],
+      "bearer_openapi": true
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/persons",
+      "operation_id": "create_person_api_v1_persons_post",
+      "classification": "Owner-scoped Endpoint",
+      "authenticated": true,
+      "jwt_requirement": "fixed HS256 / sub(UUID), exp, iss, aud; service validates existing User or owned FK-backed resource",
+      "owner_source": "Verified AuthenticatedActor.user_id only",
+      "resource_id": [],
+      "body_resource_ids": [
+        "id"
+      ],
+      "parent_resource_validation": "Relationship create validates owned Person; Conversation create validates owned Relationship; Message history validates owned Conversation; cursor binds owner/domain/parent",
+      "foreign_resource_response": "owner-neutral not-found; foreign confirmation 409 indistinguishable from unavailable; no foreign run/receipt ID",
+      "sensitive_fields": "Owned public DTO only; content/answer/names/labels/keys and subject/challenge owner IDs where existing contract allows. No ORM/raw artifact/private evidence projection.",
+      "response_contract": {
+        "application/json": {
+          "schema": {
+            "$ref": "#/components/schemas/PersonResponse"
+          }
+        }
+      },
+      "mutation_side_effects": "Create one owned persons row, or replay exact reserved UUID without new side effects",
+      "router": "apps/server/app/api/v1/resources.py::create_person",
+      "service_repository_review": [
+        "apps/server/app/services/resources.py",
+        "apps/server/app/db/repositories/resources.py",
+        "apps/server/app/db/repositories/records.py"
+      ],
+      "regression_tests": [
+        "apps/server/tests/test_authorization_security.py",
+        "apps/server/tests/test_resource_api.py"
+      ],
+      "bearer_openapi": true
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/persons/{person_id}",
+      "operation_id": "get_person_api_v1_persons__person_id__get",
+      "classification": "Owner-scoped Endpoint",
+      "authenticated": true,
+      "jwt_requirement": "fixed HS256 / sub(UUID), exp, iss, aud; service validates existing User or owned FK-backed resource",
+      "owner_source": "Verified AuthenticatedActor.user_id only",
+      "resource_id": [
+        "person_id"
+      ],
+      "body_resource_ids": [],
+      "parent_resource_validation": "Relationship create validates owned Person; Conversation create validates owned Relationship; Message history validates owned Conversation; cursor binds owner/domain/parent",
+      "foreign_resource_response": "owner-neutral not-found; foreign confirmation 409 indistinguishable from unavailable; no foreign run/receipt ID",
+      "sensitive_fields": "Owned public DTO only; content/answer/names/labels/keys and subject/challenge owner IDs where existing contract allows. No ORM/raw artifact/private evidence projection.",
+      "response_contract": {
+        "application/json": {
+          "schema": {
+            "$ref": "#/components/schemas/PersonResponse"
+          }
+        }
+      },
+      "mutation_side_effects": "none",
+      "router": "apps/server/app/api/v1/resources.py::get_person",
+      "service_repository_review": [
+        "apps/server/app/services/resources.py",
+        "apps/server/app/db/repositories/resources.py",
+        "apps/server/app/db/repositories/records.py"
+      ],
+      "regression_tests": [
+        "apps/server/tests/test_authorization_security.py",
+        "apps/server/tests/test_resource_api.py"
+      ],
+      "bearer_openapi": true
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/relationships",
+      "operation_id": "list_relationships_api_v1_relationships_get",
+      "classification": "Owner-scoped Endpoint",
+      "authenticated": true,
+      "jwt_requirement": "fixed HS256 / sub(UUID), exp, iss, aud; service validates existing User or owned FK-backed resource",
+      "owner_source": "Verified AuthenticatedActor.user_id only",
+      "resource_id": [],
+      "body_resource_ids": [],
+      "parent_resource_validation": "Relationship create validates owned Person; Conversation create validates owned Relationship; Message history validates owned Conversation; cursor binds owner/domain/parent",
+      "foreign_resource_response": "owner-neutral not-found; foreign confirmation 409 indistinguishable from unavailable; no foreign run/receipt ID",
+      "sensitive_fields": "Owned public DTO only; content/answer/names/labels/keys and subject/challenge owner IDs where existing contract allows. No ORM/raw artifact/private evidence projection.",
+      "response_contract": {
+        "application/json": {
+          "schema": {
+            "$ref": "#/components/schemas/RelationshipPage"
+          }
+        }
+      },
+      "mutation_side_effects": "none",
+      "router": "apps/server/app/api/v1/resources.py::list_relationships",
+      "service_repository_review": [
+        "apps/server/app/services/resources.py",
+        "apps/server/app/db/repositories/resources.py",
+        "apps/server/app/db/repositories/records.py"
+      ],
+      "regression_tests": [
+        "apps/server/tests/test_authorization_security.py",
+        "apps/server/tests/test_resource_api.py"
+      ],
+      "bearer_openapi": true
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/relationships",
+      "operation_id": "create_relationship_api_v1_relationships_post",
+      "classification": "Owner-scoped Endpoint",
+      "authenticated": true,
+      "jwt_requirement": "fixed HS256 / sub(UUID), exp, iss, aud; service validates existing User or owned FK-backed resource",
+      "owner_source": "Verified AuthenticatedActor.user_id only",
+      "resource_id": [],
+      "body_resource_ids": [
+        "id",
+        "person_id"
+      ],
+      "parent_resource_validation": "Relationship create validates owned Person; Conversation create validates owned Relationship; Message history validates owned Conversation; cursor binds owner/domain/parent",
+      "foreign_resource_response": "owner-neutral not-found; foreign confirmation 409 indistinguishable from unavailable; no foreign run/receipt ID",
+      "sensitive_fields": "Owned public DTO only; content/answer/names/labels/keys and subject/challenge owner IDs where existing contract allows. No ORM/raw artifact/private evidence projection.",
+      "response_contract": {
+        "application/json": {
+          "schema": {
+            "$ref": "#/components/schemas/RelationshipResponse"
+          }
+        }
+      },
+      "mutation_side_effects": "Create one owned relationships row, or replay exact reserved UUID without new side effects",
+      "router": "apps/server/app/api/v1/resources.py::create_relationship",
+      "service_repository_review": [
+        "apps/server/app/services/resources.py",
+        "apps/server/app/db/repositories/resources.py",
+        "apps/server/app/db/repositories/records.py"
+      ],
+      "regression_tests": [
+        "apps/server/tests/test_authorization_security.py",
+        "apps/server/tests/test_resource_api.py"
+      ],
+      "bearer_openapi": true
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/relationships/{relationship_id}",
+      "operation_id": "get_relationship_api_v1_relationships__relationship_id__get",
+      "classification": "Owner-scoped Endpoint",
+      "authenticated": true,
+      "jwt_requirement": "fixed HS256 / sub(UUID), exp, iss, aud; service validates existing User or owned FK-backed resource",
+      "owner_source": "Verified AuthenticatedActor.user_id only",
+      "resource_id": [
+        "relationship_id"
+      ],
+      "body_resource_ids": [],
+      "parent_resource_validation": "Relationship create validates owned Person; Conversation create validates owned Relationship; Message history validates owned Conversation; cursor binds owner/domain/parent",
+      "foreign_resource_response": "owner-neutral not-found; foreign confirmation 409 indistinguishable from unavailable; no foreign run/receipt ID",
+      "sensitive_fields": "Owned public DTO only; content/answer/names/labels/keys and subject/challenge owner IDs where existing contract allows. No ORM/raw artifact/private evidence projection.",
+      "response_contract": {
+        "application/json": {
+          "schema": {
+            "$ref": "#/components/schemas/RelationshipResponse"
+          }
+        }
+      },
+      "mutation_side_effects": "none",
+      "router": "apps/server/app/api/v1/resources.py::get_relationship",
+      "service_repository_review": [
+        "apps/server/app/services/resources.py",
+        "apps/server/app/db/repositories/resources.py",
+        "apps/server/app/db/repositories/records.py"
+      ],
+      "regression_tests": [
+        "apps/server/tests/test_authorization_security.py",
+        "apps/server/tests/test_resource_api.py"
+      ],
+      "bearer_openapi": true
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/relationships/{relationship_id}/messages",
+      "operation_id": "relationship_messages_api_v1_relationships__relationship_id__messages_get",
+      "classification": "Owner-scoped Endpoint",
+      "authenticated": true,
+      "jwt_requirement": "fixed HS256 / sub(UUID), exp, iss, aud; service validates existing User or owned FK-backed resource",
+      "owner_source": "Verified AuthenticatedActor.user_id only",
+      "resource_id": [
+        "relationship_id"
+      ],
+      "body_resource_ids": [],
+      "parent_resource_validation": "Owned Job lock before revision/state/target validation; Person and Relationship validated by owner and matching Person; History validates owned Relationship; cursor binds owner/relationship",
+      "foreign_resource_response": "owner-neutral not-found; foreign confirmation 409 indistinguishable from unavailable; no foreign run/receipt ID",
+      "sensitive_fields": "Owned public DTO only; content/answer/names/labels/keys and subject/challenge owner IDs where existing contract allows. No ORM/raw artifact/private evidence projection.",
+      "response_contract": {
+        "application/json": {
+          "schema": {
+            "$ref": "#/components/schemas/RelationshipMessagePageResponse"
+          }
+        }
+      },
+      "mutation_side_effects": "none",
+      "router": "apps/server/app/api/v1/chat_imports.py::relationship_messages",
+      "service_repository_review": [
+        "apps/server/app/services/import_jobs.py",
+        "apps/server/app/services/import_workflow.py",
+        "apps/server/app/services/import_merge.py",
+        "apps/server/app/db/repositories/records.py"
+      ],
+      "regression_tests": [
+        "apps/server/tests/test_authorization_security.py",
+        "apps/server/tests/test_import_api.py"
+      ],
+      "bearer_openapi": true
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/status",
+      "operation_id": "status_api_v1_status_get",
+      "classification": "Public Endpoint",
+      "authenticated": false,
+      "jwt_requirement": "none",
+      "owner_source": "none",
+      "resource_id": [],
+      "body_resource_ids": [],
+      "parent_resource_validation": "No resource IDs or caller data",
+      "foreign_resource_response": "not applicable",
+      "sensitive_fields": "none",
+      "response_contract": {
+        "application/json": {
+          "schema": {
+            "$ref": "#/components/schemas/StatusResponse"
+          }
+        }
+      },
+      "mutation_side_effects": "none",
+      "router": "apps/server/app/api/v1/status.py::status",
+      "service_repository_review": [],
+      "regression_tests": [],
+      "bearer_openapi": false
+    },
+    {
+      "method": "GET",
+      "path": "/health",
+      "operation_id": "health_health_get",
+      "classification": "Public Endpoint",
+      "authenticated": false,
+      "jwt_requirement": "none",
+      "owner_source": "none",
+      "resource_id": [],
+      "body_resource_ids": [],
+      "parent_resource_validation": "No resource IDs or caller data",
+      "foreign_resource_response": "not applicable",
+      "sensitive_fields": "none",
+      "response_contract": {
+        "application/json": {
+          "schema": {
+            "$ref": "#/components/schemas/HealthResponse"
+          }
+        }
+      },
+      "mutation_side_effects": "none",
+      "router": "apps/server/app/api/health.py::health",
+      "service_repository_review": [],
+      "regression_tests": [],
+      "bearer_openapi": false
+    },
+    {
+      "method": "GET",
+      "path": "/ready",
+      "operation_id": "ready_ready_get",
+      "classification": "Public Endpoint",
+      "authenticated": false,
+      "jwt_requirement": "none",
+      "owner_source": "none",
+      "resource_id": [],
+      "body_resource_ids": [],
+      "parent_resource_validation": "No resource IDs or caller data",
+      "foreign_resource_response": "not applicable",
+      "sensitive_fields": "none",
+      "response_contract": {
+        "application/json": {
+          "schema": {}
+        }
+      },
+      "mutation_side_effects": "none",
+      "router": "apps/server/app/api/readiness.py::ready",
+      "service_repository_review": [],
+      "regression_tests": [],
+      "bearer_openapi": false
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "downloads": "only helper hash-matching synthetic file cleaned; other files preserved",
+  "postgres_preserved": true,
+  "actions": [
+    {
+      "verified_hint": "phase9b-metro.ps1",
+      "pid": 32772,
+      "stopped": true
+    },
+    {
+      "verified_hint": "phase9b-relay.cjs",
+      "pid": 24456,
+      "stopped": true
+    }
+  ],
+  "emulator_preserved": true,
+  "remaining_task_listeners": []
+}

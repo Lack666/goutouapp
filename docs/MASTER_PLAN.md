@@ -22,12 +22,25 @@ as implemented by a placeholder directory or a golden expectation.
 | 6 | User-facing memory controls and retention policy integration | PASS (6A–6D) |
 | 7 | Expo React Native MVP | PASS (7A–7D) |
 | 8 | Mobile API integration, generated client and stream consumption | PASS (8A–8F, including native closeout) |
-| 9 | Security, privacy, reliability and deletion | IN PROGRESS (9A PASS; remaining work pending) |
+| 9 | Security, privacy, reliability and deletion | IN PROGRESS (9A–9B PASS; remaining work pending) |
 | 10 | Optional hybrid RAG with pgvector | PENDING |
 | 11 | Agent eval and observability | PENDING |
 | 12 | CI/CD, EAS preview, release preparation | PENDING |
 
 ## Exit criteria by phase
+
+Phase 9 subdivision (explicit authorization, 2026-10-13): 9A remains the
+completed upload-security baseline. **9B — Authentication, Ownership and Privacy
+Boundary Hardening** audits the existing JWT/services/Mobile session boundaries,
+applies minimal security fixes, inventories all actual public operations, reviews
+historical evidence privacy and preserves production admission blockers. Its
+mandatory gates include fresh Android smoke on the updated locked dependencies,
+real signed A/B FastAPI/PostgreSQL tests, and independent complete root verify
+before and after changing only `8/9A` to `8/9B`. 9B does not complete Phase 9.
+No 9C–9E names/scopes are established by this instruction; consult the Phase 9
+handoff for remaining work and obtain the next explicit task. Production account
+systems, frozen behavior changes, real providers, RAG and release publishing are
+outside 9B. Marker validation retains all Phase 8F and 9A evidence requirements.
 
 0. Preserve upstream exactly; inspect skill, README, documentation, references,
    scripts and license; record commit; run upstream validator and repository
@@ -779,3 +792,14 @@ and verified with the lockfile.
 - Phase 6 is PASS; marker is `6 / 6D`. Production scheduler, encrypted backup
   rotation and restore replay remain NOT DEPLOYED. Phase 7 is PENDING.
   See [Phase 6 final acceptance](PHASE_6_FINAL_ACCEPTANCE.md).
+
+### Phase 9B — Authentication, Ownership and Privacy Boundary Hardening
+
+PASS after fresh five-scene Android smoke and independent full root pre/post
+exits0. Marker8/9B; Phase9 overall remains IN PROGRESS, Phase10–12 PENDING.
+Minimal changes: exact-scope opaque cursors, per-event SSE epoch guard and fixed
+log whitelist. Real signed A/B FastAPI/PostgreSQL and all prior gates retained.
+Backend644, Mobile359, repository61, Golden83, Web22/3/3/4/5/1, OpenAPI36,
+Doctor21/21. No production identity/admission, real provider, RAG or release.
+See PHASE_9B_ACCEPTANCE and Phase9 handoff for explicit remaining blockers.
+Stop after9B; no further subphase scope is authorized by this acceptance.

@@ -171,3 +171,27 @@ These sources guide the audit; only repository tests prove this implementation.
 
 See [upload boundary](UPLOAD_SECURITY_BOUNDARY.md), [acceptance](PHASE_9A_ACCEPTANCE.md)
 and [handoff](PHASE_9_SECURITY_RELIABILITY_HANDOFF.md) for measured results and remaining work.
+
+## Phase 9B current supplement (2026-10-13)
+
+Current baseline14eb9d4/8-9A. B1/B3 now have an explicit36-operation service/
+repository inventory, signed A/B negative matrix and per-event Transport epoch
+guard. Import History/Memory opaque cursors bind exact owned navigation scope;
+SQL remains independently owner-filtered. B7 application output uses a reviewed
+fixed whitelist and strips args/exception/stack/extra fields; Uvicorn access stays
+disabled. Runtime/DTO/frozen behavior remains unchanged. Fresh actual Android
+smoke of updated dependencies is mandatory9B evidence, not inherited8F/9A PASS.
+
+Tests: test_authorization_security.py, test_privacy_logging.py, Mobile
+authPrivacy.test.ts and retained session/controller suites. New generated markers
+are runtime-only. Historical131 plus9A21 files have separate automatic credential
+screening and limited manual/provenance review in EVIDENCE_PRIVACY_REVIEW_9B.
+
+B9/R-07 remains a production blocker: local project listeners/defaults are
+loopback; one-request201MiB transient disk bound multiplies with concurrency.
+No global/owner rate, admission/storage quota or active-body deadline exists.
+Controlled disk ENOSPC yields generic500/no Job; bounded real pool exhaustion
+yields503. These faults do not validate aggregate availability. Before public
+exposure require proxy/app admission, quota/deadline controls, monitored storage
+and bounded pool/worker alignment plus aggregate stress and fault validation.
+R-06/R-08 and production portions of R-09 remain explicit future work.
