@@ -40,6 +40,7 @@ def make_app():
     return create_app(
         Settings(
             app_env="test",
+            database_url=None,  # Keep the stub adapter independent of env DB URLs.
             auth_jwt_secret=SECRET,
             auth_jwt_issuer="stream-issuer",
             auth_jwt_audience="stream-api",

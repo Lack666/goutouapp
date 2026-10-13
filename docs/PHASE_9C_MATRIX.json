@@ -1,0 +1,188 @@
+{
+  "phase": "9C",
+  "status": "PASS",
+  "baseline": "1d556e9",
+  "open_p0_p1": [],
+  "production_acceptable": false,
+  "production_blockers": [
+    "Undeployed public ingress/TLS/header/connection/non-upload-body protections",
+    "Shared local private root/fences/DB/policy; multi-host unsupported",
+    "Worker/pool sizing, supervisor and whole-host storage monitoring",
+    "R-06 monitored retention/backup/restore/deletion consistency",
+    "R-09 production identity/full-system deletion/reconciliation"
+  ],
+  "topology": {
+    "shared_local_root": true,
+    "actual_worker_processes": 2,
+    "public_deployment": "NOT DEPLOYED",
+    "host": "Windows local loopback",
+    "postgresql": "16.15 / migrated disposable synthetic test databases"
+  },
+  "source_fingerprint": "f2ef961382c052905ab88875254f6057c73dfb76c2a2a6621f2653a6fce5039a",
+  "coverage": {
+    "early": [
+      "apps/server/tests/test_resource_admission.py::test_early_invalid_credential_does_not_receive_or_spool"
+    ],
+    "owner": [
+      "apps/server/tests/test_resource_admission.py::test_real_two_workers_owner_global_limits_disconnect_and_recovery"
+    ],
+    "global": [
+      "apps/server/tests/test_resource_admission.py::test_two_workers_simultaneously_compete_for_one_global_slot"
+    ],
+    "storage": [
+      "apps/server/tests/test_resource_admission.py::test_storage_includes_retained_sources_and_releases_on_cancel",
+      "apps/server/tests/test_resource_admission.py::test_unknown_orphan_fails_closed_and_crash_artifact_stays_charged"
+    ],
+    "rates": [
+      "apps/server/tests/test_resource_admission.py::test_real_shared_rate_windows_and_owner_isolation",
+      "apps/server/tests/test_resource_admission.py::test_generic_request_rate_is_shared_across_workers",
+      "apps/server/tests/test_resource_admission.py::test_owner_rejected_attempts_still_count_toward_global_rate"
+    ],
+    "idle": [
+      "apps/server/tests/test_resource_admission.py::test_real_body_idle_and_total_deadline"
+    ],
+    "total": [
+      "apps/server/tests/test_resource_admission.py::test_real_body_idle_and_total_deadline"
+    ],
+    "disconnect": [
+      "apps/server/tests/test_resource_admission.py::test_real_two_workers_owner_global_limits_disconnect_and_recovery"
+    ],
+    "crash_body": [
+      "apps/server/tests/test_resource_admission.py::test_real_worker_kill_recovers_without_expiring_a_live_owner",
+      "apps/server/tests/test_resource_admission.py::test_real_worker_death_closes_actual_rolled_multipart_spool"
+    ],
+    "crash_partial": [
+      "apps/server/tests/test_resource_admission.py::test_real_worker_crash_during_write_and_before_job_commit"
+    ],
+    "crash_artifact": [
+      "apps/server/tests/test_resource_admission.py::test_real_worker_crash_during_write_and_before_job_commit"
+    ],
+    "live_fence": [
+      "apps/server/tests/test_resource_admission.py::test_atomic_concurrent_reservations_and_live_database_loss"
+    ],
+    "cleanup": [
+      "apps/server/tests/test_resource_admission.py::test_live_fence_protects_old_partial_and_cleanup_fault_stays_charged"
+    ],
+    "database": [
+      "apps/server/tests/test_resource_admission.py::test_real_database_unavailability_is_safe_and_does_not_read_body"
+    ],
+    "disk": [
+      "apps/server/tests/test_resource_admission.py::test_real_http_storage_budget_rate_global_disk_failure_and_restored_capacity"
+    ],
+    "finalize": [
+      "apps/server/tests/test_resource_admission.py::test_finalize_replay_cancel_race_and_accounting"
+    ],
+    "metrics": [
+      "apps/server/tests/test_resource_admission.py::test_speaker_inventory_rejected_without_partial_job_and_metrics_whitelist"
+    ],
+    "speakers": [
+      "apps/server/tests/test_resource_admission.py::test_speaker_inventory_rejected_without_partial_job_and_metrics_whitelist"
+    ],
+    "mobile": [
+      "apps/mobile/tests/resourceAdmission.test.ts"
+    ]
+  },
+  "focused": {
+    "exit_code": 0,
+    "log": {
+      "path": "docs/evidence/phase9c/focused.log",
+      "sha256": "2831b0a51af2f25b08030e16ca6ed518672cbb1974c0763cc9af95471cb600a3"
+    },
+    "exit": {
+      "path": "docs/evidence/phase9c/focused.exit",
+      "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+    }
+  },
+  "focused_tests": 137,
+  "new_backend_tests": 27,
+  "new_mobile_tests": 4,
+  "prior_native_current_fingerprint_unchanged": true,
+  "failed_attempts": [
+    {
+      "exit_code": 1,
+      "log": {
+        "path": "docs/evidence/phase9c/focused-attempt1.log",
+        "sha256": "b333a000ffa12e427cc02dc93aa0a2110c683dee0e98e02b3fea0215d2a82e22"
+      },
+      "exit": {
+        "path": "docs/evidence/phase9c/focused-attempt1.exit",
+        "sha256": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04"
+      }
+    },
+    {
+      "exit_code": 1,
+      "log": {
+        "path": "docs/evidence/phase9c/pre-marker-attempt1.log",
+        "sha256": "4dfb06a608b926ac49be54f4ed97a4e1073bb5c3f40aa47f5eb3e032ec328d46"
+      },
+      "exit": {
+        "path": "docs/evidence/phase9c/pre-marker-attempt1.exit",
+        "sha256": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04"
+      }
+    }
+  ],
+  "crash_host_diagnostic": {
+    "exit_code": 0,
+    "log": {
+      "path": "docs/evidence/phase9c/crash-host-diagnostic.log",
+      "sha256": "872e7732dcf5b2a45d603a4133c1fd34260160aa61bd1884840b5d1e02658f58"
+    },
+    "exit": {
+      "path": "docs/evidence/phase9c/crash-host-diagnostic.exit",
+      "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+    }
+  },
+  "diagnostic_limit": "Host crash clients observed502; direct-loopback fixture disables environment proxy. No root cause attributed to a specific proxy; zero Jobs and terminated workers asserted.",
+  "windows_worker_history": "9B native exit3221226505 unconfirmed P2; preserve any recurrence",
+  "r07_status": "mitigated_local_application / production blocked",
+  "accounting_limit": "Filesystem byte sizes/rounded overhead and conservative reservations, not RSS or universal physical-volume quota",
+  "acceptance_state": "closed",
+  "pre_marker": {
+    "exit_code": 0,
+    "log": {
+      "path": "docs/evidence/phase9c/pre-marker.log",
+      "sha256": "ec99fce74c6ee45d4a451913e12fb2d6b2cda421d10dca5539f1ac09e1f44cc4"
+    },
+    "exit": {
+      "path": "docs/evidence/phase9c/pre-marker.exit",
+      "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+    }
+  },
+  "backend_tests": 671,
+  "mobile_tests": 363,
+  "repository_tests": 67,
+  "backend_env_diagnostic": {
+    "independent_exit_code": "NOT RECORDED",
+    "observed_pytest": "2 failed, 669 passed",
+    "log": {
+      "path": "docs/evidence/phase9c/backend-env-diagnostic.log",
+      "sha256": "ab64d0faa2521a6454326a9d26c9c315079681469a6f7f18c6bed51f5c47d8fb"
+    },
+    "scope": "Intermediate .env contract-fixture diagnostic, not an acceptance gate"
+  },
+  "post_marker": {
+    "exit_code": 0,
+    "log": {
+      "path": "docs/evidence/phase9c/post-marker.log",
+      "sha256": "f736d0b1892238c364b21ed64ae0e71d639487659d173519b97b1d1da25f5583"
+    },
+    "exit": {
+      "path": "docs/evidence/phase9c/post-marker.exit",
+      "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+    }
+  },
+  "regression": {
+    "golden": 83,
+    "demo_web": 22,
+    "connected_web": [
+      3,
+      3,
+      4,
+      5,
+      1
+    ],
+    "openapi_operations": 36,
+    "expo_doctor": "21/21",
+    "new_native_run": "NOT RUN; unchanged current-source 9B native gate retained"
+  }
+}

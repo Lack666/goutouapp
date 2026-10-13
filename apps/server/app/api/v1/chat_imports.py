@@ -4,11 +4,13 @@ from typing import Annotated
 from uuid import UUID
 
 from fastapi import APIRouter, Depends, File, Form, Query, Request, UploadFile
+from fastapi.routing import APIRoute
 from sqlalchemy.orm import Session
+from starlette.concurrency import run_in_threadpool
 
 from app.api.dependencies import get_authenticated_actor, get_db
 from app.chat_import import FORMAT_WECHAT_MARKDOWN_V1
-from app.chat_import.artifacts import CHUNK_BYTES, UploadTooLarge
+from app.chat_import.artifacts import CHUNK_BYTES, ArtifactStoreError, UploadTooLarge
 from app.schemas.chat_import import (
     FinalizeRequest,
     ImportJobResponse,
@@ -25,7 +27,25 @@ from app.services.import_workflow import (
     ImportWorkflowErrorCode,
 )
 
-router = APIRouter(tags=["chat-import"])
+
+class ImportRoute(APIRoute):
+    def get_route_handler(self):
+        handler = super().get_route_handler()
+
+        async def limited_form(request: Request):
+            if request.method != "POST" or request.url.path != "/api/v1/chat-imports":
+                return await handler(request)
+            try:
+                # Cache a stricter parse before FastAPI's automatic form parse.
+                await request.form(max_files=1, max_fields=2, max_part_size=1024**2)
+                return await handler(request)
+            finally:
+                await request.close()
+
+        return limited_form
+
+
+router = APIRouter(tags=["chat-import"], route_class=ImportRoute)
 
 
 def _workflow(request: Request):
@@ -45,7 +65,10 @@ async def upload_chat_import(
     if source_format is not None and source_format != FORMAT_WECHAT_MARKDOWN_V1:
         raise ImportWorkflowError(ImportWorkflowErrorCode.UNSUPPORTED_FORMAT)
     store = request.app.state.import_artifact_store
-    writer = store.begin()
+    try:
+        writer = store.begin(request.scope.get("admission_artifact_key"))
+    except OSError:
+        raise ArtifactStoreError from None
     size = 0
     try:
         while chunk := await file.read(CHUNK_BYTES):
@@ -54,16 +77,25 @@ async def upload_chat_import(
                 raise UploadTooLarge
             writer.write(chunk)
         artifact = writer.finish()
-    except BaseException:
+    except BaseException as exc:
         try:
             writer.abort()
         except OSError:
-            pass  # Orphan cleanup covers a temporary file that could not be removed.
+            from app.services.import_workflow import _cleanup_warning
+
+            _cleanup_warning()
+            request.app.state.resource_admission.record("cleanup_failure")
+        if isinstance(exc, OSError) and not isinstance(exc, ConnectionError):
+            raise ArtifactStoreError from None
         raise
     finally:
         await file.close()
-    view = _workflow(request).register_uploaded(
-        actor, artifact, source_timezone=source_timezone, source_format=source_format
+    view = await run_in_threadpool(
+        _workflow(request).register_uploaded,
+        actor,
+        artifact,
+        source_timezone=source_timezone,
+        source_format=source_format,
     )
     return ImportJobResponse.model_validate(view)
 

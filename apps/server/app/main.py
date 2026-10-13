@@ -10,6 +10,7 @@ from app.api.errors import register_error_handlers
 from app.api.health import router as health_router
 from app.api.import_upload_limit import ImportUploadBodyLimit
 from app.api.readiness import router as readiness_router
+from app.api.resource_admission import ResourceAdmissionMiddleware
 from app.api.v1.router import router as v1_router
 from app.chat_import.artifacts import LocalFilesystemImportArtifactStore
 from app.core.config import Settings, get_settings
@@ -17,6 +18,7 @@ from app.core.logging import configure_logging
 from app.db.session import Database
 from app.schemas.error import ErrorResponse
 from app.services.import_workflow import ImportWorkflowService
+from app.services.resource_admission import ResourceAdmission
 
 ERROR_RESPONSES = {
     400: {"model": ErrorResponse, "description": "Invalid request"},
@@ -58,10 +60,15 @@ def create_app(settings: Settings | None = None) -> FastAPI:
         app.state.database.session,
         app.state.import_artifact_store,
         settings.chat_import_retention_hours,
+        settings.max_chat_import_speakers,
     )
     app.state.agent_service = None
     app.state.agent_service_lock = RLock()
+    app.state.resource_admission = ResourceAdmission(app.state.database, settings)
     register_error_handlers(app)
+    app.add_middleware(
+        ResourceAdmissionMiddleware, admission=app.state.resource_admission, settings=settings
+    )
     app.add_middleware(ImportUploadBodyLimit, max_file_bytes=settings.max_chat_import_bytes)
     if settings.dev_cors_origins:
         app.add_middleware(

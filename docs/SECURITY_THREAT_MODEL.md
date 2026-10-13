@@ -1,5 +1,18 @@
 # Security threat model — Phase 9A
 
+Current9C supplement updates B2/B5/B9: rate/auth/atomic reservations run before
+Multipart receive; one-file/two-field parsing, per-receive idle/total deadlines,
+bounded speaker registration, Owner/global actual-file accounting and shared
+upload/finalize slots are tested with real signed PostgreSQL and two TCP workers.
+OS-owned fences prevent reclaiming a still-writing worker after DB backend loss.
+Body/partial/artifact-before-commit crash recovery retains charges and protects
+live sources from orphan cleanup. B7 retains fixed safe logs and count-only,
+operator-only finite metrics. Historical "no admission" paragraphs describe9A/9B,
+not current code. Public ingress/TLS/non-upload body/header/connection limits,
+supervision, physical allocation/RSS and monitored retention remain explicit
+R-07/R-06 production conditions; R-09 deletion/identity and R-08 future analysis
+remain outside this task. No new model/Agent/DTO/knowledge behavior is introduced.
+
 Scope: repository HEAD `08563c3` as the Phase 8 baseline, followed by the 9A
 changes. Assessment date: 2026-10-13. This is a development-system engineering
 assessment, not production certification. Frozen Skill, Golden Cases, Agent

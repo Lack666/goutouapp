@@ -1,5 +1,10 @@
 # Phase 4B authentication
 
+Phase9C upload/finalize admission validates the same signed claims and existing
+User before receiving Multipart or executing import work; unknown signed subjects
+fail early401. No algorithm/claim/issuer policy, token service or production account
+flow is added. Services and the normal route verifier still authorize independently.
+
 Phase9B audit supplement: policy remains unchanged. New signed negative tests
 cover missing/signature/expiry/nbf/format/algorithm/unsigned/tamper/subject/
 issuer/audience/required claims and non-finite dates. All33 sensitive operations

@@ -15,7 +15,7 @@ def audit(root=ROOT):
     findings = []
     inventory = {}
     types = Counter()
-    for group in ("phase8f-closeout", "phase9a", "phase9b"):
+    for group in ("phase8f-closeout", "phase9a", "phase9b", "phase9c"):
         paths = sorted((root / "docs/evidence" / group).glob("*"))
         matrix = (
             root
@@ -24,6 +24,7 @@ def audit(root=ROOT):
                 "phase8f-closeout": "PHASE_8F_CLOSEOUT_MATRIX.json",
                 "phase9a": "PHASE_9A_MATRIX.json",
                 "phase9b": "PHASE_9B_MATRIX.json",
+                "phase9c": "PHASE_9C_MATRIX.json",
             }[group]
         )
         if matrix.is_file():

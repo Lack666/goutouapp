@@ -37,7 +37,7 @@ class ArtifactWriter(Protocol):
 
 
 class ImportArtifactStore(Protocol):
-    def begin(self) -> ArtifactWriter: ...
+    def begin(self, key: str | None = None) -> ArtifactWriter: ...
     def open(self, key: str) -> BinaryIO: ...
     def stat(self, key: str) -> os.stat_result: ...
     def delete(self, key: str) -> None: ...
@@ -99,8 +99,8 @@ class LocalFilesystemImportArtifactStore:
             raise ArtifactStoreError
         return self._root / f"{key}.{'part' if partial else 'bin'}"
 
-    def begin(self) -> ArtifactWriter:
-        return _LocalWriter(self, uuid4().hex)
+    def begin(self, key: str | None = None) -> ArtifactWriter:
+        return _LocalWriter(self, key or uuid4().hex)
 
     def open(self, key: str) -> BinaryIO:
         path = self._path(key)

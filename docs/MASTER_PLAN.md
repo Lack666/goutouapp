@@ -22,7 +22,7 @@ as implemented by a placeholder directory or a golden expectation.
 | 6 | User-facing memory controls and retention policy integration | PASS (6A–6D) |
 | 7 | Expo React Native MVP | PASS (7A–7D) |
 | 8 | Mobile API integration, generated client and stream consumption | PASS (8A–8F, including native closeout) |
-| 9 | Security, privacy, reliability and deletion | IN PROGRESS (9A–9B PASS; remaining work pending) |
+| 9 | Security, privacy, reliability and deletion | IN PROGRESS (9A–9C PASS; remaining work pending) |
 | 10 | Optional hybrid RAG with pgvector | PENDING |
 | 11 | Agent eval and observability | PENDING |
 | 12 | CI/CD, EAS preview, release preparation | PENDING |
@@ -37,10 +37,17 @@ historical evidence privacy and preserves production admission blockers. Its
 mandatory gates include fresh Android smoke on the updated locked dependencies,
 real signed A/B FastAPI/PostgreSQL tests, and independent complete root verify
 before and after changing only `8/9A` to `8/9B`. 9B does not complete Phase 9.
-No 9C–9E names/scopes are established by this instruction; consult the Phase 9
-handoff for remaining work and obtain the next explicit task. Production account
+The next explicit user instruction establishes **9C — Aggregate Resource Admission
+and Upload Reliability Hardening**: shared global/owner request rates, early signed
+upload admission, concurrent upload/finalize capacity, retained/spool storage and
+pending-job budgets, actual receive idle/total deadlines, fenced crash reconciliation,
+safe metrics and real multi-process signed HTTP/PostgreSQL regression. Completion
+requires independent full root exits0 before/after advancing only8/9B to8/9C;
+all8F/9A/9B evidence gates remain. Phase9 stays IN PROGRESS. No9D–9E names/scopes
+are authorized. Production account
 systems, frozen behavior changes, real providers, RAG and release publishing are
-outside 9B. Marker validation retains all Phase 8F and 9A evidence requirements.
+outside these tasks. 9C does not certify undeployed public ingress, scheduler,
+backup/deletion propagation or future providers. Stop after the authorized9C task.
 
 0. Preserve upstream exactly; inspect skill, README, documentation, references,
    scripts and license; record commit; run upstream validator and repository
@@ -803,3 +810,19 @@ Backend644, Mobile359, repository61, Golden83, Web22/3/3/4/5/1, OpenAPI36,
 Doctor21/21. No production identity/admission, real provider, RAG or release.
 See PHASE_9B_ACCEPTANCE and Phase9 handoff for explicit remaining blockers.
 Stop after9B; no further subphase scope is authorized by this acceptance.
+
+### Phase 9C — Aggregate Resource Admission and Upload Reliability Hardening
+
+PASS after independent complete root pre/post exits0. Marker8/9C; Phase9 remains
+IN PROGRESS and Phase10–12 PENDING. Shared PostgreSQL admission before Multipart,
+Owner/global request/upload rates, concurrency/storage/pending budgets, actual
+receive idle/total deadlines and private OS-fenced reconciliation are verified
+with two real signed HTTP workers and migrated synthetic PostgreSQL databases.
+Backend671, Mobile363, repository67, Golden83, Web22/3/3/4/5/1, OpenAPI36,
+Doctor21/21. Prior native gates retain their unchanged Mobile fingerprint; no new
+9C native run is claimed. Source fingerprints and original evidence hashes remain
+mandatory. See PHASE_9C_ACCEPTANCE, RESOURCE_ADMISSION_POLICY, UPLOAD_RELIABILITY
+and ADR0038. Public production acceptance remains FALSE; ingress/host sizing/
+supervision/monitored retention and R-06/R-09 backup/deletion/identity tasks remain.
+Next work requires explicit authorization under the current Phase9 handoff.
+Stop after9C; no later subphase, real provider, RAG or release work started.

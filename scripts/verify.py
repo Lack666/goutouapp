@@ -55,6 +55,7 @@ MOBILE_IMPORT = (ROOT / "apps/mobile/src/data/importController.ts").is_file()
 MOBILE_MEMORY = (ROOT / "apps/mobile/src/data/memoryController.ts").is_file()
 UPLOAD_SECURITY = (ROOT / "apps/server/tests/test_upload_security.py").is_file()
 AUTHORIZATION_SECURITY = (ROOT / "apps/server/tests/test_authorization_security.py").is_file()
+RESOURCE_ADMISSION = (ROOT / "apps/server/tests/test_resource_admission.py").is_file()
 MEMORY_GATE_FILES = (
     "apps/mobile/src/api/memoryAdapter.ts",
     "apps/mobile/src/api/memoryErrors.ts",
@@ -203,20 +204,26 @@ def native_closeout_check() -> None:
 
 
 def phase_marker_check() -> None:
-    if PHASE > 8 or (PHASE == 8 and SUBPHASE not in {"8F", "9A", "9B"}):
-        raise RuntimeError("Phase 8 requires 8F closeout; only Phase 9A/9B are implemented")
-    if SUBPHASE in {"9A", "9B"}:
+    if PHASE > 8 or (PHASE == 8 and SUBPHASE not in {"8F", "9A", "9B", "9C"}):
+        raise RuntimeError("Phase 8 requires 8F closeout; only Phase 9A/9B/9C are implemented")
+    if SUBPHASE in {"9A", "9B", "9C"}:
         if PHASE != 8 or not UPLOAD_SECURITY:
             raise RuntimeError("Phase 9A requires completed Phase 8 and security gates")
         from check_security_9a import check
 
         check(completed=True)
-    if SUBPHASE == "9B":
+    if SUBPHASE in {"9B", "9C"}:
         if PHASE != 8 or not AUTHORIZATION_SECURITY:
             raise RuntimeError("Phase 9B requires completed Phase 8/9A and security gates")
         from check_security_9b import check as check_9b
 
         check_9b(completed=True)
+    if SUBPHASE == "9C":
+        if PHASE != 8 or not RESOURCE_ADMISSION:
+            raise RuntimeError("Phase9C requires completed8/9B and resource security gates")
+        from check_security_9c import check as check_9c
+
+        check_9c(completed=True)
     if PHASE == 8:
         if not all(
             (
@@ -413,6 +420,9 @@ def tests() -> None:
             "apps/server/tests/test_authorization_security.py",
             "apps/server/tests/test_privacy_logging.py",
         )
+    if RESOURCE_ADMISSION:
+        uv_run("python", "scripts/check_security_9c.py")
+        uv_run("pytest", "-q", "apps/server/tests/test_resource_admission.py")
     if MEMORY_CONTROL_API:
         uv_run("pytest", "-q", "apps/server/tests/test_memory_control.py")
         uv_run("python", "apps/server/memory_control_demo.py")
@@ -468,6 +478,7 @@ def lint() -> None:
         "scripts/audit_authorization.py",
         "scripts/audit_evidence_privacy.py",
         "scripts/check_security_9b.py",
+        "scripts/check_security_9c.py",
         "scripts/phase9b_android_smoke.py",
     )
     uv_run(
@@ -495,6 +506,7 @@ def lint() -> None:
         "scripts/audit_authorization.py",
         "scripts/audit_evidence_privacy.py",
         "scripts/check_security_9b.py",
+        "scripts/check_security_9c.py",
         "scripts/phase9b_android_smoke.py",
     )
 
@@ -759,6 +771,8 @@ def verify() -> None:
                     print("PASS: Phase 9A security focused/regression gates")
                     if AUTHORIZATION_SECURITY:
                         print("PASS: Phase 9B authorization/privacy/fresh native gates")
+                    if RESOURCE_ADMISSION:
+                        print("PASS: Phase9C shared resource admission/upload reliability gates")
                     print("Phase 9 IN PROGRESS; remaining security/privacy/reliability deferred")
                 else:
                     print("Phase 9 PENDING / NOT STARTED")

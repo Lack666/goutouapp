@@ -1,5 +1,14 @@
 # Phase 2B database operations
 
+Phase9C revision20261013_01 adds resource_admission_states and upload_reservations;
+17 application tables are checked through the existing disposable migration cycle.
+Neither new table stores transcript/filename/token. Request-window/issuance/recovery
+uses bounded advisory transactions; private OS fences prevent unsafe recycling
+after DB backend loss. Default per-process pool5+10 now waits at most1s for checkout;
+these are configurable and must be aligned with workers/DB capacity. Existing
+deployment databases require the normal authorized Alembic upgrade before this
+code receives data traffic; acceptance migrates only disposable synthetic DBs.
+
 The root `compose.yaml` runs PostgreSQL 18.6 for local development. Set
 `POSTGRES_*`, `DATABASE_URL` and `TEST_DATABASE_URL` through an ignored `.env`
 or the shell. The committed `.env.example` contains **development-only** values.

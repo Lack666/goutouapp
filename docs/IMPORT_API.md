@@ -1,5 +1,14 @@
 # Chat import HTTP API — Phase 5D
 
+Phase9C resource supplement: early JWT/known-User admission before Multipart,
+shared request/upload rate429, capacity/storage/DB503 artifact_unavailable,
+receive408 http_error and existing413. ErrorResponse/36 operations/generated DTOs
+unchanged; Retry-After bounds explicit retries. Multipart accepts one file/two
+fields; registration rejects >configured1024 distinct speakers with parse_failed422.
+Finalize/replay has independent processing slots; no blind upload retransmission.
+Source retention and exact-dataset/revision/receipt semantics remain. Unknown signed
+subjects at upload/finalize now fail early401. See RESOURCE_ADMISSION_POLICY.
+
 All routes require the Phase 4 signed Bearer JWT. The verified subject becomes
 `AuthenticatedActor`; caller-supplied owner IDs are never accepted. Unknown and
 foreign jobs or relationships use the same 404 response. Errors use

@@ -85,7 +85,7 @@ class SecurityGateTests(unittest.TestCase):
             with self.assertRaisesRegex(RuntimeError, "native evidence"):
                 verifier.phase_marker_check()
             security_check.assert_called_once()
-        for phase, subphase in ((9, "9A"), (8, "9C"), (7, "9A")):
+        for phase, subphase in ((9, "9A"), (8, "9D"), (7, "9A")):
             with patch.multiple(verifier, PHASE=phase, SUBPHASE=subphase):
                 with self.assertRaises(RuntimeError):
                     verifier.phase_marker_check()

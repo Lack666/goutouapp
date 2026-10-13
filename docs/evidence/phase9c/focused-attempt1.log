@@ -1,0 +1,71 @@
+................FF...................................................... [ 52%]
+.................................................................        [100%]
+================================== FAILURES ===================================
+_____ test_real_worker_crash_during_write_and_before_job_commit[partial] ______
+
+worker_pair = <function worker_pair.<locals>.start at 0x0000024407944B40>
+database_engine = Engine(postgresql+psycopg://postgres@127.0.0.1:15434/goutou_test_624cb628ef14)
+stage = 'partial'
+
+    @pytest.mark.parametrize("stage", ["partial", "artifact"])
+    def test_real_worker_crash_during_write_and_before_job_commit(worker_pair, database_engine, stage):
+        config, admission, ports, processes = worker_pair(fault=stage)
+        owner, *_ = scope(database_engine)
+    
+        def request():
+            with api(ports[0]) as client:
+                try:
+                    upload(client, owner)
+                except httpx.HTTPError:
+                    return "disconnected"
+            return "unexpected_response"
+    
+        with ThreadPoolExecutor(max_workers=1) as executor:
+            response = executor.submit(request)
+            assert processes[0]._phase9c_event.wait(5)
+            wait_active(admission, 1)
+            processes[0].terminate()
+            processes[0].join(timeout=5)
+>           assert response.result(timeout=5) == "disconnected"
+E           AssertionError: assert 'unexpected_response' == 'disconnected'
+E             
+E             - disconnected
+E             + unexpected_response
+
+apps\server\tests\test_resource_admission.py:476: AssertionError
+_____ test_real_worker_crash_during_write_and_before_job_commit[artifact] _____
+
+worker_pair = <function worker_pair.<locals>.start at 0x0000024407945590>
+database_engine = Engine(postgresql+psycopg://postgres@127.0.0.1:15434/goutou_test_624cb628ef14)
+stage = 'artifact'
+
+    @pytest.mark.parametrize("stage", ["partial", "artifact"])
+    def test_real_worker_crash_during_write_and_before_job_commit(worker_pair, database_engine, stage):
+        config, admission, ports, processes = worker_pair(fault=stage)
+        owner, *_ = scope(database_engine)
+    
+        def request():
+            with api(ports[0]) as client:
+                try:
+                    upload(client, owner)
+                except httpx.HTTPError:
+                    return "disconnected"
+            return "unexpected_response"
+    
+        with ThreadPoolExecutor(max_workers=1) as executor:
+            response = executor.submit(request)
+            assert processes[0]._phase9c_event.wait(5)
+            wait_active(admission, 1)
+            processes[0].terminate()
+            processes[0].join(timeout=5)
+>           assert response.result(timeout=5) == "disconnected"
+E           AssertionError: assert 'unexpected_response' == 'disconnected'
+E             
+E             - disconnected
+E             + unexpected_response
+
+apps\server\tests\test_resource_admission.py:476: AssertionError
+=========================== short test summary info ===========================
+FAILED apps/server/tests/test_resource_admission.py::test_real_worker_crash_during_write_and_before_job_commit[partial]
+FAILED apps/server/tests/test_resource_admission.py::test_real_worker_crash_during_write_and_before_job_commit[artifact]
+2 failed, 135 passed in 42.85s

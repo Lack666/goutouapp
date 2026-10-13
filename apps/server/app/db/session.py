@@ -31,6 +31,9 @@ class Database:
                     url,
                     pool_pre_ping=True,
                     hide_parameters=True,
+                    pool_size=self._settings.database_pool_size,
+                    max_overflow=self._settings.database_max_overflow,
+                    pool_timeout=self._settings.database_pool_timeout_seconds,
                     connect_args={"connect_timeout": 2, "options": "-c timezone=UTC"},
                 )
             return self._engine

@@ -40,6 +40,7 @@ def setup():
     app = create_app(
         Settings(
             app_env="test",
+            database_url=None,  # This adapter contract intentionally has no DB.
             auth_jwt_secret=SECRET,
             auth_jwt_issuer="contract-issuer",
             auth_jwt_audience="contract-api",
@@ -200,7 +201,9 @@ def test_openapi_bearer_and_public_liveness():
 
 
 def test_missing_auth_configuration_keeps_health_but_closes_business_endpoint():
-    app = create_app(Settings(app_env="test", auth_jwt_secret=None, _env_file=None))
+    app = create_app(
+        Settings(app_env="test", database_url=None, auth_jwt_secret=None, _env_file=None)
+    )
     app.state.agent_service = RecordingService()
     user_id, conversation_id = uuid4(), uuid4()
     with TestClient(app) as client:

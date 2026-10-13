@@ -26,6 +26,8 @@ EXPECTED = {
     "chat_import_artifacts",
     "chat_import_speakers",
     "relationship_messages",
+    "resource_admission_states",
+    "upload_reservations",
 }
 
 

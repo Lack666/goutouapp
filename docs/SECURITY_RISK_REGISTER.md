@@ -1,5 +1,19 @@
 # Security risk register — Phase 9A
 
+Current Phase9C supplement: R-07 is substantially mitigated for the tested local
+shared-filesystem topology by early signed admission, shared protected request/
+upload rates, Owner/global concurrency/storage/pending budgets, actual receive
+deadlines and OS-fenced crash reconciliation. PHASE_9C_MATRIX/ACCEPTANCE link
+tests and independent results. Historical9A JSON and9B evidence remain unchanged.
+Public production acceptableFALSE: TLS/ingress/header/connection/non-upload body
+limits, private OS fencing/storage ACLs, whole-host allocation/free-space races,
+DB/worker sizing, supervisor and monitored maintenance are not deployed/certified.
+Unknown-provenance files fail closed until reviewed/cleaned; living hung workers
+retain capacity until safely stopped. Do not equate accounted bytes with total
+physical disk or bounded RSS. R-06 backup/restore/deletion scheduling and R-09
+production identity/full deletion/reconciliation remain explicit future tasks.
+The9B Windows native worker exit remains an unconfirmed P2 environment finding.
+
 Assessment: 2026-10-13, local development scope. Machine-readable authority:
 [SECURITY_RISK_REGISTER.json](SECURITY_RISK_REGISTER.json). Root verification
 validates IDs, severity, status, owner stage, all required fields and existing

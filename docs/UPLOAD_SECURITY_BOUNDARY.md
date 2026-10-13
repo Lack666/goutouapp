@@ -1,5 +1,16 @@
 # Upload security boundary — Phase 9A
 
+Phase9C supplement supersedes the baseline's absent aggregate controls:
+ASGI signed admission precedes actual form receive; PostgreSQL shares rates,
+upload/finalize capacity, worst-case spool+artifact reservations and Owner/global
+retained/pending budgets. Actual receive idle/total deadlines and one-file/two-field
+parse limits apply; registration bounds distinct speakers. Existing exact bytes,
+format/hash/bindings/receipts and private publication remain. OS fences protect
+live pre-registration sources; physical failed/expired/cancelled/orphan files
+remain charged. See RESOURCE_ADMISSION_POLICY and UPLOAD_RELIABILITY for exact
+budgets, topology, errors and remaining public/scheduler/storage assumptions.
+This is local application acceptance, not public deployment certification.
+
 Endpoint: `POST /api/v1/chat-imports`. Authority is the existing
 [Import API](IMPORT_API.md) and [Artifact lifecycle](IMPORT_ARTIFACTS.md), plus
 the narrow fixes documented here. No new formats or analysis pipeline are added.

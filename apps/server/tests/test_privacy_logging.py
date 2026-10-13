@@ -76,7 +76,8 @@ def test_storage_exhaustion_has_no_job_or_private_error(security_api, monkeypatc
 
     monkeypatch.setattr(Path, "open", disk_full)
     response = upload(client, a[0])
-    assert response.status_code == 500
+    # Phase9C maps a storage dependency failure to formal retryable503.
+    assert response.status_code == 503
     assert marker not in response.text
     assert list(app.state.import_artifact_store._root.iterdir()) == []
 

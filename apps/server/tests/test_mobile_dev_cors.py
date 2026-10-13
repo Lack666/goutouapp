@@ -32,7 +32,9 @@ def test_no_development_cors_in_deployment(environment):
 
 def test_local_cors_does_not_bypass_auth_and_denies_other_origins():
     with TestClient(
-        create_app(Settings(_env_file=None, dev_cors_origins=["http://localhost:8087"]))
+        create_app(
+            Settings(_env_file=None, database_url=None, dev_cors_origins=["http://localhost:8087"])
+        )
     ) as client:
         headers = {
             "Origin": "http://localhost:8087",
@@ -61,7 +63,9 @@ def test_default_has_no_cors():
 def test_import_put_preflight_is_local_and_does_not_bypass_signed_auth():
     path = "/api/v1/chat-imports/11111111-1111-4111-8111-111111111111/speakers"
     origin = "http://localhost:8090"
-    with TestClient(create_app(Settings(_env_file=None, dev_cors_origins=[origin]))) as client:
+    with TestClient(
+        create_app(Settings(_env_file=None, database_url=None, dev_cors_origins=[origin]))
+    ) as client:
         headers = {
             "Origin": origin,
             "Access-Control-Request-Method": "PUT",

@@ -180,10 +180,23 @@ def test_oversized_multipart_rejected_before_form_spooling(tmp_path, monkeypatch
 
 
 def test_chunked_multipart_body_limit(tmp_path):
+    from fastapi import FastAPI, Request
+
+    from app.api.errors import register_error_handlers
+    from app.api.import_upload_limit import ImportUploadBodyLimit
+
     root = tmp_path / "chunked-limit"
-    app = create_app(
-        Settings(max_chat_import_bytes=100, chat_import_artifact_root=root, _env_file=None)
-    )
+    root.mkdir()
+    # Isolate the receive-byte guard: Phase9C rejects absent credentials before
+    # receiving form bytes. Signed real HTTP overflow is separately retained.
+    app = FastAPI()
+    register_error_handlers(app)
+    app.add_middleware(ImportUploadBodyLimit, max_file_bytes=100)
+
+    @app.post("/api/v1/chat-imports")
+    async def receive_body(request: Request):
+        await request.body()
+        return {}
 
     def body():
         yield (

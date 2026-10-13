@@ -1,5 +1,22 @@
 # Phase 9 — Security, Privacy, Reliability and Deletion handoff
 
+Latest explicit instruction establishes9C Aggregate Resource Admission and Upload
+Reliability Hardening after committed9B. Current evidence/marker authority is
+PHASE_9C_ACCEPTANCE and PHASE_9C_MATRIX; MASTER_PLAN and validator permit only
+8/9C after full independent pre/post gates. Phase9 remains IN PROGRESS. R-07's
+local application admission/deadline/quota/fenced recovery controls are added;
+public topology/ingress/supervisor/pool/physical-storage certification stays blocked.
+Next explicit work is Phase9 data deletion, monitored retention, backup/restore
+consistency and conservative reconciliation, with production R-09 identity and
+R-08 future analysis boundaries retained. No9D–9E names/scope or Phase10–12/model
+integration is authorized. Stop after9C; historical introductions below are dated.
+
+9C acceptance now PASS, marker8/9C: independent full root pre/post exits0,
+Backend671/Mobile363/repository67, Golden83, Web22/3/3/4/5/1, OpenAPI36,
+Doctor21/21. Actual two-process TCP admission/crash/deadline tests passed; prior
+Mobile source/dependency native fingerprints remain unchanged. Production
+acceptableFALSE; no new native run, installed scheduler or public ingress claim.
+
 Current handoff, 2026-10-13: Phase8 is PASS at committed8/8F, backed by the
 [final closeout addendum](PHASE_8_FINAL_ACCEPTANCE.md) and native hash matrix.
 The user authorized Phase9A only. Its current acceptance and completion marker

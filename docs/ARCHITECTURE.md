@@ -1,5 +1,14 @@
 # Architecture direction
 
+Phase9C adds shared PostgreSQL resource windows/reservations before Multipart,
+OS-owned local worker fences, actual receive idle/total deadlines and filesystem
+quota reconciliation. Private local root/DB/policy are shared by tested workers;
+no new infrastructure, public endpoint/DTO, dependency or Runtime behavior.
+See RESOURCE_ADMISSION_POLICY, UPLOAD_RELIABILITY and ADR0038. Current acceptance
+is recorded in PHASE_9C_ACCEPTANCE; Phase9 overall remains IN PROGRESS. Public
+ingress, monitored retention, production identities and deletion propagation are
+still deployment blockers. Older "absent admission" sections are dated baselines.
+
 Current Phase9B supplements the existing boundaries with exact owner/filter
 v2 Memory/Import History navigation cursors, per-event transport session epochs
 and a fixed application-log whitelist. DTOs, operations and Runtime behavior

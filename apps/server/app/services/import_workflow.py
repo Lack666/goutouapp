@@ -22,7 +22,7 @@ from app.chat_import.artifacts import (
     ImportArtifactStore,
 )
 from app.core.logging import LOGGER_NAME
-from app.db.models import ChatImportArtifact, ChatImportJob
+from app.db.models import ChatImportArtifact, ChatImportJob, UploadReservation
 from app.services.agent_service import AuthenticatedActor
 from app.services.import_jobs import (
     ImportJobError,
@@ -70,10 +70,12 @@ class ImportWorkflowService:
         session_factory: Callable[[], Session],
         store: ImportArtifactStore,
         retention_hours: int,
+        max_speakers: int = 1024,
     ) -> None:
         self._sessions = session_factory
         self._store = store
         self._retention = timedelta(hours=retention_hours)
+        self._max_speakers = max_speakers
 
     def register_uploaded(
         self,
@@ -86,6 +88,13 @@ class ImportWorkflowService:
         try:
             if artifact.size_bytes == 0:
                 raise ImportWorkflowError(ImportWorkflowErrorCode.INVALID_UPLOAD)
+            speakers = set()
+
+            def bounded_speakers(message):
+                speakers.add(message.raw_speaker_label)
+                if len(speakers) > self._max_speakers:
+                    raise ImportWorkflowError(ImportWorkflowErrorCode.PARSE_FAILED)
+
             with self._store.open(artifact.key) as stream:
                 parsed = WeChatMarkdownParser().parse(
                     ChatImportSource(_chunks(stream)),
@@ -94,6 +103,7 @@ class ImportWorkflowService:
                         source_format=source_format,
                         include_messages=False,
                     ),
+                    on_message=bounded_speakers,
                 )
             if parsed.fatal:
                 codes = {issue.code.value for issue in parsed.issues}
@@ -249,6 +259,16 @@ class ImportWorkflowService:
                     artifact.updated_at = now
                     cleanup.append(artifact.storage_key)
             live_keys = {row.storage_key for row in artifacts if row.state == "active"}
+            # A pre-registration upload has no Artifact row yet. Its admission
+            # fence protects .part/.bin even if a maintenance grace elapses.
+            live_keys.update(
+                db.scalars(
+                    select(UploadReservation.artifact_key).where(
+                        UploadReservation.active.is_(True),
+                        UploadReservation.artifact_key.is_not(None),
+                    )
+                )
+            )
         removed = 0
         for key in cleanup:
             try:
