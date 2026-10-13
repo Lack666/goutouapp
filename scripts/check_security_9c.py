@@ -71,8 +71,39 @@ def check(root=ROOT, *, completed=False):
         or topology.get("actual_worker_processes", 0) < 2
     ):
         raise RuntimeError("9C requires tested shared-filesystem multi-process topology")
-    if matrix.get("source_fingerprint") != source_fingerprint(root):
-        raise RuntimeError("9C tested source fingerprint drift")
+    current_fingerprint = source_fingerprint(root)
+    if matrix.get("source_fingerprint") != current_fingerprint:
+        # A later authorized phase changes the broad server fingerprint. Keep the
+        # historical 9C matrix/evidence immutable; require a separately hashed
+        # fresh COMPLETE 9C regression on the current source instead of waiving it.
+        replacement = root / "docs/PHASE_9D_MATRIX.json"
+        if not replacement.is_file():
+            raise RuntimeError("9C tested source fingerprint drift")
+        newer = json.loads(replacement.read_text("utf-8"))
+        record = newer.get("admission_revalidation", {})
+        original_hash = hashlib.sha256(
+            (root / "docs/PHASE_9C_MATRIX.json").read_bytes().replace(b"\r\n", b"\n")
+        ).hexdigest()
+        if (
+            newer.get("phase") != "9D"
+            or record.get("source_fingerprint") != current_fingerprint
+            or record.get("historical_matrix_sha256") != original_hash
+            or record.get("exit_code") != 0
+        ):
+            raise RuntimeError("9C tested source fingerprint drift")
+        for field in ("log", "exit"):
+            descriptor = record[field]
+            path = (root / descriptor["path"]).resolve()
+            if (
+                not path.is_relative_to((root / "docs/evidence/phase9d").resolve())
+                or not path.is_file()
+                or hashlib.sha256(path.read_bytes()).hexdigest() != descriptor["sha256"]
+            ):
+                raise RuntimeError("9C current-source regression evidence invalid")
+            if field == "exit" and path.read_text("utf-8").strip() != "0":
+                raise RuntimeError("9C current-source regression requires zero exit")
+            if field == "log" and "27 passed" not in path.read_text("utf-8"):
+                raise RuntimeError("9C complete 27-case regression required")
     required = {
         "early",
         "owner",

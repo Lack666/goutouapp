@@ -23,7 +23,23 @@ from app.main import create_app
 from app.services.resource_admission import AdmissionRejected, ResourceAdmission
 
 
-def serve(config, port, fault=None, event=None, marker=None):
+def controlled_rate_clock(original_scalar, read_clock):
+    def scalar(self, statement, *args, **kwargs):
+        result = original_scalar(self, statement, *args, **kwargs)
+        if str(statement) == "SELECT extract(epoch FROM clock_timestamp())":
+            return read_clock()
+        return result
+
+    return scalar
+
+
+def serve(config, port, fault=None, event=None, marker=None, rate_epoch=None):
+    if rate_epoch is not None:
+        from sqlalchemy.orm import Session
+
+        # Spawned workers use the same controlled minute; SQL/transactions,
+        # sockets, signatures, counters and storage remain real.
+        Session.scalar = controlled_rate_clock(Session.scalar, lambda: rate_epoch)
     app = create_app(Settings(**config))
     if fault == "artifact":
         original = app.state.import_workflow.register_uploaded
@@ -91,6 +107,7 @@ def worker_pair(database_engine, tmp_path):
     def start(**options):
         fault = options.pop("fault", None)
         marker = options.pop("marker", None)
+        rate_epoch = options.pop("rate_epoch", None)
         event = multiprocessing.get_context("spawn").Event()
         limits = dict(
             max_chat_import_bytes=4096,
@@ -115,7 +132,14 @@ def worker_pair(database_engine, tmp_path):
             port = free_port()
             proc = multiprocessing.get_context("spawn").Process(
                 target=serve,
-                args=(config.model_dump(), port, fault if index == 0 else None, event, marker),
+                args=(
+                    config.model_dump(),
+                    port,
+                    fault if index == 0 else None,
+                    event,
+                    marker,
+                    rate_epoch,
+                ),
             )
             proc.start()
             proc._phase9c_event = event
@@ -262,7 +286,9 @@ def test_real_worker_kill_recovers_without_expiring_a_live_owner(worker_pair, da
 
 
 def test_real_shared_rate_windows_and_owner_isolation(worker_pair, database_engine):
-    _, admission, ports, _ = worker_pair(admission_owner_uploads_per_minute=1)
+    _, admission, ports, _ = worker_pair(
+        admission_owner_uploads_per_minute=1, rate_epoch=1900000000.0
+    )
     a, *_ = scope(database_engine)
     b, *_ = scope(database_engine)
     with api(ports[0]) as first, api(ports[1]) as second:
@@ -523,6 +549,7 @@ def test_real_http_storage_budget_rate_global_disk_failure_and_restored_capacity
         marker=marker,
         admission_storage_global_bytes=reserve + 4096,
         admission_uploads_per_minute=3,
+        rate_epoch=1900000000.0,
     )
     owner, *_ = scope(database_engine)
     with api(ports[0]) as failing, api(ports[1]) as healthy:
@@ -570,7 +597,7 @@ def test_early_invalid_credential_does_not_receive_or_spool(quota_api):
 
 
 def test_generic_request_rate_is_shared_across_workers(worker_pair, database_engine):
-    _, _, ports, _ = worker_pair(admission_requests_per_minute=1)
+    _, _, ports, _ = worker_pair(admission_requests_per_minute=1, rate_epoch=1900000000.0)
     owner, *_ = scope(database_engine)
     with api(ports[0]) as first, api(ports[1]) as second:
         assert first.get("/api/v1/persons", headers=headers(owner)).status_code == 200
@@ -689,7 +716,16 @@ def test_two_workers_simultaneously_compete_for_one_global_slot(worker_pair, dat
         assert upload(client, owners[1]).status_code == 201
 
 
-def test_owner_rejected_attempts_still_count_toward_global_rate(quota_api, database_engine):
+def test_owner_rejected_attempts_still_count_toward_global_rate(
+    quota_api, database_engine, monkeypatch
+):
+    from sqlalchemy.orm import Session
+
+    # Keep the invariant in one controlled minute. Real wall-clock rollover
+    # legitimately accepts a second upload and is not a debit-rollback defect.
+    # Execute the real PG clock query, but use a deterministic time in this test.
+    clock = [1900000000.0]
+    monkeypatch.setattr(Session, "scalar", controlled_rate_clock(Session.scalar, lambda: clock[0]))
     app, client = quota_api(admission_owner_uploads_per_minute=1, admission_requests_per_minute=3)
     owner, *_ = scope(database_engine)
     assert upload(client, owner).status_code == 201
@@ -700,6 +736,9 @@ def test_owner_rejected_attempts_still_count_toward_global_rate(quota_api, datab
     assert (
         client.get("/api/v1/persons", headers=headers(scope(database_engine)[0])).status_code == 429
     )
+    # The next minute resets the global/Owner counters exactly as documented.
+    clock[0] += 60
+    assert upload(client, owner).status_code == 201
 
 
 def test_real_worker_death_closes_actual_rolled_multipart_spool(worker_pair, database_engine):

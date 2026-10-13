@@ -1,5 +1,23 @@
 # Security risk register — Phase 9A
 
+Current9D authority: [PHASE_9D_RISK_ASSESSMENT.json](PHASE_9D_RISK_ASSESSMENT.json).
+R-06 is mitigated for tested local periodic primary maintenance/retry/resource
+reconciliation and native synthetic restore with an intact authoritative current
+primary. R-09 Memory deletion/owner/key semantics remain protected and restore
+controls/receipts now reconcile. Neither risk is closed for production: installed
+monitored scheduling, encrypted rotation/key custody, independent journal/WAL and
+serving barriers, production identity and full account/history/dataset erasure
+remain prerequisites. Missing APIs are inventoried, not advertised as implemented.
+No new confirmed open P0/P1 in the controlled local topology; real-user erasure or
+production disaster recovery promises without these controls are prohibited.
+Prior9A JSON/9B/9C matrices and evidence remain immutable historical authorities.
+9D-01/P1 fixed: the first recovery coordinator reconciled Memory receipt keys but
+missed post-backup Agent keys. Real source execution/archive/restore reproduced
+unsafe release (1fail/1pass); current source checks every issued Agent key for
+restored owners against restored run/scope/fingerprint before release (2pass).
+Missing keys keep recovery quarantined; reconstructing newer Agent history is not
+implemented. See the9D assessment and original reproduction/fix evidence.
+
 Current Phase9C supplement: R-07 is substantially mitigated for the tested local
 shared-filesystem topology by early signed admission, shared protected request/
 upload rates, Owner/global concurrency/storage/pending budgets, actual receive

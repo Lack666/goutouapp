@@ -1,0 +1,44 @@
+{
+  "phase": "9D",
+  "deployment_scope": "Controlled local, synthetic data, shared PostgreSQL/private filesystem",
+  "open_p0_p1": [],
+  "production_acceptable": false,
+  "fixed_findings": [
+    {
+      "id": "9D-01",
+      "severity": "P1 restore retry consistency",
+      "status": "fixed",
+      "description": "Current Memory receipts alone did not preserve post-backup Agent operation keys; a restored target could treat an old keyed request as a new execution",
+      "resolution": "Refuse release when any current issued Agent key for restored owners lacks a matching restored Run ID/scope/fingerprint; do not reconstruct newer Agent history",
+      "test": "apps/server/tests/test_backup_restore.py::test_restore_cannot_release_when_acknowledged_agent_key_is_missing",
+      "evidence": "docs/evidence/phase9d/restore-key-reproduction.log and restore-key-fixed.log"
+    }
+  ],
+  "risks": [
+    {
+      "id": "R-06",
+      "status": "local_mitigated_production_open",
+      "severity": "P2 under controlled local use",
+      "control": "Periodic bounded primary cleanup, safe retry and OS-owned competition fence; actual native synthetic dump/restore and current-primary Memory/control/receipt reconciliation before target release",
+      "remaining": "Installed monitored scheduler/supervisor, encrypted daily copies/35-day rotation/separate key custody, independent exact-ID deletion/WAL history and production recovery serving barrier",
+      "owner_stage": "Explicit subsequent Phase9 operations/deployment task",
+      "tests": ["apps/server/tests/test_data_lifecycle.py", "apps/server/tests/test_backup_restore.py", "apps/server/tests/test_resource_admission.py", "apps/server/tests/test_memory_retention.py"]
+    },
+    {
+      "id": "R-09",
+      "status": "existing_memory_protected_full_erasure_open",
+      "severity": "P2 under controlled local use",
+      "control": "Owner-scoped exact challenge/receipt/key semantics retained; current consent and terminal receipts survive controlled restore; all data/delete gaps inventoried",
+      "remaining": "Account/Person/Relationship/Conversation/Agent history/imported dataset erasure APIs, production identity/revocation, client caches/log collectors/provider copies, durable pending reconciliation",
+      "owner_stage": "Explicit subsequent Phase9 privacy/identity/reliability task",
+      "tests": ["apps/server/tests/test_memory_mutation.py", "apps/server/tests/test_phase6_e2e.py", "apps/server/tests/test_data_lifecycle.py", "apps/server/tests/test_backup_restore.py", "apps/mobile/tests/connectedMemory.test.ts"]
+    }
+  ],
+  "limits": [
+    "Synthetic restore requires complete intact current primary; no production disaster recovery release",
+    "Old backups retain private rows until future verified rotation; primary deletion is not all-copy erasure",
+    "OS unlink hangs require supervisor termination; no elapsed-time lock theft or abandoned writer",
+    "R-07 production ingress/TLS/pool/filesystem sizing and R-08 provider/analysis prerequisites remain",
+    "Historical Windows worker exit remains unconfirmed; failures must be retained"
+  ]
+}

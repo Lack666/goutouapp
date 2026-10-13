@@ -1,0 +1,41 @@
+.F                                                                       [100%]
+================================== FAILURES ===================================
+_ test_restore_cannot_release_when_acknowledged_agent_key_is_missing[after_backup] _
+
+recovery = (Engine(postgresql+psycopg://postgres@127.0.0.1:15434/goutou_test_001350fce5ea), WindowsPath('F:/狗头军师app化/goutouapp/.c...ry.SQLAlchemyMemoryStore object at 0x000001C8B21C5BD0>, <starlette.testclient.TestClient object at 0x000001C8B21C42D0>)
+when = 'after_backup'
+
+    @pytest.mark.parametrize("when", ["before_backup", "after_backup"])
+    def test_restore_cannot_release_when_acknowledged_agent_key_is_missing(recovery, when):
+        from test_agent_service import queue_safety, service_with_mock
+    
+        engine, temp, a, _, _, _ = recovery
+        archive = temp / "agent-keys.dump"
+        service, provider, _ = service_with_mock(engine)
+        queue_safety(provider)
+        key = uuid4().hex
+        if when == "after_backup":
+            dump_synthetic(engine, archive)
+        completed = asyncio.run(
+            service.execute(
+                actor=actor_from_verified_identity(a[0]),
+                conversation_id=a[3],
+                message="Synthetic controlled safety fixture",
+                operation_key=key,
+            )
+        )
+        if when == "before_backup":
+            dump_synthetic(engine, archive)
+        root = temp / "restored-files"
+        root.mkdir()
+        try:
+            with restore_synthetic(engine, archive, root) as state:
+                if when == "after_backup":
+>                   with pytest.raises(RecoveryError):
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E                   Failed: DID NOT RAISE RecoveryError
+
+apps\server\tests\test_backup_restore.py:459: Failed
+=========================== short test summary info ===========================
+FAILED apps/server/tests/test_backup_restore.py::test_restore_cannot_release_when_acknowledged_agent_key_is_missing[after_backup]
+1 failed, 1 passed, 23 deselected in 2.95s

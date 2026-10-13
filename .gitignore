@@ -21,4 +21,5 @@ test-results/
 *.sqlite3-shm
 *.log
 !docs/evidence/phase8f-closeout/*.log
+!docs/evidence/phase9d/*.log
 !knowledge/goutoujunshi/assets/reference-library-135.png

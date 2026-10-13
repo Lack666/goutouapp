@@ -4,7 +4,7 @@ from collections.abc import Callable
 from datetime import datetime
 
 from pydantic import BaseModel, ConfigDict, Field
-from sqlalchemy import delete, func, select
+from sqlalchemy import delete, func, select, text
 from sqlalchemy.orm import Session
 
 from app.db.models import (
@@ -71,6 +71,8 @@ class MemoryRetentionService:
         )
 
     def _delete_batch(self, db: Session, now: datetime, size: int) -> CleanupCounts:
+        db.execute(text("SET LOCAL lock_timeout = '1000ms'"))
+        db.execute(text("SET LOCAL statement_timeout = '5000ms'"))
         cutoff = self.policy.challenge_cutoff(now)
         # Discovery does not lock child rows: all writers take the owner lock first.
         memories = db.execute(

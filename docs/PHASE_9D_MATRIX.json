@@ -1,0 +1,382 @@
+{
+  "phase": "9D",
+  "status": "PASS",
+  "acceptance_state": "closed",
+  "baseline_head": "60f12d64250f2bca23c24a993f66264eb2066b78",
+  "open_p0_p1": [],
+  "production_acceptable": false,
+  "production_blockers": [
+    "Installed monitored scheduler and process supervisor",
+    "Encrypted daily copies/35-day verified rotation/separate key custody",
+    "Independent current deletion/control/key history, production recovery serving barrier and disaster recovery",
+    "Full account/history/imported-dataset erasure and production identity",
+    "Retained R-07 ingress/pool/filesystem and R-08 provider prerequisites"
+  ],
+  "recovery_scope": {
+    "synthetic_only": true,
+    "native_postgresql": true,
+    "postgresql_version": "16.15",
+    "authoritative_current_primary_required": true,
+    "agent_operation_fences_required": true,
+    "production_disaster_recovery": false
+  },
+  "coverage": {
+    "lifecycle": [
+      "apps/server/tests/test_data_lifecycle.py::test_cleanup_cancel_finalize_and_concurrent_upload_keep_formal_datasets"
+    ],
+    "memory": [
+      "apps/server/tests/test_memory_mutation.py",
+      "apps/server/tests/test_phase6_e2e.py",
+      "apps/server/tests/test_memory_retention.py"
+    ],
+    "periodic": [
+      "apps/server/tests/test_data_lifecycle.py::test_periodic_loop_retries_failure_and_drains_expired_memory",
+      "apps/server/tests/test_data_lifecycle.py::test_periodic_database_failure_is_generic_and_retries"
+    ],
+    "cleanup": [
+      "apps/server/tests/test_data_lifecycle.py::test_metadata_physical_mismatches_reconcile_and_restore_quota",
+      "apps/server/tests/test_data_lifecycle.py::test_bounded_cleanup_cursor_reaches_later_jobs"
+    ],
+    "quota": [
+      "apps/server/tests/test_data_lifecycle.py::test_cleanup_error_or_timeout_does_not_release_disk_budget",
+      "apps/server/tests/test_data_lifecycle.py::test_slow_cleanup_keeps_physical_budget_until_unlink",
+      "apps/server/tests/test_data_lifecycle.py::test_live_upload_and_unknown_owner_orphan_sweep",
+      "apps/server/tests/test_data_lifecycle.py::test_fresh_unattributed_file_fails_closed_until_actual_cleanup"
+    ],
+    "crash": [
+      "apps/server/tests/test_data_lifecycle.py::test_actual_maintenance_process_crash_after_unlink_reconciles",
+      "apps/server/tests/test_resource_admission.py"
+    ],
+    "multi_worker": [
+      "apps/server/tests/test_data_lifecycle.py::test_multiple_processes_compete_and_killed_maintenance_releases_fence",
+      "apps/server/tests/test_resource_admission.py"
+    ],
+    "owner": [
+      "apps/server/tests/test_data_lifecycle.py::test_response_lost_delete_original_key_and_signed_foreign_owner_denial",
+      "apps/server/tests/test_backup_restore.py::test_person_delete_restore_preserves_other_person_and_invalidates_old_challenge"
+    ],
+    "receipt": [
+      "apps/server/tests/test_backup_restore.py::test_real_backup_delete_restore_exact_owner_targets_and_receipts",
+      "apps/server/tests/test_backup_restore.py::test_restore_cannot_release_when_acknowledged_agent_key_is_missing"
+    ],
+    "backup_restore": [
+      "apps/server/tests/test_backup_restore.py::test_real_backup_delete_restore_exact_owner_targets_and_receipts",
+      "apps/server/tests/test_backup_restore.py::test_real_restore_formal_import_history_retained_pending_cancelled_empty_files",
+      "apps/server/tests/test_backup_restore.py::test_retention_after_backup_does_not_reappear_after_restore"
+    ],
+    "restore_failure": [
+      "apps/server/tests/test_backup_restore.py::test_restore_failure_rolls_back_and_does_not_release",
+      "apps/server/tests/test_backup_restore.py::test_restore_refuses_missing_authoritative_owner_and_nonempty_root",
+      "apps/server/tests/test_backup_restore.py::test_recovery_refuses_non_disposable_or_non_loopback_target"
+    ],
+    "restore_race": [
+      "apps/server/tests/test_backup_restore.py::test_reconciliation_waits_for_committed_delete_and_blocks_concurrent_write"
+    ],
+    "privacy": [
+      "apps/server/tests/test_backup_restore.py::test_native_timeout_and_output_do_not_escape",
+      "apps/server/tests/test_backup_restore.py::test_corrupt_archive_native_errors_are_private_and_target_dropped",
+      "apps/server/tests/test_data_lifecycle.py::test_periodic_database_failure_is_generic_and_retries",
+      "apps/server/tests/test_privacy_logging.py"
+    ]
+  },
+  "baseline": {
+    "exit_code": 0,
+    "log": {
+      "path": "docs/evidence/phase9d/baseline.log",
+      "sha256": "1688a72711a9eef33c89d3e651c01ee4e559ec145f4b838eb365f290d3efbeef"
+    },
+    "exit": {
+      "path": "docs/evidence/phase9d/baseline.exit",
+      "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+    }
+  },
+  "focused": {
+    "exit_code": 0,
+    "log": {
+      "path": "docs/evidence/phase9d/focused.log",
+      "sha256": "1ed69aba3f3509be575487dd54cb758a7c9e5fff7b09ee95bdfd448b0c10254a"
+    },
+    "exit": {
+      "path": "docs/evidence/phase9d/focused.exit",
+      "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+    }
+  },
+  "demo": {
+    "exit_code": 0,
+    "log": {
+      "path": "docs/evidence/phase9d/demo.log",
+      "sha256": "7aa16a4b27dcddeec793ba5080381c997c71f273f0b3b8587ea9ccab2e06eff4"
+    },
+    "exit": {
+      "path": "docs/evidence/phase9d/demo.exit",
+      "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+    }
+  },
+  "failed_invocations": [
+    {
+      "exit_code": 1,
+      "log": {
+        "path": "docs/evidence/phase9d/baseline-attempt1.log",
+        "sha256": "823fd01eff4d5c79701b4f1320d66a496433eff63c91439ce99d6be81205d096"
+      },
+      "exit": {
+        "path": "docs/evidence/phase9d/baseline-attempt1.exit",
+        "sha256": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04"
+      }
+    },
+    {
+      "exit_code": 1,
+      "log": {
+        "path": "docs/evidence/phase9d/baseline-attempt2.log",
+        "sha256": "b03aeb8a50e7be2265f42fa69a9d87023f98ca45aecc21cf3304faeabade8173"
+      },
+      "exit": {
+        "path": "docs/evidence/phase9d/baseline-attempt2.exit",
+        "sha256": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04"
+      }
+    },
+    {
+      "exit_code": 1,
+      "log": {
+        "path": "docs/evidence/phase9d/focused-attempt1.log",
+        "sha256": "c0638519a3d1c7912a0d5ea586c767dd298cc5c6b14e20f6680fa179d605be36"
+      },
+      "exit": {
+        "path": "docs/evidence/phase9d/focused-attempt1.exit",
+        "sha256": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04"
+      }
+    },
+    {
+      "exit_code": 1,
+      "log": {
+        "path": "docs/evidence/phase9d/demo-attempt1.log",
+        "sha256": "ec4f87c8345a12ac23fcf27dec321668dbf58fa12923999fcb62095a983e2240"
+      },
+      "exit": {
+        "path": "docs/evidence/phase9d/demo-attempt1.exit",
+        "sha256": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04"
+      }
+    },
+    {
+      "exit_code": 1,
+      "log": {
+        "path": "docs/evidence/phase9d/restore-key-reproduction.log",
+        "sha256": "323ca744b48721bdb2e4d7c8cf7f0ad02ab44f618c617b5a9adff52a46a3e5ca"
+      },
+      "exit": {
+        "path": "docs/evidence/phase9d/restore-key-reproduction.exit",
+        "sha256": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04"
+      }
+    },
+    {
+      "exit_code": 1,
+      "log": {
+        "path": "docs/evidence/phase9d/pre-marker-rate-failure.log",
+        "sha256": "b9b6a750c5129cf9d6ebbcbef54d66529206c89f8d258411dbbbbadd1fa7010a"
+      },
+      "exit": {
+        "path": "docs/evidence/phase9d/pre-marker-rate-failure.exit",
+        "sha256": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04"
+      }
+    },
+    {
+      "exit_code": 1,
+      "log": {
+        "path": "docs/evidence/phase9d/pre-marker-tcp-rate-failure.log",
+        "sha256": "a25031e20560a6db73839e4d1025a384f44df2ee57db7382157e130e96137f4f"
+      },
+      "exit": {
+        "path": "docs/evidence/phase9d/pre-marker-tcp-rate-failure.exit",
+        "sha256": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04"
+      }
+    },
+    {
+      "exit_code": 1,
+      "log": {
+        "path": "docs/evidence/phase9d/post-marker-boundary-failure.log",
+        "sha256": "00dc8b35bcb47309bff7a552ca3db09774c84ad2b7de272f4958a1168e9fb476"
+      },
+      "exit": {
+        "path": "docs/evidence/phase9d/post-marker-boundary-failure.exit",
+        "sha256": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04"
+      }
+    }
+  ],
+  "fixed_findings": [
+    {
+      "id": "9D-01",
+      "severity": "P1",
+      "status": "fixed",
+      "fixed": {
+        "exit_code": 0,
+        "log": {
+          "path": "docs/evidence/phase9d/restore-key-fixed.log",
+          "sha256": "1fce433c8cc43f42120856f0f061b26fcad613f3371370d5194311238eec5942"
+        },
+        "exit": {
+          "path": "docs/evidence/phase9d/restore-key-fixed.exit",
+          "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+        }
+      }
+    }
+  ],
+  "intermediate_success": [
+    {
+      "exit_code": 0,
+      "log": {
+        "path": "docs/evidence/phase9d/focused-attempt2.log",
+        "sha256": "46f944db2cf7afdcb9f34e342037b8d919d2b89811e30ce57d3ec8d37f51703b"
+      },
+      "exit": {
+        "path": "docs/evidence/phase9d/focused-attempt2.exit",
+        "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+      }
+    },
+    {
+      "exit_code": 0,
+      "log": {
+        "path": "docs/evidence/phase9d/demo-attempt2.log",
+        "sha256": "7aa16a4b27dcddeec793ba5080381c997c71f273f0b3b8587ea9ccab2e06eff4"
+      },
+      "exit": {
+        "path": "docs/evidence/phase9d/demo-attempt2.exit",
+        "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+      }
+    },
+    {
+      "exit_code": 0,
+      "log": {
+        "path": "docs/evidence/phase9d/focused-r1.log",
+        "sha256": "cf614251d86a0c20ad5f329ac4d478b1bf3811af70599c5e6573c0d34d28d564"
+      },
+      "exit": {
+        "path": "docs/evidence/phase9d/focused-r1.exit",
+        "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+      }
+    },
+    {
+      "exit_code": 0,
+      "log": {
+        "path": "docs/evidence/phase9d/admission-regression-r1.log",
+        "sha256": "611ac3c3369f83f111aeeb63600747b267c92866f08e1015c2f31a06f34ccb65"
+      },
+      "exit": {
+        "path": "docs/evidence/phase9d/admission-regression-r1.exit",
+        "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+      }
+    },
+    {
+      "exit_code": 0,
+      "log": {
+        "path": "docs/evidence/phase9d/focused-r2.log",
+        "sha256": "e3d709e2f23e5b7146f98ba2e6e3f846d80aa1384baecaf11ef486ae2cf67986"
+      },
+      "exit": {
+        "path": "docs/evidence/phase9d/focused-r2.exit",
+        "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+      }
+    },
+    {
+      "exit_code": 0,
+      "log": {
+        "path": "docs/evidence/phase9d/admission-regression-r2.log",
+        "sha256": "8b17e21578a412d9f2c5e1cbc83a0102d6efa3d2d3e693a51cc4819e51254edd"
+      },
+      "exit": {
+        "path": "docs/evidence/phase9d/admission-regression-r2.exit",
+        "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+      }
+    },
+    {
+      "exit_code": 0,
+      "log": {
+        "path": "docs/evidence/phase9d/admission-regression-r3.log",
+        "sha256": "6d12c77d0dcf532a0671ae54bc70ab69a476068df1c3f142a8c8c3f725f9d2d8"
+      },
+      "exit": {
+        "path": "docs/evidence/phase9d/admission-regression-r3.exit",
+        "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+      }
+    },
+    {
+      "exit_code": 0,
+      "log": {
+        "path": "docs/evidence/phase9d/admission-regression-r4.log",
+        "sha256": "f3b0a4ae371615f08036196deba62d5038ccc367817fb5abaecdd2323c1735e1"
+      },
+      "exit": {
+        "path": "docs/evidence/phase9d/admission-regression-r4.exit",
+        "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+      }
+    },
+    {
+      "exit_code": 0,
+      "log": {
+        "path": "docs/evidence/phase9d/demo-r1.log",
+        "sha256": "7aa16a4b27dcddeec793ba5080381c997c71f273f0b3b8587ea9ccab2e06eff4"
+      },
+      "exit": {
+        "path": "docs/evidence/phase9d/demo-r1.exit",
+        "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+      }
+    },
+    {
+      "exit_code": 0,
+      "log": {
+        "path": "docs/evidence/phase9d/pre-marker-superseded.log",
+        "sha256": "89bd8a2fec604dfafa6ea5a02cad7c73e06899ddfcac702ead5b255f51b88611"
+      },
+      "exit": {
+        "path": "docs/evidence/phase9d/pre-marker-superseded.exit",
+        "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+      }
+    },
+    {
+      "exit_code": 0,
+      "log": {
+        "path": "docs/evidence/phase9d/pre-marker-before-boundary-fix.log",
+        "sha256": "f5af46d61102224144267981ced252266adfa6ab16a35953be04302e00698948"
+      },
+      "exit": {
+        "path": "docs/evidence/phase9d/pre-marker-before-boundary-fix.exit",
+        "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+      }
+    }
+  ],
+  "source_fingerprint": "ca8fe790fb55adb44daa7efa647be63281505c00a7d0bad1d869b7ac40626d98",
+  "admission_revalidation": {
+    "exit_code": 0,
+    "log": {
+      "path": "docs/evidence/phase9d/admission-regression.log",
+      "sha256": "f601c531088b63ea24c3087519ce1bd47b6d83e11e683a47c5baa489e5d05451"
+    },
+    "exit": {
+      "path": "docs/evidence/phase9d/admission-regression.exit",
+      "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+    },
+    "historical_matrix_sha256": "86bc4b9ce89c3c94d804291b9b6c6791d6b380550b529fac2ef60053bff78fa2",
+    "source_fingerprint": "49e8edab57b322b14c0925065153f6658ff38ad52931fe1adccf7a7cd293fe48"
+  },
+  "pre_marker": {
+    "exit_code": 0,
+    "log": {
+      "path": "docs/evidence/phase9d/pre-marker.log",
+      "sha256": "68359dd8597631144595fe066834a51c52925bbec9176fe4840e2a2be7b6a6e4"
+    },
+    "exit": {
+      "path": "docs/evidence/phase9d/pre-marker.exit",
+      "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+    }
+  },
+  "post_marker": {
+    "exit_code": 0,
+    "log": {
+      "path": "docs/evidence/phase9d/post-marker.log",
+      "sha256": "a8bd2178ac12351c11ab99a9590e25c1639b19987fff4df1d5c9525c3a197fbe"
+    },
+    "exit": {
+      "path": "docs/evidence/phase9d/post-marker.exit",
+      "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+    }
+  }
+}

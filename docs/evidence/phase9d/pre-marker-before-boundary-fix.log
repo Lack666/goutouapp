@@ -1,0 +1,747 @@
+Python 3.14.7
+git: git version 2.55.0.windows.5 (D:\Git\cmd\git.EXE)
+uv: uv 0.12.11 (4b53f66b7 2026-09-08 x86_64-pc-windows-msvc) (C:\Users\VOS-User\.local\bin\uv.EXE)
+node: v24.15.0 (C:\Program Files\nodejs\node.EXE)
+pnpm: 11.7.0 (C:\Users\VOS-User\AppData\Roaming\npm\pnpm.CMD)
+make: .\make.CMD
+docker: Docker version 29.8.0, build 88096ef (D:\Docker\Desktop\resources\bin\docker.EXE)
+Completed phase: 8
+Completed subphase: 9C
++ E:\python\python.exe -m unittest discover -s tests -v
+test_http_failures_and_failed_official_fallback_are_not_success (test_expo_doctor_network.DoctorNetworkTests.test_http_failures_and_failed_official_fallback_are_not_success) ... ok
+test_only_public_legacy_schema_get_uses_real_official_response (test_expo_doctor_network.DoctorNetworkTests.test_only_public_legacy_schema_get_uses_real_official_response) ... ok
+test_other_paths_private_headers_methods_and_errors_never_fallback (test_expo_doctor_network.DoctorNetworkTests.test_other_paths_private_headers_methods_and_errors_never_fallback) ... ok
+test_request_private_headers_and_url_credentials_do_not_fallback (test_expo_doctor_network.DoctorNetworkTests.test_request_private_headers_and_url_credentials_do_not_fallback) ... ok
+test_tls_abort_unknown_and_custom_transport_do_not_fallback (test_expo_doctor_network.DoctorNetworkTests.test_tls_abort_unknown_and_custom_transport_do_not_fallback) ... ok
+test_full_static_dataset (test_golden_dataset.GoldenDatasetTests.test_full_static_dataset) ... ok
+test_invalid_source_and_reference_are_rejected (test_golden_dataset.GoldenDatasetTests.test_invalid_source_and_reference_are_rejected) ... ok
+test_pair_contrast_must_change (test_golden_dataset.GoldenDatasetTests.test_pair_contrast_must_change) ... ok
+test_safety_precedence_and_memory_consent_are_rejected_if_removed (test_golden_dataset.GoldenDatasetTests.test_safety_precedence_and_memory_consent_are_rejected_if_removed) ... ok
+test_unknown_behavior_is_rejected (test_golden_dataset.GoldenDatasetTests.test_unknown_behavior_is_rejected) ... ok
+test_7c_does_not_complete_phase_seven (test_mobile_phase_gate.MobilePhaseGateTests.test_7c_does_not_complete_phase_seven) ... ok
+test_8a_cannot_skip_phase_seven (test_mobile_phase_gate.MobilePhaseGateTests.test_8a_cannot_skip_phase_seven) ... ok
+test_8a_keeps_phase_seven_complete_and_phase_eight_incomplete (test_mobile_phase_gate.MobilePhaseGateTests.test_8a_keeps_phase_seven_complete_and_phase_eight_incomplete) ... ok
+test_8a_requires_resource_gate (test_mobile_phase_gate.MobilePhaseGateTests.test_8a_requires_resource_gate) ... ok
+test_8b_cannot_skip_phase_seven (test_mobile_phase_gate.MobilePhaseGateTests.test_8b_cannot_skip_phase_seven) ... ok
+test_8b_keeps_phase_eight_incomplete (test_mobile_phase_gate.MobilePhaseGateTests.test_8b_keeps_phase_eight_incomplete) ... ok
+test_8b_requires_connected_implementation (test_mobile_phase_gate.MobilePhaseGateTests.test_8b_requires_connected_implementation) ... ok
+test_8c_cannot_skip_phase_seven (test_mobile_phase_gate.MobilePhaseGateTests.test_8c_cannot_skip_phase_seven) ... ok
+test_8c_is_not_supported_by_8b (test_mobile_phase_gate.MobilePhaseGateTests.test_8c_is_not_supported_by_8b) ... ok
+test_8c_keeps_phase_eight_incomplete (test_mobile_phase_gate.MobilePhaseGateTests.test_8c_keeps_phase_eight_incomplete) ... ok
+test_8d_cannot_skip_agent_chat (test_mobile_phase_gate.MobilePhaseGateTests.test_8d_cannot_skip_agent_chat) ... ok
+test_8d_is_not_supported_by_8c (test_mobile_phase_gate.MobilePhaseGateTests.test_8d_is_not_supported_by_8c) ... ok
+test_8d_keeps_whole_phase_eight_incomplete (test_mobile_phase_gate.MobilePhaseGateTests.test_8d_keeps_whole_phase_eight_incomplete) ... ok
+test_8e_cannot_skip_import_history (test_mobile_phase_gate.MobilePhaseGateTests.test_8e_cannot_skip_import_history) ... ok
+test_8e_is_not_implemented_by_8d (test_mobile_phase_gate.MobilePhaseGateTests.test_8e_is_not_implemented_by_8d) ... ok
+test_8e_keeps_whole_phase_eight_incomplete (test_mobile_phase_gate.MobilePhaseGateTests.test_8e_keeps_whole_phase_eight_incomplete) ... ok
+test_8f_is_not_implemented_by_8e (test_mobile_phase_gate.MobilePhaseGateTests.test_8f_is_not_implemented_by_8e) ... ok
+test_complete_7d_marker_is_supported (test_mobile_phase_gate.MobilePhaseGateTests.test_complete_7d_marker_is_supported) ... ok
+test_missing_integration_gate_prevents_completion (test_mobile_phase_gate.MobilePhaseGateTests.test_missing_integration_gate_prevents_completion) ... ok
+test_phase_eight_is_not_claimed_by_mobile_mvp (test_mobile_phase_gate.MobilePhaseGateTests.test_phase_eight_is_not_claimed_by_mobile_mvp) ... ok
+test_complete_independent_evidence_is_accepted (test_native_closeout_gate.NativeCloseoutGateTests.test_complete_independent_evidence_is_accepted) ... ok
+test_evidence_changed_after_manifest_is_rejected (test_native_closeout_gate.NativeCloseoutGateTests.test_evidence_changed_after_manifest_is_rejected) ... ok
+test_external_artifacts_are_rejected (test_native_closeout_gate.NativeCloseoutGateTests.test_external_artifacts_are_rejected) ... ok
+test_future_phase_is_rejected (test_native_closeout_gate.NativeCloseoutGateTests.test_future_phase_is_rejected) ... ok
+test_missing_native_scene_is_rejected (test_native_closeout_gate.NativeCloseoutGateTests.test_missing_native_scene_is_rejected) ... ok
+test_native_state_snapshot_is_an_execution_step (test_native_closeout_gate.NativeCloseoutGateTests.test_native_state_snapshot_is_an_execution_step) ... ok
+test_one_failed_scene_blocks_closure (test_native_closeout_gate.NativeCloseoutGateTests.test_one_failed_scene_blocks_closure) ... ok
+test_partial_execution_cannot_be_spliced_into_pass (test_native_closeout_gate.NativeCloseoutGateTests.test_partial_execution_cannot_be_spliced_into_pass) ... ok
+test_pre_marker_failure_blocks_closure (test_native_closeout_gate.NativeCloseoutGateTests.test_pre_marker_failure_blocks_closure) ... ok
+test_env_template_and_ignore_rules (test_repository.RepositoryTests.test_env_template_and_ignore_rules) ... ok
+test_license_and_reference_inventory (test_repository.RepositoryTests.test_license_and_reference_inventory) ... ok
+test_monorepo_boundaries (test_repository.RepositoryTests.test_monorepo_boundaries) ... ok
+test_phase_one_dataset_when_enabled (test_repository.RepositoryTests.test_phase_one_dataset_when_enabled) ... ok
+test_upstream_inventory_and_hashes (test_repository.RepositoryTests.test_upstream_inventory_and_hashes) ... ok
+test_9b_marker_keeps_9a_and_phase8_native_gates (test_security_9b_tooling.NativeSecurityGateTests.test_9b_marker_keeps_9a_and_phase8_native_gates) ... ok
+test_actual_complete_native_transcripts_validate (test_security_9b_tooling.NativeSecurityGateTests.test_actual_complete_native_transcripts_validate) ... ok
+test_altered_artifact_and_outside_evidence_path_are_rejected (test_security_9b_tooling.NativeSecurityGateTests.test_altered_artifact_and_outside_evidence_path_are_rejected) ... ok
+test_missing_scene_old_dependencies_and_nonzero_exit_are_rejected (test_security_9b_tooling.NativeSecurityGateTests.test_missing_scene_old_dependencies_and_nonzero_exit_are_rejected) ... ok
+test_old_and_current_evidence_is_read_only_and_pattern_clean (test_security_9b_tooling.PrivacyToolingTests.test_old_and_current_evidence_is_read_only_and_pattern_clean) ... ok
+test_powershell_timeout_python_and_native_failure_output_is_private (test_security_9b_tooling.PrivacyToolingTests.test_powershell_timeout_python_and_native_failure_output_is_private) ... ok
+test_9c_marker_retains_all_prior_security_and_native_gates (test_security_9c_tooling.Security9CGateTests.test_9c_marker_retains_all_prior_security_and_native_gates) ... ok
+test_actual_complete_local_evidence_passes (test_security_9c_tooling.Security9CGateTests.test_actual_complete_local_evidence_passes) ... ok
+test_completed_marker_needs_independent_pre_exit_and_pass (test_security_9c_tooling.Security9CGateTests.test_completed_marker_needs_independent_pre_exit_and_pass) ... ok
+test_evidence_corruption_and_outside_paths_fail (test_security_9c_tooling.Security9CGateTests.test_evidence_corruption_and_outside_paths_fail) ... ok
+test_missing_worker_coverage_or_public_waiver_fails (test_security_9c_tooling.Security9CGateTests.test_missing_worker_coverage_or_public_waiver_fails) ... ok
+test_new_source_drift_invalidates_evidence (test_security_9c_tooling.Security9CGateTests.test_new_source_drift_invalidates_evidence) ... ok
+test_9d_keeps_all_old_security_and_native_gates_and_rejects_next_phase (test_security_9d_tooling.Security9DGateTests.test_9d_keeps_all_old_security_and_native_gates_and_rejects_next_phase) ... ok
+test_actual_local_native_restore_evidence_and_production_limits (test_security_9d_tooling.Security9DGateTests.test_actual_local_native_restore_evidence_and_production_limits) ... ok
+test_current_9c_source_needs_fresh_complete_regression_and_original_hash (test_security_9d_tooling.Security9DGateTests.test_current_9c_source_needs_fresh_complete_regression_and_original_hash) ... ok
+test_evidence_hash_path_and_nonzero_exit_fail_closed (test_security_9d_tooling.Security9DGateTests.test_evidence_hash_path_and_nonzero_exit_fail_closed) ... ok
+test_marker_requires_success_and_independent_pre_post (test_security_9d_tooling.Security9DGateTests.test_marker_requires_success_and_independent_pre_post) ... ok
+test_no_production_waiver_incomplete_scope_or_missing_coverage (test_security_9d_tooling.Security9DGateTests.test_no_production_waiver_incomplete_scope_or_missing_coverage) ... ok
+test_old_baseline_is_not_current_stage_pre_or_post_root_proof (test_security_9d_tooling.Security9DGateTests.test_old_baseline_is_not_current_stage_pre_or_post_root_proof) ... ok
+test_actual_risk_register_is_valid (test_security_gate.SecurityGateTests.test_actual_risk_register_is_valid) ... ok
+test_completed_marker_requires_immutable_successful_evidence (test_security_gate.SecurityGateTests.test_completed_marker_requires_immutable_successful_evidence) ... ok
+test_missing_field_duplicate_id_and_fake_test_are_rejected (test_security_gate.SecurityGateTests.test_missing_field_duplicate_id_and_fake_test_are_rejected) ... ok
+test_only_8_9a_is_allowed_and_phase8_evidence_stays_required (test_security_gate.SecurityGateTests.test_only_8_9a_is_allowed_and_phase8_evidence_stays_required) ... ok
+test_unresolved_p1_cannot_be_waived (test_security_gate.SecurityGateTests.test_unresolved_p1_cannot_be_waived) ... ok
+test_fake_credentials_are_detected_without_returning_values (test_security_tooling.SecurityToolingTests.test_fake_credentials_are_detected_without_returning_values) ... ok
+test_history_privacy_screen (test_security_tooling.SecurityToolingTests.test_history_privacy_screen) ... ok
+test_private_subprocess_failures_hide_arguments_and_output (test_security_tooling.SecurityToolingTests.test_private_subprocess_failures_hide_arguments_and_output) ... ok
+test_contract_identifies_frozen_source_and_required_sections (test_skill_contract.SkillContractTests.test_contract_identifies_frozen_source_and_required_sections) ... ok
+test_every_upstream_reference_is_traceable_in_contract (test_skill_contract.SkillContractTests.test_every_upstream_reference_is_traceable_in_contract) ... ok
+test_scenarios_examples_and_anti_patterns_are_substantive (test_skill_contract.SkillContractTests.test_scenarios_examples_and_anti_patterns_are_substantive) ... ok
+
+----------------------------------------------------------------------
+Ran 74 tests in 1.399s
+
+OK
++ E:\python\python.exe knowledge/goutoujunshi/scripts/validate_skill.py
+goutoujunshi validation passed
++ uv --cache-dir F:\狗头军师app化\goutouapp\.cache\uv --no-managed-python run --locked --env-file .env python scripts/check_db_migrations.py
++ alembic upgrade head
++ alembic downgrade base
++ alembic upgrade head
++ alembic check
+No new upgrade operations detected.
+PASS: isolated Alembic upgrade head / downgrade base / upgrade head / check
++ uv --cache-dir F:\狗头军师app化\goutouapp\.cache\uv --no-managed-python run --locked --env-file .env pytest -q apps/server/tests/test_llm_mock.py apps/server/tests/test_llm_openai_compatible.py
+................................                                         [100%]
+32 passed in 0.57s
++ uv --cache-dir F:\狗头军师app化\goutouapp\.cache\uv --no-managed-python run --locked --env-file .env pytest -q apps/server/tests/test_backend_integration.py
+.......                                                                  [100%]
+7 passed in 5.10s
++ uv --cache-dir F:\狗头军师app化\goutouapp\.cache\uv --no-managed-python run --locked --env-file .env pytest -q apps/server/tests/test_agent_contracts.py
+........................................................................ [ 81%]
+................                                                         [100%]
+88 passed in 0.21s
++ uv --cache-dir F:\狗头军师app化\goutouapp\.cache\uv --no-managed-python run --locked --env-file .env pytest -q apps/server/tests/test_agent_runtime.py
+........                                                                 [100%]
+8 passed in 0.44s
++ uv --cache-dir F:\狗头军师app化\goutouapp\.cache\uv --no-managed-python run --locked --env-file .env pytest -q apps/server/tests/test_agent_semantic.py
+........                                                                 [100%]
+8 passed in 0.85s
++ uv --cache-dir F:\狗头军师app化\goutouapp\.cache\uv --no-managed-python run --locked --env-file .env pytest -q apps/server/tests/test_agent_knowledge.py
+..................                                                       [100%]
+18 passed in 0.58s
++ uv --cache-dir F:\狗头军师app化\goutouapp\.cache\uv --no-managed-python run --locked --env-file .env python scripts/check_knowledge_routing.py
+Golden deterministic knowledge routing passed: 83 cases
++ uv --cache-dir F:\狗头军师app化\goutouapp\.cache\uv --no-managed-python run --locked --env-file .env pytest -q apps/server/tests/test_agent_analysis.py
+........                                                                 [100%]
+8 passed in 0.77s
++ uv --cache-dir F:\狗头军师app化\goutouapp\.cache\uv --no-managed-python run --locked --env-file .env python scripts/check_analysis_replay.py
+Golden structural analysis Mock replay passed: 30 cases
++ uv --cache-dir F:\狗头军师app化\goutouapp\.cache\uv --no-managed-python run --locked --env-file .env pytest -q apps/server/tests/test_agent_action_response.py
+................                                                         [100%]
+16 passed in 0.83s
++ uv --cache-dir F:\狗头军师app化\goutouapp\.cache\uv --no-managed-python run --locked --env-file .env python scripts/check_action_response_replay.py
+Golden Phase 3F action/response Mock replay passed: 38 cases
++ uv --cache-dir F:\狗头军师app化\goutouapp\.cache\uv --no-managed-python run --locked --env-file .env pytest -q apps/server/tests/test_agent_memory.py
+...........                                                              [100%]
+11 passed in 0.58s
++ uv --cache-dir F:\狗头军师app化\goutouapp\.cache\uv --no-managed-python run --locked --env-file .env pytest -q apps/server/tests/test_memory_database.py
+.....                                                                    [100%]
+5 passed in 0.86s
++ uv --cache-dir F:\狗头军师app化\goutouapp\.cache\uv --no-managed-python run --locked --env-file .env python scripts/check_memory_replay.py
+Golden Phase 3G memory runtime replay passed: 14 cases
++ uv --cache-dir F:\狗头军师app化\goutouapp\.cache\uv --no-managed-python run --locked --env-file .env pytest -q apps/server/tests/test_agent_streaming.py
+..........                                                               [100%]
+10 passed in 0.43s
++ uv --cache-dir F:\狗头军师app化\goutouapp\.cache\uv --no-managed-python run --locked --env-file .env pytest -q apps/server/tests/test_phase3_e2e.py
+........                                                                 [100%]
+8 passed in 0.44s
++ uv --cache-dir F:\狗头军师app化\goutouapp\.cache\uv --no-managed-python run --locked --env-file .env pytest -q apps/server/tests/test_agent_service.py
+............                                                             [100%]
+12 passed in 1.18s
++ uv --cache-dir F:\狗头军师app化\goutouapp\.cache\uv --no-managed-python run --locked --env-file .env python apps/server/agent_service_demo.py
+{"run_id": "9733f832-14a9-4873-a637-7a067c0c190c", "conversation_id": "71cffb12-a8ec-4821-9a04-50b268111fe8", "status": "completed", "persisted_roles": ["user", "assistant"], "answer_persisted": true}
++ uv --cache-dir F:\狗头军师app化\goutouapp\.cache\uv --no-managed-python run --locked --env-file .env pytest -q apps/server/tests/test_auth_jwt.py apps/server/tests/test_agent_rest_contract.py apps/server/tests/test_agent_rest.py
+...............................................                          [100%]
+47 passed in 2.67s
++ uv --cache-dir F:\狗头军师app化\goutouapp\.cache\uv --no-managed-python run --locked --env-file .env python apps/server/agent_rest_demo.py
+{"http_status": 200, "invalid_signature_status": 401, "run_id": "3f1a9178-b66e-4c94-8093-afdd67032323", "verified_subject": "06ea0856-f06a-4fb6-ba04-3c792953ce6d", "persisted_roles": ["user", "assistant"], "answer_persisted": true}
++ uv --cache-dir F:\狗头军师app化\goutouapp\.cache\uv --no-managed-python run --locked --env-file .env pytest -q apps/server/tests/test_agent_stream_contract.py apps/server/tests/test_agent_stream_api.py apps/server/tests/test_agent_stream_disconnect.py
+................                                                         [100%]
+16 passed in 2.59s
++ uv --cache-dir F:\狗头军师app化\goutouapp\.cache\uv --no-managed-python run --locked --env-file .env python apps/server/agent_stream_demo.py
+received_event=run_started
+received_event=status
+received_event=status
+received_event=status
+received_event=status
+received_event=final_response
+received_event=completed
+replay_event=final_response
+replay_event=completed
+{"http_status": 200, "run_id": "13c56367-fa49-4611-9c05-25a27f841a46", "event_types": ["run_started", "status", "status", "status", "status", "final_response", "completed"], "completed_was_persisted_when_received": true, "stream_replay_events": ["final_response", "completed"], "sync_retry_same_response": true, "sync_to_stream_replay_events": ["final_response", "completed"], "one_run_per_operation": true}
++ uv --cache-dir F:\狗头军师app化\goutouapp\.cache\uv --no-managed-python run --locked --env-file .env pytest -q apps/server/tests/test_phase4_idempotency.py
+.................                                                        [100%]
+17 passed in 2.01s
++ uv --cache-dir F:\狗头军师app化\goutouapp\.cache\uv --no-managed-python run --locked --env-file .env pytest -q apps/server/tests/test_chat_import.py
+...................                                                      [100%]
+19 passed in 0.20s
++ uv --cache-dir F:\狗头军师app化\goutouapp\.cache\uv --no-managed-python run --locked --env-file .env python apps/server/chat_import_demo.py
+{"format": "wechat_markdown_v1", "parser_version": "1", "schema_version": "1", "message_count": 4, "speaker_counts": [{"label": "\u6021\u5b9d\ud83e\udd70", "count": 3}, {"label": "\u6211", "count": 1}], "first_timestamp_utc": "2023-11-08T23:51:23+00:00", "last_timestamp_utc": "2023-11-09T00:23:26+00:00", "warning_count": 0, "error_count": 0, "fatal_count": 0, "issue_codes": [], "issues_truncated": 0, "source_fingerprint": "7c52b002682a2f51eac542d1a95eb655fa462a6e622a068ddf1f1f0e4c323a0a", "transcript_fingerprint": "7481a2a5d11eefb7547ed7eacb82505a5bceeaeb7194e637396da40bedd25d72"}
++ uv --cache-dir F:\狗头军师app化\goutouapp\.cache\uv --no-managed-python run --locked --env-file .env pytest -q apps/server/tests/test_import_jobs.py
+......                                                                   [100%]
+6 passed in 0.61s
++ uv --cache-dir F:\狗头军师app化\goutouapp\.cache\uv --no-managed-python run --locked --env-file .env python apps/server/import_job_demo.py
+{"status": "ready", "speaker_inventory": [{"label": "\u6021\u5b9d\ud83e\udd70", "count": 3}, {"label": "\u6211", "count": 1}], "binding_revision": 3, "persisted_after_new_session": true, "formal_message_count": 0}
++ uv --cache-dir F:\狗头军师app化\goutouapp\.cache\uv --no-managed-python run --locked --env-file .env pytest -q apps/server/tests/test_import_merge.py
+........                                                                 [100%]
+8 passed in 2.10s
++ uv --cache-dir F:\狗头军师app化\goutouapp\.cache\uv --no-managed-python run --locked --env-file .env python apps/server/import_merge_demo.py
+{"job_id": "6c13e10f-59a6-45c9-ae32-b8f0b09c9b08", "status": "imported", "imported_count": 4, "ignored_count": 0, "first_timestamp_utc": "2023-11-08T23:51:23+00:00", "last_timestamp_utc": "2023-11-09T00:23:26+00:00", "persisted_after_new_session": true, "agent_message_count": 0, "replay_status": "already_imported", "replay_duplicate_writes": 0}
++ uv --cache-dir F:\狗头军师app化\goutouapp\.cache\uv --no-managed-python run --locked --env-file .env pytest -q apps/server/tests/test_import_api.py
+..........                                                               [100%]
+10 passed in 3.09s
++ uv --cache-dir F:\狗头军师app化\goutouapp\.cache\uv --no-managed-python run --locked --env-file .env python apps/server/import_api_demo.py
+{"upload_status": 201, "speaker_count": 2, "ready_status": "ready", "imported_message_count": 2, "paginated_first_page_count": 1, "raw_artifacts_remaining": 0, "result": "PASS"}
++ uv --cache-dir F:\狗头军师app化\goutouapp\.cache\uv --no-managed-python run --locked --env-file .env python scripts/check_security_9a.py
+PASS: Phase 9A security documents, risks and linked test coverage
++ uv --cache-dir F:\狗头军师app化\goutouapp\.cache\uv --no-managed-python run --locked --env-file .env python scripts/audit_phase8_evidence.py
+{
+  "files": 131,
+  "inventory_sha256": "159f8343692c0c78f23ca164fc4444026edd41dd102ba8ff9042db0a10ac8c83",
+  "findings": []
+}
++ uv --cache-dir F:\狗头军师app化\goutouapp\.cache\uv --no-managed-python run --locked --env-file .env pytest -q apps/server/tests/test_upload_security.py
+.............................................                            [100%]
+45 passed in 6.80s
++ uv --cache-dir F:\狗头军师app化\goutouapp\.cache\uv --no-managed-python run --locked --env-file .env python scripts/audit_authorization.py
+PASS: 36 reviewed operations; 3 public
++ uv --cache-dir F:\狗头军师app化\goutouapp\.cache\uv --no-managed-python run --locked --env-file .env python scripts/audit_evidence_privacy.py
+{
+  "groups": {
+    "phase8f-closeout": 131,
+    "phase9a": 21,
+    "phase9b": 37,
+    "phase9c": 14,
+    "phase9d": 46
+  },
+  "file_types": {
+    ".json": 75,
+    ".exit": 86,
+    ".log": 88
+  },
+  "files": 249,
+  "findings": [],
+  "inventory_sha256": "402977399c1d5eefccb888b854cf6ff6c31d299c3df00f7c159a51a2fb036221",
+  "limit": "Pattern screening only; provenance and manual sampling are separate documented work"
+}
++ uv --cache-dir F:\狗头军师app化\goutouapp\.cache\uv --no-managed-python run --locked --env-file .env python scripts/check_security_9b.py
+PASS: Phase 9B authorization/privacy/native/deployment gates
++ uv --cache-dir F:\狗头军师app化\goutouapp\.cache\uv --no-managed-python run --locked --env-file .env pytest -q apps/server/tests/test_authorization_security.py apps/server/tests/test_privacy_logging.py
+.........................................                                [100%]
+41 passed in 4.35s
++ uv --cache-dir F:\狗头军师app化\goutouapp\.cache\uv --no-managed-python run --locked --env-file .env python scripts/check_security_9c.py
+PASS: Phase9C shared admission/body deadlines/recovery/privacy gates
++ uv --cache-dir F:\狗头军师app化\goutouapp\.cache\uv --no-managed-python run --locked --env-file .env pytest -q apps/server/tests/test_resource_admission.py
+...........................                                              [100%]
+27 passed in 36.02s
++ uv --cache-dir F:\狗头军师app化\goutouapp\.cache\uv --no-managed-python run --locked --env-file .env python scripts/check_security_9d.py
+PASS: Phase9D primary lifecycle/periodic maintenance/native controlled restore gates
++ uv --cache-dir F:\狗头军师app化\goutouapp\.cache\uv --no-managed-python run --locked --env-file .env pytest -q apps/server/tests/test_data_lifecycle.py apps/server/tests/test_backup_restore.py
+............................................                             [100%]
+44 passed in 20.90s
++ uv --cache-dir F:\狗头军师app化\goutouapp\.cache\uv --no-managed-python run --locked --env-file .env python apps/server/backup_restore_demo.py
+{"postgresql": true, "native_dump_restore": true, "owners": 2, "imported_occurrences": 2, "maintenance_iterations": 3, "maintenance_failures": 0, "deleted_memory_recalled": 0, "retained_owner_recalled": 1, "original_receipt_replayed": true, "restored_artifact_files": 0, "production_deployed": false, "memory_removed": 1, "memory_retained": 1, "pending_imports_cancelled": 0, "current_receipts": 1}
++ uv --cache-dir F:\狗头军师app化\goutouapp\.cache\uv --no-managed-python run --locked --env-file .env pytest -q apps/server/tests/test_memory_control.py
+.......                                                                  [100%]
+7 passed in 1.92s
++ uv --cache-dir F:\狗头军师app化\goutouapp\.cache\uv --no-managed-python run --locked --env-file .env python apps/server/memory_control_demo.py
+{"initial_consent": false, "grant_effective": true, "agent_write": "saved", "inspect_count": 1, "pause_blocks_write_and_recall": true, "resume_recall_count": 1, "revoke_blocks_write_and_recall": true, "record_retained": true}
++ uv --cache-dir F:\狗头军师app化\goutouapp\.cache\uv --no-managed-python run --locked --env-file .env python apps/server/memory_control_http_demo.py
+{"initial_http_status": 200, "grant_effective": true, "pause_blocks_recall": true, "resume_restores_recall": true, "inspect_http_status": 200, "inspect_count": 0}
++ uv --cache-dir F:\狗头军师app化\goutouapp\.cache\uv --no-managed-python run --locked --env-file .env pytest -q apps/server/tests/test_memory_mutation.py
+..........                                                               [100%]
+10 passed in 1.42s
++ uv --cache-dir F:\狗头军师app化\goutouapp\.cache\uv --no-managed-python run --locked --env-file .env python apps/server/memory_destructive_control_demo.py
+{"saved_count": 2, "undo_preview_available": true, "undo_status": "undone", "undo_retry_replayed": true, "older_memory_survived_retry": true, "delete_confirmation_count": 1, "delete_affected_count": 1, "inspect_after_delete_count": 0, "agent_recall_after_delete_count": 0}
++ uv --cache-dir F:\狗头军师app化\goutouapp\.cache\uv --no-managed-python run --locked --env-file .env python apps/server/memory_destructive_http_demo.py
+{"preview_http_status": 200, "undo_http_status": 200, "undo_retry_replayed": true, "older_memory_survived_retry": true, "confirmation_http_status": 200, "delete_http_status": 200, "inspect_after_delete_count": 0}
++ uv --cache-dir F:\狗头军师app化\goutouapp\.cache\uv --no-managed-python run --locked --env-file .env pytest -q apps/server/tests/test_memory_retention.py
+..........................                                               [100%]
+26 passed in 3.71s
++ uv --cache-dir F:\狗头军师app化\goutouapp\.cache\uv --no-managed-python run --locked --env-file .env python apps/server/memory_retention_demo.py
+{"consent_explicit": true, "agent_recall_active_count": 1, "expired_record_excluded_before_cleanup": true, "dry_run_eligible_records": 1, "dry_run_did_not_mutate": true, "physical_records_removed": 1, "undo_history_removed": 1, "new_session_inspect_active_count": 1, "second_cleanup_removed": 0, "consumed_challenges_removed": 1, "receipt_replay_after_challenge_cleanup": true, "new_memory_survives_receipt_retry": true, "automatic_scheduling": "NOT DEPLOYED"}
++ uv --cache-dir F:\狗头军师app化\goutouapp\.cache\uv --no-managed-python run --locked --env-file .env pytest -q apps/server/tests/test_phase6_e2e.py
+................................                                         [100%]
+32 passed in 6.02s
++ uv --cache-dir F:\狗头军师app化\goutouapp\.cache\uv --no-managed-python run --locked --env-file .env python apps/server/memory_phase6_e2e_demo.py
+{"real_socket": true, "real_signed_jwt": true, "real_postgresql": true, "saved_via_rest_and_sse_count": 2, "pause_blocks_recall_and_write": true, "undo_replay_preserves_older_record": true, "delete_receipt_id": "e6b5a9b7-138e-489c-894d-a5f7fe5be491", "expired_excluded_before_cleanup": true, "cleanup_record_count": 1, "cleanup_undo_count": 1, "expired_duplicate_resave_new_id": true, "final_inspect_count": 0, "status": "PASS"}
++ uv --cache-dir F:\狗头军师app化\goutouapp\.cache\uv --no-managed-python run --locked --env-file .env python scripts/export_openapi.py --check
+PASS: deterministic OpenAPI, 36 operations, all 26 Phase 7D contracts preserved
++ uv --cache-dir F:\狗头军师app化\goutouapp\.cache\uv --no-managed-python run --locked --env-file .env pytest -q apps/server/tests/test_resource_contract.py apps/server/tests/test_resource_api.py
+........................................................................ [ 74%]
+.........................                                                [100%]
+97 passed in 11.44s
++ uv --cache-dir F:\狗头军师app化\goutouapp\.cache\uv --no-managed-python run --locked --env-file .env python apps/server/resource_api_demo.py
+{"agent_status": "completed", "history_pages_repeat_without_loss": true, "owned_resource_counts": {"conversations": 1, "persons": 1, "relationships": 1}, "owner_neutral_denials": 3, "persisted_history_roles": ["user", "assistant"], "postgresql": true, "real_socket": true, "response_loss_retries": 3, "signed_jwt": true}
++ uv --cache-dir F:\狗头军师app化\goutouapp\.cache\uv --no-managed-python run --locked --env-file .env pytest -q apps/server/tests
+........................................................................ [ 10%]
+........................................................................ [ 20%]
+........................................................................ [ 30%]
+........................................................................ [ 40%]
+........................................................................ [ 50%]
+........................................................................ [ 60%]
+........................................................................ [ 70%]
+........................................................................ [ 80%]
+........................................................................ [ 90%]
+...................................................................      [100%]
+715 passed in 106.40s (0:01:46)
++ E:\python\python.exe evals/validate.py
+Golden annotation validation passed: {'cases': 83, 'categories': 27, 'scenarios': 19, 'high_risk': 16, 'minimal_pairs': 6}
++ git -c safe.directory=F:/狗头军师app化/goutouapp diff --check
+warning: in the working copy of '.gitattributes', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.gitignore', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/server/app/services/import_workflow.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/server/app/services/memory_retention.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/server/tests/test_resource_admission.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'docs/IMPORT_ARTIFACTS.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'docs/MEMORY_BACKUP_DELETION_POLICY.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'docs/MEMORY_RETENTION.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'scripts/audit_evidence_privacy.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'scripts/check_security_9c.py', LF will be replaced by CRLF the next time Git touches it
++ git -c safe.directory=F:/狗头军师app化/goutouapp diff --cached --check
+Repository secret boundary check passed
++ uv --cache-dir F:\狗头军师app化\goutouapp\.cache\uv --no-managed-python run --locked --env-file .env ruff check apps/server evals/phase3c_semantic.py evals/phase3d_routing.py evals/phase3e_analysis.py evals/phase3f_action_response.py evals/phase3g_memory.py scripts/verify.py scripts/check_knowledge_routing.py scripts/check_analysis_replay.py scripts/check_action_response_replay.py scripts/check_memory_replay.py scripts/check_db_migrations.py scripts/check_mobile.py scripts/export_openapi.py scripts/phase8_android_demo.py scripts/phase8_native_closeout.py scripts/check_security_9a.py scripts/audit_phase8_evidence.py scripts/audit_authorization.py scripts/audit_evidence_privacy.py scripts/check_security_9b.py scripts/check_security_9c.py scripts/check_security_9d.py scripts/phase9b_android_smoke.py
+All checks passed!
++ uv --cache-dir F:\狗头军师app化\goutouapp\.cache\uv --no-managed-python run --locked --env-file .env ruff format --check apps/server evals/phase3c_semantic.py evals/phase3d_routing.py evals/phase3e_analysis.py evals/phase3f_action_response.py evals/phase3g_memory.py scripts/verify.py scripts/check_knowledge_routing.py scripts/check_analysis_replay.py scripts/check_action_response_replay.py scripts/check_memory_replay.py scripts/check_db_migrations.py scripts/check_mobile.py scripts/export_openapi.py scripts/phase8_android_demo.py scripts/phase8_native_closeout.py scripts/check_security_9a.py scripts/audit_phase8_evidence.py scripts/audit_authorization.py scripts/audit_evidence_privacy.py scripts/check_security_9b.py scripts/check_security_9c.py scripts/check_security_9d.py scripts/phase9b_android_smoke.py
+197 files already formatted
++ E:\python\python.exe scripts/check_mobile.py
+PASS: project pnpm 11.25.0
+PASS: Mobile six routes, strict contracts, fixture and secret/network boundaries
++ C:\Users\VOS-User\AppData\Roaming\npm\pnpm.CMD install --frozen-lockfile --offline
+Scope: all 3 workspace projects
+Already up to date
+Done in 227ms using pnpm v11.25.0
++ C:\Users\VOS-User\AppData\Roaming\npm\pnpm.CMD --filter @goutou/mobile run compatibility
+$ expo install --check
+Dependencies are up to date
++ C:\Users\VOS-User\AppData\Roaming\npm\pnpm.CMD --filter @goutou/mobile run typecheck
+$ tsc --noEmit
++ C:\Users\VOS-User\AppData\Roaming\npm\pnpm.CMD --filter @goutou/mobile run lint
+$ eslint .
++ C:\Users\VOS-User\AppData\Roaming\npm\pnpm.CMD --filter @goutou/mobile run format:check
+$ prettier --check .
+Checking formatting...
+All matched files use Prettier code style!
++ C:\Users\VOS-User\AppData\Roaming\npm\pnpm.CMD --filter @goutou/mobile run test
+$ jest --runInBand
+PASS tests/history.test.tsx
+PASS tests/chat.test.tsx
+PASS tests/integration.test.tsx
+PASS tests/connectedMemoryUI.test.tsx
+PASS tests/connectedImportUI.test.tsx
+PASS tests/agentChat.test.ts
+PASS tests/import.test.tsx
+PASS tests/controls.test.tsx
+PASS tests/shell.test.tsx
+PASS tests/settings.test.tsx
+PASS tests/connectedChatUI.test.tsx
+PASS tests/relationship.test.tsx
+PASS tests/connected.test.ts
+PASS tests/sseParser.test.ts
+PASS tests/fullMobileIntegration.test.ts
+PASS tests/connectedImport.test.ts
+PASS tests/connectedMemory.test.ts
+PASS tests/connectedHistory.test.ts
+PASS tests/filePicker.test.ts
+PASS tests/sessionIsolation.test.ts
+PASS tests/resourceAdmission.test.ts
+PASS tests/uploadSecurity.test.ts
+PASS tests/resourceNames.test.ts
+PASS tests/authPrivacy.test.ts
+PASS tests/nativeSseObserver.test.ts
+
+Test Suites: 25 passed, 25 total
+Tests:       363 passed, 363 total
+Snapshots:   0 total
+Time:        7.476 s, estimated 17 s
+Ran all test suites.
++ C:\Users\VOS-User\AppData\Roaming\npm\pnpm.CMD run api:check
+$ pnpm --filter @goutou/api-codegen check
+$ node generate-api.mjs --check && node --test generate-api.test.mjs
+PASS: deterministic generated client (36 operations)
+✔ same authoritative input generates byte-identical client twice (342.8003ms)
+✔ input drift fails the same check without modifying the authority file (113.2337ms)
+✔ manual generated output changes fail check (0.2025ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 771.6002
++ C:\Users\VOS-User\AppData\Roaming\npm\pnpm.CMD --filter @goutou/mobile exec expo-doctor
+Running 21 checks on your project...
+21/21 checks passed. No issues detected!
++ C:\Users\VOS-User\AppData\Roaming\npm\pnpm.CMD --filter @goutou/mobile run test:connected
+$ jest --runInBand tests/connected.test.ts tests/sessionIsolation.test.ts
+PASS tests/connected.test.ts
+PASS tests/sessionIsolation.test.ts
+
+Test Suites: 2 passed, 2 total
+Tests:       50 passed, 50 total
+Snapshots:   0 total
+Time:        0.598 s, estimated 1 s
+Ran all test suites matching /tests\\connected.test.ts|tests\\sessionIsolation.test.ts/i.
++ C:\Users\VOS-User\AppData\Roaming\npm\pnpm.CMD --filter @goutou/mobile run test:sse
+$ jest --runInBand tests/sseParser.test.ts
+PASS tests/sseParser.test.ts
+  √ accepts every two-part byte boundary including Chinese/emoji and partial JSON (31 ms)
+  √ accepts single-byte chunks, CRLF splits, comments and multiple frames per chunk (1 ms)
+  √ joins multi-line data before JSON validation (1 ms)
+  √ rejects malformed JSON (5 ms)
+  √ rejects no event (1 ms)
+  √ rejects unknown event
+  √ rejects unknown version
+  √ rejects extra internal fields (1 ms)
+  √ rejects bad run id
+  √ rejects event mismatch
+  √ rejects bad status
+  √ rejects bad final
+  √ rejects bad memory
+  √ rejects bad confirmation
+  √ rejects bad completed (1 ms)
+  √ rejects bad failure
+  √ rejects extension field
+  √ validates public event run_started
+  √ validates public event status
+  √ validates public event final_response (1 ms)
+  √ validates public event memory_status
+  √ validates public event pending_confirmation
+  √ validates public event completed
+  √ validates public event failed
+  √ enforces line/frame and cumulative byte bounds independently
+  √ rejects truncated UTF-8 and an unterminated last frame (1 ms)
+  √ cleans up reader after normal terminal and rejects nonterminal EOF (5 ms)
+  √ rejects incorrect content type
+
+Test Suites: 1 passed, 1 total
+Tests:       28 passed, 28 total
+Snapshots:   0 total
+Time:        0.596 s, estimated 1 s
+Ran all test suites matching /tests\\sseParser.test.ts/i.
++ C:\Users\VOS-User\AppData\Roaming\npm\pnpm.CMD --filter @goutou/mobile run test:agent-chat
+$ jest --runInBand tests/agentChat.test.ts tests/connectedChatUI.test.tsx
+PASS tests/agentChat.test.ts
+PASS tests/connectedChatUI.test.tsx
+
+Test Suites: 2 passed, 2 total
+Tests:       46 passed, 46 total
+Snapshots:   0 total
+Time:        1.308 s
+Ran all test suites matching /tests\\agentChat.test.ts|tests\\connectedChatUI.test.tsx/i.
++ C:\Users\VOS-User\AppData\Roaming\npm\pnpm.CMD --filter @goutou/mobile run test:imports
+$ jest --runInBand tests/connectedImport.test.ts tests/connectedHistory.test.ts tests/filePicker.test.ts tests/connectedImportUI.test.tsx
+PASS tests/connectedImportUI.test.tsx
+PASS tests/connectedImport.test.ts
+PASS tests/connectedHistory.test.ts
+PASS tests/filePicker.test.ts
+
+Test Suites: 4 passed, 4 total
+Tests:       77 passed, 77 total
+Snapshots:   0 total
+Time:        1.249 s
+Ran all test suites matching /tests\\connectedImport.test.ts|tests\\connectedHistory.test.ts|tests\\filePicker.test.ts|tests\\connectedImportUI.test.tsx/i.
++ C:\Users\VOS-User\AppData\Roaming\npm\pnpm.CMD --filter @goutou/mobile run test:memory
+$ jest --runInBand tests/connectedMemory.test.ts tests/connectedMemoryUI.test.tsx
+PASS tests/connectedMemoryUI.test.tsx
+PASS tests/connectedMemory.test.ts
+
+Test Suites: 2 passed, 2 total
+Tests:       48 passed, 48 total
+Snapshots:   0 total
+Time:        1.166 s
+Ran all test suites matching /tests\\connectedMemory.test.ts|tests\\connectedMemoryUI.test.tsx/i.
++ C:\Users\VOS-User\AppData\Roaming\npm\pnpm.CMD --filter @goutou/mobile run test:final
+$ jest --runInBand tests/fullMobileIntegration.test.ts
+PASS tests/fullMobileIntegration.test.ts
+  √ one session clears resources, Chat scope, Import, History cursor and Memory confirmation together on owner switch (15 ms)
+  √ Demo switching invalidates every Connected controller without submitting business mutations (2 ms)
+  √ late resource response after logout cannot restore scope or inherited keys (1 ms)
+  √ process reconstruction restores only authoritative reads and cannot replay a lost Memory key (2 ms)
+  √ background clears prepared confirmation and foreground performs only reads across all history and memory surfaces (5 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       5 passed, 5 total
+Snapshots:   0 total
+Time:        0.491 s, estimated 1 s
+Ran all test suites matching /tests\\fullMobileIntegration.test.ts/i.
++ C:\Users\VOS-User\AppData\Roaming\npm\pnpm.CMD --filter @goutou/mobile run test:features
+$ jest --runInBand tests/chat.test.tsx tests/relationship.test.tsx
+PASS tests/chat.test.tsx
+PASS tests/relationship.test.tsx
+
+Test Suites: 2 passed, 2 total
+Tests:       24 passed, 24 total
+Snapshots:   0 total
+Time:        2.173 s
+Ran all test suites matching /tests\\chat.test.tsx|tests\\relationship.test.tsx/i.
++ C:\Users\VOS-User\AppData\Roaming\npm\pnpm.CMD --filter @goutou/mobile run test:controls
+$ jest --runInBand tests/import.test.tsx tests/history.test.tsx tests/settings.test.tsx tests/controls.test.tsx
+PASS tests/history.test.tsx
+PASS tests/import.test.tsx
+PASS tests/controls.test.tsx
+PASS tests/settings.test.tsx
+
+Test Suites: 4 passed, 4 total
+Tests:       35 passed, 35 total
+Snapshots:   0 total
+Time:        3.426 s, estimated 4 s
+Ran all test suites matching /tests\\import.test.tsx|tests\\history.test.tsx|tests\\settings.test.tsx|tests\\controls.test.tsx/i.
++ C:\Users\VOS-User\AppData\Roaming\npm\pnpm.CMD --filter @goutou/mobile run test:integration
+$ jest --runInBand tests/integration.test.tsx
+PASS tests/integration.test.tsx
+  Phase 7D integration and recovery
+    √ fails closed with an empty relationship source on /chat (107 ms)
+    √ fails closed with an empty relationship source on /relationship (21 ms)
+    √ fails closed with an empty relationship source on /import (20 ms)
+    √ fails closed with an empty relationship source on /history (43 ms)
+    √ keeps empty Memory inspect/undo usable without fabricating a target (33 ms)
+    √ Home remains visible for source loading (12 ms)
+    √ Home remains visible for source error (6 ms)
+    √ rejects a duplicated identical route scope on /chat (6 ms)
+    √ rejects a duplicated identical route scope on /relationship (14 ms)
+    √ rejects a duplicated identical route scope on /import (8 ms)
+    √ rejects a duplicated identical route scope on /history (11 ms)
+    √ clears Chat messages, draft and pending state when A changes to B (47 ms)
+    √ cannot advance past incomplete identity, missing Person, or unconfirmed relationship
+
+Test Suites: 1 passed, 1 total
+Tests:       13 passed, 13 total
+Snapshots:   0 total
+Time:        1.864 s
+Ran all test suites matching /tests\\integration.test.tsx/i.
+No peer dependency issues found
+
+PASS: Phase 7A Mobile static gates; runtime smoke is a separate command
+PASS: Phase 7B Chat/Relationship focused gate; runtime smoke is separate
+PASS: Phase 7C Import/History/Settings focused gate; runtime smoke is separate
+PASS: Phase 7D integration/recovery focused gate; runtime smoke is separate
++ C:\Users\VOS-User\AppData\Roaming\npm\pnpm.CMD --filter @goutou/mobile run export:web
+$ expo export --platform web
+Expo Autolinking module resolution enabled
+Starting Metro Bundler
+
+| (node:35640) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+| (Use `node --trace-warnings ...` to show where the warning was created)
+| (node:35640) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+| (Use `node --trace-warnings ...` to show where the warning was created)
+| (node:35640) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+| (Use `node --trace-warnings ...` to show where the warning was created)
+| (node:35640) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+| (Use `node --trace-warnings ...` to show where the warning was created)
+| (node:35640) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+| (Use `node --trace-warnings ...` to show where the warning was created)
+| (node:35640) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+| (Use `node --trace-warnings ...` to show where the warning was created)
+| (node:35640) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+| (Use `node --trace-warnings ...` to show where the warning was created)
+| (node:35640) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+| (Use `node --trace-warnings ...` to show where the warning was created)
+| (node:35640) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+| (Use `node --trace-warnings ...` to show where the warning was created)
+| (node:35640) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+| (Use `node --trace-warnings ...` to show where the warning was created)
+| (node:35640) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+| (Use `node --trace-warnings ...` to show where the warning was created)
+| (node:35640) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+| (Use `node --trace-warnings ...` to show where the warning was created)
+| (node:35640) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+| (Use `node --trace-warnings ...` to show where the warning was created)
+| (node:35640) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+| (Use `node --trace-warnings ...` to show where the warning was created)
+Web Bundled 4492ms node_modules\.pnpm\expo-router@57.0.26_5ce6f3ce184a4a24433656baacc42e09\node_modules\expo-router\entry.js (853 modules)
+
+› Assets (18):
+..\..\node_modules\.pnpm\expo-router@57.0.26_5ce6f3ce184a4a24433656baacc42e09\node_modules\expo-router\assets\arrow_down.017bc6ba3fc25503e5eb5e53826d48a8.png (9.5KB)
+..\..\node_modules\.pnpm\expo-router@57.0.26_5ce6f3ce184a4a24433656baacc42e09\node_modules\expo-router\assets\error.d1ea1496f9057eb392d5bbf3732a61b7.png (469B)
+..\..\node_modules\.pnpm\expo-router@57.0.26_5ce6f3ce184a4a24433656baacc42e09\node_modules\expo-router\assets\file.19eeb73b9593a38f8e9f418337fc7d10.png (138B)
+..\..\node_modules\.pnpm\expo-router@57.0.26_5ce6f3ce184a4a24433656baacc42e09\node_modules\expo-router\assets\forward.d8b800c443b8972542883e0b9de2bdc6.png (188B)
+..\..\node_modules\.pnpm\expo-router@57.0.26_5ce6f3ce184a4a24433656baacc42e09\node_modules\expo-router\assets\pkg.ab19f4cbc543357183a20571f68380a3.png (364B)
+..\..\node_modules\.pnpm\expo-router@57.0.26_5ce6f3ce184a4a24433656baacc42e09\node_modules\expo-router\assets\react-navigation\elements\back-icon-mask.0a328cd9c1afd0afe8e3b1ec5165b1b4.png (653B)
+..\..\node_modules\.pnpm\expo-router@57.0.26_5ce6f3ce184a4a24433656baacc42e09\node_modules\expo-router\assets\react-navigation\elements\back-icon.35ba0eaec5a4f5ed12ca16fabeae451d.png (207B)
+..\..\node_modules\.pnpm\expo-router@57.0.26_5ce6f3ce184a4a24433656baacc42e09\node_modules\expo-router\assets\react-navigation\elements\clear-icon.c94f6478e7ae0cdd9f15de1fcb9e5e55.png (4 variations | 425B)
+..\..\node_modules\.pnpm\expo-router@57.0.26_5ce6f3ce184a4a24433656baacc42e09\node_modules\expo-router\assets\react-navigation\elements\close-icon.808e1b1b9b53114ec2838071a7e6daa7.png (4 variations | 235B)
+..\..\node_modules\.pnpm\expo-router@57.0.26_5ce6f3ce184a4a24433656baacc42e09\node_modules\expo-router\assets\react-navigation\elements\search-icon.286d67d3f74808a60a78d3ebf1a5fb57.png (928B)
+..\..\node_modules\.pnpm\expo-router@57.0.26_5ce6f3ce184a4a24433656baacc42e09\node_modules\expo-router\assets\sitemap.412dd9275b6b48ad28f5e3d81bb1f626.png (465B)
+..\..\node_modules\.pnpm\expo-router@57.0.26_5ce6f3ce184a4a24433656baacc42e09\node_modules\expo-router\assets\unmatched.20e71bdf79e3a97bf55fd9e164041578.png (4.8KB)
+
+› web bundles (1):
+_expo/static/js/web/entry-33ffd13fbfd42e27af9b10360ed89caa.js (1.3MB)
+
+› Files (2):
+index.html (1.2KB)
+metadata.json (49B)
+
+Exported: dist
++ C:\Users\VOS-User\AppData\Roaming\npm\pnpm.CMD --filter @goutou/mobile run smoke:web
+$ playwright test
+[WebServer] (node:35324) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:16668) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 22 tests using 1 worker
+
+(node:15480) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  1 smoke\controls.spec.ts:6:9 › Import History Settings 浅色 320px (2.4s)
+  ok  2 smoke\controls.spec.ts:6:9 › Import History Settings 浅色 360px (2.0s)
+  ok  3 smoke\controls.spec.ts:6:9 › Import History Settings 浅色 412px (2.0s)
+  ok  4 smoke\controls.spec.ts:6:9 › Import History Settings 深色 320px (2.0s)
+  ok  5 smoke\controls.spec.ts:6:9 › Import History Settings 深色 360px (2.0s)
+  ok  6 smoke\controls.spec.ts:6:9 › Import History Settings 深色 412px (2.0s)
+  ok  7 smoke\features.spec.ts:5:9 › Chat and Relationship local flow 浅色 320px (1.2s)
+  ok  8 smoke\features.spec.ts:5:9 › Chat and Relationship local flow 浅色 360px (1.2s)
+  ok  9 smoke\features.spec.ts:5:9 › Chat and Relationship local flow 浅色 412px (1.2s)
+  ok 10 smoke\features.spec.ts:5:9 › Chat and Relationship local flow 深色 320px (1.2s)
+  ok 11 smoke\features.spec.ts:5:9 › Chat and Relationship local flow 深色 360px (1.2s)
+  ok 12 smoke\features.spec.ts:5:9 › Chat and Relationship local flow 深色 412px (1.2s)
+  ok 13 smoke\integration.spec.ts:37:9 › Phase 7 final six-surface journey 浅色 320px (1.8s)
+  ok 14 smoke\integration.spec.ts:37:9 › Phase 7 final six-surface journey 浅色 360px (1.7s)
+  ok 15 smoke\integration.spec.ts:37:9 › Phase 7 final six-surface journey 浅色 412px (1.7s)
+  ok 16 smoke\integration.spec.ts:37:9 › Phase 7 final six-surface journey 深色 320px (1.7s)
+  ok 17 smoke\integration.spec.ts:37:9 › Phase 7 final six-surface journey 深色 360px (1.8s)
+  ok 18 smoke\integration.spec.ts:37:9 › Phase 7 final six-surface journey 深色 412px (1.7s)
+  ok 19 smoke\integration.spec.ts:149:5 › direct routes reject missing, blank, duplicate and malformed scopes; unknown path recovers (4.2s)
+  ok 20 smoke\integration.spec.ts:176:5 › History A/B scope switches reset domain, window and old previews; Chat remount/reload clears draft (1.0s)
+  ok 21 smoke\integration.spec.ts:215:5 › Import empty/incompatible/group drafts cannot skip gates; change relationship and reset invalidate binding (942ms)
+  ok 22 smoke\web.spec.ts:3:5 › six surfaces, return navigation, theme, UI states and small screens in real Expo Web (2.1s)
+
+  22 passed (40.9s)
+PASS: Phase 7D real Expo Web export and six-surface browser regression
++ C:\Users\VOS-User\AppData\Roaming\npm\pnpm.CMD --filter @goutou/mobile run smoke:connected
+$ playwright test --config playwright.connected.config.ts
+[WebServer] (node:35100) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:21528) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 3 tests using 1 worker
+
+(node:3244) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 connected\http.spec.ts:9:5 › generated mobile client + CLI signed JWT + real HTTP + PostgreSQL: retries, scopes, pages and conflicts (278ms)
+  ok 2 connected\web.spec.ts:23:5 › real Expo Web owned resource creation, lost response retry, contexts and A to B isolation (5.1s)
+  ok 3 connected\web.spec.ts:136:5 › real browser rejects expired/invalid credentials, normalizes offline and clears on server 401 (943ms)
+
+  3 passed (11.5s)
+PASS: Phase 8B generated client / CLI JWT / real HTTP / PostgreSQL / Expo Web
+ANDROID CONNECTED: separate native evidence; Web is not Android verification
++ C:\Users\VOS-User\AppData\Roaming\npm\pnpm.CMD --filter @goutou/mobile run smoke:agent
+$ playwright test --config playwright.agent.config.ts
+[WebServer] (node:30364) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:228) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 3 tests using 1 worker
+
+(node:28968) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 agent-connected\http.spec.ts:10:5 › real SSE answer committed but terminal frame lost: same-key REST recovers one persisted answer (298ms)
+  ok 2 agent-connected\http.spec.ts:55:5 › real signed REST/SSE cross replay, lost response, PostgreSQL IDs, history and owner isolation (548ms)
+  ok 3 agent-connected\web.spec.ts:10:5 › Phase 8C Agent Chat Connected Demo: real POST SSE, history, safe replay, logout and B isolation (5.0s)
+
+  3 passed (11.2s)
+PASS: Phase 8C CLI JWT / Agent REST / POST SSE / PostgreSQL / Expo Web
+ANDROID CONNECTED SSE: separate native evidence; never inferred from Web
++ C:\Users\VOS-User\AppData\Roaming\npm\pnpm.CMD --filter @goutou/mobile run smoke:imports
+$ playwright test --config playwright.import.config.ts
+[WebServer] (node:22360) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:15752) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 4 tests using 1 worker
+
+(node:9712) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 import-connected\http.spec.ts:7:5 › signed generated multipart / PostgreSQL / 1001 history occurrences / exact-dataset replay / owned isolation (632ms)
+  ok 2 import-connected\http.spec.ts:79:5 › actual upload Job committed but response lost: unknown outcome never automatically repeats multipart (100ms)
+  ok 3 import-connected\http.spec.ts:118:5 › actual finalized commit loses response: original Job inspect recovers summary, replay writes zero rows (150ms)
+  ok 4 import-connected\web.spec.ts:5:5 › Chrome Expo real file picker, explicit bindings/ready/finalize, formal History pages/refresh/logout (4.8s)
+
+  4 passed (10.9s)
+PASS: Phase 8D signed JWT / multipart / ImportJob / PostgreSQL / History / Expo Web
+ANDROID NATIVE IMPORT: separate evidence; never inferred from Web
++ C:\Users\VOS-User\AppData\Roaming\npm\pnpm.CMD --filter @goutou/mobile run smoke:memory
+$ playwright test --config playwright.memory.config.ts
+[WebServer] (node:6372) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:35580) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 5 tests using 1 worker
+
+(node:34908) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 memory-connected\http.spec.ts:16:5 › real JWT / PostgreSQL / LangGraph: consent, pause, expiry, guarded undo and data-domain separation (842ms)
+  ok 2 memory-connected\http.spec.ts:87:5 › real committed response loss: controls re-inspect; undo/delete replay exact original payload, durable owner-only receipts (422ms)
+  ok 3 memory-connected\http.spec.ts:186:5 › real structured Person deletion, stale/expired challenge, explicit all consent choice, safe replay preserving new records (570ms)
+  ok 4 memory-connected\web.spec.ts:20:5 › Chrome actual Settings / Agent SSE / Undo / one-person-all confirmation / durable receipt replay / owner isolation (6.5s)
+  ok 5 memory-connected\web.spec.ts:128:5 › Chrome real committed response lost: unknown deletion never reports success or automatically re-prepares (1.2s)
+
+  5 passed (14.8s)
+PASS: Phase 8E signed JWT / Memory controls / guarded mutations / PostgreSQL / Expo Web
+ANDROID NATIVE MEMORY: separate evidence; never inferred from Web
++ C:\Users\VOS-User\AppData\Roaming\npm\pnpm.CMD --filter @goutou/mobile run smoke:final
+$ playwright test --config playwright.final.config.ts
+[WebServer] (node:35280) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:35296) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+(node:11580) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 final-connected\web.spec.ts:7:5 › 8F six real Connected surfaces retain one owned scope and separate data domains through deletion and owner switch (5.9s)
+
+  1 passed (11.2s)
+PASS: Phase 8F real Connected six-surface Web integration
+PHASE 8 FINAL: Android acceptance remains a separate required gate
+PASS: PostgreSQL migration and integration gate
+PASS: LLM Provider unit gate
+PASS: Backend integration smoke gate
+PASS: Agent contracts and Golden schema compatibility gate
+PASS: Minimal standalone LangGraph runtime gate
+PASS: Safety, Scenario and FIU node/24-case replay gate
+PASS: Deterministic knowledge router, frozen loader and Golden fixture evaluation
+PASS: Structured relationship analysis and 30-case Mock replay gate
+PASS: Structured action/response generation and 38-case Mock replay gate
+PASS: Consent-gated memory runtime, PostgreSQL persistence and 14-case Mock replay
+DEFERRED: full live-model Golden runtime eval
+PASS: Phase 4A Agent Application Service
+PASS: Phase 4B REST/Auth, signed-JWT PostgreSQL integration and real HTTP demo
+PASS: Phase 4C Streaming Transport, disconnect policy and socket demo
+PASS: Phase 4D persistent and cross-transport idempotency, PostgreSQL race and replay demo
+PASS: Phase 5A chat import parser, dry run and 10k-message fixture
+PASS: Phase 5B persistent jobs, binding and PostgreSQL demo
+PASS: Phase 5C atomic relationship message merge and 10k PostgreSQL import
+PASS: Phase 5D authenticated one-upload import, cleanup, pagination and 10k HTTP
+PASS: Phase 6A Memory Control Service, signed API and Agent integration
+PASS: Phase 6B guarded undo, confirmed deletion and durable receipts
+PASS: Phase 6C retention expiry, bounded maintenance and durable receipt safety
+AUTOMATIC SCHEDULING: NOT DEPLOYED
+PASS: Phase 6D signed HTTP Agent/Memory end-to-end integration
+PASS: Typed runtime streaming and eight standalone Phase 3 E2E cases
+PASS: Phase 8A public resources, signed JWT/ownership, retries/history and HTTP demo
+PASS: Deterministic OpenAPI generation input and Phase 7D compatibility
+PASS: Phase 4 API
+PASS: Phase 5 Chat Import and Relationship Data Pipeline
+PASS: Phase 6A Memory Control Service and Public Contracts
+PASS: Phase 6B Memory Undo, Deletion and Confirmation Boundary
+DEFERRED: Chat Analysis
+PASS: Phase 7A Mobile static gates
+SEPARATE GATE: Expo Web / Android runtime smoke
+PASS: Phase 7B Chat/Relationship focused static gate
+PASS: Phase 7C Import/History/Settings focused static gate
+PASS: Phase 7D focused integration and real browser gates
+PASS: Phase 8F independently recorded Android native acceptance
+DEFERRED: RAG
+PASS: Phase 6 Memory Controls and Retention
+PRODUCTION SCHEDULER / BACKUP / RESTORE REPLAY: NOT DEPLOYED
+PASS: Phase 7 Expo React Native MVP
+PASS: all active Phase 0..8 gates
+PASS: Phase 9A security focused/regression gates
+PASS: Phase 9B authorization/privacy/fresh native gates
+PASS: Phase9C shared resource admission/upload reliability gates
+PASS: Phase9D lifecycle/maintenance/controlled restore gates
+Phase 9 IN PROGRESS; remaining security/privacy/reliability deferred

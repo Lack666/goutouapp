@@ -1,0 +1,18 @@
+{
+  "groups": {
+    "phase8f-closeout": 131,
+    "phase9a": 21,
+    "phase9b": 37,
+    "phase9c": 14,
+    "phase9d": 53
+  },
+  "file_types": {
+    ".json": 75,
+    ".exit": 90,
+    ".log": 91
+  },
+  "files": 256,
+  "findings": [],
+  "inventory_sha256": "b5ba5d4f2c0067dad60df41adfd3c853c9ce2f1a80e46496e71afc15b7d088b1",
+  "limit": "Pattern screening only; provenance and manual sampling are separate documented work"
+}

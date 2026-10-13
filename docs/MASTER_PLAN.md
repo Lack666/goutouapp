@@ -22,7 +22,7 @@ as implemented by a placeholder directory or a golden expectation.
 | 6 | User-facing memory controls and retention policy integration | PASS (6A–6D) |
 | 7 | Expo React Native MVP | PASS (7A–7D) |
 | 8 | Mobile API integration, generated client and stream consumption | PASS (8A–8F, including native closeout) |
-| 9 | Security, privacy, reliability and deletion | IN PROGRESS (9A–9C PASS; remaining work pending) |
+| 9 | Security, privacy, reliability and deletion | IN PROGRESS (9A–9D PASS) |
 | 10 | Optional hybrid RAG with pgvector | PENDING |
 | 11 | Agent eval and observability | PENDING |
 | 12 | CI/CD, EAS preview, release preparation | PENDING |
@@ -43,11 +43,31 @@ upload admission, concurrent upload/finalize capacity, retained/spool storage an
 pending-job budgets, actual receive idle/total deadlines, fenced crash reconciliation,
 safe metrics and real multi-process signed HTTP/PostgreSQL regression. Completion
 requires independent full root exits0 before/after advancing only8/9B to8/9C;
-all8F/9A/9B evidence gates remain. Phase9 stays IN PROGRESS. No9D–9E names/scopes
-are authorized. Production account
+all8F/9A/9B evidence gates remain. Phase9 stays IN PROGRESS.
+The next explicit instruction (2026-10-13) establishes **9D — Data Deletion,
+Retention and Backup/Restore Consistency**. Minimum scope: inventory every data
+domain and deletion gap; preserve guarded Memory mutations; repair physical
+artifact cleanup/retry/accounting races; add periodic bounded maintenance with
+multi-worker exclusion; exercise actual PostgreSQL dump/restore in disposable
+synthetic databases and reconcile Memory against a frozen authoritative current
+primary before any restored application access. No new public deletion API is
+needed: account, Person, Relationship, Conversation and imported-dataset erasure
+remain explicit contractual gaps. A complete current primary is mandatory for
+the tested recovery path; disaster recovery without it remains blocked. Production
+backup encryption/rotation and scheduler deployment are not certified. Required
+gates: CODE/TEST/DOC/DEMO/REGRESSION, linked real PostgreSQL lifecycle/restore tests,
+all prior gates and independent full root exits0 before/after changing only8/9C
+to8/9D. Phase9 remains IN PROGRESS; stop after9D. No9E scope is inferred.
+9D acceptance now PASS: final independent complete pre/post root exits0,
+Backend715/Mobile363/repository74, Golden83, Web22/3/3/4/5/1, OpenAPI36,
+Expo Doctor21/21. Actual periodic maintenance and native PostgreSQL synthetic
+restore passed. Marker8/9D only; production scheduler/encrypted backup/disaster
+recovery/full erasure remain outside this acceptance. See PHASE_9D_ACCEPTANCE.
+Production account
 systems, frozen behavior changes, real providers, RAG and release publishing are
-outside these tasks. 9C does not certify undeployed public ingress, scheduler,
-backup/deletion propagation or future providers. Stop after the authorized9C task.
+outside these tasks. Historical9C acceptance does not certify undeployed public
+ingress, scheduler, backup/deletion propagation or future providers. Its stop
+condition applied to that9C instruction; the current explicit task stops after9D.
 
 0. Preserve upstream exactly; inspect skill, README, documentation, references,
    scripts and license; record commit; run upstream validator and repository

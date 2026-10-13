@@ -1,5 +1,19 @@
 # Security threat model — Phase 9A
 
+Current9D supplement (B5/B8/B9): scheduled local maintenance executes bounded
+Memory expiry/challenge cleanup, all-state Job-locked raw-source cleanup and9C
+actual-file quota reconciliation with OS-owned multi-process exclusion. Failure,
+timeout, file/DB mismatch and actual post-unlink process death are tested without
+premature budget release. B3/B7 preserve exact signed-owner challenges/receipts,
+original retry keys and fixed metadata-only output. Native synthetic PostgreSQL
+dump/restore now demonstrates that an old snapshot contains deleted Memory;
+quarantine and authoritative current-primary exact-ID/control/key reconciliation
+prevent serving it. B8 still assumes a complete intact current primary and private
+operator isolation: no independent production deletion journal/WAL, recovery switch,
+encrypted backup rotation or installed monitored scheduler is deployed. Current
+R-06/R-09 limits and absent full-data erasure APIs are explicit in
+PHASE_9D_RISK_ASSESSMENT and DATA_DELETION_CONTRACT. No real provider/Agent changes.
+
 Current9C supplement updates B2/B5/B9: rate/auth/atomic reservations run before
 Multipart receive; one-file/two-field parsing, per-receive idle/total deadlines,
 bounded speaker registration, Owner/global actual-file accounting and shared

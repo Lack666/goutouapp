@@ -4,13 +4,14 @@ from __future__ import annotations
 
 import logging
 from collections.abc import Callable, Iterator
+from dataclasses import dataclass
 from datetime import UTC, datetime, timedelta
 from enum import StrEnum
 from hashlib import sha256
 from typing import BinaryIO
 from uuid import UUID
 
-from sqlalchemy import select
+from sqlalchemy import select, text
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm import Session
 
@@ -23,6 +24,7 @@ from app.chat_import.artifacts import (
 )
 from app.core.logging import LOGGER_NAME
 from app.db.models import ChatImportArtifact, ChatImportJob, UploadReservation
+from app.retention import as_utc
 from app.services.agent_service import AuthenticatedActor
 from app.services.import_jobs import (
     ImportJobError,
@@ -37,6 +39,15 @@ from app.services.import_merge import (
     ImportMergeService,
     ImportMergeStatus,
 )
+
+
+@dataclass
+class ArtifactCleanupResult:
+    removed: int = 0
+    orphans: int = 0
+    failures: int = 0
+    scanned: int = 0
+    next_cursor: UUID | None = None
 
 
 def _cleanup_warning() -> None:
@@ -238,29 +249,84 @@ class ImportWorkflowService:
         return self.inspect(actor, job_id)
 
     def cleanup_expired(self, *, now: datetime | None = None) -> tuple[int, int]:
-        """Explicit maintenance operation; no background scheduler is implied."""
-        now = now or datetime.now(UTC)
-        with self._sessions() as db, db.begin():
-            artifacts = tuple(
-                db.scalars(select(ChatImportArtifact).where(ChatImportArtifact.state == "active"))
-            )
-            cleanup: list[str] = []
-            for artifact in artifacts:
-                job = db.scalar(
-                    select(ChatImportJob).where(ChatImportJob.artifact_id == artifact.id)
+        """Compatibility one-shot; scheduled maintenance uses detailed cleanup_pass."""
+        result = self.cleanup_pass(now=now)
+        return result.removed, result.orphans
+
+    def cleanup_pass(
+        self,
+        *,
+        now: datetime | None = None,
+        batch_size: int = 100,
+        max_batches: int = 100,
+        start_after: UUID | None = None,
+    ) -> ArtifactCleanupResult:
+        if not 1 <= batch_size <= 1000 or not 1 <= max_batches <= 10000:
+            raise ValueError("Invalid artifact cleanup bounds")
+        now = as_utc(now or datetime.now(UTC))
+        result = ArtifactCleanupResult()
+        cursor = start_after
+        for _ in range(max_batches):
+            with self._sessions() as db:
+                query = (
+                    select(ChatImportArtifact.id).order_by(ChatImportArtifact.id).limit(batch_size)
                 )
-                expired = artifact.expires_at <= now
-                terminal = job is not None and job.status in {"imported", "cancelled"}
-                if expired or terminal:
-                    if expired and job is not None and job.status in {"ready", "awaiting_binding"}:
-                        job.status = "cancelled"
-                        job.updated_at = now
-                    artifact.state = "expired" if expired else "deleted"
-                    artifact.updated_at = now
-                    cleanup.append(artifact.storage_key)
-            live_keys = {row.storage_key for row in artifacts if row.state == "active"}
-            # A pre-registration upload has no Artifact row yet. Its admission
-            # fence protects .part/.bin even if a maintenance grace elapses.
+                if cursor is not None:
+                    query = query.where(ChatImportArtifact.id > cursor)
+                ids = list(db.scalars(query))
+            if not ids:
+                cursor = None
+                break
+            for artifact_id in ids:
+                # Merge/cancel lock Job first. Use that same order, then recheck
+                # Artifact state under lock before any irreversible filesystem work.
+                with self._sessions() as db, db.begin():
+                    db.execute(text("SET LOCAL lock_timeout = '1000ms'"))
+                    db.execute(text("SET LOCAL statement_timeout = '5000ms'"))
+                    job = db.scalar(
+                        select(ChatImportJob)
+                        .where(ChatImportJob.artifact_id == artifact_id)
+                        .with_for_update()
+                    )
+                    row = db.scalar(
+                        select(ChatImportArtifact)
+                        .where(ChatImportArtifact.id == artifact_id)
+                        .with_for_update()
+                    )
+                    if row is None:
+                        continue
+                    expired = row.expires_at <= now
+                    terminal = job is not None and job.status in {"imported", "cancelled"}
+                    physical = self._store.exists(row.storage_key)
+                    invalid = row.state != "active" or not physical
+                    if expired or terminal or invalid:
+                        if job is not None and job.status in {"ready", "awaiting_binding"}:
+                            job.status = "cancelled"
+                            job.updated_at = now
+                        try:
+                            self._store.delete(row.storage_key)
+                        except (OSError, ArtifactStoreError):
+                            result.failures += 1
+                            _cleanup_warning()
+                        else:
+                            # State never releases quota: actual disk inventory does.
+                            row.state = "expired" if expired else "deleted"
+                            row.updated_at = now
+                            result.removed += int(physical)
+                result.scanned += 1
+            cursor = ids[-1]
+            if len(ids) < batch_size:
+                cursor = None
+                break
+        result.next_cursor = cursor
+        with self._sessions() as db:
+            live_keys = set(
+                db.scalars(
+                    select(ChatImportArtifact.storage_key).where(
+                        ChatImportArtifact.state == "active", ChatImportArtifact.expires_at > now
+                    )
+                )
+            )
             live_keys.update(
                 db.scalars(
                     select(UploadReservation.artifact_key).where(
@@ -269,16 +335,9 @@ class ImportWorkflowService:
                     )
                 )
             )
-        removed = 0
-        for key in cleanup:
-            try:
-                self._store.delete(key)
-                removed += 1
-            except (OSError, ArtifactStoreError):
-                _cleanup_warning()
         try:
-            orphans = self._store.cleanup_expired(live_keys, now - timedelta(hours=1))
+            result.orphans = self._store.cleanup_expired(live_keys, now - timedelta(hours=1))
         except (OSError, ArtifactStoreError):
             _cleanup_warning()
-            orphans = 0
-        return removed, orphans
+            result.failures += 1
+        return result

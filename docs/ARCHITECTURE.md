@@ -1,5 +1,22 @@
 # Architecture direction
 
+Phase9D composes existing owner-serialized Memory retention, Job-locked Artifact
+cleanup and9C physical resource reconciliation in an opt-in periodic operator loop.
+A root-scoped OS file lock excludes competing maintenance processes; death releases
+the lock, failed iterations retry and live hung I/O requires supervision. Artifact
+state is finalized after unlink, and all prior-state inconsistencies are scanned
+through bounded keysets with a resumable loop cursor. Native PostgreSQL synthetic
+dump/restore stays quarantined until an intact current primary is write-frozen and
+exact surviving owner/Memory IDs, current consent/undo/receipts are reconciled.
+Every current issued Agent key for restored owners must match a restored Run
+ID/scope/fingerprint; missing post-backup fences reject release (fixed9D-01/P1).
+Raw Artifact files are excluded; unfinished restored imports are cancelled. No new
+table, public endpoint, dependency, Mobile DTO or Agent behavior. See ADR0039,
+DATA_LIFECYCLE_INVENTORY, DATA_DELETION_CONTRACT, RETENTION_MAINTENANCE and
+BACKUP_RESTORE_POLICY. Production disaster recovery without current primary,
+encrypted backup rotation, installed monitored scheduling and full account/history
+erasure remain blocked. Historical phase boundaries below retain their dates.
+
 Phase9C adds shared PostgreSQL resource windows/reservations before Multipart,
 OS-owned local worker fences, actual receive idle/total deadlines and filesystem
 quota reconciliation. Private local root/DB/policy are shared by tested workers;

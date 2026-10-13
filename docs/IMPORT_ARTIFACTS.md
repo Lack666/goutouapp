@@ -1,5 +1,13 @@
 # Temporary import artifacts — Phase 5D
 
+Current9D supplement: cleanup scans all metadata states through bounded keysets,
+locks Job before Artifact, cancels expired/missing-source unfinished Jobs, unlinks
+before publishing final metadata, and retries failures/inconsistent terminal states.
+Scheduled local execution and actual maintenance process death are tested with9C
+physical accounting. Metadata never proves bytes freed. The new operator loop is
+opt-in; production monitored scheduling remains NOT DEPLOYED. See
+RETENTION_MAINTENANCE and DATA_DELETION_CONTRACT; historical5D sections follow.
+
 `ImportArtifactStore` is the application storage boundary. Its methods cover
 create/write stream, open/read stream, stat, delete, exists and expired-orphan
 cleanup. `LocalFilesystemImportArtifactStore` is the development and single

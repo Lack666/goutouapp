@@ -1,6 +1,26 @@
 # Phase 9 — Security, Privacy, Reliability and Deletion handoff
 
-Latest explicit instruction establishes9C Aggregate Resource Admission and Upload
+Latest authorization: Phase9D Data Deletion, Retention and Backup/Restore
+Consistency, after clean60f12d6/8-9C. MASTER_PLAN registers the minimum scope.
+Only8/9D may advance after independent complete pre/post root verification and
+actual local automated-maintenance/isolated-restore evidence. Phase9 stays
+IN PROGRESS;10–12 PENDING. Full account/history/dataset deletion APIs, production
+identity, durable outbox, cloud backup/key custody/rotation and deployed monitored
+scheduling remain separate work. Historical9C/9B/9A sections below are dated.
+
+9D acceptance PASS, marker8/9D: independent final-source complete root pre/post
+exits0, Backend715/Mobile363/repository74, Golden83, Web22/3/3/4/5/1,
+OpenAPI36/Doctor21/21. Maintenance/retry/crash/owner/restore44 cases and actual
+native16.15 dump/restore passed.9D-01/P1 missing Agent key fence fixed; current
+intact primary remains mandatory. Final read-only credential screen256 files,
+zero hits; no general PII guarantee. Historical failed fixture archives removed,
+host scan0 dumps/local disposable DB0. Production acceptableFALSE; retain R-06,
+R-09/full erasure and R-07/R-08 prerequisites. No new Mobile/native run is claimed.
+Current evidence authority: PHASE_9D_ACCEPTANCE/MATRIX; next reliability/privacy/
+operations/final security scope requires explicit instruction. Stop after9D;
+whole Phase9 IN PROGRESS and10–12 PENDING.
+
+Historical explicit instruction establishes9C Aggregate Resource Admission and Upload
 Reliability Hardening after committed9B. Current evidence/marker authority is
 PHASE_9C_ACCEPTANCE and PHASE_9C_MATRIX; MASTER_PLAN and validator permit only
 8/9C after full independent pre/post gates. Phase9 remains IN PROGRESS. R-07's

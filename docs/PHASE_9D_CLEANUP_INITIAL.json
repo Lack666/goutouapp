@@ -1,0 +1,8 @@
+{
+  "remaining_synthetic_test_databases": 0,
+  "remaining_phase9d_native_archives": 3,
+  "scope": "local isolated test namespaces and phase9d cache trees",
+  "real_user_data_used": false,
+  "status": "failed: historical synthetic fixtures remain",
+  "archive_scan": "initial sandbox rglob; host-owned cache directories were not fully readable; not an exhaustive scan"
+}

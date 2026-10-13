@@ -1,5 +1,11 @@
 # Authoritative Memory Retention Policy — Phase 6C
 
+Current9D supplement: the opt-in operator loop in RETENTION_MAINTENANCE composes
+this same service with Import cleanup and9C reconciliation. Actual short-interval
+execution/retry and multi-process competition pass locally. No production OS task,
+supervisor, collector or alert schedule is installed. All180d/24h/owner-lifetime
+policies below remain; older automatic-scheduling absence refers to production/6C.
+
 Policy version: 1, 2026-10-08. This product decision supplements the Skill
 memory contract without changing consent. See ADR 0028 and
 [backup/deletion policy](MEMORY_BACKUP_DELETION_POLICY.md).

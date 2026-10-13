@@ -1,5 +1,14 @@
 # Memory Backup and Deletion Policy — Phase 6C
 
+Current9D supplement: BACKUP_RESTORE_POLICY and ADR0039 implement/test the
+intact-current-primary recovery option in disposable synthetic databases using
+actual native PostgreSQL dumps/restores. Current exact owner/record survival,
+controls, undo targets and durable receipts reconcile before any target access;
+old challenges are invalidated. An independent exact-ID journal is still absent.
+Production restore without current primary, recovery access switching, encryption,
+key custody and backup rotation remain NOT DEPLOYED. The design-only6C sections
+below are historical; they are not current local-drill capability claims.
+
 Status, 2026-10-08: production backups, backup erasure automation, deletion
 ledger export, encrypted backup storage and restore replay are **NOT DEPLOYED**.
 The repository's local PostgreSQL validation is not production backup coverage.

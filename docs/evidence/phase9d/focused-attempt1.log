@@ -1,0 +1,94 @@
+.......................FFF.........                                      [100%]
+================================== FAILURES ===================================
+_ test_real_backup_delete_restore_exact_owner_targets_and_receipts[delete_all-before] _
+
+recovery = (Engine(postgresql+psycopg://postgres@127.0.0.1:15434/goutou_test_308d6e375504), WindowsPath('F:/狗头军师app化/goutouapp/.c...ry.SQLAlchemyMemoryStore object at 0x0000026676B37170>, <starlette.testclient.TestClient object at 0x0000026677DBFF00>)
+timing = 'before', action = 'delete_all'
+
+    @pytest.mark.parametrize("timing", ["before", "after", "concurrent_snapshot"])
+    @pytest.mark.parametrize("action", ["undo", "delete_one", "delete_person", "delete_all"])
+    def test_real_backup_delete_restore_exact_owner_targets_and_receipts(recovery, timing, action):
+        engine, temp, a, b, store, client = recovery
+        deleted_record = store.list_records(a[0])[0]
+        retained_b = store.list_records(b[0])[0]
+        archive = temp / "synthetic.dump"
+        if timing == "before":
+            receipt, path, body = delete_via_http(client, a[0], deleted_record, action)
+            dump_synthetic(engine, archive)
+        elif timing == "after":
+            dump_synthetic(engine, archive)
+            receipt, path, body = delete_via_http(client, a[0], deleted_record, action)
+        else:
+            # The real dump reads a snapshot from before a concurrently committed delete.
+            with backup_snapshot(engine) as snapshot:
+                receipt, path, body = delete_via_http(client, a[0], deleted_record, action)
+                dump_synthetic(engine, archive, snapshot=snapshot)
+        _save(store, a[0], a[1], a[2], "Synthetic later post-backup save")
+>       new_record = store.list_records(a[0])[0]
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       IndexError: list index out of range
+
+apps\server\tests\test_backup_restore.py:102: IndexError
+_ test_real_backup_delete_restore_exact_owner_targets_and_receipts[delete_all-after] _
+
+recovery = (Engine(postgresql+psycopg://postgres@127.0.0.1:15434/goutou_test_308d6e375504), WindowsPath('F:/狗头军师app化/goutouapp/.c...ry.SQLAlchemyMemoryStore object at 0x000002667658AF90>, <starlette.testclient.TestClient object at 0x0000026677FB0AF0>)
+timing = 'after', action = 'delete_all'
+
+    @pytest.mark.parametrize("timing", ["before", "after", "concurrent_snapshot"])
+    @pytest.mark.parametrize("action", ["undo", "delete_one", "delete_person", "delete_all"])
+    def test_real_backup_delete_restore_exact_owner_targets_and_receipts(recovery, timing, action):
+        engine, temp, a, b, store, client = recovery
+        deleted_record = store.list_records(a[0])[0]
+        retained_b = store.list_records(b[0])[0]
+        archive = temp / "synthetic.dump"
+        if timing == "before":
+            receipt, path, body = delete_via_http(client, a[0], deleted_record, action)
+            dump_synthetic(engine, archive)
+        elif timing == "after":
+            dump_synthetic(engine, archive)
+            receipt, path, body = delete_via_http(client, a[0], deleted_record, action)
+        else:
+            # The real dump reads a snapshot from before a concurrently committed delete.
+            with backup_snapshot(engine) as snapshot:
+                receipt, path, body = delete_via_http(client, a[0], deleted_record, action)
+                dump_synthetic(engine, archive, snapshot=snapshot)
+        _save(store, a[0], a[1], a[2], "Synthetic later post-backup save")
+>       new_record = store.list_records(a[0])[0]
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       IndexError: list index out of range
+
+apps\server\tests\test_backup_restore.py:102: IndexError
+_ test_real_backup_delete_restore_exact_owner_targets_and_receipts[delete_all-concurrent_snapshot] _
+
+recovery = (Engine(postgresql+psycopg://postgres@127.0.0.1:15434/goutou_test_308d6e375504), WindowsPath('F:/狗头军师app化/goutouapp/.c...ry.SQLAlchemyMemoryStore object at 0x0000026677F5EF30>, <starlette.testclient.TestClient object at 0x0000026677F187C0>)
+timing = 'concurrent_snapshot', action = 'delete_all'
+
+    @pytest.mark.parametrize("timing", ["before", "after", "concurrent_snapshot"])
+    @pytest.mark.parametrize("action", ["undo", "delete_one", "delete_person", "delete_all"])
+    def test_real_backup_delete_restore_exact_owner_targets_and_receipts(recovery, timing, action):
+        engine, temp, a, b, store, client = recovery
+        deleted_record = store.list_records(a[0])[0]
+        retained_b = store.list_records(b[0])[0]
+        archive = temp / "synthetic.dump"
+        if timing == "before":
+            receipt, path, body = delete_via_http(client, a[0], deleted_record, action)
+            dump_synthetic(engine, archive)
+        elif timing == "after":
+            dump_synthetic(engine, archive)
+            receipt, path, body = delete_via_http(client, a[0], deleted_record, action)
+        else:
+            # The real dump reads a snapshot from before a concurrently committed delete.
+            with backup_snapshot(engine) as snapshot:
+                receipt, path, body = delete_via_http(client, a[0], deleted_record, action)
+                dump_synthetic(engine, archive, snapshot=snapshot)
+        _save(store, a[0], a[1], a[2], "Synthetic later post-backup save")
+>       new_record = store.list_records(a[0])[0]
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       IndexError: list index out of range
+
+apps\server\tests\test_backup_restore.py:102: IndexError
+=========================== short test summary info ===========================
+FAILED apps/server/tests/test_backup_restore.py::test_real_backup_delete_restore_exact_owner_targets_and_receipts[delete_all-before]
+FAILED apps/server/tests/test_backup_restore.py::test_real_backup_delete_restore_exact_owner_targets_and_receipts[delete_all-after]
+FAILED apps/server/tests/test_backup_restore.py::test_real_backup_delete_restore_exact_owner_targets_and_receipts[delete_all-concurrent_snapshot]
+3 failed, 32 passed in 17.65s

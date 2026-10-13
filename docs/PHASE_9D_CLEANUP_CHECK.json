@@ -1,0 +1,7 @@
+{
+  "remaining_synthetic_test_databases": 0,
+  "remaining_phase9d_native_archives": 0,
+  "archive_scan": "host PowerShell recursive scan; ErrorAction Stop; all phase9d cache trees",
+  "historical_failed_fixture_archives_removed": 3,
+  "real_user_data_used": false
+}
