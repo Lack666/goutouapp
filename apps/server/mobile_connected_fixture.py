@@ -34,6 +34,8 @@ from app.db.models import (
     ChatImportArtifact,
     ChatImportJob,
     Conversation,
+    ErasureConfirmation,
+    ErasureReceipt,
     MemoryConfirmationRow,
     MemoryControlRow,
     MemoryMutationRow,
@@ -192,6 +194,81 @@ def main():
             for command in sys.stdin:
                 if command.strip() == "stop":
                     break
+                if os.environ.get("GOUTOU_ERASURE_E2E") == "1":
+                    if command.startswith("expire_erasure "):
+                        with Session(engine) as db, db.begin():
+                            row = db.get(ErasureConfirmation, UUID(command.strip().split()[1]))
+                            if row is None:
+                                raise ValueError("Synthetic erasure challenge missing")
+                            row.expires_at = datetime.now(UTC) - timedelta(seconds=1)
+                        print(json.dumps({"expired": True}), flush=True)
+                    if command.startswith("busy_conversation "):
+                        with Session(engine) as db, db.begin():
+                            row = db.get(Conversation, UUID(command.strip().split()[1]))
+                            if row is None or row.user_id != owner:
+                                raise ValueError("Synthetic owned Conversation missing")
+                            db.add(
+                                AgentRun(user_id=owner, conversation_id=row.id, status="running")
+                            )
+                        print(json.dumps({"busy": True}), flush=True)
+                    if command.strip() == "erasure_evidence":
+                        with Session(engine) as db:
+                            print(
+                                json.dumps(
+                                    {
+                                        "datasets": [
+                                            {
+                                                "id": str(row.id),
+                                                "relationship": str(row.bound_relationship_id),
+                                                "deleted": row.deleted_at is not None,
+                                                "messages": db.scalar(
+                                                    select(func.count())
+                                                    .select_from(RelationshipMessage)
+                                                    .where(
+                                                        RelationshipMessage.import_job_id == row.id
+                                                    )
+                                                ),
+                                            }
+                                            for row in db.scalars(
+                                                select(ChatImportJob)
+                                                .where(ChatImportJob.status == "imported")
+                                                .order_by(ChatImportJob.id)
+                                            )
+                                        ],
+                                        "conversations": [
+                                            {
+                                                "id": str(row.id),
+                                                "deleted": row.deleted_at is not None,
+                                                "messages": db.scalar(
+                                                    select(func.count())
+                                                    .select_from(Message)
+                                                    .where(Message.conversation_id == row.id)
+                                                ),
+                                            }
+                                            for row in db.scalars(
+                                                select(Conversation).order_by(Conversation.id)
+                                            )
+                                        ],
+                                        "receipts": [
+                                            {
+                                                "id": str(row.id),
+                                                "domain": row.domain,
+                                                "target": str(row.target_id),
+                                                "count": row.message_count,
+                                            }
+                                            for row in db.scalars(
+                                                select(ErasureReceipt).order_by(
+                                                    ErasureReceipt.performed_at, ErasureReceipt.id
+                                                )
+                                            )
+                                        ],
+                                        "memories": db.scalar(
+                                            select(func.count()).select_from(MemoryRecordRow)
+                                        ),
+                                    }
+                                ),
+                                flush=True,
+                            )
                 if native_mode and command.startswith("fault "):
                     fault = command.strip().split()[1]
                     if fault == "provider_failed":

@@ -2,6 +2,7 @@
 
 import asyncio
 import json
+from hashlib import sha256
 from threading import Event
 
 import jwt
@@ -51,7 +52,7 @@ class NativeAcceptanceWire:
         self.release.set()
 
     def arm(self, fault):
-        if fault not in {"agent_drop", "memory_drop", "sse_disconnect"}:
+        if fault not in {"agent_drop", "memory_drop", "erasure_drop", "sse_disconnect"}:
             raise ValueError("Unsupported synthetic fault")
         if self.fault:
             raise ValueError("A synthetic fault is already armed")
@@ -90,10 +91,23 @@ class NativeAcceptanceWire:
         except (jwt.PyJWTError, UnicodeError, KeyError):
             proof["verified_owner"] = "invalid"
         self.requests.append(proof)
+        if method == "POST" and path == "/api/v1/erasures/execute":
+            original_receive = receive
+            digest = sha256()
+
+            async def receive():
+                message = await original_receive()
+                if message["type"] == "http.request":
+                    digest.update(message.get("body", b""))
+                    if not message.get("more_body", False):
+                        proof["body_sha256"] = digest.hexdigest()
+                return message
+
         self.requests[:] = self.requests[-500:]
         fault = self.fault
         matches = method == "POST" and (
             (fault == "agent_drop" and path.endswith("/agent-runs"))
+            or (fault == "erasure_drop" and path == "/api/v1/erasures/execute")
             or (
                 fault == "memory_drop"
                 and "/memory/deletions/" in path
@@ -120,10 +134,13 @@ class NativeAcceptanceWire:
                 if held:
                     if not await asyncio.to_thread(self.release.wait, 180):
                         raise RuntimeError("Controlled GET barrier timed out")
-                if fault in {"agent_drop", "memory_drop"} and message["status"] < 300:
+                if (
+                    fault in {"agent_drop", "memory_drop", "erasure_drop"}
+                    and message["status"] < 300
+                ):
                     return
             if message["type"] == "http.response.body" and start and start["status"] < 300:
-                if fault in {"agent_drop", "memory_drop"}:
+                if fault in {"agent_drop", "memory_drop", "erasure_drop"}:
                     if not message.get("more_body", False):
                         self.fired.append({"fault": fault, "path": path, "status": start["status"]})
                         await send(start)

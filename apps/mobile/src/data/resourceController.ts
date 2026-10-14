@@ -67,6 +67,21 @@ export class ResourceController {
     });
   }
   snapshot = () => this.view;
+  invalidateConversation = (id: string) => {
+    this.pending.delete('conversations');
+    this.pageRequests.get('conversations')?.abort();
+    this.pageRequests.delete('conversations');
+    this.detailRequests.get('conversations')?.abort();
+    this.detailRequests.delete('conversations');
+    this.view = {
+      ...this.view,
+      selectedConversationId:
+        this.view.selectedConversationId === id ? null : this.view.selectedConversationId,
+      pages: { ...this.view.pages, conversations: emptyPage() },
+      details: { ...this.view.details, conversations: emptyDetail() },
+    };
+    this.emit();
+  };
   subscribe = (fn: () => void) => {
     this.listeners.add(fn);
     return () => {

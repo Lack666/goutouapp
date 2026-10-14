@@ -148,6 +148,10 @@ export class AgentChatController {
       }
     }
   };
+  invalidateConversation = (id: string) => {
+    this.attempts.delete(asUUID(id));
+    if (this.view.conversationId === id) this.leave();
+  };
   async open(value: string, expectedRelationship: string | null = null) {
     this.leave();
     if (!this.authenticated()) {

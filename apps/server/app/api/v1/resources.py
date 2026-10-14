@@ -11,6 +11,7 @@ from app.schemas.resources import (
     ConversationCreateRequest,
     ConversationPage,
     ConversationResponse,
+    DatasetPage,
     PageRequest,
     PersonCreateRequest,
     PersonPage,
@@ -88,3 +89,8 @@ def list_agent_messages(
     conversation_id: UUID, actor: Actor, service: Service, page: Page
 ) -> AgentMessagePage:
     return service.list_agent_messages(actor, conversation_id, page)
+
+
+@router.get("/relationships/{relationship_id}/datasets", response_model=DatasetPage)
+def list_datasets(relationship_id: UUID, actor: Actor, service: Service, page: Page) -> DatasetPage:
+    return service.list_datasets(actor, relationship_id, page)

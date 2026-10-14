@@ -1,16 +1,29 @@
-Current9E acceptance PASS, marker8/9E: independent original9D baseline and
+# Phase 9 — Security, Privacy, Reliability and Deletion handoff
+
+## Current Phase9F integration
+
+Phase9F PASS for controlled development: exact Dataset/Conversation App erasure,
+minimal signed discovery and failure recovery passed real PostgreSQL/Web/Android.
+Final complete pre-marker r4 and independent post-marker r2 each exited0.
+Only marker8/9F advances; Phase9 overall IN PROGRESS and10–12 PENDING.
+Backend761/Mobile396/repository88/Golden83/OpenAPI40/Doctor21, new Web2 and all
+prior Web/native gates pass. Earlier failures are retained with honest exits.
+Next: Phase9 overall security/reliability final acceptance only after separate
+explicit authorization. No auto-start. See PHASE_9F_ACCEPTANCE/MATRIX and
+SECURITY_RISK_REGISTER for remaining production blockers. The sections below
+retain historical acceptance-time boundaries.
+
+Historical9E acceptance PASS, marker8/9E: independent original9D baseline and
 complete current-source root pre/post exits0; Backend754/Mobile374/repository80,
 OpenAPI39, erasure39/lifecycle44/admission27 and five fresh Android scenes PASS.
 9E-01/P1 and9E-02/P2 fixed. Backend-only; App chat deletion and full account/
 Person/Relationship erasure remain absent. Production scheduler, encryption/rotation,
 identity/admission and independent primary-loss authority remain NOT DEPLOYED.
 R-06/R-07/R-08/R-09 block public exposure; production acceptableFALSE.
-PHASE_9E_ACCEPTANCE/MATRIX is current evidence authority; Phase9 IN PROGRESS,
+PHASE_9E_ACCEPTANCE/MATRIX is historical9E evidence authority; Phase9 IN PROGRESS,
 10–12 PENDING. Stop here; next scope requires explicit instruction.
 
-# Phase 9 — Security, Privacy, Reliability and Deletion handoff
-
-Current explicit task is9E User Data Erasure and Security Reliability Closeout.
+Historical9E scope was User Data Erasure and Security Reliability Closeout.
 Only8/9D →8/9E can advance after independent full pre/post root gates; whole9 remains
 IN PROGRESS while production/full-account prerequisites persist. Backend-only signed
 Dataset/Conversation erasure, tombstones, exact-target restore, generated client,

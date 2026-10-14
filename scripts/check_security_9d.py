@@ -104,6 +104,8 @@ def check(root=ROOT, *, completed=False):
         raise RuntimeError("9D scope/blockers invalid")
     if matrix.get("source_fingerprint") != source_fingerprint(root):
         replacement = root / "docs/PHASE_9E_MATRIX.json"
+        if (root / "docs/PHASE_9F_MATRIX.json").is_file():
+            replacement = root / "docs/PHASE_9F_MATRIX.json"
         if not replacement.is_file():
             raise RuntimeError("9D tested source fingerprint drift")
         from check_security_9e import revalidation

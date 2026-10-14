@@ -1,0 +1,1138 @@
+[
+  {
+    "execution": {
+      "steps_file": "F:\\\u72d7\u5934\u519b\u5e08app\u5316\\goutouapp\\.cache\\phase9b-android-9f-r1-session.steps.json",
+      "steps": [
+        "restart",
+        "tap [\"\u6e05\u9664\u5f53\u524d\u5f00\u53d1\u4f1a\u8bdd\",\"down\"]",
+        "assert_ui \"\u672a\u8fde\u63a5\uff1a\u6ca1\u6709\u5f00\u53d1\u51ed\u8bc1\"",
+        "seed",
+        "login a",
+        "assert_ui \"\u5f00\u53d1\u4f1a\u8bdd\u5df2\u8fde\u63a5\"",
+        "restart",
+        "assert_ui \"\u5f00\u53d1\u4f1a\u8bdd\u5df2\u8fde\u63a5\"",
+        "state",
+        "home",
+        "open settings",
+        "assert_ui \"\u5f00\u53d1\u4f1a\u8bdd\u5df2\u8fde\u63a5\"",
+        "tap [\"\u6388\u6743\u957f\u671f\u8bb0\u5fc6\"]",
+        "tap [\"\u6062\u590d\u8bb0\u5fc6\"]",
+        "save \u4e00",
+        "tap [\"\u91cd\u65b0\u8bfb\u53d6 Memory \u6743\u5a01\u72b6\u6001\",\"down\"]",
+        "assert_ui \"\u5f53\u524d\u7a97\u53e3\uff1a1 \u6761\"",
+        "memory_id",
+        "tap [\"\u51c6\u5907\u5220\u9664\u8bb0\u5fc6 {memory}\"]",
+        "assert_ui \"Mutation \u72b6\u6001\uff1a\u7b49\u5f85\u4f60\u660e\u786e\u786e\u8ba4\"",
+        "state",
+        "tap [\"\u6e05\u9664\u5f53\u524d\u5f00\u53d1\u4f1a\u8bdd\",\"down\"]",
+        "assert_ui \"\u672a\u8fde\u63a5\uff1a\u6ca1\u6709\u5f00\u53d1\u51ed\u8bc1\"",
+        "login b",
+        "assert_ui \"\u5f00\u53d1\u4f1a\u8bdd\u5df2\u8fde\u63a5\"",
+        "tap [\"\u91cd\u65b0\u8bfb\u53d6 Memory \u6743\u5a01\u72b6\u6001\",\"down\"]",
+        "assert_ui \"\u5f53\u524d\u8303\u56f4\u6ca1\u6709\u6709\u6548\u8bb0\u5fc6\u3002\"",
+        "assert_ui \"Mutation \u72b6\u6001\uff1a\u5c1a\u672a\u51c6\u5907\u64cd\u4f5c\"",
+        "assert_absent [\"Confirmation ID\uff1a\",\"{memory}\"]",
+        "assert_identity",
+        "evidence",
+        "assert_db [\"memory.memories\",1]",
+        "assert_db [\"memory.receipts\",0]",
+        "tap [\"\u6e05\u9664\u5f53\u524d\u5f00\u53d1\u4f1a\u8bdd\",\"down\"]",
+        "assert_ui \"\u672a\u8fde\u63a5\uff1a\u6ca1\u6709\u5f00\u53d1\u51ed\u8bc1\"",
+        "restart",
+        "assert_ui \"\u672a\u8fde\u63a5\uff1a\u6ca1\u6709\u5f00\u53d1\u51ed\u8bc1\"",
+        "state",
+        "stop"
+      ],
+      "helper_sha256": "e2075327221269de52702734ba19b59500e754a61b78b30eba401104a240dc76",
+      "device": "emulator-5554"
+    }
+  },
+  {
+    "command": "restart",
+    "status": "done"
+  },
+  {
+    "command": "tap",
+    "status": "done"
+  },
+  {
+    "assert_ui": "\u672a\u8fde\u63a5\uff1a\u6ca1\u6709\u5f00\u53d1\u51ed\u8bc1",
+    "status": "PASS"
+  },
+  {
+    "command": "assert_ui",
+    "status": "done"
+  },
+  {
+    "command": "seed",
+    "status": "done"
+  },
+  {
+    "command": "login",
+    "status": "done"
+  },
+  {
+    "assert_ui": "\u5f00\u53d1\u4f1a\u8bdd\u5df2\u8fde\u63a5",
+    "status": "PASS"
+  },
+  {
+    "command": "assert_ui",
+    "status": "done"
+  },
+  {
+    "command": "restart",
+    "status": "done"
+  },
+  {
+    "assert_ui": "\u5f00\u53d1\u4f1a\u8bdd\u5df2\u8fde\u63a5",
+    "status": "PASS"
+  },
+  {
+    "command": "assert_ui",
+    "status": "done"
+  },
+  {
+    "ui_state": [
+      {
+        "text": "",
+        "label": "Tools",
+        "bounds": "[937,219][1005,287]",
+        "enabled": "true"
+      },
+      {
+        "text": "",
+        "label": "\u8fd4\u56de\u4e0a\u4e00\u7ea7",
+        "bounds": "[42,226][215,357]",
+        "enabled": "true"
+      },
+      {
+        "text": "\u8fd4\u56de",
+        "label": "",
+        "bounds": "[86,260][170,323]",
+        "enabled": "true"
+      },
+      {
+        "text": "\u8bbe\u7f6e",
+        "label": "",
+        "bounds": "[42,378][190,478]",
+        "enabled": "true"
+      },
+      {
+        "text": "\u5f00\u53d1\u4f1a\u8bdd\u4e0e\u5916\u89c2",
+        "label": "",
+        "bounds": "[42,499][336,565]",
+        "enabled": "true"
+      },
+      {
+        "text": "\u5916\u89c2",
+        "label": "",
+        "bounds": "[107,714][973,791]",
+        "enabled": "true"
+      },
+      {
+        "text": "",
+        "label": "\u8ddf\u968f\u7cfb\u7edf",
+        "bounds": "[108,823][972,955]",
+        "enabled": "true"
+      },
+      {
+        "text": "\u8ddf\u968f\u7cfb\u7edf",
+        "label": "",
+        "bounds": "[152,857][928,920]",
+        "enabled": "true"
+      },
+      {
+        "text": "",
+        "label": "\u6d45\u8272",
+        "bounds": "[108,986][972,1117]",
+        "enabled": "true"
+      },
+      {
+        "text": "\u6d45\u8272",
+        "label": "",
+        "bounds": "[152,1020][928,1083]",
+        "enabled": "true"
+      },
+      {
+        "text": "",
+        "label": "\u6df1\u8272",
+        "bounds": "[108,1149][972,1280]",
+        "enabled": "true"
+      },
+      {
+        "text": "\u6df1\u8272",
+        "label": "",
+        "bounds": "[152,1183][928,1246]",
+        "enabled": "true"
+      },
+      {
+        "text": "Development Session",
+        "label": "",
+        "bounds": "[107,1453][973,1530]",
+        "enabled": "true"
+      },
+      {
+        "text": "Connected Development Mode",
+        "label": "",
+        "bounds": "[107,1562][973,1628]",
+        "enabled": "true"
+      },
+      {
+        "text": "\u5f00\u53d1\u4f1a\u8bdd\u5df2\u8fde\u63a5",
+        "label": "",
+        "bounds": "[107,1659][973,1725]",
+        "enabled": "true"
+      },
+      {
+        "text": "\u4ec5\u4f9b\u5f00\u53d1\u8054\u8c03\u3002\u7531\u5f00\u53d1\u8005\u4e3b\u52a8\u5f55\u5165\u540e\u7aef CLI \u7684\u77ed\u671f\u51ed\u8bc1\uff0c15 \u5206\u949f\u540e\u91cd\u65b0\u83b7\u53d6\u3002",
+        "label": "",
+        "bounds": "[107,1757][973,1889]",
+        "enabled": "true"
+      },
+      {
+        "text": "",
+        "label": "\u4f7f\u7528 Demo Mode",
+        "bounds": "[108,1921][972,2053]",
+        "enabled": "true"
+      },
+      {
+        "text": "\u4f7f\u7528 Demo Mode",
+        "label": "",
+        "bounds": "[152,1955][928,2018]",
+        "enabled": "true"
+      },
+      {
+        "text": "",
+        "label": "\u4f7f\u7528 Connected Development Mode",
+        "bounds": "[108,2083][972,2214]",
+        "enabled": "true"
+      },
+      {
+        "text": "\u4f7f\u7528 Connected Development Mode",
+        "label": "",
+        "bounds": "[152,2117][928,2180]",
+        "enabled": "true"
+      },
+      {
+        "text": "\u8bbe\u5907\u51ed\u8bc1\u4f7f\u7528\u7cfb\u7edf\u5b89\u5168\u5b58\u50a8\uff1b\u6062\u590d\u65f6\u91cd\u65b0\u9a8c\u8bc1\u3002",
+        "label": "",
+        "bounds": "[107,2246][973,2361]",
+        "enabled": "true"
+      },
+      {
+        "text": "",
+        "label": "\u6e05\u9664\u5f53\u524d\u5f00\u53d1\u4f1a\u8bdd",
+        "bounds": "[108,2410][972,2361]",
+        "enabled": "true"
+      }
+    ]
+  },
+  {
+    "command": "home",
+    "status": "done"
+  },
+  {
+    "command": "open",
+    "status": "done"
+  },
+  {
+    "assert_ui": "\u5f00\u53d1\u4f1a\u8bdd\u5df2\u8fde\u63a5",
+    "status": "PASS"
+  },
+  {
+    "command": "assert_ui",
+    "status": "done"
+  },
+  {
+    "command": "tap",
+    "status": "done"
+  },
+  {
+    "command": "tap",
+    "status": "done"
+  },
+  {
+    "command": "save",
+    "status": "done"
+  },
+  {
+    "command": "tap",
+    "status": "done"
+  },
+  {
+    "assert_ui": "\u5f53\u524d\u7a97\u53e3\uff1a1 \u6761 \u00b7 \u6700\u591a 200 \u6761",
+    "status": "PASS"
+  },
+  {
+    "command": "assert_ui",
+    "status": "done"
+  },
+  {
+    "command": "memory_id",
+    "status": "done"
+  },
+  {
+    "command": "tap",
+    "status": "done"
+  },
+  {
+    "assert_ui": "Mutation \u72b6\u6001\uff1a\u7b49\u5f85\u4f60\u660e\u786e\u786e\u8ba4",
+    "status": "PASS"
+  },
+  {
+    "command": "assert_ui",
+    "status": "done"
+  },
+  {
+    "ui_state": [
+      {
+        "text": "",
+        "label": "Tools",
+        "bounds": "[937,219][1005,287]",
+        "enabled": "true"
+      },
+      {
+        "text": "Person\uff1a22874266-61d0-48b8-b885-ce5bbcebfd69 \u00b7 Relationship\uff1ae67e37cd-a089-4ded-ac37-752afeb23727 \u00b7 \u521b\u5efa\uff1a2026-10-14T04:05:13.463940Z",
+        "label": "",
+        "bounds": "[107,142][973,24]",
+        "enabled": "true"
+      },
+      {
+        "text": "\u786e\u8ba4\u5220\u9664 \u00b7 \u4ec5\u4e3b\u5e93\u957f\u671f\u8bb0\u5fc6",
+        "label": "",
+        "bounds": "[107,197][973,274]",
+        "enabled": "true"
+      },
+      {
+        "text": "Person \u5220\u9664\u6309\u670d\u52a1\u5668\u7ed3\u6784\u5316 Person \u8303\u56f4\u6267\u884c\uff0c\u5305\u542b\u8be5\u5bf9\u8c61\u5404\u5173\u7cfb\u7684\u8bb0\u5fc6\uff1b\u4e0d\u4f1a\u9760\u6587\u672c\u641c\u7d22\u5339\u914d\uff0c\u4e5f\u4e0d\u5220\u9664 Person\u3001Relationship\u3001Conversation\u3001Agent History \u6216\u5bfc\u5165\u804a\u5929\u3002",
+        "label": "",
+        "bounds": "[107,306][973,570]",
+        "enabled": "true"
+      },
+      {
+        "text": "",
+        "label": "\u51c6\u5907\u5220\u9664\u5f53\u524d Person \u7684\u8bb0\u5fc6",
+        "bounds": "[108,602][972,733]",
+        "enabled": "false"
+      },
+      {
+        "text": "\u51c6\u5907\u5220\u9664\u5f53\u524d Person \u7684\u8bb0\u5fc6",
+        "label": "",
+        "bounds": "[152,636][928,699]",
+        "enabled": "true"
+      },
+      {
+        "text": "\u5220\u9664\u5168\u90e8\u8bb0\u5fc6\u540e\u662f\u5426\u64a4\u9500\u6388\u6743\uff1a\u5c1a\u672a\u9009\u62e9",
+        "label": "",
+        "bounds": "[107,764][973,830]",
+        "enabled": "true"
+      },
+      {
+        "text": "",
+        "label": "\u5168\u90e8\u5220\u9664\u540e\u4fdd\u7559\u6388\u6743",
+        "bounds": "[108,862][972,993]",
+        "enabled": "true"
+      },
+      {
+        "text": "\u5168\u90e8\u5220\u9664\u540e\u4fdd\u7559\u6388\u6743",
+        "label": "",
+        "bounds": "[152,896][928,959]",
+        "enabled": "true"
+      },
+      {
+        "text": "",
+        "label": "\u5168\u90e8\u5220\u9664\u540e\u64a4\u9500\u6388\u6743",
+        "bounds": "[108,1025][972,1156]",
+        "enabled": "true"
+      },
+      {
+        "text": "\u5168\u90e8\u5220\u9664\u540e\u64a4\u9500\u6388\u6743",
+        "label": "",
+        "bounds": "[152,1059][928,1122]",
+        "enabled": "true"
+      },
+      {
+        "text": "",
+        "label": "\u51c6\u5907\u5220\u9664\u5168\u90e8\u672c\u4eba\u8bb0\u5fc6",
+        "bounds": "[108,1187][972,1318]",
+        "enabled": "false"
+      },
+      {
+        "text": "\u51c6\u5907\u5220\u9664\u5168\u90e8\u672c\u4eba\u8bb0\u5fc6",
+        "label": "",
+        "bounds": "[152,1221][928,1284]",
+        "enabled": "true"
+      },
+      {
+        "text": "\u4fee\u6539\u6388\u6743\u9009\u62e9\u4f1a\u4f7f\u65e7\u786e\u8ba4\u5931\u6548\uff0c\u9700\u91cd\u65b0\u5411\u670d\u52a1\u5668\u51c6\u5907\u3002\u5220\u9664\u5305\u542b\u8303\u56f4\u5185\u7684\u8fc7\u671f\u4e3b\u5e93\u8bb0\u5f55\u53ca Undo \u5386\u53f2\uff1b\u786e\u8ba4\u548c\u56de\u6267\u5143\u6570\u636e\u6309\u7b56\u7565\u4fdd\u7559\u3002\u4e3b\u5e93\u5220\u9664\u4e0d\u4ee3\u8868\u5907\u4efd\u3001\u65e5\u5fd7\u6216\u5916\u90e8\u63d0\u4f9b\u5546\u526f\u672c\u5373\u65f6\u64e6\u9664\uff0c\u4e5f\u4e0d\u4ee3\u8868\u5220\u9664\u6240\u6709\u4e2a\u4eba\u8d44\u6599\u3002",
+        "label": "",
+        "bounds": "[107,1350][973,1680]",
+        "enabled": "true"
+      },
+      {
+        "text": "\u64cd\u4f5c\u786e\u8ba4\u4e0e\u6062\u590d",
+        "label": "",
+        "bounds": "[107,1853][973,1930]",
+        "enabled": "true"
+      },
+      {
+        "text": "Mutation \u72b6\u6001\uff1a\u7b49\u5f85\u4f60\u660e\u786e\u786e\u8ba4",
+        "label": "",
+        "bounds": "[107,1962][973,2028]",
+        "enabled": "true"
+      },
+      {
+        "text": "Confirmation ID\uff1a911b4ce8-5058-4b69-9941-09dcead21f14",
+        "label": "",
+        "bounds": "[107,2059][973,2191]",
+        "enabled": "true"
+      },
+      {
+        "text": "Action\uff1adelete_one \u00b7 Target\uff1a8f2dc770-2812-4ace-8cb7-05201bc9b49d",
+        "label": "",
+        "bounds": "[107,2223][973,2355]",
+        "enabled": "true"
+      },
+      {
+        "text": "\u670d\u52a1\u5668\u5f85\u5220\u6570\u91cf\uff1a1",
+        "label": "",
+        "bounds": "[107,2386][973,2361]",
+        "enabled": "true"
+      }
+    ]
+  },
+  {
+    "command": "tap",
+    "status": "done"
+  },
+  {
+    "assert_ui": "\u672a\u8fde\u63a5\uff1a\u6ca1\u6709\u5f00\u53d1\u51ed\u8bc1",
+    "status": "PASS"
+  },
+  {
+    "command": "assert_ui",
+    "status": "done"
+  },
+  {
+    "command": "login",
+    "status": "done"
+  },
+  {
+    "assert_ui": "\u5f00\u53d1\u4f1a\u8bdd\u5df2\u8fde\u63a5",
+    "status": "PASS"
+  },
+  {
+    "command": "assert_ui",
+    "status": "done"
+  },
+  {
+    "command": "tap",
+    "status": "done"
+  },
+  {
+    "assert_ui": "\u5f53\u524d\u8303\u56f4\u6ca1\u6709\u6709\u6548\u8bb0\u5fc6\u3002",
+    "status": "PASS"
+  },
+  {
+    "command": "assert_ui",
+    "status": "done"
+  },
+  {
+    "assert_ui": "Mutation \u72b6\u6001\uff1a\u5c1a\u672a\u51c6\u5907\u64cd\u4f5c",
+    "status": "PASS"
+  },
+  {
+    "command": "assert_ui",
+    "status": "done"
+  },
+  {
+    "assert_absent": [
+      "Confirmation ID\uff1a",
+      "8f2dc770-2812-4ace-8cb7-05201bc9b49d"
+    ],
+    "status": "PASS"
+  },
+  {
+    "command": "assert_absent",
+    "status": "done"
+  },
+  {
+    "native_identity": "b",
+    "requests_checked": 3,
+    "status": "PASS"
+  },
+  {
+    "command": "assert_identity",
+    "status": "done"
+  },
+  {
+    "database": {
+      "agent": {
+        "calls": [
+          "SafetyResult",
+          "ScenarioResult",
+          "FactExtractionResult",
+          "AnalysisResult",
+          "ActionPlan",
+          "ResponseResult",
+          "MemoryCandidateBatch"
+        ],
+        "runs": [
+          {
+            "id": "705506cc-fd51-4475-b295-ea4ad982863c",
+            "owner": "c1325e6f-9e62-4fb2-bd81-b27a83ec4430",
+            "conversation": "525e8012-e2dd-41ce-bf7f-91ffa819bdee",
+            "status": "completed",
+            "key": "cc58b9a0-f3ff-48c2-8ef3-71bbe063e412"
+          }
+        ],
+        "messages": [
+          {
+            "id": "eebb907f-452b-4581-ba20-7b4068d528f0",
+            "conversation": "525e8012-e2dd-41ce-bf7f-91ffa819bdee",
+            "role": "user"
+          },
+          {
+            "id": "21a19235-8318-4aa9-a5e3-5bb3ea67a105",
+            "conversation": "525e8012-e2dd-41ce-bf7f-91ffa819bdee",
+            "role": "assistant"
+          }
+        ],
+        "memories": 1
+      },
+      "memory": {
+        "memories": 1,
+        "receipts": 0,
+        "records": [
+          {
+            "id": "8f2dc770-2812-4ace-8cb7-05201bc9b49d",
+            "owner": "c1325e6f-9e62-4fb2-bd81-b27a83ec4430",
+            "person": "22874266-61d0-48b8-b885-ce5bbcebfd69",
+            "relationship": "e67e37cd-a089-4ded-ac37-752afeb23727"
+          }
+        ],
+        "mutations": [],
+        "agent_messages": 2,
+        "relationship_messages": 0,
+        "recall_counts": [
+          0
+        ],
+        "calls": 7,
+        "controls": [
+          {
+            "owner": "c1325e6f-9e62-4fb2-bd81-b27a83ec4430",
+            "consent_enabled": true,
+            "paused": false
+          }
+        ]
+      },
+      "import": {
+        "jobs": [],
+        "messages": 0,
+        "agent_messages": 2,
+        "memories": 1,
+        "active_artifacts": 0
+      },
+      "resources": {
+        "persons": 1,
+        "relationships": 1,
+        "conversations": 1
+      },
+      "wire": {
+        "requests": [
+          {
+            "method": "POST",
+            "path": "/api/v1/persons",
+            "bearer": true,
+            "json": true,
+            "cursor": false,
+            "host_setup": true,
+            "verified_owner": "a",
+            "status": 201
+          },
+          {
+            "method": "POST",
+            "path": "/api/v1/relationships",
+            "bearer": true,
+            "json": true,
+            "cursor": false,
+            "host_setup": true,
+            "verified_owner": "a",
+            "status": 201
+          },
+          {
+            "method": "POST",
+            "path": "/api/v1/conversations",
+            "bearer": true,
+            "json": true,
+            "cursor": false,
+            "host_setup": true,
+            "verified_owner": "a",
+            "status": 201
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/persons",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/persons",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/relationships",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memory/control",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memories",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memory/undo/preview",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/persons",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/relationships",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memory/control",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/persons",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memories",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memory/undo/preview",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memory/control",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memories",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memory/undo/preview",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memory/control",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memories",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memory/undo/preview",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "POST",
+            "path": "/api/v1/memory/consent",
+            "bearer": true,
+            "json": true,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memory/control",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "POST",
+            "path": "/api/v1/memory/resume",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memory/control",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "POST",
+            "path": "/api/v1/conversations/525e8012-e2dd-41ce-bf7f-91ffa819bdee/agent-runs",
+            "bearer": true,
+            "json": true,
+            "cursor": false,
+            "host_setup": true,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memory/control",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memories",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memory/undo/preview",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memories",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": true,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "POST",
+            "path": "/api/v1/memory/deletions/one/prepare",
+            "bearer": true,
+            "json": true,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/persons",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "b",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memory/control",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "b",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/persons",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "b",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/relationships",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "b",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memories",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "b",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memory/undo/preview",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "b",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memory/control",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "b",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memories",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "b",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memory/undo/preview",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "b",
+            "status": 200
+          }
+        ],
+        "faults": []
+      },
+      "erasure": {
+        "datasets": [],
+        "conversations": [
+          {
+            "id": "525e8012-e2dd-41ce-bf7f-91ffa819bdee",
+            "deleted": false,
+            "messages": 2
+          }
+        ],
+        "receipts": [],
+        "memories": 1
+      }
+    }
+  },
+  {
+    "command": "evidence",
+    "status": "done"
+  },
+  {
+    "assert_db": "memory.memories",
+    "expected": 1,
+    "actual": 1,
+    "status": "PASS"
+  },
+  {
+    "command": "assert_db",
+    "status": "done"
+  },
+  {
+    "assert_db": "memory.receipts",
+    "expected": 0,
+    "actual": 0,
+    "status": "PASS"
+  },
+  {
+    "command": "assert_db",
+    "status": "done"
+  },
+  {
+    "command": "tap",
+    "status": "done"
+  },
+  {
+    "assert_ui": "\u672a\u8fde\u63a5\uff1a\u6ca1\u6709\u5f00\u53d1\u51ed\u8bc1",
+    "status": "PASS"
+  },
+  {
+    "command": "assert_ui",
+    "status": "done"
+  },
+  {
+    "command": "restart",
+    "status": "done"
+  },
+  {
+    "assert_ui": "\u672a\u8fde\u63a5\uff1a\u6ca1\u6709\u5f00\u53d1\u51ed\u8bc1",
+    "status": "PASS"
+  },
+  {
+    "command": "assert_ui",
+    "status": "done"
+  },
+  {
+    "ui_state": [
+      {
+        "text": "",
+        "label": "Tools",
+        "bounds": "[937,219][1005,287]",
+        "enabled": "true"
+      },
+      {
+        "text": "",
+        "label": "\u8fd4\u56de\u4e0a\u4e00\u7ea7",
+        "bounds": "[42,226][215,357]",
+        "enabled": "true"
+      },
+      {
+        "text": "\u8fd4\u56de",
+        "label": "",
+        "bounds": "[86,260][170,323]",
+        "enabled": "true"
+      },
+      {
+        "text": "\u8bbe\u7f6e",
+        "label": "",
+        "bounds": "[42,378][190,478]",
+        "enabled": "true"
+      },
+      {
+        "text": "\u8ba9\u754c\u9762\u66f4\u9002\u5408\u4f60\u3002",
+        "label": "",
+        "bounds": "[42,499][378,565]",
+        "enabled": "true"
+      },
+      {
+        "text": "\u5916\u89c2",
+        "label": "",
+        "bounds": "[107,714][973,791]",
+        "enabled": "true"
+      },
+      {
+        "text": "",
+        "label": "\u8ddf\u968f\u7cfb\u7edf",
+        "bounds": "[108,823][365,955]",
+        "enabled": "true"
+      },
+      {
+        "text": "\u8ddf\u968f\u7cfb\u7edf",
+        "label": "",
+        "bounds": "[152,857][320,920]",
+        "enabled": "true"
+      },
+      {
+        "text": "",
+        "label": "\u6d45\u8272",
+        "bounds": "[386,823][559,955]",
+        "enabled": "true"
+      },
+      {
+        "text": "\u6d45\u8272",
+        "label": "",
+        "bounds": "[430,857][514,920]",
+        "enabled": "true"
+      },
+      {
+        "text": "",
+        "label": "\u6df1\u8272",
+        "bounds": "[581,823][754,955]",
+        "enabled": "true"
+      },
+      {
+        "text": "\u6df1\u8272",
+        "label": "",
+        "bounds": "[625,857][709,920]",
+        "enabled": "true"
+      },
+      {
+        "text": "\u5f53\u524d\u5916\u89c2\uff1a\u6d45\u8272\u3002\u672c\u5730\u504f\u597d\u4ec5\u5728\u672c\u6b21\u6253\u5f00\u671f\u95f4\u4fdd\u7559\u3002",
+        "label": "",
+        "bounds": "[107,985][973,1117]",
+        "enabled": "true"
+      },
+      {
+        "text": "\u5e94\u7528\u4fe1\u606f",
+        "label": "",
+        "bounds": "[107,1291][973,1368]",
+        "enabled": "true"
+      },
+      {
+        "text": "\u72d7\u5934\u519b\u5e08 \u00b7 0.1.0",
+        "label": "",
+        "bounds": "[107,1400][973,1466]",
+        "enabled": "true"
+      },
+      {
+        "text": "\u79fb\u52a8\u7aef\u672c\u5730\u6f14\u793a \u00b7 Backend not connected",
+        "label": "",
+        "bounds": "[107,1497][973,1563]",
+        "enabled": "true"
+      },
+      {
+        "text": "\u672c\u5730\u6f14\u793a \u00b7 Demo",
+        "label": "",
+        "bounds": "[107,1736][973,1813]",
+        "enabled": "true"
+      },
+      {
+        "text": "\u5f53\u524d\u672a\u8fde\u63a5\u670d\u52a1\u5668\u3002\u9875\u9762\u5c55\u793a\u7684\u662f\u6f14\u793a\u5e03\u5c40\uff0c\u6ca1\u6709\u767b\u5f55\u3001\u771f\u5b9e\u5bf9\u8bdd\u6216\u5df2\u4fdd\u5b58\u8d44\u6599\u3002",
+        "label": "",
+        "bounds": "[107,1845][973,1977]",
+        "enabled": "true"
+      },
+      {
+        "text": "Development Session",
+        "label": "",
+        "bounds": "[107,2150][973,2227]",
+        "enabled": "true"
+      },
+      {
+        "text": "Demo Mode \u00b7 \u533f\u540d\u5408\u6210\u6570\u636e",
+        "label": "",
+        "bounds": "[107,2259][973,2325]",
+        "enabled": "true"
+      },
+      {
+        "text": "\u672a\u8fde\u63a5\uff1a\u6ca1\u6709\u5f00\u53d1\u51ed\u8bc1",
+        "label": "",
+        "bounds": "[107,2356][973,2361]",
+        "enabled": "true"
+      }
+    ]
+  }
+]

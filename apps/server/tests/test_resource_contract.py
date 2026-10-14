@@ -19,9 +19,16 @@ from scripts.export_openapi import (
 def test_deterministic_keyless_snapshot_preserves_prior_26_operations():
     first, second = build_spec(), build_spec()
     assert canonical(first) == canonical(second) == SNAPSHOT.read_bytes()
-    assert audit(first, json.loads(BASELINE.read_text(encoding="utf-8"))) == 39
+    assert audit(first, json.loads(BASELINE.read_text(encoding="utf-8"))) == 40
     assert (
-        len([key for key in operations(first) if not key[1].startswith("/api/v1/erasures")]) == 36
+        len(
+            [
+                key
+                for key in operations(first)
+                if not key[1].startswith("/api/v1/erasures") and not key[1].endswith("/datasets")
+            ]
+        )
+        == 36
     )
 
 
@@ -77,6 +84,16 @@ def test_new_operation_requests_success_nullable_and_page_contracts():
         "user",
         "assistant",
     ]
-    assert len([key for key in NEW_OPERATIONS if not key[1].startswith("/api/v1/erasures")]) == 10
+    assert (
+        len(
+            [
+                key
+                for key in NEW_OPERATIONS
+                if not key[1].startswith("/api/v1/erasures") and not key[1].endswith("/datasets")
+            ]
+        )
+        == 10
+    )
     assert len([key for key in NEW_OPERATIONS if key[1].startswith("/api/v1/erasures")]) == 3
-    assert len(NEW_OPERATIONS) == 13
+    assert len(NEW_OPERATIONS) == 14
+    assert len({op for op in NEW_OPERATIONS if not op[1].endswith("/datasets")}) == 13

@@ -1,0 +1,61 @@
+[
+  {
+    "execution": {
+      "steps_file": "F:\\\u72d7\u5934\u519b\u5e08app\u5316\\goutouapp\\.cache\\phase9b-android-9f-r2-sse_normal.steps.json",
+      "steps": [
+        "restart",
+        "tap [\"\u6e05\u9664\u5f53\u524d\u5f00\u53d1\u4f1a\u8bdd\",\"down\"]",
+        "case 8F-SSE-NORMAL",
+        "seed",
+        "login a",
+        "route [\"chat\",\"current\"]",
+        "assert_ui \"\u5f53\u524d Conversation\uff1a{conversation}\"",
+        "fault hold_final",
+        "input [\"Agent \u6d88\u606f\u8f93\u5165\",\"Synthetic native SSE acceptance\"]",
+        "tap [\"\u53d1\u9001 Agent \u6d88\u606f\"]",
+        "wait 6",
+        "assert_visible_ui \"\u6574\u7406\u56de\u7b54\"",
+        "state",
+        "observe",
+        "fault release_final",
+        "wait 3",
+        "observe completed",
+        "assert_ui \"\u5408\u6210\u9a8c\u6536\ud83c\udf31\"",
+        "assert_ui \"Agent \u72b6\u6001\uff1a\u8fd0\u884c\u5b8c\u6210\"",
+        "evidence",
+        "assert_db [\"agent.runs.length\",1]",
+        "assert_db [\"agent.messages.length\",2]",
+        "assert_db [\"agent.memories\",0]",
+        "tap [\"\u6e05\u9664\u5f53\u524d\u5f00\u53d1\u4f1a\u8bdd\",\"down\"]",
+        "stop"
+      ],
+      "helper_sha256": "95f608e09124f463f1333d2d4117658392ee7e8fcb78e633023181d0bd52ca59",
+      "device": "emulator-5554",
+      "mobile_fingerprint": "8073589bfdec57dd640ec60ee5294720b7df56a0bb305919831223ed0ff4e1f4",
+      "erasure_fingerprint": "b62e367ad4e9018f82319c1099b58c3b746bad0c0b57cfa508c7fc9672cde605"
+    }
+  },
+  {
+    "command": "restart",
+    "status": "done"
+  },
+  {
+    "command": "tap",
+    "status": "done"
+  },
+  {
+    "case": "8F-SSE-NORMAL"
+  },
+  {
+    "command": "case",
+    "status": "done"
+  },
+  {
+    "command": "seed",
+    "status": "done"
+  },
+  {
+    "command": "login",
+    "status": "failed"
+  }
+]

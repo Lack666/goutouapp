@@ -65,11 +65,16 @@ afterEach(() => {
 });
 
 describe('generated client and safe transport', () => {
-  it('preserves 36 operations and adds three signed guarded erasure operations', () => {
-    expect(operationInventory).toHaveLength(39);
-    expect(operationInventory.filter((op) => !op.path.startsWith('/api/v1/erasures'))).toHaveLength(
-      36,
-    );
+  it('preserves the original 39 operations and adds signed dataset discovery', () => {
+    expect(operationInventory).toHaveLength(40);
+    const discovery = operationInventory.filter((op) => op.path.endsWith('/datasets'));
+    expect(discovery).toHaveLength(1);
+    expect(discovery[0]).toMatchObject({ method: 'get', bearer: true });
+    expect(
+      operationInventory.filter(
+        (op) => !op.path.startsWith('/api/v1/erasures') && !op.path.endsWith('/datasets'),
+      ),
+    ).toHaveLength(36);
     const erasures = operationInventory.filter((op) => op.path.startsWith('/api/v1/erasures'));
     expect(erasures).toHaveLength(3);
     expect(erasures.every((op) => op.bearer)).toBe(true);

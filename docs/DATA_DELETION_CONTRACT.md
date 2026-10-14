@@ -1,5 +1,9 @@
 # Data deletion contract — current Phase9E
 
+## Current Phase9F integration
+
+Phase9F exposes the existing 9E exact Dataset/Conversation erasure contracts through Connected Mobile self-service. Memory remains separate; account/Person/Relationship erasure is unavailable. Canonical Dataset discovery is owner-scoped and survives restart. Confirmation, immutable key, durable Receipt and authoritative refresh are mandatory; unknown outcomes and lost keys cannot become inferred success. See MOBILE_DATA_ERASURE. Earlier Backend-only statements describe 9E acceptance.
+
 ## Current9E contract (supersedes dated9D absence claims below)
 
 Backend-only guarded canonical Dataset and Conversation erasure is implemented:

@@ -105,6 +105,7 @@ def test_every_sensitive_operation_requires_real_bearer(security_api):
     count = 0
     original_count = 0
     erasure_count = 0
+    discovery_count = 0
     for path, operations in app.openapi()["paths"].items():
         for method, operation in operations.items():
             if not operation.get("security"):
@@ -112,6 +113,8 @@ def test_every_sensitive_operation_requires_real_bearer(security_api):
             count += 1
             if path.startswith("/api/v1/erasures"):
                 erasure_count += 1
+            elif path.endswith("/datasets"):
+                discovery_count += 1
             else:
                 original_count += 1
             target = path
@@ -130,7 +133,8 @@ def test_every_sensitive_operation_requires_real_bearer(security_api):
             assert response.status_code == 401
     assert original_count == 33
     assert erasure_count == 3
-    assert count == 36
+    assert discovery_count == 1
+    assert count == 37
 
 
 @pytest.mark.parametrize("environment", ["test", "staging", "production"])

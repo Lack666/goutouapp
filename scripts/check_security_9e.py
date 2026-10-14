@@ -94,16 +94,32 @@ def gate(record, root=ROOT):
 
 def revalidation(matrix, root, name, fingerprint, original, expected):
     record = matrix.get(name, {})
+    # A later phase supplies new evidence without modifying the historical matrix.
+    if matrix.get("phase") == "9E" and record.get("source_fingerprint") != fingerprint:
+        replacement = root / "docs/PHASE_9F_MATRIX.json"
+        if replacement.is_file():
+            return revalidation(
+                json.loads(replacement.read_text("utf-8")),
+                root,
+                name,
+                fingerprint,
+                original,
+                expected,
+            )
     original_hash = hashlib.sha256(
         (root / original).read_bytes().replace(b"\r\n", b"\n")
     ).hexdigest()
     if (
-        matrix.get("phase") != "9E"
+        matrix.get("phase") not in {"9E", "9F"}
         or record.get("source_fingerprint") != fingerprint
         or record.get("historical_matrix_sha256") != original_hash
     ):
         raise RuntimeError("9E current-source regression fingerprint drift")
-    if expected not in gate(record, root):
+    if matrix.get("phase") == "9F":
+        from check_security_9f import gate as evidence_gate
+    else:
+        evidence_gate = gate
+    if expected not in evidence_gate(record, root):
         raise RuntimeError("9E complete prior regression required")
 
 
@@ -129,8 +145,20 @@ def check(root=ROOT, *, completed=False):
     risks = json.loads((root / "docs/PHASE_9E_RISK_ASSESSMENT.json").read_text("utf-8"))
     if matrix.get("phase") != "9E" or matrix.get("open_p0_p1") != []:
         raise RuntimeError("9E scope/blockers invalid")
-    if matrix.get("source_fingerprint") != source_fingerprint(root):
-        raise RuntimeError("9E tested source fingerprint drift")
+    changed_source = matrix.get("source_fingerprint") != source_fingerprint(root)
+    if changed_source:
+        replacement = root / "docs/PHASE_9F_MATRIX.json"
+        if not replacement.is_file():
+            raise RuntimeError("9E tested source fingerprint drift")
+        newer = json.loads(replacement.read_text("utf-8"))
+        revalidation(
+            newer,
+            root,
+            "erasure_revalidation",
+            source_fingerprint(root),
+            "docs/PHASE_9E_MATRIX.json",
+            "39 passed",
+        )
     if (
         matrix.get("delivery") != "Backend-only"
         or matrix.get("app_self_service_erasure") is not False
@@ -229,7 +257,9 @@ def check(root=ROOT, *, completed=False):
         "docs/PHASE_9D_MATRIX.json",
         "44 passed",
     )
-    native_check(matrix, root, evidence_phase="phase9e")
+    native_check(matrix, root, historical=changed_source, evidence_phase="phase9e")
+    if changed_source:
+        native_check(newer, root, evidence_phase="phase9f")
     results = [
         json.loads(line) for line in gate(matrix["demo"], root).splitlines() if line.startswith("{")
     ]

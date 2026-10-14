@@ -45,6 +45,11 @@ class ResourceFlow:
     def __init__(self, client, owner):
         self.client, self.owner = client, owner
         self.headers = headers(owner)
+        # Establish signed admission before the resource business races. Cold
+        # admission deliberately has a bounded lock wait and can return 503;
+        # its fail-closed behavior is tested separately. Never retry or rewrite
+        # a raced mutation response to satisfy the resource assertions.
+        self.call("GET", "/persons", params={"limit": 1})
 
     def call(self, method, path, body=None, *, status=200, auth=None, params=None):
         response = self.client.request(

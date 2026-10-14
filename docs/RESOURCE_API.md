@@ -1,3 +1,9 @@
+# Public resources and Agent history — Phase 8A
+
+## Current Phase9F integration
+
+Phase9F adds GET /api/v1/relationships/{relationship_id}/datasets with signed ownership, neutral404, limit1–100 and bound cursor. It lists canonical imported Jobs only, including nondeletable tombstones, metadata-only provenance/import receipt counts/current message count. Owner and parent are checked before paging, and the datasets cursor cannot cross owner/relationship/domain. OpenAPI40 preserves all original39 operations. See DatasetSummary/DatasetPage schemas and test_dataset_discovery.py.
+
 ## Current Phase9E boundary
 
 Backend-only guarded Dataset/Conversation erasure is documented in [ERASURE_API](ERASURE_API.md).
@@ -7,8 +13,6 @@ returns409 `dataset_deleted`, including duplicate same-scope transcripts.
 App History/Settings disclose the absence of self-service chat/import/account
 erasure. Existing Memory controls do not erase either history domain. External
 erasure requires authoritative history refresh/reopen to clear cached rows/cursors.
-
-# Public resources and Agent history — Phase 8A
 
 These ten operations close the resource prerequisites of Phase 8. Mobile is still
 the local Phase 7 Demo; no client generation, session storage or network adapter

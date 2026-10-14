@@ -1,0 +1,32 @@
+PASS tests/uploadSecurity.test.ts
+PASS tests/sseParser.test.ts
+PASS tests/shell.test.tsx (11.986 s)
+PASS tests/settings.test.tsx
+PASS tests/sessionIsolation.test.ts
+PASS tests/resourceNames.test.ts
+PASS tests/resourceAdmission.test.ts
+PASS tests/relationship.test.tsx
+PASS tests/nativeSseObserver.test.ts
+PASS tests/integration.test.tsx
+PASS tests/import.test.tsx
+PASS tests/history.test.tsx
+PASS tests/fullMobileIntegration.test.ts
+PASS tests/filePicker.test.ts
+PASS tests/erasureContract.test.ts
+PASS tests/controls.test.tsx
+PASS tests/connectedMemoryUI.test.tsx
+PASS tests/connectedMemory.test.ts
+PASS tests/connectedImportUI.test.tsx
+PASS tests/connectedImport.test.ts
+PASS tests/connectedHistory.test.ts
+PASS tests/connectedChatUI.test.tsx
+PASS tests/connected.test.ts
+PASS tests/chat.test.tsx
+PASS tests/authPrivacy.test.ts
+PASS tests/agentChat.test.ts
+
+Test Suites: 26 passed, 26 total
+Tests:       374 passed, 374 total
+Snapshots:   0 total
+Time:        23.423 s
+Ran all test suites.

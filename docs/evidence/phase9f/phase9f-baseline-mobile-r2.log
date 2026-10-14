@@ -1,0 +1,683 @@
+FAIL tests/connected.test.ts
+  ● Test suite failed to run
+
+    Cannot find module '@babel/runtime/helpers/interopRequireDefault' from 'tests/setup.ts'
+
+      1 | import mockSafeAreaContext from 'react-native-safe-area-context/jest/mock';
+    > 2 | jest.mock('react-native-safe-area-context', () => mockSafeAreaContext);
+        |                                                                        ^
+      3 |
+
+      at Resolver._throwModNotFoundError (../../../node_modules/.pnpm/jest-resolve@29.7.0/node_modules/jest-resolve/build/resolver.js:427:11)
+      at Object.require (tests/setup.ts:2:72)
+
+FAIL tests/connectedMemory.test.ts
+  ● Test suite failed to run
+
+    Cannot find module '@babel/runtime/helpers/interopRequireDefault' from 'tests/setup.ts'
+
+      1 | import mockSafeAreaContext from 'react-native-safe-area-context/jest/mock';
+    > 2 | jest.mock('react-native-safe-area-context', () => mockSafeAreaContext);
+        |                                                                        ^
+      3 |
+
+      at Resolver._throwModNotFoundError (../../../node_modules/.pnpm/jest-resolve@29.7.0/node_modules/jest-resolve/build/resolver.js:427:11)
+      at Object.require (tests/setup.ts:2:72)
+
+FAIL tests/connectedImport.test.ts
+  ● Test suite failed to run
+
+    Cannot find module '@babel/runtime/helpers/interopRequireDefault' from 'tests/setup.ts'
+
+      1 | import mockSafeAreaContext from 'react-native-safe-area-context/jest/mock';
+    > 2 | jest.mock('react-native-safe-area-context', () => mockSafeAreaContext);
+        |                                                                        ^
+      3 |
+
+      at Resolver._throwModNotFoundError (../../../node_modules/.pnpm/jest-resolve@29.7.0/node_modules/jest-resolve/build/resolver.js:427:11)
+      at Object.require (tests/setup.ts:2:72)
+
+FAIL tests/agentChat.test.ts
+  ● Test suite failed to run
+
+    Cannot find module '@babel/runtime/helpers/interopRequireDefault' from 'tests/setup.ts'
+
+      1 | import mockSafeAreaContext from 'react-native-safe-area-context/jest/mock';
+    > 2 | jest.mock('react-native-safe-area-context', () => mockSafeAreaContext);
+        |                                                                        ^
+      3 |
+
+      at Resolver._throwModNotFoundError (../../../node_modules/.pnpm/jest-resolve@29.7.0/node_modules/jest-resolve/build/resolver.js:427:11)
+      at Object.require (tests/setup.ts:2:72)
+
+FAIL tests/connectedHistory.test.ts
+  ● Test suite failed to run
+
+    Cannot find module '@babel/runtime/helpers/interopRequireDefault' from 'tests/setup.ts'
+
+      1 | import mockSafeAreaContext from 'react-native-safe-area-context/jest/mock';
+    > 2 | jest.mock('react-native-safe-area-context', () => mockSafeAreaContext);
+        |                                                                        ^
+      3 |
+
+      at Resolver._throwModNotFoundError (../../../node_modules/.pnpm/jest-resolve@29.7.0/node_modules/jest-resolve/build/resolver.js:427:11)
+      at Object.require (tests/setup.ts:2:72)
+
+FAIL tests/chat.test.tsx
+  ● Test suite failed to run
+
+    Cannot find module '@babel/runtime/helpers/interopRequireDefault' from 'tests/setup.ts'
+
+      1 | import mockSafeAreaContext from 'react-native-safe-area-context/jest/mock';
+    > 2 | jest.mock('react-native-safe-area-context', () => mockSafeAreaContext);
+        |                                                                        ^
+      3 |
+
+      at Resolver._throwModNotFoundError (../../../node_modules/.pnpm/jest-resolve@29.7.0/node_modules/jest-resolve/build/resolver.js:427:11)
+      at Object.require (tests/setup.ts:2:72)
+
+FAIL tests/import.test.tsx
+  ● Test suite failed to run
+
+    Cannot find module '@babel/runtime/helpers/interopRequireDefault' from 'tests/setup.ts'
+
+      1 | import mockSafeAreaContext from 'react-native-safe-area-context/jest/mock';
+    > 2 | jest.mock('react-native-safe-area-context', () => mockSafeAreaContext);
+        |                                                                        ^
+      3 |
+
+      at Resolver._throwModNotFoundError (../../../node_modules/.pnpm/jest-resolve@29.7.0/node_modules/jest-resolve/build/resolver.js:427:11)
+      at Object.require (tests/setup.ts:2:72)
+
+FAIL tests/history.test.tsx
+  ● Test suite failed to run
+
+    Cannot find module '@babel/runtime/helpers/interopRequireDefault' from 'tests/setup.ts'
+
+      1 | import mockSafeAreaContext from 'react-native-safe-area-context/jest/mock';
+    > 2 | jest.mock('react-native-safe-area-context', () => mockSafeAreaContext);
+        |                                                                        ^
+      3 |
+
+      at Resolver._throwModNotFoundError (../../../node_modules/.pnpm/jest-resolve@29.7.0/node_modules/jest-resolve/build/resolver.js:427:11)
+      at Object.require (tests/setup.ts:2:72)
+
+FAIL tests/settings.test.tsx
+  ● Test suite failed to run
+
+    Cannot find module '@babel/runtime/helpers/interopRequireDefault' from 'tests/setup.ts'
+
+      1 | import mockSafeAreaContext from 'react-native-safe-area-context/jest/mock';
+    > 2 | jest.mock('react-native-safe-area-context', () => mockSafeAreaContext);
+        |                                                                        ^
+      3 |
+
+      at Resolver._throwModNotFoundError (../../../node_modules/.pnpm/jest-resolve@29.7.0/node_modules/jest-resolve/build/resolver.js:427:11)
+      at Object.require (tests/setup.ts:2:72)
+
+FAIL tests/shell.test.tsx
+  ● Test suite failed to run
+
+    Cannot find module '@babel/runtime/helpers/interopRequireDefault' from 'tests/setup.ts'
+
+      1 | import mockSafeAreaContext from 'react-native-safe-area-context/jest/mock';
+    > 2 | jest.mock('react-native-safe-area-context', () => mockSafeAreaContext);
+        |                                                                        ^
+      3 |
+
+      at Resolver._throwModNotFoundError (../../../node_modules/.pnpm/jest-resolve@29.7.0/node_modules/jest-resolve/build/resolver.js:427:11)
+      at Object.require (tests/setup.ts:2:72)
+
+FAIL tests/connectedMemoryUI.test.tsx
+  ● Test suite failed to run
+
+    Cannot find module '@babel/runtime/helpers/interopRequireDefault' from 'tests/setup.ts'
+
+      1 | import mockSafeAreaContext from 'react-native-safe-area-context/jest/mock';
+    > 2 | jest.mock('react-native-safe-area-context', () => mockSafeAreaContext);
+        |                                                                        ^
+      3 |
+
+      at Resolver._throwModNotFoundError (../../../node_modules/.pnpm/jest-resolve@29.7.0/node_modules/jest-resolve/build/resolver.js:427:11)
+      at Object.require (tests/setup.ts:2:72)
+
+FAIL tests/filePicker.test.ts
+  ● Test suite failed to run
+
+    Cannot find module '@babel/runtime/helpers/interopRequireDefault' from 'tests/setup.ts'
+
+      1 | import mockSafeAreaContext from 'react-native-safe-area-context/jest/mock';
+    > 2 | jest.mock('react-native-safe-area-context', () => mockSafeAreaContext);
+        |                                                                        ^
+      3 |
+
+      at Resolver._throwModNotFoundError (../../../node_modules/.pnpm/jest-resolve@29.7.0/node_modules/jest-resolve/build/resolver.js:427:11)
+      at Object.require (tests/setup.ts:2:72)
+
+FAIL tests/sessionIsolation.test.ts
+  ● Test suite failed to run
+
+    Cannot find module '@babel/runtime/helpers/interopRequireDefault' from 'tests/setup.ts'
+
+      1 | import mockSafeAreaContext from 'react-native-safe-area-context/jest/mock';
+    > 2 | jest.mock('react-native-safe-area-context', () => mockSafeAreaContext);
+        |                                                                        ^
+      3 |
+
+      at Resolver._throwModNotFoundError (../../../node_modules/.pnpm/jest-resolve@29.7.0/node_modules/jest-resolve/build/resolver.js:427:11)
+      at Object.require (tests/setup.ts:2:72)
+
+FAIL tests/integration.test.tsx
+  ● Test suite failed to run
+
+    Cannot find module '@babel/runtime/helpers/interopRequireDefault' from 'tests/setup.ts'
+
+      1 | import mockSafeAreaContext from 'react-native-safe-area-context/jest/mock';
+    > 2 | jest.mock('react-native-safe-area-context', () => mockSafeAreaContext);
+        |                                                                        ^
+      3 |
+
+      at Resolver._throwModNotFoundError (../../../node_modules/.pnpm/jest-resolve@29.7.0/node_modules/jest-resolve/build/resolver.js:427:11)
+      at Object.require (tests/setup.ts:2:72)
+
+FAIL tests/fullMobileIntegration.test.ts
+  ● Test suite failed to run
+
+    Cannot find module '@babel/runtime/helpers/interopRequireDefault' from 'tests/setup.ts'
+
+      1 | import mockSafeAreaContext from 'react-native-safe-area-context/jest/mock';
+    > 2 | jest.mock('react-native-safe-area-context', () => mockSafeAreaContext);
+        |                                                                        ^
+      3 |
+
+      at Resolver._throwModNotFoundError (../../../node_modules/.pnpm/jest-resolve@29.7.0/node_modules/jest-resolve/build/resolver.js:427:11)
+      at Object.require (tests/setup.ts:2:72)
+
+FAIL tests/sseParser.test.ts
+  ● Test suite failed to run
+
+    Cannot find module '@babel/runtime/helpers/interopRequireDefault' from 'tests/setup.ts'
+
+      1 | import mockSafeAreaContext from 'react-native-safe-area-context/jest/mock';
+    > 2 | jest.mock('react-native-safe-area-context', () => mockSafeAreaContext);
+        |                                                                        ^
+      3 |
+
+      at Resolver._throwModNotFoundError (../../../node_modules/.pnpm/jest-resolve@29.7.0/node_modules/jest-resolve/build/resolver.js:427:11)
+      at Object.require (tests/setup.ts:2:72)
+
+FAIL tests/controls.test.tsx
+  ● Test suite failed to run
+
+    Cannot find module '@babel/runtime/helpers/interopRequireDefault' from 'tests/setup.ts'
+
+      1 | import mockSafeAreaContext from 'react-native-safe-area-context/jest/mock';
+    > 2 | jest.mock('react-native-safe-area-context', () => mockSafeAreaContext);
+        |                                                                        ^
+      3 |
+
+      at Resolver._throwModNotFoundError (../../../node_modules/.pnpm/jest-resolve@29.7.0/node_modules/jest-resolve/build/resolver.js:427:11)
+      at Object.require (tests/setup.ts:2:72)
+
+FAIL tests/connectedImportUI.test.tsx
+  ● Test suite failed to run
+
+    Cannot find module '@babel/runtime/helpers/interopRequireDefault' from 'tests/setup.ts'
+
+      1 | import mockSafeAreaContext from 'react-native-safe-area-context/jest/mock';
+    > 2 | jest.mock('react-native-safe-area-context', () => mockSafeAreaContext);
+        |                                                                        ^
+      3 |
+
+      at Resolver._throwModNotFoundError (../../../node_modules/.pnpm/jest-resolve@29.7.0/node_modules/jest-resolve/build/resolver.js:427:11)
+      at Object.require (tests/setup.ts:2:72)
+
+FAIL tests/relationship.test.tsx
+  ● Test suite failed to run
+
+    Cannot find module '@babel/runtime/helpers/interopRequireDefault' from 'tests/setup.ts'
+
+      1 | import mockSafeAreaContext from 'react-native-safe-area-context/jest/mock';
+    > 2 | jest.mock('react-native-safe-area-context', () => mockSafeAreaContext);
+        |                                                                        ^
+      3 |
+
+      at Resolver._throwModNotFoundError (../../../node_modules/.pnpm/jest-resolve@29.7.0/node_modules/jest-resolve/build/resolver.js:427:11)
+      at Object.require (tests/setup.ts:2:72)
+
+FAIL tests/connectedChatUI.test.tsx
+  ● Test suite failed to run
+
+    Cannot find module '@babel/runtime/helpers/interopRequireDefault' from 'tests/setup.ts'
+
+      1 | import mockSafeAreaContext from 'react-native-safe-area-context/jest/mock';
+    > 2 | jest.mock('react-native-safe-area-context', () => mockSafeAreaContext);
+        |                                                                        ^
+      3 |
+
+      at Resolver._throwModNotFoundError (../../../node_modules/.pnpm/jest-resolve@29.7.0/node_modules/jest-resolve/build/resolver.js:427:11)
+      at Object.require (tests/setup.ts:2:72)
+
+FAIL tests/nativeSseObserver.test.ts
+  ● Test suite failed to run
+
+    Cannot find module '@babel/runtime/helpers/interopRequireDefault' from 'tests/setup.ts'
+
+      1 | import mockSafeAreaContext from 'react-native-safe-area-context/jest/mock';
+    > 2 | jest.mock('react-native-safe-area-context', () => mockSafeAreaContext);
+        |                                                                        ^
+      3 |
+
+      at Resolver._throwModNotFoundError (../../../node_modules/.pnpm/jest-resolve@29.7.0/node_modules/jest-resolve/build/resolver.js:427:11)
+      at Object.require (tests/setup.ts:2:72)
+
+FAIL tests/resourceNames.test.ts
+  ● Test suite failed to run
+
+    Cannot find module '@babel/runtime/helpers/interopRequireDefault' from 'tests/setup.ts'
+
+      1 | import mockSafeAreaContext from 'react-native-safe-area-context/jest/mock';
+    > 2 | jest.mock('react-native-safe-area-context', () => mockSafeAreaContext);
+        |                                                                        ^
+      3 |
+
+      at Resolver._throwModNotFoundError (../../../node_modules/.pnpm/jest-resolve@29.7.0/node_modules/jest-resolve/build/resolver.js:427:11)
+      at Object.require (tests/setup.ts:2:72)
+
+FAIL tests/authPrivacy.test.ts
+  ● Test suite failed to run
+
+    Cannot find module '@babel/runtime/helpers/interopRequireDefault' from 'tests/setup.ts'
+
+      1 | import mockSafeAreaContext from 'react-native-safe-area-context/jest/mock';
+    > 2 | jest.mock('react-native-safe-area-context', () => mockSafeAreaContext);
+        |                                                                        ^
+      3 |
+
+      at Resolver._throwModNotFoundError (../../../node_modules/.pnpm/jest-resolve@29.7.0/node_modules/jest-resolve/build/resolver.js:427:11)
+      at Object.require (tests/setup.ts:2:72)
+
+FAIL tests/resourceAdmission.test.ts
+  ● Test suite failed to run
+
+    Cannot find module '@babel/runtime/helpers/interopRequireDefault' from 'tests/setup.ts'
+
+      1 | import mockSafeAreaContext from 'react-native-safe-area-context/jest/mock';
+    > 2 | jest.mock('react-native-safe-area-context', () => mockSafeAreaContext);
+        |                                                                        ^
+      3 |
+
+      at Resolver._throwModNotFoundError (../../../node_modules/.pnpm/jest-resolve@29.7.0/node_modules/jest-resolve/build/resolver.js:427:11)
+      at Object.require (tests/setup.ts:2:72)
+
+FAIL tests/erasureContract.test.ts
+  ● Test suite failed to run
+
+    Cannot find module '@babel/runtime/helpers/interopRequireDefault' from 'tests/setup.ts'
+
+      1 | import mockSafeAreaContext from 'react-native-safe-area-context/jest/mock';
+    > 2 | jest.mock('react-native-safe-area-context', () => mockSafeAreaContext);
+        |                                                                        ^
+      3 |
+
+      at Resolver._throwModNotFoundError (../../../node_modules/.pnpm/jest-resolve@29.7.0/node_modules/jest-resolve/build/resolver.js:427:11)
+      at Object.require (tests/setup.ts:2:72)
+
+FAIL tests/uploadSecurity.test.ts
+  ● Test suite failed to run
+
+    Cannot find module '@babel/runtime/helpers/interopRequireDefault' from 'tests/setup.ts'
+
+      1 | import mockSafeAreaContext from 'react-native-safe-area-context/jest/mock';
+    > 2 | jest.mock('react-native-safe-area-context', () => mockSafeAreaContext);
+        |                                                                        ^
+      3 |
+
+      at Resolver._throwModNotFoundError (../../../node_modules/.pnpm/jest-resolve@29.7.0/node_modules/jest-resolve/build/resolver.js:427:11)
+      at Object.require (tests/setup.ts:2:72)
+
+Summary of all failing tests
+FAIL tests/connected.test.ts
+  ● Test suite failed to run
+
+    Cannot find module '@babel/runtime/helpers/interopRequireDefault' from 'tests/setup.ts'
+
+      1 | import mockSafeAreaContext from 'react-native-safe-area-context/jest/mock';
+    > 2 | jest.mock('react-native-safe-area-context', () => mockSafeAreaContext);
+        |                                                                        ^
+      3 |
+
+      at Resolver._throwModNotFoundError (../../../node_modules/.pnpm/jest-resolve@29.7.0/node_modules/jest-resolve/build/resolver.js:427:11)
+      at Object.require (tests/setup.ts:2:72)
+
+FAIL tests/connectedMemory.test.ts
+  ● Test suite failed to run
+
+    Cannot find module '@babel/runtime/helpers/interopRequireDefault' from 'tests/setup.ts'
+
+      1 | import mockSafeAreaContext from 'react-native-safe-area-context/jest/mock';
+    > 2 | jest.mock('react-native-safe-area-context', () => mockSafeAreaContext);
+        |                                                                        ^
+      3 |
+
+      at Resolver._throwModNotFoundError (../../../node_modules/.pnpm/jest-resolve@29.7.0/node_modules/jest-resolve/build/resolver.js:427:11)
+      at Object.require (tests/setup.ts:2:72)
+
+FAIL tests/connectedImport.test.ts
+  ● Test suite failed to run
+
+    Cannot find module '@babel/runtime/helpers/interopRequireDefault' from 'tests/setup.ts'
+
+      1 | import mockSafeAreaContext from 'react-native-safe-area-context/jest/mock';
+    > 2 | jest.mock('react-native-safe-area-context', () => mockSafeAreaContext);
+        |                                                                        ^
+      3 |
+
+      at Resolver._throwModNotFoundError (../../../node_modules/.pnpm/jest-resolve@29.7.0/node_modules/jest-resolve/build/resolver.js:427:11)
+      at Object.require (tests/setup.ts:2:72)
+
+FAIL tests/agentChat.test.ts
+  ● Test suite failed to run
+
+    Cannot find module '@babel/runtime/helpers/interopRequireDefault' from 'tests/setup.ts'
+
+      1 | import mockSafeAreaContext from 'react-native-safe-area-context/jest/mock';
+    > 2 | jest.mock('react-native-safe-area-context', () => mockSafeAreaContext);
+        |                                                                        ^
+      3 |
+
+      at Resolver._throwModNotFoundError (../../../node_modules/.pnpm/jest-resolve@29.7.0/node_modules/jest-resolve/build/resolver.js:427:11)
+      at Object.require (tests/setup.ts:2:72)
+
+FAIL tests/connectedHistory.test.ts
+  ● Test suite failed to run
+
+    Cannot find module '@babel/runtime/helpers/interopRequireDefault' from 'tests/setup.ts'
+
+      1 | import mockSafeAreaContext from 'react-native-safe-area-context/jest/mock';
+    > 2 | jest.mock('react-native-safe-area-context', () => mockSafeAreaContext);
+        |                                                                        ^
+      3 |
+
+      at Resolver._throwModNotFoundError (../../../node_modules/.pnpm/jest-resolve@29.7.0/node_modules/jest-resolve/build/resolver.js:427:11)
+      at Object.require (tests/setup.ts:2:72)
+
+FAIL tests/chat.test.tsx
+  ● Test suite failed to run
+
+    Cannot find module '@babel/runtime/helpers/interopRequireDefault' from 'tests/setup.ts'
+
+      1 | import mockSafeAreaContext from 'react-native-safe-area-context/jest/mock';
+    > 2 | jest.mock('react-native-safe-area-context', () => mockSafeAreaContext);
+        |                                                                        ^
+      3 |
+
+      at Resolver._throwModNotFoundError (../../../node_modules/.pnpm/jest-resolve@29.7.0/node_modules/jest-resolve/build/resolver.js:427:11)
+      at Object.require (tests/setup.ts:2:72)
+
+FAIL tests/import.test.tsx
+  ● Test suite failed to run
+
+    Cannot find module '@babel/runtime/helpers/interopRequireDefault' from 'tests/setup.ts'
+
+      1 | import mockSafeAreaContext from 'react-native-safe-area-context/jest/mock';
+    > 2 | jest.mock('react-native-safe-area-context', () => mockSafeAreaContext);
+        |                                                                        ^
+      3 |
+
+      at Resolver._throwModNotFoundError (../../../node_modules/.pnpm/jest-resolve@29.7.0/node_modules/jest-resolve/build/resolver.js:427:11)
+      at Object.require (tests/setup.ts:2:72)
+
+FAIL tests/history.test.tsx
+  ● Test suite failed to run
+
+    Cannot find module '@babel/runtime/helpers/interopRequireDefault' from 'tests/setup.ts'
+
+      1 | import mockSafeAreaContext from 'react-native-safe-area-context/jest/mock';
+    > 2 | jest.mock('react-native-safe-area-context', () => mockSafeAreaContext);
+        |                                                                        ^
+      3 |
+
+      at Resolver._throwModNotFoundError (../../../node_modules/.pnpm/jest-resolve@29.7.0/node_modules/jest-resolve/build/resolver.js:427:11)
+      at Object.require (tests/setup.ts:2:72)
+
+FAIL tests/settings.test.tsx
+  ● Test suite failed to run
+
+    Cannot find module '@babel/runtime/helpers/interopRequireDefault' from 'tests/setup.ts'
+
+      1 | import mockSafeAreaContext from 'react-native-safe-area-context/jest/mock';
+    > 2 | jest.mock('react-native-safe-area-context', () => mockSafeAreaContext);
+        |                                                                        ^
+      3 |
+
+      at Resolver._throwModNotFoundError (../../../node_modules/.pnpm/jest-resolve@29.7.0/node_modules/jest-resolve/build/resolver.js:427:11)
+      at Object.require (tests/setup.ts:2:72)
+
+FAIL tests/shell.test.tsx
+  ● Test suite failed to run
+
+    Cannot find module '@babel/runtime/helpers/interopRequireDefault' from 'tests/setup.ts'
+
+      1 | import mockSafeAreaContext from 'react-native-safe-area-context/jest/mock';
+    > 2 | jest.mock('react-native-safe-area-context', () => mockSafeAreaContext);
+        |                                                                        ^
+      3 |
+
+      at Resolver._throwModNotFoundError (../../../node_modules/.pnpm/jest-resolve@29.7.0/node_modules/jest-resolve/build/resolver.js:427:11)
+      at Object.require (tests/setup.ts:2:72)
+
+FAIL tests/connectedMemoryUI.test.tsx
+  ● Test suite failed to run
+
+    Cannot find module '@babel/runtime/helpers/interopRequireDefault' from 'tests/setup.ts'
+
+      1 | import mockSafeAreaContext from 'react-native-safe-area-context/jest/mock';
+    > 2 | jest.mock('react-native-safe-area-context', () => mockSafeAreaContext);
+        |                                                                        ^
+      3 |
+
+      at Resolver._throwModNotFoundError (../../../node_modules/.pnpm/jest-resolve@29.7.0/node_modules/jest-resolve/build/resolver.js:427:11)
+      at Object.require (tests/setup.ts:2:72)
+
+FAIL tests/filePicker.test.ts
+  ● Test suite failed to run
+
+    Cannot find module '@babel/runtime/helpers/interopRequireDefault' from 'tests/setup.ts'
+
+      1 | import mockSafeAreaContext from 'react-native-safe-area-context/jest/mock';
+    > 2 | jest.mock('react-native-safe-area-context', () => mockSafeAreaContext);
+        |                                                                        ^
+      3 |
+
+      at Resolver._throwModNotFoundError (../../../node_modules/.pnpm/jest-resolve@29.7.0/node_modules/jest-resolve/build/resolver.js:427:11)
+      at Object.require (tests/setup.ts:2:72)
+
+FAIL tests/sessionIsolation.test.ts
+  ● Test suite failed to run
+
+    Cannot find module '@babel/runtime/helpers/interopRequireDefault' from 'tests/setup.ts'
+
+      1 | import mockSafeAreaContext from 'react-native-safe-area-context/jest/mock';
+    > 2 | jest.mock('react-native-safe-area-context', () => mockSafeAreaContext);
+        |                                                                        ^
+      3 |
+
+      at Resolver._throwModNotFoundError (../../../node_modules/.pnpm/jest-resolve@29.7.0/node_modules/jest-resolve/build/resolver.js:427:11)
+      at Object.require (tests/setup.ts:2:72)
+
+FAIL tests/integration.test.tsx
+  ● Test suite failed to run
+
+    Cannot find module '@babel/runtime/helpers/interopRequireDefault' from 'tests/setup.ts'
+
+      1 | import mockSafeAreaContext from 'react-native-safe-area-context/jest/mock';
+    > 2 | jest.mock('react-native-safe-area-context', () => mockSafeAreaContext);
+        |                                                                        ^
+      3 |
+
+      at Resolver._throwModNotFoundError (../../../node_modules/.pnpm/jest-resolve@29.7.0/node_modules/jest-resolve/build/resolver.js:427:11)
+      at Object.require (tests/setup.ts:2:72)
+
+FAIL tests/fullMobileIntegration.test.ts
+  ● Test suite failed to run
+
+    Cannot find module '@babel/runtime/helpers/interopRequireDefault' from 'tests/setup.ts'
+
+      1 | import mockSafeAreaContext from 'react-native-safe-area-context/jest/mock';
+    > 2 | jest.mock('react-native-safe-area-context', () => mockSafeAreaContext);
+        |                                                                        ^
+      3 |
+
+      at Resolver._throwModNotFoundError (../../../node_modules/.pnpm/jest-resolve@29.7.0/node_modules/jest-resolve/build/resolver.js:427:11)
+      at Object.require (tests/setup.ts:2:72)
+
+FAIL tests/sseParser.test.ts
+  ● Test suite failed to run
+
+    Cannot find module '@babel/runtime/helpers/interopRequireDefault' from 'tests/setup.ts'
+
+      1 | import mockSafeAreaContext from 'react-native-safe-area-context/jest/mock';
+    > 2 | jest.mock('react-native-safe-area-context', () => mockSafeAreaContext);
+        |                                                                        ^
+      3 |
+
+      at Resolver._throwModNotFoundError (../../../node_modules/.pnpm/jest-resolve@29.7.0/node_modules/jest-resolve/build/resolver.js:427:11)
+      at Object.require (tests/setup.ts:2:72)
+
+FAIL tests/controls.test.tsx
+  ● Test suite failed to run
+
+    Cannot find module '@babel/runtime/helpers/interopRequireDefault' from 'tests/setup.ts'
+
+      1 | import mockSafeAreaContext from 'react-native-safe-area-context/jest/mock';
+    > 2 | jest.mock('react-native-safe-area-context', () => mockSafeAreaContext);
+        |                                                                        ^
+      3 |
+
+      at Resolver._throwModNotFoundError (../../../node_modules/.pnpm/jest-resolve@29.7.0/node_modules/jest-resolve/build/resolver.js:427:11)
+      at Object.require (tests/setup.ts:2:72)
+
+FAIL tests/connectedImportUI.test.tsx
+  ● Test suite failed to run
+
+    Cannot find module '@babel/runtime/helpers/interopRequireDefault' from 'tests/setup.ts'
+
+      1 | import mockSafeAreaContext from 'react-native-safe-area-context/jest/mock';
+    > 2 | jest.mock('react-native-safe-area-context', () => mockSafeAreaContext);
+        |                                                                        ^
+      3 |
+
+      at Resolver._throwModNotFoundError (../../../node_modules/.pnpm/jest-resolve@29.7.0/node_modules/jest-resolve/build/resolver.js:427:11)
+      at Object.require (tests/setup.ts:2:72)
+
+FAIL tests/relationship.test.tsx
+  ● Test suite failed to run
+
+    Cannot find module '@babel/runtime/helpers/interopRequireDefault' from 'tests/setup.ts'
+
+      1 | import mockSafeAreaContext from 'react-native-safe-area-context/jest/mock';
+    > 2 | jest.mock('react-native-safe-area-context', () => mockSafeAreaContext);
+        |                                                                        ^
+      3 |
+
+      at Resolver._throwModNotFoundError (../../../node_modules/.pnpm/jest-resolve@29.7.0/node_modules/jest-resolve/build/resolver.js:427:11)
+      at Object.require (tests/setup.ts:2:72)
+
+FAIL tests/connectedChatUI.test.tsx
+  ● Test suite failed to run
+
+    Cannot find module '@babel/runtime/helpers/interopRequireDefault' from 'tests/setup.ts'
+
+      1 | import mockSafeAreaContext from 'react-native-safe-area-context/jest/mock';
+    > 2 | jest.mock('react-native-safe-area-context', () => mockSafeAreaContext);
+        |                                                                        ^
+      3 |
+
+      at Resolver._throwModNotFoundError (../../../node_modules/.pnpm/jest-resolve@29.7.0/node_modules/jest-resolve/build/resolver.js:427:11)
+      at Object.require (tests/setup.ts:2:72)
+
+FAIL tests/nativeSseObserver.test.ts
+  ● Test suite failed to run
+
+    Cannot find module '@babel/runtime/helpers/interopRequireDefault' from 'tests/setup.ts'
+
+      1 | import mockSafeAreaContext from 'react-native-safe-area-context/jest/mock';
+    > 2 | jest.mock('react-native-safe-area-context', () => mockSafeAreaContext);
+        |                                                                        ^
+      3 |
+
+      at Resolver._throwModNotFoundError (../../../node_modules/.pnpm/jest-resolve@29.7.0/node_modules/jest-resolve/build/resolver.js:427:11)
+      at Object.require (tests/setup.ts:2:72)
+
+FAIL tests/resourceNames.test.ts
+  ● Test suite failed to run
+
+    Cannot find module '@babel/runtime/helpers/interopRequireDefault' from 'tests/setup.ts'
+
+      1 | import mockSafeAreaContext from 'react-native-safe-area-context/jest/mock';
+    > 2 | jest.mock('react-native-safe-area-context', () => mockSafeAreaContext);
+        |                                                                        ^
+      3 |
+
+      at Resolver._throwModNotFoundError (../../../node_modules/.pnpm/jest-resolve@29.7.0/node_modules/jest-resolve/build/resolver.js:427:11)
+      at Object.require (tests/setup.ts:2:72)
+
+FAIL tests/authPrivacy.test.ts
+  ● Test suite failed to run
+
+    Cannot find module '@babel/runtime/helpers/interopRequireDefault' from 'tests/setup.ts'
+
+      1 | import mockSafeAreaContext from 'react-native-safe-area-context/jest/mock';
+    > 2 | jest.mock('react-native-safe-area-context', () => mockSafeAreaContext);
+        |                                                                        ^
+      3 |
+
+      at Resolver._throwModNotFoundError (../../../node_modules/.pnpm/jest-resolve@29.7.0/node_modules/jest-resolve/build/resolver.js:427:11)
+      at Object.require (tests/setup.ts:2:72)
+
+FAIL tests/resourceAdmission.test.ts
+  ● Test suite failed to run
+
+    Cannot find module '@babel/runtime/helpers/interopRequireDefault' from 'tests/setup.ts'
+
+      1 | import mockSafeAreaContext from 'react-native-safe-area-context/jest/mock';
+    > 2 | jest.mock('react-native-safe-area-context', () => mockSafeAreaContext);
+        |                                                                        ^
+      3 |
+
+      at Resolver._throwModNotFoundError (../../../node_modules/.pnpm/jest-resolve@29.7.0/node_modules/jest-resolve/build/resolver.js:427:11)
+      at Object.require (tests/setup.ts:2:72)
+
+FAIL tests/erasureContract.test.ts
+  ● Test suite failed to run
+
+    Cannot find module '@babel/runtime/helpers/interopRequireDefault' from 'tests/setup.ts'
+
+      1 | import mockSafeAreaContext from 'react-native-safe-area-context/jest/mock';
+    > 2 | jest.mock('react-native-safe-area-context', () => mockSafeAreaContext);
+        |                                                                        ^
+      3 |
+
+      at Resolver._throwModNotFoundError (../../../node_modules/.pnpm/jest-resolve@29.7.0/node_modules/jest-resolve/build/resolver.js:427:11)
+      at Object.require (tests/setup.ts:2:72)
+
+FAIL tests/uploadSecurity.test.ts
+  ● Test suite failed to run
+
+    Cannot find module '@babel/runtime/helpers/interopRequireDefault' from 'tests/setup.ts'
+
+      1 | import mockSafeAreaContext from 'react-native-safe-area-context/jest/mock';
+    > 2 | jest.mock('react-native-safe-area-context', () => mockSafeAreaContext);
+        |                                                                        ^
+      3 |
+
+      at Resolver._throwModNotFoundError (../../../node_modules/.pnpm/jest-resolve@29.7.0/node_modules/jest-resolve/build/resolver.js:427:11)
+      at Object.require (tests/setup.ts:2:72)
+
+
+Test Suites: 26 failed, 26 total
+Tests:       0 total
+Snapshots:   0 total
+Time:        3.421 s
+Ran all test suites.

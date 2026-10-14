@@ -1,0 +1,45 @@
+Diagnostic bootstrap reached
+Pytest imported
+Timeout (0:00:30)!
+Thread 0x00004c04 [AnyIO worker thread] (most recent call first):
+  File "F:\\u72d7\u5934\u519b\u5e08app\u5316\goutouapp\.venv\Lib\site-packages\psycopg\_connection_base.py", line 439 in _connect_gen
+  File "F:\\u72d7\u5934\u519b\u5e08app\u5316\goutouapp\.venv\Lib\site-packages\psycopg\waiting.py", line 136 in wait_conn
+  File "F:\\u72d7\u5934\u519b\u5e08app\u5316\goutouapp\.venv\Lib\site-packages\psycopg\connection.py", line 109 in connect
+  File "F:\\u72d7\u5934\u519b\u5e08app\u5316\goutouapp\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 857 in connect
+  File "F:\\u72d7\u5934\u519b\u5e08app\u5316\goutouapp\.venv\Lib\site-packages\sqlalchemy\engine\create.py", line 645 in connect
+  File "F:\\u72d7\u5934\u519b\u5e08app\u5316\goutouapp\.venv\Lib\site-packages\sqlalchemy\pool\base.py", line 891 in __connect
+  File "F:\\u72d7\u5934\u519b\u5e08app\u5316\goutouapp\.venv\Lib\site-packages\sqlalchemy\pool\base.py", line 671 in __init__
+  File "__init__", line ??? in __init__
+  <invalid frame>
+
+Thread 0x000026b4 [asyncio-portal-16fc123c280] (most recent call first):
+  File "E:\python\Lib\asyncio\windows_events.py", line 778 in _poll
+  File "E:\python\Lib\asyncio\windows_events.py", line 446 in select
+  File "E:\python\Lib\asyncio\base_events.py", line 2019 in _run_once
+  File "E:\python\Lib\asyncio\base_events.py", line 678 in run_forever
+  File "E:\python\Lib\asyncio\base_events.py", line 707 in run_until_complete
+  File "E:\python\Lib\asyncio\runners.py", line 128 in run
+  File "F:\\u72d7\u5934\u519b\u5e08app\u5316\goutouapp\.venv\Lib\site-packages\anyio\_backends\_asyncio.py", line 2548 in run
+  File "F:\\u72d7\u5934\u519b\u5e08app\u5316\goutouapp\.venv\Lib\site-packages\anyio\_core\_eventloop.py", line 83 in run
+  File "F:\\u72d7\u5934\u519b\u5e08app\u5316\goutouapp\.venv\Lib\site-packages\anyio\from_thread.py", line 538 in run_blocking_portal
+  File "E:\python\Lib\threading.py", line 1024 in run
+  File "E:\python\Lib\threading.py", line 1082 in _bootstrap_inner
+  File "E:\python\Lib\threading.py", line 1044 in _bootstrap
+
+Thread 0x00004af8 (most recent call first):
+  File "E:\python\Lib\threading.py", line 369 in wait
+  File "E:\python\Lib\concurrent\futures\_base.py", line 449 in result
+  File "F:\\u72d7\u5934\u519b\u5e08app\u5316\goutouapp\.venv\Lib\site-packages\anyio\from_thread.py", line 340 in call
+  File "F:\\u72d7\u5934\u519b\u5e08app\u5316\goutouapp\.venv\Lib\site-packages\starlette\testclient.py", line 357 in handle_request
+  File "F:\\u72d7\u5934\u519b\u5e08app\u5316\goutouapp\.venv\Lib\site-packages\httpx2\_client.py", line 1076 in _send_single_request
+  File "F:\\u72d7\u5934\u519b\u5e08app\u5316\goutouapp\.venv\Lib\site-packages\httpx2\_client.py", line 1043 in _send_handling_redirects
+  File "F:\\u72d7\u5934\u519b\u5e08app\u5316\goutouapp\.venv\Lib\site-packages\httpx2\_client.py", line 1008 in _send_handling_auth
+  File "F:\\u72d7\u5934\u519b\u5e08app\u5316\goutouapp\.venv\Lib\site-packages\httpx2\_client.py", line 980 in send
+  File "F:\\u72d7\u5934\u519b\u5e08app\u5316\goutouapp\.venv\Lib\site-packages\httpx2\_client.py", line 797 in request
+  File "F:\\u72d7\u5934\u519b\u5e08app\u5316\goutouapp\.venv\Lib\site-packages\starlette\testclient.py", line 463 in request
+  File "F:\\u72d7\u5934\u519b\u5e08app\u5316\goutouapp\apps\server\resource_demo_support.py", line 50 in call
+  File "F:\\u72d7\u5934\u519b\u5e08app\u5316\goutouapp\.cache\phase9f_resource_probe_warm.py", line 8 in warm
+  File "__init__", line ??? in __init__
+  <invalid frame>
+........................................................................................................................................................................................................................................................................................................................................................................
+360 passed, 3240 deselected in 54.62s

@@ -7,6 +7,7 @@ Physical files remain charged after failed deletion or worker death.
 import math
 import secrets
 import shutil
+import stat as file_stat
 import tempfile
 from collections import Counter
 from dataclasses import dataclass
@@ -152,13 +153,19 @@ class ResourceAdmission:
         # Include pre-9C artifacts and deleted/expired metadata: disk is authority.
         files = []
         for path in self.root.iterdir():
-            if (
-                len(files) >= self.settings.admission_inventory_limit
-                or path.is_symlink()
-                or not path.is_file()
+            try:
+                stat = path.lstat()
+            except FileNotFoundError:
+                # A live upload may atomically rename its .part to .bin while
+                # another worker inventories. Its full reservation stays charged.
+                # Unknown or inactive disappearing files still fail closed.
+                if any(row.artifact_key == path.stem for row in active):
+                    continue
+                raise AdmissionRejected() from None
+            if len(files) >= self.settings.admission_inventory_limit or not file_stat.S_ISREG(
+                stat.st_mode
             ):
                 raise AdmissionRejected()
-            stat = path.stat()
             files.append(
                 (path.stem, max(stat.st_size, math.ceil(stat.st_size / 4096) * 4096) + 4096)
             )

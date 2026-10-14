@@ -58,6 +58,7 @@ AUTHORIZATION_SECURITY = (ROOT / "apps/server/tests/test_authorization_security.
 RESOURCE_ADMISSION = (ROOT / "apps/server/tests/test_resource_admission.py").is_file()
 DATA_LIFECYCLE = (ROOT / "apps/server/tests/test_data_lifecycle.py").is_file()
 DATA_ERASURE = (ROOT / "apps/server/tests/test_erasure.py").is_file()
+MOBILE_ERASURE = (ROOT / "apps/mobile/src/data/erasureController.ts").is_file()
 MEMORY_GATE_FILES = (
     "apps/mobile/src/api/memoryAdapter.ts",
     "apps/mobile/src/api/memoryErrors.ts",
@@ -206,40 +207,44 @@ def native_closeout_check() -> None:
 
 
 def phase_marker_check() -> None:
-    if PHASE > 8 or (PHASE == 8 and SUBPHASE not in {"8F", "9A", "9B", "9C", "9D", "9E"}):
+    if PHASE > 8 or (PHASE == 8 and SUBPHASE not in {"8F", "9A", "9B", "9C", "9D", "9E", "9F"}):
         raise RuntimeError(
-            "Phase 8 requires 8F closeout; only Phase 9A/9B/9C/9D/9E are implemented"
+            "Phase 8 requires 8F closeout; only Phase 9A/9B/9C/9D/9E/9F are implemented"
         )
-    if SUBPHASE in {"9A", "9B", "9C", "9D", "9E"}:
+    if SUBPHASE in {"9A", "9B", "9C", "9D", "9E", "9F"}:
         if PHASE != 8 or not UPLOAD_SECURITY:
             raise RuntimeError("Phase 9A requires completed Phase 8 and security gates")
         from check_security_9a import check
 
         check(completed=True)
-    if SUBPHASE in {"9B", "9C", "9D", "9E"}:
+    if SUBPHASE in {"9B", "9C", "9D", "9E", "9F"}:
         if PHASE != 8 or not AUTHORIZATION_SECURITY:
             raise RuntimeError("Phase 9B requires completed Phase 8/9A and security gates")
         from check_security_9b import check as check_9b
 
         check_9b(completed=True)
-    if SUBPHASE in {"9C", "9D", "9E"}:
+    if SUBPHASE in {"9C", "9D", "9E", "9F"}:
         if PHASE != 8 or not RESOURCE_ADMISSION:
             raise RuntimeError("Phase9C requires completed8/9B and resource security gates")
         from check_security_9c import check as check_9c
 
         check_9c(completed=True)
-    if SUBPHASE in {"9D", "9E"}:
+    if SUBPHASE in {"9D", "9E", "9F"}:
         if PHASE != 8 or not DATA_LIFECYCLE:
             raise RuntimeError("Phase9D requires completed8/9C and lifecycle gates")
         from check_security_9d import check as check_9d
 
         check_9d(completed=True)
-    if SUBPHASE == "9E":
+    if SUBPHASE in {"9E", "9F"}:
         if PHASE != 8 or not DATA_ERASURE:
             raise RuntimeError("Phase9E requires completed8/9D and erasure gates")
         from check_security_9e import check as check_9e
 
         check_9e(completed=True)
+    if SUBPHASE == "9F":
+        from check_security_9f import check as check_9f
+
+        check_9f(completed=True)
     if PHASE == 8:
         if not all(
             (
@@ -452,6 +457,14 @@ def tests() -> None:
         uv_run("python", "scripts/check_security_9e.py")
         uv_run("pytest", "-q", "apps/server/tests/test_erasure.py")
         uv_run("python", "apps/server/erasure_demo.py")
+    if MOBILE_ERASURE:
+        uv_run("python", "scripts/check_security_9f.py")
+        uv_run(
+            "pytest",
+            "-q",
+            "apps/server/tests/test_dataset_discovery.py",
+            "apps/server/tests/test_admission_rename_regression.py",
+        )
     if MEMORY_CONTROL_API:
         uv_run("pytest", "-q", "apps/server/tests/test_memory_control.py")
         uv_run("python", "apps/server/memory_control_demo.py")
@@ -510,6 +523,7 @@ def lint() -> None:
         "scripts/check_security_9c.py",
         "scripts/check_security_9d.py",
         "scripts/check_security_9e.py",
+        "scripts/check_security_9f.py",
         "scripts/phase9b_android_smoke.py",
     )
     uv_run(
@@ -540,6 +554,7 @@ def lint() -> None:
         "scripts/check_security_9c.py",
         "scripts/check_security_9d.py",
         "scripts/check_security_9e.py",
+        "scripts/check_security_9f.py",
         "scripts/phase9b_android_smoke.py",
     )
 
@@ -646,6 +661,12 @@ def verify() -> None:
         run([pnpm, "--filter", "@goutou/mobile", "run", "smoke:final"])
         print("PASS: Phase 8F real Connected six-surface Web integration")
         print("PHASE 8 FINAL: Android acceptance remains a separate required gate")
+    if MOBILE_ERASURE:
+        pnpm = shutil.which("pnpm")
+        if not pnpm:
+            raise RuntimeError("pnpm is required for Mobile erasure E2E")
+        run([pnpm, "--filter", "@goutou/mobile", "run", "smoke:erasure"])
+        print("PASS: Phase9F Mobile self-service erasure gates")
     if DATABASE_FOUNDATION:
         print("PASS: PostgreSQL migration and integration gate")
     elif BACKEND_FOUNDATION:

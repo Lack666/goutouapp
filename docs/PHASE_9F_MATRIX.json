@@ -1,0 +1,1209 @@
+{
+  "recorded_at_utc": "2026-10-14T10:25:42.153649+00:00",
+  "phase": "9F",
+  "status": "PASS",
+  "acceptance_state": "closed",
+  "open_p0_p1": [],
+  "baseline": {
+    "exit_code": 1,
+    "log": {
+      "path": "docs/evidence/phase9f/phase9f-baseline-r4.log",
+      "sha256": "dba4d48c6a46829b1c5e5f3bf1ca77f4650e0a3982da160037a9446899d8215b"
+    },
+    "exit": {
+      "path": "docs/evidence/phase9f/phase9f-baseline-r4.exit",
+      "sha256": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04"
+    },
+    "commit": "a6d8c2c",
+    "status": "FAIL; explicit pre-existing upload promotion/inventory race"
+  },
+  "fixed_baseline_issue": {
+    "id": "9F-01",
+    "severity": "P2 controlled local reliability",
+    "cause": "Atomic part-to-bin promotion raced separate is_file/stat inventory calls",
+    "fix": "Single no-follow stat; vanished live fully charged reservation only; unknown remains refused",
+    "test": "apps/server/tests/test_admission_rename_regression.py",
+    "regression": {
+      "exit_code": 0,
+      "log": {
+        "path": "docs/evidence/phase9f/phase9f-rename.log",
+        "sha256": "06c2f965ff1eb07a6b0d49defa971979403f12e5829c49c8f5e5a3ec90eff2be"
+      },
+      "exit": {
+        "path": "docs/evidence/phase9f/phase9f-rename.exit",
+        "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+      }
+    }
+  },
+  "baseline_mobile": {
+    "exit_code": 0,
+    "log": {
+      "path": "docs/evidence/phase9f/phase9f-baseline-mobile-r3.log",
+      "sha256": "ac435f288dff64aecbfd5f60a9854503389294f563df225797e03d2674932a46"
+    },
+    "exit": {
+      "path": "docs/evidence/phase9f/phase9f-baseline-mobile-r3.exit",
+      "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+    }
+  },
+  "baseline_repository": {
+    "exit_code": 0,
+    "log": {
+      "path": "docs/evidence/phase9f/phase9f-baseline-repository.log",
+      "sha256": "30b1c1ae5e8d16859cf1c6f9644fea1dc4afaca127532e1ba13444af45bdeec3"
+    },
+    "exit": {
+      "path": "docs/evidence/phase9f/phase9f-baseline-repository.exit",
+      "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+    }
+  },
+  "baseline_golden": {
+    "exit_code": 0,
+    "log": {
+      "path": "docs/evidence/phase9f/phase9f-baseline-golden.log",
+      "sha256": "0c47de4f3a2a7907df2d820c65685d9b8fefa6feda1c58511d6937b44794bd20"
+    },
+    "exit": {
+      "path": "docs/evidence/phase9f/phase9f-baseline-golden.exit",
+      "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+    }
+  },
+  "source_fingerprint": "4d3c3af1bf7de1d88fcbd41b53737876d553f74e9b78aab37365271b50517dd7",
+  "historical_native_matrix_sha256": "876ee7685da85f6811653220149d5f994d88a1da900238606b68620900e68909",
+  "admission_revalidation": {
+    "exit_code": 0,
+    "log": {
+      "path": "docs/evidence/phase9f/phase9f-admission-r2.log",
+      "sha256": "dbe39a8f095ea2e56a5c6d322bc8608c08818d76cc41601907a64000985147b5"
+    },
+    "exit": {
+      "path": "docs/evidence/phase9f/phase9f-admission-r2.exit",
+      "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+    },
+    "source_fingerprint": "66cd9d02a81116a8c6d07214d4ff566859ed81591d7666a8f4a04415625a5313",
+    "historical_matrix_sha256": "86bc4b9ce89c3c94d804291b9b6c6791d6b380550b529fac2ef60053bff78fa2"
+  },
+  "lifecycle_revalidation": {
+    "exit_code": 0,
+    "log": {
+      "path": "docs/evidence/phase9f/phase9f-lifecycle-r4.log",
+      "sha256": "ab26fb1e2d3a6f0aee6f2ba3a15cb3cfdfcdf9bfb5c4e22c7d312cf60ae1ce9b"
+    },
+    "exit": {
+      "path": "docs/evidence/phase9f/phase9f-lifecycle-r4.exit",
+      "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+    },
+    "source_fingerprint": "d02bc60090367547d3d4aeead0fac971de5477a1d8be987bca7d4617c4a7cad3",
+    "historical_matrix_sha256": "298bdcdad4a2dc99a51da61cf7d183abf1e3402b72fdd5e5f48f86b5e8236903"
+  },
+  "erasure_revalidation": {
+    "exit_code": 0,
+    "log": {
+      "path": "docs/evidence/phase9f/phase9f-erasure-r4.log",
+      "sha256": "7e3ce07a2bb657402952f20afa264432624317d58d5152569ad1a9b9c76b617a"
+    },
+    "exit": {
+      "path": "docs/evidence/phase9f/phase9f-erasure-r4.exit",
+      "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+    },
+    "source_fingerprint": "b62e367ad4e9018f82319c1099b58c3b746bad0c0b57cfa508c7fc9672cde605",
+    "historical_matrix_sha256": "2bbd4a27a96e33468faf29558b3f48c82a8b5b46eb0a9e68e4d117aac7ad283a"
+  },
+  "discovery": {
+    "exit_code": 0,
+    "log": {
+      "path": "docs/evidence/phase9f/phase9f-discovery-r2.log",
+      "sha256": "a63640c5a1be2ff49285af33b7f4ab342ff988579ebc3b4149e4b2ca65bd4d7a"
+    },
+    "exit": {
+      "path": "docs/evidence/phase9f/phase9f-discovery-r2.exit",
+      "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+    }
+  },
+  "web": {
+    "exit_code": 0,
+    "log": {
+      "path": "docs/evidence/phase9f/phase9f-web-compat-erasure-r1.log",
+      "sha256": "7dbf917e42ec7d2d98b5c7b43e6f3da36639fe8f0fb120a7a27112d8cdf4434c"
+    },
+    "exit": {
+      "path": "docs/evidence/phase9f/phase9f-web-compat-erasure-r1.exit",
+      "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+    }
+  },
+  "backend": {
+    "exit_code": 0,
+    "log": {
+      "path": "docs/evidence/phase9f/phase9f-backend-r2.log",
+      "sha256": "52b74717064b246eebd9a57ba24a3709abb4a68089ce77ee3f045a9b5bfa1853"
+    },
+    "exit": {
+      "path": "docs/evidence/phase9f/phase9f-backend-r2.exit",
+      "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+    }
+  },
+  "mobile": {
+    "exit_code": 0,
+    "log": {
+      "path": "docs/evidence/phase9f/phase9f-mobile-r4.log",
+      "sha256": "5143046b7e860ffcf5c4390827b36a807858370f373d27d588ac56fa4a349a1e"
+    },
+    "exit": {
+      "path": "docs/evidence/phase9f/phase9f-mobile-r4.exit",
+      "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+    }
+  },
+  "repository": {
+    "exit_code": 0,
+    "log": {
+      "path": "docs/evidence/phase9f/phase9f-repository-r7.log",
+      "sha256": "e46153b6d9dc06f466ba59e107a14b6454fad2a5f55c0075407751ac46fa31e0"
+    },
+    "exit": {
+      "path": "docs/evidence/phase9f/phase9f-repository-r7.exit",
+      "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+    }
+  },
+  "resource_concurrency_precondition": {
+    "exit_code": 0,
+    "log": {
+      "path": "docs/evidence/phase9f/phase9f-resource-precondition-r1.log",
+      "sha256": "f7470b92a1e7fe3ac3499b795f24e5a7f89364869fe301cea73b63397e6f7149"
+    },
+    "exit": {
+      "path": "docs/evidence/phase9f/phase9f-resource-precondition-r1.exit",
+      "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+    },
+    "helper_sha256": "6d90d2b1bb4d4010c4a2c6ff3821f2960f77978812b4ac8dfff9b6e4ad8b8807",
+    "scope": "Test/demo-only signed read-only warmup; original mutation responses/assertions untouched, no retries or production timeout changes",
+    "diagnostic_unwarmed": {
+      "exit_code": 1,
+      "log": {
+        "path": "docs/evidence/phase9f/phase9f-resource-probe-r2.log",
+        "sha256": "f0724953469a0c8e8be7c721dc9553607f9ffbdd62b1fd39733e2e7968e3369f"
+      },
+      "exit": {
+        "path": "docs/evidence/phase9f/phase9f-resource-probe-r2.exit",
+        "sha256": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04"
+      }
+    },
+    "diagnostic_warmed": {
+      "exit_code": 0,
+      "log": {
+        "path": "docs/evidence/phase9f/phase9f-resource-probe-warm-r1.log",
+        "sha256": "e21ec0b45940ae3684859cb224cca3d0771222e63683b3df5b3f50defd3fd5b9"
+      },
+      "exit": {
+        "path": "docs/evidence/phase9f/phase9f-resource-probe-warm-r1.exit",
+        "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+      }
+    }
+  },
+  "delivery": "Connected React Native + unchanged guarded ErasureService",
+  "production_acceptable": false,
+  "production_blockers": [
+    "R-06 monitored retention/scheduling/encrypted rotation",
+    "R-07 trusted ingress/host sizing/supervision",
+    "R-08 future imported analysis/provider controls",
+    "R-09 production identity/full-account erasure/independent deletion journal/primary-loss restore",
+    "R-10 unresolved Run reconciliation"
+  ],
+  "full_account_erasure": false,
+  "production_disaster_recovery": false,
+  "independent_deletion_journal": false,
+  "native": {
+    "status": "PASS",
+    "device": "emulator-5554 Android API37 / Expo Go; localhost reverse + IPv6 loopback relay",
+    "synthetic_only": true,
+    "mobile_fingerprint": "8073589bfdec57dd640ec60ee5294720b7df56a0bb305919831223ed0ff4e1f4",
+    "scenes": [
+      {
+        "scene": "resource_create",
+        "status": "PASS",
+        "exit_code": 0,
+        "preconditions": "Disposable signed owner fixtures; host setup explicitly marked; actual Android App UI actions",
+        "actual": "All commands and assertions completed independently; SQL and signed wire evidence retained",
+        "artifacts": {
+          "steps": {
+            "path": "docs/evidence/phase9f/phase9b-android-9f-r3-resource_create.steps.json",
+            "sha256": "e0f55db5b89259604c55415ff9a0cd7f81f3fa1062c24a83b52ff090e6e38097"
+          },
+          "report": {
+            "path": "docs/evidence/phase9f/phase9b-android-9f-r3-resource_create.json",
+            "sha256": "a186a20969d283f59cd815ec3f2759314b966c854e06fb455d04ca50c4913f82"
+          },
+          "log": {
+            "path": "docs/evidence/phase9f/phase9b-android-9f-r3-resource_create.log",
+            "sha256": "b9d45ed4d1a9a9f80a5fbb62ebbbf3ef1fbf7f7716ca5d3081b00228f2dc4b21"
+          },
+          "exit": {
+            "path": "docs/evidence/phase9f/phase9b-android-9f-r3-resource_create.exit",
+            "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+          }
+        }
+      },
+      {
+        "scene": "sse_normal",
+        "status": "PASS",
+        "exit_code": 0,
+        "preconditions": "Disposable signed owner fixtures; host setup explicitly marked; actual Android App UI actions",
+        "actual": "All commands and assertions completed independently; SQL and signed wire evidence retained",
+        "artifacts": {
+          "steps": {
+            "path": "docs/evidence/phase9f/phase9b-android-9f-r3-sse_normal.steps.json",
+            "sha256": "68b07361d3fd4eb549801917fbfb297d4bc8d699d784004d2ce58396fe57bfad"
+          },
+          "report": {
+            "path": "docs/evidence/phase9f/phase9b-android-9f-r3-sse_normal.json",
+            "sha256": "aef937beebd890c968ff042c3565c145c70dc8ab8765a5bd88405ef115613e0c"
+          },
+          "log": {
+            "path": "docs/evidence/phase9f/phase9b-android-9f-r3-sse_normal.log",
+            "sha256": "86a89a9fce5820324060bad5fed611f5e86968ecd291f6ce4f702bec12f63f4c"
+          },
+          "exit": {
+            "path": "docs/evidence/phase9f/phase9b-android-9f-r3-sse_normal.exit",
+            "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+          }
+        }
+      },
+      {
+        "scene": "memory_smoke_revoke",
+        "status": "PASS",
+        "exit_code": 0,
+        "preconditions": "Disposable signed owner fixtures; host setup explicitly marked; actual Android App UI actions",
+        "actual": "All commands and assertions completed independently; SQL and signed wire evidence retained",
+        "artifacts": {
+          "steps": {
+            "path": "docs/evidence/phase9f/phase9b-android-9f-r3-memory_smoke_revoke.steps.json",
+            "sha256": "605fbe95c53c6552cb89bc344a71346416c0df3e2bb5927994ce4a1fef642537"
+          },
+          "report": {
+            "path": "docs/evidence/phase9f/phase9b-android-9f-r3-memory_smoke_revoke.json",
+            "sha256": "cee33678b4504e054f64ef71095dd2dcf1d7c7abc8af00a0b85fd814efbda72d"
+          },
+          "log": {
+            "path": "docs/evidence/phase9f/phase9b-android-9f-r3-memory_smoke_revoke.log",
+            "sha256": "8e5291f8e3e5dcaaefaf2c89333a9413deea797154337a4069cfa90e380ec12d"
+          },
+          "exit": {
+            "path": "docs/evidence/phase9f/phase9b-android-9f-r3-memory_smoke_revoke.exit",
+            "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+          }
+        }
+      },
+      {
+        "scene": "session",
+        "status": "PASS",
+        "exit_code": 0,
+        "preconditions": "Disposable signed owner fixtures; host setup explicitly marked; actual Android App UI actions",
+        "actual": "All commands and assertions completed independently; SQL and signed wire evidence retained",
+        "artifacts": {
+          "steps": {
+            "path": "docs/evidence/phase9f/phase9b-android-9f-r3-session.steps.json",
+            "sha256": "8d84af6416af2eea2e4cfa57f47a1d1f1a1d52a77d8174574d9b08e511069b55"
+          },
+          "report": {
+            "path": "docs/evidence/phase9f/phase9b-android-9f-r3-session.json",
+            "sha256": "70a7ff268afdb1b3fd8aa439de54b9870a289d9aba3752987794f19e03e699cd"
+          },
+          "log": {
+            "path": "docs/evidence/phase9f/phase9b-android-9f-r3-session.log",
+            "sha256": "aa5247a66f6f4304f090d40a5975619f56d1e5d27c4a82a5be13eb7008d80c46"
+          },
+          "exit": {
+            "path": "docs/evidence/phase9f/phase9b-android-9f-r3-session.exit",
+            "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+          }
+        }
+      },
+      {
+        "scene": "import_history",
+        "status": "PASS",
+        "exit_code": 0,
+        "preconditions": "Disposable signed owner fixtures; host setup explicitly marked; actual Android App UI actions",
+        "actual": "All commands and assertions completed independently; SQL and signed wire evidence retained",
+        "artifacts": {
+          "steps": {
+            "path": "docs/evidence/phase9f/phase9b-android-9f-r3-import_history.steps.json",
+            "sha256": "4c02c12405aeaeb3ce22e365360c97a12a2accafd0927799a68cd8f8c08521ab"
+          },
+          "report": {
+            "path": "docs/evidence/phase9f/phase9b-android-9f-r3-import_history.json",
+            "sha256": "92732623d1df2ae2464ba903d2862cc77dabc46b2e27bd69d7d1b8fe4220ef81"
+          },
+          "log": {
+            "path": "docs/evidence/phase9f/phase9b-android-9f-r3-import_history.log",
+            "sha256": "243fe851f275df1cb19d41a1d1aa59cb6285c0b81535589e2422256c7215b633"
+          },
+          "exit": {
+            "path": "docs/evidence/phase9f/phase9b-android-9f-r3-import_history.exit",
+            "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+          }
+        }
+      }
+    ]
+  },
+  "erasure_native": {
+    "status": "PASS",
+    "device": "emulator-5554 Android API37 / Expo Go; signed JWT / FastAPI / PostgreSQL",
+    "synthetic_only": true,
+    "source_fingerprint": "4d3c3af1bf7de1d88fcbd41b53737876d553f74e9b78aab37365271b50517dd7",
+    "scenes": [
+      {
+        "scene": "dataset",
+        "status": "PASS",
+        "exit_code": 0,
+        "preconditions": "Disposable signed owner fixtures; host setup explicitly marked; actual Android App UI actions",
+        "actual": "All commands and assertions completed independently; SQL and signed wire evidence retained",
+        "artifacts": {
+          "steps": {
+            "path": "docs/evidence/phase9f/phase9f_dataset.json",
+            "sha256": "a2599048fbf9776a9887d08bb01ebbec40cf5470fbf4624a0e308d77a54b7ff9"
+          },
+          "report": {
+            "path": "docs/evidence/phase9f/phase9f-native-dataset-r4.json",
+            "sha256": "6be86acb9b0bc0442a0f5b08ab3aa0cb59f21c58e32596e67150988a6e1aad3c"
+          },
+          "log": {
+            "path": "docs/evidence/phase9f/phase9f-native-dataset-r4.log",
+            "sha256": "0fe514fc7662fe7e61e30b4741dc7b2ead71e9fb391a54500767bf3cc952e54f"
+          },
+          "exit": {
+            "path": "docs/evidence/phase9f/phase9f-native-dataset-r4.exit",
+            "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+          }
+        }
+      },
+      {
+        "scene": "conversation",
+        "status": "PASS",
+        "exit_code": 0,
+        "preconditions": "Disposable signed owner fixtures; host setup explicitly marked; actual Android App UI actions",
+        "actual": "All commands and assertions completed independently; SQL and signed wire evidence retained",
+        "artifacts": {
+          "steps": {
+            "path": "docs/evidence/phase9f/phase9f_conversation.json",
+            "sha256": "51aac6699e7b161d5465434fec1c20ee9e10a0d1245771b490a0c72ddc33cfcb"
+          },
+          "report": {
+            "path": "docs/evidence/phase9f/phase9f-native-conversation-r2.json",
+            "sha256": "280b8e7556de826ba37f2a874c2f0b114aace2c415fc7406df259463e75b41d6"
+          },
+          "log": {
+            "path": "docs/evidence/phase9f/phase9f-native-conversation-r2.log",
+            "sha256": "963f38aec9c9ce0e1f0702e4529343d3506cd9e14e54ac51b99fdae4f29d94a6"
+          },
+          "exit": {
+            "path": "docs/evidence/phase9f/phase9f-native-conversation-r2.exit",
+            "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+          }
+        }
+      },
+      {
+        "scene": "faults",
+        "status": "PASS",
+        "exit_code": 0,
+        "preconditions": "Disposable signed owner fixtures; host setup explicitly marked; actual Android App UI actions",
+        "actual": "All commands and assertions completed independently; SQL and signed wire evidence retained",
+        "artifacts": {
+          "steps": {
+            "path": "docs/evidence/phase9f/phase9f_faults.json",
+            "sha256": "00aafd6f1ea1f715fff49a718f4067469a981e250a4349d1e96010c2f764e0a1"
+          },
+          "report": {
+            "path": "docs/evidence/phase9f/phase9f-native-faults-r2.json",
+            "sha256": "56e65824b8837a12ff28cf2d5cf5dd2bee0f44d6bce97d4430faf00d863774aa"
+          },
+          "log": {
+            "path": "docs/evidence/phase9f/phase9f-native-faults-r2.log",
+            "sha256": "5048942372d9ad90074b1e45c5b7556dabd3d37c6031929584244b7c16975fdc"
+          },
+          "exit": {
+            "path": "docs/evidence/phase9f/phase9f-native-faults-r2.exit",
+            "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+          }
+        }
+      },
+      {
+        "scene": "restart_session",
+        "status": "PASS",
+        "exit_code": 0,
+        "preconditions": "Disposable signed owner fixtures; host setup explicitly marked; actual Android App UI actions",
+        "actual": "All commands and assertions completed independently; SQL and signed wire evidence retained",
+        "artifacts": {
+          "steps": {
+            "path": "docs/evidence/phase9f/phase9f_restart_session.json",
+            "sha256": "f14c63d07225e3c2b8e16b91ab185ca35070064a3263ee3ec0d1e9dccda14fa0"
+          },
+          "report": {
+            "path": "docs/evidence/phase9f/phase9f-native-restart_session-r2.json",
+            "sha256": "adad5615372a241db860d40ccfec4973eb78a10ad9af76c27a1490410b7d5348"
+          },
+          "log": {
+            "path": "docs/evidence/phase9f/phase9f-native-restart_session-r2.log",
+            "sha256": "3060d92c394ad68ad0097a8237f18deceb60f5ffe942332240c004e90938fe78"
+          },
+          "exit": {
+            "path": "docs/evidence/phase9f/phase9f-native-restart_session-r2.exit",
+            "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+          }
+        }
+      }
+    ]
+  },
+  "known_validation_events": [
+    "Original-source baseline FAIL preserved; original Mobile374/repository80/Golden83 independent PASS",
+    "Initial backend and first root pre-marker verification each hit an old Person business-concurrency503; isolated repeat reproduced admission LockNotAvailable SQLSTATE55P03 at250ms. A read-only ResourceFlow warmup preserves every original mutation status/SQL assertion without retry, timeout or quota change. Precise historical uninstrumented cause is unconfirmed. New complete root pre/post remain mandatory",
+    "Initial Android ADB/Metro IPv6 and Web test-helper failures retained; final complete executions required",
+    "Final prior-native batch r2 failed session controls/login; diagnostic r4 confirmed unavailable accessibility hierarchy, device reboot restored complete diagnostic login. Earlier individual login-failure cause unconfirmed; failed reports retained and new independent r3 required",
+    "Second complete root pre-marker run passed Backend761/Mobile396/Doctor21/DemoWeb22 but failed the old Connected network allowlist on the new Dataset GET. Extended only the exact path with GET-only and observed-request assertions; all original status/count/owner checks retained. New independent Web groups and complete roots required.",
+    "First post-marker run failed two historical unit tests that still rejected explicitly authorized9F. Advanced only their future-phase rejection to9G, preserving every original security/native assertion. Marker reverted8/9E; affected lifecycle fingerprint independently revalidated; final complete pre/post repeated."
+  ],
+  "coverage": {
+    "controller": "apps/mobile/tests/erasureController.test.ts",
+    "late_events": "apps/mobile/tests/agentChat.test.ts",
+    "discovery": "apps/server/tests/test_dataset_discovery.py",
+    "web": "apps/mobile/erasure-connected/web.spec.ts",
+    "native": "scripts/native/phase9f_*.json",
+    "prior_contract": "apps/server/tests/test_erasure.py"
+  },
+  "web_compatibility": {
+    "connected": {
+      "exit_code": 0,
+      "log": {
+        "path": "docs/evidence/phase9f/phase9f-web-compat-connected-r1.log",
+        "sha256": "0059852535f86a444dd4a27e5e9a16353dcd8c8567b2145637f6d47c0f2deb72"
+      },
+      "exit": {
+        "path": "docs/evidence/phase9f/phase9f-web-compat-connected-r1.exit",
+        "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+      }
+    },
+    "agent": {
+      "exit_code": 0,
+      "log": {
+        "path": "docs/evidence/phase9f/phase9f-web-compat-agent-r1.log",
+        "sha256": "4e332bef5f25a7dfe9957b28dd78f961ee2518db73fe0d6a59935b5711828cc0"
+      },
+      "exit": {
+        "path": "docs/evidence/phase9f/phase9f-web-compat-agent-r1.exit",
+        "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+      }
+    },
+    "imports": {
+      "exit_code": 0,
+      "log": {
+        "path": "docs/evidence/phase9f/phase9f-web-compat-imports-r1.log",
+        "sha256": "20ab29b6c9e7debe4ea94ed5f332eddbd578e4bce8cc0fb8d954bfe84a81af49"
+      },
+      "exit": {
+        "path": "docs/evidence/phase9f/phase9f-web-compat-imports-r1.exit",
+        "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+      }
+    },
+    "memory": {
+      "exit_code": 0,
+      "log": {
+        "path": "docs/evidence/phase9f/phase9f-web-compat-memory-r1.log",
+        "sha256": "8bdca3420dd2e92ae6a8a289c6e4268396466b0eb6f626d08beb7f6b596c8b87"
+      },
+      "exit": {
+        "path": "docs/evidence/phase9f/phase9f-web-compat-memory-r1.exit",
+        "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+      }
+    },
+    "final": {
+      "exit_code": 0,
+      "log": {
+        "path": "docs/evidence/phase9f/phase9f-web-compat-final-r1.log",
+        "sha256": "e9f9707d9cee5f11321635676ca3ad67352588be0f1826d2caff37b2781c6703"
+      },
+      "exit": {
+        "path": "docs/evidence/phase9f/phase9f-web-compat-final-r1.exit",
+        "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+      }
+    },
+    "erasure": {
+      "exit_code": 0,
+      "log": {
+        "path": "docs/evidence/phase9f/phase9f-web-compat-erasure-r1.log",
+        "sha256": "7dbf917e42ec7d2d98b5c7b43e6f3da36639fe8f0fb120a7a27112d8cdf4434c"
+      },
+      "exit": {
+        "path": "docs/evidence/phase9f/phase9f-web-compat-erasure-r1.exit",
+        "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+      }
+    }
+  },
+  "failed_attempts": [
+    {
+      "exit_code": 1,
+      "log": {
+        "path": "docs/evidence/phase9f/phase9f-backend-r1.log",
+        "sha256": "5c54c615ac94e8ff0f67313ee5acd69edf6257e0c3d9f52a17e10cb126a91233"
+      },
+      "exit": {
+        "path": "docs/evidence/phase9f/phase9f-backend-r1.exit",
+        "sha256": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04"
+      }
+    },
+    {
+      "exit_code": 1,
+      "log": {
+        "path": "docs/evidence/phase9f/phase9f-baseline-mobile-r2.log",
+        "sha256": "689ddd6afbc02136a5f12cdcd26efd6291ed65ba3ee038e6ba8938fa1075ac95"
+      },
+      "exit": {
+        "path": "docs/evidence/phase9f/phase9f-baseline-mobile-r2.exit",
+        "sha256": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04"
+      }
+    },
+    {
+      "exit_code": 1,
+      "log": {
+        "path": "docs/evidence/phase9f/phase9f-baseline-mobile.log",
+        "sha256": "b677f97ec965e4c04ccb9c1247621c547f017d12d4d633a70ea34e4b6fd61d90"
+      },
+      "exit": {
+        "path": "docs/evidence/phase9f/phase9f-baseline-mobile.exit",
+        "sha256": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04"
+      }
+    },
+    {
+      "exit_code": 1,
+      "log": {
+        "path": "docs/evidence/phase9f/phase9f-baseline-r2.log",
+        "sha256": "aaba08816d4c77f602476fa29690ff152032d71e24751943d1f16b2cdb041124"
+      },
+      "exit": {
+        "path": "docs/evidence/phase9f/phase9f-baseline-r2.exit",
+        "sha256": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04"
+      }
+    },
+    {
+      "exit_code": 1,
+      "log": {
+        "path": "docs/evidence/phase9f/phase9f-baseline-r3.log",
+        "sha256": "d4f32090625d2062a9661803c7bd477101cad460a38ece3b5aa27d81da186486"
+      },
+      "exit": {
+        "path": "docs/evidence/phase9f/phase9f-baseline-r3.exit",
+        "sha256": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04"
+      }
+    },
+    {
+      "exit_code": 1,
+      "log": {
+        "path": "docs/evidence/phase9f/phase9f-baseline-r4.log",
+        "sha256": "dba4d48c6a46829b1c5e5f3bf1ca77f4650e0a3982da160037a9446899d8215b"
+      },
+      "exit": {
+        "path": "docs/evidence/phase9f/phase9f-baseline-r4.exit",
+        "sha256": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04"
+      }
+    },
+    {
+      "exit_code": 1,
+      "log": {
+        "path": "docs/evidence/phase9f/phase9f-baseline-r5.log",
+        "sha256": "8c26d2c867a326f9ee04f966db734ae99f88135d910762717643e6b87e8738bb"
+      },
+      "exit": {
+        "path": "docs/evidence/phase9f/phase9f-baseline-r5.exit",
+        "sha256": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04"
+      }
+    },
+    {
+      "exit_code": 1,
+      "log": {
+        "path": "docs/evidence/phase9f/phase9f-baseline-r6.log",
+        "sha256": "f33d2e69a11ced7bc03ed60010e1c53b50317bb998a33a2b5a688cf5e1a83974"
+      },
+      "exit": {
+        "path": "docs/evidence/phase9f/phase9f-baseline-r6.exit",
+        "sha256": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04"
+      }
+    },
+    {
+      "exit_code": 1,
+      "log": {
+        "path": "docs/evidence/phase9f/phase9f-baseline.log",
+        "sha256": "570e922f6b5117c099e01ed4c4eed2d7d74f65ab9fae4126a559ddc486318572"
+      },
+      "exit": {
+        "path": "docs/evidence/phase9f/phase9f-baseline.exit",
+        "sha256": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04"
+      }
+    },
+    {
+      "exit_code": 1,
+      "log": {
+        "path": "docs/evidence/phase9f/phase9f-buffered-probe.log",
+        "sha256": "51ef5a944760e9db6e41c17f380ba07cdd9b4b47f6ccdf02297e5309db947b72"
+      },
+      "exit": {
+        "path": "docs/evidence/phase9f/phase9f-buffered-probe.exit",
+        "sha256": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04"
+      }
+    },
+    {
+      "exit_code": 1,
+      "log": {
+        "path": "docs/evidence/phase9f/phase9f-focused-r2.log",
+        "sha256": "eb3ee8394fa279dd8270bc2083bc88f51e449bff5c6a2f331c1b636e60411781"
+      },
+      "exit": {
+        "path": "docs/evidence/phase9f/phase9f-focused-r2.exit",
+        "sha256": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04"
+      }
+    },
+    {
+      "exit_code": 1,
+      "log": {
+        "path": "docs/evidence/phase9f/phase9f-lifecycle-r3.log",
+        "sha256": "422958973dbba007c406fc964eac4b079748e81cbc1f11fb78fe418e37ce4297"
+      },
+      "exit": {
+        "path": "docs/evidence/phase9f/phase9f-lifecycle-r3.exit",
+        "sha256": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04"
+      }
+    },
+    {
+      "exit_code": 1,
+      "log": {
+        "path": "docs/evidence/phase9f/phase9f-login-diagnostic-r2.log",
+        "sha256": "a1ff36dacbdd1b10b1f20935c382785c0f0980765ba1b2ea99da3c15866181cc"
+      },
+      "exit": {
+        "path": "docs/evidence/phase9f/phase9f-login-diagnostic-r2.exit",
+        "sha256": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04"
+      }
+    },
+    {
+      "exit_code": 1,
+      "log": {
+        "path": "docs/evidence/phase9f/phase9f-login-diagnostic-r3.log",
+        "sha256": "533eec8e21126bcd507284c352843106b67e5b35ab74383a0047444ec2e02868"
+      },
+      "exit": {
+        "path": "docs/evidence/phase9f/phase9f-login-diagnostic-r3.exit",
+        "sha256": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04"
+      }
+    },
+    {
+      "exit_code": 1,
+      "log": {
+        "path": "docs/evidence/phase9f/phase9f-login-diagnostic-r4.log",
+        "sha256": "40ba067fadaf463ee7d49d6f1e99cbaefba30f3909da6c8039eb1a553ac3f34e"
+      },
+      "exit": {
+        "path": "docs/evidence/phase9f/phase9f-login-diagnostic-r4.exit",
+        "sha256": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04"
+      }
+    },
+    {
+      "exit_code": 1,
+      "log": {
+        "path": "docs/evidence/phase9f/phase9f-login-diagnostic.log",
+        "sha256": "79f8cbe832f0d00f2cb70338e7ca48e8a6e829fba1c36eb58ff349d3c5e90541"
+      },
+      "exit": {
+        "path": "docs/evidence/phase9f/phase9f-login-diagnostic.exit",
+        "sha256": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04"
+      }
+    },
+    {
+      "exit_code": 1,
+      "log": {
+        "path": "docs/evidence/phase9f/phase9f-mobile.log",
+        "sha256": "17f5f5e19c86e6a5635d1cda694ac371154375b0596773b4cb945bafd00f2880"
+      },
+      "exit": {
+        "path": "docs/evidence/phase9f/phase9f-mobile.exit",
+        "sha256": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04"
+      }
+    },
+    {
+      "exit_code": 1,
+      "log": {
+        "path": "docs/evidence/phase9f/phase9f-native-dataset-r1.log",
+        "sha256": "592b84e34bd57f1a5819f40db7fe7e7ea9bf1b8c6707c3a5ef3fd25a03de7c10"
+      },
+      "exit": {
+        "path": "docs/evidence/phase9f/phase9f-native-dataset-r1.exit",
+        "sha256": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04"
+      }
+    },
+    {
+      "exit_code": 1,
+      "log": {
+        "path": "docs/evidence/phase9f/phase9f-native-dataset-r2.log",
+        "sha256": "0e19e8333277a937305edf6aeba8f355e713fe236788b6ce8d3f8cc974a08984"
+      },
+      "exit": {
+        "path": "docs/evidence/phase9f/phase9f-native-dataset-r2.exit",
+        "sha256": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04"
+      }
+    },
+    {
+      "exit_code": 1,
+      "log": {
+        "path": "docs/evidence/phase9f/phase9f-native-final.log",
+        "sha256": "29721ff490e14cadc5cf84ea3d62b0106108c77aa8d836327f0394d387fe3b60"
+      },
+      "exit": {
+        "path": "docs/evidence/phase9f/phase9f-native-final.exit",
+        "sha256": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04"
+      }
+    },
+    {
+      "exit_code": 1,
+      "log": {
+        "path": "docs/evidence/phase9f/phase9f-native-regression-r2.log",
+        "sha256": "550693f494fb0f989d5608fdcefc8896191e41c3c280c7e7b96f8aef5d3b300e"
+      },
+      "exit": {
+        "path": "docs/evidence/phase9f/phase9f-native-regression-r2.exit",
+        "sha256": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04"
+      }
+    },
+    {
+      "exit_code": 1,
+      "log": {
+        "path": "docs/evidence/phase9f/phase9f-post-marker-r1.log",
+        "sha256": "4e9b252c04408f89705584e6e5f11e88b5bdafb3ebcf8509b68cc9b7a3bd0f2f"
+      },
+      "exit": {
+        "path": "docs/evidence/phase9f/phase9f-post-marker-r1.exit",
+        "sha256": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04"
+      }
+    },
+    {
+      "exit_code": 1,
+      "log": {
+        "path": "docs/evidence/phase9f/phase9f-pre-marker-r1.log",
+        "sha256": "bf6a97a48b7f78ff699d1e743c816fff9364f28c0129d4cf32d247fdd96c0cee"
+      },
+      "exit": {
+        "path": "docs/evidence/phase9f/phase9f-pre-marker-r1.exit",
+        "sha256": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04"
+      }
+    },
+    {
+      "exit_code": 1,
+      "log": {
+        "path": "docs/evidence/phase9f/phase9f-pre-marker-r2.log",
+        "sha256": "5fe92bd2cad7c691facd6f263b65a90632271854573eb6f935083736116573b8"
+      },
+      "exit": {
+        "path": "docs/evidence/phase9f/phase9f-pre-marker-r2.exit",
+        "sha256": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04"
+      }
+    },
+    {
+      "exit_code": -1,
+      "log": {
+        "path": "docs/evidence/phase9f/phase9f-resource-probe-r1.log",
+        "sha256": "7962279497f4d0e5bddea0575eef28111ef70804fcf1e238a876efd0efe1dc52"
+      },
+      "exit": {
+        "path": "docs/evidence/phase9f/phase9f-resource-probe-r1.exit",
+        "sha256": "186a919b8c7cb84aebf4e53c70cd1cc028a93a1d183ee29dd6e10cd18a714577"
+      }
+    },
+    {
+      "exit_code": 1,
+      "log": {
+        "path": "docs/evidence/phase9f/phase9f-resource-probe-r2.log",
+        "sha256": "f0724953469a0c8e8be7c721dc9553607f9ffbdd62b1fd39733e2e7968e3369f"
+      },
+      "exit": {
+        "path": "docs/evidence/phase9f/phase9f-resource-probe-r2.exit",
+        "sha256": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04"
+      }
+    },
+    {
+      "exit_code": 1,
+      "log": {
+        "path": "docs/evidence/phase9f/phase9f-web-r1.log",
+        "sha256": "15946c82ab098ce5d757de110d5c04404e94aba9713f2c1b9268059b68f5b42d"
+      },
+      "exit": {
+        "path": "docs/evidence/phase9f/phase9f-web-r1.exit",
+        "sha256": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04"
+      }
+    },
+    {
+      "exit_code": 1,
+      "log": {
+        "path": "docs/evidence/phase9f/phase9f-web-r2.log",
+        "sha256": "24e253f199821cf4c6ca699f3e503aeaf2af7f7c24cbe2fa0c19b45727cc01b8"
+      },
+      "exit": {
+        "path": "docs/evidence/phase9f/phase9f-web-r2.exit",
+        "sha256": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04"
+      }
+    },
+    {
+      "exit_code": 1,
+      "log": {
+        "path": "docs/evidence/phase9f/phase9f-web-r3.log",
+        "sha256": "068ce31804b9d65849a09ba6ebd95707e21be149d65166ee1880d55546c0648c"
+      },
+      "exit": {
+        "path": "docs/evidence/phase9f/phase9f-web-r3.exit",
+        "sha256": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04"
+      }
+    },
+    {
+      "exit_code": 1,
+      "log": {
+        "path": "docs/evidence/phase9f/phase9b-android-9f-r2-import_history.log",
+        "sha256": "744c73a91087570153711da77101d1887424d7d20f990c462eeb2c60ab4164ae"
+      },
+      "exit": {
+        "path": "docs/evidence/phase9f/phase9b-android-9f-r2-import_history.exit",
+        "sha256": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04"
+      },
+      "report": {
+        "path": "docs/evidence/phase9f/phase9b-android-9f-r2-import_history.json",
+        "sha256": "1fc2d3b99da8d9871a75ebdfd15fd33b191660c1171603851383a9a9b7832012"
+      },
+      "steps": {
+        "path": "docs/evidence/phase9f/phase9b-android-9f-r2-import_history.steps.json",
+        "sha256": "4c02c12405aeaeb3ce22e365360c97a12a2accafd0927799a68cd8f8c08521ab"
+      }
+    },
+    {
+      "exit_code": 1,
+      "log": {
+        "path": "docs/evidence/phase9f/phase9b-android-9f-r2-memory_smoke_revoke.log",
+        "sha256": "dc0370fb57d697fe4d202c882f6413eff88d7fa1817c43c2782d407791d91605"
+      },
+      "exit": {
+        "path": "docs/evidence/phase9f/phase9b-android-9f-r2-memory_smoke_revoke.exit",
+        "sha256": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04"
+      },
+      "report": {
+        "path": "docs/evidence/phase9f/phase9b-android-9f-r2-memory_smoke_revoke.json",
+        "sha256": "911770b6463b11eda9827ea431268ca1cd2ab92ee6fcc2f479e67feb61646e41"
+      },
+      "steps": {
+        "path": "docs/evidence/phase9f/phase9b-android-9f-r2-memory_smoke_revoke.steps.json",
+        "sha256": "605fbe95c53c6552cb89bc344a71346416c0df3e2bb5927994ce4a1fef642537"
+      }
+    },
+    {
+      "exit_code": 1,
+      "log": {
+        "path": "docs/evidence/phase9f/phase9b-android-9f-r2-resource_create.log",
+        "sha256": "136c51a3a889030681e50fb8b3e09c91f7ad8b4415e53807fa5db43e9577f609"
+      },
+      "exit": {
+        "path": "docs/evidence/phase9f/phase9b-android-9f-r2-resource_create.exit",
+        "sha256": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04"
+      },
+      "report": {
+        "path": "docs/evidence/phase9f/phase9b-android-9f-r2-resource_create.json",
+        "sha256": "834577198bf3c71ed83ba51e68c9828192f6b237653cb06beae3dd1a3a150d1b"
+      },
+      "steps": {
+        "path": "docs/evidence/phase9f/phase9b-android-9f-r2-resource_create.steps.json",
+        "sha256": "e0f55db5b89259604c55415ff9a0cd7f81f3fa1062c24a83b52ff090e6e38097"
+      }
+    },
+    {
+      "exit_code": 1,
+      "log": {
+        "path": "docs/evidence/phase9f/phase9b-android-9f-r2-session.log",
+        "sha256": "7cb621e4eb0e540ced9f8a1871b896fb084ded318504d4ee1770ac05b385961d"
+      },
+      "exit": {
+        "path": "docs/evidence/phase9f/phase9b-android-9f-r2-session.exit",
+        "sha256": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04"
+      },
+      "report": {
+        "path": "docs/evidence/phase9f/phase9b-android-9f-r2-session.json",
+        "sha256": "b0b862384d61bc56199a0c13b56731932db6ae38f721a95c3252bc25b6b9a48e"
+      },
+      "steps": {
+        "path": "docs/evidence/phase9f/phase9b-android-9f-r2-session.steps.json",
+        "sha256": "8d84af6416af2eea2e4cfa57f47a1d1f1a1d52a77d8174574d9b08e511069b55"
+      }
+    },
+    {
+      "exit_code": 1,
+      "log": {
+        "path": "docs/evidence/phase9f/phase9b-android-9f-r2-sse_normal.log",
+        "sha256": "430632e7ebc483530411deb97181f58e424b11299a809c01566e26c0f8c27883"
+      },
+      "exit": {
+        "path": "docs/evidence/phase9f/phase9b-android-9f-r2-sse_normal.exit",
+        "sha256": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04"
+      },
+      "report": {
+        "path": "docs/evidence/phase9f/phase9b-android-9f-r2-sse_normal.json",
+        "sha256": "0b9312b5478d393f3f47f42d654f84d34cfb80e86a159208d0c2b7b95b878ac9"
+      },
+      "steps": {
+        "path": "docs/evidence/phase9f/phase9b-android-9f-r2-sse_normal.steps.json",
+        "sha256": "68b07361d3fd4eb549801917fbfb297d4bc8d699d784004d2ce58396fe57bfad"
+      }
+    }
+  ],
+  "superseded_native": {
+    "reason": "Earlier complete successful executions precede final exact domain/scope recovery UI guard and execution-time fingerprint instrumentation; final acceptance uses fresh current-source scenes only",
+    "scenes": [
+      {
+        "scene": "resource_create",
+        "status": "PASS",
+        "exit_code": 0,
+        "preconditions": "Disposable signed owner fixtures; host setup explicitly marked; actual Android App UI actions",
+        "actual": "All commands and assertions completed independently; SQL and signed wire evidence retained",
+        "artifacts": {
+          "steps": {
+            "path": "docs/evidence/phase9f/phase9b-android-9f-r1-resource_create.steps.json",
+            "sha256": "e0f55db5b89259604c55415ff9a0cd7f81f3fa1062c24a83b52ff090e6e38097"
+          },
+          "report": {
+            "path": "docs/evidence/phase9f/phase9b-android-9f-r1-resource_create.json",
+            "sha256": "afb2c0eaf8b4fa7cec6a2a01df0db476d4a0a8bc874f95ffa3329d8d2d3b6c80"
+          },
+          "log": {
+            "path": "docs/evidence/phase9f/phase9b-android-9f-r1-resource_create.log",
+            "sha256": "7e0c5acc0f0d220766b9c57955859b20af438400da338def55e8fcc6573de73f"
+          },
+          "exit": {
+            "path": "docs/evidence/phase9f/phase9b-android-9f-r1-resource_create.exit",
+            "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+          }
+        }
+      },
+      {
+        "scene": "sse_normal",
+        "status": "PASS",
+        "exit_code": 0,
+        "preconditions": "Disposable signed owner fixtures; host setup explicitly marked; actual Android App UI actions",
+        "actual": "All commands and assertions completed independently; SQL and signed wire evidence retained",
+        "artifacts": {
+          "steps": {
+            "path": "docs/evidence/phase9f/phase9b-android-9f-r1-sse_normal.steps.json",
+            "sha256": "68b07361d3fd4eb549801917fbfb297d4bc8d699d784004d2ce58396fe57bfad"
+          },
+          "report": {
+            "path": "docs/evidence/phase9f/phase9b-android-9f-r1-sse_normal.json",
+            "sha256": "bf00e0d528b60aa2e722758fa9a2818771a28fe46394e6e4bced0cdfea2f5464"
+          },
+          "log": {
+            "path": "docs/evidence/phase9f/phase9b-android-9f-r1-sse_normal.log",
+            "sha256": "fae5dd5d28dea0e8cdcc9c01bf817fb4cb27ca536b810b03950914097d8a5929"
+          },
+          "exit": {
+            "path": "docs/evidence/phase9f/phase9b-android-9f-r1-sse_normal.exit",
+            "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+          }
+        }
+      },
+      {
+        "scene": "memory_smoke_revoke",
+        "status": "PASS",
+        "exit_code": 0,
+        "preconditions": "Disposable signed owner fixtures; host setup explicitly marked; actual Android App UI actions",
+        "actual": "All commands and assertions completed independently; SQL and signed wire evidence retained",
+        "artifacts": {
+          "steps": {
+            "path": "docs/evidence/phase9f/phase9b-android-9f-r1-memory_smoke_revoke.steps.json",
+            "sha256": "605fbe95c53c6552cb89bc344a71346416c0df3e2bb5927994ce4a1fef642537"
+          },
+          "report": {
+            "path": "docs/evidence/phase9f/phase9b-android-9f-r1-memory_smoke_revoke.json",
+            "sha256": "70388ff40cf52dd608351149ed8cfd41a41dd449ce1b37fa9480ecc67e9f2863"
+          },
+          "log": {
+            "path": "docs/evidence/phase9f/phase9b-android-9f-r1-memory_smoke_revoke.log",
+            "sha256": "030c9c611fc32620eca7a51b6c0ea78ad306286734aa020d3f01c6851ae7edc5"
+          },
+          "exit": {
+            "path": "docs/evidence/phase9f/phase9b-android-9f-r1-memory_smoke_revoke.exit",
+            "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+          }
+        }
+      },
+      {
+        "scene": "session",
+        "status": "PASS",
+        "exit_code": 0,
+        "preconditions": "Disposable signed owner fixtures; host setup explicitly marked; actual Android App UI actions",
+        "actual": "All commands and assertions completed independently; SQL and signed wire evidence retained",
+        "artifacts": {
+          "steps": {
+            "path": "docs/evidence/phase9f/phase9b-android-9f-r1-session.steps.json",
+            "sha256": "8d84af6416af2eea2e4cfa57f47a1d1f1a1d52a77d8174574d9b08e511069b55"
+          },
+          "report": {
+            "path": "docs/evidence/phase9f/phase9b-android-9f-r1-session.json",
+            "sha256": "4a72b73df28139fe94662e409fca74631921ce816b44847ef1deacff4b44b3c0"
+          },
+          "log": {
+            "path": "docs/evidence/phase9f/phase9b-android-9f-r1-session.log",
+            "sha256": "ffca12d1e18356c0c6479cb1bea231438bebf809d47b63034ca6f6519709f14f"
+          },
+          "exit": {
+            "path": "docs/evidence/phase9f/phase9b-android-9f-r1-session.exit",
+            "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+          }
+        }
+      },
+      {
+        "scene": "import_history",
+        "status": "PASS",
+        "exit_code": 0,
+        "preconditions": "Disposable signed owner fixtures; host setup explicitly marked; actual Android App UI actions",
+        "actual": "All commands and assertions completed independently; SQL and signed wire evidence retained",
+        "artifacts": {
+          "steps": {
+            "path": "docs/evidence/phase9f/phase9b-android-9f-r1-import_history.steps.json",
+            "sha256": "4c02c12405aeaeb3ce22e365360c97a12a2accafd0927799a68cd8f8c08521ab"
+          },
+          "report": {
+            "path": "docs/evidence/phase9f/phase9b-android-9f-r1-import_history.json",
+            "sha256": "4bb1391729f86769e1f6c4d24c265b33ad98d755279343ac51a84271191a78fa"
+          },
+          "log": {
+            "path": "docs/evidence/phase9f/phase9b-android-9f-r1-import_history.log",
+            "sha256": "97a17167713c8358fc9ab99c44e0c60d566de1b9d2e19ef8b726b83cc60b70fa"
+          },
+          "exit": {
+            "path": "docs/evidence/phase9f/phase9b-android-9f-r1-import_history.exit",
+            "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+          }
+        }
+      },
+      {
+        "scene": "dataset",
+        "status": "PASS",
+        "exit_code": 0,
+        "preconditions": "Disposable signed owner fixtures; host setup explicitly marked; actual Android App UI actions",
+        "actual": "All commands and assertions completed independently; SQL and signed wire evidence retained",
+        "artifacts": {
+          "steps": {
+            "path": "docs/evidence/phase9f/phase9f_dataset.json",
+            "sha256": "a2599048fbf9776a9887d08bb01ebbec40cf5470fbf4624a0e308d77a54b7ff9"
+          },
+          "report": {
+            "path": "docs/evidence/phase9f/phase9f-native-dataset-r3.json",
+            "sha256": "6ae71c713e2b194134c5f851be65bac8c7120211eb590e80d3664950b6e94b68"
+          },
+          "log": {
+            "path": "docs/evidence/phase9f/phase9f-native-dataset-r3.log",
+            "sha256": "94b8cf330cc82fc0661d37099731f4721aeb0790813de2c4f4178cdc56797426"
+          },
+          "exit": {
+            "path": "docs/evidence/phase9f/phase9f-native-dataset-r3.exit",
+            "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+          }
+        }
+      },
+      {
+        "scene": "conversation",
+        "status": "PASS",
+        "exit_code": 0,
+        "preconditions": "Disposable signed owner fixtures; host setup explicitly marked; actual Android App UI actions",
+        "actual": "All commands and assertions completed independently; SQL and signed wire evidence retained",
+        "artifacts": {
+          "steps": {
+            "path": "docs/evidence/phase9f/phase9f_conversation.json",
+            "sha256": "51aac6699e7b161d5465434fec1c20ee9e10a0d1245771b490a0c72ddc33cfcb"
+          },
+          "report": {
+            "path": "docs/evidence/phase9f/phase9f-native-conversation-r1.json",
+            "sha256": "d8e52b8060d3afc694b2ff0cee802d370fb69f155f873544b3a73d89b56c1d4d"
+          },
+          "log": {
+            "path": "docs/evidence/phase9f/phase9f-native-conversation-r1.log",
+            "sha256": "de7e2cdcc9b00f77d3a9ca016b80c693e9528a3e07828bc3fb43213ae0cb41f2"
+          },
+          "exit": {
+            "path": "docs/evidence/phase9f/phase9f-native-conversation-r1.exit",
+            "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+          }
+        }
+      },
+      {
+        "scene": "faults",
+        "status": "PASS",
+        "exit_code": 0,
+        "preconditions": "Disposable signed owner fixtures; host setup explicitly marked; actual Android App UI actions",
+        "actual": "All commands and assertions completed independently; SQL and signed wire evidence retained",
+        "artifacts": {
+          "steps": {
+            "path": "docs/evidence/phase9f/phase9f_faults.json",
+            "sha256": "00aafd6f1ea1f715fff49a718f4067469a981e250a4349d1e96010c2f764e0a1"
+          },
+          "report": {
+            "path": "docs/evidence/phase9f/phase9f-native-faults-r1.json",
+            "sha256": "1e52910910e62257cf0c5731eb0436599aaa1d5a3592dd4d7341d20a1bdaaf3b"
+          },
+          "log": {
+            "path": "docs/evidence/phase9f/phase9f-native-faults-r1.log",
+            "sha256": "f9b3615f8540e7138cec6f9f8de566c5f510287ee0844ec715403a5257d39349"
+          },
+          "exit": {
+            "path": "docs/evidence/phase9f/phase9f-native-faults-r1.exit",
+            "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+          }
+        }
+      },
+      {
+        "scene": "restart_session",
+        "status": "PASS",
+        "exit_code": 0,
+        "preconditions": "Disposable signed owner fixtures; host setup explicitly marked; actual Android App UI actions",
+        "actual": "All commands and assertions completed independently; SQL and signed wire evidence retained",
+        "artifacts": {
+          "steps": {
+            "path": "docs/evidence/phase9f/phase9f_restart_session.json",
+            "sha256": "f14c63d07225e3c2b8e16b91ab185ca35070064a3263ee3ec0d1e9dccda14fa0"
+          },
+          "report": {
+            "path": "docs/evidence/phase9f/phase9f-native-restart_session-r1.json",
+            "sha256": "2584c64423dc02843dc08fad1586754ba7c2ac098132f09259d7ff23dca3c41b"
+          },
+          "log": {
+            "path": "docs/evidence/phase9f/phase9f-native-restart_session-r1.log",
+            "sha256": "9bc9977aff19f0d7c9f8a409e2508425d7a54ffffc755f44a37a849d5afbaea7"
+          },
+          "exit": {
+            "path": "docs/evidence/phase9f/phase9f-native-restart_session-r1.exit",
+            "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+          }
+        }
+      }
+    ]
+  },
+  "pre_marker": {
+    "exit_code": 0,
+    "log": {
+      "path": "docs/evidence/phase9f/phase9f-pre-marker-r4.log",
+      "sha256": "9d85b97cb433708e6cc2eb69f8cc1322c5224d57ccae4d14ee2b9d44974fcce9"
+    },
+    "exit": {
+      "path": "docs/evidence/phase9f/phase9f-pre-marker-r4.exit",
+      "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+    }
+  },
+  "pre_marker_accepted_at_utc": "2026-10-14T10:36:39.772503+00:00",
+  "post_marker": {
+    "exit_code": 0,
+    "log": {
+      "path": "docs/evidence/phase9f/phase9f-post-marker-r2.log",
+      "sha256": "5233fd8f863c7a8be3a4506689a8bf715cd10a7b3df6187c38ed6f22488e8358"
+    },
+    "exit": {
+      "path": "docs/evidence/phase9f/phase9f-post-marker-r2.exit",
+      "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+    }
+  },
+  "closed_at_utc": "2026-10-14T10:47:39.420759+00:00"
+}

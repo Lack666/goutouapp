@@ -1,5 +1,9 @@
 # Mobile architecture — Phase 7A–7D and Phase 8B–8E
 
+## Current Phase9F integration
+
+Phase9F composes ErasureController beside existing History, Chat, Import and Memory controllers. It binds exact server targets and immutable volatile keys to the authenticated owner/session epoch, invalidates only matching caches, inspects durable receipts and requires authoritative refresh. AppState/Back/logout prevent stale confirmations and late events. No persistent erasure outbox or auto-execute after restart. See MOBILE_DATA_ERASURE and ADR0041.
+
 Phase8E adds one MemoryController and ConnectedMemoryPanel to the existing
 ConnectionProvider/DevelopmentSession/ApiTransport composition. Generated public
 adapters project control, bounded record/expiry inspection, latest Undo, deletion

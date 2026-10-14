@@ -3,6 +3,7 @@ import { ApiError, httpError } from './errors';
 import { agentHTTPError } from './agentErrors';
 import { importHTTPError } from './importErrors';
 import { memoryHTTPError } from './memoryErrors';
+import { erasureHTTPError } from './erasureErrors';
 import type { components, UUID } from './generated/client';
 import type { AgentEvent } from './agentEvents';
 import { consumeSSE } from './sseParser';
@@ -45,6 +46,7 @@ export class ApiTransport {
     private readonly importEnabled = false,
     private readonly importTimeoutMs = 120_000,
     private readonly memoryEnabled = false,
+    private readonly erasureEnabled = false,
   ) {
     this.baseURL = validateBaseURL(baseURL, localDevelopment);
     this.client = createApiClient({
@@ -125,6 +127,13 @@ export class ApiTransport {
           ? 'POST'
           : null;
     const isMemory = memoryMethod !== null;
+    const erasureMethod = /^\/api\/v1\/erasures\/(prepare|execute)$/.test(path)
+      ? 'POST'
+      : /^\/api\/v1\/erasures\/receipts\/[0-9a-f-]{36}$/i.test(path) ||
+          /^\/api\/v1\/relationships\/[0-9a-f-]{36}\/datasets$/i.test(path)
+        ? 'GET'
+        : null;
+    const isErasure = erasureMethod !== null;
     if (
       !(
         /^\/api\/v1\/(persons|relationships|conversations)(\/[0-9a-f-]{36})?$/i.test(path) &&
@@ -136,7 +145,8 @@ export class ApiTransport {
         request.method === (path.endsWith('/messages') ? 'GET' : 'POST')
       ) &&
       !(this.importEnabled && isImport && request.method === importMethod) &&
-      !(this.memoryEnabled && isMemory && request.method === memoryMethod)
+      !(this.memoryEnabled && isMemory && request.method === memoryMethod) &&
+      !(this.erasureEnabled && isErasure && request.method === erasureMethod)
     )
       throw new ApiError('validation');
     const epoch = this.session.epoch();
@@ -158,7 +168,8 @@ export class ApiTransport {
     try {
       const token = this.session.credential();
       if (epoch !== this.session.epoch()) throw new ApiError('cancelled');
-      if ((isAgent || isImport || isMemory) && !token) throw new ApiError('unauthorized');
+      if ((isAgent || isImport || isMemory || isErasure) && !token)
+        throw new ApiError('unauthorized');
       if (controller.signal.aborted) throw new ApiError('cancelled');
       const headers = new Headers(request.headers);
       headers.delete('Authorization');
@@ -186,6 +197,8 @@ export class ApiTransport {
         throw new ApiError(timedOut ? 'timeout' : 'cancelled');
       if (!response.ok) {
         if (response.status === 401) this.session.invalidate(epoch);
+        if (isErasure && response.status !== 401)
+          throw erasureHTTPError(response.status, await Promise.race([response.text(), cancelled]));
         // Agent recovery uses only allowlisted public codes/IDs; never retain raw messages.
         if (isAgent && response.status !== 401)
           throw agentHTTPError(response.status, await Promise.race([response.text(), cancelled]));

@@ -1,0 +1,78 @@
+Scope: all 3 workspace projects
+✓ Lockfile passes supply-chain policies (verified 1d ago)
+Lockfile is up to date, resolution step is skipped
+Already up to date
+
+Done in 858ms using pnpm v11.25.0
+
+   ╭────────────────────────────────────────────────────────────────────────╮
+   │                                                                        │
+   │                  Update available! 11.25.0 → 12.11.2.                  │
+   │                  Changelog: https://pnpm.io/v/12.11.2                  │
+   │   To update, run: Invoke-WebRequest https://get.pnpm.io/install.ps1    │
+   │                 -UseBasicParsing | Invoke-Expression                   │
+   │                                                                        │
+   ╰────────────────────────────────────────────────────────────────────────╯
+
+$ playwright test --config playwright.erasure.config.ts
+[WebServer] (node:12032) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:32832) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 2 tests using 1 worker
+
+(node:31316) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  1 erasure-connected\web.spec.ts:43:5 › actual Dataset and Conversation UI confirmation/receipt, SQL deletion, other scopes, Memory and original-key replay (4.9s)
+(node:33624) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  2 erasure-connected\web.spec.ts:97:5 › actual committed response loss / original key replay / A-B denial / expired challenge / busy run / Demo separation (6.6s)
+
+
+  1) erasure-connected\web.spec.ts:43:5 › actual Dataset and Conversation UI confirmation/receipt, SQL deletion, other scopes, Memory and original-key replay 
+
+    ReferenceError: Cannot access 'history' before initialization
+
+      53 |     expect(before.memories).toBeGreaterThan(0);
+      54 |     await login(page, backend.a);
+    > 55 |     await history(page, a.relationship);
+         |     ^
+      56 |     await expect(button(page, `选择删除 Dataset ${a.datasets[0]!.dataset_job_id}`)).toBeVisible();
+      57 |     await button(page, `选择删除 Dataset ${a.datasets[0]!.dataset_job_id}`).click();
+      58 |     await button(page, '向服务器准备删除').click();
+        at F:\狗头军师app化\goutouapp\apps\mobile\erasure-connected\web.spec.ts:55:5
+
+    Error Context: ..\..\.cache\phase9f-web-results\web-actual-Dataset-and-Con-d2ec7-ory-and-original-key-replay\error-context.md
+
+  2) erasure-connected\web.spec.ts:97:5 › actual committed response loss / original key replay / A-B denial / expired challenge / busy run / Demo separation 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByText('删除状态：completed', { exact: true })
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByText('删除状态：completed', { exact: true }) with timeout 5000ms
+      - waiting for getByText('删除状态：completed', { exact: true })
+
+
+      125 |     await expect(page.getByText('删除状态：unknown_outcome', { exact: true })).toBeVisible();
+      126 |     await button(page, '同 key 安全重放原删除').click();
+    > 127 |     await expect(page.getByText('删除状态：completed', { exact: true })).toBeVisible();
+          |                                                                     ^
+      128 |     await expect(page.getByText('权威刷新：verified', { exact: true })).toBeVisible();
+      129 |     expect(bodies[0]).toBe(bodies[1]);
+      130 |     const receiptId = (await page.getByText(/^Receipt ID：/).innerText()).split('：')[1]!;
+        at F:\狗头军师app化\goutouapp\apps\mobile\erasure-connected\web.spec.ts:127:69
+
+    Error Context: ..\..\.cache\phase9f-web-results\web-actual-committed-respo-0f3d6-ge-busy-run-Demo-separation\error-context.md
+
+  2 failed
+    erasure-connected\web.spec.ts:43:5 › actual Dataset and Conversation UI confirmation/receipt, SQL deletion, other scopes, Memory and original-key replay 
+    erasure-connected\web.spec.ts:97:5 › actual committed response loss / original key replay / A-B denial / expired challenge / busy run / Demo separation 
+F:\狗头军师app化\goutouapp\apps\mobile:
+[ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL] @goutou/mobile@0.1.0 smoke:erasure: `playwright test --config playwright.erasure.config.ts`
+Exit status 1

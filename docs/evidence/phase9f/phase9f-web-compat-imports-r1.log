@@ -1,0 +1,16 @@
+$ playwright test --config playwright.import.config.ts
+[WebServer] (node:26264) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:37852) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 4 tests using 1 worker
+
+(node:20660) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 import-connected\http.spec.ts:7:5 › signed generated multipart / PostgreSQL / 1001 history occurrences / exact-dataset replay / owned isolation (805ms)
+  ok 2 import-connected\http.spec.ts:79:5 › actual upload Job committed but response lost: unknown outcome never automatically repeats multipart (116ms)
+  ok 3 import-connected\http.spec.ts:118:5 › actual finalized commit loses response: original Job inspect recovers summary, replay writes zero rows (183ms)
+  ok 4 import-connected\web.spec.ts:5:5 › Chrome Expo real file picker, explicit bindings/ready/finalize, formal History pages/refresh/logout (5.7s)
+
+  4 passed (13.2s)

@@ -1,0 +1,22 @@
+................................F............                            [100%]
+================================== FAILURES ===================================
+______________ test_finalize_cancel_race_and_concurrent_uploads _______________
+
+setup_api = (<fastapi.applications.FastAPI object at 0x000002DB509FF620>, <starlette.testclient.TestClient object at 0x000002DB50A...wsPath('C:/Users/VOS-User/AppData/Local/Temp/pytest-of-VOS-User/pytest-119/test_finalize_cancel_race_and_0/artifacts'))
+database_engine = Engine(postgresql+psycopg://postgres@127.0.0.1:15434/goutou_test_85c4787ea1a4)
+
+    def test_finalize_cancel_race_and_concurrent_uploads(setup_api, database_engine):
+        _app, client, root = setup_api
+        a, person, relation, _ = scope(database_engine)
+        b, _, _, _ = scope(database_engine)
+        with ThreadPoolExecutor(max_workers=4) as pool:
+            uploads = list(pool.map(lambda user: upload(client, user), [a, a, b, b]))
+>       assert all(result.status_code == 201 for result in uploads)
+E       assert False
+E        +  where False = all(<generator object test_finalize_cancel_race_and_concurrent_uploads.<locals>.<genexpr> at 0x000002DB510D6A80>)
+
+apps\server\tests\test_upload_security.py:275: AssertionError
+=========================== short test summary info ===========================
+FAILED apps/server/tests/test_upload_security.py::test_finalize_cancel_race_and_concurrent_uploads
+1 failed, 44 passed in 7.81s
+BUFFERED_EXCEPTION_LOCATIONS [('_inventory', 'AdmissionRejected', None, [('wrapped', 9), ('_inventory', 160)]), ('acquire', 'AdmissionRejected', None, [('wrapped', 9), ('acquire', 213), ('wrapped', 9), ('_inventory', 160)])]

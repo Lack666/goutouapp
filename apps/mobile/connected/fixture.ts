@@ -7,6 +7,7 @@ interface Backend {
   a: string;
   b: string;
   expired: string;
+  erasureCommand(value: string): Promise<Record<string, unknown>>;
   expire(kind: 'memory' | 'confirmation', id: string): Promise<void>;
   memoryEvidence(): Promise<{
     memories: number;
@@ -61,11 +62,28 @@ export const test = base.extend<object, { backend: Backend }>({
         throw new Error('Real PostgreSQL fixture failed to start; check TEST_DATABASE_URL.');
       const credentials = JSON.parse(first.value) as Omit<
         Backend,
-        'counts' | 'agentEvidence' | 'importEvidence' | 'expire' | 'memoryEvidence'
+        | 'counts'
+        | 'agentEvidence'
+        | 'importEvidence'
+        | 'expire'
+        | 'memoryEvidence'
+        | 'erasureCommand'
       >;
       try {
         await useBackend({
           ...credentials,
+          erasureCommand: async (value) => {
+            if (
+              !/^(erasure_evidence|expire_erasure [0-9a-f-]{36}|busy_conversation [0-9a-f-]{36})$/.test(
+                value,
+              )
+            )
+              throw new Error('Unsupported synthetic command');
+            child.stdin.write(`${value}\n`);
+            const row = await iterator.next();
+            if (row.done) throw new Error('Erasure evidence unavailable');
+            return JSON.parse(row.value);
+          },
           expire: async (kind, id) => {
             child.stdin.write(`expire_${kind} ${id}\n`);
             const row = await iterator.next();

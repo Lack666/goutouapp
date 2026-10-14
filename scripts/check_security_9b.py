@@ -107,6 +107,10 @@ def check(root=ROOT, *, completed=False):
         # scenes on the changed generated/client source. No Web substitution.
         native_check(matrix, root, historical=True)
         replacement = root / "docs/PHASE_9E_MATRIX.json"
+        evidence_phase, expected_phase = "phase9e", "9E"
+        if (root / "docs/PHASE_9F_MATRIX.json").is_file():
+            replacement = root / "docs/PHASE_9F_MATRIX.json"
+            evidence_phase, expected_phase = "phase9f", "9F"
         if not replacement.is_file():
             raise RuntimeError("9B requires fresh Android PASS for current source/dependencies")
         newer = json.loads(replacement.read_text("utf-8"))
@@ -114,11 +118,11 @@ def check(root=ROOT, *, completed=False):
             (root / "docs/PHASE_9B_MATRIX.json").read_bytes().replace(b"\r\n", b"\n")
         ).hexdigest()
         if (
-            newer.get("phase") != "9E"
+            newer.get("phase") != expected_phase
             or newer.get("historical_native_matrix_sha256") != original_hash
         ):
             raise RuntimeError("9B native historical authority drift")
-        native_check(newer, root, evidence_phase="phase9e")
+        native_check(newer, root, evidence_phase=evidence_phase)
     if not completed:
         return
     if matrix.get("status") != "PASS":

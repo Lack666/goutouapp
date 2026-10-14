@@ -1,3 +1,9 @@
+# Generated Mobile API client — Phase 8B–8E
+
+## Current Phase9F integration
+
+Phase9F generated inventory is40: original39 plus signed canonical Dataset discovery. DTO projections validate erasure target/domain/scope, counts, timestamps, memory_affected=false and durable receipt identity. Transport enables only narrow erasure/discovery paths in the production composition; Demo cannot execute. Safe errors expose allowlisted business codes without server details.
+
 ## Current Phase9E boundary
 
 Backend-only guarded Dataset/Conversation erasure is documented in [ERASURE_API](ERASURE_API.md).
@@ -7,8 +13,6 @@ returns409 `dataset_deleted`, including duplicate same-scope transcripts.
 App History/Settings disclose the absence of self-service chat/import/account
 erasure. Existing Memory controls do not erase either history domain. External
 erasure requires authoritative history refresh/reopen to clear cached rows/cursors.
-
-# Generated Mobile API client — Phase 8B–8E
 
 Phase8E explicitly enables the13 existing Memory operations on the same generated
 36-operation client/session/transport. memoryAdapter validates public DTOs and

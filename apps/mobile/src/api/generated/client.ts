@@ -1,5 +1,5 @@
 // Generated from docs/contracts/openapi.json. DO NOT EDIT.
-// Input SHA256: 29729974a979c3bd880a63770bf142444c6fcc8485de9e792f62c9315bcef9f5
+// Input SHA256: 5b62292846495dffa7a635ddb798ea982cf14e2d723f2bd308dda58cbcd1bd98
 import createClient, { type ClientOptions } from 'openapi-fetch';
 export type UUID = `${string}-${string}-${string}-${string}-${string}`;
 export interface paths {
@@ -550,6 +550,23 @@ export interface paths {
     patch?: never;
     trace?: never;
   };
+  '/api/v1/relationships/{relationship_id}/datasets': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /** List Datasets */
+    get: operations['list_datasets_api_v1_relationships__relationship_id__datasets_get'];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
   '/api/v1/relationships/{relationship_id}/messages': {
     parameters: {
       query?: never;
@@ -756,6 +773,59 @@ export interface components {
        * @description Optional client-generated retry key scoped to this user and conversation. Reuse only with the same logical request; use a new key for a new attempt.
        */
       operation_key?: string | null;
+    };
+    /** DatasetPage */
+    DatasetPage: {
+      /** Items */
+      items: components['schemas']['DatasetSummary'][];
+      /** Next Cursor */
+      next_cursor: string | null;
+    };
+    /** DatasetSummary */
+    DatasetSummary: {
+      /** Current Message Count */
+      current_message_count: number;
+      /**
+       * Dataset Job Id
+       * Format: uuid
+       */
+      dataset_job_id: UUID;
+      /** Deletable */
+      deletable: boolean;
+      /** Deleted At */
+      deleted_at: string | null;
+      /**
+       * First Timestamp Utc
+       * Format: date-time
+       */
+      first_timestamp_utc: string;
+      /** Ignored Message Count */
+      ignored_message_count: number;
+      /**
+       * Imported At
+       * Format: date-time
+       */
+      imported_at: string;
+      /** Imported Message Count */
+      imported_message_count: number;
+      /**
+       * Last Timestamp Utc
+       * Format: date-time
+       */
+      last_timestamp_utc: string;
+      /** Parser Version */
+      parser_version: string;
+      /**
+       * Relationship Id
+       * Format: uuid
+       */
+      relationship_id: UUID;
+      /** Source Format */
+      source_format: string;
+      /** Source Timezone */
+      source_timezone: string;
+      /** System Message Count */
+      system_message_count: number;
     };
     /** DeleteAllPreparation */
     DeleteAllPreparation: {
@@ -4837,6 +4907,103 @@ export interface operations {
       };
     };
   };
+  list_datasets_api_v1_relationships__relationship_id__datasets_get: {
+    parameters: {
+      query?: {
+        limit?: number;
+        cursor?: string | null;
+      };
+      header?: never;
+      path: {
+        relationship_id: UUID;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Successful Response */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['DatasetPage'];
+        };
+      };
+      /** @description Invalid request */
+      400: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponse'];
+        };
+      };
+      /** @description Authentication required */
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponse'];
+        };
+      };
+      /** @description Resource not found */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponse'];
+        };
+      };
+      /** @description Active run or idempotency conflict */
+      409: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponse'];
+        };
+      };
+      /** @description Validation error */
+      422: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponse'];
+        };
+      };
+      /** @description Internal server error */
+      500: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponse'];
+        };
+      };
+      /** @description Agent execution failed */
+      502: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponse'];
+        };
+      };
+      /** @description Dependency unavailable */
+      503: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponse'];
+        };
+      };
+    };
+  };
   relationship_messages_api_v1_relationships__relationship_id__messages_get: {
     parameters: {
       query?: {
@@ -5420,6 +5587,12 @@ export const operationInventory = [
     method: 'get',
     path: '/api/v1/relationships/{relationship_id}',
     operationId: 'get_relationship_api_v1_relationships__relationship_id__get',
+    bearer: true,
+  },
+  {
+    method: 'get',
+    path: '/api/v1/relationships/{relationship_id}/datasets',
+    operationId: 'list_datasets_api_v1_relationships__relationship_id__datasets_get',
     bearer: true,
   },
   {

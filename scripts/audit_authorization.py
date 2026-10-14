@@ -212,7 +212,11 @@ def inventory():
                     else [
                         "apps/server/tests/test_authorization_security.py",
                         {
-                            "resources": "apps/server/tests/test_resource_api.py",
+                            "resources": (
+                                "apps/server/tests/test_dataset_discovery.py"
+                                if path.endswith("/datasets")
+                                else "apps/server/tests/test_resource_api.py"
+                            ),
                             "agent": "apps/server/tests/test_phase4_idempotency.py",
                             "import": "apps/server/tests/test_import_api.py",
                             "memory": "apps/server/tests/test_phase6_e2e.py",
@@ -232,7 +236,7 @@ def inventory():
     if operations != {(item["method"], item["path"]) for item in result}:
         raise RuntimeError("Router inventory does not cover actual OpenAPI")
     return {
-        "phase": "9E",
+        "phase": "9F",
         "operations": len(result),
         "public": sum(not item["authenticated"] for item in result),
         "inventory": result,
@@ -243,7 +247,7 @@ def check():
     actual = inventory()
     if actual != json.loads(TARGET.read_text("utf-8")):
         raise RuntimeError("Public authorization inventory drift")
-    if actual["operations"] != 39 or actual["public"] != 3:
+    if actual["operations"] != 40 or actual["public"] != 3:
         raise RuntimeError("Unreviewed public API change")
     for item in actual["inventory"]:
         if item["authenticated"] and (

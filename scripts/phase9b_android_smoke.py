@@ -21,7 +21,9 @@ def main():
     parser.add_argument("--adb", required=True)
     parser.add_argument("--serial", required=True)
     parser.add_argument(
-        "--batch", required=True, choices=("r1", "r2", "r3", "9e-r1", "9e-r2", "9e-r3", "9e-r4")
+        "--batch",
+        required=True,
+        choices=("r1", "r2", "r3", "9e-r1", "9e-r2", "9e-r3", "9e-r4", "9f-r1", "9f-r2", "9f-r3"),
     )
     parser.add_argument("--scenes", nargs="+", choices=SCENES, default=list(SCENES))
     args = parser.parse_args()

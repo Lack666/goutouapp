@@ -78,6 +78,9 @@ def check(root=ROOT, *, completed=False):
         # fresh COMPLETE 9C regression on the current source instead of waiving it.
         replacement = root / "docs/PHASE_9E_MATRIX.json"
         evidence_phase, expected_phase = "phase9e", "9E"
+        if (root / "docs/PHASE_9F_MATRIX.json").is_file():
+            replacement = root / "docs/PHASE_9F_MATRIX.json"
+            evidence_phase, expected_phase = "phase9f", "9F"
         if not replacement.is_file():
             replacement = root / "docs/PHASE_9D_MATRIX.json"
             evidence_phase, expected_phase = "phase9d", "9D"

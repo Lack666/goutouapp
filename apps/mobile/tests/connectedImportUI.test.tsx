@@ -5,6 +5,7 @@ import { ThemeProvider } from '../src/theme/ThemeProvider';
 import type { Connection } from '../src/session/ConnectionProvider';
 import { setup, prepare, sessions, person, rel, json } from './importSupport';
 import { HistoryController } from '../src/data/historyController';
+import { ErasureController } from '../src/data/erasureController';
 jest.mock('expo-router', () => ({
   useLocalSearchParams: () => ({}),
   useRouter: () => ({ canGoBack: () => false, replace: jest.fn(), push: jest.fn() }),
@@ -49,6 +50,13 @@ async function connection() {
     session: created.session,
     imports: created.controller,
     history: new HistoryController(created.transport, created.session),
+    erasure: new ErasureController(
+      created.transport,
+      created.session,
+      () => person,
+      () => undefined,
+      async () => undefined,
+    ),
     resources: {
       snapshot: () => resources,
       subscribe: () => () => undefined,

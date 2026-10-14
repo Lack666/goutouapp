@@ -1,3 +1,4 @@
+import { ConnectedErasurePanel } from './ConnectedErasurePanel';
 import { useCallback, useEffect, useState, useSyncExternalStore } from 'react';
 import { useFocusEffect, useLocalSearchParams, useRouter } from 'expo-router';
 import { KeyboardAvoidingView, Platform, View } from 'react-native';
@@ -105,6 +106,12 @@ export function ConnectedChatScreen({ connection }: { connection: Connection }) 
                 }}
               />
               <DevelopmentSessionControls />
+              <ConnectedErasurePanel
+                connection={connection}
+                domain="conversation"
+                targetId={conversation ?? null}
+                relationshipId={scope}
+              />
               <SectionCard title="Agent 对话 · 服务器记录">
                 <BodyText>当前 Conversation：{view.conversationId ?? '未选择或正在验证'}</BodyText>
                 <BodyText>关系范围：{view.relationshipId ?? '通用会话'}</BodyText>

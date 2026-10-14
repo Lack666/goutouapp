@@ -185,6 +185,64 @@ async function setup(
 afterEach(() => {
   for (const session of sessions.splice(0)) session.logout();
 });
+it('erasure invalidation clears pending history and ignores a late Agent response', async () => {
+  let resolve!: (value: Response) => void;
+  const { chat, requests } = await setup(
+    () =>
+      new Promise<Response>((r) => {
+        resolve = r;
+      }),
+  );
+  const sending = chat.send('合成问题', 'rest');
+  await new Promise((r) => setTimeout(r, 0));
+  chat.invalidateConversation(conv);
+  resolve(json(response));
+  await sending;
+  expect(chat.snapshot().conversationId).toBeNull();
+  expect(chat.snapshot().messages).toHaveLength(0);
+  const count = requests.length;
+  await chat.retry('rest');
+  expect(requests).toHaveLength(count);
+});
+it('erasure of another conversation preserves current history', async () => {
+  const { chat } = await setup(undefined, () => ({
+    items: [message(user, 'user', '合成')],
+    next_cursor: null,
+  }));
+  chat.invalidateConversation(other);
+  expect(chat.snapshot().conversationId).toBe(conv);
+  expect(chat.snapshot().messages).toHaveLength(1);
+});
+it('erasure ignores a late SSE response and a late authoritative History page', async () => {
+  let resolve!: (value: Response) => void;
+  const x = await setup(
+    () =>
+      new Promise<Response>((done) => {
+        resolve = done;
+      }),
+  );
+  const sending = x.chat.send('合成问题');
+  await new Promise((r) => setTimeout(r, 0));
+  x.chat.invalidateConversation(conv);
+  resolve(stream(success));
+  await sending;
+  expect(x.chat.snapshot().messages).toHaveLength(0);
+  expect(x.chat.snapshot().conversationId).toBeNull();
+  await x.chat.open(conv);
+  x.fetcher.mockImplementationOnce(
+    () =>
+      new Promise<Response>((done) => {
+        resolve = done;
+      }),
+  );
+  const reading = x.chat.loadHistory();
+  await new Promise((r) => setTimeout(r, 0));
+  x.chat.invalidateConversation(conv);
+  resolve(json({ items: [message(user, 'user', '已删除合成内容')], next_cursor: 'old-cursor' }));
+  await reading;
+  expect(x.chat.snapshot().messages).toHaveLength(0);
+  expect(x.chat.snapshot().conversationId).toBeNull();
+});
 it('REST uses generated body, owned scope, Bearer, public result and warnings', async () => {
   const { chat, requests } = await setup(async () => json(response));
   await chat.send(' 问题 ', 'rest');

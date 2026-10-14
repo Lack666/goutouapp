@@ -1,6 +1,10 @@
 # Architecture direction
 
-Current9E: transport-independent ErasureService adds three signed exact-target
+## Current Phase9F integration
+
+Phase9F adds server-only canonical Dataset discovery and Connected Mobile erasure using the unchanged 9E service. Transport remains outside the Agent runtime. Only one signed summary GET is added (OpenAPI40); Mobile holds no model keys or private Agent/Memory implementation. See MOBILE_DATA_ERASURE and ADR0041. Historical phase sections below describe their acceptance-time scope.
+
+Historical9E acceptance: transport-independent ErasureService adds three signed exact-target
 challenge/execute/receipt operations. Conversation and canonical imported Job keep
 deleted_at tombstones/key/dedup fences; formal messages and canonical Dataset labels
 are physically removed without touching Memory. Existing owner/Conversation/Job/scope

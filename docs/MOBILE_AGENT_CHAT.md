@@ -1,5 +1,9 @@
 # Connected Agent Chat — Phase 8C
 
+## Current Phase9F integration
+
+Phase9F adds guarded deletion for the exact owned Conversation. Execute invalidates matching pending Chat/History state and attempts, suppresses late responses/SSE, inspects a durable Receipt and verifies old GET404. Other Conversations and Memory are independent. Busy is a server refusal without automatic Run reset. See MOBILE_DATA_ERASURE.
+
 Phase8E adds “前往 Memory 控制与确认” when Chat has a server memory_status,
 including pending_confirmation. This navigates only to Connected Settings;
 Chat never grants consent or automatically runs Undo/delete. It preserves the

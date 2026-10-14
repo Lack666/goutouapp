@@ -1,0 +1,126 @@
+Diagnostic bootstrap reached
+Pytest imported
+Timeout (0:00:30)!
+Thread 0x00005438 [AnyIO worker thread] (most recent call first):
+  File "E:\python\Lib\threading.py", line 369 in wait
+  File "E:\python\Lib\queue.py", line 199 in get
+  File "F:\\u72d7\u5934\u519b\u5e08app\u5316\goutouapp\.venv\Lib\site-packages\anyio\_backends\_asyncio.py", line 1089 in run
+  File "E:\python\Lib\threading.py", line 1082 in _bootstrap_inner
+  File "E:\python\Lib\threading.py", line 1044 in _bootstrap
+
+Thread 0x0000108c [asyncio-portal-207749e4670] (most recent call first):
+  File "E:\python\Lib\annotationlib.py", line 1013 in get_annotations
+  File "E:\python\Lib\inspect.py", line ??? in _signature_from_function
+  <invalid frame>
+
+Thread 0x000021ac (most recent call first):
+  File "E:\python\Lib\threading.py", line 369 in wait
+  File "E:\python\Lib\concurrent\futures\_base.py", line 449 in result
+  File "F:\\u72d7\u5934\u519b\u5e08app\u5316\goutouapp\.venv\Lib\site-packages\anyio\from_thread.py", line 340 in call
+  File "F:\\u72d7\u5934\u519b\u5e08app\u5316\goutouapp\.venv\Lib\site-packages\starlette\testclient.py", line 357 in handle_request
+  File "F:\\u72d7\u5934\u519b\u5e08app\u5316\goutouapp\.venv\Lib\site-packages\httpx2\_client.py", line 1076 in _send_single_request
+  File "F:\\u72d7\u5934\u519b\u5e08app\u5316\goutouapp\.venv\Lib\site-packages\httpx2\_client.py", line 1043 in _send_handling_redirects
+  File "F:\\u72d7\u5934\u519b\u5e08app\u5316\goutouapp\.venv\Lib\site-packages\httpx2\_client.py", line 1008 in _send_handling_auth
+  File "F:\\u72d7\u5934\u519b\u5e08app\u5316\goutouapp\.venv\Lib\site-packages\httpx2\_client.py", line 980 in send
+  File "F:\\u72d7\u5934\u519b\u5e08app\u5316\goutouapp\.venv\Lib\site-packages\httpx2\_client.py", line 797 in request
+  File "F:\\u72d7\u5934\u519b\u5e08app\u5316\goutouapp\.venv\Lib\site-packages\starlette\testclient.py", line 463 in request
+  File "F:\\u72d7\u5934\u519b\u5e08app\u5316\goutouapp\apps\server\resource_demo_support.py", line 50 in call
+  File "F:\\u72d7\u5934\u519b\u5e08app\u5316\goutouapp\apps\server\resource_demo_support.py", line 62 in person
+  File "F:\\u72d7\u5934\u519b\u5e08app\u5316\goutouapp\apps\server\resource_demo_support.py", line 72 in relationship
+  File "F:\\u72d7\u5934\u519b\u5e08app\u5316\goutouapp\apps\server\resource_demo_support.py", line 99 in body
+  File "F:\\u72d7\u5934\u519b\u5e08app\u5316\goutouapp\apps\server\tests\test_resource_api.py", line 507 in test_two_owners_racing_same_uuid_cannot_claim_each_others_record
+  File "F:\\u72d7\u5934\u519b\u5e08app\u5316\goutouapp\.venv\Lib\site-packages\_pytest\python.py", line 167 in pytest_pyfunc_call
+  File "F:\\u72d7\u5934\u519b\u5e08app\u5316\goutouapp\.venv\Lib\site-packages\pluggy\_callers.py", line 121 in _multicall
+  File "F:\\u72d7\u5934\u519b\u5e08app\u5316\goutouapp\.venv\Lib\site-packages\pluggy\_manager.py", line 120 in _hookexec
+  File "F:\\u72d7\u5934\u519b\u5e08app\u5316\goutouapp\.venv\Lib\site-packages\pluggy\_hooks.py", line 512 in __call__
+  File "F:\\u72d7\u5934\u519b\u5e08app\u5316\goutouapp\.venv\Lib\site-packages\_pytest\python.py", line 1707 in runtest
+  File "F:\\u72d7\u5934\u519b\u5e08app\u5316\goutouapp\.venv\Lib\site-packages\_pytest\runner.py", line 184 in pytest_runtest_call
+  File "F:\\u72d7\u5934\u519b\u5e08app\u5316\goutouapp\.venv\Lib\site-packages\pluggy\_callers.py", line 121 in _multicall
+  File "F:\\u72d7\u5934\u519b\u5e08app\u5316\goutouapp\.venv\Lib\site-packages\pluggy\_manager.py", line 120 in _hookexec
+  File "F:\\u72d7\u5934\u519b\u5e08app\u5316\goutouapp\.venv\Lib\site-packages\pluggy\_hooks.py", line 512 in __call__
+  File "F:\\u72d7\u5934\u519b\u5e08app\u5316\goutouapp\.venv\Lib\site-packages\_pytest\runner.py", line 250 in <lambda>
+  File "F:\\u72d7\u5934\u519b\u5e08app\u5316\goutouapp\.venv\Lib\site-packages\_pytest\runner.py", line 361 in from_call
+  File "F:\\u72d7\u5934\u519b\u5e08app\u5316\goutouapp\.venv\Lib\site-packages\_pytest\runner.py", line 249 in call_and_report
+  File "F:\\u72d7\u5934\u519b\u5e08app\u5316\goutouapp\.venv\Lib\site-packages\_pytest\runner.py", line 139 in runtestprotocol
+  File "F:\\u72d7\u5934\u519b\u5e08app\u5316\goutouapp\.venv\Lib\site-packages\_pytest\runner.py", line 118 in pytest_runtest_protocol
+  File "F:\\u72d7\u5934\u519b\u5e08app\u5316\goutouapp\.venv\Lib\site-packages\pluggy\_callers.py", line 121 in _multicall
+  File "F:\\u72d7\u5934\u519b\u5e08app\u5316\goutouapp\.venv\Lib\site-packages\pluggy\_manager.py", line 120 in _hookexec
+  File "F:\\u72d7\u5934\u519b\u5e08app\u5316\goutouapp\.venv\Lib\site-packages\pluggy\_hooks.py", line 512 in __call__
+  File "F:\\u72d7\u5934\u519b\u5e08app\u5316\goutouapp\.venv\Lib\site-packages\_pytest\main.py", line 408 in pytest_runtestloop
+  File "F:\\u72d7\u5934\u519b\u5e08app\u5316\goutouapp\.venv\Lib\site-packages\pluggy\_callers.py", line 121 in _multicall
+  File "F:\\u72d7\u5934\u519b\u5e08app\u5316\goutouapp\.venv\Lib\site-packages\pluggy\_manager.py", line 120 in _hookexec
+  File "F:\\u72d7\u5934\u519b\u5e08app\u5316\goutouapp\.venv\Lib\site-packages\pluggy\_hooks.py", line 512 in __call__
+  File "F:\\u72d7\u5934\u519b\u5e08app\u5316\goutouapp\.venv\Lib\site-packages\_pytest\main.py", line 384 in _main
+  File "F:\\u72d7\u5934\u519b\u5e08app\u5316\goutouapp\.venv\Lib\site-packages\_pytest\main.py", line 330 in wrap_session
+  File "F:\\u72d7\u5934\u519b\u5e08app\u5316\goutouapp\.venv\Lib\site-packages\_pytest\main.py", line 377 in pytest_cmdline_main
+  File "F:\\u72d7\u5934\u519b\u5e08app\u5316\goutouapp\.venv\Lib\site-packages\pluggy\_callers.py", line 121 in _multicall
+  File "F:\\u72d7\u5934\u519b\u5e08app\u5316\goutouapp\.venv\Lib\site-packages\pluggy\_manager.py", line 120 in _hookexec
+  File "F:\\u72d7\u5934\u519b\u5e08app\u5316\goutouapp\.venv\Lib\site-packages\pluggy\_hooks.py", line 512 in __call__
+  File "F:\\u72d7\u5934\u519b\u5e08app\u5316\goutouapp\.venv\Lib\site-packages\_pytest\config\__init__.py", line 229 in _main
+  File "F:\\u72d7\u5934\u519b\u5e08app\u5316\goutouapp\.venv\Lib\site-packages\_pytest\config\__init__.py", line 201 in main
+  File "F:\\u72d7\u5934\u519b\u5e08app\u5316\goutouapp\.cache\phase9f-run-resource-probe.py", line 8 in <module>
+...............................................................................................................................................................................................................................................................................................................................................................SAFE_RESOURCE_DIAGNOSTIC {"kind": "admission", "code": "artifact_unavailable", "caught_type": "OperationalError", "driver_type": "LockNotAvailable", "sqlstate": "55P03"}SAFE_RESOURCE_DIAGNOSTIC {"kind": "admission", "code": "artifact_unavailable", "caught_type": "OperationalError", "driver_type": "LockNotAvailable", "sqlstate": "55P03"}
+SAFE_RESOURCE_DIAGNOSTIC {"kind": "admission", "code": "artifact_unavailable", "caught_type": "OperationalError", "driver_type": "LockNotAvailable", "sqlstate": "55P03"}
+
+SAFE_RESOURCE_DIAGNOSTIC {"kind": "admission", "code": "artifact_unavailable", "caught_type": "OperationalError", "driver_type": "LockNotAvailable", "sqlstate": "55P03"}
+F........
+================================== FAILURES ===================================
+___ test_eight_concurrent_duplicate_creates_have_one_committed_row[persons] ___
+
+flow = <resource_demo_support.ResourceFlow object at 0x0000020774EDB8D0>
+domain = 'persons'
+
+    @pytest.mark.parametrize("domain", MODELS)
+    def test_eight_concurrent_duplicate_creates_have_one_committed_row(flow, domain):
+        body = flow.body(domain)
+        with ThreadPoolExecutor(max_workers=8) as pool:
+>           results = list(
+                pool.map(lambda _: flow.call("POST", f"/{domain}", body, status=201), range(8))
+            )
+
+apps\server\tests\test_resource_api.py:190: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+E:\python\Lib\concurrent\futures\_base.py:645: in result_iterator
+    yield _result_or_cancel(fs.pop())
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E:\python\Lib\concurrent\futures\_base.py:312: in _result_or_cancel
+    return fut.result(timeout)
+           ^^^^^^^^^^^^^^^^^^^
+E:\python\Lib\concurrent\futures\_base.py:447: in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+E:\python\Lib\concurrent\futures\_base.py:396: in __get_result
+    raise self._exception
+E:\python\Lib\concurrent\futures\thread.py:86: in run
+    result = ctx.run(self.task)
+             ^^^^^^^^^^^^^^^^^^
+E:\python\Lib\concurrent\futures\thread.py:73: in run
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+apps\server\tests\test_resource_api.py:191: in <lambda>
+    pool.map(lambda _: flow.call("POST", f"/{domain}", body, status=201), range(8))
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <resource_demo_support.ResourceFlow object at 0x0000020774EDB8D0>
+method = 'POST', path = '/persons'
+body = {'id': 'ea9e0d73-ce6c-429d-b2a1-54cc4a93216f', 'display_name': 'Synthetic A'}
+status = 201, auth = None, params = None
+
+    def call(self, method, path, body=None, *, status=200, auth=None, params=None):
+        response = self.client.request(
+            method,
+            "/api/v1" + path,
+            headers=self.headers if auth is None else auth,
+            json=body,
+            params=params,
+        )
+        # Do not print failed response bodies, which could contain private content.
+>       assert response.status_code == status, f"Unexpected HTTP status {response.status_code}"
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: Unexpected HTTP status 503
+
+apps\server\resource_demo_support.py:58: AssertionError
+=========================== short test summary info ===========================
+FAILED apps/server/tests/test_resource_api.py::test_eight_concurrent_duplicate_creates_have_one_committed_row[persons]
+1 failed, 359 passed, 3240 deselected in 50.56s

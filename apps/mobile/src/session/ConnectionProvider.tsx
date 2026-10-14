@@ -22,6 +22,7 @@ import { streamFetch } from '../api/streamFetch';
 import { ImportController } from '../data/importController';
 import { HistoryController } from '../data/historyController';
 import { MemoryController } from '../data/memoryController';
+import { ErasureController } from '../data/erasureController';
 
 export interface Connection {
   session: DevelopmentSession;
@@ -30,6 +31,7 @@ export interface Connection {
   imports: ImportController;
   history: HistoryController;
   memory: MemoryController;
+  erasure: ErasureController;
 }
 export function createConnection(baseURL: string, localDevelopment: boolean): Connection {
   const session = new DevelopmentSession(createPlatformTokenStorage());
@@ -45,8 +47,9 @@ export function createConnection(baseURL: string, localDevelopment: boolean): Co
     true,
     120_000,
     true,
+    true,
   );
-  return {
+  const controllers = {
     session,
     resources: new ResourceController(transport, session, randomUUID),
     chat: new AgentChatController(transport, session, randomUUID),
@@ -54,6 +57,53 @@ export function createConnection(baseURL: string, localDevelopment: boolean): Co
     history: new HistoryController(transport, session),
     memory: new MemoryController(transport, session, randomUUID),
   };
+  const erasure = new ErasureController(
+    transport,
+    session,
+    randomUUID,
+    (target) => {
+      const history = controllers.history.snapshot();
+      if (
+        (target.domain === 'dataset' &&
+          history.kind === 'relationship' &&
+          history.parentId === target.relationship_id) ||
+        (target.domain === 'conversation' &&
+          history.kind === 'agent' &&
+          history.parentId === target.target_id)
+      )
+        controllers.history.clear(history.kind);
+      if (target.domain === 'conversation') {
+        controllers.chat.invalidateConversation(target.target_id);
+      } else if (
+        controllers.imports.snapshot().receipt?.datasetId === target.target_id ||
+        controllers.imports.snapshot().job?.id === target.target_id
+      )
+        controllers.imports.clear();
+    },
+    async (target) => {
+      const epoch = session.epoch();
+      if (target.domain === 'dataset' && target.relationship_id) {
+        await controllers.history.open('relationship', target.relationship_id);
+        if (epoch !== session.epoch()) return;
+        if (
+          controllers.history.snapshot().status !== 'ready' ||
+          controllers.history
+            .snapshot()
+            .items.some(
+              (item) => item.kind === 'relationship' && item.datasetId === target.target_id,
+            )
+        )
+          throw new Error('History refresh failed');
+      } else {
+        controllers.resources.invalidateConversation(target.target_id);
+        await controllers.resources.load('conversations');
+        if (epoch !== session.epoch()) return;
+        if (controllers.resources.snapshot().pages.conversations.status !== 'ready')
+          throw new Error('Resource refresh failed');
+      }
+    },
+  );
+  return { ...controllers, erasure };
 }
 const Context = createContext<Connection | null>(null);
 export const useConnection = () => useContext(Context);
@@ -113,6 +163,7 @@ export function ConnectionProvider({
         if (connection.imports.snapshot().upload !== 'selecting') connection.imports.pause();
         connection.history.pause();
         connection.memory.pause();
+        connection.erasure.pause();
       }
     });
     return () => subscription.remove();

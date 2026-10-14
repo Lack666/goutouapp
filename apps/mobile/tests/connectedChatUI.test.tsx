@@ -12,6 +12,7 @@ jest.mock('expo-router', () => ({
 jest.mock('../src/components/DevelopmentSessionControls', () => ({
   DevelopmentSessionControls: () => null,
 }));
+jest.mock('../src/features/ConnectedErasurePanel', () => ({ ConnectedErasurePanel: () => null }));
 const conv = asUUID('11111111-1111-4111-8111-111111111111');
 const base: ConnectedChatView = {
   conversationId: conv,

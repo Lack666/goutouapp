@@ -331,6 +331,128 @@
         "title": "CreateAgentRunRequest",
         "type": "object"
       },
+      "DatasetPage": {
+        "additionalProperties": false,
+        "properties": {
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/DatasetSummary"
+            },
+            "maxItems": 100,
+            "title": "Items",
+            "type": "array"
+          },
+          "next_cursor": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Next Cursor"
+          }
+        },
+        "required": [
+          "items",
+          "next_cursor"
+        ],
+        "title": "DatasetPage",
+        "type": "object"
+      },
+      "DatasetSummary": {
+        "additionalProperties": false,
+        "properties": {
+          "current_message_count": {
+            "title": "Current Message Count",
+            "type": "integer"
+          },
+          "dataset_job_id": {
+            "format": "uuid",
+            "title": "Dataset Job Id",
+            "type": "string"
+          },
+          "deletable": {
+            "title": "Deletable",
+            "type": "boolean"
+          },
+          "deleted_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Deleted At"
+          },
+          "first_timestamp_utc": {
+            "format": "date-time",
+            "title": "First Timestamp Utc",
+            "type": "string"
+          },
+          "ignored_message_count": {
+            "title": "Ignored Message Count",
+            "type": "integer"
+          },
+          "imported_at": {
+            "format": "date-time",
+            "title": "Imported At",
+            "type": "string"
+          },
+          "imported_message_count": {
+            "title": "Imported Message Count",
+            "type": "integer"
+          },
+          "last_timestamp_utc": {
+            "format": "date-time",
+            "title": "Last Timestamp Utc",
+            "type": "string"
+          },
+          "parser_version": {
+            "title": "Parser Version",
+            "type": "string"
+          },
+          "relationship_id": {
+            "format": "uuid",
+            "title": "Relationship Id",
+            "type": "string"
+          },
+          "source_format": {
+            "title": "Source Format",
+            "type": "string"
+          },
+          "source_timezone": {
+            "title": "Source Timezone",
+            "type": "string"
+          },
+          "system_message_count": {
+            "title": "System Message Count",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "dataset_job_id",
+          "relationship_id",
+          "source_format",
+          "parser_version",
+          "source_timezone",
+          "first_timestamp_utc",
+          "last_timestamp_utc",
+          "imported_message_count",
+          "current_message_count",
+          "ignored_message_count",
+          "system_message_count",
+          "imported_at",
+          "deleted_at",
+          "deletable"
+        ],
+        "title": "DatasetSummary",
+        "type": "object"
+      },
       "DeleteAllPreparation": {
         "additionalProperties": false,
         "properties": {
@@ -6303,6 +6425,154 @@
           }
         ],
         "summary": "Get Relationship",
+        "tags": [
+          "resources"
+        ]
+      }
+    },
+    "/api/v1/relationships/{relationship_id}/datasets": {
+      "get": {
+        "operationId": "list_datasets_api_v1_relationships__relationship_id__datasets_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "relationship_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Relationship Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 30,
+              "maximum": 100,
+              "minimum": 1,
+              "title": "Limit",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "cursor",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "maxLength": 512,
+                  "minLength": 1,
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Cursor"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DatasetPage"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Invalid request"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Authentication required"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Resource not found"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Active run or idempotency conflict"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Validation error"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Internal server error"
+          },
+          "502": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Agent execution failed"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Dependency unavailable"
+          }
+        },
+        "security": [
+          {
+            "BearerCredential": []
+          }
+        ],
+        "summary": "List Datasets",
         "tags": [
           "resources"
         ]

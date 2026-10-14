@@ -1,4 +1,8 @@
-# Mobile app — Phase 7A–7D and Phase 8B–8F acceptance
+# Mobile app — Phase 7–8 baseline and Phase 9F self-service erasure
+
+## Current Phase9F integration
+
+Phase9F adds Connected History Dataset discovery/deletion and Chat Conversation deletion using server confirmation and durable receipts. Run `pnpm --filter @goutou/mobile smoke:erasure` for real signed Web/PostgreSQL integration; independent Android evidence remains mandatory. Memory/account/backup scopes are explained in docs/MOBILE_DATA_ERASURE.md. Earlier sections retain historical phase boundaries.
 
 8F adds `test:final` for cross-controller owner/mode/background/restart boundaries
 and `smoke:final` for all six actual Connected surfaces in one signed

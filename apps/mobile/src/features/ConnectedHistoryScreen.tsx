@@ -1,3 +1,4 @@
+import { ConnectedErasurePanel } from './ConnectedErasurePanel';
 import { useCallback, useEffect, useState, useSyncExternalStore } from 'react';
 import { useFocusEffect } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -57,7 +58,9 @@ function ConnectedHistorySession({
               onBack={nav.back}
             />
             <DevelopmentSessionControls />
-            <BodyText muted>当前 App 尚无聊天历史删除入口；删除记忆不会清除聊天历史。</BodyText>
+            <BodyText muted>
+              可单独删除指定导入 Dataset 或 AI Conversation；Memory 通过独立控制删除。
+            </BodyText>
             <SectionCard title="历史类型">
               <PrimaryButton
                 label="关系聊天"
@@ -112,6 +115,12 @@ function ConnectedHistorySession({
                   ))}
               </SectionCard>
             )}
+            <ConnectedErasurePanel
+              connection={connection}
+              domain={kind === 'relationship' ? 'dataset' : 'conversation'}
+              targetId={kind === 'agent' ? parent : null}
+              relationshipId={kind === 'relationship' ? parent : scope}
+            />
             <SectionCard title="服务器历史状态">
               <BodyText>
                 范围：{view.parentId ?? '未选择或不可用'} · 已读取 {view.items.length} 条

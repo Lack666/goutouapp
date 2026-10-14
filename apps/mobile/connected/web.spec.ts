@@ -27,11 +27,14 @@ test('real Expo Web owned resource creation, lost response retry, contexts and A
   const errors: string[] = [];
   const requests: string[] = [];
   const memoryRequests: { method: string; path: string }[] = [];
+  const datasetRequests: { method: string; path: string }[] = [];
   page.on('pageerror', (error) => errors.push(error.name));
   page.on('request', (request) => {
     if (request.url().startsWith(backend.baseURL)) {
       const path = new URL(request.url()).pathname;
       requests.push(path);
+      if (/^\/api\/v1\/relationships\/[a-f0-9-]{36}\/datasets$/.test(path))
+        datasetRequests.push({ method: request.method(), path });
       if (/^\/api\/v1\/(memory\/|memories)/.test(path))
         memoryRequests.push({ method: request.method(), path });
     }
@@ -124,12 +127,15 @@ test('real Expo Web owned resource creation, lost response retry, contexts and A
       (path) =>
         /^\/api\/v1\/(persons|relationships|conversations)(\/[a-f0-9-]{36})?$/.test(path) ||
         /^\/api\/v1\/(conversations|relationships)\/[a-f0-9-]{36}\/messages$/.test(path) ||
+        /^\/api\/v1\/relationships\/[a-f0-9-]{36}\/datasets$/.test(path) ||
         ['/api/v1/memory/control', '/api/v1/memories', '/api/v1/memory/undo/preview'].includes(
           path,
-        ), // 8E Settings inspects Memory; all mutations remain forbidden in this resource regression.
+        ), // Settings/History inspect Memory and Dataset metadata; deletion remains forbidden.
     ),
   ).toBe(true);
   expect(memoryRequests.every((request) => request.method === 'GET')).toBe(true);
+  expect(datasetRequests.length).toBeGreaterThan(0);
+  expect(datasetRequests.every((request) => request.method === 'GET')).toBe(true);
   expect(errors).toEqual([]);
   expect(await backend.counts()).toEqual({ persons: 3, relationships: 2, conversations: 2 });
 });

@@ -1,0 +1,67 @@
+$ playwright test --config playwright.erasure.config.ts
+[WebServer] (node:24500) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:32832) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 2 tests using 1 worker
+
+(node:3344) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  1 erasure-connected\web.spec.ts:31:5 › actual Dataset and Conversation UI confirmation/receipt, SQL deletion, other scopes, Memory and original-key replay (10.6s)
+(node:34016) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  2 erasure-connected\web.spec.ts:85:5 › actual committed response loss / original key replay / A-B denial / expired challenge / busy run / Demo separation (2.0m)
+
+
+  1) erasure-connected\web.spec.ts:31:5 › actual Dataset and Conversation UI confirmation/receipt, SQL deletion, other scopes, Memory and original-key replay 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByRole('button', { name: '选择删除 Dataset 1ee1be32-4563-4c7d-b52e-d38b0701d658', exact: true })
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByRole('button', { name: '选择删除 Dataset 1ee1be32-4563-4c7d-b52e-d38b0701d658', exact: true }) with timeout 5000ms
+      - waiting for getByRole('button', { name: '选择删除 Dataset 1ee1be32-4563-4c7d-b52e-d38b0701d658', exact: true })
+
+
+      42 |     await login(page, backend.a);
+      43 |     await page.goto(`/history?relationshipId=${a.relationship}`);
+    > 44 |     await expect(button(page, `选择删除 Dataset ${a.datasets[0]!.dataset_job_id}`)).toBeVisible();
+         |                                                                                 ^
+      45 |     await button(page, `选择删除 Dataset ${a.datasets[0]!.dataset_job_id}`).click();
+      46 |     await button(page, '向服务器准备删除').click();
+      47 |     await expect(page.getByText('服务器待删消息：4 · 保留 Run 元数据：0', { exact: true })).toBeVisible();
+        at F:\狗头军师app化\goutouapp\apps\mobile\erasure-connected\web.spec.ts:44:81
+
+    Error Context: ..\..\.cache\phase9f-web-results\web-actual-Dataset-and-Con-d2ec7-ory-and-original-key-replay\error-context.md
+
+  2) erasure-connected\web.spec.ts:85:5 › actual committed response loss / original key replay / A-B denial / expired challenge / busy run / Demo separation 
+
+    Test timeout of 120000ms exceeded.
+
+    Error: locator.click: Test timeout of 120000ms exceeded.
+    Call log:
+      - waiting for getByRole('button', { name: '选择删除 Dataset 9c519bc9-7de4-4734-ae32-0b247eb94157', exact: true })
+
+
+      94 |     expect((await api(backend.baseURL, backend.a, '/erasures/prepare', { ...target, relationship_id: randomUUID() })).status).toBe(404);
+      95 |     await login(page, backend.a); await page.goto(`/history?relationshipId=${a.relationship}`);
+    > 96 |     await button(page, `选择删除 Dataset ${target.target_id}`).click(); await button(page, '向服务器准备删除').click();
+         |                                                            ^
+      97 |     const confirmationText = await page.getByText(/^Confirmation ID：/).innerText();
+      98 |     await backend.erasureCommand(`expire_erasure ${confirmationText.split('：')[1]}`);
+      99 |     await button(page, '明确确认并执行此范围删除').click();
+        at F:\狗头军师app化\goutouapp\apps\mobile\erasure-connected\web.spec.ts:96:60
+
+    Error Context: ..\..\.cache\phase9f-web-results\web-actual-committed-respo-0f3d6-ge-busy-run-Demo-separation\error-context.md
+
+  2 failed
+    erasure-connected\web.spec.ts:31:5 › actual Dataset and Conversation UI confirmation/receipt, SQL deletion, other scopes, Memory and original-key replay 
+    erasure-connected\web.spec.ts:85:5 › actual committed response loss / original key replay / A-B denial / expired challenge / busy run / Demo separation 
+F:\狗头军师app化\goutouapp\apps\mobile:
+[ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL] @goutou/mobile@0.1.0 smoke:erasure: `playwright test --config playwright.erasure.config.ts`
+Exit status 1

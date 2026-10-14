@@ -22,12 +22,28 @@ as implemented by a placeholder directory or a golden expectation.
 | 6 | User-facing memory controls and retention policy integration | PASS (6A–6D) |
 | 7 | Expo React Native MVP | PASS (7A–7D) |
 | 8 | Mobile API integration, generated client and stream consumption | PASS (8A–8F, including native closeout) |
-| 9 | Security, privacy, reliability and deletion | IN PROGRESS (9A–9E PASS) |
+| 9 | Security, privacy, reliability and deletion | IN PROGRESS (9A–9F PASS) |
 | 10 | Optional hybrid RAG with pgvector | PENDING |
 | 11 | Agent eval and observability | PENDING |
 | 12 | CI/CD, EAS preview, release preparation | PENDING |
 
 ## Exit criteria by phase
+
+Explicit authorization (2026-10-14): **9F — Mobile Self-Service Data Erasure
+Integration** follows 8/9E. Implement minimum signed owner/Relationship Dataset
+discovery and Connected Dataset/Conversation prepare → server confirmation →
+explicit execute → durable receipt → authoritative refresh. Preserve Demo,
+Memory independence, immutable operation keys, unknown outcomes, target_busy,
+session epochs and tombstones. Require actual signed PostgreSQL, Expo Web and
+Android deletion/fault/restart evidence, all prior regressions, and independent
+full root exits0 before/after advancing only 8/9E to 8/9F.
+Final complete pre-marker r4 under8/9E and independent post-marker r2 under8/9F
+each exited0. Actual Android Dataset/Conversation/fault/restart and all five prior
+native scenes passed on the current App. PHASE_9F_ACCEPTANCE/MATRIX record PASS;
+only the marker advances to8/9F. Earlier failed attempts retain nonzero evidence.
+Phase9 stays IN PROGRESS;
+10–12, new Agent reasoning, real providers and full-account erasure are outside
+scope. Stop after9F; whole Phase9 acceptance needs separate authorization.
 
 Explicit authorization (2026-10-13): **9E — User Data Erasure and Security
 Reliability Closeout** follows completed9D. Implement signed owner-scoped,

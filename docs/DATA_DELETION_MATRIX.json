@@ -1,6 +1,6 @@
 {
-  "phase": "9E",
-  "delivery": "Backend-only",
+  "phase": "9F",
+  "delivery": "Connected React Native App + guarded signed API",
   "domains": {
     "account": {
       "self_service": "Unavailable",
@@ -39,7 +39,7 @@
       "ui_api_limit": "No DELETE endpoint/button"
     },
     "conversation": {
-      "self_service": "Backend-only guarded API; no App self-service",
+      "self_service": "Connected App Prepare / explicit Confirm / Execute / durable Receipt / authoritative refresh",
       "authorized_actor": "Signed owner",
       "confirmation": "Five-minute server snapshot challenge; explicit execute and operation key",
       "affected_resources": "Exact Conversation and all its formal Messages, across roles; associated run body metadata",
@@ -51,7 +51,7 @@
       "ui_api_limit": "Old history/REST/SSE 404, create old UUID 409; pending/running/unresolved Memory run blocks; cached clients must refresh"
     },
     "agent_history": {
-      "self_service": "Backend-only via containing Conversation; no per-message/run erasure",
+      "self_service": "Connected Chat via exact containing Conversation; no per-message/run erasure",
       "authorized_actor": "Signed Conversation owner",
       "confirmation": "Same Conversation challenge",
       "affected_resources": "All Messages in exact Conversation; Run links SET NULL and outcome metadata scrubbed",
@@ -63,7 +63,7 @@
       "ui_api_limit": "No standalone Agent history DELETE; old run key cannot recreate answer"
     },
     "dataset": {
-      "self_service": "Backend-only guarded API; no App self-service",
+      "self_service": "Connected App Prepare / explicit Confirm / Execute / durable Receipt / authoritative refresh",
       "authorized_actor": "Signed canonical imported Job owner and exact Relationship",
       "confirmation": "Five-minute exact dataset_job_id/relationship_id snapshot challenge",
       "affected_resources": "All RelationshipMessages and speaker labels in exact canonical Job",
@@ -75,7 +75,7 @@
       "ui_api_limit": "No Job UUID reuse; other transcripts/owners/Relationships remain independent; inspect metadata is historical receipt"
     },
     "relationship_message": {
-      "self_service": "Backend-only through containing Dataset; no per-message erasure",
+      "self_service": "Connected History via canonical Dataset; no per-message erasure",
       "authorized_actor": "Signed canonical Dataset owner",
       "confirmation": "Same exact Dataset challenge",
       "affected_resources": "Only rows with exact owner/Relationship/import_job_id",

@@ -1,0 +1,15 @@
+$ playwright test --config playwright.connected.config.ts
+[WebServer] (node:10648) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:34676) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 3 tests using 1 worker
+
+(node:7156) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 connected\http.spec.ts:9:5 › generated mobile client + CLI signed JWT + real HTTP + PostgreSQL: retries, scopes, pages and conflicts (334ms)
+  ok 2 connected\web.spec.ts:23:5 › real Expo Web owned resource creation, lost response retry, contexts and A to B isolation (5.5s)
+  ok 3 connected\web.spec.ts:142:5 › real browser rejects expired/invalid credentials, normalizes offline and clears on server 401 (1.1s)
+
+  3 passed (13.4s)

@@ -68,9 +68,13 @@ if (
   const generated = await generate(await readFile(input));
   if (process.argv.includes("--check")) {
     assertCurrent(generated, await readFile(output, "utf8"));
-    process.stdout.write(
-      "PASS: deterministic generated client (39 operations)\n",
+    const schema = JSON.parse(await readFile(input, "utf8"));
+    const count = Object.values(schema.paths).reduce(
+      (total, path) => total + Object.keys(path).filter((method) =>
+        ["get", "post", "put", "patch", "delete", "head", "options"].includes(method),
+      ).length, 0,
     );
+    process.stdout.write(`PASS: deterministic generated client (${count} operations)\n`);
   } else {
     await mkdir(
       new URL("../../apps/mobile/src/api/generated/", import.meta.url),

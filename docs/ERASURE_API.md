@@ -1,5 +1,9 @@
 # Guarded erasure API — Phase9E / Backend-only
 
+## Current Phase9F integration
+
+Phase9F Connected Mobile now uses all three unchanged guarded erasure operations. Dataset target selection uses the new canonical owner/Relationship discovery GET; Conversation uses its existing owned GET. No new deletion endpoint, local-confirm bypass or service rewrite. See MOBILE_DATA_ERASURE.
+
 All three routes require the existing signed Bearer credential and existing
 User. Owner comes exclusively from the verified actor; clients cannot supply it.
 OpenAPI has39 operations: all original36 preserved plus these three. Generated

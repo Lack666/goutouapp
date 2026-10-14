@@ -10,10 +10,11 @@ from enum import StrEnum
 from hashlib import sha256
 from uuid import UUID
 
+from sqlalchemy import func, select, tuple_
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm import Session
 
-from app.db.models import Conversation, Person, Relationship
+from app.db.models import ChatImportJob, Conversation, Person, Relationship, RelationshipMessage
 from app.db.repositories import records, resources
 from app.schemas.resources import (
     AgentMessagePage,
@@ -21,6 +22,8 @@ from app.schemas.resources import (
     ConversationCreateRequest,
     ConversationPage,
     ConversationResponse,
+    DatasetPage,
+    DatasetSummary,
     PageRequest,
     PersonCreateRequest,
     PersonPage,
@@ -212,6 +215,60 @@ class ResourceService:
             )
             return ConversationPage(
                 items=[ConversationResponse.model_validate(row) for row in rows[: page.limit]],
+                next_cursor=_next_cursor(rows, page.limit, context),
+            )
+
+    def list_datasets(
+        self, actor: AuthenticatedActor, relationship_id: UUID, page: PageRequest
+    ) -> DatasetPage:
+        """Canonical imported Jobs only; ready duplicates are never deletion IDs."""
+        with self._transaction(actor) as db:
+            if records.get_relationship(db, actor.user_id, relationship_id) is None:
+                raise ResourceError(ResourceErrorCode.NOT_FOUND)
+            context = _context(actor.user_id, "datasets", relationship_id)
+            position = _decode_cursor(page.cursor, context)
+            job = ChatImportJob
+            query = select(job).where(
+                job.owner_user_id == actor.user_id,
+                job.bound_relationship_id == relationship_id,
+                job.status == "imported",
+            )
+            if position is not None:
+                query = query.where(tuple_(job.created_at, job.id) > position)
+            rows = list(db.scalars(query.order_by(job.created_at, job.id).limit(page.limit + 1)))
+            counts = dict(
+                db.execute(
+                    select(RelationshipMessage.import_job_id, func.count())
+                    .where(
+                        RelationshipMessage.owner_user_id == actor.user_id,
+                        RelationshipMessage.relationship_id == relationship_id,
+                        RelationshipMessage.import_job_id.in_(
+                            [row.id for row in rows[: page.limit]]
+                        ),
+                    )
+                    .group_by(RelationshipMessage.import_job_id)
+                ).all()
+            )
+            return DatasetPage(
+                items=[
+                    DatasetSummary(
+                        dataset_job_id=row.id,
+                        relationship_id=relationship_id,
+                        source_format=row.source_format,
+                        parser_version=row.parser_version,
+                        source_timezone=row.source_timezone,
+                        first_timestamp_utc=row.first_timestamp_utc,
+                        last_timestamp_utc=row.last_timestamp_utc,
+                        imported_message_count=row.imported_message_count,
+                        current_message_count=counts.get(row.id, 0),
+                        ignored_message_count=row.ignored_message_count,
+                        system_message_count=row.system_message_count,
+                        imported_at=row.imported_at,
+                        deleted_at=row.deleted_at,
+                        deletable=row.deleted_at is None,
+                    )
+                    for row in rows[: page.limit]
+                ],
                 next_cursor=_next_cursor(rows, page.limit, context),
             )
 

@@ -1,4 +1,5 @@
 .env
+/_phase9f_baseline/
 .env.*
 !.env.example
 .idea/
@@ -23,4 +24,5 @@ test-results/
 !docs/evidence/phase8f-closeout/*.log
 !docs/evidence/phase9d/*.log
 !docs/evidence/phase9e/*.log
+!docs/evidence/phase9f/*.log
 !knowledge/goutoujunshi/assets/reference-library-135.png

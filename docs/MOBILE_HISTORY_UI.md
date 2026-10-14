@@ -1,5 +1,9 @@
 # History UI — Phase 8D
 
+## Current Phase9F integration
+
+Phase9F adds explicit canonical Dataset selection and guarded server deletion in Connected History. Receipt-backed deletion clears matching History/cursor/import selection and reloads authoritative messages and Dataset summaries; other Datasets remain. Discovery survives App restart and never guesses IDs from chat content. See MOBILE_DATA_ERASURE.
+
 Connected preserves the existing FlatList/rows/theme and maps generated DTOs into
 the typed History ViewModels. RelationshipMessage uses actual ID/relationship/
 import_job_id/source_index/timestamp_utc/original_timestamp/source_timezone/raw

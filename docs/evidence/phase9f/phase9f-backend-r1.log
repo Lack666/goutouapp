@@ -1,0 +1,39 @@
+........................................................................ [  9%]
+........................................................................ [ 18%]
+........................................................................ [ 28%]
+........................................................................ [ 37%]
+........................................................................ [ 47%]
+........................................................................ [ 56%]
+........................................................................ [ 66%]
+........................................................................ [ 75%]
+........................................................................ [ 85%]
+....................................................F................... [ 94%]
+.........................................                                [100%]
+================================== FAILURES ===================================
+__ test_two_owners_racing_same_uuid_cannot_claim_each_others_record[persons] __
+
+flow = <resource_demo_support.ResourceFlow object at 0x000001E15E0657D0>
+domain = 'persons'
+
+    @pytest.mark.parametrize("domain", MODELS)
+    def test_two_owners_racing_same_uuid_cannot_claim_each_others_record(flow, domain):
+        other = ResourceFlow(flow.client, flow.foreign)
+        first, second = flow.body(domain), other.body(domain)
+        second["id"] = first["id"]
+        with ThreadPoolExecutor(max_workers=2) as pool:
+            responses = list(
+                pool.map(
+                    lambda args: flow.client.post(f"/api/v1/{domain}", json=args[0], headers=args[1]),
+                    ((first, flow.headers), (second, other.headers)),
+                )
+            )
+>       assert sorted(response.status_code for response in responses) == [201, 404]
+E       assert [201, 503] == [201, 404]
+E         
+E         At index 1 diff: 503 != 404
+E         Use -v to get more diff
+
+apps\server\tests\test_resource_api.py:516: AssertionError
+=========================== short test summary info ===========================
+FAILED apps/server/tests/test_resource_api.py::test_two_owners_racing_same_uuid_cannot_claim_each_others_record[persons]
+1 failed, 760 passed in 157.35s (0:02:37)

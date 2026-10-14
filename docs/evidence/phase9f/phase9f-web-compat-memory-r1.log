@@ -1,0 +1,17 @@
+$ playwright test --config playwright.memory.config.ts
+[WebServer] (node:29972) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:4624) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 5 tests using 1 worker
+
+(node:30584) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 memory-connected\http.spec.ts:16:5 › real JWT / PostgreSQL / LangGraph: consent, pause, expiry, guarded undo and data-domain separation (921ms)
+  ok 2 memory-connected\http.spec.ts:87:5 › real committed response loss: controls re-inspect; undo/delete replay exact original payload, durable owner-only receipts (473ms)
+  ok 3 memory-connected\http.spec.ts:186:5 › real structured Person deletion, stale/expired challenge, explicit all consent choice, safe replay preserving new records (634ms)
+  ok 4 memory-connected\web.spec.ts:20:5 › Chrome actual Settings / Agent SSE / Undo / one-person-all confirmation / durable receipt replay / owner isolation (6.9s)
+  ok 5 memory-connected\web.spec.ts:128:5 › Chrome real committed response lost: unknown deletion never reports success or automatically re-prepares (1.2s)
+
+  5 passed (16.5s)

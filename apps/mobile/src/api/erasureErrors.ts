@@ -1,6 +1,15 @@
 import { ApiError, httpError } from './errors';
 
-// Backend-only contract adapter: no controller, automatic retry or App deletion UI.
+export class ErasureHTTPError extends ApiError {
+  constructor(
+    readonly code: string,
+    status: number,
+    message: string,
+  ) {
+    super(httpError(status).kind, status);
+    this.message = message;
+  }
+}
 const messages: Record<string, string> = {
   confirmation_not_found: '服务器删除确认不可用，请重新准备。',
   confirmation_expired: '删除确认已过期，请重新核对服务器范围。',
@@ -16,9 +25,7 @@ export function erasureHTTPError(status: number, text: string): ApiError {
     const body = JSON.parse(text) as { error?: { code?: unknown } };
     const code = body.error?.code;
     if (typeof code === 'string' && Object.hasOwn(messages, code)) {
-      const error = httpError(status);
-      error.message = messages[code] ?? error.message;
-      return error;
+      return new ErasureHTTPError(code, status, messages[code] ?? httpError(status).message);
     }
   } catch {
     // Only fixed public messages survive; no exception/input retention.

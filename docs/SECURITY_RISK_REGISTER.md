@@ -1,6 +1,60 @@
-# Security risk register — Phase 9A
+# Security risk register — Phase 9A–9F
 
-Current9E authority: PHASE_9E_RISK_ASSESSMENT.json. R-09 gains tested guarded canonical
+## Phase9F current risk status
+
+The sections below this update retain historical acceptance-time findings.
+Controlled development acceptance does not certify public production use.
+
+- R-06: 9D bounded maintenance and 9E controlled current-primary restore are
+  implemented and regression tested. Monitored production scheduling, encrypted
+  rotation, independent deletion journal and lost-primary recovery remain absent.
+- R-07: 9C shared-root owner/global reservation, rates and active body deadlines
+  are implemented. Trusted production ingress, capacity sizing, supervision and
+  deployed monitoring still require separate evidence before public exposure.
+- R-08: imported history remains outside Agent/provider analysis. No new provider,
+  imported-chat analysis or injection-sensitive reasoning path is added in9F.
+- R-09: signed public ownership audit and exact guarded Dataset/Conversation
+  erasure are implemented, now exposed through Mobile. Production issuer/refresh/
+  revocation and full account/Person/Relationship erasure are still missing.
+- R-10: OPEN reliability limitation. pending/running/unresolved-memory AgentRun
+  blocks Conversation erasure with target_busy. Controlled development impact:
+  a Conversation can remain undeletable (P2); production reliability acceptance
+  remains blocked. Existing service fence plus explicit App refresh protects data;
+  there is no automatic timeout, forced erase, status rewrite or new-key bypass.
+  Tests: test_erasure.py running/unresolved cases; erasureController.test.ts;
+  erasure-connected/web.spec.ts; native phase9f_faults.json. Next authorized work:
+  define server Run reconciliation and prove a safe terminal state before allowing
+  deletion. User-facing copy explains that status may require separate recovery.
+
+9F validation event: one full-backend run and the first root pre-marker run
+returned503 in old Person business-concurrency tests. Instrumented repetition
+reproduced admission LockNotAvailable/SQLSTATE55P03 at the existing250ms bound
+(359/360 pass). The precise historical uninstrumented causes remain unconfirmed.
+ResourceFlow now establishes one signed read-only request before business races:
+the warmed diagnostic and uninstrumented repetition each pass360/360. All original
+mutation responses, concurrency and SQL uniqueness assertions remain unchanged;
+there is no response retry, timeout/quota relaxation or production behavior change.
+Cold admission remains fail-closed and covered by the existing admission suite.
+Independent complete root pre/post passes are still mandatory; failed logs remain.
+The second root pre-marker attempt passed Backend761/Mobile396/Doctor21 but
+found the old Connected Web network allowlist omitted the new Dataset discovery
+GET. Only that exact path is added, with observed-request and GET-only assertions;
+existing owner, count and forbidden-deletion checks remain. Its failure is retained.
+The first post-marker attempt failed two historical tests still rejecting authorized9F.
+Their future-stage rejection now targets9G; all original safety assertions remain.
+Marker was reverted8/9E and affected44/88 gates revalidated before final complete
+pre-marker r4 and post-marker r2 exits0. Failed logs remain nonzero evidence.
+9F-01's separately reproduced upload-promotion/inventory race is fixed with two
+new deterministic tests; unknown disappearing files continue to fail closed.
+
+9F native validation event: the second prior-regression batch failed session
+controls/login and is retained with nonzero exits. An independent diagnostic
+confirmed an unavailable Android accessibility hierarchy; the dedicated emulator
+was rebooted and a complete diagnostic login then passed. The precise cause of
+each earlier login failure is unconfirmed. Acceptance requires fresh complete
+formal scenes on unchanged application/helper source, never diagnostic output.
+
+Historical9E authority: PHASE_9E_RISK_ASSESSMENT.json. R-09 gains tested guarded canonical
 Dataset and Conversation deletion, metadata-only durable receipts and replay fences;
 full-account/Person/Relationship erasure, production identity and App chat deletion
 remain formally unfinished. R-06 restore extends exact primary reconciliation to

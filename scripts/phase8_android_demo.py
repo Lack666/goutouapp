@@ -206,6 +206,9 @@ def main() -> None:
             ),
             flush=True,
         )
+        from check_security_9b import mobile_fingerprint
+        from check_security_9e import source_fingerprint as erasure_fingerprint
+
         evidence: list[dict] = [
             {
                 "execution": {
@@ -213,6 +216,8 @@ def main() -> None:
                     "steps": inputs if args.steps else None,
                     "helper_sha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
                     "device": args.serial,
+                    "mobile_fingerprint": mobile_fingerprint(ROOT),
+                    "erasure_fingerprint": erasure_fingerprint(ROOT),
                 }
             }
         ]
@@ -253,7 +258,7 @@ def main() -> None:
                         evidence.append({"ui_state": json.loads(output)})
                         print(output, flush=True)
                     elif action == "case":
-                        if not re.fullmatch(r"8F-[A-Z0-9-]+", parameter):
+                        if not re.fullmatch(r"(?:8F|9F)-[A-Z0-9-]+", parameter):
                             raise ValueError("Invalid acceptance test ID")
                         evidence.append({"case": parameter})
                         print(json.dumps({"case": parameter}), flush=True)
@@ -392,6 +397,16 @@ def main() -> None:
                             r"[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}", text
                         ).group()
                         evidence.append({"expiry": command("expire_confirmation " + identifier)})
+                    elif action == "expire_erasure":
+                        text = find("Confirmation ID：")
+                        identifier = re.search(
+                            r"[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}", text
+                        ).group()
+                        evidence.append({"erasure_expiry": command("expire_erasure " + identifier)})
+                    elif action == "busy_conversation":
+                        evidence.append(
+                            {"busy": command("busy_conversation " + context["conversation"])}
+                        )
                     elif action == "stale_memory":
                         evidence.append({"stale": command("stale_memory " + context["memory"])})
                     elif action == "login":
@@ -646,8 +661,72 @@ def main() -> None:
                         }
                         if args.closeout:
                             proof["wire"] = command("wire_evidence")
+                        if os.environ.get("GOUTOU_ERASURE_E2E") == "1":
+                            proof["erasure"] = command("erasure_evidence")
                         evidence.append({"database": proof})
                         print(json.dumps(proof), flush=True)
+                    elif action == "assert_erased":
+                        domain, name, deleted, count = json.loads(parameter)
+                        selected = bookmarks.get(name, context)
+                        key = "job" if domain == "dataset" else "conversation"
+                        proof = command("erasure_evidence")
+                        rows = proof["datasets" if domain == "dataset" else "conversations"]
+                        row = next(row for row in rows if row["id"] == selected[key])
+                        if row["deleted"] != deleted or row["messages"] != count:
+                            raise RuntimeError("Erasure SQL target witness mismatch")
+                        evidence.append(
+                            {
+                                "assert_erased": domain,
+                                "target": selected[key],
+                                "deleted": deleted,
+                                "message_count": count,
+                                "status": "PASS",
+                            }
+                        )
+                    elif action == "assert_erasure_replay":
+                        requests = command("wire_evidence")["requests"]
+                        executed = [
+                            row
+                            for row in requests
+                            if row["path"] == "/api/v1/erasures/execute"
+                            and not row["host_setup"]
+                            and row.get("status") == 200
+                        ]
+                        if (
+                            len(executed) < 2
+                            or not executed[-1].get("body_sha256")
+                            or executed[-1]["body_sha256"] != executed[-2].get("body_sha256")
+                        ):
+                            raise RuntimeError(
+                                "Native original erasure body/key replay witness missing"
+                            )
+                        evidence.append(
+                            {
+                                "assert_erasure_replay": "exact body SHA256 unchanged",
+                                "status": "PASS",
+                            }
+                        )
+                    elif action == "assert_erasure_http":
+                        name, expected = json.loads(parameter)
+                        selected = bookmarks.get(name, context)
+                        with httpx.Client(
+                            base_url=credentials["baseURL"],
+                            headers={"Authorization": "Bearer " + credentials[identity]},
+                        ) as client:
+                            response = client.get(
+                                "/api/v1/conversations/" + selected["conversation"] + "/messages"
+                            )
+                            if response.status_code != expected:
+                                raise RuntimeError(
+                                    "Erasure authoritative History rejection mismatch"
+                                )
+                        evidence.append(
+                            {
+                                "assert_erasure_http": selected["conversation"],
+                                "actual": expected,
+                                "status": "PASS",
+                            }
+                        )
                     elif action == "assert_db":
                         path, expected = json.loads(parameter)
                         actual = next(

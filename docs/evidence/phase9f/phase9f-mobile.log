@@ -1,0 +1,76 @@
+$ jest --runInBand
+PASS tests/history.test.tsx
+PASS tests/chat.test.tsx
+PASS tests/integration.test.tsx
+PASS tests/connectedMemoryUI.test.tsx
+PASS tests/connectedImportUI.test.tsx
+PASS tests/erasureController.test.ts
+PASS tests/agentChat.test.ts
+PASS tests/shell.test.tsx
+PASS tests/import.test.tsx
+PASS tests/controls.test.tsx
+PASS tests/settings.test.tsx
+FAIL tests/connected.test.ts
+  ● generated client and safe transport › preserves 36 operations and adds three signed guarded erasure operations
+
+    expect(received).toHaveLength(expected)
+
+    Expected length: 39
+    Received length: 40
+    Received array:  [{"bearer": true, "method": "post", "operationId": "upload_chat_import_api_v1_chat_imports_post", "path": "/api/v1/chat-imports"}, {"bearer": true, "method": "get", "operationId": "inspect_chat_import_api_v1_chat_imports__job_id__get", "path": "/api/v1/chat-imports/{job_id}"}, {"bearer": true, "method": "post", "operationId": "cancel_chat_import_api_v1_chat_imports__job_id__cancel_post", "path": "/api/v1/chat-imports/{job_id}/cancel"}, {"bearer": true, "method": "post", "operationId": "finalize_chat_import_api_v1_chat_imports__job_id__finalize_post", "path": "/api/v1/chat-imports/{job_id}/finalize"}, {"bearer": true, "method": "post", "operationId": "mark_chat_import_ready_api_v1_chat_imports__job_id__ready_post", "path": "/api/v1/chat-imports/{job_id}/ready"}, {"bearer": true, "method": "put", "operationId": "bind_relationship_api_v1_chat_imports__job_id__relationship_put", "path": "/api/v1/chat-imports/{job_id}/relationship"}, {"bearer": true, "method": "put", "operationId": "bind_speaker_api_v1_chat_imports__job_id__speakers_put", "path": "/api/v1/chat-imports/{job_id}/speakers"}, {"bearer": true, "method": "get", "operationId": "list_conversations_api_v1_conversations_get", "path": "/api/v1/conversations"}, {"bearer": true, "method": "post", "operationId": "create_conversation_api_v1_conversations_post", "path": "/api/v1/conversations"}, {"bearer": true, "method": "get", "operationId": "get_conversation_api_v1_conversations__conversation_id__get", "path": "/api/v1/conversations/{conversation_id}"}, …]
+
+      67 | describe('generated client and safe transport', () => {
+      68 |   it('preserves 36 operations and adds three signed guarded erasure operations', () => {
+    > 69 |     expect(operationInventory).toHaveLength(39);
+         |                                ^
+      70 |     expect(operationInventory.filter((op) => !op.path.startsWith('/api/v1/erasures'))).toHaveLength(
+      71 |       36,
+      72 |     );
+
+      at Object.toHaveLength (tests/connected.test.ts:69:32)
+
+PASS tests/relationship.test.tsx
+PASS tests/sseParser.test.ts
+PASS tests/fullMobileIntegration.test.ts
+PASS tests/connectedChatUI.test.tsx
+PASS tests/connectedImport.test.ts
+PASS tests/connectedMemory.test.ts
+PASS tests/connectedHistory.test.ts
+PASS tests/filePicker.test.ts
+PASS tests/sessionIsolation.test.ts
+PASS tests/resourceAdmission.test.ts
+PASS tests/uploadSecurity.test.ts
+PASS tests/resourceNames.test.ts
+PASS tests/authPrivacy.test.ts
+PASS tests/erasureContract.test.ts
+PASS tests/nativeSseObserver.test.ts
+
+Summary of all failing tests
+FAIL tests/connected.test.ts
+  ● generated client and safe transport › preserves 36 operations and adds three signed guarded erasure operations
+
+    expect(received).toHaveLength(expected)
+
+    Expected length: 39
+    Received length: 40
+    Received array:  [{"bearer": true, "method": "post", "operationId": "upload_chat_import_api_v1_chat_imports_post", "path": "/api/v1/chat-imports"}, {"bearer": true, "method": "get", "operationId": "inspect_chat_import_api_v1_chat_imports__job_id__get", "path": "/api/v1/chat-imports/{job_id}"}, {"bearer": true, "method": "post", "operationId": "cancel_chat_import_api_v1_chat_imports__job_id__cancel_post", "path": "/api/v1/chat-imports/{job_id}/cancel"}, {"bearer": true, "method": "post", "operationId": "finalize_chat_import_api_v1_chat_imports__job_id__finalize_post", "path": "/api/v1/chat-imports/{job_id}/finalize"}, {"bearer": true, "method": "post", "operationId": "mark_chat_import_ready_api_v1_chat_imports__job_id__ready_post", "path": "/api/v1/chat-imports/{job_id}/ready"}, {"bearer": true, "method": "put", "operationId": "bind_relationship_api_v1_chat_imports__job_id__relationship_put", "path": "/api/v1/chat-imports/{job_id}/relationship"}, {"bearer": true, "method": "put", "operationId": "bind_speaker_api_v1_chat_imports__job_id__speakers_put", "path": "/api/v1/chat-imports/{job_id}/speakers"}, {"bearer": true, "method": "get", "operationId": "list_conversations_api_v1_conversations_get", "path": "/api/v1/conversations"}, {"bearer": true, "method": "post", "operationId": "create_conversation_api_v1_conversations_post", "path": "/api/v1/conversations"}, {"bearer": true, "method": "get", "operationId": "get_conversation_api_v1_conversations__conversation_id__get", "path": "/api/v1/conversations/{conversation_id}"}, …]
+
+      67 | describe('generated client and safe transport', () => {
+      68 |   it('preserves 36 operations and adds three signed guarded erasure operations', () => {
+    > 69 |     expect(operationInventory).toHaveLength(39);
+         |                                ^
+      70 |     expect(operationInventory.filter((op) => !op.path.startsWith('/api/v1/erasures'))).toHaveLength(
+      71 |       36,
+      72 |     );
+
+      at Object.toHaveLength (tests/connected.test.ts:69:32)
+
+
+Test Suites: 1 failed, 26 passed, 27 total
+Tests:       1 failed, 390 passed, 391 total
+Snapshots:   0 total
+Time:        11.012 s, estimated 18 s
+Ran all test suites.
+F:\狗头军师app化\goutouapp\apps\mobile:
+[ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL] @goutou/mobile@0.1.0 test: `jest --runInBand`
+Exit status 1

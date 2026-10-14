@@ -93,3 +93,25 @@ class ConversationPage(PublicResourceModel):
 class AgentMessagePage(PublicResourceModel):
     items: list[AgentMessagePublicResponse] = Field(max_length=100)
     next_cursor: str | None
+
+
+class DatasetSummary(PublicResourceModel):
+    dataset_job_id: UUID
+    relationship_id: UUID
+    source_format: str
+    parser_version: str
+    source_timezone: str
+    first_timestamp_utc: datetime
+    last_timestamp_utc: datetime
+    imported_message_count: int
+    current_message_count: int
+    ignored_message_count: int
+    system_message_count: int
+    imported_at: datetime
+    deleted_at: datetime | None
+    deletable: bool
+
+
+class DatasetPage(PublicResourceModel):
+    items: list[DatasetSummary] = Field(max_length=100)
+    next_cursor: str | None
