@@ -59,6 +59,7 @@ RESOURCE_ADMISSION = (ROOT / "apps/server/tests/test_resource_admission.py").is_
 DATA_LIFECYCLE = (ROOT / "apps/server/tests/test_data_lifecycle.py").is_file()
 DATA_ERASURE = (ROOT / "apps/server/tests/test_erasure.py").is_file()
 MOBILE_ERASURE = (ROOT / "apps/mobile/src/data/erasureController.ts").is_file()
+SAFETY_RELIABILITY_AUDIT = (ROOT / "apps/server/tests/test_security_priority_9g.py").is_file()
 MEMORY_GATE_FILES = (
     "apps/mobile/src/api/memoryAdapter.ts",
     "apps/mobile/src/api/memoryErrors.ts",
@@ -207,44 +208,50 @@ def native_closeout_check() -> None:
 
 
 def phase_marker_check() -> None:
-    if PHASE > 8 or (PHASE == 8 and SUBPHASE not in {"8F", "9A", "9B", "9C", "9D", "9E", "9F"}):
+    if PHASE > 8 or (
+        PHASE == 8 and SUBPHASE not in {"8F", "9A", "9B", "9C", "9D", "9E", "9F", "9G"}
+    ):
         raise RuntimeError(
-            "Phase 8 requires 8F closeout; only Phase 9A/9B/9C/9D/9E/9F are implemented"
+            "Phase 8 requires 8F closeout; only Phase 9A/9B/9C/9D/9E/9F/9G are implemented"
         )
-    if SUBPHASE in {"9A", "9B", "9C", "9D", "9E", "9F"}:
+    if SUBPHASE in {"9A", "9B", "9C", "9D", "9E", "9F", "9G"}:
         if PHASE != 8 or not UPLOAD_SECURITY:
             raise RuntimeError("Phase 9A requires completed Phase 8 and security gates")
         from check_security_9a import check
 
         check(completed=True)
-    if SUBPHASE in {"9B", "9C", "9D", "9E", "9F"}:
+    if SUBPHASE in {"9B", "9C", "9D", "9E", "9F", "9G"}:
         if PHASE != 8 or not AUTHORIZATION_SECURITY:
             raise RuntimeError("Phase 9B requires completed Phase 8/9A and security gates")
         from check_security_9b import check as check_9b
 
         check_9b(completed=True)
-    if SUBPHASE in {"9C", "9D", "9E", "9F"}:
+    if SUBPHASE in {"9C", "9D", "9E", "9F", "9G"}:
         if PHASE != 8 or not RESOURCE_ADMISSION:
             raise RuntimeError("Phase9C requires completed8/9B and resource security gates")
         from check_security_9c import check as check_9c
 
         check_9c(completed=True)
-    if SUBPHASE in {"9D", "9E", "9F"}:
+    if SUBPHASE in {"9D", "9E", "9F", "9G"}:
         if PHASE != 8 or not DATA_LIFECYCLE:
             raise RuntimeError("Phase9D requires completed8/9C and lifecycle gates")
         from check_security_9d import check as check_9d
 
         check_9d(completed=True)
-    if SUBPHASE in {"9E", "9F"}:
+    if SUBPHASE in {"9E", "9F", "9G"}:
         if PHASE != 8 or not DATA_ERASURE:
             raise RuntimeError("Phase9E requires completed8/9D and erasure gates")
         from check_security_9e import check as check_9e
 
         check_9e(completed=True)
-    if SUBPHASE == "9F":
+    if SUBPHASE in {"9F", "9G"}:
         from check_security_9f import check as check_9f
 
         check_9f(completed=True)
+    if SUBPHASE == "9G":
+        from check_security_9g import check as check_9g
+
+        check_9g(completed=True)
     if PHASE == 8:
         if not all(
             (
@@ -465,6 +472,15 @@ def tests() -> None:
             "apps/server/tests/test_dataset_discovery.py",
             "apps/server/tests/test_admission_rename_regression.py",
         )
+    if SAFETY_RELIABILITY_AUDIT:
+        uv_run("python", "scripts/check_security_9g.py")
+        uv_run(
+            "pytest",
+            "-q",
+            "-s",
+            "apps/server/tests/test_security_priority_9g.py",
+            "apps/server/tests/test_reliability_9g.py",
+        )
     if MEMORY_CONTROL_API:
         uv_run("pytest", "-q", "apps/server/tests/test_memory_control.py")
         uv_run("python", "apps/server/memory_control_demo.py")
@@ -524,6 +540,8 @@ def lint() -> None:
         "scripts/check_security_9d.py",
         "scripts/check_security_9e.py",
         "scripts/check_security_9f.py",
+        "scripts/check_security_9g.py",
+        "scripts/phase9g_capture.py",
         "scripts/phase9b_android_smoke.py",
     )
     uv_run(
@@ -555,6 +573,8 @@ def lint() -> None:
         "scripts/check_security_9d.py",
         "scripts/check_security_9e.py",
         "scripts/check_security_9f.py",
+        "scripts/check_security_9g.py",
+        "scripts/phase9g_capture.py",
         "scripts/phase9b_android_smoke.py",
     )
 
@@ -667,6 +687,8 @@ def verify() -> None:
             raise RuntimeError("pnpm is required for Mobile erasure E2E")
         run([pnpm, "--filter", "@goutou/mobile", "run", "smoke:erasure"])
         print("PASS: Phase9F Mobile self-service erasure gates")
+    if SAFETY_RELIABILITY_AUDIT:
+        print("PASS: Phase9G safety/reliability audit gates")
     if DATABASE_FOUNDATION:
         print("PASS: PostgreSQL migration and integration gate")
     elif BACKEND_FOUNDATION:

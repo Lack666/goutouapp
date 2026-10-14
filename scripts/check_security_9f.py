@@ -64,11 +64,11 @@ def gate(record, root=ROOT):
     return artifact(record["log"], root).read_text("utf-8")
 
 
-def native_erasure(matrix, root=ROOT):
+def native_erasure(matrix, root=ROOT, *, expected_source=None, expected_erasure=None):
     native = matrix["erasure_native"]
     if (
         native.get("status") != "PASS"
-        or native.get("source_fingerprint") != source_fingerprint(root)
+        or native.get("source_fingerprint") != (expected_source or source_fingerprint(root))
         or native.get("synthetic_only") is not True
         or not native.get("device")
     ):
@@ -100,7 +100,9 @@ def native_erasure(matrix, root=ROOT):
             raise RuntimeError("9F partial/spliced native execution rejected")
         if report[0]["execution"].get("mobile_fingerprint") != mobile_fingerprint(root) or report[
             0
-        ]["execution"].get("erasure_fingerprint") != erasure_fingerprint(root):
+        ]["execution"].get("erasure_fingerprint") != (
+            expected_erasure or erasure_fingerprint(root)
+        ):
             raise RuntimeError("9F native execution recorded stale application source")
         if any(r.get("status") in {"FAIL", "failed"} for r in report):
             raise RuntimeError("9F failed native step")
@@ -139,8 +141,16 @@ def check(root=ROOT, *, completed=False):
         if not (root / name).is_file():
             raise RuntimeError("Missing Phase9F gate: " + name)
     matrix = json.loads((root / "docs/PHASE_9F_MATRIX.json").read_text("utf-8"))
-    if matrix.get("phase") != "9F" or matrix.get("source_fingerprint") != source_fingerprint(root):
+    if matrix.get("phase") != "9F":
         raise RuntimeError("9F tested source fingerprint drift")
+    expected_source = None
+    expected_erasure = erasure_fingerprint(root)
+    if matrix.get("source_fingerprint") != source_fingerprint(root):
+        from check_security_9g import prior_9f
+
+        historical = prior_9f(root)
+        expected_source = historical["source_fingerprint"]
+        expected_erasure = historical["erasure_revalidation"]["source_fingerprint"]
     if (
         matrix.get("production_acceptable") is not False
         or not matrix.get("production_blockers")
@@ -188,11 +198,12 @@ def check(root=ROOT, *, completed=False):
     native_check(matrix, root, evidence_phase="phase9f")
     for row in matrix["native"]["scenes"]:
         report = json.loads(artifact(row["artifacts"]["report"], root).read_text("utf-8"))
-        if report[0]["execution"].get("mobile_fingerprint") != mobile_fingerprint(root) or report[
-            0
-        ]["execution"].get("erasure_fingerprint") != erasure_fingerprint(root):
+        if (
+            report[0]["execution"].get("mobile_fingerprint") != mobile_fingerprint(root)
+            or report[0]["execution"].get("erasure_fingerprint") != expected_erasure
+        ):
             raise RuntimeError("9F prior native regression recorded stale application source")
-    native_erasure(matrix, root)
+    native_erasure(matrix, root, expected_source=expected_source, expected_erasure=expected_erasure)
     if "2 passed" not in gate(matrix["web"], root) or "5 passed" not in gate(
         matrix["discovery"], root
     ):

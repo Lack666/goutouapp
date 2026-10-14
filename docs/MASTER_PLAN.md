@@ -22,12 +22,33 @@ as implemented by a placeholder directory or a golden expectation.
 | 6 | User-facing memory controls and retention policy integration | PASS (6A–6D) |
 | 7 | Expo React Native MVP | PASS (7A–7D) |
 | 8 | Mobile API integration, generated client and stream consumption | PASS (8A–8F, including native closeout) |
-| 9 | Security, privacy, reliability and deletion | IN PROGRESS (9A–9F PASS) |
+| 9 | Security, privacy, reliability and deletion | IN PROGRESS (9A–9G PASS in their limited scopes; full lifecycle closure unfinished) |
 | 10 | Optional hybrid RAG with pgvector | PENDING |
 | 11 | Agent eval and observability | PENDING |
 | 12 | CI/CD, EAS preview, release preparation | PENDING |
 
 ## Exit criteria by phase
+
+Explicit authorization (2026-10-14): **9G — Safety Priority, Reliability Audit
+and Phase 9 Final Acceptance** follows clean64afd5d/8-9F. Verify original item9
+with requirement → source → test → independent execution evidence; audit actual
+LangGraph safety paths, untrusted input/Memory/API authority, upload publication,
+bounded Person55P03 diagnosis and unresolved Run erasure blocks. Prefer minimal
+fixes only for demonstrated production defects. No new analysis/provider/RAG or
+infrastructure. Verifier adds only8/9G after a complete final-source root exit0
+under8/9F and requires an independent full post-marker exit0 under8/9G. All prior
+gates remain mandatory. Historical actual Android evidence may be retained only
+when an exact Git-verified executable-input manifest proves unchanged Backend,
+Mobile/dependencies/migrations/native helpers; fresh current-source service suites
+remain mandatory for audit/tooling changes. Any executable change rejects reuse.
+Full Owner/Person/Relationship erasure and its lifecycle/recovery authorization
+remain unfinished Phase9 closure prerequisites; production-only deployment
+blockers are listed separately. Do not force completed_phase9 from subphase PASS.
+9G acceptance: independent full final-source pre/post exits0; Backend810/Mobile396/
+repository99/Golden83/OpenAPI40/Doctor21 and full Web regressions pass. Marker8/9G;
+see PHASE_9G_ACCEPTANCE/MATRIX for source binding and retained historical Android.
+Stop after9G; further Phase9 work needs explicit scope, not automatic9H. Phase10–12,
+real providers/private-chat analysis and public exposure remain unauthorized.
 
 Explicit authorization (2026-10-14): **9F — Mobile Self-Service Data Erasure
 Integration** follows 8/9E. Implement minimum signed owner/Relationship Dataset

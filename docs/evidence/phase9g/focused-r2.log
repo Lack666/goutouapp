@@ -1,0 +1,6 @@
+........................................{"diagnostic": "held_global_guard", "sqlstate": "55P03", "different_owner": false, "elapsed_ms": 281, "rejected_no_row": true, "explicit_same_uuid_retry": 201}
+.{"diagnostic": "held_global_guard", "sqlstate": "55P03", "different_owner": true, "elapsed_ms": 283, "rejected_no_row": true, "explicit_same_uuid_retry": 201}
+.{"diagnostic": "cold_two_worker_pressure", "same_owner": false, "person_status_counts": {"201": 16}, "upload_status": 201, "elapsed_ms": 362, "automatic_retries": 0}
+.{"diagnostic": "cold_two_worker_pressure", "same_owner": true, "person_status_counts": {"201": 16}, "upload_status": 201, "elapsed_ms": 348, "automatic_retries": 0}
+......
+49 passed in 15.58s

@@ -1,0 +1,11 @@
+{
+  "source_fingerprint": "1f14142b7d99afc2bc6f811062022db92e74f275a255704bdd8aed4ef136ad5d",
+  "phase_marker": {
+    "completed_phase": 8,
+    "completed_subphase": "9F"
+  },
+  "git_head": "64afd5dcb37001193bed7838ca2d53d45c4ecbb7",
+  "synthetic_only": true,
+  "exit_code": 0,
+  "log_sha256": "aeccac362b4cd1479b3dedcc986c5d62b1ae6dbf5268d292b4ddbdfa0b25849a"
+}

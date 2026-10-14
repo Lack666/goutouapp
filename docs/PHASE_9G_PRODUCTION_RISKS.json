@@ -1,0 +1,176 @@
+{
+  "phase": "9G",
+  "production_acceptable": false,
+  "open_p0_p1": [],
+  "risks": [
+    {
+      "id": "R-06",
+      "implementation_state": "Implemented local maintenance and controlled current-primary restore; production deployment absent",
+      "validation_state": "Local tested; requires production deployment validation",
+      "remaining": "Installed monitored scheduler, encrypted rotation/key custody, independent deletion authority and copy inventory",
+      "responsible_stage": "Phase9 operations/privacy; Phase12 deployment",
+      "acceptance_condition": "Real monitored scheduling, encrypted retention/rotation and restore drill before serving",
+      "controls": [
+        "9D maintenance/restore44",
+        "9E erasure39"
+      ],
+      "blocks_public_exposure": true,
+      "development_severity": "P2"
+    },
+    {
+      "id": "R-07",
+      "implementation_state": "Implemented shared-root quotas/rates/deadlines/fences; ingress/supervision absent",
+      "validation_state": "Local two-worker tested; requires production deployment validation",
+      "remaining": "TLS/header/connection/non-upload budgets, host storage/pool sizing, supervisor and monitoring",
+      "responsible_stage": "Phase9 admission verification; Phase12 hosting",
+      "acceptance_condition": "Validate actual ingress topology, bounded hostile concurrency and supervised crash cleanup",
+      "controls": [
+        "9C admission27",
+        "9G cold two-worker pressure and55P03"
+      ],
+      "blocks_public_exposure": true,
+      "development_severity": "P2"
+    },
+    {
+      "id": "R-08",
+      "implementation_state": "Implemented prompt/data role separation and import/Agent separation; future provider/RAG/imported analysis absent",
+      "validation_state": "Local Mock routing/authority tested; real classifier/injection quality untested",
+      "remaining": "Real provider semantic safety/injection eval, consent/context/tool/copy lifecycle before user data",
+      "responsible_stage": "Explicit provider/import task; Phase10 optional RAG; Phase11 eval",
+      "acceptance_condition": "Pass provider behavior and source-scope/tool authorization evaluation with RAG disabled baseline",
+      "controls": [
+        "test_security_priority_9g.py",
+        "AGENT_UNTRUSTED_INPUT.md"
+      ],
+      "blocks_public_exposure": true,
+      "development_severity": "P2"
+    },
+    {
+      "id": "R-09",
+      "implementation_state": "Implemented signed owner-scoped Memory/Dataset/Conversation erasure; production identity/full lifecycle absent",
+      "validation_state": "Local A/B/Web/native scope tested; full-account not implemented",
+      "remaining": "Full Owner/Person/Relationship erasure, production issuer/revocation and dependency/copy policy",
+      "responsible_stage": "Separately authorized Phase9 privacy/lifecycle",
+      "acceptance_condition": "Guarded complete lifecycle with terminal key/receipt barriers, actual A/B/restored/mobile erasure proof",
+      "controls": [
+        "DATA_DELETION_MATRIX.json",
+        "erasure39",
+        "retained9F native"
+      ],
+      "blocks_public_exposure": true,
+      "development_severity": "P2"
+    },
+    {
+      "id": "R-10",
+      "implementation_state": "Implemented conservative target_busy; recovery is only design",
+      "validation_state": "Local30-day-old unresolved Run/restart/replay tested; no reconciler",
+      "remaining": "Conversation may remain indefinitely undeletable after writer crash",
+      "responsible_stage": "Separately authorized Phase9 recovery",
+      "acceptance_condition": "Prove stopped deployment-wide writers and exact committed effects; idempotent authorized terminal transition and reprepare",
+      "controls": [
+        "test_reliability_9g.py",
+        "AGENT_RUN_RECOVERY.md"
+      ],
+      "blocks_public_exposure": true,
+      "development_severity": "P2"
+    },
+    {
+      "id": "L-OUTBOX",
+      "implementation_state": "Session-only immutable attempts implemented; durable pending outbox absent",
+      "validation_state": "Local restart/late-response and retained native tested",
+      "remaining": "Lost Agent/Memory/erasure request descriptor cannot automatically reconcile",
+      "responsible_stage": "Explicit client recovery contract",
+      "acceptance_condition": "Encrypted owner-scoped pending descriptor plus authoritative lookup; no auto replacement key",
+      "controls": [
+        "Mobile pending/restart tests",
+        "retained9F faults/restart"
+      ],
+      "blocks_public_exposure": true,
+      "development_severity": "P2"
+    },
+    {
+      "id": "L-ACCOUNT",
+      "implementation_state": "Development signed JWT only; actual production account lifecycle not implemented",
+      "validation_state": "Signed A/B and SecureStore tested; production lifecycle unverified",
+      "remaining": "Login/refresh/revocation/account closure/dependent ownership and exports",
+      "responsible_stage": "Phase9 identity/privacy then Phase12 admission",
+      "acceptance_condition": "Least-privilege production identity and revoked credential rejection throughout erasure/recovery",
+      "controls": [
+        "AUTHENTICATION.md",
+        "test_authorization_security.py"
+      ],
+      "blocks_public_exposure": true,
+      "development_severity": "P2"
+    },
+    {
+      "id": "L-PRIMARY-LOSS",
+      "implementation_state": "Only current-primary controlled restore implemented; total-loss recovery not implemented",
+      "validation_state": "Actual native synthetic dump/restore tested; lost authority fails closed",
+      "remaining": "Independent authoritative exact-ID deletion/control/key journal or verified WAL chain and serving barrier",
+      "responsible_stage": "Phase9 recovery/backup implementation",
+      "acceptance_condition": "Total-primary-loss drill cannot resurrect erased bodies or old operation keys and cannot serve before reconciliation",
+      "controls": [
+        "BACKUP_RESTORE_POLICY.md",
+        "test_backup_restore.py"
+      ],
+      "blocks_public_exposure": true,
+      "development_severity": "P2"
+    },
+    {
+      "id": "L-PUBLIC",
+      "implementation_state": "Private loopback development only; public deployment absent",
+      "validation_state": "Local processes tested; requires actual deployment verification",
+      "remaining": "HTTPS/ingress/auth/capacity/private storage/OS controls/release process",
+      "responsible_stage": "Phase12 after Phase9 closure",
+      "acceptance_condition": "Approved production checklist and real public topology negative/security/deletion recovery checks",
+      "controls": [
+        "No public service introduced",
+        "resource admission policy"
+      ],
+      "blocks_public_exposure": true,
+      "development_severity": "P2"
+    },
+    {
+      "id": "L-OBSERVABILITY",
+      "implementation_state": "Fixed logs and bounded count-only process metrics implemented; alert pipeline not implemented",
+      "validation_state": "Local redaction and finite-label tests pass; production alerting not deployed",
+      "remaining": "Durable safe Run age/backlog/cleanup/admission/error alerts and operator response",
+      "responsible_stage": "Phase11 observability; Phase12 operations",
+      "acceptance_condition": "Trigger and verify privacy-safe actionable alerts without bodies/keys/hidden reasoning",
+      "controls": [
+        "test_privacy_logging.py",
+        "test_resource_admission.py"
+      ],
+      "blocks_public_exposure": true,
+      "development_severity": "P2"
+    },
+    {
+      "id": "L-EXPORT-COPIES",
+      "implementation_state": "Scoped primary deletion disclosure implemented; full export/provider/copy deletion absent",
+      "validation_state": "Local primary effects tested; provider/export/backup lifecycle only design",
+      "remaining": "Owner export API, copy inventory, provider retention and deletion propagation, receipt-retention policy",
+      "responsible_stage": "Phase9 privacy contract; explicit export/provider scope",
+      "acceptance_condition": "Verify authenticated export and complete promised copy deletion/expiry without weakening dedup fences",
+      "controls": [
+        "DATA_DELETION_CONTRACT.md",
+        "MOBILE_DATA_ERASURE.md"
+      ],
+      "blocks_public_exposure": true,
+      "development_severity": "P2"
+    },
+    {
+      "id": "L-WINDOWS-TEST",
+      "implementation_state": "Existing tests preserved; no environment stability repair implemented",
+      "validation_state": "Repeated historical native Node exit3221226505; root cause unconfirmed",
+      "remaining": "Host/runtime crash diagnostics and reproducible stable automated environment",
+      "responsible_stage": "Engineering validation environment; Phase12 CI",
+      "acceptance_condition": "Retain nonzero invocations, diagnose safe process metadata, run full independent root without hidden retries/skips",
+      "controls": [
+        "9G baseline-configured.log/exit",
+        "historical9B post-marker failure"
+      ],
+      "blocks_public_exposure": true,
+      "development_severity": "P2"
+    }
+  ]
+}

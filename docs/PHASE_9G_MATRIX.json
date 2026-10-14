@@ -1,0 +1,603 @@
+{
+  "phase": "9G",
+  "status": "PASS",
+  "acceptance_state": "closed",
+  "source_fingerprint": "6cde5bbd29c2cd06cdd49e6980aedf8e54ae04cc2e5d7d4a50f09eaa676a320a",
+  "open_p0_p1": [],
+  "production_acceptable": false,
+  "phase9_overall": "IN PROGRESS",
+  "phase9_blockers": [
+    "Complete Owner/Person/Relationship erasure and its identity/dependency/recovery contract; separately authorize Phase9 lifecycle implementation"
+  ],
+  "production_blockers": [
+    "R-06",
+    "R-07",
+    "R-08",
+    "R-09",
+    "R-10",
+    "L-OUTBOX",
+    "L-ACCOUNT",
+    "L-PRIMARY-LOSS",
+    "L-PUBLIC",
+    "L-OBSERVABILITY",
+    "L-EXPORT-COPIES",
+    "L-WINDOWS-TEST"
+  ],
+  "baseline": {
+    "exit_code": 0,
+    "log": {
+      "path": "docs/evidence/phase9g/baseline-r3.log",
+      "sha256": "08fcb7186634f763ff83e9e54256d54a716fb9a509b3d23fccf770d6d3fda33d"
+    },
+    "exit": {
+      "path": "docs/evidence/phase9g/baseline-r3.exit",
+      "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+    },
+    "commit": "64afd5dcb37001193bed7838ca2d53d45c4ecbb7",
+    "historical_integration_fingerprint": "4d3c3af1bf7de1d88fcbd41b53737876d553f74e9b78aab37365271b50517dd7"
+  },
+  "focused": {
+    "exit_code": 0,
+    "log": {
+      "path": "docs/evidence/phase9g/focused-r2.log",
+      "sha256": "91ad1b43117e9ad62c2ebc60de6be01249d0a0d1b85850eae21b1ec264288e9e"
+    },
+    "exit": {
+      "path": "docs/evidence/phase9g/focused-r2.exit",
+      "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+    },
+    "source": {
+      "path": "docs/evidence/phase9g/focused-r2.source.json",
+      "sha256": "a0929424b3fbba550e77ca38e0b92f324b565c9a14300913a263253be6ac32bc"
+    }
+  },
+  "repository": {
+    "exit_code": 0,
+    "log": {
+      "path": "docs/evidence/phase9g/repository-final.log",
+      "sha256": "a0c49ed5170a77b8d815ad0ae33a2a716da0e213dc6b643c60f7476b3ad857c8"
+    },
+    "exit": {
+      "path": "docs/evidence/phase9g/repository-final.exit",
+      "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+    },
+    "source": {
+      "path": "docs/evidence/phase9g/repository-final.source.json",
+      "sha256": "a74e1888f4726cc8b334cbc205a2989f8ff51213f34b3285c97c47cfde6aa1ea"
+    }
+  },
+  "authorization_revalidation": {
+    "exit_code": 0,
+    "log": {
+      "path": "docs/evidence/phase9g/boundaries-r2.log",
+      "sha256": "b609ec3e824784c3307eb84925bbc77cee4fd92334fc29eaa6e28c291d3c7c43"
+    },
+    "exit": {
+      "path": "docs/evidence/phase9g/boundaries-r2.exit",
+      "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+    },
+    "source": {
+      "path": "docs/evidence/phase9g/boundaries-r2.source.json",
+      "sha256": "ce21d4ff114aaed919a4610ea3061d6e56ac2e9bf93ca3c5fe604c57a685bc94"
+    }
+  },
+  "upload_revalidation": {
+    "exit_code": 0,
+    "log": {
+      "path": "docs/evidence/phase9g/boundaries-r2.log",
+      "sha256": "b609ec3e824784c3307eb84925bbc77cee4fd92334fc29eaa6e28c291d3c7c43"
+    },
+    "exit": {
+      "path": "docs/evidence/phase9g/boundaries-r2.exit",
+      "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+    },
+    "source": {
+      "path": "docs/evidence/phase9g/boundaries-r2.source.json",
+      "sha256": "ce21d4ff114aaed919a4610ea3061d6e56ac2e9bf93ca3c5fe604c57a685bc94"
+    }
+  },
+  "memory_revalidation": {
+    "exit_code": 0,
+    "log": {
+      "path": "docs/evidence/phase9g/boundaries-r2.log",
+      "sha256": "b609ec3e824784c3307eb84925bbc77cee4fd92334fc29eaa6e28c291d3c7c43"
+    },
+    "exit": {
+      "path": "docs/evidence/phase9g/boundaries-r2.exit",
+      "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+    },
+    "source": {
+      "path": "docs/evidence/phase9g/boundaries-r2.source.json",
+      "sha256": "ce21d4ff114aaed919a4610ea3061d6e56ac2e9bf93ca3c5fe604c57a685bc94"
+    }
+  },
+  "native": {
+    "status": "PASS",
+    "device": "emulator-5554 Android API37 / Expo Go; localhost reverse + IPv6 loopback relay",
+    "synthetic_only": true,
+    "mobile_fingerprint": "8073589bfdec57dd640ec60ee5294720b7df56a0bb305919831223ed0ff4e1f4",
+    "scenes": [
+      {
+        "scene": "resource_create",
+        "status": "PASS",
+        "exit_code": 0,
+        "preconditions": "Disposable signed owner fixtures; host setup explicitly marked; actual Android App UI actions",
+        "actual": "All commands and assertions completed independently; SQL and signed wire evidence retained",
+        "artifacts": {
+          "steps": {
+            "path": "docs/evidence/phase9f/phase9b-android-9f-r3-resource_create.steps.json",
+            "sha256": "e0f55db5b89259604c55415ff9a0cd7f81f3fa1062c24a83b52ff090e6e38097"
+          },
+          "report": {
+            "path": "docs/evidence/phase9f/phase9b-android-9f-r3-resource_create.json",
+            "sha256": "a186a20969d283f59cd815ec3f2759314b966c854e06fb455d04ca50c4913f82"
+          },
+          "log": {
+            "path": "docs/evidence/phase9f/phase9b-android-9f-r3-resource_create.log",
+            "sha256": "b9d45ed4d1a9a9f80a5fbb62ebbbf3ef1fbf7f7716ca5d3081b00228f2dc4b21"
+          },
+          "exit": {
+            "path": "docs/evidence/phase9f/phase9b-android-9f-r3-resource_create.exit",
+            "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+          }
+        }
+      },
+      {
+        "scene": "sse_normal",
+        "status": "PASS",
+        "exit_code": 0,
+        "preconditions": "Disposable signed owner fixtures; host setup explicitly marked; actual Android App UI actions",
+        "actual": "All commands and assertions completed independently; SQL and signed wire evidence retained",
+        "artifacts": {
+          "steps": {
+            "path": "docs/evidence/phase9f/phase9b-android-9f-r3-sse_normal.steps.json",
+            "sha256": "68b07361d3fd4eb549801917fbfb297d4bc8d699d784004d2ce58396fe57bfad"
+          },
+          "report": {
+            "path": "docs/evidence/phase9f/phase9b-android-9f-r3-sse_normal.json",
+            "sha256": "aef937beebd890c968ff042c3565c145c70dc8ab8765a5bd88405ef115613e0c"
+          },
+          "log": {
+            "path": "docs/evidence/phase9f/phase9b-android-9f-r3-sse_normal.log",
+            "sha256": "86a89a9fce5820324060bad5fed611f5e86968ecd291f6ce4f702bec12f63f4c"
+          },
+          "exit": {
+            "path": "docs/evidence/phase9f/phase9b-android-9f-r3-sse_normal.exit",
+            "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+          }
+        }
+      },
+      {
+        "scene": "memory_smoke_revoke",
+        "status": "PASS",
+        "exit_code": 0,
+        "preconditions": "Disposable signed owner fixtures; host setup explicitly marked; actual Android App UI actions",
+        "actual": "All commands and assertions completed independently; SQL and signed wire evidence retained",
+        "artifacts": {
+          "steps": {
+            "path": "docs/evidence/phase9f/phase9b-android-9f-r3-memory_smoke_revoke.steps.json",
+            "sha256": "605fbe95c53c6552cb89bc344a71346416c0df3e2bb5927994ce4a1fef642537"
+          },
+          "report": {
+            "path": "docs/evidence/phase9f/phase9b-android-9f-r3-memory_smoke_revoke.json",
+            "sha256": "cee33678b4504e054f64ef71095dd2dcf1d7c7abc8af00a0b85fd814efbda72d"
+          },
+          "log": {
+            "path": "docs/evidence/phase9f/phase9b-android-9f-r3-memory_smoke_revoke.log",
+            "sha256": "8e5291f8e3e5dcaaefaf2c89333a9413deea797154337a4069cfa90e380ec12d"
+          },
+          "exit": {
+            "path": "docs/evidence/phase9f/phase9b-android-9f-r3-memory_smoke_revoke.exit",
+            "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+          }
+        }
+      },
+      {
+        "scene": "session",
+        "status": "PASS",
+        "exit_code": 0,
+        "preconditions": "Disposable signed owner fixtures; host setup explicitly marked; actual Android App UI actions",
+        "actual": "All commands and assertions completed independently; SQL and signed wire evidence retained",
+        "artifacts": {
+          "steps": {
+            "path": "docs/evidence/phase9f/phase9b-android-9f-r3-session.steps.json",
+            "sha256": "8d84af6416af2eea2e4cfa57f47a1d1f1a1d52a77d8174574d9b08e511069b55"
+          },
+          "report": {
+            "path": "docs/evidence/phase9f/phase9b-android-9f-r3-session.json",
+            "sha256": "70a7ff268afdb1b3fd8aa439de54b9870a289d9aba3752987794f19e03e699cd"
+          },
+          "log": {
+            "path": "docs/evidence/phase9f/phase9b-android-9f-r3-session.log",
+            "sha256": "aa5247a66f6f4304f090d40a5975619f56d1e5d27c4a82a5be13eb7008d80c46"
+          },
+          "exit": {
+            "path": "docs/evidence/phase9f/phase9b-android-9f-r3-session.exit",
+            "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+          }
+        }
+      },
+      {
+        "scene": "import_history",
+        "status": "PASS",
+        "exit_code": 0,
+        "preconditions": "Disposable signed owner fixtures; host setup explicitly marked; actual Android App UI actions",
+        "actual": "All commands and assertions completed independently; SQL and signed wire evidence retained",
+        "artifacts": {
+          "steps": {
+            "path": "docs/evidence/phase9f/phase9b-android-9f-r3-import_history.steps.json",
+            "sha256": "4c02c12405aeaeb3ce22e365360c97a12a2accafd0927799a68cd8f8c08521ab"
+          },
+          "report": {
+            "path": "docs/evidence/phase9f/phase9b-android-9f-r3-import_history.json",
+            "sha256": "92732623d1df2ae2464ba903d2862cc77dabc46b2e27bd69d7d1b8fe4220ef81"
+          },
+          "log": {
+            "path": "docs/evidence/phase9f/phase9b-android-9f-r3-import_history.log",
+            "sha256": "243fe851f275df1cb19d41a1d1aa59cb6285c0b81535589e2422256c7215b633"
+          },
+          "exit": {
+            "path": "docs/evidence/phase9f/phase9b-android-9f-r3-import_history.exit",
+            "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+          }
+        }
+      }
+    ]
+  },
+  "historical_native": {
+    "mode": "Retained actual9F scenes; no new9G native run",
+    "runtime_manifest": {
+      "path": "docs/evidence/phase9g/original-runtime-manifest.json",
+      "sha256": "655eaa34d407ba21a1869b0893e64ff5fcb8d666d35629e813d062b409d4536e"
+    },
+    "historical_matrix_sha256": "a3f8c7c651951129e6015ff9423afddc424cc9684a314f495608bbcce219fd64",
+    "native_scenes": 9,
+    "git_object_verified_executable_inputs": 245,
+    "fresh_android_required_on_any_executable_drift": true
+  },
+  "expected_final_counts": {
+    "backend": 810,
+    "mobile": 396,
+    "repository": 99,
+    "golden": 83,
+    "openapi": 40,
+    "expo_doctor": "21/21",
+    "web_demo": 22,
+    "web_connected": [
+      3,
+      3,
+      4,
+      5,
+      1
+    ],
+    "web_erasure": 2
+  },
+  "failed_or_superseded_attempts": [
+    {
+      "exit_code": 1,
+      "log": {
+        "path": "docs/evidence/phase9g/baseline.log",
+        "sha256": "3aff28c046d56c43c4ad5841239e7dc4df81808b46265efa205b39e61d42c8a4"
+      },
+      "exit": {
+        "path": "docs/evidence/phase9g/baseline.exit",
+        "sha256": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04"
+      },
+      "reason": "Initial stale database-port configuration; genuine failure"
+    },
+    {
+      "exit_code": 1,
+      "log": {
+        "path": "docs/evidence/phase9g/baseline-configured.log",
+        "sha256": "f0118d57bc90515fabed47f214500d2f0cc1a0a23160d198c50cfd6b65ba982b"
+      },
+      "exit": {
+        "path": "docs/evidence/phase9g/baseline-configured.exit",
+        "sha256": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04"
+      },
+      "reason": "Windows Node native exit3221226505 at retained test:agent-chat; root cause unconfirmed"
+    },
+    {
+      "exit_code": 1,
+      "log": {
+        "path": "docs/evidence/phase9g/staged-audit.log",
+        "sha256": "32c4d30b4e0def8ee698d44fa25c5334b4c22ae597a5e9cfb472375c97ce041e"
+      },
+      "exit": {
+        "path": "docs/evidence/phase9g/staged-audit.exit",
+        "sha256": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04"
+      },
+      "reason": "48pass/1fail: test fixture had invalid Memory terminal enum, corrected to existing none"
+    },
+    {
+      "exit_code": 0,
+      "log": {
+        "path": "docs/evidence/phase9g/staged-audit-r2.log",
+        "sha256": "a555be9cb8163d7ac97eb8350e50948747e70a29f25ab7db5a7eb901835cbfbb"
+      },
+      "exit": {
+        "path": "docs/evidence/phase9g/staged-audit-r2.exit",
+        "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+      },
+      "reason": "49 pass on intermediate test/tool source; superseded by final current-source record"
+    },
+    {
+      "exit_code": 0,
+      "log": {
+        "path": "docs/evidence/phase9g/focused.log",
+        "sha256": "aeccac362b4cd1479b3dedcc986c5d62b1ae6dbf5268d292b4ddbdfa0b25849a"
+      },
+      "exit": {
+        "path": "docs/evidence/phase9g/focused.exit",
+        "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+      },
+      "reason": "Prior audit tooling source; superseded by final source-bound run"
+    },
+    {
+      "exit_code": 0,
+      "log": {
+        "path": "docs/evidence/phase9g/admission.log",
+        "sha256": "5473e52b35750c4ad4212455f003b08581666ca0cf8242894490f5b084f4a564"
+      },
+      "exit": {
+        "path": "docs/evidence/phase9g/admission.exit",
+        "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+      },
+      "reason": "Prior audit tooling source; superseded"
+    },
+    {
+      "exit_code": 0,
+      "log": {
+        "path": "docs/evidence/phase9g/lifecycle.log",
+        "sha256": "09793d8a881c18bfc8a574460df8bb6d948150ba972bc0a6a70068e3493a3347"
+      },
+      "exit": {
+        "path": "docs/evidence/phase9g/lifecycle.exit",
+        "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+      },
+      "reason": "Prior audit tooling source; superseded"
+    },
+    {
+      "exit_code": 0,
+      "log": {
+        "path": "docs/evidence/phase9g/erasure.log",
+        "sha256": "1f5316291d7e9c799e543888425e6ef9d1532f8c6be89714b6fae16308d28fd7"
+      },
+      "exit": {
+        "path": "docs/evidence/phase9g/erasure.exit",
+        "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+      },
+      "reason": "Prior audit tooling source; superseded"
+    },
+    {
+      "exit_code": 0,
+      "log": {
+        "path": "docs/evidence/phase9g/integration.log",
+        "sha256": "a99b2c50aa54f7a9df457a728dbbdfd37879020325c64396f915dd6643df6388"
+      },
+      "exit": {
+        "path": "docs/evidence/phase9g/integration.exit",
+        "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+      },
+      "reason": "Prior audit tooling source; superseded"
+    },
+    {
+      "exit_code": 0,
+      "log": {
+        "path": "docs/evidence/phase9g/boundaries.log",
+        "sha256": "c49f231ae7efcfb74827e633f9331913024b8023e4ebfb415dee5152a84b29e8"
+      },
+      "exit": {
+        "path": "docs/evidence/phase9g/boundaries.exit",
+        "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+      },
+      "reason": "Prior audit tooling source; superseded"
+    }
+  ],
+  "admission_revalidation": {
+    "exit_code": 0,
+    "log": {
+      "path": "docs/evidence/phase9g/admission-r2.log",
+      "sha256": "bdfd3706c5c3530ea7e497cd90c992036cf2c8b28b392dd704a039015dc5953c"
+    },
+    "exit": {
+      "path": "docs/evidence/phase9g/admission-r2.exit",
+      "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+    },
+    "source": {
+      "path": "docs/evidence/phase9g/admission-r2.source.json",
+      "sha256": "146a0ad573e8b9f19305f1240f0e2a202e9b2362ed5515559f158d567e0337f8"
+    },
+    "source_fingerprint": "ca386207543f5e2fd164ae1c8a569920282ce0efb15678cc72331ba4b33afc25",
+    "historical_matrix_sha256": "86bc4b9ce89c3c94d804291b9b6c6791d6b380550b529fac2ef60053bff78fa2"
+  },
+  "lifecycle_revalidation": {
+    "exit_code": 0,
+    "log": {
+      "path": "docs/evidence/phase9g/lifecycle-r2.log",
+      "sha256": "59f950fda341064026dbaff0b2ae0ab27e186873d93225a38321f844edc582a7"
+    },
+    "exit": {
+      "path": "docs/evidence/phase9g/lifecycle-r2.exit",
+      "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+    },
+    "source": {
+      "path": "docs/evidence/phase9g/lifecycle-r2.source.json",
+      "sha256": "4d10415353c6e4fb4912c24ab3583ba8a6343636419ff59509752d306aba0c23"
+    },
+    "source_fingerprint": "f160991d18cf7217388f038f78d65eec54cdc88132477bf18bfb9c422abfa609",
+    "historical_matrix_sha256": "298bdcdad4a2dc99a51da61cf7d183abf1e3402b72fdd5e5f48f86b5e8236903"
+  },
+  "erasure_revalidation": {
+    "exit_code": 0,
+    "log": {
+      "path": "docs/evidence/phase9g/erasure-r2.log",
+      "sha256": "020272d97b45b5ebb1428aeb1768ad419608f8e93a889b8b7ca5f8a7b6a91d71"
+    },
+    "exit": {
+      "path": "docs/evidence/phase9g/erasure-r2.exit",
+      "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+    },
+    "source": {
+      "path": "docs/evidence/phase9g/erasure-r2.source.json",
+      "sha256": "9e36862a6d014140b41ed0a9398df08b15f873c15d59d09e9bb1170d30b1dfb4"
+    },
+    "source_fingerprint": "f98dc474b2ac7fa7173d9d1903aeaa81ee97ecfd9d285c59aecd4d289b12f01a",
+    "historical_matrix_sha256": "2bbd4a27a96e33468faf29558b3f48c82a8b5b46eb0a9e68e4d117aac7ad283a"
+  },
+  "integration_revalidation": {
+    "exit_code": 0,
+    "log": {
+      "path": "docs/evidence/phase9g/integration-r2.log",
+      "sha256": "32443233bf7f7d0698bd5c00bc2a5c53b7264e7324146477a36afdd9a893b9c2"
+    },
+    "exit": {
+      "path": "docs/evidence/phase9g/integration-r2.exit",
+      "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+    },
+    "source": {
+      "path": "docs/evidence/phase9g/integration-r2.source.json",
+      "sha256": "17a5c97223c8c617eb0421fd756875e8682db7450b923b87ce227cc62963b702"
+    },
+    "source_fingerprint": "a0cf961910694f1f3adeb76ec1d7a76ab1fc062192f11b0704345b6a0337a558",
+    "historical_matrix_sha256": "a3f8c7c651951129e6015ff9423afddc424cc9684a314f495608bbcce219fd64"
+  },
+  "pre_marker": {
+    "exit_code": 0,
+    "log": {
+      "path": "docs/evidence/phase9g/pre-marker.log",
+      "sha256": "c01fdd9dda59f327c25c11f612e25e2951f9b8160e757d0c2dce2fe6242c86f9"
+    },
+    "exit": {
+      "path": "docs/evidence/phase9g/pre-marker.exit",
+      "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+    },
+    "source": {
+      "path": "docs/evidence/phase9g/pre-marker.source.json",
+      "sha256": "89f0be2dd5e2cb450c41bebe2909c0962bff9c8a1780c00adcc7cb2e5032f009"
+    }
+  },
+  "post_marker": {
+    "exit_code": 0,
+    "log": {
+      "path": "docs/evidence/phase9g/post-marker.log",
+      "sha256": "4ad8707d54946a1f2576a5da2b70473d9d6177ea0d673e9b860ec0993ef627bc"
+    },
+    "exit": {
+      "path": "docs/evidence/phase9g/post-marker.exit",
+      "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+    },
+    "source": {
+      "path": "docs/evidence/phase9g/post-marker.source.json",
+      "sha256": "0cb6a9bd551bdd2e8812039f5bd677770185a9180ea1fdd0d93373900b87ba09"
+    }
+  },
+  "privacy_screen": {
+    "exit_code": 0,
+    "log": {
+      "path": "docs/evidence/phase9g/privacy-final.log",
+      "sha256": "ffd53e479b9c65d3c4ff824dca324417643f99c46f40b8d157548b89ce127c60"
+    },
+    "exit": {
+      "path": "docs/evidence/phase9g/privacy-final.exit",
+      "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+    },
+    "source": {
+      "path": "docs/evidence/phase9g/privacy-final.source.json",
+      "sha256": "d59277080a56eed0f6e03fdbc65b57a8003d352d3102a565b8718a3dd5c8aaff"
+    }
+  },
+  "files_changed": [
+    ".gitattributes",
+    "apps/server/tests/test_reliability_9g.py",
+    "apps/server/tests/test_security_priority_9g.py",
+    "docs/AGENT_RUN_RECOVERY.md",
+    "docs/AGENT_UNTRUSTED_INPUT.md",
+    "docs/ARCHITECTURE.md",
+    "docs/MASTER_PLAN.md",
+    "docs/PHASE_9G_ACCEPTANCE.md",
+    "docs/PHASE_9G_MATRIX.json",
+    "docs/PHASE_9G_PRODUCTION_RISKS.json",
+    "docs/PHASE_9_EXIT_CRITERIA_MATRIX.json",
+    "docs/PHASE_9_SECURITY_RELIABILITY_HANDOFF.md",
+    "docs/SECURITY_RISK_REGISTER.md",
+    "docs/SECURITY_THREAT_MODEL.md",
+    "docs/adr/0042-audit-source-binding-and-unresolved-run-recovery.md",
+    "docs/evidence/phase9g/admission-r2.exit",
+    "docs/evidence/phase9g/admission-r2.log",
+    "docs/evidence/phase9g/admission-r2.source.json",
+    "docs/evidence/phase9g/admission.exit",
+    "docs/evidence/phase9g/admission.log",
+    "docs/evidence/phase9g/admission.source.json",
+    "docs/evidence/phase9g/baseline-configured.exit",
+    "docs/evidence/phase9g/baseline-configured.log",
+    "docs/evidence/phase9g/baseline-r3.exit",
+    "docs/evidence/phase9g/baseline-r3.log",
+    "docs/evidence/phase9g/baseline.exit",
+    "docs/evidence/phase9g/baseline.log",
+    "docs/evidence/phase9g/boundaries-r2.exit",
+    "docs/evidence/phase9g/boundaries-r2.log",
+    "docs/evidence/phase9g/boundaries-r2.source.json",
+    "docs/evidence/phase9g/boundaries.exit",
+    "docs/evidence/phase9g/boundaries.log",
+    "docs/evidence/phase9g/boundaries.source.json",
+    "docs/evidence/phase9g/erasure-r2.exit",
+    "docs/evidence/phase9g/erasure-r2.log",
+    "docs/evidence/phase9g/erasure-r2.source.json",
+    "docs/evidence/phase9g/erasure.exit",
+    "docs/evidence/phase9g/erasure.log",
+    "docs/evidence/phase9g/erasure.source.json",
+    "docs/evidence/phase9g/focused-r2.exit",
+    "docs/evidence/phase9g/focused-r2.log",
+    "docs/evidence/phase9g/focused-r2.source.json",
+    "docs/evidence/phase9g/focused.exit",
+    "docs/evidence/phase9g/focused.log",
+    "docs/evidence/phase9g/focused.source.json",
+    "docs/evidence/phase9g/integration-r2.exit",
+    "docs/evidence/phase9g/integration-r2.log",
+    "docs/evidence/phase9g/integration-r2.source.json",
+    "docs/evidence/phase9g/integration.exit",
+    "docs/evidence/phase9g/integration.log",
+    "docs/evidence/phase9g/integration.source.json",
+    "docs/evidence/phase9g/lifecycle-r2.exit",
+    "docs/evidence/phase9g/lifecycle-r2.log",
+    "docs/evidence/phase9g/lifecycle-r2.source.json",
+    "docs/evidence/phase9g/lifecycle.exit",
+    "docs/evidence/phase9g/lifecycle.log",
+    "docs/evidence/phase9g/lifecycle.source.json",
+    "docs/evidence/phase9g/original-runtime-manifest.json",
+    "docs/evidence/phase9g/post-marker.exit",
+    "docs/evidence/phase9g/post-marker.log",
+    "docs/evidence/phase9g/post-marker.source.json",
+    "docs/evidence/phase9g/pre-marker.exit",
+    "docs/evidence/phase9g/pre-marker.log",
+    "docs/evidence/phase9g/pre-marker.source.json",
+    "docs/evidence/phase9g/privacy-final.exit",
+    "docs/evidence/phase9g/privacy-final.log",
+    "docs/evidence/phase9g/privacy-final.source.json",
+    "docs/evidence/phase9g/repository-final.exit",
+    "docs/evidence/phase9g/repository-final.log",
+    "docs/evidence/phase9g/repository-final.source.json",
+    "docs/evidence/phase9g/repository-initial.exit",
+    "docs/evidence/phase9g/repository-initial.log",
+    "docs/evidence/phase9g/staged-audit-r2.exit",
+    "docs/evidence/phase9g/staged-audit-r2.log",
+    "docs/evidence/phase9g/staged-audit.exit",
+    "docs/evidence/phase9g/staged-audit.log",
+    "project-phase.json",
+    "scripts/check_security_9c.py",
+    "scripts/check_security_9d.py",
+    "scripts/check_security_9e.py",
+    "scripts/check_security_9f.py",
+    "scripts/check_security_9g.py",
+    "scripts/phase9g_capture.py",
+    "scripts/verify.py",
+    "tests/test_security_9d_tooling.py",
+    "tests/test_security_9g_tooling.py",
+    "tests/test_security_gate.py"
+  ],
+  "final_phase_marker": {
+    "completed_phase": 8,
+    "completed_subphase": "9G"
+  }
+}

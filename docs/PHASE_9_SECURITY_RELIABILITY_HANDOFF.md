@@ -1,5 +1,28 @@
 # Phase 9 — Security, Privacy, Reliability and Deletion handoff
 
+## Current9G authorization and remaining work
+
+9G PASS in its authorized audit scope after independent complete current-source
+pre/post root exits0. Backend810/Mobile396/repository99/Golden83/OpenAPI40/Doctor21
+and all Web regressions passed; immutable actual9F native evidence remains bound
+to245 unchanged executable inputs verified against original Git objects. Marker8/9G.
+Phase9 overall IN PROGRESS and Phase10–12 PENDING. Evidence authority:
+PHASE_9G_ACCEPTANCE/MATRIX and PHASE_9_EXIT_CRITERIA_MATRIX. It retains all earlier
+gates and tests actual graph paths and deterministic service authority, not live
+model comprehension. Imported-chat analysis remains absent. AGENT_UNTRUSTED_INPUT
+is the mandatory future Provider/RAG/import handoff; it preserves source labels,
+scope/consent/budgets and independent authorization for any future action tool.
+
+Phase9 cannot close while full Owner/Person/Relationship erasure and its exact
+dependency/identity/recovery contract remain unfinished. R-10 can indefinitely
+block Conversation erasure; AGENT_RUN_RECOVERY is design only and does not permit
+SQL resets or age-based deletion. Separately authorize any remaining Phase9
+implementation with current-source tests and full acceptance; do not auto-start9H.
+R-06/07/08/09 and outbox/account/primary-loss/monitoring/export requirements are
+graded in PHASE_9G_PRODUCTION_RISKS.json. Public production remains NOT APPROVED.
+Stop after9G. Phase10/11/12, real providers, private-chat analysis and deployment
+are not authorized by this audit. Earlier stop/scope statements below are dated.
+
 ## Current Phase9F integration
 
 Phase9F PASS for controlled development: exact Dataset/Conversation App erasure,

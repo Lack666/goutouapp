@@ -1,5 +1,18 @@
 # Architecture direction
 
+## Current Phase9G audit boundary
+
+9G adds synthetic actual-node and signed PostgreSQL safety/authority audits,
+real publication/accounting windows, bounded global-lock55P03 diagnosis and
+old-Run/replay/target_busy tests. No production graph/service/schema/Mobile or
+dependency change is introduced. Audit-source fingerprints cover fresh test
+execution separately from the exact245 executable-input Git manifest required
+to retain immutable9F native evidence. New tests cannot relabel historical
+Android scenes as new runs. Untrusted input and recovery limits are explicit in
+AGENT_UNTRUSTED_INPUT, AGENT_RUN_RECOVERY and ADR0042. Marker closure is8/9G only;
+full Phase9/privacy lifecycle and public deployment remain separate unfinished
+boundaries. Phase10–12 is not implemented here.
+
 ## Current Phase9F integration
 
 Phase9F adds server-only canonical Dataset discovery and Connected Mobile erasure using the unchanged 9E service. Transport remains outside the Agent runtime. Only one signed summary GET is added (OpenAPI40); Mobile holds no model keys or private Agent/Memory implementation. See MOBILE_DATA_ERASURE and ADR0041. Historical phase sections below describe their acceptance-time scope.

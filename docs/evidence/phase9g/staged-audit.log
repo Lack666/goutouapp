@@ -1,0 +1,51 @@
+........................................{"diagnostic": "held_global_guard", "sqlstate": "55P03", "different_owner": false, "elapsed_ms": 289, "rejected_no_row": true, "explicit_same_uuid_retry": 201}
+.{"diagnostic": "held_global_guard", "sqlstate": "55P03", "different_owner": true, "elapsed_ms": 282, "rejected_no_row": true, "explicit_same_uuid_retry": 201}
+.{"diagnostic": "cold_two_worker_pressure", "same_owner": false, "person_status_counts": {"201": 16}, "upload_status": 201, "elapsed_ms": 368, "automatic_retries": 0}
+.{"diagnostic": "cold_two_worker_pressure", "same_owner": true, "person_status_counts": {"201": 16}, "upload_status": 201, "elapsed_ms": 372, "automatic_retries": 0}
+.....F
+================================== FAILURES ===================================
+______ test_old_run_restart_replay_owner_and_erasure_contract[completed] ______
+
+erasure_api = (Engine(postgresql+psycopg://postgres@127.0.0.1:15434/goutou_test_f3ec2364917f), <starlette.testclient.TestClient obje...WindowsPath('C:/Users/VOS-User/AppData/Local/Temp/pytest-of-VOS-User/pytest-207/test_old_run_restart_replay_ow4'), ...)
+state = 'completed'
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x000001DE12FAC050>
+
+    @pytest.mark.parametrize("state", ["pending", "running", "completed_unresolved", "failed", "completed"])
+    def test_old_run_restart_replay_owner_and_erasure_contract(erasure_api, state, monkeypatch):
+        engine, client, a, b, _, _, config = erasure_api
+        busy = state in {"pending", "running", "completed_unresolved"}
+        with Session(engine) as db, db.begin():
+            run = db.scalar(select(AgentRun).where(AgentRun.conversation_id == a[3]))
+            run_id = run.id
+            run.status = "completed" if state.startswith("completed") else state
+            run.memory_status = None if busy else "not_requested"
+            run.updated_at = datetime.now(UTC) - timedelta(days=30)
+            run.request_fingerprint = request_fingerprint(a[0], a[3], "Synthetic old request", None, None)
+            run.failure_code = "client_disconnected" if state == "failed" else None
+        # No provider is allowed during replay/status checks, including a restarted App.
+        def forbidden(_):
+            raise AssertionError("A replay must not dispatch provider work")
+    
+        monkeypatch.setattr("app.api.dependencies.create_llm_provider", forbidden)
+        # Replays need an assembled service; runtime itself must stay unused.
+        from app.services.agent_service import AgentService
+    
+        class NoRuntime:
+            async def run(self, request):
+                raise AssertionError("No run allowed")
+    
+        app = create_app(config)
+        app.state.agent_service = AgentService(app.state.database.session, NoRuntime())
+        path = f"/api/v1/conversations/{a[3]}/agent-runs"
+        body = {"message": "Synthetic old request", "operation_key": "synthetic-original-key"}
+        with TestClient(app) as restarted:
+            for suffix in ("", "/stream"):
+                response = restarted.post(path + suffix, headers=headers(a[0]), json=body)
+>               assert response.status_code == (200 if state == "completed" else 409)
+E               assert 409 == 200
+E                +  where 409 = <Response [409 Conflict]>.status_code
+
+.cache\phase9g_reliability.py:243: AssertionError
+=========================== short test summary info ===========================
+FAILED .cache/phase9g_reliability.py::test_old_run_restart_replay_owner_and_erasure_contract[completed]
+1 failed, 48 passed in 14.19s

@@ -1,4 +1,29 @@
-# Security risk register — Phase 9A–9F
+# Security risk register — Phase 9A–9G
+
+## Current9G audited boundary
+
+PHASE_9G_PRODUCTION_RISKS.json is the current detailed status supplement; original
+9A–9F JSON/matrices/logs remain immutable. No new confirmed open P0/P1 under the
+controlled synthetic topology, and no production-readiness approval. Full Owner/
+Person/Relationship erasure remains a Phase9 closure prerequisite. R-06/07/08/09
+still distinguish local controls from undeployed scheduler/backup/identity/ingress
+and future real provider/analysis. Durable outboxes, complete account lifecycle,
+total-primary-loss recovery, alerting and export/copy handling remain explicit.
+
+R-10 is reproduced across App restart with30-day old pending/running/completed-
+unresolved rows. Such Conversations can remain permanently undeletable until a
+separately authorized safe recovery implementation exists. P2 local limitation;
+public erasure/recovery promises blocked. AGENT_RUN_RECOVERY is design only.
+
+The global admission guard was deliberately held during real signed Person
+requests for both owner combinations:55P03/generic503 near the250ms bound, zero
+Person writes, then successful explicit original-UUID retry/replay. Bounded cold
+two-worker resource/upload pressure records actual status distributions. This
+proves a possible mechanism, not the cause of earlier9F uninstrumented events;
+no timeout/quota/retry/success-rate change is made. The9G original-source baseline
+also observed Windows Node native exit3221226505 at retained test:agent-chat,
+matching the historical environment risk category. Cause remains unconfirmed;
+the failed complete run retains nonzero evidence and is not counted PASS.
 
 ## Phase9F current risk status
 

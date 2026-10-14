@@ -1,5 +1,22 @@
 # Security threat model — Phase 9A
 
+Current9G B3/B6/B9 audit: actual SafetyResult node precedes ordinary relationship
+analysis and Memory mutations in both signed REST/POST SSE; semantic Mock fixtures
+cannot certify real-model risk recognition. Current/history/speaker/Memory JSON
+data cannot create LLM system roles or API actors/challenges. Imported Markdown
+and RelationshipMessage remain outside Agent payloads. High-risk graph witnesses
+skip all ordinary/action/mutation nodes; lower-risk controls continue normally.
+See AGENT_UNTRUSTED_INPUT for exact future Provider/RAG/tool authorization gates.
+Actual file publication remains charged under its exact OS-fenced reservation;
+unrelated/foreign unknown-file exceptions reject. Real global-lock contention
+provokes55P03/generic503 before any Person commit; explicit original-UUID retry
+after release works. This does not establish prior transient root causes or fix
+availability. Thirty-day pending/running/completed-unresolved Runs still block
+Conversation erasure. No age reset, new-key bypass or reconciliation tool exists;
+AGENT_RUN_RECOVERY specifies design-only writer/effect proof. Exact native
+executable-input equality and fresh full service regression are separate gates.
+Full account/lifecycle/recovery and public deployment risks remain unfinished.
+
 Current9E supplement B3/B4/B8: signed owner-only canonical Dataset/Conversation
 challenges bind target/Relationship/snapshot/counts/expiry. Execute stores durable
 receipt and tombstone while physically deleting exact formal messages; no body

@@ -1,0 +1,201 @@
+{
+  "phase": "9G",
+  "source_requirement": "docs/MASTER_PLAN.md Exit criteria item9 and dated approved Phase9 closure constraints",
+  "phase9_overall": "IN PROGRESS",
+  "public_production_readiness": "NOT APPROVED",
+  "requirements": [
+    {
+      "id": "P9-UPLOAD",
+      "requirement": "Original item9: actual upload limits; aggregate admission supplement",
+      "implementation": [
+        "apps/server/app/api/import_upload_limit.py",
+        "apps/server/app/services/resource_admission.py"
+      ],
+      "tests": [
+        "apps/server/tests/test_upload_security.py",
+        "apps/server/tests/test_resource_admission.py"
+      ],
+      "evidence": [
+        "admission_revalidation",
+        "pre_marker",
+        "post_marker"
+      ],
+      "status": "PASS",
+      "remaining": "Public ingress/host physical allocation and capacity validation remain production requirements.",
+      "blocks_phase9": false
+    },
+    {
+      "id": "P9-TYPE",
+      "requirement": "Original item9: file type and content validation",
+      "implementation": [
+        "apps/server/app/api/v1/chat_imports.py",
+        "apps/server/app/chat_import/wechat_markdown.py"
+      ],
+      "tests": [
+        "apps/server/tests/test_upload_security.py",
+        "apps/server/tests/test_chat_import.py"
+      ],
+      "evidence": [
+        "upload_revalidation",
+        "pre_marker",
+        "post_marker"
+      ],
+      "status": "PASS",
+      "remaining": "Only existing UTF-8 WeChat Markdown V1; no broader format promise.",
+      "blocks_phase9": false
+    },
+    {
+      "id": "P9-PATH",
+      "requirement": "Original item9: traversal prevention and private random-key storage",
+      "implementation": [
+        "apps/server/app/chat_import/artifacts.py"
+      ],
+      "tests": [
+        "apps/server/tests/test_upload_security.py"
+      ],
+      "evidence": [
+        "upload_revalidation",
+        "pre_marker",
+        "post_marker"
+      ],
+      "status": "PASS",
+      "remaining": "Private storage root/ACL and trusted host remain deployment assumptions.",
+      "blocks_phase9": false
+    },
+    {
+      "id": "P9-OWNER",
+      "requirement": "Original item9: owner and exact resource/scope isolation",
+      "implementation": [
+        "apps/server/app/auth/jwt_verifier.py",
+        "apps/server/app/services/agent_service.py",
+        "apps/server/app/services/erasure.py"
+      ],
+      "tests": [
+        "apps/server/tests/test_authorization_security.py",
+        "apps/server/tests/test_erasure.py",
+        "apps/server/tests/test_reliability_9g.py"
+      ],
+      "evidence": [
+        "authorization_revalidation",
+        "erasure_revalidation",
+        "focused",
+        "pre_marker",
+        "post_marker"
+      ],
+      "status": "PASS",
+      "remaining": "Production identity/refresh/revocation/account lifecycle absent; signed development actors only.",
+      "blocks_phase9": false
+    },
+    {
+      "id": "P9-DELETE",
+      "requirement": "Original item9 deletion; current Roadmap retains full-data lifecycle prerequisites",
+      "implementation": [
+        "apps/server/app/services/erasure.py",
+        "apps/server/app/services/memory_mutation.py",
+        "docs/DATA_DELETION_MATRIX.json"
+      ],
+      "tests": [
+        "apps/server/tests/test_erasure.py",
+        "apps/server/tests/test_memory_mutation.py",
+        "apps/mobile/tests/erasureController.test.ts"
+      ],
+      "evidence": [
+        "erasure_revalidation",
+        "memory_revalidation",
+        "focused",
+        "pre_marker",
+        "post_marker"
+      ],
+      "status": "PARTIAL",
+      "remaining": "Memory/Dataset/Conversation primary erasure locally passes; full Owner/Person/Relationship deletion unavailable. Requires separately authorized Phase9 lifecycle task, exact dependency/identity barriers, guarded idempotency, restore and Mobile/native acceptance.",
+      "blocks_phase9": true
+    },
+    {
+      "id": "P9-LOG",
+      "requirement": "Original item9: log redaction and safe public failure envelopes",
+      "implementation": [
+        "apps/server/app/core/logging.py",
+        "apps/server/app/api/errors.py"
+      ],
+      "tests": [
+        "apps/server/tests/test_privacy_logging.py",
+        "apps/server/tests/test_upload_security.py"
+      ],
+      "evidence": [
+        "authorization_revalidation",
+        "upload_revalidation",
+        "pre_marker",
+        "post_marker"
+      ],
+      "status": "PASS",
+      "remaining": "Production collectors/rotation/PII distribution policy unverified; regex alone cannot certify all private prose.",
+      "blocks_phase9": false
+    },
+    {
+      "id": "P9-SAFETY",
+      "requirement": "Original item9: high-risk safety priority over ordinary analysis and mutations",
+      "implementation": [
+        "apps/server/app/agent/runtime.py",
+        "apps/server/app/agent/nodes.py",
+        "apps/server/app/agent/prompts/safety.py"
+      ],
+      "tests": [
+        "apps/server/tests/test_security_priority_9g.py::test_high_risk_real_nodes_precede_analysis_and_memory",
+        "apps/server/tests/test_security_priority_9g.py::test_imported_markdown_and_speaker_instruction_never_enter_agent"
+      ],
+      "evidence": [
+        "focused",
+        "pre_marker",
+        "post_marker"
+      ],
+      "status": "PASS",
+      "remaining": "Oracle-driven Mock verifies real route/effects, not semantic classifier accuracy. Future provider/RAG requires real behavioral eval; imported analysis absent.",
+      "blocks_phase9": false
+    },
+    {
+      "id": "P9-RELIABILITY",
+      "requirement": "9G reliability supplement: publication, capacity/error and unresolved-run boundaries",
+      "implementation": [
+        "apps/server/app/services/resource_admission.py",
+        "apps/server/app/services/agent_service.py",
+        "docs/AGENT_RUN_RECOVERY.md"
+      ],
+      "tests": [
+        "apps/server/tests/test_reliability_9g.py",
+        "apps/server/tests/test_resource_admission.py",
+        "apps/server/tests/test_data_lifecycle.py"
+      ],
+      "evidence": [
+        "focused",
+        "admission_revalidation",
+        "lifecycle_revalidation",
+        "integration_revalidation",
+        "pre_marker",
+        "post_marker"
+      ],
+      "status": "PASS",
+      "remaining": "Global guard250ms can reject503; no availability fix claim. R-10 unresolved Run can indefinitely block Conversation erase. Reconciliation/outboxes require separate explicit implementation and production verification.",
+      "blocks_phase9": false
+    },
+    {
+      "id": "P9-CLOSEOUT",
+      "requirement": "Current approved Roadmap Phase9 closure, independent of public deployment approval",
+      "implementation": [
+        "docs/MASTER_PLAN.md",
+        "docs/PHASE_9G_ACCEPTANCE.md",
+        "docs/DATA_DELETION_CONTRACT.md"
+      ],
+      "tests": [
+        "tests/test_security_9g_tooling.py"
+      ],
+      "evidence": [
+        "focused",
+        "pre_marker",
+        "post_marker"
+      ],
+      "status": "IN PROGRESS",
+      "remaining": "Full Owner/Person/Relationship lifecycle is a formal unfinished Phase9 prerequisite. Proposed work owner: separately authorized Phase9 privacy/lifecycle scope. Acceptance: complete scoped dependency/identity erasure, durable key/receipt/restore barriers, actual A/B Backend/Web/native and full pre/post root exits0. No implicit9H/Phase10 authorization.",
+      "blocks_phase9": true
+    }
+  ]
+}

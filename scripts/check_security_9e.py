@@ -95,8 +95,13 @@ def gate(record, root=ROOT):
 def revalidation(matrix, root, name, fingerprint, original, expected):
     record = matrix.get(name, {})
     # A later phase supplies new evidence without modifying the historical matrix.
-    if matrix.get("phase") == "9E" and record.get("source_fingerprint") != fingerprint:
+    if matrix.get("phase") in {"9E", "9F"} and record.get("source_fingerprint") != fingerprint:
         replacement = root / "docs/PHASE_9F_MATRIX.json"
+        if (root / "docs/PHASE_9G_MATRIX.json").is_file():
+            replacement = root / "docs/PHASE_9G_MATRIX.json"
+        # A9F row cannot recurse into itself when no later evidence exists.
+        if matrix.get("phase") == "9F" and replacement.name == "PHASE_9F_MATRIX.json":
+            raise RuntimeError("9E current-source regression fingerprint drift")
         if replacement.is_file():
             return revalidation(
                 json.loads(replacement.read_text("utf-8")),
@@ -110,12 +115,14 @@ def revalidation(matrix, root, name, fingerprint, original, expected):
         (root / original).read_bytes().replace(b"\r\n", b"\n")
     ).hexdigest()
     if (
-        matrix.get("phase") not in {"9E", "9F"}
+        matrix.get("phase") not in {"9E", "9F", "9G"}
         or record.get("source_fingerprint") != fingerprint
         or record.get("historical_matrix_sha256") != original_hash
     ):
         raise RuntimeError("9E current-source regression fingerprint drift")
-    if matrix.get("phase") == "9F":
+    if matrix.get("phase") == "9G":
+        from check_security_9g import gate as evidence_gate
+    elif matrix.get("phase") == "9F":
         from check_security_9f import gate as evidence_gate
     else:
         evidence_gate = gate
@@ -148,6 +155,8 @@ def check(root=ROOT, *, completed=False):
     changed_source = matrix.get("source_fingerprint") != source_fingerprint(root)
     if changed_source:
         replacement = root / "docs/PHASE_9F_MATRIX.json"
+        if (root / "docs/PHASE_9G_MATRIX.json").is_file():
+            replacement = root / "docs/PHASE_9G_MATRIX.json"
         if not replacement.is_file():
             raise RuntimeError("9E tested source fingerprint drift")
         newer = json.loads(replacement.read_text("utf-8"))
