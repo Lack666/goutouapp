@@ -1,0 +1,8 @@
+{"android_api": "37"}
+Traceback (most recent call last):
+  File "F:\狗头军师app化\goutouapp\scripts\phase8_android_demo.py", line 959, in <module>
+    main()
+    ~~~~^^
+  File "F:\狗头军师app化\goutouapp\scripts\phase8_android_demo.py", line 89, in main
+    raise RuntimeError("Disposable fixture unavailable; check TEST_DATABASE_URL")
+RuntimeError: Disposable fixture unavailable; check TEST_DATABASE_URL

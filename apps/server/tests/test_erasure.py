@@ -41,6 +41,11 @@ from app.services.memory_retention import MemoryRetentionService
 BASE = "/api/v1/erasures"
 
 
+@pytest.fixture(name="database_engine")
+def isolated_recovery_engine(recovery_database_engine):
+    return recovery_database_engine
+
+
 @pytest.fixture
 def erasure_api(database_engine, tmp_path):
     a, b = scope(database_engine), scope(database_engine)

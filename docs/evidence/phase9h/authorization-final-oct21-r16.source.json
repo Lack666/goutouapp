@@ -1,0 +1,21 @@
+{
+  "source_fingerprint": "fdcde451667babd93bbcc12ca005724002b584830d0ca11bb5f2b74566ae51e7",
+  "phase_marker": {
+    "completed_phase": 8,
+    "completed_subphase": "9G"
+  },
+  "synthetic_only": true,
+  "command": [
+    "uv",
+    "--cache-dir",
+    ".cache/uv",
+    "run",
+    "pytest",
+    "apps/server/tests/test_authorization_security.py",
+    "apps/server/tests/test_privacy_logging.py",
+    "-q"
+  ],
+  "exit_code": 0,
+  "log_sha256": "485d3752542869b03cb746120d859186770265e4704f22b8f09a2929dd231231",
+  "end_source_fingerprint": "fdcde451667babd93bbcc12ca005724002b584830d0ca11bb5f2b74566ae51e7"
+}

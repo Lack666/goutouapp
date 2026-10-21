@@ -1,0 +1,9 @@
+{
+  "synthetic_only": true,
+  "read_only_scan": true,
+  "source_fingerprint": "dc0e1026713e5150f0a6c6eb4b5ae9b442e8264ae61c33ff92af3f02c75da20e",
+  "files": 982,
+  "inventory_sha256": "fdb479b0b36915b8b469c988cad6f2a4e3dabc915107f8ebbffd29cdc451f626",
+  "findings": [],
+  "limits": "Pattern screening does not certify arbitrary private prose. Evidence is synthetic; no credential values are returned."
+}

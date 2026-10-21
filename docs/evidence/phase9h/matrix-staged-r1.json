@@ -1,0 +1,525 @@
+{
+  "phase": "9H",
+  "status": "STAGED",
+  "acceptance_state": "staged",
+  "baseline_commit": "dcc7085c6061fe43081b2b914507fa8ebd733fcb",
+  "source_fingerprint": "8b252bf77d0ed9b9c56e40181fb667532ebc9146b586888acd998604fef05851",
+  "open_p0_p1": [],
+  "production_acceptable": false,
+  "phase9_overall": "IN PROGRESS",
+  "final_marker": {
+    "completed_phase": 9,
+    "completed_subphase": "9H"
+  },
+  "baseline": {
+    "exit_code": 0,
+    "log": {
+      "path": "docs/evidence/phase9h/baseline-r3.log",
+      "sha256": "ef78073f59a30d0d526bf4f965a3474024b0ff83554505dd7b776cb72b640b95"
+    },
+    "exit": {
+      "path": "docs/evidence/phase9h/baseline-r3.exit",
+      "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+    },
+    "source": {
+      "path": "docs/evidence/phase9h/baseline-r3.source.json",
+      "sha256": "8b5b6eca6730fb122f91a1016a4eeb9aad492f57d86b06bd3f16343891169cf4"
+    }
+  },
+  "backend": {
+    "exit_code": 0,
+    "log": {
+      "path": "docs/evidence/phase9h/backend-final-oct20-r5.log",
+      "sha256": "8a7cdbdefe65d118a1cf5d693268236b008ca42c981eb16bfbfb5778aff1dd30"
+    },
+    "exit": {
+      "path": "docs/evidence/phase9h/backend-final-oct20-r5.exit",
+      "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+    },
+    "source": {
+      "path": "docs/evidence/phase9h/backend-final-oct20-r5.source.json",
+      "sha256": "aba45ec8f38b8b563ee2f799fd5c036cb2fe95f6a7c0e42581aa8aa144be31b9"
+    }
+  },
+  "mobile": {
+    "exit_code": 0,
+    "log": {
+      "path": "docs/evidence/phase9h/mobile-final-oct20-r5.log",
+      "sha256": "ae60986614c3a31b14a84aa3517a311b08b0faf2dbdfedee318aa4876e113ae8"
+    },
+    "exit": {
+      "path": "docs/evidence/phase9h/mobile-final-oct20-r5.exit",
+      "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+    },
+    "source": {
+      "path": "docs/evidence/phase9h/mobile-final-oct20-r5.source.json",
+      "sha256": "fe01ae59042053f52a230bd52cc09c891b4cee0fb99de7faf5e1d0ba4696344e"
+    }
+  },
+  "repository": {
+    "exit_code": 0,
+    "log": {
+      "path": "docs/evidence/phase9h/repository-final-oct20-r5.log",
+      "sha256": "ff45c685621db76fe3d2a7e654643889332bcf92a52e7de4ec858bf60a09a36f"
+    },
+    "exit": {
+      "path": "docs/evidence/phase9h/repository-final-oct20-r5.exit",
+      "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+    },
+    "source": {
+      "path": "docs/evidence/phase9h/repository-final-oct20-r5.source.json",
+      "sha256": "8c96470bca7539a1cd4f045b376c1fd6790e09104923d09b7630aa3374e10fc5"
+    }
+  },
+  "web": {
+    "exit_code": 0,
+    "log": {
+      "path": "docs/evidence/phase9h/web-final-oct20-r5.log",
+      "sha256": "8937a5c081e977207aeaa8af7fa0ae4e8c972e222c2c683b963ce04d47ba6858"
+    },
+    "exit": {
+      "path": "docs/evidence/phase9h/web-final-oct20-r5.exit",
+      "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+    },
+    "source": {
+      "path": "docs/evidence/phase9h/web-final-oct20-r5.source.json",
+      "sha256": "e590830c6bb308f1d26b249eab7839ed3b8021d62242cf3c09aa197bf899716a"
+    }
+  },
+  "focused": {
+    "exit_code": 0,
+    "log": {
+      "path": "docs/evidence/phase9h/focused-final-oct20-r5.log",
+      "sha256": "9b75a218c0d4830a5878fa150d13e32bbb0a5b55cb294d72d3459b42dd199c32"
+    },
+    "exit": {
+      "path": "docs/evidence/phase9h/focused-final-oct20-r5.exit",
+      "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+    },
+    "source": {
+      "path": "docs/evidence/phase9h/focused-final-oct20-r5.source.json",
+      "sha256": "6338db8ea290c4ef7ccded0ed68c7047d7c1a6af8b5494d92567a77cbb1e1e8e"
+    }
+  },
+  "full_boundaries": {
+    "exit_code": 0,
+    "log": {
+      "path": "docs/evidence/phase9h/full-boundaries-final-oct20-r5.log",
+      "sha256": "481989e662a5d2c9e4ca3b4d6239329786d710f4118fdee9f8dc3ec79dbfe0e6"
+    },
+    "exit": {
+      "path": "docs/evidence/phase9h/full-boundaries-final-oct20-r5.exit",
+      "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+    },
+    "source": {
+      "path": "docs/evidence/phase9h/full-boundaries-final-oct20-r5.source.json",
+      "sha256": "c7d3e9db981773c738dd6c63c6a5e8a96be8d9220168f529e07109481301ad8f"
+    }
+  },
+  "admission_revalidation": {
+    "exit_code": 0,
+    "log": {
+      "path": "docs/evidence/phase9h/admission-final-oct20-r5.log",
+      "sha256": "1b27d46a347ff40634a268e0573ecde4197708a9f239a9d6d3fa3e9899925e06"
+    },
+    "exit": {
+      "path": "docs/evidence/phase9h/admission-final-oct20-r5.exit",
+      "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+    },
+    "source": {
+      "path": "docs/evidence/phase9h/admission-final-oct20-r5.source.json",
+      "sha256": "80fe264e27fe53c6cf51ca0b02019039da7c4544e71d26c975931b56d3fe41d5"
+    }
+  },
+  "lifecycle_revalidation": {
+    "exit_code": 0,
+    "log": {
+      "path": "docs/evidence/phase9h/lifecycle-final-oct20-r5.log",
+      "sha256": "fcd0821af8e10938d8f1a953ff5ee25f331f5f275bf08306bc5cdbe87f100bce"
+    },
+    "exit": {
+      "path": "docs/evidence/phase9h/lifecycle-final-oct20-r5.exit",
+      "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+    },
+    "source": {
+      "path": "docs/evidence/phase9h/lifecycle-final-oct20-r5.source.json",
+      "sha256": "397f53385b76fcf7199bb832a71d97e5e569557febdf98ca7e2c6b6f95cada4f"
+    }
+  },
+  "erasure_revalidation": {
+    "exit_code": 0,
+    "log": {
+      "path": "docs/evidence/phase9h/erasure-final-oct20-r5.log",
+      "sha256": "6d14158763b07193be8e6791baf05e392979bf05279367631b9db9b5c98b75e7"
+    },
+    "exit": {
+      "path": "docs/evidence/phase9h/erasure-final-oct20-r5.exit",
+      "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+    },
+    "source": {
+      "path": "docs/evidence/phase9h/erasure-final-oct20-r5.source.json",
+      "sha256": "e8c8d1f81f085071f07e75ea5ff7c62e666b084992580fc29244b4b16b843d3b"
+    }
+  },
+  "integration_revalidation": {
+    "exit_code": 0,
+    "log": {
+      "path": "docs/evidence/phase9h/integration-final-oct20-r5.log",
+      "sha256": "e0c4e0a23cb422b9123069b084d8ad775aba0917417abe7eef47f197609fd80a"
+    },
+    "exit": {
+      "path": "docs/evidence/phase9h/integration-final-oct20-r5.exit",
+      "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+    },
+    "source": {
+      "path": "docs/evidence/phase9h/integration-final-oct20-r5.source.json",
+      "sha256": "c7f7827fceebec9fe43f19dfcde09e18559a4f7c67750aae68a2127cd5725256"
+    }
+  },
+  "authorization_revalidation": {
+    "exit_code": 0,
+    "log": {
+      "path": "docs/evidence/phase9h/authorization-final-oct20-r5.log",
+      "sha256": "d8e24ba2d09119de58b9659d55fcde23f08540e3d98db6e5ae2515ffa061f56b"
+    },
+    "exit": {
+      "path": "docs/evidence/phase9h/authorization-final-oct20-r5.exit",
+      "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+    },
+    "source": {
+      "path": "docs/evidence/phase9h/authorization-final-oct20-r5.source.json",
+      "sha256": "50311f9115f0e8e9148c0aba663f95cfd2ef9ca54ada23f26e57aa5eb7d5508b"
+    }
+  },
+  "upload_revalidation": {
+    "exit_code": 0,
+    "log": {
+      "path": "docs/evidence/phase9h/upload-final-oct20-r5.log",
+      "sha256": "f8949e8581c6dbfea0999cafbaafbeec76c88a38e24a22d11633ad9551279924"
+    },
+    "exit": {
+      "path": "docs/evidence/phase9h/upload-final-oct20-r5.exit",
+      "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+    },
+    "source": {
+      "path": "docs/evidence/phase9h/upload-final-oct20-r5.source.json",
+      "sha256": "f66375a777882435b225c8508b0f0f47111f407ff59b49c6f8e1399b0d4fd75e"
+    }
+  },
+  "native": [
+    {
+      "scene": "resource_create",
+      "exit_code": 0,
+      "log": {
+        "path": "docs/evidence/phase9h/android-r7-resource_create.log",
+        "sha256": "6d51a6d71af9466900ab9022d5827d4180125caff10bf99d552570b7a1bcd90c"
+      },
+      "exit": {
+        "path": "docs/evidence/phase9h/android-r7-resource_create.exit",
+        "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+      },
+      "source": {
+        "path": "docs/evidence/phase9h/android-r7-resource_create.source.json",
+        "sha256": "5b97cb0612fbc2f037243d2b39c51ba36a90dcd83891f53db4a238812de74ae9"
+      },
+      "report": {
+        "path": "docs/evidence/phase9h/android-r7-resource_create.json",
+        "sha256": "9d23b306f1099e0225a25124c6d16b3ddf51bf2e454c38215ae38fc948393d5b"
+      },
+      "source_binding": "Exact recorded runtime_fingerprint_9h + complete canonical steps; test-only source changes are not native executable changes"
+    },
+    {
+      "scene": "sse_normal",
+      "exit_code": 0,
+      "log": {
+        "path": "docs/evidence/phase9h/android-r7-sse_normal.log",
+        "sha256": "2a92a120a6e233062c6c19e84552cd2d3f80512cd09802d3763ba2f0339d4580"
+      },
+      "exit": {
+        "path": "docs/evidence/phase9h/android-r7-sse_normal.exit",
+        "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+      },
+      "source": {
+        "path": "docs/evidence/phase9h/android-r7-sse_normal.source.json",
+        "sha256": "67bce3617a364f9587b40c8b212dbec3f299c883d9a063f6beebcdd5373316ab"
+      },
+      "report": {
+        "path": "docs/evidence/phase9h/android-r7-sse_normal.json",
+        "sha256": "2743b0508bc8221bcbb656118231eb2778ed4c3446eb1169ceb47c15a587cd52"
+      },
+      "source_binding": "Exact recorded runtime_fingerprint_9h + complete canonical steps; test-only source changes are not native executable changes"
+    },
+    {
+      "scene": "memory_smoke_revoke",
+      "exit_code": 0,
+      "log": {
+        "path": "docs/evidence/phase9h/android-r7-memory_smoke_revoke.log",
+        "sha256": "0d23145863cdff57e096758ef39537cc9ab6191972e52b02409eaad5dd6712e8"
+      },
+      "exit": {
+        "path": "docs/evidence/phase9h/android-r7-memory_smoke_revoke.exit",
+        "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+      },
+      "source": {
+        "path": "docs/evidence/phase9h/android-r7-memory_smoke_revoke.source.json",
+        "sha256": "92403b1656427384f566d900f98c8c7af539a252de2736affc8b34050e21d114"
+      },
+      "report": {
+        "path": "docs/evidence/phase9h/android-r7-memory_smoke_revoke.json",
+        "sha256": "be3e32a650e3342a7f554eef0ff75b28d925e7c13a8e94683ab9370da7993e04"
+      },
+      "source_binding": "Exact recorded runtime_fingerprint_9h + complete canonical steps; test-only source changes are not native executable changes"
+    },
+    {
+      "scene": "session",
+      "exit_code": 0,
+      "log": {
+        "path": "docs/evidence/phase9h/android-r7-session.log",
+        "sha256": "810133087e04d6fcd6f9bd9360ec134aec2b6349a29ef80dad4e9618a9f1666c"
+      },
+      "exit": {
+        "path": "docs/evidence/phase9h/android-r7-session.exit",
+        "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+      },
+      "source": {
+        "path": "docs/evidence/phase9h/android-r7-session.source.json",
+        "sha256": "4523680a438ec88cec14a8d77db03dcde6b0542aa35224b2e3cd489c8868d518"
+      },
+      "report": {
+        "path": "docs/evidence/phase9h/android-r7-session.json",
+        "sha256": "0c8184e7a4d0965f5f6cc9deed8c5dbe94979c8131a0996e288bc02f28481b28"
+      },
+      "source_binding": "Exact recorded runtime_fingerprint_9h + complete canonical steps; test-only source changes are not native executable changes"
+    },
+    {
+      "scene": "import_history",
+      "exit_code": 0,
+      "log": {
+        "path": "docs/evidence/phase9h/android-r7-import_history.log",
+        "sha256": "1b9c6061d76ce30994b37abadeef6b0922c0d7a32ef51dfd7c3d7103550f58d4"
+      },
+      "exit": {
+        "path": "docs/evidence/phase9h/android-r7-import_history.exit",
+        "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+      },
+      "source": {
+        "path": "docs/evidence/phase9h/android-r7-import_history.source.json",
+        "sha256": "c52850c566f12102334eca5c0a72afe8afb6faeb4979b2172ae0a607b9f32c55"
+      },
+      "report": {
+        "path": "docs/evidence/phase9h/android-r7-import_history.json",
+        "sha256": "bb6eba6a5c4e286b5894a9c470df44b84582003d8ab8f7e61bcfaa3cbc70c1ab"
+      },
+      "source_binding": "Exact recorded runtime_fingerprint_9h + complete canonical steps; test-only source changes are not native executable changes"
+    },
+    {
+      "scene": "dataset",
+      "exit_code": 0,
+      "log": {
+        "path": "docs/evidence/phase9h/android-r7-dataset.log",
+        "sha256": "98ade2fed26f96ba48d1b0713a88f1cb9b5f55f8e3019c396bb91e4c84be1fcf"
+      },
+      "exit": {
+        "path": "docs/evidence/phase9h/android-r7-dataset.exit",
+        "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+      },
+      "source": {
+        "path": "docs/evidence/phase9h/android-r7-dataset.source.json",
+        "sha256": "7b30d8377fa382d5b2748c04a3e6f5ba6aa9455538c439e5a5570c1eaa01a591"
+      },
+      "report": {
+        "path": "docs/evidence/phase9h/android-r7-dataset.json",
+        "sha256": "22e2d65507defd2b363ceafac6f08779773de81accbf1ca1a5201f0801d9da1d"
+      },
+      "source_binding": "Exact recorded runtime_fingerprint_9h + complete canonical steps; test-only source changes are not native executable changes"
+    },
+    {
+      "scene": "conversation",
+      "exit_code": 0,
+      "log": {
+        "path": "docs/evidence/phase9h/android-r7-conversation.log",
+        "sha256": "9c6d482e2081f90394abc64ec0c62670bd0ca51b973dbefe17733f748d8e635c"
+      },
+      "exit": {
+        "path": "docs/evidence/phase9h/android-r7-conversation.exit",
+        "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+      },
+      "source": {
+        "path": "docs/evidence/phase9h/android-r7-conversation.source.json",
+        "sha256": "65a49dafe59ec721e2f96911e09b12f11a253360a65c8877bcb8fec87621bebe"
+      },
+      "report": {
+        "path": "docs/evidence/phase9h/android-r7-conversation.json",
+        "sha256": "5befb7945a6601393263c9407c8c1d5ae77388a924c2d6f14537ff70e0958206"
+      },
+      "source_binding": "Exact recorded runtime_fingerprint_9h + complete canonical steps; test-only source changes are not native executable changes"
+    },
+    {
+      "scene": "erasure_faults",
+      "exit_code": 0,
+      "log": {
+        "path": "docs/evidence/phase9h/android-r7-erasure_faults.log",
+        "sha256": "a777498ecc43a784524bdadd88d44224936b8762a15a1e6979fa3f2d698015d7"
+      },
+      "exit": {
+        "path": "docs/evidence/phase9h/android-r7-erasure_faults.exit",
+        "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+      },
+      "source": {
+        "path": "docs/evidence/phase9h/android-r7-erasure_faults.source.json",
+        "sha256": "35779ce77ace956e6fcd9c8498a1c8012261d71c12c6029de7261b17168cdb7f"
+      },
+      "report": {
+        "path": "docs/evidence/phase9h/android-r7-erasure_faults.json",
+        "sha256": "1145a4b96bb5909333848f435a735f495ba36c1bdd6a10fcd7496512463bcb96"
+      },
+      "source_binding": "Exact recorded runtime_fingerprint_9h + complete canonical steps; test-only source changes are not native executable changes"
+    },
+    {
+      "scene": "erasure_restart",
+      "exit_code": 0,
+      "log": {
+        "path": "docs/evidence/phase9h/android-r7-erasure_restart.log",
+        "sha256": "7ffb281356c47eadab6556b8696a82c8c7e5c7565c0fe29b4f1856c157bef231"
+      },
+      "exit": {
+        "path": "docs/evidence/phase9h/android-r7-erasure_restart.exit",
+        "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+      },
+      "source": {
+        "path": "docs/evidence/phase9h/android-r7-erasure_restart.source.json",
+        "sha256": "6d814c42591b2632296bb803a80919655b457a3a440f5512d3d8e730747ced4a"
+      },
+      "report": {
+        "path": "docs/evidence/phase9h/android-r7-erasure_restart.json",
+        "sha256": "d1eb245bd64924901ecfd39698b87bd825ad55381fa50d6b9ae44866030d7dd6"
+      },
+      "source_binding": "Exact recorded runtime_fingerprint_9h + complete canonical steps; test-only source changes are not native executable changes"
+    },
+    {
+      "scene": "person",
+      "exit_code": 0,
+      "log": {
+        "path": "docs/evidence/phase9h/android-r7-person.log",
+        "sha256": "677404f9fd44ba22b0def81397adbbeaa258f859af4dc6b4ef490cae41aa593d"
+      },
+      "exit": {
+        "path": "docs/evidence/phase9h/android-r7-person.exit",
+        "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+      },
+      "source": {
+        "path": "docs/evidence/phase9h/android-r7-person.source.json",
+        "sha256": "da9160ca49a1de0b95484180ad1b7c6fd0fc8b6ee690f6e7ada552f0f172a4e4"
+      },
+      "report": {
+        "path": "docs/evidence/phase9h/android-r7-person.json",
+        "sha256": "0938d627a70916d9de172e21d6c3707f8b58a0d565a2807ad43695eb7515498e"
+      },
+      "source_binding": "Exact recorded runtime_fingerprint_9h + complete canonical steps; test-only source changes are not native executable changes"
+    },
+    {
+      "scene": "relationship",
+      "exit_code": 0,
+      "log": {
+        "path": "docs/evidence/phase9h/android-r7-relationship.log",
+        "sha256": "f4a73bb67e359f4c77a6eeb3a39dbbff86ea5aca8799ad98f6f7ca975693a7cd"
+      },
+      "exit": {
+        "path": "docs/evidence/phase9h/android-r7-relationship.exit",
+        "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+      },
+      "source": {
+        "path": "docs/evidence/phase9h/android-r7-relationship.source.json",
+        "sha256": "9571e0df65b9a741be03f0736cc86fd38076583a2364fbd91d4875caee7232b5"
+      },
+      "report": {
+        "path": "docs/evidence/phase9h/android-r7-relationship.json",
+        "sha256": "39093292a2de3b050ee56d8a3fb6788e29cc89acb10f6cd02187177ad49f229d"
+      },
+      "source_binding": "Exact recorded runtime_fingerprint_9h + complete canonical steps; test-only source changes are not native executable changes"
+    },
+    {
+      "scene": "lifecycle_faults",
+      "exit_code": 0,
+      "log": {
+        "path": "docs/evidence/phase9h/android-r7-lifecycle_faults.log",
+        "sha256": "c123b4af6fac4dd2218115c4409e452da60228756fd817261df925e08d4cafef"
+      },
+      "exit": {
+        "path": "docs/evidence/phase9h/android-r7-lifecycle_faults.exit",
+        "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+      },
+      "source": {
+        "path": "docs/evidence/phase9h/android-r7-lifecycle_faults.source.json",
+        "sha256": "dd644f01aaafeeb5d45d0ed4847a9e9d0f56c7a12ed3c3622d32045638cdadb2"
+      },
+      "report": {
+        "path": "docs/evidence/phase9h/android-r7-lifecycle_faults.json",
+        "sha256": "a47d46691d4b8aa20cff4342c901ac2918a979835cc4f683eecbcbfa7fa61148"
+      },
+      "source_binding": "Exact recorded runtime_fingerprint_9h + complete canonical steps; test-only source changes are not native executable changes"
+    },
+    {
+      "scene": "lifecycle_restart",
+      "exit_code": 0,
+      "log": {
+        "path": "docs/evidence/phase9h/android-r7-lifecycle_restart.log",
+        "sha256": "6520e9c703c18c198190f696bb4828ccf70a9fb286e2a768d474a7339e27a1e1"
+      },
+      "exit": {
+        "path": "docs/evidence/phase9h/android-r7-lifecycle_restart.exit",
+        "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+      },
+      "source": {
+        "path": "docs/evidence/phase9h/android-r7-lifecycle_restart.source.json",
+        "sha256": "1e475f79486307a220fbd42ad01be3ce32597ebdf58e86cb133ccc3e1418b567"
+      },
+      "report": {
+        "path": "docs/evidence/phase9h/android-r7-lifecycle_restart.json",
+        "sha256": "5d809896bdbb193ce0bfc0a2d263441dad7d5cbbe722b387be4c1fecc58709bc"
+      },
+      "source_binding": "Exact recorded runtime_fingerprint_9h + complete canonical steps; test-only source changes are not native executable changes"
+    }
+  ],
+  "coverage": {
+    "person_relationship_owner": [
+      "apps/server/tests/test_full_erasure_9h.py",
+      "apps/server/tests/test_owner_operator_9h.py"
+    ],
+    "writer_stop_recovery": [
+      "apps/server/tests/test_agent_recovery_9h.py"
+    ],
+    "real_archives": [
+      "apps/server/tests/test_full_restore_9h.py",
+      "apps/server/tests/test_backup_restore.py"
+    ],
+    "mobile_lifecycle": [
+      "apps/mobile/tests/lifecycleController.test.ts",
+      "apps/mobile/erasure-connected/lifecycle.spec.ts"
+    ],
+    "prior_contracts": [
+      "apps/server/tests/test_erasure.py",
+      "apps/server/tests/test_security_priority_9g.py",
+      "apps/server/tests/test_reliability_9g.py"
+    ]
+  },
+  "runtime_manifest": {
+    "path": "docs/evidence/phase9h/runtime-final-oct20-r3.json",
+    "sha256": "64c0e1d85206569884c83dfbcc255867def40754120871e50816e38d67b393de"
+  },
+  "lint": {
+    "exit_code": 0,
+    "log": {
+      "path": "docs/evidence/phase9h/lint-final-oct20-r2.log",
+      "sha256": "58ce648aa42aebce552a8ddc982f2f7b1500ade59e25d6fb8888df0865ef5479"
+    },
+    "exit": {
+      "path": "docs/evidence/phase9h/lint-final-oct20-r2.exit",
+      "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+    },
+    "source": {
+      "path": "docs/evidence/phase9h/lint-final-oct20-r2.source.json",
+      "sha256": "384e43bc630622c9dcd58da0997a8322a96201b5740ed0fc4c06b67e4ec7410e"
+    }
+  }
+}

@@ -84,6 +84,12 @@ def native_check(matrix, root=ROOT, *, historical=False, evidence_phase="phase9b
 
 
 def check(root=ROOT, *, completed=False):
+    # Authorized 9H changes executable inputs. Preserve Git-pinned historical
+    # evidence and require complete fresh suites and thirteen native executions.
+    from check_security_9h import revalidate_prior
+
+    if revalidate_prior("9B", root):
+        return
     for filename in REQUIRED:
         if not (root / filename).is_file():
             raise RuntimeError("Missing Phase 9B gate: " + filename)

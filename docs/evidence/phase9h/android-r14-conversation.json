@@ -1,0 +1,517 @@
+[
+  {
+    "execution": {
+      "steps_file": "scripts\\native\\phase9f_conversation.json",
+      "steps": [
+        "restart",
+        "tap [\"\u6e05\u9664\u5f53\u524d\u5f00\u53d1\u4f1a\u8bdd\",\"down\"]",
+        "case 9F-CONVERSATION",
+        "seed EraseConversation",
+        "bookmark erase",
+        "login a",
+        "tap [\"\u6388\u6743\u957f\u671f\u8bb0\u5fc6\"]",
+        "tap [\"\u6062\u590d\u8bb0\u5fc6\"]",
+        "save \u4e00",
+        "seed KeepConversation",
+        "bookmark keep",
+        "save \u4e8c",
+        "scope erase",
+        "route [\"chat\",\"erase\"]",
+        "tap [\"\u5411\u670d\u52a1\u5668\u51c6\u5907\u5220\u9664\"]",
+        "assert_ui \"\u670d\u52a1\u5668\u5f85\u5220\u6d88\u606f\uff1a2\"",
+        "tap [\"\u660e\u786e\u786e\u8ba4\u5e76\u6267\u884c\u6b64\u8303\u56f4\u5220\u9664\"]",
+        "assert_ui \"\u5220\u9664\u72b6\u6001\uff1acompleted\"",
+        "assert_ui \"Receipt ID\uff1a\"",
+        "assert_ui \"\u6743\u5a01\u5237\u65b0\uff1averified\"",
+        "tap [\"\u67e5\u8be2\u6b63\u5f0f\u5220\u9664\u56de\u6267\"]",
+        "assert_ui \"\u5220\u9664\u72b6\u6001\uff1acompleted\"",
+        "assert_erased [\"conversation\",\"erase\",true,0]",
+        "assert_erased [\"conversation\",\"keep\",false,2]",
+        "assert_erasure_http [\"erase\",404]",
+        "assert_erasure_http [\"keep\",200]",
+        "evidence",
+        "assert_db [\"erasure.receipts.length\",1]",
+        "assert_db [\"erasure.memories\",2]",
+        "assert_identity",
+        "stop"
+      ],
+      "helper_sha256": "72381f0e5d322db5dd70a9c41f6a466e8045a055d49e2a36b0d874eab9d8a775",
+      "device": "emulator-5554",
+      "mobile_fingerprint": "39887500b795b25bbf44a370d879efd6d263c02f5bb25e9b8e17a9f36fc0163c",
+      "erasure_fingerprint": "ac8c4ced046e89c34cccd2d6a4a47579afb2a187f38d8c5d2ec249528458e314",
+      "runtime_fingerprint_9h": "743a3c876be160b5b3a01ec4e3506ad329e84eff18fb19d6ce62d95cf980d31f"
+    }
+  },
+  {
+    "native_build": {
+      "compiled_mobile_fingerprint": "5fce585ec817d956d3354f5a3c6fb170bd3c7358144b25a64ea38a6c0593a423",
+      "expected_mobile_fingerprint": "5fce585ec817d956d3354f5a3c6fb170bd3c7358144b25a64ea38a6c0593a423",
+      "verified": true,
+      "transport": "actual Android accessibility"
+    }
+  },
+  {
+    "native_build": {
+      "compiled_mobile_fingerprint": "5fce585ec817d956d3354f5a3c6fb170bd3c7358144b25a64ea38a6c0593a423",
+      "expected_mobile_fingerprint": "5fce585ec817d956d3354f5a3c6fb170bd3c7358144b25a64ea38a6c0593a423",
+      "verified": true,
+      "transport": "actual Android accessibility"
+    }
+  },
+  {
+    "command": "restart",
+    "status": "done"
+  },
+  {
+    "command": "tap",
+    "status": "done"
+  },
+  {
+    "case": "9F-CONVERSATION"
+  },
+  {
+    "command": "case",
+    "status": "done"
+  },
+  {
+    "command": "seed",
+    "status": "done"
+  },
+  {
+    "command": "bookmark",
+    "status": "done"
+  },
+  {
+    "command": "login",
+    "status": "done"
+  },
+  {
+    "command": "tap",
+    "status": "done"
+  },
+  {
+    "command": "tap",
+    "status": "done"
+  },
+  {
+    "command": "save",
+    "status": "done"
+  },
+  {
+    "command": "seed",
+    "status": "done"
+  },
+  {
+    "command": "bookmark",
+    "status": "done"
+  },
+  {
+    "command": "save",
+    "status": "done"
+  },
+  {
+    "command": "scope",
+    "status": "done"
+  },
+  {
+    "command": "route",
+    "status": "done"
+  },
+  {
+    "command": "tap",
+    "status": "done"
+  },
+  {
+    "assert_ui": "\u670d\u52a1\u5668\u5f85\u5220\u6d88\u606f\uff1a2 \u00b7 \u4fdd\u7559 Run \u5143\u6570\u636e\uff1a1",
+    "status": "PASS"
+  },
+  {
+    "command": "assert_ui",
+    "status": "done"
+  },
+  {
+    "command": "tap",
+    "status": "done"
+  },
+  {
+    "assert_ui": "\u5220\u9664\u72b6\u6001\uff1acompleted",
+    "status": "PASS"
+  },
+  {
+    "command": "assert_ui",
+    "status": "done"
+  },
+  {
+    "assert_ui": "Receipt ID\uff1afbe30027-7f7c-4a28-b19a-bc09c181fa6c",
+    "status": "PASS"
+  },
+  {
+    "command": "assert_ui",
+    "status": "done"
+  },
+  {
+    "assert_ui": "\u6743\u5a01\u5237\u65b0\uff1averified",
+    "status": "PASS"
+  },
+  {
+    "command": "assert_ui",
+    "status": "done"
+  },
+  {
+    "command": "tap",
+    "status": "failed"
+  },
+  {
+    "failure_database": {
+      "wire": {
+        "requests": [
+          {
+            "method": "POST",
+            "path": "/api/v1/persons",
+            "bearer": true,
+            "json": true,
+            "cursor": false,
+            "host_setup": true,
+            "verified_owner": "a",
+            "status": 201
+          },
+          {
+            "method": "POST",
+            "path": "/api/v1/relationships",
+            "bearer": true,
+            "json": true,
+            "cursor": false,
+            "host_setup": true,
+            "verified_owner": "a",
+            "status": 201
+          },
+          {
+            "method": "POST",
+            "path": "/api/v1/conversations",
+            "bearer": true,
+            "json": true,
+            "cursor": false,
+            "host_setup": true,
+            "verified_owner": "a",
+            "status": 201
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/persons",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/persons",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/relationships",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memory/control",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memories",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memory/undo/preview",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "POST",
+            "path": "/api/v1/memory/consent",
+            "bearer": true,
+            "json": true,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memory/control",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "POST",
+            "path": "/api/v1/memory/resume",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memory/control",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "POST",
+            "path": "/api/v1/conversations/2959b73a-ebb7-4efc-9b86-3a3f6da02c2d/agent-runs",
+            "bearer": true,
+            "json": true,
+            "cursor": false,
+            "host_setup": true,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "POST",
+            "path": "/api/v1/persons",
+            "bearer": true,
+            "json": true,
+            "cursor": false,
+            "host_setup": true,
+            "verified_owner": "a",
+            "status": 201
+          },
+          {
+            "method": "POST",
+            "path": "/api/v1/relationships",
+            "bearer": true,
+            "json": true,
+            "cursor": false,
+            "host_setup": true,
+            "verified_owner": "a",
+            "status": 201
+          },
+          {
+            "method": "POST",
+            "path": "/api/v1/conversations",
+            "bearer": true,
+            "json": true,
+            "cursor": false,
+            "host_setup": true,
+            "verified_owner": "a",
+            "status": 201
+          },
+          {
+            "method": "POST",
+            "path": "/api/v1/conversations/1dfcfbff-26b9-4de7-99ae-cb14272a66fd/agent-runs",
+            "bearer": true,
+            "json": true,
+            "cursor": false,
+            "host_setup": true,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/conversations/2959b73a-ebb7-4efc-9b86-3a3f6da02c2d",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/conversations/2959b73a-ebb7-4efc-9b86-3a3f6da02c2d",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memory/control",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/conversations/2959b73a-ebb7-4efc-9b86-3a3f6da02c2d/messages",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memories",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/memory/undo/preview",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "POST",
+            "path": "/api/v1/erasures/prepare",
+            "bearer": true,
+            "json": true,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "POST",
+            "path": "/api/v1/erasures/execute",
+            "bearer": true,
+            "json": true,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "body_sha256": "86aa4877a6a8719aa8f439aa6057aa43222f575858b43de6f27d3828656127b1",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/erasures/receipts/fbe30027-7f7c-4a28-b19a-bc09c181fa6c",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/conversations/2959b73a-ebb7-4efc-9b86-3a3f6da02c2d",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 404
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/conversations",
+            "bearer": true,
+            "json": false,
+            "cursor": false,
+            "host_setup": false,
+            "verified_owner": "a",
+            "status": 200
+          }
+        ],
+        "faults": []
+      },
+      "erasure": {
+        "persons": [
+          {
+            "id": "0b4cb2ee-4f78-4259-b014-cb5301805192",
+            "owner": "d8148c4b-ccf5-49cb-b364-3bff4464b340",
+            "deleted": false
+          },
+          {
+            "id": "9a750eef-bdd1-409d-829a-bad193721315",
+            "owner": "d8148c4b-ccf5-49cb-b364-3bff4464b340",
+            "deleted": false
+          }
+        ],
+        "relationships": [
+          {
+            "id": "24b4468b-dc78-431d-a80f-73b5245d1d07",
+            "owner": "d8148c4b-ccf5-49cb-b364-3bff4464b340",
+            "deleted": false
+          },
+          {
+            "id": "8ed4e4cf-f260-4f36-8ef6-99072e52008d",
+            "owner": "d8148c4b-ccf5-49cb-b364-3bff4464b340",
+            "deleted": false
+          }
+        ],
+        "lifecycle_receipts": [],
+        "datasets": [],
+        "conversations": [
+          {
+            "id": "1dfcfbff-26b9-4de7-99ae-cb14272a66fd",
+            "deleted": false,
+            "messages": 2
+          },
+          {
+            "id": "2959b73a-ebb7-4efc-9b86-3a3f6da02c2d",
+            "deleted": true,
+            "messages": 0
+          }
+        ],
+        "receipts": [
+          {
+            "id": "fbe30027-7f7c-4a28-b19a-bc09c181fa6c",
+            "domain": "conversation",
+            "target": "2959b73a-ebb7-4efc-9b86-3a3f6da02c2d",
+            "count": 2
+          }
+        ],
+        "memories": 2
+      }
+    }
+  },
+  {
+    "failure_controls": [],
+    "control": "[\"\u67e5\u8be2\u6b63\u5f0f\u5220\u9664\u56de\u6267\"]"
+  }
+]

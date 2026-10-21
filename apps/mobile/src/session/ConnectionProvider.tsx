@@ -23,6 +23,7 @@ import { ImportController } from '../data/importController';
 import { HistoryController } from '../data/historyController';
 import { MemoryController } from '../data/memoryController';
 import { ErasureController } from '../data/erasureController';
+import { LifecycleController } from '../data/lifecycleController';
 
 export interface Connection {
   session: DevelopmentSession;
@@ -32,6 +33,7 @@ export interface Connection {
   history: HistoryController;
   memory: MemoryController;
   erasure: ErasureController;
+  lifecycle?: LifecycleController;
 }
 export function createConnection(baseURL: string, localDevelopment: boolean): Connection {
   const session = new DevelopmentSession(createPlatformTokenStorage());
@@ -103,7 +105,33 @@ export function createConnection(baseURL: string, localDevelopment: boolean): Co
       }
     },
   );
-  return { ...controllers, erasure };
+  const lifecycle = new LifecycleController(
+    transport,
+    session,
+    randomUUID,
+    () => {
+      controllers.resources.clear();
+      controllers.chat.clear();
+      controllers.imports.clear();
+      controllers.history.clear();
+      controllers.memory.clear();
+      erasure.leave();
+    },
+    async () => {
+      await Promise.all(
+        (['persons', 'relationships', 'conversations'] as const).map((kind) =>
+          controllers.resources.load(kind),
+        ),
+      );
+      if (
+        Object.values(controllers.resources.snapshot().pages).some(
+          (page) => page.status !== 'ready',
+        )
+      )
+        throw new Error('Resource refresh failed');
+    },
+  );
+  return { ...controllers, erasure, lifecycle };
 }
 const Context = createContext<Connection | null>(null);
 export const useConnection = () => useContext(Context);
@@ -164,6 +192,7 @@ export function ConnectionProvider({
         connection.history.pause();
         connection.memory.pause();
         connection.erasure.pause();
+        connection.lifecycle?.leave();
       }
     });
     return () => subscription.remove();

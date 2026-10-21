@@ -1,0 +1,47 @@
+{
+  "synthetic_only": true,
+  "diagnostic_only_not_acceptance": true,
+  "gesture_only_no_click_or_http": true,
+  "rows": [
+    {
+      "step": 0,
+      "controls": [],
+      "scrollable_bounds": [
+        "[0,142][1080,1909]"
+      ]
+    },
+    {
+      "step": 1,
+      "controls": [
+        {
+          "label": "\u5220\u9664\u72b6\u6001\uff1acompleted",
+          "bounds": "[107,995][973,1061]",
+          "enabled": "true"
+        },
+        {
+          "label": "Receipt ID\uff1a0f1f9bc3-10f6-4a3c-bd94-c609d2ac018c",
+          "bounds": "[173,1592][907,1724]",
+          "enabled": "true"
+        },
+        {
+          "label": "\u6743\u5a01\u5237\u65b0\uff1averified",
+          "bounds": "[173,2180][907,1909]",
+          "enabled": "true"
+        },
+        {
+          "label": "\u67e5\u8be2\u6b63\u5f0f\u5220\u9664\u56de\u6267",
+          "bounds": "[174,2278][908,1909]",
+          "enabled": "true"
+        },
+        {
+          "label": "\u67e5\u8be2\u6b63\u5f0f\u5220\u9664\u56de\u6267",
+          "bounds": "[218,2312][864,1909]",
+          "enabled": "true"
+        }
+      ],
+      "scrollable_bounds": [
+        "[0,142][1080,1909]"
+      ]
+    }
+  ]
+}

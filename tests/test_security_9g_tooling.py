@@ -106,7 +106,7 @@ class Security9GGateTests(unittest.TestCase):
                 verifier.phase_marker_check()
             for check in checks:
                 check.assert_called_once_with(completed=True)
-        for phase, subphase in ((8, "9H"), (9, "9G"), (10, None)):
+        for phase, subphase in ((8, "9I"), (9, "9G"), (10, None)):
             with patch.multiple(verifier, PHASE=phase, SUBPHASE=subphase):
                 with self.assertRaises(RuntimeError):
                     verifier.phase_marker_check()

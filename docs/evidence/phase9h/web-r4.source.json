@@ -1,0 +1,17 @@
+{
+  "source_fingerprint": "513f7abd87d5b2bf3dcd258c14acc72139446fe91123476b235f7240b62de7ca",
+  "phase_marker": {
+    "completed_phase": 8,
+    "completed_subphase": "9G"
+  },
+  "synthetic_only": true,
+  "command": [
+    "pnpm",
+    "--filter",
+    "@goutou/mobile",
+    "smoke:erasure"
+  ],
+  "exit_code": 0,
+  "log_sha256": "1040d2774c4a6d16a0f3a1456a2af5f3bed8fdeabd134bc12b56faf631a8a20e",
+  "end_source_fingerprint": "513f7abd87d5b2bf3dcd258c14acc72139446fe91123476b235f7240b62de7ca"
+}

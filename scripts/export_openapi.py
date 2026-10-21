@@ -25,6 +25,9 @@ NEW_OPERATIONS = {
     )
 } | {("get", "/api/v1/conversations/{conversation_id}/messages")}
 NEW_OPERATIONS |= {
+    ("post", "/api/v1/lifecycle-erasures/prepare"),
+    ("post", "/api/v1/lifecycle-erasures/execute"),
+    ("get", "/api/v1/lifecycle-erasures/receipts/{receipt_id}"),
     ("get", "/api/v1/relationships/{relationship_id}/datasets"),
     ("post", "/api/v1/erasures/prepare"),
     ("post", "/api/v1/erasures/execute"),
@@ -125,9 +128,9 @@ def audit(spec, baseline):
     expected_additions = {f"{method.upper()} {path}" for method, path in NEW_OPERATIONS}
     if set(actual["operations"]) - set(baseline["operations"]) != expected_additions:
         raise RuntimeError("Unexpected resource operation inventory")
-    if len(baseline["operations"]) != 26 or len(actual["operations"]) != 40:
+    if len(baseline["operations"]) != 26 or len(actual["operations"]) != 43:
         raise RuntimeError(
-            "Expected 26 preserved, ten resource, three erasure and one Dataset discovery operation"
+            "Expected 26 preserved, ten resource, six erasure and one Dataset discovery operation"
         )
     schemas = spec["components"]["schemas"]
     for name, fields in DTO_FIELDS.items():

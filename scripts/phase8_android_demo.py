@@ -24,6 +24,44 @@ ROOT = Path(__file__).resolve().parents[1]
 DEVICE_FILE = "/sdcard/Download/phase8f-synthetic.md"
 
 
+def compiled_mobile_fingerprint(root=ROOT):
+    """Bind compiled source/dependencies and the Expo/Metro/TS build inputs."""
+    from check_security_9b import mobile_fingerprint
+
+    hashes = {"source_and_dependencies": mobile_fingerprint(root)}
+    paths = [root / "package.json", root / "pnpm-workspace.yaml"]
+    paths += [
+        path
+        for path in (root / "apps/mobile").iterdir()
+        if path.is_file() and path.suffix in {".ts", ".js", ".cjs", ".mjs", ".json"}
+    ]
+    for path in sorted(set(paths)):
+        if path.is_file():
+            hashes[path.relative_to(root).as_posix()] = hashlib.sha256(
+                path.read_bytes().replace(b"\r\n", b"\n")
+            ).hexdigest()
+    return hashlib.sha256(json.dumps(hashes, sort_keys=True).encode()).hexdigest()
+
+
+def compiled_build_proof(nodes, expected):
+    """A file/source-map hash alone cannot prove Metro's cached compiled module."""
+    prefix = "NATIVE-BUILD "
+    observed = {
+        value
+        for node in nodes
+        for value in (node.get("content-desc", ""), node.get("text", ""))
+        if value.startswith(prefix)
+    }
+    if not re.fullmatch(r"[0-9a-f]{64}", expected) or observed != {prefix + expected}:
+        raise RuntimeError("Native compiled mobile source proof missing or stale")
+    return {
+        "compiled_mobile_fingerprint": expected,
+        "expected_mobile_fingerprint": expected,
+        "verified": True,
+        "transport": "actual Android accessibility",
+    }
+
+
 def run_private_command(parts: list[str], *, timeout: float = 20) -> bytes:
     """Never let subprocess exceptions serialize private native input arguments."""
     try:
@@ -115,7 +153,10 @@ def main() -> None:
                 # footer is outside that scrollable region).
                 viewport_bottom = screen_height - 64
                 for candidate in current:
-                    if candidate.get("content-desc") == "历史消息列表":
+                    if (
+                        candidate.get("content-desc") == "历史消息列表"
+                        or candidate.get("scrollable") == "true"
+                    ):
                         viewport = list(map(int, re.findall(r"\d+", candidate.get("bounds", ""))))
                         if len(viewport) == 4 and viewport[3] > viewport[1]:
                             viewport_bottom = viewport[3]
@@ -208,6 +249,7 @@ def main() -> None:
         )
         from check_security_9b import mobile_fingerprint
         from check_security_9e import source_fingerprint as erasure_fingerprint
+        from check_security_9g import runtime_files
 
         evidence: list[dict] = [
             {
@@ -218,10 +260,46 @@ def main() -> None:
                     "device": args.serial,
                     "mobile_fingerprint": mobile_fingerprint(ROOT),
                     "erasure_fingerprint": erasure_fingerprint(ROOT),
+                    "runtime_fingerprint_9h": hashlib.sha256(
+                        json.dumps(runtime_files(ROOT), sort_keys=True).encode()
+                    ).hexdigest(),
                 }
             }
         ]
+
+        def observe_compiled_build():
+            expected = compiled_mobile_fingerprint(ROOT)
+            for _ in range(10):
+                try:
+                    proof = compiled_build_proof(nodes(), expected)
+                    evidence.append({"native_build": proof})
+                    print(json.dumps({"native_build": proof}), flush=True)
+                    return
+                except RuntimeError:
+                    time.sleep(1)
+            evidence.append({"native_build": {"verified": False}})
+            raise RuntimeError("Native compiled mobile source proof missing or stale")
+
+        require_compiled_build = os.environ.get("GOUTOU_NATIVE_BUILD_SOURCE_REQUIRED") == "1"
         try:
+            if require_compiled_build:
+                # Drop previously loaded JS as well as requiring the freshly
+                # compiled build marker. This is fixture initialization; the
+                # canonical action sequence remains unchanged and complete.
+                adb("shell", "am", "force-stop", "host.exp.exponent")
+                adb(
+                    "shell",
+                    "am",
+                    "start",
+                    "-a",
+                    "android.intent.action.VIEW",
+                    "-d",
+                    "exp://127.0.0.1:8092",
+                    "-p",
+                    "host.exp.exponent",
+                )
+                time.sleep(20)
+                observe_compiled_build()
             for line in inputs:
                 action, _, parameter = line.strip().partition(" ")
                 if action != "login":
@@ -258,7 +336,7 @@ def main() -> None:
                         evidence.append({"ui_state": json.loads(output)})
                         print(output, flush=True)
                     elif action == "case":
-                        if not re.fullmatch(r"(?:8F|9F)-[A-Z0-9-]+", parameter):
+                        if not re.fullmatch(r"(?:8F|9F|9H)-[A-Z0-9-]+", parameter):
                             raise ValueError("Invalid acceptance test ID")
                         evidence.append({"case": parameter})
                         print(json.dumps({"case": parameter}), flush=True)
@@ -397,6 +475,12 @@ def main() -> None:
                             r"[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}", text
                         ).group()
                         evidence.append({"expiry": command("expire_confirmation " + identifier)})
+                    elif action == "expire_lifecycle":
+                        text = find("完整删除 Confirmation ID：")
+                        identifier = re.search(
+                            r"[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}", text
+                        ).group()
+                        evidence.append({"expiry": command("expire_lifecycle " + identifier)})
                     elif action == "expire_erasure":
                         text = find("Confirmation ID：")
                         identifier = re.search(
@@ -616,6 +700,8 @@ def main() -> None:
                             "-p",
                             "host.exp.exponent",
                         )
+                        if require_compiled_build:
+                            observe_compiled_build()
                     elif action == "receipt_id":
                         proof = command("memory_evidence")
                         if not proof["mutations"]:
@@ -680,6 +766,45 @@ def main() -> None:
                                 "target": selected[key],
                                 "deleted": deleted,
                                 "message_count": count,
+                                "status": "PASS",
+                            }
+                        )
+                    elif action == "assert_lifecycle":
+                        domain, name, deleted = json.loads(parameter)
+                        if domain not in {"person", "relationship"}:
+                            raise ValueError("Finite lifecycle target required")
+                        selected = bookmarks.get(name, context)
+                        proof = command("erasure_evidence")
+                        rows = proof["persons" if domain == "person" else "relationships"]
+                        row = next(row for row in rows if row["id"] == selected[domain])
+                        if row["deleted"] != deleted:
+                            raise RuntimeError("Lifecycle authoritative target mismatch")
+                        evidence.append(
+                            {
+                                "assert_lifecycle": domain,
+                                "target": selected[domain],
+                                "deleted": deleted,
+                                "status": "PASS",
+                            }
+                        )
+                    elif action == "assert_lifecycle_replay":
+                        requests = command("wire_evidence")["requests"]
+                        executed = [
+                            row
+                            for row in requests
+                            if row["path"] == "/api/v1/lifecycle-erasures/execute"
+                            and not row["host_setup"]
+                            and row.get("status") == 200
+                        ]
+                        if (
+                            len(executed) < 2
+                            or not executed[-1].get("body_sha256")
+                            or executed[-1]["body_sha256"] != executed[-2].get("body_sha256")
+                        ):
+                            raise RuntimeError("Native lifecycle original body replay missing")
+                        evidence.append(
+                            {
+                                "assert_lifecycle_replay": "exact body SHA256 unchanged",
                                 "status": "PASS",
                             }
                         )
@@ -852,6 +977,38 @@ def main() -> None:
                     # No exception arguments, command lines or credentials reach the transcript.
                     print(json.dumps({"command": action, "status": "failed"}), flush=True)
                     evidence.append({"command": action, "status": "failed"})
+                    # Preserve authoritative count/wire diagnostics before the
+                    # disposable fixture is removed. Never include credentials,
+                    # arbitrary inputs or private message/profile bodies.
+                    try:
+                        failure = {"wire": command("wire_evidence")}
+                        if os.environ.get("GOUTOU_ERASURE_E2E") == "1":
+                            failure["erasure"] = command("erasure_evidence")
+                        evidence.append({"failure_database": failure})
+                        safe_prefixes = (
+                            "删除状态：",
+                            "权威刷新：",
+                            "服务器待删消息：",
+                            "取消本次删除确认",
+                            "明确确认并执行此范围删除",
+                            "Receipt ID：",
+                            "生命周期状态：",
+                        )
+                        controls = []
+                        for node in nodes():
+                            label = node.get("content-desc") or node.get("text", "")
+                            if node.get("password") != "true" and label.startswith(safe_prefixes):
+                                controls.append(
+                                    {
+                                        "label": label[:180],
+                                        "bounds": node.get("bounds"),
+                                        "enabled": node.get("enabled"),
+                                    }
+                                )
+                        evidence.append({"failure_controls": controls})
+                    except Exception:
+                        # Diagnostic failure must not hide the original nonzero.
+                        pass
                     if action in {"tap", "open"}:
                         evidence[-1]["control"] = parameter
                     if args.steps:

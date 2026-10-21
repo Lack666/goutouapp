@@ -147,7 +147,8 @@ class Security9EGateTests(unittest.TestCase):
                 verifier.phase_marker_check()
             for gate in (ga, gb, gc, gd, ge):
                 gate.assert_called_once_with(completed=True)
-        for phase, subphase in ((8, "9F"), (9, None), (10, None)):
+        # 9F through 9H are authorized; unsupported stages must still refuse.
+        for phase, subphase in ((8, "9I"), (9, None), (10, None)):
             with (
                 patch.multiple(verifier, PHASE=phase, SUBPHASE=subphase),
                 self.assertRaises(RuntimeError),

@@ -1,0 +1,1 @@
+{"synthetic_only": true, "before_fix_counterexample_reproduced": true, "before_tests": 3, "before_expected_geometry_error": 1, "after_tests": 3, "after_errors": 0, "old_source_changed_only_in_memory": true, "no_test_or_timeout_waiver": true}

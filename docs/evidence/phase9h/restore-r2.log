@@ -1,0 +1,50 @@
+............F..........................                                  [100%]
+================================== FAILURES ===================================
+_ test_proved_worker_stop_preserves_committed_effects_and_original_key[memory_thread] _
+
+database_engine = Engine(postgresql+psycopg://postgres@127.0.0.1:15434/goutou_test_06c1500c9778)
+tmp_path = WindowsPath('F:/狗头军师app化/goutouapp/.cache/phase9h-restore-r2/test_proved_worker_stop_preser3')
+stage = 'memory_thread'
+
+    @pytest.mark.parametrize("stage", ["provider", "answer", "memory", "memory_thread"])
+    def test_proved_worker_stop_preserves_committed_effects_and_original_key(
+        database_engine, tmp_path, stage
+    ):
+        engine = database_engine
+        a, b = scope(engine), scope(engine)
+        root = tmp_path / "artifacts"
+        config = settings(engine, chat_import_artifact_root=root)
+        with TestClient(create_app(config)) as client:
+            assert (
+                client.post(
+                    "/api/v1/memory/consent", headers=headers(a[0]), json={"enabled": True}
+                ).status_code
+                == 200
+            )
+            assert client.post("/api/v1/memory/resume", headers=headers(a[0])).status_code == 200
+            context = multiprocessing.get_context("spawn")
+            parent, child = context.Pipe()
+            process = context.Process(target=worker, args=(child,))
+            process.start()
+            child.close()
+            parent.send(
+                (
+                    engine.url.render_as_string(hide_password=False),
+                    str(root),
+                    headers(a[0])["Authorization"].removeprefix("Bearer "),
+                    str(a[3]),
+                    str(a[2]),
+                    stage,
+                )
+            )
+            try:
+>               assert parent.poll(30), "Synthetic worker did not reach the controlled commit point"
+E               AssertionError: Synthetic worker did not reach the controlled commit point
+E               assert False
+E                +  where False = poll(30)
+E                +    where poll = <multiprocessing.connection.PipeConnection object at 0x0000017261460F30>.poll
+
+apps\server\tests\test_agent_recovery_9h.py:139: AssertionError
+=========================== short test summary info ===========================
+FAILED apps/server/tests/test_agent_recovery_9h.py::test_proved_worker_stop_preserves_committed_effects_and_original_key[memory_thread]
+1 failed, 38 passed in 76.37s (0:01:16)

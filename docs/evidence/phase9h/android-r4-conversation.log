@@ -1,0 +1,39 @@
+{"android_api": "37"}
+{"fixture": "ready", "baseURL": "http://127.0.0.1:8024", "commands": "state, tap [label,direction?], login a|b|expired, seed, evidence, stage, cleanup, back, home, stop"}
+{"command": "restart", "status": "done"}
+{"command": "tap", "status": "done"}
+{"case": "9F-CONVERSATION"}
+{"command": "case", "status": "done"}
+{"person": "c2fc820c-28d5-44a5-8757-4ca813ab0229", "relationship": "f6bcaa8e-f87c-4d16-8f94-b95df7296d99", "conversation": "787a355e-5495-4b0a-9e97-03ae8c5940ba"}
+{"command": "seed", "status": "done"}
+{"command": "bookmark", "status": "done"}
+{"command": "login", "status": "done"}
+{"command": "tap", "status": "done"}
+{"command": "tap", "status": "done"}
+{"setup_transport": "host REST", "run_id": "fd5b9797-e04f-46f0-94d4-09e4ef616f9a", "memory_status": "saved"}
+{"command": "save", "status": "done"}
+{"person": "ab398520-5884-4865-b7bc-39b1472dac2b", "relationship": "56f6f462-2b41-443c-9441-b5d041fd9003", "conversation": "afe1c50f-06cb-44d4-80bd-28b72cc34284"}
+{"command": "seed", "status": "done"}
+{"command": "bookmark", "status": "done"}
+{"setup_transport": "host REST", "run_id": "97ef7f6e-7a6d-4924-9011-c3bf6d516685", "memory_status": "saved"}
+{"command": "save", "status": "done"}
+{"command": "scope", "status": "done"}
+{"command": "route", "status": "done"}
+{"command": "tap", "status": "done"}
+{"assert_ui": "\u670d\u52a1\u5668\u5f85\u5220\u6d88\u606f\uff1a2 \u00b7 \u4fdd\u7559 Run \u5143\u6570\u636e\uff1a1", "status": "PASS"}
+{"command": "assert_ui", "status": "done"}
+{"command": "tap", "status": "done"}
+{"assert_ui": "\u5220\u9664\u72b6\u6001\uff1acompleted", "status": "PASS"}
+{"command": "assert_ui", "status": "done"}
+{"assert_ui": "Receipt ID\uff1a9f24c273-0004-44e6-8795-1ff0d1ad9b3a", "status": "PASS"}
+{"command": "assert_ui", "status": "done"}
+{"command": "assert_ui", "status": "failed"}
+Traceback (most recent call last):
+  File "F:\狗头军师app化\goutouapp\scripts\phase8_android_demo.py", line 927, in <module>
+    main()
+    ~~~~^^
+  File "F:\狗头军师app化\goutouapp\scripts\phase8_android_demo.py", line 907, in main
+    raise RuntimeError(
+        "Native sequence failed; inspect sanitized evidence"
+    ) from None
+RuntimeError: Native sequence failed; inspect sanitized evidence

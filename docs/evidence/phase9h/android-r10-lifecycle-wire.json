@@ -1,0 +1,81 @@
+[
+  {
+    "execution": {
+      "steps_file": ".cache\\phase9h-lifecycle-wire-steps.json",
+      "steps": [
+        "restart",
+        "tap [\"\u6e05\u9664\u5f53\u524d\u5f00\u53d1\u4f1a\u8bdd\",\"down\"]",
+        "case 9H-FAULTS",
+        "seed LifecycleFault9H",
+        "bookmark erase",
+        "login a",
+        "route [\"relationship\",\"erase\"]",
+        "tap [\"\u67e5\u770b relationships LifecycleFault9H\"]",
+        "tap [\"\u51c6\u5907\u5220\u9664 Relationship {relationship}\"]",
+        "expire_lifecycle",
+        "tap [\"\u660e\u786e\u786e\u8ba4\u5e76\u6267\u884c\u5b8c\u6574\u8303\u56f4\u5220\u9664\"]",
+        "assert_ui \"\u5b8c\u6574\u5220\u9664\u72b6\u6001\uff1aexpired\"",
+        "tap [\"\u91cd\u65b0\u51c6\u5907\u5b8c\u6574\u8303\u56f4\u5220\u9664\"]",
+        "fault erasure_drop",
+        "tap [\"\u660e\u786e\u786e\u8ba4\u5e76\u6267\u884c\u5b8c\u6574\u8303\u56f4\u5220\u9664\"]",
+        "assert_ui \"\u5b8c\u6574\u5220\u9664\u72b6\u6001\uff1aunknown_outcome\"",
+        "evidence",
+        "assert_db [\"erasure.lifecycle_receipts.length\",1]",
+        "tap [\"\u540c key \u91cd\u653e\u5b8c\u6574\u8303\u56f4\u5220\u9664\"]",
+        "assert_ui \"\u5b8c\u6574\u5220\u9664\u72b6\u6001\uff1acompleted\"",
+        "assert_ui \"\u5b8c\u6574\u5220\u9664\u6743\u5a01\u5237\u65b0\uff1averified\"",
+        "assert_lifecycle_replay",
+        "seed LifecycleBusy9H",
+        "bookmark busy",
+        "busy_conversation",
+        "route [\"relationship\",\"busy\"]",
+        "tap [\"\u5237\u65b0 persons\"]",
+        "tap [\"\u5237\u65b0 relationships\"]",
+        "tap [\"\u67e5\u770b relationships LifecycleBusy9H\"]",
+        "tap [\"\u51c6\u5907\u5220\u9664 Relationship {relationship}\"]",
+        "assert_ui \"\u5b8c\u6574\u5220\u9664\u72b6\u6001\uff1atarget_busy\"",
+        "tap [\"\u4e3b\u52a8\u5237\u65b0\u5b8c\u6574\u5220\u9664 Busy\"]",
+        "tap [\"\u91cd\u65b0\u51c6\u5907\u5b8c\u6574\u8303\u56f4\u5220\u9664\"]",
+        "assert_ui \"\u5b8c\u6574\u5220\u9664\u72b6\u6001\uff1atarget_busy\"",
+        "assert_lifecycle [\"relationship\",\"busy\",false]",
+        "assert_identity",
+        "evidence",
+        "stop"
+      ],
+      "helper_sha256": "4cded218e3601ed0fac900c222a19983e986cbc4eb3a17bc48f1016ce5e98992",
+      "device": "emulator-5554",
+      "mobile_fingerprint": "398806146f517ee05131d118abf41851a67347a3601c0e1d840f62d0c680c4ea",
+      "erasure_fingerprint": "8a614cb466f8cb1cc95a056586949e06e920756005b93945b96f91a414feaad7",
+      "runtime_fingerprint_9h": "5b33ca19980436d58414e0b53c66a068fa86cc8528beb5159023090900e71edb"
+    }
+  },
+  {
+    "command": "restart",
+    "status": "done"
+  },
+  {
+    "command": "tap",
+    "status": "failed"
+  },
+  {
+    "failure_database": {
+      "wire": {
+        "requests": [],
+        "faults": []
+      },
+      "erasure": {
+        "persons": [],
+        "relationships": [],
+        "lifecycle_receipts": [],
+        "datasets": [],
+        "conversations": [],
+        "receipts": [],
+        "memories": 0
+      }
+    }
+  },
+  {
+    "failure_controls": [],
+    "control": "[\"\u6e05\u9664\u5f53\u524d\u5f00\u53d1\u4f1a\u8bdd\",\"down\"]"
+  }
+]

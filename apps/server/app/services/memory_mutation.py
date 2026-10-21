@@ -122,7 +122,7 @@ class MemoryMutationService:
 
     @staticmethod
     def _owner(db: Session, owner_id: UUID, *, lock: bool) -> None:
-        query = select(User.id).where(User.id == owner_id)
+        query = select(User.id).where(User.id == owner_id, User.deleted_at.is_(None))
         if lock:
             query = query.with_for_update()
         if db.scalar(query) is None:

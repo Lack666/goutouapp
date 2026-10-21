@@ -1,0 +1,44 @@
+$ playwright test --config playwright.erasure.config.ts
+[WebServer] (node:19224) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:31400) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 4 tests using 1 worker
+
+(node:20708) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 erasure-connected\lifecycle.spec.ts:28:7 › actual person UI explicit full erasure, cancel, memory, SQL, survivor and same-key receipt (7.2s)
+  x  2 erasure-connected\lifecycle.spec.ts:28:7 › actual relationship UI explicit full erasure, cancel, memory, SQL, survivor and same-key receipt (2.0m)
+(node:6240) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 3 erasure-connected\web.spec.ts:57:5 › actual Dataset and Conversation UI confirmation/receipt, SQL deletion, other scopes, Memory and original-key replay (3.5s)
+  ok 4 erasure-connected\web.spec.ts:171:5 › actual committed response loss / original key replay / A-B denial / expired challenge / busy run / Demo separation (3.2s)
+
+
+  1) erasure-connected\lifecycle.spec.ts:28:7 › actual relationship UI explicit full erasure, cancel, memory, SQL, survivor and same-key receipt 
+
+    Test timeout of 120000ms exceeded.
+
+    Error: locator.click: Test timeout of 120000ms exceeded.
+    Call log:
+      - waiting for getByRole('button', { name: '查看 relationships be78d943-360e-46c4-957a-45a126874a2e', exact: true })
+
+
+      59 |       await login(page, backend.a);
+      60 |       if (domain === 'person') await button(page, `查看 persons ${label}`).click();
+    > 61 |       else await button(page, `查看 relationships ${label}`).click();
+         |                                                                    ^
+      62 |       const id = domain === 'person' ? a.person : a.relationship;
+      63 |       await button(
+      64 |         page,
+        at F:\狗头军师app化\goutouapp\apps\mobile\erasure-connected\lifecycle.spec.ts:61:69
+
+    Error Context: ..\..\.cache\phase9f-web-results\lifecycle-actual-relations-a856d-rvivor-and-same-key-receipt\error-context.md
+
+  1 failed
+    erasure-connected\lifecycle.spec.ts:28:7 › actual relationship UI explicit full erasure, cancel, memory, SQL, survivor and same-key receipt 
+  3 passed (2.5m)
+F:\狗头军师app化\goutouapp\apps\mobile:
+[ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL] @goutou/mobile@0.1.0 smoke:erasure: `playwright test --config playwright.erasure.config.ts`
+Exit status 1

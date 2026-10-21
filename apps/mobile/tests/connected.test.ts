@@ -65,16 +65,24 @@ afterEach(() => {
 });
 
 describe('generated client and safe transport', () => {
-  it('preserves the original 39 operations and adds signed dataset discovery', () => {
-    expect(operationInventory).toHaveLength(40);
+  it('preserves original operations, dataset discovery and adds three signed lifecycle operations', () => {
+    expect(operationInventory).toHaveLength(43);
     const discovery = operationInventory.filter((op) => op.path.endsWith('/datasets'));
     expect(discovery).toHaveLength(1);
     expect(discovery[0]).toMatchObject({ method: 'get', bearer: true });
     expect(
       operationInventory.filter(
-        (op) => !op.path.startsWith('/api/v1/erasures') && !op.path.endsWith('/datasets'),
+        (op) =>
+          !op.path.startsWith('/api/v1/erasures') &&
+          !op.path.startsWith('/api/v1/lifecycle-erasures') &&
+          !op.path.endsWith('/datasets'),
       ),
     ).toHaveLength(36);
+    const lifecycle = operationInventory.filter((op) =>
+      op.path.startsWith('/api/v1/lifecycle-erasures'),
+    );
+    expect(lifecycle).toHaveLength(3);
+    expect(lifecycle.every((op) => op.bearer)).toBe(true);
     const erasures = operationInventory.filter((op) => op.path.startsWith('/api/v1/erasures'));
     expect(erasures).toHaveLength(3);
     expect(erasures.every((op) => op.bearer)).toBe(true);

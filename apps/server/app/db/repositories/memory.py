@@ -50,13 +50,20 @@ class SQLAlchemyMemoryStore:
 
     def owner_exists(self, user_id: UUID) -> bool:
         with self._session_factory() as db:
-            return db.scalar(select(User.id).where(User.id == user_id)) is not None
+            return (
+                db.scalar(select(User.id).where(User.id == user_id, User.deleted_at.is_(None)))
+                is not None
+            )
 
     def person_exists(self, user_id: UUID, person_id: UUID) -> bool:
         with self._session_factory() as db:
             return (
                 db.scalar(
-                    select(Person.id).where(Person.user_id == user_id, Person.id == person_id)
+                    select(Person.id).where(
+                        Person.user_id == user_id,
+                        Person.id == person_id,
+                        Person.deleted_at.is_(None),
+                    )
                 )
                 is not None
             )
@@ -66,7 +73,14 @@ class SQLAlchemyMemoryStore:
 
     def set_control(self, user_id: UUID, control: MemoryControl) -> None:
         with self._session_factory() as db:
-            if db.scalar(select(User.id).where(User.id == user_id).with_for_update()) is None:
+            if (
+                db.scalar(
+                    select(User.id)
+                    .where(User.id == user_id, User.deleted_at.is_(None))
+                    .with_for_update()
+                )
+                is None
+            ):
                 raise LookupError("memory owner not found")
             row = db.scalar(select(MemoryControlRow).where(MemoryControlRow.user_id == user_id))
             if row is None:
@@ -86,7 +100,14 @@ class SQLAlchemyMemoryStore:
         if decision not in {"grant", "revoke", "pause", "resume"}:
             raise ValueError("invalid memory control decision")
         with self._session_factory() as db:
-            if db.scalar(select(User.id).where(User.id == user_id).with_for_update()) is None:
+            if (
+                db.scalar(
+                    select(User.id)
+                    .where(User.id == user_id, User.deleted_at.is_(None))
+                    .with_for_update()
+                )
+                is None
+            ):
                 raise LookupError("memory owner not found")
             row = db.scalar(select(MemoryControlRow).where(MemoryControlRow.user_id == user_id))
             current = MemoryControl(
@@ -186,7 +207,9 @@ class SQLAlchemyMemoryStore:
         with self._session_factory() as db:
             return db.scalar(
                 select(Relationship.person_id).where(
-                    Relationship.user_id == user_id, Relationship.id == relationship_id
+                    Relationship.user_id == user_id,
+                    Relationship.id == relationship_id,
+                    Relationship.deleted_at.is_(None),
                 )
             )
 
@@ -207,7 +230,11 @@ class SQLAlchemyMemoryStore:
         with self._session_factory() as db:
             # Serialize the final write gate with API and Agent control changes.
             if (
-                db.scalar(select(User.id).where(User.id == record.owner_user_id).with_for_update())
+                db.scalar(
+                    select(User.id)
+                    .where(User.id == record.owner_user_id, User.deleted_at.is_(None))
+                    .with_for_update()
+                )
                 is None
             ):
                 raise MemoryWriteBlocked(MemoryWriteStatus.SKIPPED_NO_CONSENT)
@@ -224,6 +251,7 @@ class SQLAlchemyMemoryStore:
                         Relationship.user_id == record.owner_user_id,
                         Relationship.id == record.relationship_id,
                         Relationship.person_id == record.person_id,
+                        Relationship.deleted_at.is_(None),
                     )
                 )
                 if valid is None or record.subject_id != record.person_id or record.type == "user":
@@ -307,7 +335,14 @@ class SQLAlchemyMemoryStore:
 
     def undo_last(self, user_id: UUID) -> bool:
         with self._session_factory() as db:
-            if db.scalar(select(User.id).where(User.id == user_id).with_for_update()) is None:
+            if (
+                db.scalar(
+                    select(User.id)
+                    .where(User.id == user_id, User.deleted_at.is_(None))
+                    .with_for_update()
+                )
+                is None
+            ):
                 return False
             operation = db.scalar(
                 select(MemoryOperationRow)
@@ -331,7 +366,14 @@ class SQLAlchemyMemoryStore:
 
     def delete_one(self, user_id: UUID, memory_id: UUID, person_id: UUID | None) -> bool:
         with self._session_factory() as db:
-            if db.scalar(select(User.id).where(User.id == user_id).with_for_update()) is None:
+            if (
+                db.scalar(
+                    select(User.id)
+                    .where(User.id == user_id, User.deleted_at.is_(None))
+                    .with_for_update()
+                )
+                is None
+            ):
                 return False
             result = db.execute(
                 delete(MemoryRecordRow).where(
@@ -345,7 +387,14 @@ class SQLAlchemyMemoryStore:
 
     def delete_person(self, user_id: UUID, person_id: UUID) -> int:
         with self._session_factory() as db:
-            if db.scalar(select(User.id).where(User.id == user_id).with_for_update()) is None:
+            if (
+                db.scalar(
+                    select(User.id)
+                    .where(User.id == user_id, User.deleted_at.is_(None))
+                    .with_for_update()
+                )
+                is None
+            ):
                 return 0
             result = db.execute(
                 delete(MemoryRecordRow).where(
@@ -358,7 +407,14 @@ class SQLAlchemyMemoryStore:
 
     def delete_all(self, user_id: UUID) -> int:
         with self._session_factory() as db:
-            if db.scalar(select(User.id).where(User.id == user_id).with_for_update()) is None:
+            if (
+                db.scalar(
+                    select(User.id)
+                    .where(User.id == user_id, User.deleted_at.is_(None))
+                    .with_for_update()
+                )
+                is None
+            ):
                 return 0
             result = db.execute(
                 delete(MemoryRecordRow).where(MemoryRecordRow.owner_user_id == user_id)

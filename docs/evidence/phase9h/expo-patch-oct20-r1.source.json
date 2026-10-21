@@ -1,0 +1,22 @@
+{
+  "source_fingerprint": "0f6d1d92234581b322d1cb1cce7e9c5db49f82ed97b46def3b255acc91bb89e9",
+  "phase_marker": {
+    "completed_phase": 8,
+    "completed_subphase": "9G"
+  },
+  "synthetic_only": true,
+  "command": [
+    "pnpm",
+    "--filter",
+    "@goutou/mobile",
+    "add",
+    "--save-exact",
+    "expo@57.0.30",
+    "expo-constants@57.0.22",
+    "expo-linking@57.0.13",
+    "expo-router@57.0.28"
+  ],
+  "exit_code": 0,
+  "log_sha256": "7862c1f5f2c73e68f2a07cb1ee710c474fbc619c413e38624afcfb690272ed74",
+  "end_source_fingerprint": "35fe7a2d39da8cc1375aa1a00f67eff72e5804df11ea51a343e4059fe199f6f0"
+}

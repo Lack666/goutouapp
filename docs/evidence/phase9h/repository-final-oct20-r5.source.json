@@ -1,0 +1,24 @@
+{
+  "source_fingerprint": "8b252bf77d0ed9b9c56e40181fb667532ebc9146b586888acd998604fef05851",
+  "phase_marker": {
+    "completed_phase": 8,
+    "completed_subphase": "9G"
+  },
+  "synthetic_only": true,
+  "command": [
+    "uv",
+    "--cache-dir",
+    ".cache/uv",
+    "run",
+    "python",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "tests",
+    "-v"
+  ],
+  "exit_code": 0,
+  "log_sha256": "ff45c685621db76fe3d2a7e654643889332bcf92a52e7de4ec858bf60a09a36f",
+  "end_source_fingerprint": "8b252bf77d0ed9b9c56e40181fb667532ebc9146b586888acd998604fef05851"
+}

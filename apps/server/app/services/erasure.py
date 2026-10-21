@@ -9,6 +9,7 @@ from uuid import UUID
 from sqlalchemy import delete, func, select, text, update
 from sqlalchemy.exc import SQLAlchemyError
 
+from app.core.config import get_settings
 from app.db.models import (
     AgentRun,
     ChatImportJob,
@@ -23,6 +24,7 @@ from app.db.models import (
 from app.db.repositories import records
 from app.schemas.erasure import ErasureChallenge, ErasureExecute, ErasureResult, ErasureTarget
 from app.services.agent_service import AuthenticatedActor
+from app.services.agent_writer import AgentWriterRegistry, WriterProofUnavailable
 
 
 class ErasureError(Exception):
@@ -52,9 +54,10 @@ def _canonical(values):
 
 
 class ErasureService:
-    def __init__(self, sessions, *, clock=lambda: datetime.now(UTC)):
+    def __init__(self, sessions, *, clock=lambda: datetime.now(UTC), writers=None):
         self._sessions = sessions
         self._clock = clock
+        self._writers = writers or AgentWriterRegistry(get_settings().chat_import_artifact_root)
 
     @contextmanager
     def _transaction(self, actor):
@@ -69,7 +72,9 @@ class ErasureService:
                 # Agent holding the Conversation advisory slot.
                 if (
                     db.scalar(
-                        select(User).where(User.id == actor.user_id).with_for_update(key_share=True)
+                        select(User)
+                        .where(User.id == actor.user_id, User.deleted_at.is_(None))
+                        .with_for_update(key_share=True)
                     )
                     is None
                 ):
@@ -77,6 +82,8 @@ class ErasureService:
                 yield db
         except SQLAlchemyError:
             raise ErasureError("persistence_failure") from None
+        except WriterProofUnavailable:
+            raise ErasureError("writer_proof_unavailable") from None
 
     def _target(self, db, actor, body):
         if body.domain == "conversation":
@@ -139,10 +146,12 @@ class ErasureService:
             )
             run_count = 0
             for run in runs:
+                durable = db.get(AgentRun, run.id)
                 if run.status in {"running", "pending"} or (
                     run.status == "completed" and run.memory_status is None
                 ):
                     raise ErasureError("target_busy")
+                self._writers.require_settled(db, durable)
                 digest.update(_canonical(tuple(run)))
                 run_count += 1
         else:

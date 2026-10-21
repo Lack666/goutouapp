@@ -1,0 +1,15 @@
+{
+  "source_fingerprint": "dc0e1026713e5150f0a6c6eb4b5ae9b442e8264ae61c33ff92af3f02c75da20e",
+  "phase_marker": {
+    "completed_phase": 9,
+    "completed_subphase": "9H"
+  },
+  "synthetic_only": true,
+  "command": [
+    "make.cmd",
+    "verify"
+  ],
+  "exit_code": 0,
+  "log_sha256": "2a3649317aa82d14bade9e7c63c9dc5650b2c29fe6d49cd9ed44e18c85639199",
+  "end_source_fingerprint": "dc0e1026713e5150f0a6c6eb4b5ae9b442e8264ae61c33ff92af3f02c75da20e"
+}

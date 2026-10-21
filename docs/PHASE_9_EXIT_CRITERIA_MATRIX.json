@@ -1,7 +1,7 @@
 {
-  "phase": "9G",
-  "source_requirement": "docs/MASTER_PLAN.md Exit criteria item9 and dated approved Phase9 closure constraints",
-  "phase9_overall": "IN PROGRESS",
+  "phase": "9H",
+  "source_requirement": "Original MASTER_PLAN item9, retained9G closure prerequisites, and explicit9H conditional whole-phase acceptance",
+  "phase9_overall": "PASS",
   "public_production_readiness": "NOT APPROVED",
   "requirements": [
     {
@@ -73,14 +73,17 @@
       "tests": [
         "apps/server/tests/test_authorization_security.py",
         "apps/server/tests/test_erasure.py",
-        "apps/server/tests/test_reliability_9g.py"
+        "apps/server/tests/test_reliability_9g.py",
+        "apps/server/tests/test_owner_operator_9h.py",
+        "apps/server/tests/test_full_erasure_9h.py"
       ],
       "evidence": [
         "authorization_revalidation",
         "erasure_revalidation",
         "focused",
         "pre_marker",
-        "post_marker"
+        "post_marker",
+        "full_boundaries"
       ],
       "status": "PASS",
       "remaining": "Production identity/refresh/revocation/account lifecycle absent; signed development actors only.",
@@ -92,23 +95,34 @@
       "implementation": [
         "apps/server/app/services/erasure.py",
         "apps/server/app/services/memory_mutation.py",
-        "docs/DATA_DELETION_MATRIX.json"
+        "docs/DATA_DELETION_MATRIX.json",
+        "apps/server/app/services/lifecycle_erasure.py",
+        "apps/server/data_erasure_cli.py",
+        "apps/mobile/src/data/lifecycleController.ts",
+        "apps/server/app/services/backup_restore.py"
       ],
       "tests": [
         "apps/server/tests/test_erasure.py",
         "apps/server/tests/test_memory_mutation.py",
-        "apps/mobile/tests/erasureController.test.ts"
+        "apps/mobile/tests/erasureController.test.ts",
+        "apps/server/tests/test_full_erasure_9h.py",
+        "apps/server/tests/test_owner_operator_9h.py",
+        "apps/server/tests/test_full_restore_9h.py",
+        "apps/mobile/tests/lifecycleController.test.ts"
       ],
       "evidence": [
         "erasure_revalidation",
-        "memory_revalidation",
         "focused",
         "pre_marker",
-        "post_marker"
+        "post_marker",
+        "full_boundaries",
+        "backend",
+        "mobile",
+        "web"
       ],
-      "status": "PARTIAL",
-      "remaining": "Memory/Dataset/Conversation primary erasure locally passes; full Owner/Person/Relationship deletion unavailable. Requires separately authorized Phase9 lifecycle task, exact dependency/identity barriers, guarded idempotency, restore and Mobile/native acceptance.",
-      "blocks_phase9": true
+      "status": "PASS",
+      "remaining": "Local structured full-scope erasure and guarded current-primary recovery verified. External/provider copies, independent total-primary-loss authority and production account closure remain separate production limitations.",
+      "blocks_phase9": false
     },
     {
       "id": "P9-LOG",
@@ -158,12 +172,15 @@
       "implementation": [
         "apps/server/app/services/resource_admission.py",
         "apps/server/app/services/agent_service.py",
-        "docs/AGENT_RUN_RECOVERY.md"
+        "docs/AGENT_RUN_RECOVERY.md",
+        "apps/server/app/services/agent_writer.py",
+        "apps/server/app/services/agent_recovery.py"
       ],
       "tests": [
         "apps/server/tests/test_reliability_9g.py",
         "apps/server/tests/test_resource_admission.py",
-        "apps/server/tests/test_data_lifecycle.py"
+        "apps/server/tests/test_data_lifecycle.py",
+        "apps/server/tests/test_agent_recovery_9h.py"
       ],
       "evidence": [
         "focused",
@@ -171,10 +188,11 @@
         "lifecycle_revalidation",
         "integration_revalidation",
         "pre_marker",
-        "post_marker"
+        "post_marker",
+        "full_boundaries"
       ],
       "status": "PASS",
-      "remaining": "Global guard250ms can reject503; no availability fix claim. R-10 unresolved Run can indefinitely block Conversation erase. Reconciliation/outboxes require separate explicit implementation and production verification.",
+      "remaining": "New fenced runs support actual stopped-writer recovery without reexecution. Legacy/missing/mismatched proof remains fail-closed; supervised production topology, durable outbox and independent total-loss authority are separate limitations. Global guard250ms remains bounded503, no availability-fix claim.",
       "blocks_phase9": false
     },
     {
@@ -182,20 +200,29 @@
       "requirement": "Current approved Roadmap Phase9 closure, independent of public deployment approval",
       "implementation": [
         "docs/MASTER_PLAN.md",
-        "docs/PHASE_9G_ACCEPTANCE.md",
+        "docs/PHASE_9H_ACCEPTANCE.md",
+        "scripts/check_security_9h.py",
+        "scripts/verify.py",
         "docs/DATA_DELETION_CONTRACT.md"
       ],
       "tests": [
-        "tests/test_security_9g_tooling.py"
+        "tests/test_security_9g_tooling.py",
+        "tests/test_security_9h_tooling.py"
       ],
       "evidence": [
         "focused",
         "pre_marker",
-        "post_marker"
+        "post_marker",
+        "full_boundaries",
+        "backend",
+        "mobile",
+        "repository",
+        "web"
       ],
-      "status": "IN PROGRESS",
-      "remaining": "Full Owner/Person/Relationship lifecycle is a formal unfinished Phase9 prerequisite. Proposed work owner: separately authorized Phase9 privacy/lifecycle scope. Acceptance: complete scoped dependency/identity erasure, durable key/receipt/restore barriers, actual A/B Backend/Web/native and full pre/post root exits0. No implicit9H/Phase10 authorization.",
-      "blocks_phase9": true
+      "status": "PASS",
+      "remaining": "Original engineering criteria, thirteen current-source native scenes and two independent full original pre/post root exits0 verified. Public production remains NOT APPROVED; Phase10\u201312 not started.",
+      "blocks_phase9": false
     }
-  ]
+  ],
+  "acceptance_state": "closed"
 }

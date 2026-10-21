@@ -1,0 +1,20 @@
+{
+  "source_fingerprint": "536f246613a3f533ba40976ac77cf675a3d61ed4040d94e8fedd0c8ac4487a68",
+  "phase_marker": {
+    "completed_phase": 8,
+    "completed_subphase": "9G"
+  },
+  "synthetic_only": true,
+  "command": [
+    "uv",
+    "--cache-dir",
+    ".cache/uv",
+    "run",
+    "pytest",
+    "apps/server/tests/test_resource_admission.py",
+    "-q"
+  ],
+  "exit_code": 0,
+  "log_sha256": "aa351f7689242e88b10708704e0bcbba6adfd977862d034df301428f50388212",
+  "end_source_fingerprint": "536f246613a3f533ba40976ac77cf675a3d61ed4040d94e8fedd0c8ac4487a68"
+}

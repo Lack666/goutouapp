@@ -57,6 +57,12 @@ def gate(record, root=ROOT):
 
 
 def check(root=ROOT, *, completed=False):
+    # Authorized 9H changes executable inputs. Preserve Git-pinned historical
+    # evidence and require complete fresh suites and thirteen native executions.
+    from check_security_9h import revalidate_prior
+
+    if revalidate_prior("9C", root):
+        return
     for name in REQUIRED:
         if not (root / name).is_file():
             raise RuntimeError("Missing Phase9C gate: " + name)

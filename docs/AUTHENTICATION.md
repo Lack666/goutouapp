@@ -1,4 +1,17 @@
-# Phase 4B authentication
+# Authentication — current Phase9H
+
+## Current9H authority
+
+Current9H has43 reviewed operations,40 requiring real Bearer authentication.
+Active local User checks reject protected reads and writes after Owned Data erasure.
+Person/Relationship operations remain signed owner-scoped; Owner erasure and run
+recovery are private development/test operator commands. Production issuer,
+refresh/revocation and account closure remain absent. Earlier dated counts and
+phase-specific checks below are historical; signed claim policy is unchanged.
+
+## Historical phase-specific contracts
+
+### Phase 4B authentication
 
 Phase9C upload/finalize admission validates the same signed claims and existing
 User before receiving Multipart or executing import work; unknown signed subjects
@@ -69,3 +82,13 @@ check without an owner override. Development handoff for 8B is a manually suppli
 remain 8B. The signing secret stays in private server configuration. No Mobile
 signer, embedded JWT, public development issuer or production account flow is
 introduced. See [resource API](RESOURCE_API.md).
+
+
+## Current Phase 9H
+
+Owner Owned Data erasure permanently tombstones the local User. Signed JWTs for that
+UUID remain cryptographic strings but protected HTTP admission and service write gates
+reject their reads/writes; resource recreation and import/Agent entry are denied.
+Other owners are preserved. The private development/test operator can inspect/replay
+only that signed owner's minimal erasure receipt. No public Owner/account endpoint,
+production issuer, refresh/OAuth identity lifecycle or provider closure is introduced.

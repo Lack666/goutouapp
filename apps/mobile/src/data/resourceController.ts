@@ -67,6 +67,16 @@ export class ResourceController {
     });
   }
   snapshot = () => this.view;
+  clear = () => {
+    for (const request of this.pageRequests.values()) request.abort();
+    for (const request of this.detailRequests.values()) request.abort();
+    this.pageRequests.clear();
+    this.detailRequests.clear();
+    this.pending.clear();
+    this.creating.clear();
+    this.view = emptyView();
+    this.emit();
+  };
   invalidateConversation = (id: string) => {
     this.pending.delete('conversations');
     this.pageRequests.get('conversations')?.abort();

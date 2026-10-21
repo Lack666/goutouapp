@@ -1,0 +1,32 @@
+FF.............                                                          [100%]
+================================== FAILURES ===================================
+__ test_full_primary_scope_receipt_replay_old_uuid_agent_job_cursor[person] ___
+
+full_erasure_api = (Engine(postgresql+psycopg://postgres@127.0.0.1:15434/goutou_test_aa28668ee33e), <starlette.testclient.TestClient obje...ready', ...}, WindowsPath('F:/狗头军师app化/goutouapp/.cache/phase9h-full-erasure-r1/test_full_primary_scope_receip0'), ...)
+domain = 'person'
+
+    @pytest.mark.parametrize("domain", ["person", "relationship"])
+    def test_full_primary_scope_receipt_replay_old_uuid_agent_job_cursor(full_erasure_api, domain):
+        engine, client, a, b, job, _, config = full_erasure_api
+>       survivor = scope(engine, a[0])
+                   ^^^^^^^^^^^^^^^^^^^
+E       TypeError: scope() takes 1 positional argument but 2 were given
+
+apps\server\tests\test_full_erasure_9h.py:63: TypeError
+_ test_full_primary_scope_receipt_replay_old_uuid_agent_job_cursor[relationship] _
+
+full_erasure_api = (Engine(postgresql+psycopg://postgres@127.0.0.1:15434/goutou_test_aa28668ee33e), <starlette.testclient.TestClient obje...ready', ...}, WindowsPath('F:/狗头军师app化/goutouapp/.cache/phase9h-full-erasure-r1/test_full_primary_scope_receip1'), ...)
+domain = 'relationship'
+
+    @pytest.mark.parametrize("domain", ["person", "relationship"])
+    def test_full_primary_scope_receipt_replay_old_uuid_agent_job_cursor(full_erasure_api, domain):
+        engine, client, a, b, job, _, config = full_erasure_api
+>       survivor = scope(engine, a[0])
+                   ^^^^^^^^^^^^^^^^^^^
+E       TypeError: scope() takes 1 positional argument but 2 were given
+
+apps\server\tests\test_full_erasure_9h.py:63: TypeError
+=========================== short test summary info ===========================
+FAILED apps/server/tests/test_full_erasure_9h.py::test_full_primary_scope_receipt_replay_old_uuid_agent_job_cursor[person]
+FAILED apps/server/tests/test_full_erasure_9h.py::test_full_primary_scope_receipt_replay_old_uuid_agent_job_cursor[relationship]
+2 failed, 13 passed in 5.63s

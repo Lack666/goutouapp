@@ -1,0 +1,19 @@
+{
+  "source_fingerprint": "dc0e1026713e5150f0a6c6eb4b5ae9b442e8264ae61c33ff92af3f02c75da20e",
+  "phase_marker": {
+    "completed_phase": 8,
+    "completed_subphase": "9G"
+  },
+  "synthetic_only": true,
+  "command": [
+    "uv",
+    "--cache-dir",
+    ".cache/uv",
+    "run",
+    "python",
+    ".cache/phase9h-geometry-validation.py"
+  ],
+  "exit_code": 0,
+  "log_sha256": "fb5eedbb58f2b675f6c88d3d593ee1ba0da2a1f00e9812d1cdb27c024ab09f84",
+  "end_source_fingerprint": "dc0e1026713e5150f0a6c6eb4b5ae9b442e8264ae61c33ff92af3f02c75da20e"
+}

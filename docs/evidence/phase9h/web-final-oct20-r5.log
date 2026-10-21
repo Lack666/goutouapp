@@ -1,0 +1,16 @@
+$ playwright test --config playwright.erasure.config.ts
+[WebServer] (node:22668) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:41492) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 4 tests using 1 worker
+
+(node:34576) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 erasure-connected\lifecycle.spec.ts:28:7 › actual person UI explicit full erasure, cancel, memory, SQL, survivor and same-key receipt (5.5s)
+  ok 2 erasure-connected\lifecycle.spec.ts:28:7 › actual relationship UI explicit full erasure, cancel, memory, SQL, survivor and same-key receipt (1.4s)
+  ok 3 erasure-connected\web.spec.ts:57:5 › actual Dataset and Conversation UI confirmation/receipt, SQL deletion, other scopes, Memory and original-key replay (1.9s)
+  ok 4 erasure-connected\web.spec.ts:171:5 › actual committed response loss / original key replay / A-B denial / expired challenge / busy run / Demo separation (2.0s)
+
+  4 passed (16.7s)

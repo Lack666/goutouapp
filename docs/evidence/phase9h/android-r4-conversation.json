@@ -1,0 +1,140 @@
+[
+  {
+    "execution": {
+      "steps_file": "scripts\\native\\phase9f_conversation.json",
+      "steps": [
+        "restart",
+        "tap [\"\u6e05\u9664\u5f53\u524d\u5f00\u53d1\u4f1a\u8bdd\",\"down\"]",
+        "case 9F-CONVERSATION",
+        "seed EraseConversation",
+        "bookmark erase",
+        "login a",
+        "tap [\"\u6388\u6743\u957f\u671f\u8bb0\u5fc6\"]",
+        "tap [\"\u6062\u590d\u8bb0\u5fc6\"]",
+        "save \u4e00",
+        "seed KeepConversation",
+        "bookmark keep",
+        "save \u4e8c",
+        "scope erase",
+        "route [\"chat\",\"erase\"]",
+        "tap [\"\u5411\u670d\u52a1\u5668\u51c6\u5907\u5220\u9664\"]",
+        "assert_ui \"\u670d\u52a1\u5668\u5f85\u5220\u6d88\u606f\uff1a2\"",
+        "tap [\"\u660e\u786e\u786e\u8ba4\u5e76\u6267\u884c\u6b64\u8303\u56f4\u5220\u9664\"]",
+        "assert_ui \"\u5220\u9664\u72b6\u6001\uff1acompleted\"",
+        "assert_ui \"Receipt ID\uff1a\"",
+        "assert_ui \"\u6743\u5a01\u5237\u65b0\uff1averified\"",
+        "tap [\"\u67e5\u8be2\u6b63\u5f0f\u5220\u9664\u56de\u6267\"]",
+        "assert_ui \"\u5220\u9664\u72b6\u6001\uff1acompleted\"",
+        "assert_erased [\"conversation\",\"erase\",true,0]",
+        "assert_erased [\"conversation\",\"keep\",false,2]",
+        "assert_erasure_http [\"erase\",404]",
+        "assert_erasure_http [\"keep\",200]",
+        "evidence",
+        "assert_db [\"erasure.receipts.length\",1]",
+        "assert_db [\"erasure.memories\",2]",
+        "assert_identity",
+        "stop"
+      ],
+      "helper_sha256": "de4ebc0ea596c9dc5baa8680c24f1a8dffa78f9236d4fb5bd1cf95d198942c59",
+      "device": "emulator-5554",
+      "mobile_fingerprint": "398806146f517ee05131d118abf41851a67347a3601c0e1d840f62d0c680c4ea",
+      "erasure_fingerprint": "5f662f25882c82c5e004bfef3fe5acbeda6d3b8b18b9ae2e9bef6745a493bab5",
+      "runtime_fingerprint_9h": "ca2cc80e7165cf65fe63ef97f23cdb27a3ca8f8621c68a09de7250e025373d81"
+    }
+  },
+  {
+    "command": "restart",
+    "status": "done"
+  },
+  {
+    "command": "tap",
+    "status": "done"
+  },
+  {
+    "case": "9F-CONVERSATION"
+  },
+  {
+    "command": "case",
+    "status": "done"
+  },
+  {
+    "command": "seed",
+    "status": "done"
+  },
+  {
+    "command": "bookmark",
+    "status": "done"
+  },
+  {
+    "command": "login",
+    "status": "done"
+  },
+  {
+    "command": "tap",
+    "status": "done"
+  },
+  {
+    "command": "tap",
+    "status": "done"
+  },
+  {
+    "command": "save",
+    "status": "done"
+  },
+  {
+    "command": "seed",
+    "status": "done"
+  },
+  {
+    "command": "bookmark",
+    "status": "done"
+  },
+  {
+    "command": "save",
+    "status": "done"
+  },
+  {
+    "command": "scope",
+    "status": "done"
+  },
+  {
+    "command": "route",
+    "status": "done"
+  },
+  {
+    "command": "tap",
+    "status": "done"
+  },
+  {
+    "assert_ui": "\u670d\u52a1\u5668\u5f85\u5220\u6d88\u606f\uff1a2 \u00b7 \u4fdd\u7559 Run \u5143\u6570\u636e\uff1a1",
+    "status": "PASS"
+  },
+  {
+    "command": "assert_ui",
+    "status": "done"
+  },
+  {
+    "command": "tap",
+    "status": "done"
+  },
+  {
+    "assert_ui": "\u5220\u9664\u72b6\u6001\uff1acompleted",
+    "status": "PASS"
+  },
+  {
+    "command": "assert_ui",
+    "status": "done"
+  },
+  {
+    "assert_ui": "Receipt ID\uff1a9f24c273-0004-44e6-8795-1ff0d1ad9b3a",
+    "status": "PASS"
+  },
+  {
+    "command": "assert_ui",
+    "status": "done"
+  },
+  {
+    "command": "assert_ui",
+    "status": "failed"
+  }
+]

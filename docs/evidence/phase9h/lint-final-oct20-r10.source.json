@@ -1,0 +1,16 @@
+{
+  "source_fingerprint": "d73bfa296be76bcaa79ef8dc362aaff8923997e7ccfbf2bd183bcc3744dc455d",
+  "phase_marker": {
+    "completed_phase": 8,
+    "completed_subphase": "9G"
+  },
+  "synthetic_only": true,
+  "command": [
+    "python",
+    "scripts/verify.py",
+    "lint"
+  ],
+  "exit_code": 0,
+  "log_sha256": "58ce648aa42aebce552a8ddc982f2f7b1500ade59e25d6fb8888df0865ef5479",
+  "end_source_fingerprint": "d73bfa296be76bcaa79ef8dc362aaff8923997e7ccfbf2bd183bcc3744dc455d"
+}

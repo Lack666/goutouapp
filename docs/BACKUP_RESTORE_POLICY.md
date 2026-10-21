@@ -1,4 +1,18 @@
-# Backup / restore policy — current Phase9E
+# Backup / restore policy — current Phase9H
+
+## Current9H authority
+
+Current9H adds exact Person/Relationship/Owner tombstones, immutable lifecycle and
+recovery receipts, retained Agent/import keys and active identity fences to the
+frozen current-primary reconciliation. Unacknowledged writers or inconsistent
+recovery proof deny release. Restored raw stores remain empty. Real synthetic
+pg_dump/pg_restore tests cover before/after/concurrent snapshots; independently
+durable authority after total primary loss is still absent. The dated9E/9D text
+below describes historical prerequisites; the Current9H section specifies overrides.
+
+## Historical phase-specific contracts
+
+### Backup / restore policy — current Phase9E
 
 Current9E supplement: the current-primary SHARE write freeze also includes the
 new erasure challenge/receipt tables and target tombstones. Exact restored resource
@@ -113,3 +127,19 @@ PG_BIN_DIR;9D tests use the existing local16.15 binaries matching the test serve
 Job in the backup. A pre-finalize `ready` Job lacks the partial unique-index
 re-import fence; reconciliation refuses release rather than synthesizing newer
 import history. Covered by `test_restore_cannot_drop_post_backup_imported_dataset_fence`.
+
+
+## Current Phase 9H
+
+Synthetic pg_dump/pg_restore now reconciles exact Person/Relationship/User tombstones,
+LifecycleReceipt and RunRecoveryReceipt, as well as all prior Memory/Dataset/
+Conversation fences. Current primary is frozen while the restored database is
+quarantined. Live unacknowledged writer tokens block release. Recovery receipts must
+match terminal run identity/status/time and unchanged Message pointers; post-backup
+answers/fences cannot be invented. Owner tombstones reject old protected JWT reads/
+writes after restore. Parent-erased pending Jobs can stay cancelled; independently
+deleted canonical Datasets still require the original imported dedup fence.
+Missing authority, new missing target/key, tampered receipt or effect mismatch denies
+release. Old raw stores are never published; an empty restored root is mandatory.
+Production total-primary-loss restore needs independently durable deletion authority,
+encryption/rotation and deployment validation, none certified here.

@@ -1,0 +1,23 @@
+{
+  "source_fingerprint": "dc0e1026713e5150f0a6c6eb4b5ae9b442e8264ae61c33ff92af3f02c75da20e",
+  "phase_marker": {
+    "completed_phase": 8,
+    "completed_subphase": "9G"
+  },
+  "synthetic_only": true,
+  "command": [
+    "uv",
+    "--cache-dir",
+    ".cache/uv",
+    "run",
+    "pytest",
+    "apps/server/tests/test_full_erasure_9h.py",
+    "apps/server/tests/test_agent_recovery_9h.py",
+    "apps/server/tests/test_full_restore_9h.py",
+    "apps/server/tests/test_owner_operator_9h.py",
+    "-q"
+  ],
+  "exit_code": 0,
+  "log_sha256": "cafc669e2cca52a2f1b0045cc89459759b4c8eff6059fbc2e5698722a0271fca",
+  "end_source_fingerprint": "dc0e1026713e5150f0a6c6eb4b5ae9b442e8264ae61c33ff92af3f02c75da20e"
+}

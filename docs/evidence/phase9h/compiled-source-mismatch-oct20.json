@@ -1,0 +1,10 @@
+{
+  "new_settings_disclosure": false,
+  "old_settings_disclosure": true,
+  "bytes": 6947224,
+  "bundle_sha256": "6317cf05d36dba4d77364c0a6d351aa754b2abf55339fd6d42bd07bef09fda45",
+  "synthetic_only": true,
+  "status": "REJECTED: stale compiled Metro module",
+  "filesystem_fingerprint": "90a2e386fe1e23aa15056729db19eb99e22d8e0550a9df0e4dec7bafc5e95884",
+  "source_map_alone_is_not_compiled_module_proof": true
+}

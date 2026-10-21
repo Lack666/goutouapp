@@ -1,0 +1,17 @@
+[
+  "restart", "tap [\"清除当前开发会话\",\"down\"]", "case 9H-PERSON",
+  "seed ErasePerson9H", "bookmark erase", "login a", "tap [\"授权长期记忆\"]", "tap [\"恢复记忆\"]",
+  "save 一", "history_setup [4,\"ErasePersonDataset\"]", "bookmark erase",
+  "seed KeepPerson9H", "history_setup [3,\"KeepPersonDataset\"]", "bookmark keep",
+  "scope erase", "route [\"relationship\",\"erase\"]", "tap [\"查看 persons ErasePerson9H\"]",
+  "tap [\"准备删除 Person {person}\"]", "assert_ui \"完整删除状态：awaiting_confirmation\"",
+  "assert_ui \"长期记忆及关联 Undo：1\"", "tap [\"取消完整范围删除\"]",
+  "evidence", "assert_db [\"erasure.lifecycle_receipts.length\",0]",
+  "tap [\"重新准备完整范围删除\"]", "tap [\"明确确认并执行完整范围删除\"]",
+  "assert_ui \"完整删除状态：completed\"", "assert_ui \"完整删除权威刷新：verified\"",
+  "assert_lifecycle [\"person\",\"erase\",true]", "assert_lifecycle [\"relationship\",\"erase\",true]",
+  "assert_lifecycle [\"person\",\"keep\",false]", "assert_erased [\"dataset\",\"erase\",true,0]",
+  "assert_erased [\"dataset\",\"keep\",false,3]", "evidence", "assert_db [\"erasure.memories\",0]",
+  "tap [\"同 key 重放完整范围删除\"]", "assert_ui \"完整删除权威刷新：verified\"",
+  "assert_lifecycle_replay", "assert_identity", "stop"
+]

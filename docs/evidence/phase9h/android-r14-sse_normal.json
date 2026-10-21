@@ -1,0 +1,44 @@
+[
+  {
+    "execution": {
+      "steps_file": "scripts\\native\\phase8f_closeout_sse_normal.json",
+      "steps": [
+        "restart",
+        "tap [\"\u6e05\u9664\u5f53\u524d\u5f00\u53d1\u4f1a\u8bdd\",\"down\"]",
+        "case 8F-SSE-NORMAL",
+        "seed",
+        "login a",
+        "route [\"chat\",\"current\"]",
+        "assert_ui \"\u5f53\u524d Conversation\uff1a{conversation}\"",
+        "fault hold_final",
+        "input [\"Agent \u6d88\u606f\u8f93\u5165\",\"Synthetic native SSE acceptance\"]",
+        "tap [\"\u53d1\u9001 Agent \u6d88\u606f\"]",
+        "wait 6",
+        "assert_visible_ui \"\u6574\u7406\u56de\u7b54\"",
+        "state",
+        "observe",
+        "fault release_final",
+        "wait 3",
+        "observe completed",
+        "assert_ui \"\u5408\u6210\u9a8c\u6536\ud83c\udf31\"",
+        "assert_ui \"Agent \u72b6\u6001\uff1a\u8fd0\u884c\u5b8c\u6210\"",
+        "evidence",
+        "assert_db [\"agent.runs.length\",1]",
+        "assert_db [\"agent.messages.length\",2]",
+        "assert_db [\"agent.memories\",0]",
+        "tap [\"\u6e05\u9664\u5f53\u524d\u5f00\u53d1\u4f1a\u8bdd\",\"down\"]",
+        "stop"
+      ],
+      "helper_sha256": "72381f0e5d322db5dd70a9c41f6a466e8045a055d49e2a36b0d874eab9d8a775",
+      "device": "emulator-5554",
+      "mobile_fingerprint": "39887500b795b25bbf44a370d879efd6d263c02f5bb25e9b8e17a9f36fc0163c",
+      "erasure_fingerprint": "ac8c4ced046e89c34cccd2d6a4a47579afb2a187f38d8c5d2ec249528458e314",
+      "runtime_fingerprint_9h": "743a3c876be160b5b3a01ec4e3506ad329e84eff18fb19d6ce62d95cf980d31f"
+    }
+  },
+  {
+    "native_build": {
+      "verified": false
+    }
+  }
+]

@@ -22,12 +22,30 @@ as implemented by a placeholder directory or a golden expectation.
 | 6 | User-facing memory controls and retention policy integration | PASS (6A–6D) |
 | 7 | Expo React Native MVP | PASS (7A–7D) |
 | 8 | Mobile API integration, generated client and stream consumption | PASS (8A–8F, including native closeout) |
-| 9 | Security, privacy, reliability and deletion | IN PROGRESS (9A–9G PASS in their limited scopes; full lifecycle closure unfinished) |
+| 9 | Security, privacy, reliability and deletion | PASS (9A–9H and original final engineering criteria; public production NOT APPROVED) |
 | 10 | Optional hybrid RAG with pgvector | PENDING |
 | 11 | Agent eval and observability | PENDING |
 | 12 | CI/CD, EAS preview, release preparation | PENDING |
 
 ## Exit criteria by phase
+
+Explicit authorization (2026-10-14/15): **9H — Full Data Erasure and Safe AgentRun
+Recovery** follows clean dcc7085c/8-9G. Implement exact structured Person/Relationship
+and development operator Owner Owned Data erasure, active identity/write barriers,
+five-minute dependency confirmation, immutable receipts/keys/dedup, safe writer-stop
+recovery, current-primary quarantined restore and real Backend/Web/Android acceptance.
+Preserve all prior tests and immutable historical evidence. Require thirteen fresh
+native scenes and independent final-source make.cmd verify before/after the marker.
+Only if every original item9 engineering criterion passes may whole Phase9 pass;
+production-only identity/copy/scheduler/independent-backup/ingress limits stay separate.
+Stop after9H/final acceptance. No Phase10–12, provider, RAG or public release is started.
+Current9H and whole Phase9 engineering acceptance: PASS (2026-10-21). Thirteen new
+native scenes, the independent full-flow wire supplement, and complete original
+pre/post make.cmd verify each exit0. Backend852/Mobile410/repository121/Golden83/
+OpenAPI43/Doctor21; all previous Web and security gates pass. Marker9/9H.
+Evidence: PHASE_9H_ACCEPTANCE/MATRIX and PHASE_9_FINAL_ACCEPTANCE. Public production
+remains NOT APPROVED. Phase10–12 remain PENDING; stop after this acceptance.
+
 
 Explicit authorization (2026-10-14): **9G — Safety Priority, Reliability Audit
 and Phase 9 Final Acceptance** follows clean64afd5d/8-9F. Verify original item9

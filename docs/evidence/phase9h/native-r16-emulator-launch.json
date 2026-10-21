@@ -1,0 +1,23 @@
+{
+  "synthetic_only": true,
+  "raw_byte_identical": true,
+  "artifacts": [
+    {
+      "original": ".cache/phase9h-emulator-r16.stdout.log",
+      "path": "docs/evidence/phase9h/native-r16-emulator-launch.stdout.log",
+      "sha256": "3974a967313e45401746d047ceb217de819d6a5c1c95990173f5730aae00aa86"
+    },
+    {
+      "original": ".cache/phase9h-emulator-r16.stderr.log",
+      "path": "docs/evidence/phase9h/native-r16-emulator-launch.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "launch_attempt_refused_existing_avd": true,
+  "launch_exit_code_not_captured": true,
+  "actual_avd_reused": "Pixel_10",
+  "existing_qemu_created_local": "2026-10-21 11:27:42",
+  "r16_launch_record_local": "2026-10-21 11:50:16",
+  "existing_avd_preserved": true,
+  "not_an_independent_passing_test": true
+}

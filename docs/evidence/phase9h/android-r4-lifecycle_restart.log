@@ -1,0 +1,12 @@
+Traceback (most recent call last):
+  File "F:\狗头军师app化\goutouapp\scripts\phase8_android_demo.py", line 927, in <module>
+    main()
+    ~~~~^^
+  File "F:\狗头军师app化\goutouapp\scripts\phase8_android_demo.py", line 63, in main
+    if adb("shell", "getprop", "sys.boot_completed").strip() != b"1":
+       ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\狗头军师app化\goutouapp\scripts\phase8_android_demo.py", line 61, in adb
+    return run_private_command([str(args.adb), "-s", args.serial, *parts])
+  File "F:\狗头军师app化\goutouapp\scripts\phase8_android_demo.py", line 34, in run_private_command
+    raise RuntimeError("Android command failed; private arguments suppressed")
+RuntimeError: Android command failed; private arguments suppressed

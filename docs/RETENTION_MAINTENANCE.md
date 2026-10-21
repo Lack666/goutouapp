@@ -1,4 +1,17 @@
-# Retention maintenance — current Phase9E
+# Retention maintenance — current Phase9H
+
+## Current9H authority
+
+Current9H maintenance additionally cleans expired lifecycle confirmations using
+the existing owner-serialized expiry/grace policy. Immutable lifecycle/recovery
+receipts and original key/UUID/dedup fences survive cleanup for the owner fence
+lifetime. Existing artifact/Memory controls remain; no supervised production
+scheduler or independent disaster-recovery authority is added. Dated baseline
+sections below remain historical; see the Current9H supplement.
+
+## Historical phase-specific contracts
+
+### Retention maintenance — current Phase9E
 
 9E extends existing bounded challenge cleanup to erasure_confirmations:5min validity
 plus24h grace, at most configured batch_size per challenge domain per transaction,
@@ -68,3 +81,14 @@ physical mismatch, quota, lock competition), retained test_memory_retention.py,
 test_resource_admission.py (real worker deaths/live DB-loss/upload races),
 test_backup_restore.py (restore physical/metadata policy). Production scheduling:
 **NOT DEPLOYED**.
+
+
+## Current Phase 9H
+
+The existing bounded MemoryRetentionService also removes LifecycleConfirmation after
+expiry plus the existing24h grace, under sorted owner locks. It never expires
+LifecycleReceipt/RunRecoveryReceipt or original Agent/import anti-resurrection keys.
+Owner clearing preserves these minimal owner-lifetime fences. Active upload and
+unresolved Agent writer proof cannot be bypassed by maintenance or elapsed age.
+The existing supervised scheduling/alerts/encrypted rotation production gaps remain;
+9H adds no unattended service or automatic run reset.

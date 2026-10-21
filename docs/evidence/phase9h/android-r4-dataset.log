@@ -1,0 +1,41 @@
+{"android_api": "37"}
+{"fixture": "ready", "baseURL": "http://127.0.0.1:8024", "commands": "state, tap [label,direction?], login a|b|expired, seed, evidence, stage, cleanup, back, home, stop"}
+{"command": "restart", "status": "done"}
+{"command": "tap", "status": "done"}
+{"case": "9F-DATASET"}
+{"command": "case", "status": "done"}
+{"person": "e0b4dcd5-1062-4b43-a1fa-527764cdc6a3", "relationship": "da0c9942-def9-4149-b0ad-6b60a9b2f8ef", "conversation": "c36be52b-4d18-49d6-a87a-8f1b1f62536b"}
+{"command": "seed", "status": "done"}
+{"command": "bookmark", "status": "done"}
+{"command": "login", "status": "done"}
+{"command": "tap", "status": "done"}
+{"command": "tap", "status": "done"}
+{"setup_transport": "host REST", "run_id": "4b6fd74c-ac15-4d0f-bdc5-d7ba118581b4", "memory_status": "saved"}
+{"command": "save", "status": "done"}
+{"history_setup": {"transport": "host REST preconditions", "count": 4, "relationship": "da0c9942-def9-4149-b0ad-6b60a9b2f8ef", "job": "57f3e157-0b03-45f8-84ff-d3e9b6bf5648", "receipt_status": "imported"}}
+{"command": "history_setup", "status": "done"}
+{"command": "bookmark", "status": "done"}
+{"history_setup": {"transport": "host REST preconditions", "count": 2, "relationship": "da0c9942-def9-4149-b0ad-6b60a9b2f8ef", "job": "906d7017-2d6b-447b-b775-19a2a1c0f2af", "receipt_status": "imported"}}
+{"command": "history_setup", "status": "done"}
+{"command": "bookmark", "status": "done"}
+{"person": "9ad6a307-f08d-4342-b6a3-a4b74dfaa328", "relationship": "3d7ff286-96d3-4c94-91d8-08da04763e04", "conversation": "6afb254d-7a53-4a14-9bbb-0534de271460"}
+{"command": "seed", "status": "done"}
+{"history_setup": {"transport": "host REST preconditions", "count": 3, "relationship": "3d7ff286-96d3-4c94-91d8-08da04763e04", "job": "2fccfb67-430b-417a-aa66-2d75dff9edd2", "receipt_status": "imported"}}
+{"command": "history_setup", "status": "done"}
+{"command": "bookmark", "status": "done"}
+{"command": "scope", "status": "done"}
+{"command": "route", "status": "done"}
+{"command": "tap", "status": "done"}
+{"command": "tap", "status": "done"}
+{"assert_ui": "\u670d\u52a1\u5668\u5f85\u5220\u6d88\u606f\uff1a4 \u00b7 \u4fdd\u7559 Run \u5143\u6570\u636e\uff1a0", "status": "PASS"}
+{"command": "assert_ui", "status": "done"}
+{"command": "tap", "status": "failed"}
+Traceback (most recent call last):
+  File "F:\狗头军师app化\goutouapp\scripts\phase8_android_demo.py", line 927, in <module>
+    main()
+    ~~~~^^
+  File "F:\狗头军师app化\goutouapp\scripts\phase8_android_demo.py", line 907, in main
+    raise RuntimeError(
+        "Native sequence failed; inspect sanitized evidence"
+    ) from None
+RuntimeError: Native sequence failed; inspect sanitized evidence

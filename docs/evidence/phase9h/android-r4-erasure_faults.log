@@ -1,0 +1,23 @@
+{"android_api": "37"}
+{"fixture": "ready", "baseURL": "http://127.0.0.1:8024", "commands": "state, tap [label,direction?], login a|b|expired, seed, evidence, stage, cleanup, back, home, stop"}
+{"command": "restart", "status": "done"}
+{"command": "tap", "status": "done"}
+{"case": "9F-FAULTS"}
+{"command": "case", "status": "done"}
+{"person": "2e1ebc6d-f912-46cd-846d-e4db21c9f728", "relationship": "94bfef8a-566a-422a-b59a-08f4f8e1b52d", "conversation": "4dffa8bd-961b-4a3b-a0eb-0ba59e6c2b88"}
+{"command": "seed", "status": "done"}
+{"command": "bookmark", "status": "done"}
+{"command": "login", "status": "done"}
+{"command": "route", "status": "done"}
+{"command": "tap", "status": "done"}
+{"command": "expire_erasure", "status": "done"}
+{"command": "tap", "status": "failed"}
+Traceback (most recent call last):
+  File "F:\狗头军师app化\goutouapp\scripts\phase8_android_demo.py", line 927, in <module>
+    main()
+    ~~~~^^
+  File "F:\狗头军师app化\goutouapp\scripts\phase8_android_demo.py", line 907, in main
+    raise RuntimeError(
+        "Native sequence failed; inspect sanitized evidence"
+    ) from None
+RuntimeError: Native sequence failed; inspect sanitized evidence

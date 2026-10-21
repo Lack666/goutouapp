@@ -1,0 +1,10 @@
+{
+  "source_fingerprint": "67a29b4504f1b772356f0a60e904bd586a309b493fd6a01d7dafdb1f3f6477c9",
+  "phase_marker": {
+    "completed_phase": 8,
+    "completed_subphase": "9G"
+  },
+  "synthetic_only": true,
+  "exit_code": 0,
+  "log_sha256": "496a160d900a803fafe5530d298ddee219a215ca7c5c496836ecc2e788210f39"
+}

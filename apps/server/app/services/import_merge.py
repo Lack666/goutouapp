@@ -173,6 +173,8 @@ class ImportMergeService:
             raise ImportMergeError(ImportMergeErrorCode.TRANSCRIPT_MISMATCH)
         try:
             with self._session_factory() as db, db.begin():
+                if records.get_user(db, actor.user_id) is None:
+                    raise ImportMergeError(ImportMergeErrorCode.JOB_NOT_FOUND)
                 job = db.scalar(
                     select(ChatImportJob)
                     .where(

@@ -24,6 +24,7 @@ from app.chat_import.artifacts import (
 )
 from app.core.logging import LOGGER_NAME
 from app.db.models import ChatImportArtifact, ChatImportJob, UploadReservation
+from app.db.repositories import records
 from app.retention import as_utc
 from app.services.agent_service import AuthenticatedActor
 from app.services.import_jobs import (
@@ -147,6 +148,8 @@ class ImportWorkflowService:
             raise
 
     def _owned_job(self, db: Session, actor: AuthenticatedActor, job_id: UUID) -> ChatImportJob:
+        if records.get_user(db, actor.user_id) is None:
+            raise ImportJobError(ImportJobErrorCode.JOB_NOT_FOUND)
         job = db.scalar(
             select(ChatImportJob).where(
                 ChatImportJob.id == job_id, ChatImportJob.owner_user_id == actor.user_id

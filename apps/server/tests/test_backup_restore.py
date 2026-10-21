@@ -31,6 +31,11 @@ from app.services.backup_restore import RecoveryError, _synthetic, dump_syntheti
 from app.services.memory_mutation import MemoryMutationService
 
 
+@pytest.fixture(name="database_engine")
+def isolated_recovery_engine(recovery_database_engine):
+    return recovery_database_engine
+
+
 @pytest.fixture
 def recovery(database_engine, tmp_path):
     a, b = scope(database_engine), scope(database_engine)

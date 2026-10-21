@@ -12,7 +12,15 @@ from fastapi.routing import APIRoute  # noqa: E402
 
 from app.api.health import router as health_router  # noqa: E402
 from app.api.readiness import router as readiness_router  # noqa: E402
-from app.api.v1 import agent_runs, chat_imports, erasure, memory, resources, status  # noqa: E402
+from app.api.v1 import (  # noqa: E402
+    agent_runs,
+    chat_imports,
+    erasure,
+    lifecycle_erasure,
+    memory,
+    resources,
+    status,
+)  # noqa: E402
 from app.core.config import Settings  # noqa: E402
 from app.main import create_app  # noqa: E402
 
@@ -32,6 +40,7 @@ def inventory():
         memory.router,
         resources.router,
         erasure.router,
+        lifecycle_erasure.router,
     )
     for route in (route for router in routers for route in router.routes):
         if not isinstance(route, APIRoute) or not route.include_in_schema:
@@ -50,11 +59,14 @@ def inventory():
             else "memory"
             if name == "memory"
             else "erasure"
-            if name == "erasure"
+            if name in {"erasure", "lifecycle_erasure"}
             else "public"
         )
         service = {
-            "erasure": ["apps/server/app/services/erasure.py"],
+            "erasure": [
+                "apps/server/app/services/erasure.py",
+                "apps/server/app/services/lifecycle_erasure.py",
+            ],
             "resources": [
                 "apps/server/app/services/resources.py",
                 "apps/server/app/db/repositories/resources.py",
@@ -109,7 +121,7 @@ def inventory():
             guarded = (
                 path == "/api/v1/memory/undo"
                 or ("/deletions/" in path and path.endswith("/execute"))
-                or path == "/api/v1/erasures/execute"
+                or path in {"/api/v1/erasures/execute", "/api/v1/lifecycle-erasures/execute"}
             )
             preparation = route.path.endswith("/prepare")
             response = operation.get("responses", {}).get(
@@ -165,6 +177,20 @@ def inventory():
                         else "Exact target Message removal, durable tombstone and receipt; "
                         "Memory preserved"
                     )
+                    if path.startswith("/api/v1/lifecycle-erasures/"):
+                        parents = (
+                            "Signed active owner; owned Person/Relationship; exact structured "
+                            "dependency snapshot, expiry and original-key receipt; "
+                            "Owner excluded from HTTP"
+                        )
+                        effect = (
+                            "Owner-bound exact-scope confirmation only"
+                            if preparation
+                            else "Exact structured-scope messages, raw artifacts and Memory/Undo "
+                            "removal; "
+                            "profile labels scrubbed; immutable UUID/key/dedup/receipt "
+                            "fences retained"
+                        )
             result.append(
                 {
                     "method": method,
@@ -220,7 +246,9 @@ def inventory():
                             "agent": "apps/server/tests/test_phase4_idempotency.py",
                             "import": "apps/server/tests/test_import_api.py",
                             "memory": "apps/server/tests/test_phase6_e2e.py",
-                            "erasure": "apps/server/tests/test_erasure.py",
+                            "erasure": "apps/server/tests/test_full_erasure_9h.py"
+                            if path.startswith("/api/v1/lifecycle-erasures/")
+                            else "apps/server/tests/test_erasure.py",
                         }[group],
                     ],
                     "bearer_openapi": bool(operation.get("security")),
@@ -247,7 +275,7 @@ def check():
     actual = inventory()
     if actual != json.loads(TARGET.read_text("utf-8")):
         raise RuntimeError("Public authorization inventory drift")
-    if actual["operations"] != 40 or actual["public"] != 3:
+    if actual["operations"] != 43 or actual["public"] != 3:
         raise RuntimeError("Unreviewed public API change")
     for item in actual["inventory"]:
         if item["authenticated"] and (

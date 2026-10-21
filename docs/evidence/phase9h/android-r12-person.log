@@ -1,0 +1,26 @@
+{"android_api": "37"}
+{"fixture": "ready", "baseURL": "http://127.0.0.1:8024", "commands": "state, tap [label,direction?], login a|b|expired, seed, evidence, stage, cleanup, back, home, stop"}
+{"command": "restart", "status": "done"}
+{"command": "tap", "status": "done"}
+{"case": "9H-PERSON"}
+{"command": "case", "status": "done"}
+{"person": "5839b107-fddb-4c9e-ad00-db4dc6cf8787", "relationship": "d2335f39-4227-4e97-811b-49230e4fee77", "conversation": "4b0e0910-46d6-4035-878f-aaff98cd3f6a"}
+{"command": "seed", "status": "done"}
+{"command": "bookmark", "status": "done"}
+{"command": "login", "status": "done"}
+{"command": "tap", "status": "done"}
+{"command": "tap", "status": "done"}
+{"setup_transport": "host REST", "run_id": "386542df-eae4-4e2d-934e-ca7c46a27a3e", "memory_status": "saved"}
+{"command": "save", "status": "done"}
+{"history_setup": {"transport": "host REST preconditions", "count": 4, "relationship": "d2335f39-4227-4e97-811b-49230e4fee77", "job": "cb5b1cb3-d889-415a-a798-af305e646849", "receipt_status": "imported"}}
+{"command": "history_setup", "status": "done"}
+{"command": "bookmark", "status": "done"}
+{"person": "0fb5ae02-d2dc-4f12-8c38-48e88f7d4449", "relationship": "81cd00ec-12be-4e9f-abec-e30f718c3d91", "conversation": "5406992d-f0d8-4ac1-87e2-ed470f59dd5e"}
+{"command": "seed", "status": "done"}
+{"history_setup": {"transport": "host REST preconditions", "count": 3, "relationship": "81cd00ec-12be-4e9f-abec-e30f718c3d91", "job": "14a8ed6f-b542-460f-a7e3-875af455b910", "receipt_status": "imported"}}
+{"command": "history_setup", "status": "done"}
+{"command": "bookmark", "status": "done"}
+{"command": "scope", "status": "done"}
+{"command": "route", "status": "done"}
+{"command": "tap", "status": "done"}
+{"command": "tap", "status": "done"}

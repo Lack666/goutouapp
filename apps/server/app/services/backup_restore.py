@@ -22,13 +22,18 @@ from app.db.models import (
     Conversation,
     ErasureConfirmation,
     ErasureReceipt,
+    LifecycleConfirmation,
+    LifecycleReceipt,
     MemoryConfirmationRow,
     MemoryControlRow,
     MemoryMutationRow,
     MemoryOperationRow,
     MemoryRecordRow,
     Message,
+    Person,
+    Relationship,
     RelationshipMessage,
+    RunRecoveryReceipt,
     UploadReservation,
     User,
 )
@@ -147,6 +152,83 @@ class QuarantinedRestore:
                 owners = set(db.scalars(select(User.id)))
                 if not owners <= set(current.scalars(select(User.id))):
                     raise RecoveryError()
+                # A frozen SQL snapshot cannot stop a live executor or Provider.
+                # Unacknowledged writers require the separate OS-proof recovery path.
+                if current.scalar(
+                    select(AgentRun.id)
+                    .where(
+                        AgentRun.user_id.in_(owners),
+                        AgentRun.writer_token.is_not(None),
+                        AgentRun.writer_released.is_(False),
+                        AgentRun.recovered_at.is_(None),
+                    )
+                    .limit(1)
+                ):
+                    raise RecoveryError()
+                # A bare recovered_at flag cannot substitute for a writer proof.
+                recovered = current.execute(
+                    select(
+                        AgentRun.id,
+                        AgentRun.user_id,
+                        AgentRun.conversation_id,
+                        AgentRun.writer_token,
+                        AgentRun.writer_scope,
+                        AgentRun.recovered_at,
+                        AgentRun.status,
+                        AgentRun.failure_code,
+                    ).where(AgentRun.user_id.in_(owners), AgentRun.recovered_at.is_not(None))
+                )
+                for run in recovered:
+                    if (
+                        run.status != "failed"
+                        or run.failure_code != "writer_stopped"
+                        or not current.scalar(
+                            select(RunRecoveryReceipt.id).where(
+                                RunRecoveryReceipt.run_id == run.id,
+                                RunRecoveryReceipt.owner_user_id == run.user_id,
+                                RunRecoveryReceipt.conversation_id == run.conversation_id,
+                                RunRecoveryReceipt.writer_token == run.writer_token,
+                                RunRecoveryReceipt.writer_scope == run.writer_scope,
+                                RunRecoveryReceipt.performed_at == run.recovered_at,
+                            )
+                        )
+                    ):
+                        raise RecoveryError()
+                erased_owners, erased_relationships = set(), set()
+                for model, owner_column, identity_columns in (
+                    (User, User.id, ()),
+                    (Person, Person.user_id, ()),
+                    (Relationship, Relationship.user_id, (Relationship.person_id,)),
+                ):
+                    columns = (model.id, owner_column, *identity_columns, model.deleted_at)
+                    authoritative_profiles = {
+                        row[0]: tuple(row)
+                        for row in current.execute(select(*columns).where(owner_column.in_(owners)))
+                    }
+                    restored_profiles = {
+                        row[0]: tuple(row)
+                        for row in db.execute(select(*columns).where(owner_column.in_(owners)))
+                    }
+                    for target_id, old in restored_profiles.items():
+                        live = authoritative_profiles.get(target_id)
+                        if live is None or old[:-1] != live[:-1]:
+                            raise RecoveryError()
+                        if old[-1] is not None and old[-1] != live[-1]:
+                            raise RecoveryError()
+                    for target_id, live in authoritative_profiles.items():
+                        if live[-1] is None:
+                            continue
+                        if target_id not in restored_profiles:
+                            raise RecoveryError()
+                        values = {"deleted_at": live[-1], "updated_at": live[-1]}
+                        if model is Person:
+                            values["display_name"] = ""
+                        elif model is Relationship:
+                            values.update(relationship_type="erased", status="erased")
+                            erased_relationships.add(target_id)
+                        else:
+                            erased_owners.add(target_id)
+                        db.execute(update(model).where(model.id == target_id).values(**values))
                 # Agent fences live on AgentRun, not Memory receipts. A missing
                 # post-backup key could re-execute an old consent/save request.
                 # Recovering its run/messages beyond the backup is outside scope.
@@ -194,12 +276,21 @@ class QuarantinedRestore:
                             continue
                         if target_id not in restored_targets:
                             raise RecoveryError()
-                        if model is ChatImportJob and (
-                            db.get(ChatImportJob, target_id).status != "imported"
-                            or current.scalar(
-                                select(ChatImportJob.status).where(ChatImportJob.id == target_id)
+                        parent_erased = model is ChatImportJob and (
+                            row[1] in erased_owners or row[2] in erased_relationships
+                        )
+                        if (
+                            model is ChatImportJob
+                            and not parent_erased
+                            and (
+                                db.get(ChatImportJob, target_id).status != "imported"
+                                or current.scalar(
+                                    select(ChatImportJob.status).where(
+                                        ChatImportJob.id == target_id
+                                    )
+                                )
+                                != "imported"
                             )
-                            != "imported"
                         ):
                             # deleted_at alone is insufficient: the partial unique
                             # index/replay fence exists only on canonical imported
@@ -245,6 +336,57 @@ class QuarantinedRestore:
                 if copied:
                     db.execute(ErasureReceipt.__table__.insert(), copied)
                 db.execute(delete(ErasureConfirmation))
+                for model in (LifecycleReceipt, RunRecoveryReceipt):
+                    authoritative_rows = {
+                        row["id"]: dict(row)
+                        for row in current.execute(select(model.__table__)).mappings()
+                    }
+                    for row in db.execute(select(model.__table__)).mappings():
+                        if authoritative_rows.get(row["id"]) != dict(row):
+                            raise RecoveryError()
+                    db.execute(delete(model))
+                    rows = [r for r in authoritative_rows.values() if r["owner_user_id"] in owners]
+                    if rows:
+                        db.execute(model.__table__.insert(), rows)
+                db.execute(delete(LifecycleConfirmation))
+                for receipt in current.execute(select(RunRecoveryReceipt.__table__)).mappings():
+                    if receipt["owner_user_id"] not in owners:
+                        continue
+                    live = (
+                        current.execute(
+                            select(AgentRun.__table__).where(AgentRun.id == receipt["run_id"])
+                        )
+                        .mappings()
+                        .one_or_none()
+                    )
+                    restored = db.get(AgentRun, receipt["run_id"])
+                    if (
+                        live is None
+                        or restored is None
+                        or live["status"] != "failed"
+                        or live["failure_code"] != "writer_stopped"
+                        or live["recovered_at"] != receipt["performed_at"]
+                        or restored.conversation_id != receipt["conversation_id"]
+                        or restored.user_id != receipt["owner_user_id"]
+                    ):
+                        raise RecoveryError()
+                    # Never invent post-backup answers or inferred Memory success.
+                    for field in ("user_message_id", "assistant_message_id"):
+                        if getattr(restored, field) != live[field]:
+                            raise RecoveryError()
+                    db.execute(
+                        update(AgentRun)
+                        .where(AgentRun.id == restored.id)
+                        .values(
+                            status="failed",
+                            failure_code="writer_stopped",
+                            recovered_at=live["recovered_at"],
+                            completed_at=live["completed_at"],
+                            writer_token=live["writer_token"],
+                            writer_scope=live["writer_scope"],
+                            writer_released=live["writer_released"],
+                        )
+                    )
                 columns = (
                     "owner_user_id",
                     "id",

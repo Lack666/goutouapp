@@ -76,6 +76,12 @@ export class MemoryController {
     });
   }
   snapshot = () => this.view;
+  clear = () => {
+    this.cancel();
+    this.attempt = null;
+    this.view = empty();
+    this.patch({});
+  };
   subscribe = (fn: () => void) => {
     this.listeners.add(fn);
     return () => {

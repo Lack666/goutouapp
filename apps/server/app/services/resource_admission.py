@@ -23,6 +23,7 @@ from sqlalchemy.orm import Session
 
 from app.core.config import Settings
 from app.db.models import AdmissionState, ChatImportArtifact, ChatImportJob, UploadReservation, User
+from app.db.repositories import records
 from app.db.session import Database, DatabaseUnavailable
 from app.services.admission_fence import WorkerFence, is_live
 
@@ -93,6 +94,10 @@ class ResourceAdmission:
         try:
             with self.database.session() as db, db.begin():
                 state = self._state(db)
+                if owner:
+                    identity = db.get(User, owner)
+                    if identity is not None and identity.deleted_at is not None:
+                        raise AdmissionRejected(401, "invalid_credential")
                 if owner and db.get(User, owner) is None:
                     owner = None
                 now = float(db.scalar(text("SELECT extract(epoch FROM clock_timestamp())")))
@@ -215,7 +220,7 @@ class ResourceAdmission:
             connection = self.database.engine().connect()
             with connection.begin(), Session(bind=connection) as db:
                 self._state(db)
-                if db.get(User, owner) is None:
+                if records.get_user(db, owner) is None:
                     raise AdmissionRejected(401, "invalid_credential")
                 active, totals, keys = self._inventory(db)
                 global_limit = getattr(

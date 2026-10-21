@@ -1,0 +1,21 @@
+{
+  "source_fingerprint": "dc0e1026713e5150f0a6c6eb4b5ae9b442e8264ae61c33ff92af3f02c75da20e",
+  "phase_marker": {
+    "completed_phase": 8,
+    "completed_subphase": "9G"
+  },
+  "synthetic_only": true,
+  "command": [
+    "uv",
+    "--cache-dir",
+    ".cache/uv",
+    "run",
+    "pytest",
+    "apps/server/tests/test_dataset_discovery.py",
+    "apps/server/tests/test_admission_rename_regression.py",
+    "-q"
+  ],
+  "exit_code": 0,
+  "log_sha256": "6570b536c1085ae2c1841999b1f31a8a635b412138d513febc21caab8205eadb",
+  "end_source_fingerprint": "dc0e1026713e5150f0a6c6eb4b5ae9b442e8264ae61c33ff92af3f02c75da20e"
+}

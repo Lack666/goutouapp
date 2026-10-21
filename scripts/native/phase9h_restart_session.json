@@ -1,0 +1,13 @@
+[
+  "restart", "tap [\"清除当前开发会话\",\"down\"]", "case 9H-RESTART-SESSION",
+  "seed LifecycleRestart9H", "bookmark erase", "login a", "route [\"relationship\",\"erase\"]",
+  "tap [\"查看 persons LifecycleRestart9H\"]", "tap [\"准备删除 Person {person}\"]",
+  "assert_ui \"完整删除状态：awaiting_confirmation\"", "back", "route [\"relationship\",\"erase\"]",
+  "assert_absent [\"完整删除 Confirmation ID：\"]", "tap [\"查看 persons LifecycleRestart9H\"]",
+  "tap [\"准备删除 Person {person}\"]", "restart", "assert_ui \"开发会话已连接\"",
+  "route [\"relationship\",\"erase\"]", "assert_absent [\"完整删除 Confirmation ID：\",\"完整删除 Receipt ID：\"]",
+  "open settings", "tap [\"清除当前开发会话\",\"down\"]", "login b",
+  "route [\"relationship\",\"erase\"]", "assert_absent [\"准备删除 Person\",\"完整删除 Receipt ID：\"]",
+  "foreign", "assert_identity", "evidence", "assert_db [\"erasure.lifecycle_receipts.length\",0]",
+  "assert_lifecycle [\"person\",\"erase\",false]", "stop"
+]

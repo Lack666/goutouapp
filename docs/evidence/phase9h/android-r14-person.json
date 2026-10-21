@@ -1,0 +1,58 @@
+[
+  {
+    "execution": {
+      "steps_file": "scripts\\native\\phase9h_person.json",
+      "steps": [
+        "restart",
+        "tap [\"\u6e05\u9664\u5f53\u524d\u5f00\u53d1\u4f1a\u8bdd\",\"down\"]",
+        "case 9H-PERSON",
+        "seed ErasePerson9H",
+        "bookmark erase",
+        "login a",
+        "tap [\"\u6388\u6743\u957f\u671f\u8bb0\u5fc6\"]",
+        "tap [\"\u6062\u590d\u8bb0\u5fc6\"]",
+        "save \u4e00",
+        "history_setup [4,\"ErasePersonDataset\"]",
+        "bookmark erase",
+        "seed KeepPerson9H",
+        "history_setup [3,\"KeepPersonDataset\"]",
+        "bookmark keep",
+        "scope erase",
+        "route [\"relationship\",\"erase\"]",
+        "tap [\"\u67e5\u770b persons ErasePerson9H\"]",
+        "tap [\"\u51c6\u5907\u5220\u9664 Person {person}\"]",
+        "assert_ui \"\u5b8c\u6574\u5220\u9664\u72b6\u6001\uff1aawaiting_confirmation\"",
+        "assert_ui \"\u957f\u671f\u8bb0\u5fc6\u53ca\u5173\u8054 Undo\uff1a1\"",
+        "tap [\"\u53d6\u6d88\u5b8c\u6574\u8303\u56f4\u5220\u9664\"]",
+        "evidence",
+        "assert_db [\"erasure.lifecycle_receipts.length\",0]",
+        "tap [\"\u91cd\u65b0\u51c6\u5907\u5b8c\u6574\u8303\u56f4\u5220\u9664\"]",
+        "tap [\"\u660e\u786e\u786e\u8ba4\u5e76\u6267\u884c\u5b8c\u6574\u8303\u56f4\u5220\u9664\"]",
+        "assert_ui \"\u5b8c\u6574\u5220\u9664\u72b6\u6001\uff1acompleted\"",
+        "assert_ui \"\u5b8c\u6574\u5220\u9664\u6743\u5a01\u5237\u65b0\uff1averified\"",
+        "assert_lifecycle [\"person\",\"erase\",true]",
+        "assert_lifecycle [\"relationship\",\"erase\",true]",
+        "assert_lifecycle [\"person\",\"keep\",false]",
+        "assert_erased [\"dataset\",\"erase\",true,0]",
+        "assert_erased [\"dataset\",\"keep\",false,3]",
+        "evidence",
+        "assert_db [\"erasure.memories\",0]",
+        "tap [\"\u540c key \u91cd\u653e\u5b8c\u6574\u8303\u56f4\u5220\u9664\"]",
+        "assert_ui \"\u5b8c\u6574\u5220\u9664\u6743\u5a01\u5237\u65b0\uff1averified\"",
+        "assert_lifecycle_replay",
+        "assert_identity",
+        "stop"
+      ],
+      "helper_sha256": "72381f0e5d322db5dd70a9c41f6a466e8045a055d49e2a36b0d874eab9d8a775",
+      "device": "emulator-5554",
+      "mobile_fingerprint": "39887500b795b25bbf44a370d879efd6d263c02f5bb25e9b8e17a9f36fc0163c",
+      "erasure_fingerprint": "ac8c4ced046e89c34cccd2d6a4a47579afb2a187f38d8c5d2ec249528458e314",
+      "runtime_fingerprint_9h": "743a3c876be160b5b3a01ec4e3506ad329e84eff18fb19d6ce62d95cf980d31f"
+    }
+  },
+  {
+    "native_build": {
+      "verified": false
+    }
+  }
+]

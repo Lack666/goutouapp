@@ -9,6 +9,7 @@ from sqlalchemy.orm import Session
 
 from app.db.models import (
     ErasureConfirmation,
+    LifecycleConfirmation,
     MemoryConfirmationRow,
     MemoryMutationRow,
     MemoryOperationRow,
@@ -70,6 +71,11 @@ class MemoryRetentionService:
                 select(func.count())
                 .select_from(ErasureConfirmation)
                 .where(ErasureConfirmation.expires_at <= self.policy.challenge_cutoff(now))
+            )
+            + db.scalar(
+                select(func.count())
+                .select_from(LifecycleConfirmation)
+                .where(LifecycleConfirmation.expires_at <= self.policy.challenge_cutoff(now))
             ),
             mutation_receipts_retained=db.scalar(
                 select(func.count()).select_from(MemoryMutationRow)
@@ -99,7 +105,15 @@ class MemoryRetentionService:
             .order_by(ErasureConfirmation.expires_at, ErasureConfirmation.id)
             .limit(size)
         ).all()
-        owners = sorted({row.owner_user_id for row in [*memories, *challenges, *erasures]})
+        lifecycle = db.execute(
+            select(LifecycleConfirmation.id, LifecycleConfirmation.owner_user_id)
+            .where(LifecycleConfirmation.expires_at <= cutoff)
+            .order_by(LifecycleConfirmation.expires_at, LifecycleConfirmation.id)
+            .limit(size)
+        ).all()
+        owners = sorted(
+            {row.owner_user_id for row in [*memories, *challenges, *erasures, *lifecycle]}
+        )
         # Sorted acquisition prevents multi-owner maintenance deadlocks.
         for owner in owners:
             db.scalar(select(User.id).where(User.id == owner).with_for_update())
@@ -127,6 +141,12 @@ class MemoryRetentionService:
             delete(ErasureConfirmation).where(
                 ErasureConfirmation.id.in_([row.id for row in erasures]),
                 ErasureConfirmation.expires_at <= cutoff,
+            )
+        ).rowcount
+        removed_challenges += db.execute(
+            delete(LifecycleConfirmation).where(
+                LifecycleConfirmation.id.in_([row.id for row in lifecycle]),
+                LifecycleConfirmation.expires_at <= cutoff,
             )
         ).rowcount
         return CleanupCounts(

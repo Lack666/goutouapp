@@ -11,6 +11,9 @@ from sqlalchemy.engine import make_url
 
 ROOT = Path(__file__).resolve().parents[1]
 EXPECTED = {
+    "lifecycle_confirmations",
+    "lifecycle_receipts",
+    "run_recovery_receipts",
     "erasure_confirmations",
     "erasure_receipts",
     "users",

@@ -1,6 +1,14 @@
 # Architecture direction
 
-## Current Phase9G audit boundary
+Current9H: independent LifecycleErasure and AgentRunRecovery services use structured
+owner/target barriers, durable minimal receipts and OS writer-stop proof. See the
+Current Phase9H section below and ADR0043. Earlier phase sections are historical
+acceptance boundaries; no infrastructure or semantic Agent nodes were added.
+The final regression required four SDK57 compatibility patches and a matching pnpm
+lockfile; SDK57/RN0.86.3 and supply-chain policy remain. See ADR0043 and the retained
+failed pre-marker log; all final evidence must be rerun after these patches.
+
+## Historical Phase9G audit boundary
 
 9G adds synthetic actual-node and signed PostgreSQL safety/authority audits,
 real publication/accounting windows, bounded global-lock55P03 diagnosis and
@@ -625,3 +633,17 @@ observations and SQL/receipt witnesses are kept distinct in complete executions.
 The Phase8 marker checks hashed complete native transcripts and an independent
 pre-marker root exit before accepting8/8F. Durable pending-operation storage,
 automatic crash reconciliation and production identity remain future work.
+
+
+## Current Phase 9H
+
+AgentWriterRegistry is transport-independent. Exclusive token files retain OS locks
+through Provider/runtime/executor lifetimes; only original-writer completion or
+offline OS-proof recovery settles a run. LifecycleErasure serializes exact structured
+Person/Relationship/Owner scopes under the active owner barrier, retaining UUID/key/
+dedup/receipt fences while removing bodies and scoped Memory. Three signed HTTP
+operations expose Person/Relationship; signed private stdin handles development/test
+Owned Data and run recovery. Owner is terminal locally, not a production identity
+closure. Quarantined synthetic restore reconciles current primary authority before
+release. See ADR0043. Fixed RN/Expo, FastAPI/PostgreSQL and standalone LangGraph
+architecture is unchanged; no new infrastructure, dependencies or semantic nodes.

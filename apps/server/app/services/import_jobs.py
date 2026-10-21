@@ -107,11 +107,15 @@ class ImportJobService:
         return actor.user_id
 
     def _job(self, owner: UUID, job_id: UUID, *, lock: bool = False) -> ChatImportJob:
+        if records.get_user(self.db, owner) is None:
+            raise ImportJobError(ImportJobErrorCode.JOB_NOT_FOUND)
         query = select(ChatImportJob).where(
             ChatImportJob.id == job_id, ChatImportJob.owner_user_id == owner
         )
         job = self.db.scalar(query.with_for_update() if lock else query)
         if job is None:
+            raise ImportJobError(ImportJobErrorCode.JOB_NOT_FOUND)
+        if job.deleted_at is not None and job.status != "imported":
             raise ImportJobError(ImportJobErrorCode.JOB_NOT_FOUND)
         return job
 

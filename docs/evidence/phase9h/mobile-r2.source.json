@@ -1,0 +1,21 @@
+{
+  "source_fingerprint": "8dfb6e6b2e304f4924f3b1bdb7a7185508993caa63aacac8093c6baad6d88719",
+  "phase_marker": {
+    "completed_phase": 8,
+    "completed_subphase": "9G"
+  },
+  "synthetic_only": true,
+  "command": [
+    "pnpm",
+    "--filter",
+    "@goutou/mobile",
+    "test",
+    "--",
+    "tests/lifecycleController.test.ts",
+    "tests/erasureController.test.ts",
+    "tests/fullMobileIntegration.test.ts"
+  ],
+  "exit_code": 0,
+  "log_sha256": "66586ad49b51426074093b3a06a3603ab4234bbc3fa4e352a4e6f83d19941463",
+  "end_source_fingerprint": "8dfb6e6b2e304f4924f3b1bdb7a7185508993caa63aacac8093c6baad6d88719"
+}

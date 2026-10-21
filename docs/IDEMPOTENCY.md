@@ -1,4 +1,16 @@
-# Phase 4D persistent Agent operation idempotency
+# Idempotency — current Phase9H
+
+## Current9H authority
+
+Current9H adds immutable owner/key/payload lifecycle receipts and exact-run recovery
+receipts without replacing original Agent/import/Memory/erasure keys. Terminal
+identity and resource UUID fences prevent old requests from recreating erased data.
+Same-key replay returns committed count-only receipts; missing writer proof never
+permits a reset. The Current9H section below supplements all earlier scoped contracts.
+
+## Historical phase-specific contracts
+
+### Phase 4D persistent Agent operation idempotency
 
 Both Agent endpoints accept an optional client-generated `operation_key`. A
 client that wants retry safety must generate a fresh key for one logical user
@@ -94,3 +106,15 @@ under a PostgreSQL transaction lock; an existing matching row replays 201 and a
 changed payload yields409. The existing resource PK is the reservation and lasts
 with the row. There is no guarantee after future/internal deletion. See
 [resource retry contract](RESOURCE_API.md#creation-and-response-loss-retries).
+
+
+## Current Phase 9H
+
+Lifecycle erasure keys bind signed owner, exact domain/target and confirmation UUID.
+Exact same-key replay returns one immutable receipt even after tombstoning; changed
+payload conflicts. Owner local HTTP identity becomes unusable, so its receipt replay
+is private operator-only. Run recovery separately binds owner/conversation/run/key,
+preserves the original Agent key and returns failed/writer_stopped for REST/SSE replay,
+without Provider/Memory execution. Recovery receipts and canonical import fences are
+owner-lifetime metadata, not expiring cache. No new key or lost client descriptor can
+authorize a repeated destructive side effect.

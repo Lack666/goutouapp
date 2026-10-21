@@ -1,4 +1,18 @@
-# Security threat model — Phase 9A
+# Security threat model — current Phase9H
+
+## Current9H authority
+
+Current9H adds active identity/write barriers, exact structured deletion snapshots,
+minimal durable receipts, OS writer-stop proof and quarantined current-primary
+restore checks. Trusted shared private filesystem/DB roles are deployment
+assumptions. Missing writer or deletion authority stays fail-closed. Production
+identity, public ingress, monitored scheduling, external copies and total-primary-
+loss recovery remain separate blockers. Earlier phase-specific capability claims
+below are historical; the Current9H supplement defines the current boundary.
+
+## Historical phase-specific contracts
+
+### Security threat model — Phase 9A
 
 Current9G B3/B6/B9 audit: actual SafetyResult node precedes ordinary relationship
 analysis and Memory mutations in both signed REST/POST SSE; semantic Mock fixtures
@@ -253,3 +267,17 @@ yields503. These faults do not validate aggregate availability. Before public
 exposure require proxy/app admission, quota/deadline controls, monitored storage
 and bounded pool/worker alignment plus aggregate stress and fault validation.
 R-06/R-08 and production portions of R-09 remain explicit future work.
+
+
+## Current Phase 9H
+
+B10: OS writer proofs are valid only with the configured trusted private shared root,
+exclusive creation, held nonblocking OS locks and protected host ACL/topology.
+Missing/moved/tampered fence or legacy row is not proof of death. Lost DB access,
+timeout, client cancellation and old age never authorize mutation. Matching durable
+run receipts are required before bypassing the terminal run barrier.
+B11: exact structured erasure uses active owner barriers and dependency snapshots;
+text mentions/other-owner references cannot widen scope. Owner has an explicit signed
+operator confirmation and irreversible local identity tombstone; it is distinct from
+production provider account closure. External copies/backup independent authority
+remain separate production trust boundaries. Raw unlink is monotonic, not SQL-atomic.

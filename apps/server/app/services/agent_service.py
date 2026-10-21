@@ -9,6 +9,7 @@ from hashlib import sha256
 from typing import Protocol
 from uuid import UUID, uuid4
 
+from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from app.agent.contracts import (
@@ -27,6 +28,7 @@ from app.agent.events import (
     RunStartedEvent,
     StatusEvent,
 )
+from app.core.config import get_settings
 from app.db.models import AgentRun, Message
 from app.db.repositories import records
 from app.services.agent_stream import (
@@ -39,6 +41,7 @@ from app.services.agent_stream import (
     ServiceStatus,
     ServiceStreamEvent,
 )
+from app.services.agent_writer import ACTIVE_WRITERS, AgentWriterRegistry
 
 HISTORY_LIMIT = 20
 _ACTOR_ISSUER = object()
@@ -150,9 +153,32 @@ class AgentRunner(Protocol):
 
 
 class AgentService:
-    def __init__(self, session_factory: Callable[[], Session], runtime: AgentRunner) -> None:
+    def __init__(
+        self, session_factory: Callable[[], Session], runtime: AgentRunner, *, writers=None
+    ) -> None:
         self._session_factory = session_factory
         self._runtime = runtime
+        self._writers = writers or AgentWriterRegistry(get_settings().chat_import_artifact_root)
+
+    def _release_writer(self, request):
+        # Called only after normal runtime return/closed stream. Abnormal exits
+        # deliberately retain their OS fence until the process actually stops.
+        try:
+            with self._session_factory() as db, db.begin():
+                row = db.scalar(
+                    select(AgentRun)
+                    .where(AgentRun.id == request.run_id, AgentRun.user_id == request.user_id)
+                    .with_for_update()
+                )
+                if row is None or row.writer_token is None:
+                    return
+                row.writer_released = True
+            fence = ACTIVE_WRITERS.pop(request.run_id, None)
+            if fence is not None:
+                fence.close()
+        except Exception:
+            # Missing acknowledgement is uncertainty, never an inferred stop.
+            pass
 
     @staticmethod
     def _replay_result(db: Session, run: AgentRun, conversation_id: UUID) -> AgentServiceResult:
@@ -162,7 +188,7 @@ class AgentService:
                 run_id=run.id,
             )
         if run.status == AgentRunStatus.FAILED:
-            if run.failure_code == "client_disconnected":
+            if run.failure_code in {"client_disconnected", "writer_stopped"}:
                 code = AgentServiceErrorCode.OPERATION_FAILED
             elif run.failure_code == "persistence_failure":
                 code = AgentServiceErrorCode.PERSISTENCE_FAILURE
@@ -240,6 +266,7 @@ class AgentService:
         )
 
         run_id = uuid4()
+        fence = None
         try:
             # Transaction A is shared by synchronous and streaming execution.
             with self._session_factory() as db, db.begin():
@@ -288,7 +315,9 @@ class AgentService:
                 )
                 if user_message is None:
                     raise AgentServiceError(AgentServiceErrorCode.CONVERSATION_NOT_FOUND)
-                records.start_agent_run(
+                fence = self._writers.start(run_id)
+                ACTIVE_WRITERS[run_id] = fence
+                durable_run = records.start_agent_run(
                     db,
                     actor.user_id,
                     conversation_id,
@@ -297,9 +326,17 @@ class AgentService:
                     request_fingerprint=fingerprint,
                     user_message_id=user_message.id,
                 )
+                durable_run.writer_token = run_id
+                durable_run.writer_scope = self._writers.scope
         except AgentServiceError:
+            if fence:
+                ACTIVE_WRITERS.pop(run_id, None)
+                fence.close()
             raise
         except Exception:
+            if fence:
+                ACTIVE_WRITERS.pop(run_id, None)
+                fence.close()
             raise AgentServiceError(AgentServiceErrorCode.PERSISTENCE_FAILURE) from None
 
         return AgentInput(
@@ -430,6 +467,7 @@ class AgentService:
             memory_status=result.memory_receipt.status,
             warnings=tuple(result.warnings),
         )
+        self._release_writer(request)
         return AgentServiceResult(
             run_id=request.run_id,
             conversation_id=conversation_id,
@@ -489,6 +527,7 @@ class AgentService:
         memory_status = MemoryWriteStatus.NONE
         memory_sent = False
         terminal = False
+        writer_ended = False
         yield ServiceRunStarted(run_id)
         try:
             runtime_events = self._runtime.stream(request)
@@ -519,6 +558,7 @@ class AgentService:
                     if memory_status != MemoryWriteStatus.NONE and not memory_sent:
                         yield ServiceMemoryStatus(run_id, memory_status)
                     terminal = True
+                    writer_ended = True
                     yield ServiceCompleted(run_id, assistant_id, memory_status)
                     return
                 elif isinstance(event, FailedEvent):
@@ -569,11 +609,15 @@ class AgentService:
                 code = "agent_failure" if recovery == "failed" else "persistence_failure"
                 yield ServiceFailed(run_id, code, recovery)
         finally:
+            closed = runtime_events is None
             try:
                 if runtime_events is not None:
                     await runtime_events.aclose()
+                    closed = True
             finally:
                 if not terminal and assistant_id is None:
                     self._mark_failed(request, "client_disconnected")
                 elif not terminal:
                     self._finalize_summary(request, memory_status, ())
+                if writer_ended and closed:
+                    self._release_writer(request)

@@ -1,6 +1,41 @@
-# Security risk register — Phase 9A–9G
+# Security risk register — Phase 9A–9H
 
-## Current9G audited boundary
+## Current9H authority
+
+Current9H authority: PHASE_9H_PRODUCTION_RISKS.json and PHASE_9H_MATRIX.json.
+Local structured Person/Relationship/Owned Data erasure and OS-proved exact-run
+recovery are implemented. R-10 is mitigated for new fenced runs; unresolved legacy
+or missing proof stays quarantined. Engineering acceptance requires two independent full root exits; its current
+status is recorded in PHASE_9H_MATRIX. Public production remains NOT APPROVED. Earlier dated risk
+sections below record historical capabilities, not current missing implementations.
+
+9H-EVIDENCE-01/P1: actual Metro CI bundle inspection rejected the pre-copy Settings
+module even though disk/source-map inputs appeared current. The original r12
+native results are superseded and its partial Person run is ABORTED; no marker
+advances from those records. The local control now requires a cold build and
+an actual Android-accessibility compiled source/dependency/configuration digest,
+with missing/stale/conflicting-marker and Metro-config counterexamples. Closure
+requires all thirteen fresh complete native scenes, the independent full-flow
+wire supplement and both full original root exits on the final source. The9H
+matrix is authoritative for actual completion. Historical Windows Node crashes
+and production environment/capacity acceptance remain separate unresolved limits.
+
+9H-EVIDENCE-02/P2: r16 Conversation deletion completed with a receipt and verified
+refresh, but its subsequent receipt-query tap failed. The retained screenshot and
+accessibility bounds show a Chat FlatList ending at1909px under a fixed composer;
+the clipped receipt control reports inverted2278..1909 bounds. The helper used
+the full2424px screen for this unlabeled scrollable list, reversing the necessary
+scroll direction. Use the actual scrollable viewport for direction, while keeping
+all24 attempts, control validity checks, canonical steps and assertions. Three
+new tests cover the observed geometry, invalid/disabled refusal and valid composer
+buttons. No product control or HTTP assertion is waived. All final-source suites,
+native scenes, supplement and both roots must be rerun after this tooling fix.
+
+## Historical phase-specific contracts
+
+### Security risk register — Phase 9A–9G
+
+## Historical9G audited boundary
 
 PHASE_9G_PRODUCTION_RISKS.json is the current detailed status supplement; original
 9A–9F JSON/matrices/logs remain immutable. No new confirmed open P0/P1 under the
@@ -223,3 +258,22 @@ with code3221226505 during first post-marker run. Unchanged Agent3/3 and fresh
 full post-marker0 subsequently passed. Cause unconfirmed; preserve evidence and
 investigate host/runtime/CI stability if repeated. This is not a claimed fixed
 product defect or a waiver of failed verification.
+
+
+## Current Phase 9H
+
+R-06: bounded local maintenance and synthetic authoritative restore remain verified;
+production scheduler supervision, monitored retention, encrypted rotation and
+independent authority after total primary loss remain NOT DEPLOYED.
+R-07: local shared admission/rates/storage/deadlines remain implemented; public
+ingress/host sizing and topology acceptance remain NOT APPROVED.
+R-08: Mock regression verifies real safety routes/effects, not real-provider semantic
+accuracy. No provider transmission, RAG or imported analysis is added.
+R-09: local Person/Relationship/Owner Owned Data erasure and old-JWT terminal fence
+are implemented. Production identity/account closure, outbox and external-copy/log
+collector lifecycle remain absent; do not claim production account deletion.
+R-10: new fenced Runs can recover offline after actual writer death while preserving
+committed effects and original keys. Legacy/missing proof remains quarantined;
+unknown topology cannot be safely reset. Real worker death and live executor refusal
+are tested; production shared-root protection and incident procedures need acceptance.
+No public production readiness is inferred from these local engineering results.

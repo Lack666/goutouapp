@@ -23,7 +23,12 @@ export function selectedFixture(count: number, marker?: string) {
     release: () => undefined,
   };
 }
-export async function connected(baseURL: string, credential: string, wire: typeof fetch = fetch) {
+export async function connected(
+  baseURL: string,
+  credential: string,
+  wire: typeof fetch = fetch,
+  displayName = '8D anonymous synthetic',
+) {
   const session = new DevelopmentSession(createVolatileTokenStorage());
   const transport = new ApiTransport(
     baseURL,
@@ -41,7 +46,7 @@ export async function connected(baseURL: string, credential: string, wire: typeo
   const imports = new ImportController(transport, session);
   const history = new HistoryController(transport, session);
   await session.connect(credential, resources.probe);
-  resources.reservePerson('8D anonymous synthetic');
+  resources.reservePerson(displayName);
   await resources.retryCreate('persons');
   const person = resources.snapshot().details.persons.value!.id;
   resources.reserveRelationship(person, 'unknown', 'unknown');

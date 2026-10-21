@@ -62,3 +62,14 @@ def db_session(database_engine: Engine) -> Iterator[Session]:
                 yield session
         finally:
             outer.rollback()
+
+
+@pytest.fixture
+def recovery_database_engine() -> Iterator[Engine]:
+    # Recovery archives contain every owner. Unresolved synthetic fault rows from
+    # a different test must not be silently treated as quiescent current authority.
+    # Keep incident/restore tests in independently migrated disposable databases.
+    from memory_control_demo import disposable_database
+
+    with disposable_database() as engine:
+        yield engine

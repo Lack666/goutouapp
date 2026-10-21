@@ -1,0 +1,36 @@
+........................................................................ [  8%]
+........................................................................ [ 16%]
+........................................................................ [ 25%]
+........................................................................ [ 33%]
+........................................................................ [ 42%]
+........................................................................ [ 50%]
+........................................................................ [ 59%]
+........................................................................ [ 67%]
+........................................................................ [ 76%]
+................F....................................................... [ 84%]
+........................................................................ [ 92%]
+............................................................             [100%]
+================================== FAILURES ===================================
+_______________ test_finalize_replay_cancel_race_and_accounting _______________
+
+quota_api = <function quota_api.<locals>.make at 0x000001BDEDC25C70>
+database_engine = Engine(postgresql+psycopg://postgres@127.0.0.1:15434/goutou_test_c17656a2080f)
+
+    def test_finalize_replay_cancel_race_and_accounting(quota_api, database_engine):
+        app, client = quota_api()
+        owner, person, relationship, _ = scope(database_engine)
+        ready = bind(client, owner, upload(client, owner).json(), person, relationship)
+        with ThreadPoolExecutor(max_workers=2) as executor:
+            first = executor.submit(finalize, client, owner, ready)
+            cancel = executor.submit(
+                client.post, f"/api/v1/chat-imports/{ready['id']}/cancel", headers=headers(owner)
+            )
+            response, cancelled = first.result(), cancel.result()
+>       assert response.status_code in {200, 409} and cancelled.status_code in {200, 409}
+E       assert (503 in {200, 409})
+E        +  where 503 = <Response [503 Service Unavailable]>.status_code
+
+apps\server\tests\test_resource_admission.py:470: AssertionError
+=========================== short test summary info ===========================
+FAILED apps/server/tests/test_resource_admission.py::test_finalize_replay_cancel_race_and_accounting
+1 failed, 851 passed in 365.91s (0:06:05)

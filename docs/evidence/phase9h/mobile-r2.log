@@ -1,0 +1,10 @@
+$ jest --runInBand "--" "tests/lifecycleController.test.ts" "tests/erasureController.test.ts" "tests/fullMobileIntegration.test.ts"
+PASS tests/lifecycleController.test.ts
+PASS tests/fullMobileIntegration.test.ts
+PASS tests/erasureController.test.ts
+
+Test Suites: 3 passed, 3 total
+Tests:       37 passed, 37 total
+Snapshots:   0 total
+Time:        2.476 s
+Ran all test suites matching /tests\\lifecycleController.test.ts|tests\\erasureController.test.ts|tests\\fullMobileIntegration.test.ts/i.

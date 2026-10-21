@@ -8,6 +8,7 @@ from app.db.models.import_jobs import (
     ChatImportSpeaker,
     RelationshipMessage,
 )
+from app.db.models.lifecycle import LifecycleConfirmation, LifecycleReceipt, RunRecoveryReceipt
 from app.db.models.records import (
     AgentRun,
     Conversation,
@@ -23,6 +24,9 @@ from app.db.models.records import (
 )
 
 __all__ = [
+    "LifecycleConfirmation",
+    "LifecycleReceipt",
+    "RunRecoveryReceipt",
     "ErasureConfirmation",
     "ErasureReceipt",
     "AdmissionState",

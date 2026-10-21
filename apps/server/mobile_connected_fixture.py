@@ -36,6 +36,8 @@ from app.db.models import (
     Conversation,
     ErasureConfirmation,
     ErasureReceipt,
+    LifecycleConfirmation,
+    LifecycleReceipt,
     MemoryConfirmationRow,
     MemoryControlRow,
     MemoryMutationRow,
@@ -195,6 +197,13 @@ def main():
                 if command.strip() == "stop":
                     break
                 if os.environ.get("GOUTOU_ERASURE_E2E") == "1":
+                    if command.startswith("expire_lifecycle "):
+                        with Session(engine) as db, db.begin():
+                            row = db.get(LifecycleConfirmation, UUID(command.strip().split()[1]))
+                            if row is None:
+                                raise ValueError("Synthetic lifecycle challenge missing")
+                            row.expires_at = datetime.now(UTC) - timedelta(seconds=1)
+                        print(json.dumps({"expired": True}), flush=True)
                     if command.startswith("expire_erasure "):
                         with Session(engine) as db, db.begin():
                             row = db.get(ErasureConfirmation, UUID(command.strip().split()[1]))
@@ -216,6 +225,39 @@ def main():
                             print(
                                 json.dumps(
                                     {
+                                        "persons": [
+                                            {
+                                                "id": str(row.id),
+                                                "owner": str(row.user_id),
+                                                "deleted": row.deleted_at is not None,
+                                            }
+                                            for row in db.scalars(
+                                                select(Person).order_by(Person.id)
+                                            )
+                                        ],
+                                        "relationships": [
+                                            {
+                                                "id": str(row.id),
+                                                "owner": str(row.user_id),
+                                                "deleted": row.deleted_at is not None,
+                                            }
+                                            for row in db.scalars(
+                                                select(Relationship).order_by(Relationship.id)
+                                            )
+                                        ],
+                                        "lifecycle_receipts": [
+                                            {
+                                                "id": str(row.id),
+                                                "domain": row.domain,
+                                                "target": str(row.target_id),
+                                                "counts": row.counts,
+                                            }
+                                            for row in db.scalars(
+                                                select(LifecycleReceipt).order_by(
+                                                    LifecycleReceipt.performed_at
+                                                )
+                                            )
+                                        ],
                                         "datasets": [
                                             {
                                                 "id": str(row.id),

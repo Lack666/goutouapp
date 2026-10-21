@@ -1,0 +1,22 @@
+[
+  {
+    "execution": {
+      "steps_file": ".cache\\phase9h-build-warmup-r14.json",
+      "steps": [
+        "open settings",
+        "evidence",
+        "stop"
+      ],
+      "helper_sha256": "9981e19c21da266303f0d0a097ca7217815a1af296834fa151c21c7c9e9c4f36",
+      "device": "emulator-5554",
+      "mobile_fingerprint": "39887500b795b25bbf44a370d879efd6d263c02f5bb25e9b8e17a9f36fc0163c",
+      "erasure_fingerprint": "edaed6b0beb7f6be9a7bd191ee898dcefe4b670f98e87184b03e2c1fa49c88bb",
+      "runtime_fingerprint_9h": "91477c5f5c313d6ddee211d5556cc26cab6bb411b403fa268eaae22338037d70"
+    }
+  },
+  {
+    "native_build": {
+      "verified": false
+    }
+  }
+]

@@ -1,4 +1,38 @@
-# Data deletion contract — current Phase9E
+# Data deletion contract — current Phase9H
+
+Signed `/api/v1/lifecycle-erasures` Prepare/Execute/Receipt supports exact Person
+and Relationship erasure. Person includes all structurally linked relationships;
+Relationship preserves its Person and other relationships. Owner Owned Data uses
+the private signed development/test operator command, not account closure. Every
+domain requires a five-minute dependency/content snapshot, explicit confirmation,
+active owner/domain barriers and immutable key/payload. Changed dependencies need
+fresh preparation. Outside/unbound Person speaker references reject widened scope.
+
+AI/import messages, speaker/profile labels, raw artifacts, scoped Memory and Undo
+are deleted or scrubbed. UUIDs, Run keys/fingerprints, canonical import dedup hashes,
+count-only receipts and timestamps remain for the owner fence lifetime. Owner also
+includes general Conversations, unbound imports, controls and inactive reservations;
+unknown raw-file attribution blocks preparation. Its terminal tombstone rejects
+old local JWT protected reads/writes and UUID recreation. Text mentions and unrelated
+same-owner/Owner B domains never expand the exact structured scope.
+
+Unresolved or unproved live writers block deletion. Original-writer completion or
+matching OS-proof recovery receipt is required. Raw unlink cannot roll back with
+SQL; any failure yields no receipt and same-key retry completes cleanup. Scope is
+current primary/registered raw store; backups, external/provider/export/collector
+copies and production identities require separate handling. Restore stays quarantined
+until exact authoritative fences/receipts/tombstones have been reconciled.
+
+Connected App uses formal selected details, server counts, explicit Execute,
+receipt GET and authoritative refresh. All affected caches and late responses are
+invalidated by scope/session epoch. One volatile original-key unknown attempt can
+be replayed; restart/identity change never automatically sends an old deletion.
+See ADR0043 and AGENT_RUN_RECOVERY for operational proof and limitations.
+
+## Historical Phase9E/9F contract
+
+The following earlier limited-scope text is retained for history. Statements that
+Person/Relationship deletion is unavailable are superseded by the exact 9H scope above.
 
 ## Current Phase9F integration
 

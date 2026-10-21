@@ -1,3 +1,37 @@
+# AgentRun recovery — current Phase 9H
+
+Implemented operator-only recovery requires the exact signed owner/conversation/run,
+immutable operation key and configured trusted shared OS fence. The original writer
+holds its lock through Provider, runtime, persistence and possibly still-live executor
+threads. Cancellation, disconnect, lost DB pools and30days elapsed never prove death.
+Normal completion explicitly acknowledges writer release only after runtime ends.
+Offline recovery acquires the same lock and holds it through committed Message/Memory
+inspection and receipt commit. It preserves actual effects and original Agent key,
+records failed/writer_stopped and unknown_preserved Memory outcome. It never creates
+Completed or retries Provider. Same recovery key returns the same durable receipt;
+other owners and changed payloads are rejected. Erasure requires matching receipt
+owner/run/token/scope/time, not a recovered_at flag alone.
+
+Private development/test operator command: `uv run python apps/server/data_erasure_cli.py`.
+One bounded JSON line on stdin carries signed credential and action `recover_run`,
+conversation_id, run_id and operation_key. Credentials never enter argv/logs. No
+privileged HTTP recovery endpoint, cron reset, force flag or age threshold exists.
+Operators stop only the verified owning workload, retain its fence/root and use the
+supported proof path. Legacy rows or missing/moved roots remain quarantined; an
+unsupported topology needs authoritative incident investigation, not fabricated proof.
+DB-role/host compromise is outside the API trust boundary; root ACLs and shared
+filesystem/OS lock semantics require deployment acceptance.
+
+Actual spawned workers are held at Provider, answer and Memory commits, then killed.
+A fourth case cancels the service coroutine while a Memory executor thread remains
+alive: recovery still refuses until process termination. Original-key REST/SSE replay
+fails without re-execution. Actual pg_dump/restore preserves the recovery receipt and
+refuses release with an unacknowledged live writer. See ADR0043 and9H evidence.
+
+## Historical Phase9G audit and proposed design
+
+The earlier unavailable-command statements below describe the9G implementation.
+
 # AgentRun recovery boundary — Phase 9G
 
 This is an audited contract and future recovery design, not an implemented Run

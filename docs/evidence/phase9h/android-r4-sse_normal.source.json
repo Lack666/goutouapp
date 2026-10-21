@@ -1,0 +1,26 @@
+{
+  "source_fingerprint": "6bef92f7a2743cd7d7b74ef637cad8cb89be6ad274c4a08ce4c50a093c5c7e31",
+  "phase_marker": {
+    "completed_phase": 8,
+    "completed_subphase": "9G"
+  },
+  "synthetic_only": true,
+  "command": [
+    "F:\\\u72d7\u5934\u519b\u5e08app\u5316\\goutouapp\\.venv\\Scripts\\python.exe",
+    "scripts/phase8_android_demo.py",
+    "--adb",
+    "C:/Users/VOS-User/AppData/Local/Android/Sdk/platform-tools/adb.exe",
+    "--serial",
+    "emulator-5554",
+    "--port",
+    "8024",
+    "--closeout",
+    "--steps",
+    "scripts/native/phase8f_closeout_sse_normal.json",
+    "--report",
+    "F:\\\u72d7\u5934\u519b\u5e08app\u5316\\goutouapp\\.cache\\android-r4-sse_normal.json"
+  ],
+  "exit_code": 0,
+  "log_sha256": "86dd1f08922a7b60de0e4a4572ca3040b6abe0e76ef08a910724b0682802987c",
+  "end_source_fingerprint": "59db1195bc3e8b80a889042866608969650dc0a347315b820a09a1a2028f9234"
+}

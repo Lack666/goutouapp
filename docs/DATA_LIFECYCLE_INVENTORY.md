@@ -1,6 +1,20 @@
-# Data lifecycle inventory — current Phase9E
+# Data lifecycle inventory — current Phase9H
 
-Current schema:19 application tables, migration20261013_02. The dated9D inventory
+## Current9H authority
+
+Current schema:22 application tables, migration20261014_01. New tables are
+lifecycle_confirmations, lifecycle_receipts and run_recovery_receipts. Person,
+Relationship and User retain terminal UUID tombstones; full scoped erasure removes
+bodies/labels/raw artifacts/Memory/Undo while minimal key/dedup/receipt metadata
+remains. New Agent writer fields carry OS-proof identity and release/recovery
+acknowledgement. The Current9H section below defines all overrides; earlier dated
+inventories are historical and do not describe the current table count.
+
+## Historical phase-specific contracts
+
+### Data lifecycle inventory — current Phase9E
+
+Historical9E schema:19 application tables, migration20261013_02. The dated9D inventory
 below describes the original17-table baseline. Current overrides are authoritative:
 
 - Conversation/Agent Message: guarded exact Conversation deletion physically removes
@@ -254,3 +268,22 @@ references identify tests; execution authority is PHASE_9D_ACCEPTANCE/MATRIX.
   region, retention and erasure must be approved before real integration.
 - Retained metadata/copies: unknown vendor copies; excluded from local backup, cannot claim erased.
 - Evidence: import/Agent separation and LLM Mock tests; provider lifecycle NOT VERIFIED.
+
+
+## Current Phase 9H
+
+Current full-scope selection: Person -> all owned Relationships -> bound Conversations,
+Jobs, speakers, messages, raw artifacts and Memory/Undo; Relationship -> its exact
+children, preserving Person and other Relationships; Owner -> every owned domain,
+including general Conversations, unbound/pending imports, owner-only Memory/control
+and inactive upload reservations. Active reservations and unresolved writers block.
+Unattributed raw files block Owner and shared outside speaker references block Person.
+Lifecycle confirmations are count/digest-only, five-minute authorization metadata;
+maintenance removes expired challenges after the existing24h grace. Lifecycle and
+run recovery receipts, UUID tombstones, Agent operation keys and import dedup metadata
+remain owner-lifetime fences. Admission owner counters are bounded minute-window
+anti-abuse metadata; they roll over normally and are not globally reset by one owner.
+OS fence files contain token/lock bytes only, no bodies/JWT/hidden reasoning.
+Backups, provider/exports/collectors and production account identities remain separate
+domains, with no certified deletion propagation. Current matrix supersedes historical
+unavailable Person/Relationship statements; see DATA_DELETION_MATRIX and ADR0043.

@@ -1,0 +1,20 @@
+{
+    "stopped_service_pids":  [
+                                 21796,
+                                 5048,
+                                 14428,
+                                 27388,
+                                 11240,
+                                 564,
+                                 11128,
+                                 31552,
+                                 6348
+                             ],
+    "storage_wiped":  false,
+    "existing_emulator_preserved":  true,
+    "emulator_owned":  false,
+    "postgresql_select1":  1,
+    "synthetic_only":  true,
+    "owned_native_scenes":  14,
+    "owned_services_stopped":  true
+}

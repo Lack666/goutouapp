@@ -1,0 +1,179 @@
+[
+  {
+    "execution": {
+      "steps_file": "scripts\\native\\phase9f_dataset.json",
+      "steps": [
+        "restart",
+        "tap [\"\u6e05\u9664\u5f53\u524d\u5f00\u53d1\u4f1a\u8bdd\",\"down\"]",
+        "case 9F-DATASET",
+        "seed ErasureNative",
+        "bookmark erase",
+        "login a",
+        "tap [\"\u6388\u6743\u957f\u671f\u8bb0\u5fc6\"]",
+        "tap [\"\u6062\u590d\u8bb0\u5fc6\"]",
+        "save \u4e00",
+        "history_setup [4,\"EraseDataset\"]",
+        "bookmark erase",
+        "history_setup [2,\"KeepDataset\"]",
+        "bookmark keep",
+        "seed OtherNative",
+        "history_setup [3,\"OtherDataset\"]",
+        "bookmark other",
+        "scope erase",
+        "route [\"history\",\"erase\"]",
+        "tap [\"\u9009\u62e9\u5220\u9664 Dataset {job}\"]",
+        "tap [\"\u5411\u670d\u52a1\u5668\u51c6\u5907\u5220\u9664\"]",
+        "assert_ui \"\u670d\u52a1\u5668\u5f85\u5220\u6d88\u606f\uff1a4\"",
+        "tap [\"\u53d6\u6d88\u672c\u6b21\u5220\u9664\u786e\u8ba4\"]",
+        "evidence",
+        "assert_db [\"erasure.receipts.length\",0]",
+        "tap [\"\u5411\u670d\u52a1\u5668\u51c6\u5907\u5220\u9664\"]",
+        "tap [\"\u660e\u786e\u786e\u8ba4\u5e76\u6267\u884c\u6b64\u8303\u56f4\u5220\u9664\"]",
+        "assert_ui \"\u5220\u9664\u72b6\u6001\uff1acompleted\"",
+        "assert_ui \"Receipt ID\uff1a\"",
+        "assert_ui \"\u6743\u5a01\u5237\u65b0\uff1averified\"",
+        "assert_erased [\"dataset\",\"erase\",true,0]",
+        "assert_erased [\"dataset\",\"keep\",false,2]",
+        "assert_erased [\"dataset\",\"other\",false,3]",
+        "evidence",
+        "assert_db [\"erasure.receipts.length\",1]",
+        "assert_db [\"erasure.memories\",1]",
+        "assert_db [\"memory.agent_messages\",2]",
+        "tap [\"\u540c key \u5b89\u5168\u91cd\u653e\u539f\u5220\u9664\"]",
+        "assert_ui \"\u6743\u5a01\u5237\u65b0\uff1averified\"",
+        "evidence",
+        "assert_db [\"erasure.receipts.length\",1]",
+        "assert_identity",
+        "stop"
+      ],
+      "helper_sha256": "de4ebc0ea596c9dc5baa8680c24f1a8dffa78f9236d4fb5bd1cf95d198942c59",
+      "device": "emulator-5554",
+      "mobile_fingerprint": "398806146f517ee05131d118abf41851a67347a3601c0e1d840f62d0c680c4ea",
+      "erasure_fingerprint": "827a96a6ab020838caab826954d578630c2b927fb62f86fd004980412dee6f55",
+      "runtime_fingerprint_9h": "ca2cc80e7165cf65fe63ef97f23cdb27a3ca8f8621c68a09de7250e025373d81"
+    }
+  },
+  {
+    "command": "restart",
+    "status": "done"
+  },
+  {
+    "command": "tap",
+    "status": "done"
+  },
+  {
+    "case": "9F-DATASET"
+  },
+  {
+    "command": "case",
+    "status": "done"
+  },
+  {
+    "command": "seed",
+    "status": "done"
+  },
+  {
+    "command": "bookmark",
+    "status": "done"
+  },
+  {
+    "command": "login",
+    "status": "done"
+  },
+  {
+    "command": "tap",
+    "status": "done"
+  },
+  {
+    "command": "tap",
+    "status": "done"
+  },
+  {
+    "command": "save",
+    "status": "done"
+  },
+  {
+    "history_setup": {
+      "transport": "host REST preconditions",
+      "count": 4,
+      "relationship": "da0c9942-def9-4149-b0ad-6b60a9b2f8ef",
+      "job": "57f3e157-0b03-45f8-84ff-d3e9b6bf5648",
+      "receipt_status": "imported"
+    }
+  },
+  {
+    "command": "history_setup",
+    "status": "done"
+  },
+  {
+    "command": "bookmark",
+    "status": "done"
+  },
+  {
+    "history_setup": {
+      "transport": "host REST preconditions",
+      "count": 2,
+      "relationship": "da0c9942-def9-4149-b0ad-6b60a9b2f8ef",
+      "job": "906d7017-2d6b-447b-b775-19a2a1c0f2af",
+      "receipt_status": "imported"
+    }
+  },
+  {
+    "command": "history_setup",
+    "status": "done"
+  },
+  {
+    "command": "bookmark",
+    "status": "done"
+  },
+  {
+    "command": "seed",
+    "status": "done"
+  },
+  {
+    "history_setup": {
+      "transport": "host REST preconditions",
+      "count": 3,
+      "relationship": "3d7ff286-96d3-4c94-91d8-08da04763e04",
+      "job": "2fccfb67-430b-417a-aa66-2d75dff9edd2",
+      "receipt_status": "imported"
+    }
+  },
+  {
+    "command": "history_setup",
+    "status": "done"
+  },
+  {
+    "command": "bookmark",
+    "status": "done"
+  },
+  {
+    "command": "scope",
+    "status": "done"
+  },
+  {
+    "command": "route",
+    "status": "done"
+  },
+  {
+    "command": "tap",
+    "status": "done"
+  },
+  {
+    "command": "tap",
+    "status": "done"
+  },
+  {
+    "assert_ui": "\u670d\u52a1\u5668\u5f85\u5220\u6d88\u606f\uff1a4 \u00b7 \u4fdd\u7559 Run \u5143\u6570\u636e\uff1a0",
+    "status": "PASS"
+  },
+  {
+    "command": "assert_ui",
+    "status": "done"
+  },
+  {
+    "command": "tap",
+    "status": "failed",
+    "control": "[\"\u53d6\u6d88\u672c\u6b21\u5220\u9664\u786e\u8ba4\"]"
+  }
+]

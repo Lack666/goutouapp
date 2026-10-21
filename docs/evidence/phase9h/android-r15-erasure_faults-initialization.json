@@ -1,0 +1,10 @@
+{
+  "synthetic_only": true,
+  "source_fingerprint": "0f6d1d92234581b322d1cb1cce7e9c5db49f82ed97b46def3b255acc91bb89e9",
+  "app_stopped_before_fixture": true,
+  "resumed_activity": [
+    "topResumedActivity=ActivityRecord{65145421 u0 com.google.android.apps.nexuslauncher/.NexusLauncherActivity t2}"
+  ],
+  "storage_wiped": false,
+  "retained_failure": "android-r14-erasure_faults"
+}

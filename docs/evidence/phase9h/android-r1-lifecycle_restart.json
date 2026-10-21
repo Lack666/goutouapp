@@ -1,0 +1,53 @@
+[
+  {
+    "execution": {
+      "steps_file": "scripts\\native\\phase9h_restart_session.json",
+      "steps": [
+        "restart",
+        "tap [\"\u6e05\u9664\u5f53\u524d\u5f00\u53d1\u4f1a\u8bdd\",\"down\"]",
+        "case 9H-RESTART-SESSION",
+        "seed LifecycleRestart9H",
+        "bookmark erase",
+        "login a",
+        "route [\"relationship\",\"erase\"]",
+        "tap [\"\u67e5\u770b persons LifecycleRestart9H\"]",
+        "tap [\"\u51c6\u5907\u5220\u9664 Person {person}\"]",
+        "assert_ui \"\u5b8c\u6574\u5220\u9664\u72b6\u6001\uff1aawaiting_confirmation\"",
+        "back",
+        "route [\"relationship\",\"erase\"]",
+        "assert_absent [\"\u5b8c\u6574\u5220\u9664 Confirmation ID\uff1a\"]",
+        "tap [\"\u67e5\u770b persons LifecycleRestart9H\"]",
+        "tap [\"\u51c6\u5907\u5220\u9664 Person {person}\"]",
+        "restart",
+        "assert_ui \"\u5f00\u53d1\u4f1a\u8bdd\u5df2\u8fde\u63a5\"",
+        "route [\"relationship\",\"erase\"]",
+        "assert_absent [\"\u5b8c\u6574\u5220\u9664 Confirmation ID\uff1a\",\"\u5b8c\u6574\u5220\u9664 Receipt ID\uff1a\"]",
+        "open settings",
+        "tap [\"\u6e05\u9664\u5f53\u524d\u5f00\u53d1\u4f1a\u8bdd\",\"down\"]",
+        "login b",
+        "route [\"relationship\",\"erase\"]",
+        "assert_absent [\"\u51c6\u5907\u5220\u9664 Person\",\"\u5b8c\u6574\u5220\u9664 Receipt ID\uff1a\"]",
+        "foreign",
+        "assert_identity",
+        "evidence",
+        "assert_db [\"erasure.lifecycle_receipts.length\",0]",
+        "assert_lifecycle [\"person\",\"erase\",false]",
+        "stop"
+      ],
+      "helper_sha256": "098163e036250a8f425a46d27885711a9bc304f7eb7088fa24d3d8ea084930a3",
+      "device": "emulator-5554",
+      "mobile_fingerprint": "398806146f517ee05131d118abf41851a67347a3601c0e1d840f62d0c680c4ea",
+      "erasure_fingerprint": "691d16de6204b1a9fc12df07faccc2cb831c249796f6be8a7199956ee5adc296",
+      "runtime_fingerprint_9h": "15d079e7301dfe1156bd8f2b70e1adcfeec9d81d4bc61217aed12c7325837e17"
+    }
+  },
+  {
+    "command": "restart",
+    "status": "done"
+  },
+  {
+    "command": "tap",
+    "status": "failed",
+    "control": "[\"\u6e05\u9664\u5f53\u524d\u5f00\u53d1\u4f1a\u8bdd\",\"down\"]"
+  }
+]

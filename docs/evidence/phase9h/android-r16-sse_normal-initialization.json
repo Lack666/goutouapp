@@ -1,0 +1,9 @@
+{
+  "synthetic_only": true,
+  "source_fingerprint": "fdcde451667babd93bbcc12ca005724002b584830d0ca11bb5f2b74566ae51e7",
+  "app_stopped_before_fixture": true,
+  "resumed_activity": [
+    "topResumedActivity=ActivityRecord{133979739 u0 com.google.android.apps.nexuslauncher/.NexusLauncherActivity t2}"
+  ],
+  "storage_wiped": false
+}

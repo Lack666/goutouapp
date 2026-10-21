@@ -1,0 +1,26 @@
+{
+  "source_fingerprint": "536f246613a3f533ba40976ac77cf675a3d61ed4040d94e8fedd0c8ac4487a68",
+  "phase_marker": {
+    "completed_phase": 8,
+    "completed_subphase": "9G"
+  },
+  "synthetic_only": true,
+  "command": [
+    "F:\\\u72d7\u5934\u519b\u5e08app\u5316\\goutouapp\\.venv\\Scripts\\python.exe",
+    "scripts/phase8_android_demo.py",
+    "--adb",
+    "C:/Users/VOS-User/AppData/Local/Android/Sdk/platform-tools/adb.exe",
+    "--serial",
+    "emulator-5554",
+    "--port",
+    "8024",
+    "--closeout",
+    "--steps",
+    "scripts/native/phase8f_closeout_memory_smoke_revoke.json",
+    "--report",
+    "F:\\\u72d7\u5934\u519b\u5e08app\u5316\\goutouapp\\.cache\\android-r6-memory_smoke_revoke.json"
+  ],
+  "exit_code": 0,
+  "log_sha256": "5bfd5e298f774277202e2fb5c417faec635c69d919f6b2ec8c4697387fb32522",
+  "end_source_fingerprint": "536f246613a3f533ba40976ac77cf675a3d61ed4040d94e8fedd0c8ac4487a68"
+}

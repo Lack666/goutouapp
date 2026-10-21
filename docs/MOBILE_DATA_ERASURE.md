@@ -1,4 +1,18 @@
-# Connected Mobile self-service erasure — Phase 9F
+# Mobile data erasure — current Phase9H
+
+## Current9H authority
+
+Connected App now exposes formal Person/Relationship Prepare, explicit Confirm,
+Execute, receipt GET and authoritative refresh, alongside existing Dataset and
+Conversation erasure. Exact structured Memory/Undo scope is disclosed before
+confirmation. Caches and late responses are invalidated; one volatile original-key
+attempt supports unknown-result replay. Owner Owned Data remains operator-only,
+with no production account closure or durable client outbox. Earlier9F-only
+capability descriptions below are historical; the Current9H section is authoritative.
+
+## Historical phase-specific contracts
+
+### Connected Mobile self-service erasure — Phase 9F
 
 History lets the signed owner choose a real Relationship and read canonical
 Dataset summaries from `GET /api/v1/relationships/{relationship_id}/datasets`.
@@ -60,3 +74,18 @@ body enters evidence; request-body digests prove native replay identity.
 
 Acceptance status and exact independent evidence: [9F report](PHASE_9F_ACCEPTANCE.md)
 and [matrix](PHASE_9F_MATRIX.json). Web evidence cannot satisfy Android acceptance.
+
+
+## Current Phase 9H
+
+Connected Relationship resources now expose exact selected Person/Relationship detail
+targets. Same-name relationships display formal UUIDs. Prepare shows actual scoped
+counts, five-minute expiry, Memory/Undo policy and retained-fence/copy limits; explicit
+Confirm executes. Receipt GET compares fields semantically (JSONB key order is not
+identity), then target404 and fresh owned lists confirm current primary state.
+Before Execute all affected resource/chat/import/history/Memory caches are invalidated.
+Owner epoch/generation guards suppress late SSE/REST/history responses. One volatile
+immutable original-key attempt supports Unknown Outcome replay; known expiry/stale/
+Busy requires explicit new preparation. Cancel, background, unmount, identity switch
+and restart never automatically execute. Identity change drops attempts/receipts.
+Owner Owned Data is operator-only; production account closure remains unavailable.

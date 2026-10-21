@@ -1,42 +1,42 @@
 {
-  "phase": "9F",
-  "delivery": "Connected React Native App + guarded signed API",
+  "phase": "9H",
+  "delivery": "Connected Person/Relationship + guarded signed API; Owner Owned Data private operator",
   "domains": {
     "account": {
       "self_service": "Unavailable",
       "authorized_actor": "No public Owner/account erasure API",
       "confirmation": "Not implemented",
       "affected_resources": "Would require every owned domain and identity/provider/copy lifecycle",
-      "primary_rows": "No full account deletion",
-      "retained_metadata": "Existing owner and all formal references remain",
+      "primary_rows": "Owned Data implemented separately under owned_data; provider identity/account closure unavailable",
+      "retained_metadata": "Local owner tombstone and anti-resurrection fences remain",
       "import_dedup": "Unchanged",
       "memory_effect": "Unchanged",
       "backup_effect": "Full primary-loss/public erasure acceptance blocked R-09",
-      "ui_api_limit": "No App claim of complete personal-data deletion"
+      "ui_api_limit": "No public account endpoint, OAuth/refresh/provider closure or account deletion claim"
     },
     "person": {
-      "self_service": "Unavailable, including empty Person",
-      "authorized_actor": "No public Person deletion API",
-      "confirmation": "Not implemented",
-      "affected_resources": "Existing multiple Relationships, speaker bindings, Memory and provenance FKs",
-      "primary_rows": "Retained; RESTRICT unchanged",
-      "retained_metadata": "Person UUID and profile remain",
-      "import_dedup": "Unchanged",
-      "memory_effect": "Unchanged",
-      "backup_effect": "Retained by local restore; future explicit lifecycle task",
-      "ui_api_limit": "No DELETE endpoint/button; no widened cascade"
+      "self_service": "Connected App selected formal detail -> Prepare -> explicit Confirm -> Execute -> Receipt -> authoritative refresh",
+      "authorized_actor": "Verified active signed owner",
+      "confirmation": "Five-minute exact dependency/content snapshot; explicit execute with confirmation UUID and immutable operation key",
+      "affected_resources": "All structurally linked relationships and their children; outside/unbound speaker references reject",
+      "primary_rows": "Message/speaker bodies and Memory/Undo physically removed; raw files unlinked; profile labels scrubbed; UUID tombstones retained",
+      "retained_metadata": "Owner-lifetime UUID/key/fingerprint/dedup/receipt/count/timestamp fences; no complete chat or hidden reasoning",
+      "import_dedup": "Canonical imported metadata and transcript hash retained; pending Jobs cancelled and tombstoned",
+      "memory_effect": "Exact structured scope Memory and Undo removed; unrelated records preserved",
+      "backup_effect": "Exact frozen current-primary tombstone/key/receipt reconciliation before release; missing authority fails closed",
+      "ui_api_limit": "Primary/raw structured scope only; no text matching, external-copy or production account closure claim"
     },
     "relationship": {
-      "self_service": "Unavailable, including empty Relationship",
-      "authorized_actor": "No public Relationship deletion API",
-      "confirmation": "Not implemented",
-      "affected_resources": "Conversation, Dataset and Memory references must be independently specified",
-      "primary_rows": "Retained; RESTRICT unchanged",
-      "retained_metadata": "Relationship UUID and metadata remain",
-      "import_dedup": "Unchanged",
-      "memory_effect": "Unchanged",
-      "backup_effect": "Retained by local restore; future explicit lifecycle task",
-      "ui_api_limit": "No DELETE endpoint/button"
+      "self_service": "Connected App selected formal detail -> Prepare -> explicit Confirm -> Execute -> Receipt -> authoritative refresh",
+      "authorized_actor": "Verified active signed owner",
+      "confirmation": "Five-minute exact dependency/content snapshot; explicit execute with confirmation UUID and immutable operation key",
+      "affected_resources": "Exact Relationship and children; Person and other Relationships preserved",
+      "primary_rows": "Message/speaker bodies and Memory/Undo physically removed; raw files unlinked; profile labels scrubbed; UUID tombstones retained",
+      "retained_metadata": "Owner-lifetime UUID/key/fingerprint/dedup/receipt/count/timestamp fences; no complete chat or hidden reasoning",
+      "import_dedup": "Canonical imported metadata and transcript hash retained; pending Jobs cancelled and tombstoned",
+      "memory_effect": "Exact structured scope Memory and Undo removed; unrelated records preserved",
+      "backup_effect": "Exact frozen current-primary tombstone/key/receipt reconciliation before release; missing authority fails closed",
+      "ui_api_limit": "Primary/raw structured scope only; no text matching, external-copy or production account closure claim"
     },
     "conversation": {
       "self_service": "Connected App Prepare / explicit Confirm / Execute / durable Receipt / authoritative refresh",
@@ -97,6 +97,18 @@
       "memory_effect": "Only selected Memory; chat/import histories retained",
       "backup_effect": "Existing 9D exact authority reconciliation and challenge invalidation retained",
       "ui_api_limit": "Memory deletion is not Conversation, Dataset, Person, Relationship or account erasure"
+    },
+    "owned_data": {
+      "self_service": "Unavailable in App; private development/test operator only",
+      "authorized_actor": "Verified signed owner; owner-specific literal confirmation required",
+      "confirmation": "Five-minute exact dependency/content snapshot; explicit execute with confirmation UUID and immutable operation key",
+      "affected_resources": "All owned domains, general Conversations, unbound/pending imports, owner-only Memory/control and inactive reservations",
+      "primary_rows": "Message/speaker bodies and Memory/Undo physically removed; raw files unlinked; profile labels scrubbed; UUID tombstones retained",
+      "retained_metadata": "Owner-lifetime UUID/key/fingerprint/dedup/receipt/count/timestamp fences; no complete chat or hidden reasoning",
+      "import_dedup": "Canonical imported metadata and transcript hash retained; pending Jobs cancelled and tombstoned",
+      "memory_effect": "Exact structured scope Memory and Undo removed; unrelated records preserved",
+      "backup_effect": "Exact frozen current-primary tombstone/key/receipt reconciliation before release; missing authority fails closed",
+      "ui_api_limit": "Owned Data primary/raw scope; terminal old local JWT fence; no production account/identity closure"
     }
   }
 }

@@ -22,6 +22,8 @@ from app.db.base import Base, RecordMixin
 class User(RecordMixin, Base):
     __tablename__ = "users"
 
+    deleted_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
+
 
 class Person(RecordMixin, Base):
     __tablename__ = "persons"
@@ -29,6 +31,7 @@ class Person(RecordMixin, Base):
 
     user_id: Mapped[UUID] = mapped_column(ForeignKey("users.id", ondelete="RESTRICT"), index=True)
     display_name: Mapped[str] = mapped_column(String(120), nullable=False)
+    deleted_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
 
 
 class Relationship(RecordMixin, Base):
@@ -47,6 +50,7 @@ class Relationship(RecordMixin, Base):
     person_id: Mapped[UUID] = mapped_column(index=True)
     relationship_type: Mapped[str] = mapped_column(String(40), nullable=False)
     status: Mapped[str] = mapped_column(String(40), nullable=False)
+    deleted_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
 
 
 class Conversation(RecordMixin, Base):
@@ -114,6 +118,12 @@ class AgentRun(RecordMixin, Base):
     )
     memory_status: Mapped[str | None] = mapped_column(String(40), nullable=True)
     result_warnings: Mapped[list[str] | None] = mapped_column(JSONB, nullable=True)
+    writer_token: Mapped[UUID | None] = mapped_column(nullable=True)
+    writer_scope: Mapped[str | None] = mapped_column(String(64), nullable=True)
+    writer_released: Mapped[bool] = mapped_column(
+        nullable=False, default=False, server_default="false"
+    )
+    recovered_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
 
 
 class MemoryControlRow(RecordMixin, Base):

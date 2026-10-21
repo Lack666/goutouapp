@@ -18,7 +18,11 @@ def create_user(db: Session) -> User:
 
 
 def get_user(db: Session, user_id: UUID) -> User | None:
-    return db.get(User, user_id)
+    # Shared owner barrier precedes every domain lock. Full-scope erasure takes
+    # NO KEY UPDATE on this row and rechecks the snapshot after prior writes commit.
+    return db.scalar(
+        select(User).where(User.id == user_id, User.deleted_at.is_(None)).with_for_update(read=True)
+    )
 
 
 def create_person(
@@ -33,7 +37,11 @@ def create_person(
 
 
 def get_person(db: Session, user_id: UUID, person_id: UUID) -> Person | None:
-    return db.scalar(select(Person).where(Person.user_id == user_id, Person.id == person_id))
+    return db.scalar(
+        select(Person).where(
+            Person.user_id == user_id, Person.id == person_id, Person.deleted_at.is_(None)
+        )
+    )
 
 
 def create_relationship(
@@ -58,7 +66,9 @@ def create_relationship(
 def get_relationship(db: Session, user_id: UUID, relationship_id: UUID) -> Relationship | None:
     return db.scalar(
         select(Relationship).where(
-            Relationship.user_id == user_id, Relationship.id == relationship_id
+            Relationship.user_id == user_id,
+            Relationship.id == relationship_id,
+            Relationship.deleted_at.is_(None),
         )
     )
 

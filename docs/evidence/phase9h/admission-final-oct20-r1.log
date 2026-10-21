@@ -1,0 +1,45 @@
+..F........................                                              [100%]
+================================== FAILURES ===================================
+________________ test_real_body_idle_and_total_deadline[total] ________________
+
+worker_pair = <function worker_pair.<locals>.start at 0x000001788A037270>
+database_engine = Engine(postgresql+psycopg://postgres@127.0.0.1:15434/goutou_test_5eba4b8a0a01)
+mode = 'total'
+
+    @pytest.mark.parametrize("mode", ["idle", "total"])
+    def test_real_body_idle_and_total_deadline(worker_pair, database_engine, mode):
+        config, admission, ports, _ = worker_pair(
+            **(
+                {"admission_body_idle_seconds": 0.25}
+                if mode == "idle"
+                else {"admission_body_total_seconds": 0.5}
+            )
+        )
+        owner, *_ = scope(database_engine)
+        sock = slow_socket(ports[0], owner)
+        started = monotonic()
+        try:
+            if mode == "total":
+                for _ in range(4):
+                    sleep(0.09)
+                    try:
+                        sock.sendall(b"x")
+                    except OSError:
+                        break
+            response = sock.recv(4096)
+            assert b"408 Request Timeout" in response
+            assert monotonic() - started < 2
+        finally:
+            sock.close()
+        wait_active(admission, 0)
+        assert list(config.chat_import_artifact_root.iterdir()) == []
+        with api(ports[1]) as client:
+>           assert upload(client, owner).status_code == 201
+E           AssertionError: assert 408 == 201
+E            +  where 408 = <Response [408 Request Timeout]>.status_code
+E            +    where <Response [408 Request Timeout]> = upload(<httpx.Client object at 0x0000017889DF8C50>, UUID('00ecf619-f0fb-45e4-b59e-e5aa174bc61e'))
+
+apps\server\tests\test_resource_admission.py:269: AssertionError
+=========================== short test summary info ===========================
+FAILED apps/server/tests/test_resource_admission.py::test_real_body_idle_and_total_deadline[total]
+1 failed, 26 passed in 121.15s (0:02:01)

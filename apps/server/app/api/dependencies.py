@@ -50,7 +50,13 @@ def get_agent_service(request: Request) -> AgentService:
                     ),
                 )
             )
-            state.agent_service = AgentService(database.session, runtime)
+            from app.services.agent_writer import AgentWriterRegistry
+
+            state.agent_service = AgentService(
+                database.session,
+                runtime,
+                writers=AgentWriterRegistry(state.settings.chat_import_artifact_root),
+            )
         return state.agent_service
 
 

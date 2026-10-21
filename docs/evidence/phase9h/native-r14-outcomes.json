@@ -1,0 +1,304 @@
+{
+  "synthetic_only": true,
+  "batch_actual_exit": 1,
+  "scenes": [
+    {
+      "scene": "resource_create",
+      "actual_exit": 0,
+      "files": {
+        ".log": {
+          "path": "docs/evidence/phase9h/android-r14-resource_create.log",
+          "sha256": "9980edab14f1366d6e6ba55b98cebd7df1645604e0b475e0168d25cfbc898c76"
+        },
+        ".exit": {
+          "path": "docs/evidence/phase9h/android-r14-resource_create.exit",
+          "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+        },
+        ".source.json": {
+          "path": "docs/evidence/phase9h/android-r14-resource_create.source.json",
+          "sha256": "9b11f2f524f26ac5ce44b53463b21af1a1d200105bdb01947ab0c6b9c736d2b0"
+        },
+        ".json": {
+          "path": "docs/evidence/phase9h/android-r14-resource_create.json",
+          "sha256": "cda285c7b5bf7f0dc5beaeb286a2c5f9a6f62b789fc25e56514a830b1b605ef3"
+        }
+      }
+    },
+    {
+      "scene": "sse_normal",
+      "actual_exit": 1,
+      "files": {
+        ".log": {
+          "path": "docs/evidence/phase9h/android-r14-sse_normal.log",
+          "sha256": "2294b7237dd38a5ce8f9d6af7be1d45cdce0896437e6a7c711c7da9c44c55f70"
+        },
+        ".exit": {
+          "path": "docs/evidence/phase9h/android-r14-sse_normal.exit",
+          "sha256": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04"
+        },
+        ".source.json": {
+          "path": "docs/evidence/phase9h/android-r14-sse_normal.source.json",
+          "sha256": "626de7a0489733095478d97dd524b1e2f69ee9d87c0e3708e69e936d78d7a20f"
+        },
+        ".json": {
+          "path": "docs/evidence/phase9h/android-r14-sse_normal.json",
+          "sha256": "e6225ff5e219c06399dfc39126d393647b5d16971c72179022e27f5aebf32242"
+        }
+      }
+    },
+    {
+      "scene": "memory_smoke_revoke",
+      "actual_exit": 0,
+      "files": {
+        ".log": {
+          "path": "docs/evidence/phase9h/android-r14-memory_smoke_revoke.log",
+          "sha256": "9b7c40a84d1fe1c8790a5de8911dbef6467c4a423eaf161ef251a5816d6c8e73"
+        },
+        ".exit": {
+          "path": "docs/evidence/phase9h/android-r14-memory_smoke_revoke.exit",
+          "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+        },
+        ".source.json": {
+          "path": "docs/evidence/phase9h/android-r14-memory_smoke_revoke.source.json",
+          "sha256": "455d41c7cbdebe1391de9b2872dba0f0a2f4dafaf616c3d87b8912c1c17527d6"
+        },
+        ".json": {
+          "path": "docs/evidence/phase9h/android-r14-memory_smoke_revoke.json",
+          "sha256": "5f98970a0d248b6273966024d0bb19a81d5e832e5b3c42f1674486fbc9c5150a"
+        }
+      }
+    },
+    {
+      "scene": "session",
+      "actual_exit": 1,
+      "files": {
+        ".log": {
+          "path": "docs/evidence/phase9h/android-r14-session.log",
+          "sha256": "2294b7237dd38a5ce8f9d6af7be1d45cdce0896437e6a7c711c7da9c44c55f70"
+        },
+        ".exit": {
+          "path": "docs/evidence/phase9h/android-r14-session.exit",
+          "sha256": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04"
+        },
+        ".source.json": {
+          "path": "docs/evidence/phase9h/android-r14-session.source.json",
+          "sha256": "a64e1277d401b5fcda1c3bead0936dacaf2834af721be88662b9a8cdc935a617"
+        },
+        ".json": {
+          "path": "docs/evidence/phase9h/android-r14-session.json",
+          "sha256": "528994dfd7cfc417244a05f18bb2ca12d4d71736c2ca17ecdfecb7649e9915d7"
+        }
+      }
+    },
+    {
+      "scene": "import_history",
+      "actual_exit": 0,
+      "files": {
+        ".log": {
+          "path": "docs/evidence/phase9h/android-r14-import_history.log",
+          "sha256": "f419d526e7c8e9dff7d6a5cc9ca95a73bdabb42d3e8fec6e2ebf26d5734f7946"
+        },
+        ".exit": {
+          "path": "docs/evidence/phase9h/android-r14-import_history.exit",
+          "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+        },
+        ".source.json": {
+          "path": "docs/evidence/phase9h/android-r14-import_history.source.json",
+          "sha256": "57605a758957fba48e0f83eb45148e4934f8110de1214380dbbde4fd5d6931c4"
+        },
+        ".json": {
+          "path": "docs/evidence/phase9h/android-r14-import_history.json",
+          "sha256": "45170e9ad891fe65580b2183ea98cfd4d50fdbcd2414a8fc982398385c28b141"
+        }
+      }
+    },
+    {
+      "scene": "dataset",
+      "actual_exit": 1,
+      "files": {
+        ".log": {
+          "path": "docs/evidence/phase9h/android-r14-dataset.log",
+          "sha256": "2294b7237dd38a5ce8f9d6af7be1d45cdce0896437e6a7c711c7da9c44c55f70"
+        },
+        ".exit": {
+          "path": "docs/evidence/phase9h/android-r14-dataset.exit",
+          "sha256": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04"
+        },
+        ".source.json": {
+          "path": "docs/evidence/phase9h/android-r14-dataset.source.json",
+          "sha256": "a580c0dbcd8470018b7a2c28c174c75c8d0feb52f7f443cec841a07ae48cf4c9"
+        },
+        ".json": {
+          "path": "docs/evidence/phase9h/android-r14-dataset.json",
+          "sha256": "354df34b6399149398721510708aa82b0a75e9972471c99d8cec60b4ebbbe249"
+        }
+      }
+    },
+    {
+      "scene": "conversation",
+      "actual_exit": 1,
+      "files": {
+        ".log": {
+          "path": "docs/evidence/phase9h/android-r14-conversation.log",
+          "sha256": "7f6bd542a619780fca19ce778d85bec4a4570e6e12e8bb90e9fbb8786856513c"
+        },
+        ".exit": {
+          "path": "docs/evidence/phase9h/android-r14-conversation.exit",
+          "sha256": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04"
+        },
+        ".source.json": {
+          "path": "docs/evidence/phase9h/android-r14-conversation.source.json",
+          "sha256": "1355eb0f176e741db20e874d5358203c4e3d0dc3019d93a7e3660b209ed73f8c"
+        },
+        ".json": {
+          "path": "docs/evidence/phase9h/android-r14-conversation.json",
+          "sha256": "13d8a3fc47d9337ffca47204ce7b6839b4532cd6f5e5beaff5e7b2ee744d45d9"
+        }
+      }
+    },
+    {
+      "scene": "erasure_faults",
+      "actual_exit": 1,
+      "files": {
+        ".log": {
+          "path": "docs/evidence/phase9h/android-r14-erasure_faults.log",
+          "sha256": "2294b7237dd38a5ce8f9d6af7be1d45cdce0896437e6a7c711c7da9c44c55f70"
+        },
+        ".exit": {
+          "path": "docs/evidence/phase9h/android-r14-erasure_faults.exit",
+          "sha256": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04"
+        },
+        ".source.json": {
+          "path": "docs/evidence/phase9h/android-r14-erasure_faults.source.json",
+          "sha256": "6dd9094ff30697c13befb9b2e4d9ca084bdac9c7bec7f17040c5ece7c9e351cd"
+        },
+        ".json": {
+          "path": "docs/evidence/phase9h/android-r14-erasure_faults.json",
+          "sha256": "3dec42d08f71e2d1551ea59932960f1ab63e453880cbacc1ad478e86df0c60f3"
+        }
+      }
+    },
+    {
+      "scene": "erasure_restart",
+      "actual_exit": 0,
+      "files": {
+        ".log": {
+          "path": "docs/evidence/phase9h/android-r14-erasure_restart.log",
+          "sha256": "0fc6b9590a1395ad21d1a23c65af33154a5a89d6b51074c88cdbd42542962ca0"
+        },
+        ".exit": {
+          "path": "docs/evidence/phase9h/android-r14-erasure_restart.exit",
+          "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+        },
+        ".source.json": {
+          "path": "docs/evidence/phase9h/android-r14-erasure_restart.source.json",
+          "sha256": "be0d83ea6d1e2a7bacd52dba8784e5976179fb3cbc2a22cce132b23361cf220e"
+        },
+        ".json": {
+          "path": "docs/evidence/phase9h/android-r14-erasure_restart.json",
+          "sha256": "78fa0f30d7f72717439ae08da3d3a9c209784e97e154971709b40ade770b915b"
+        }
+      }
+    },
+    {
+      "scene": "person",
+      "actual_exit": 1,
+      "files": {
+        ".log": {
+          "path": "docs/evidence/phase9h/android-r14-person.log",
+          "sha256": "2294b7237dd38a5ce8f9d6af7be1d45cdce0896437e6a7c711c7da9c44c55f70"
+        },
+        ".exit": {
+          "path": "docs/evidence/phase9h/android-r14-person.exit",
+          "sha256": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04"
+        },
+        ".source.json": {
+          "path": "docs/evidence/phase9h/android-r14-person.source.json",
+          "sha256": "5090afe7c424acd5cdb214a18992064a3df23128d2f0e8fcd483884eab4f628c"
+        },
+        ".json": {
+          "path": "docs/evidence/phase9h/android-r14-person.json",
+          "sha256": "32c4b61c689c9bb7f22edf569ac58cfdd79b94a6682d5c0872ae389aa101c400"
+        }
+      }
+    },
+    {
+      "scene": "relationship",
+      "actual_exit": 0,
+      "files": {
+        ".log": {
+          "path": "docs/evidence/phase9h/android-r14-relationship.log",
+          "sha256": "20cefa69c5575d7f31fa41341a1847be0d15807914e0d66e6e74c06a3b4cdfa5"
+        },
+        ".exit": {
+          "path": "docs/evidence/phase9h/android-r14-relationship.exit",
+          "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+        },
+        ".source.json": {
+          "path": "docs/evidence/phase9h/android-r14-relationship.source.json",
+          "sha256": "668470a602736a529af6c9d078fa4c98ed85dfd4fddd055e0b7ff457f48b6b4f"
+        },
+        ".json": {
+          "path": "docs/evidence/phase9h/android-r14-relationship.json",
+          "sha256": "d8bc471a886820aa9d4ff18a5d1aebadc66c89784ae665d986ff1f7a49121068"
+        }
+      }
+    },
+    {
+      "scene": "lifecycle_faults",
+      "actual_exit": 1,
+      "files": {
+        ".log": {
+          "path": "docs/evidence/phase9h/android-r14-lifecycle_faults.log",
+          "sha256": "2294b7237dd38a5ce8f9d6af7be1d45cdce0896437e6a7c711c7da9c44c55f70"
+        },
+        ".exit": {
+          "path": "docs/evidence/phase9h/android-r14-lifecycle_faults.exit",
+          "sha256": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04"
+        },
+        ".source.json": {
+          "path": "docs/evidence/phase9h/android-r14-lifecycle_faults.source.json",
+          "sha256": "75dea2e90a05df6f9cf9a8399b159ed907b95094280163dc32b84603478cf457"
+        },
+        ".json": {
+          "path": "docs/evidence/phase9h/android-r14-lifecycle_faults.json",
+          "sha256": "defa6d51e921c7d0130c5f18703f6c0c1768ff91ecd4f9a9c3c96b643ec443ae"
+        }
+      }
+    },
+    {
+      "scene": "lifecycle_restart",
+      "actual_exit": 0,
+      "files": {
+        ".log": {
+          "path": "docs/evidence/phase9h/android-r14-lifecycle_restart.log",
+          "sha256": "d9e7be0dd3ad60d28ad954d19bb9c710b826f42cf48294b318ec61e4f85259d0"
+        },
+        ".exit": {
+          "path": "docs/evidence/phase9h/android-r14-lifecycle_restart.exit",
+          "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+        },
+        ".source.json": {
+          "path": "docs/evidence/phase9h/android-r14-lifecycle_restart.source.json",
+          "sha256": "f38127d3357fd0904d2672cfcf6cd54953a722a239f31e6a878b1ead270e3eef"
+        },
+        ".json": {
+          "path": "docs/evidence/phase9h/android-r14-lifecycle_restart.json",
+          "sha256": "659853528af74e17a0ca52795c1427beacfc6475ce6612288f495c39cdadd9c7"
+        }
+      }
+    }
+  ],
+  "passed": 6,
+  "failed": 7,
+  "root_verify_started": false,
+  "marker_after_batch": {
+    "completed_phase": 8,
+    "completed_subphase": "9G"
+  },
+  "control_notes": [
+    "The original followthrough stopped on the nonzero batch exit.",
+    "Two waiting continuations stopped on stricter expected-failure checks before executing any test or mutation.",
+    "The explicit seven-scene continuation separately records whole-scene repeats; no original evidence is relabeled."
+  ]
+}

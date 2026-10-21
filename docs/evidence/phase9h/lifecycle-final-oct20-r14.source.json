@@ -1,0 +1,21 @@
+{
+  "source_fingerprint": "0f6d1d92234581b322d1cb1cce7e9c5db49f82ed97b46def3b255acc91bb89e9",
+  "phase_marker": {
+    "completed_phase": 8,
+    "completed_subphase": "9G"
+  },
+  "synthetic_only": true,
+  "command": [
+    "uv",
+    "--cache-dir",
+    ".cache/uv",
+    "run",
+    "pytest",
+    "apps/server/tests/test_data_lifecycle.py",
+    "apps/server/tests/test_backup_restore.py",
+    "-q"
+  ],
+  "exit_code": 0,
+  "log_sha256": "f05c91c6c2edb8554d4f28da004f11986d0a8034ff4248c65c30e866ab57d4e5",
+  "end_source_fingerprint": "0f6d1d92234581b322d1cb1cce7e9c5db49f82ed97b46def3b255acc91bb89e9"
+}

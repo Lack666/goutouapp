@@ -1,0 +1,21 @@
+{
+    "postgresql_select1":  1,
+    "stopped_service_pids":  [
+                                 3720,
+                                 41900,
+                                 44784,
+                                 37976,
+                                 9948,
+                                 39432,
+                                 45008,
+                                 45284,
+                                 43908,
+                                 45452,
+                                 41476,
+                                 3296
+                             ],
+    "owned_services_stopped":  true,
+    "owned_native_scenes":  1,
+    "storage_wiped":  false,
+    "synthetic_only":  true
+}

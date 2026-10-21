@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'expo-router';
+import { View } from 'react-native';
 import { BodyText, PrimaryButton, SectionCard, AppHeader, ScreenContainer } from '../components/ui';
 import {
   ResourceInput,
@@ -8,6 +9,7 @@ import {
 import { useResourceView, useSessionView, type Connection } from '../session/ConnectionProvider';
 import type { ResourceKind, ResourceView } from '../contracts/resources';
 import { useLocalNavigation, useRelationshipScope } from '../navigation/scope';
+import { ConnectedLifecyclePanel } from './ConnectedLifecyclePanel';
 
 function ResourceList({
   kind,
@@ -44,14 +46,17 @@ function ResourceList({
         </>
       )}
       {page.items.map((item) => (
-        <PrimaryButton
-          key={item.id}
-          label={`查看 ${kind} ${'nickname' in item ? (item.nickname ?? '未提供名称') : 'displayName' in item ? item.displayName : item.id}`}
-          variant="quiet"
-          onPress={() => {
-            void connection.resources.select(kind, item.id);
-          }}
-        />
+        <View key={item.id} testID={`resource-${item.id}`}>
+          {kind === 'relationships' && <BodyText muted>Relationship UUID：{item.id}</BodyText>}
+          <PrimaryButton
+            key={item.id}
+            label={`查看 ${kind} ${'nickname' in item ? (item.nickname ?? '未提供名称') : 'displayName' in item ? item.displayName : item.id}`}
+            variant="quiet"
+            onPress={() => {
+              void connection.resources.select(kind, item.id);
+            }}
+          />
+        </View>
       ))}
       <PrimaryButton
         label={`加载更多 ${kind}`}
@@ -67,6 +72,19 @@ function ResourceList({
         <SectionCard title={`${kind} 详情`}>
           <BodyText>UUID：{detail.value.id}</BodyText>
           <BodyText>创建：{detail.value.createdAt}</BodyText>
+          {connection.lifecycle && (kind === 'persons' || kind === 'relationships') && (
+            <PrimaryButton
+              label={`准备删除 ${kind === 'persons' ? 'Person' : 'Relationship'} ${detail.value.id}`}
+              variant="quiet"
+              onPress={() => {
+                connection.lifecycle!.select(
+                  kind === 'persons' ? 'person' : 'relationship',
+                  detail.value!.id,
+                );
+                void connection.lifecycle!.prepare();
+              }}
+            />
+          )}
           {'nickname' in detail.value && (
             <BodyText>名称：{detail.value.nickname ?? '未提供'}</BodyText>
           )}
@@ -165,6 +183,7 @@ export function ConnectedResourcesScreen({ connection }: { connection: Connectio
             <CreationState kind="persons" view={view} connection={connection} />
           </SectionCard>
           <ResourceList kind="relationships" view={view} connection={connection} />
+          {connection.lifecycle && <ConnectedLifecyclePanel controller={connection.lifecycle} />}
           <SectionCard title="创建 Relationship">
             <BodyText>请显式选择对象并填写关系类型与状态；未知可填写 unknown。</BodyText>
             {view.pages.persons.items.map((person) => (

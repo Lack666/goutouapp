@@ -1,0 +1,12 @@
+{
+  "synthetic_only": true,
+  "scene_exit": 1,
+  "failed_command": "tap query formal erasure receipt",
+  "failure_controls_count": 0,
+  "resumed_activity": [
+    "topResumedActivity=ActivityRecord{164592818 u0 host.exp.exponent/.experience.ExperienceActivity t969}"
+  ],
+  "expo_process_present": true,
+  "screenshot": "docs/evidence/phase9h/android-r16-conversation-failure.png",
+  "no_service_or_device_reset": true
+}

@@ -60,6 +60,7 @@ DATA_LIFECYCLE = (ROOT / "apps/server/tests/test_data_lifecycle.py").is_file()
 DATA_ERASURE = (ROOT / "apps/server/tests/test_erasure.py").is_file()
 MOBILE_ERASURE = (ROOT / "apps/mobile/src/data/erasureController.ts").is_file()
 SAFETY_RELIABILITY_AUDIT = (ROOT / "apps/server/tests/test_security_priority_9g.py").is_file()
+FULL_DATA_ERASURE = (ROOT / "apps/server/tests/test_full_erasure_9h.py").is_file()
 MEMORY_GATE_FILES = (
     "apps/mobile/src/api/memoryAdapter.ts",
     "apps/mobile/src/api/memoryErrors.ts",
@@ -208,51 +209,67 @@ def native_closeout_check() -> None:
 
 
 def phase_marker_check() -> None:
-    if PHASE > 8 or (
-        PHASE == 8 and SUBPHASE not in {"8F", "9A", "9B", "9C", "9D", "9E", "9F", "9G"}
+    if (
+        PHASE > 9
+        or (PHASE == 9 and SUBPHASE != "9H")
+        or (PHASE == 8 and SUBPHASE not in {"8F", "9A", "9B", "9C", "9D", "9E", "9F", "9G", "9H"})
     ):
         raise RuntimeError(
-            "Phase 8 requires 8F closeout; only Phase 9A/9B/9C/9D/9E/9F/9G are implemented"
+            "Phase 8 and Phase 9 require all prior closeout gates; only authorized9H can complete9"
         )
-    if SUBPHASE in {"9A", "9B", "9C", "9D", "9E", "9F", "9G"}:
-        if PHASE != 8 or not UPLOAD_SECURITY:
+    if SUBPHASE in {"9A", "9B", "9C", "9D", "9E", "9F", "9G", "9H"}:
+        if PHASE not in {8, 9} or not UPLOAD_SECURITY:
             raise RuntimeError("Phase 9A requires completed Phase 8 and security gates")
         from check_security_9a import check
 
         check(completed=True)
-    if SUBPHASE in {"9B", "9C", "9D", "9E", "9F", "9G"}:
-        if PHASE != 8 or not AUTHORIZATION_SECURITY:
+    if SUBPHASE in {"9B", "9C", "9D", "9E", "9F", "9G", "9H"}:
+        if PHASE not in {8, 9} or not AUTHORIZATION_SECURITY:
             raise RuntimeError("Phase 9B requires completed Phase 8/9A and security gates")
         from check_security_9b import check as check_9b
 
         check_9b(completed=True)
-    if SUBPHASE in {"9C", "9D", "9E", "9F", "9G"}:
-        if PHASE != 8 or not RESOURCE_ADMISSION:
+    if SUBPHASE in {"9C", "9D", "9E", "9F", "9G", "9H"}:
+        if PHASE not in {8, 9} or not RESOURCE_ADMISSION:
             raise RuntimeError("Phase9C requires completed8/9B and resource security gates")
         from check_security_9c import check as check_9c
 
         check_9c(completed=True)
-    if SUBPHASE in {"9D", "9E", "9F", "9G"}:
-        if PHASE != 8 or not DATA_LIFECYCLE:
+    if SUBPHASE in {"9D", "9E", "9F", "9G", "9H"}:
+        if PHASE not in {8, 9} or not DATA_LIFECYCLE:
             raise RuntimeError("Phase9D requires completed8/9C and lifecycle gates")
         from check_security_9d import check as check_9d
 
         check_9d(completed=True)
-    if SUBPHASE in {"9E", "9F", "9G"}:
-        if PHASE != 8 or not DATA_ERASURE:
+    if SUBPHASE in {"9E", "9F", "9G", "9H"}:
+        if PHASE not in {8, 9} or not DATA_ERASURE:
             raise RuntimeError("Phase9E requires completed8/9D and erasure gates")
         from check_security_9e import check as check_9e
 
         check_9e(completed=True)
-    if SUBPHASE in {"9F", "9G"}:
+    if SUBPHASE in {"9F", "9G", "9H"}:
         from check_security_9f import check as check_9f
 
         check_9f(completed=True)
-    if SUBPHASE == "9G":
+    if SUBPHASE in {"9G", "9H"}:
         from check_security_9g import check as check_9g
 
         check_9g(completed=True)
-    if PHASE == 8:
+    if SUBPHASE == "9H":
+        from check_security_9h import check as check_9h
+
+        check_9h(completed=True)
+        if PHASE == 9:
+            criteria = json.loads(
+                (ROOT / "docs/PHASE_9_EXIT_CRITERIA_MATRIX.json").read_text("utf-8")
+            )
+            if any(
+                row["status"] != "PASS" or row["blocks_phase9"] for row in criteria["requirements"]
+            ):
+                raise RuntimeError(
+                    "Whole Phase9 requires every original engineering exit criterion"
+                )
+    if PHASE >= 8:
         if not all(
             (
                 MOBILE_FOUNDATION,
@@ -481,6 +498,16 @@ def tests() -> None:
             "apps/server/tests/test_security_priority_9g.py",
             "apps/server/tests/test_reliability_9g.py",
         )
+    if FULL_DATA_ERASURE:
+        uv_run("python", "scripts/check_security_9h.py")
+        uv_run(
+            "pytest",
+            "-q",
+            "apps/server/tests/test_full_erasure_9h.py",
+            "apps/server/tests/test_agent_recovery_9h.py",
+            "apps/server/tests/test_full_restore_9h.py",
+            "apps/server/tests/test_owner_operator_9h.py",
+        )
     if MEMORY_CONTROL_API:
         uv_run("pytest", "-q", "apps/server/tests/test_memory_control.py")
         uv_run("python", "apps/server/memory_control_demo.py")
@@ -542,6 +569,9 @@ def lint() -> None:
         "scripts/check_security_9f.py",
         "scripts/check_security_9g.py",
         "scripts/phase9g_capture.py",
+        "scripts/check_security_9h.py",
+        "scripts/phase9h_capture.py",
+        "scripts/phase9h_android_smoke.py",
         "scripts/phase9b_android_smoke.py",
     )
     uv_run(
@@ -575,6 +605,9 @@ def lint() -> None:
         "scripts/check_security_9f.py",
         "scripts/check_security_9g.py",
         "scripts/phase9g_capture.py",
+        "scripts/check_security_9h.py",
+        "scripts/phase9h_capture.py",
+        "scripts/phase9h_android_smoke.py",
         "scripts/phase9b_android_smoke.py",
     )
 
@@ -771,7 +804,7 @@ def verify() -> None:
         print("PASS: Deterministic OpenAPI generation input and Phase 7D compatibility")
     if not MOBILE_FOUNDATION:
         print("DEFERRED: Mobile lint/typecheck begin at Phase 7")
-    if PHASE in {5, 6, 7, 8}:
+    if PHASE in {5, 6, 7, 8, 9}:
         if not all(
             (
                 AGENT_CONTRACTS,
@@ -814,7 +847,7 @@ def verify() -> None:
             if MOBILE_MEMORY:
                 print(
                     "PASS: Phase 8F independently recorded Android native acceptance"
-                    if PHASE == 8
+                    if PHASE >= 8
                     else "DEFERRED: Phase 8F whole Phase 8 final/native fault evidence"
                 )
             elif MOBILE_IMPORT:
@@ -826,7 +859,7 @@ def verify() -> None:
         else:
             print("DEFERRED: Mobile")
         print("DEFERRED: RAG")
-        if PHASE in {6, 7, 8}:
+        if PHASE in {6, 7, 8, 9}:
             if not all(
                 (MEMORY_CONTROL_API, MEMORY_MUTATION_API, MEMORY_RETENTION, MEMORY_PHASE6_E2E)
             ):
@@ -840,9 +873,9 @@ def verify() -> None:
                 suffix += " and 7C focused gate"
             if MOBILE_FINAL_UI:
                 suffix += " and 7D integration/runtime gates"
-            if PHASE == 8:
+            if PHASE in {8, 9}:
                 print("PASS: Phase 7 Expo React Native MVP")
-                print("PASS: all active Phase 0..8 gates")
+                print(f"PASS: all active Phase 0..{PHASE} gates")
                 if UPLOAD_SECURITY:
                     print("PASS: Phase 9A security focused/regression gates")
                     if AUTHORIZATION_SECURITY:
@@ -853,7 +886,13 @@ def verify() -> None:
                         print("PASS: Phase9D lifecycle/maintenance/controlled restore gates")
                     if DATA_ERASURE:
                         print("PASS: Phase9E guarded dataset/conversation erasure gates")
-                    print("Phase 9 IN PROGRESS; remaining security/privacy/reliability deferred")
+                    if PHASE == 9:
+                        print(
+                            "PASS: Phase9 original engineering exit criteria; "
+                            "public production NOT APPROVED"
+                        )
+                    else:
+                        print("Phase9 final engineering acceptance IN PROGRESS")
                 else:
                     print("Phase 9 PENDING / NOT STARTED")
             elif PHASE == 7:

@@ -1,0 +1,940 @@
+..............................FFFFFFFFF...                               [100%]
+================================== FAILURES ===================================
+_ test_real_archives_preserve_full_erasure_terminal_identity_and_receipts[before-person] _
+
+full_erasure_api = (Engine(postgresql+psycopg://postgres@127.0.0.1:15434/goutou_test_e33f34bf8d41), <starlette.testclient.TestClient obje...y', ...}, WindowsPath('F:/狗头军师app化/goutouapp/.cache/phase9h-final-boundaries-r1/test_real_archives_preserve_fu0'), ...)
+domain = 'person', timing = 'before'
+
+    @pytest.mark.parametrize("domain", ["person", "relationship", "owner"])
+    @pytest.mark.parametrize("timing", ["before", "after", "concurrent_snapshot"])
+    def test_real_archives_preserve_full_erasure_terminal_identity_and_receipts(
+        full_erasure_api,  # noqa: F811
+        domain,
+        timing,
+    ):
+        engine, client, a, b, _, temp, config = full_erasure_api
+        actor = actor_from_verified_identity(a[0])
+        service = LifecycleErasure(
+            lambda: Session(engine),
+            LocalFilesystemImportArtifactStore(config.chat_import_artifact_root),
+            AgentWriterRegistry(config.chat_import_artifact_root),
+        )
+        if domain == "owner":
+            target = LifecycleTarget(domain=domain, target_id=a[0])
+            confirmation = service.prepare(actor, target)
+            body = LifecycleExecute(
+                **target.model_dump(),
+                confirmation_id=confirmation.confirmation_id,
+                operation_key=uuid4().hex,
+            ).model_dump(mode="json")
+        else:
+            body = preparation(full_erasure_api, domain)
+    
+        def erase():
+            if domain == "owner":
+                return service.execute(actor, LifecycleExecute(**body)).model_dump(mode="json")
+            response = execution(full_erasure_api, body)
+            assert response.status_code == 200, response.text
+            return response.json()
+    
+        archive = temp / "full-synthetic.dump"
+        if timing == "before":
+            receipt = erase()
+            dump_synthetic(engine, archive)
+        elif timing == "after":
+            dump_synthetic(engine, archive)
+            receipt = erase()
+        else:
+            with backup_snapshot(engine) as snapshot:
+                receipt = erase()
+                dump_synthetic(engine, archive, snapshot=snapshot)
+        root = temp / "restored-empty"
+        root.mkdir()
+        try:
+>           with restore_synthetic(engine, archive, root) as quarantine:
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+apps\server\tests\test_full_restore_9h.py:83: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+E:\python\Lib\contextlib.py:162: in __exit__
+    self.gen.throw(value)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+source = Engine(postgresql+psycopg://postgres@127.0.0.1:15434/goutou_test_e33f34bf8d41)
+archive = WindowsPath('F:/狗头军师app化/goutouapp/.cache/phase9h-final-boundaries-r1/test_real_archives_preserve_fu0/full-synthetic.dump')
+artifact_root = WindowsPath('F:/狗头军师app化/goutouapp/.cache/phase9h-final-boundaries-r1/test_real_archives_preserve_fu0/restored-empty')
+
+    @contextmanager
+    def restore_synthetic(source: Engine, archive: Path, artifact_root: Path):
+        _synthetic(source.url)
+        if not archive.is_file() or archive.is_symlink():
+            raise RecoveryError()
+        name = "goutou_restore_test_" + uuid4().hex[:12]
+        url = source.url.set(database=name)
+        admin = create_engine(
+            source.url.set(database="postgres"),
+            isolation_level="AUTOCOMMIT",
+            hide_parameters=True,
+            connect_args={"connect_timeout": 3},
+        )
+        target = None
+        created = False
+        try:
+            with admin.connect() as connection:
+                connection.execute(text(f'CREATE DATABASE "{name}"'))
+                created = True
+            _native(
+                pg_binary("pg_restore"),
+                [
+                    "--exit-on-error",
+                    "--single-transaction",
+                    "--no-owner",
+                    "--no-privileges",
+                    "--dbname",
+                    name,
+                    str(archive),
+                ],
+                url,
+            )
+            target = create_engine(url, hide_parameters=True, connect_args={"connect_timeout": 3})
+            yield QuarantinedRestore(source, target, artifact_root)
+        except Exception:
+>           raise RecoveryError() from None
+E           app.services.backup_restore.RecoveryError: synthetic_recovery_failed
+
+apps\server\app\services\backup_restore.py:514: RecoveryError
+_ test_real_archives_preserve_full_erasure_terminal_identity_and_receipts[before-relationship] _
+
+full_erasure_api = (Engine(postgresql+psycopg://postgres@127.0.0.1:15434/goutou_test_e33f34bf8d41), <starlette.testclient.TestClient obje...y', ...}, WindowsPath('F:/狗头军师app化/goutouapp/.cache/phase9h-final-boundaries-r1/test_real_archives_preserve_fu1'), ...)
+domain = 'relationship', timing = 'before'
+
+    @pytest.mark.parametrize("domain", ["person", "relationship", "owner"])
+    @pytest.mark.parametrize("timing", ["before", "after", "concurrent_snapshot"])
+    def test_real_archives_preserve_full_erasure_terminal_identity_and_receipts(
+        full_erasure_api,  # noqa: F811
+        domain,
+        timing,
+    ):
+        engine, client, a, b, _, temp, config = full_erasure_api
+        actor = actor_from_verified_identity(a[0])
+        service = LifecycleErasure(
+            lambda: Session(engine),
+            LocalFilesystemImportArtifactStore(config.chat_import_artifact_root),
+            AgentWriterRegistry(config.chat_import_artifact_root),
+        )
+        if domain == "owner":
+            target = LifecycleTarget(domain=domain, target_id=a[0])
+            confirmation = service.prepare(actor, target)
+            body = LifecycleExecute(
+                **target.model_dump(),
+                confirmation_id=confirmation.confirmation_id,
+                operation_key=uuid4().hex,
+            ).model_dump(mode="json")
+        else:
+            body = preparation(full_erasure_api, domain)
+    
+        def erase():
+            if domain == "owner":
+                return service.execute(actor, LifecycleExecute(**body)).model_dump(mode="json")
+            response = execution(full_erasure_api, body)
+            assert response.status_code == 200, response.text
+            return response.json()
+    
+        archive = temp / "full-synthetic.dump"
+        if timing == "before":
+            receipt = erase()
+            dump_synthetic(engine, archive)
+        elif timing == "after":
+            dump_synthetic(engine, archive)
+            receipt = erase()
+        else:
+            with backup_snapshot(engine) as snapshot:
+                receipt = erase()
+                dump_synthetic(engine, archive, snapshot=snapshot)
+        root = temp / "restored-empty"
+        root.mkdir()
+        try:
+>           with restore_synthetic(engine, archive, root) as quarantine:
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+apps\server\tests\test_full_restore_9h.py:83: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+E:\python\Lib\contextlib.py:162: in __exit__
+    self.gen.throw(value)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+source = Engine(postgresql+psycopg://postgres@127.0.0.1:15434/goutou_test_e33f34bf8d41)
+archive = WindowsPath('F:/狗头军师app化/goutouapp/.cache/phase9h-final-boundaries-r1/test_real_archives_preserve_fu1/full-synthetic.dump')
+artifact_root = WindowsPath('F:/狗头军师app化/goutouapp/.cache/phase9h-final-boundaries-r1/test_real_archives_preserve_fu1/restored-empty')
+
+    @contextmanager
+    def restore_synthetic(source: Engine, archive: Path, artifact_root: Path):
+        _synthetic(source.url)
+        if not archive.is_file() or archive.is_symlink():
+            raise RecoveryError()
+        name = "goutou_restore_test_" + uuid4().hex[:12]
+        url = source.url.set(database=name)
+        admin = create_engine(
+            source.url.set(database="postgres"),
+            isolation_level="AUTOCOMMIT",
+            hide_parameters=True,
+            connect_args={"connect_timeout": 3},
+        )
+        target = None
+        created = False
+        try:
+            with admin.connect() as connection:
+                connection.execute(text(f'CREATE DATABASE "{name}"'))
+                created = True
+            _native(
+                pg_binary("pg_restore"),
+                [
+                    "--exit-on-error",
+                    "--single-transaction",
+                    "--no-owner",
+                    "--no-privileges",
+                    "--dbname",
+                    name,
+                    str(archive),
+                ],
+                url,
+            )
+            target = create_engine(url, hide_parameters=True, connect_args={"connect_timeout": 3})
+            yield QuarantinedRestore(source, target, artifact_root)
+        except Exception:
+>           raise RecoveryError() from None
+E           app.services.backup_restore.RecoveryError: synthetic_recovery_failed
+
+apps\server\app\services\backup_restore.py:514: RecoveryError
+_ test_real_archives_preserve_full_erasure_terminal_identity_and_receipts[before-owner] _
+
+full_erasure_api = (Engine(postgresql+psycopg://postgres@127.0.0.1:15434/goutou_test_e33f34bf8d41), <starlette.testclient.TestClient obje...y', ...}, WindowsPath('F:/狗头军师app化/goutouapp/.cache/phase9h-final-boundaries-r1/test_real_archives_preserve_fu2'), ...)
+domain = 'owner', timing = 'before'
+
+    @pytest.mark.parametrize("domain", ["person", "relationship", "owner"])
+    @pytest.mark.parametrize("timing", ["before", "after", "concurrent_snapshot"])
+    def test_real_archives_preserve_full_erasure_terminal_identity_and_receipts(
+        full_erasure_api,  # noqa: F811
+        domain,
+        timing,
+    ):
+        engine, client, a, b, _, temp, config = full_erasure_api
+        actor = actor_from_verified_identity(a[0])
+        service = LifecycleErasure(
+            lambda: Session(engine),
+            LocalFilesystemImportArtifactStore(config.chat_import_artifact_root),
+            AgentWriterRegistry(config.chat_import_artifact_root),
+        )
+        if domain == "owner":
+            target = LifecycleTarget(domain=domain, target_id=a[0])
+            confirmation = service.prepare(actor, target)
+            body = LifecycleExecute(
+                **target.model_dump(),
+                confirmation_id=confirmation.confirmation_id,
+                operation_key=uuid4().hex,
+            ).model_dump(mode="json")
+        else:
+            body = preparation(full_erasure_api, domain)
+    
+        def erase():
+            if domain == "owner":
+                return service.execute(actor, LifecycleExecute(**body)).model_dump(mode="json")
+            response = execution(full_erasure_api, body)
+            assert response.status_code == 200, response.text
+            return response.json()
+    
+        archive = temp / "full-synthetic.dump"
+        if timing == "before":
+            receipt = erase()
+            dump_synthetic(engine, archive)
+        elif timing == "after":
+            dump_synthetic(engine, archive)
+            receipt = erase()
+        else:
+            with backup_snapshot(engine) as snapshot:
+                receipt = erase()
+                dump_synthetic(engine, archive, snapshot=snapshot)
+        root = temp / "restored-empty"
+        root.mkdir()
+        try:
+>           with restore_synthetic(engine, archive, root) as quarantine:
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+apps\server\tests\test_full_restore_9h.py:83: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+E:\python\Lib\contextlib.py:162: in __exit__
+    self.gen.throw(value)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+source = Engine(postgresql+psycopg://postgres@127.0.0.1:15434/goutou_test_e33f34bf8d41)
+archive = WindowsPath('F:/狗头军师app化/goutouapp/.cache/phase9h-final-boundaries-r1/test_real_archives_preserve_fu2/full-synthetic.dump')
+artifact_root = WindowsPath('F:/狗头军师app化/goutouapp/.cache/phase9h-final-boundaries-r1/test_real_archives_preserve_fu2/restored-empty')
+
+    @contextmanager
+    def restore_synthetic(source: Engine, archive: Path, artifact_root: Path):
+        _synthetic(source.url)
+        if not archive.is_file() or archive.is_symlink():
+            raise RecoveryError()
+        name = "goutou_restore_test_" + uuid4().hex[:12]
+        url = source.url.set(database=name)
+        admin = create_engine(
+            source.url.set(database="postgres"),
+            isolation_level="AUTOCOMMIT",
+            hide_parameters=True,
+            connect_args={"connect_timeout": 3},
+        )
+        target = None
+        created = False
+        try:
+            with admin.connect() as connection:
+                connection.execute(text(f'CREATE DATABASE "{name}"'))
+                created = True
+            _native(
+                pg_binary("pg_restore"),
+                [
+                    "--exit-on-error",
+                    "--single-transaction",
+                    "--no-owner",
+                    "--no-privileges",
+                    "--dbname",
+                    name,
+                    str(archive),
+                ],
+                url,
+            )
+            target = create_engine(url, hide_parameters=True, connect_args={"connect_timeout": 3})
+            yield QuarantinedRestore(source, target, artifact_root)
+        except Exception:
+>           raise RecoveryError() from None
+E           app.services.backup_restore.RecoveryError: synthetic_recovery_failed
+
+apps\server\app\services\backup_restore.py:514: RecoveryError
+_ test_real_archives_preserve_full_erasure_terminal_identity_and_receipts[after-person] _
+
+full_erasure_api = (Engine(postgresql+psycopg://postgres@127.0.0.1:15434/goutou_test_e33f34bf8d41), <starlette.testclient.TestClient obje...y', ...}, WindowsPath('F:/狗头军师app化/goutouapp/.cache/phase9h-final-boundaries-r1/test_real_archives_preserve_fu3'), ...)
+domain = 'person', timing = 'after'
+
+    @pytest.mark.parametrize("domain", ["person", "relationship", "owner"])
+    @pytest.mark.parametrize("timing", ["before", "after", "concurrent_snapshot"])
+    def test_real_archives_preserve_full_erasure_terminal_identity_and_receipts(
+        full_erasure_api,  # noqa: F811
+        domain,
+        timing,
+    ):
+        engine, client, a, b, _, temp, config = full_erasure_api
+        actor = actor_from_verified_identity(a[0])
+        service = LifecycleErasure(
+            lambda: Session(engine),
+            LocalFilesystemImportArtifactStore(config.chat_import_artifact_root),
+            AgentWriterRegistry(config.chat_import_artifact_root),
+        )
+        if domain == "owner":
+            target = LifecycleTarget(domain=domain, target_id=a[0])
+            confirmation = service.prepare(actor, target)
+            body = LifecycleExecute(
+                **target.model_dump(),
+                confirmation_id=confirmation.confirmation_id,
+                operation_key=uuid4().hex,
+            ).model_dump(mode="json")
+        else:
+            body = preparation(full_erasure_api, domain)
+    
+        def erase():
+            if domain == "owner":
+                return service.execute(actor, LifecycleExecute(**body)).model_dump(mode="json")
+            response = execution(full_erasure_api, body)
+            assert response.status_code == 200, response.text
+            return response.json()
+    
+        archive = temp / "full-synthetic.dump"
+        if timing == "before":
+            receipt = erase()
+            dump_synthetic(engine, archive)
+        elif timing == "after":
+            dump_synthetic(engine, archive)
+            receipt = erase()
+        else:
+            with backup_snapshot(engine) as snapshot:
+                receipt = erase()
+                dump_synthetic(engine, archive, snapshot=snapshot)
+        root = temp / "restored-empty"
+        root.mkdir()
+        try:
+>           with restore_synthetic(engine, archive, root) as quarantine:
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+apps\server\tests\test_full_restore_9h.py:83: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+E:\python\Lib\contextlib.py:162: in __exit__
+    self.gen.throw(value)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+source = Engine(postgresql+psycopg://postgres@127.0.0.1:15434/goutou_test_e33f34bf8d41)
+archive = WindowsPath('F:/狗头军师app化/goutouapp/.cache/phase9h-final-boundaries-r1/test_real_archives_preserve_fu3/full-synthetic.dump')
+artifact_root = WindowsPath('F:/狗头军师app化/goutouapp/.cache/phase9h-final-boundaries-r1/test_real_archives_preserve_fu3/restored-empty')
+
+    @contextmanager
+    def restore_synthetic(source: Engine, archive: Path, artifact_root: Path):
+        _synthetic(source.url)
+        if not archive.is_file() or archive.is_symlink():
+            raise RecoveryError()
+        name = "goutou_restore_test_" + uuid4().hex[:12]
+        url = source.url.set(database=name)
+        admin = create_engine(
+            source.url.set(database="postgres"),
+            isolation_level="AUTOCOMMIT",
+            hide_parameters=True,
+            connect_args={"connect_timeout": 3},
+        )
+        target = None
+        created = False
+        try:
+            with admin.connect() as connection:
+                connection.execute(text(f'CREATE DATABASE "{name}"'))
+                created = True
+            _native(
+                pg_binary("pg_restore"),
+                [
+                    "--exit-on-error",
+                    "--single-transaction",
+                    "--no-owner",
+                    "--no-privileges",
+                    "--dbname",
+                    name,
+                    str(archive),
+                ],
+                url,
+            )
+            target = create_engine(url, hide_parameters=True, connect_args={"connect_timeout": 3})
+            yield QuarantinedRestore(source, target, artifact_root)
+        except Exception:
+>           raise RecoveryError() from None
+E           app.services.backup_restore.RecoveryError: synthetic_recovery_failed
+
+apps\server\app\services\backup_restore.py:514: RecoveryError
+_ test_real_archives_preserve_full_erasure_terminal_identity_and_receipts[after-relationship] _
+
+full_erasure_api = (Engine(postgresql+psycopg://postgres@127.0.0.1:15434/goutou_test_e33f34bf8d41), <starlette.testclient.TestClient obje...y', ...}, WindowsPath('F:/狗头军师app化/goutouapp/.cache/phase9h-final-boundaries-r1/test_real_archives_preserve_fu4'), ...)
+domain = 'relationship', timing = 'after'
+
+    @pytest.mark.parametrize("domain", ["person", "relationship", "owner"])
+    @pytest.mark.parametrize("timing", ["before", "after", "concurrent_snapshot"])
+    def test_real_archives_preserve_full_erasure_terminal_identity_and_receipts(
+        full_erasure_api,  # noqa: F811
+        domain,
+        timing,
+    ):
+        engine, client, a, b, _, temp, config = full_erasure_api
+        actor = actor_from_verified_identity(a[0])
+        service = LifecycleErasure(
+            lambda: Session(engine),
+            LocalFilesystemImportArtifactStore(config.chat_import_artifact_root),
+            AgentWriterRegistry(config.chat_import_artifact_root),
+        )
+        if domain == "owner":
+            target = LifecycleTarget(domain=domain, target_id=a[0])
+            confirmation = service.prepare(actor, target)
+            body = LifecycleExecute(
+                **target.model_dump(),
+                confirmation_id=confirmation.confirmation_id,
+                operation_key=uuid4().hex,
+            ).model_dump(mode="json")
+        else:
+            body = preparation(full_erasure_api, domain)
+    
+        def erase():
+            if domain == "owner":
+                return service.execute(actor, LifecycleExecute(**body)).model_dump(mode="json")
+            response = execution(full_erasure_api, body)
+            assert response.status_code == 200, response.text
+            return response.json()
+    
+        archive = temp / "full-synthetic.dump"
+        if timing == "before":
+            receipt = erase()
+            dump_synthetic(engine, archive)
+        elif timing == "after":
+            dump_synthetic(engine, archive)
+            receipt = erase()
+        else:
+            with backup_snapshot(engine) as snapshot:
+                receipt = erase()
+                dump_synthetic(engine, archive, snapshot=snapshot)
+        root = temp / "restored-empty"
+        root.mkdir()
+        try:
+>           with restore_synthetic(engine, archive, root) as quarantine:
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+apps\server\tests\test_full_restore_9h.py:83: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+E:\python\Lib\contextlib.py:162: in __exit__
+    self.gen.throw(value)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+source = Engine(postgresql+psycopg://postgres@127.0.0.1:15434/goutou_test_e33f34bf8d41)
+archive = WindowsPath('F:/狗头军师app化/goutouapp/.cache/phase9h-final-boundaries-r1/test_real_archives_preserve_fu4/full-synthetic.dump')
+artifact_root = WindowsPath('F:/狗头军师app化/goutouapp/.cache/phase9h-final-boundaries-r1/test_real_archives_preserve_fu4/restored-empty')
+
+    @contextmanager
+    def restore_synthetic(source: Engine, archive: Path, artifact_root: Path):
+        _synthetic(source.url)
+        if not archive.is_file() or archive.is_symlink():
+            raise RecoveryError()
+        name = "goutou_restore_test_" + uuid4().hex[:12]
+        url = source.url.set(database=name)
+        admin = create_engine(
+            source.url.set(database="postgres"),
+            isolation_level="AUTOCOMMIT",
+            hide_parameters=True,
+            connect_args={"connect_timeout": 3},
+        )
+        target = None
+        created = False
+        try:
+            with admin.connect() as connection:
+                connection.execute(text(f'CREATE DATABASE "{name}"'))
+                created = True
+            _native(
+                pg_binary("pg_restore"),
+                [
+                    "--exit-on-error",
+                    "--single-transaction",
+                    "--no-owner",
+                    "--no-privileges",
+                    "--dbname",
+                    name,
+                    str(archive),
+                ],
+                url,
+            )
+            target = create_engine(url, hide_parameters=True, connect_args={"connect_timeout": 3})
+            yield QuarantinedRestore(source, target, artifact_root)
+        except Exception:
+>           raise RecoveryError() from None
+E           app.services.backup_restore.RecoveryError: synthetic_recovery_failed
+
+apps\server\app\services\backup_restore.py:514: RecoveryError
+_ test_real_archives_preserve_full_erasure_terminal_identity_and_receipts[after-owner] _
+
+full_erasure_api = (Engine(postgresql+psycopg://postgres@127.0.0.1:15434/goutou_test_e33f34bf8d41), <starlette.testclient.TestClient obje...y', ...}, WindowsPath('F:/狗头军师app化/goutouapp/.cache/phase9h-final-boundaries-r1/test_real_archives_preserve_fu5'), ...)
+domain = 'owner', timing = 'after'
+
+    @pytest.mark.parametrize("domain", ["person", "relationship", "owner"])
+    @pytest.mark.parametrize("timing", ["before", "after", "concurrent_snapshot"])
+    def test_real_archives_preserve_full_erasure_terminal_identity_and_receipts(
+        full_erasure_api,  # noqa: F811
+        domain,
+        timing,
+    ):
+        engine, client, a, b, _, temp, config = full_erasure_api
+        actor = actor_from_verified_identity(a[0])
+        service = LifecycleErasure(
+            lambda: Session(engine),
+            LocalFilesystemImportArtifactStore(config.chat_import_artifact_root),
+            AgentWriterRegistry(config.chat_import_artifact_root),
+        )
+        if domain == "owner":
+            target = LifecycleTarget(domain=domain, target_id=a[0])
+            confirmation = service.prepare(actor, target)
+            body = LifecycleExecute(
+                **target.model_dump(),
+                confirmation_id=confirmation.confirmation_id,
+                operation_key=uuid4().hex,
+            ).model_dump(mode="json")
+        else:
+            body = preparation(full_erasure_api, domain)
+    
+        def erase():
+            if domain == "owner":
+                return service.execute(actor, LifecycleExecute(**body)).model_dump(mode="json")
+            response = execution(full_erasure_api, body)
+            assert response.status_code == 200, response.text
+            return response.json()
+    
+        archive = temp / "full-synthetic.dump"
+        if timing == "before":
+            receipt = erase()
+            dump_synthetic(engine, archive)
+        elif timing == "after":
+            dump_synthetic(engine, archive)
+            receipt = erase()
+        else:
+            with backup_snapshot(engine) as snapshot:
+                receipt = erase()
+                dump_synthetic(engine, archive, snapshot=snapshot)
+        root = temp / "restored-empty"
+        root.mkdir()
+        try:
+>           with restore_synthetic(engine, archive, root) as quarantine:
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+apps\server\tests\test_full_restore_9h.py:83: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+E:\python\Lib\contextlib.py:162: in __exit__
+    self.gen.throw(value)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+source = Engine(postgresql+psycopg://postgres@127.0.0.1:15434/goutou_test_e33f34bf8d41)
+archive = WindowsPath('F:/狗头军师app化/goutouapp/.cache/phase9h-final-boundaries-r1/test_real_archives_preserve_fu5/full-synthetic.dump')
+artifact_root = WindowsPath('F:/狗头军师app化/goutouapp/.cache/phase9h-final-boundaries-r1/test_real_archives_preserve_fu5/restored-empty')
+
+    @contextmanager
+    def restore_synthetic(source: Engine, archive: Path, artifact_root: Path):
+        _synthetic(source.url)
+        if not archive.is_file() or archive.is_symlink():
+            raise RecoveryError()
+        name = "goutou_restore_test_" + uuid4().hex[:12]
+        url = source.url.set(database=name)
+        admin = create_engine(
+            source.url.set(database="postgres"),
+            isolation_level="AUTOCOMMIT",
+            hide_parameters=True,
+            connect_args={"connect_timeout": 3},
+        )
+        target = None
+        created = False
+        try:
+            with admin.connect() as connection:
+                connection.execute(text(f'CREATE DATABASE "{name}"'))
+                created = True
+            _native(
+                pg_binary("pg_restore"),
+                [
+                    "--exit-on-error",
+                    "--single-transaction",
+                    "--no-owner",
+                    "--no-privileges",
+                    "--dbname",
+                    name,
+                    str(archive),
+                ],
+                url,
+            )
+            target = create_engine(url, hide_parameters=True, connect_args={"connect_timeout": 3})
+            yield QuarantinedRestore(source, target, artifact_root)
+        except Exception:
+>           raise RecoveryError() from None
+E           app.services.backup_restore.RecoveryError: synthetic_recovery_failed
+
+apps\server\app\services\backup_restore.py:514: RecoveryError
+_ test_real_archives_preserve_full_erasure_terminal_identity_and_receipts[concurrent_snapshot-person] _
+
+full_erasure_api = (Engine(postgresql+psycopg://postgres@127.0.0.1:15434/goutou_test_e33f34bf8d41), <starlette.testclient.TestClient obje...y', ...}, WindowsPath('F:/狗头军师app化/goutouapp/.cache/phase9h-final-boundaries-r1/test_real_archives_preserve_fu6'), ...)
+domain = 'person', timing = 'concurrent_snapshot'
+
+    @pytest.mark.parametrize("domain", ["person", "relationship", "owner"])
+    @pytest.mark.parametrize("timing", ["before", "after", "concurrent_snapshot"])
+    def test_real_archives_preserve_full_erasure_terminal_identity_and_receipts(
+        full_erasure_api,  # noqa: F811
+        domain,
+        timing,
+    ):
+        engine, client, a, b, _, temp, config = full_erasure_api
+        actor = actor_from_verified_identity(a[0])
+        service = LifecycleErasure(
+            lambda: Session(engine),
+            LocalFilesystemImportArtifactStore(config.chat_import_artifact_root),
+            AgentWriterRegistry(config.chat_import_artifact_root),
+        )
+        if domain == "owner":
+            target = LifecycleTarget(domain=domain, target_id=a[0])
+            confirmation = service.prepare(actor, target)
+            body = LifecycleExecute(
+                **target.model_dump(),
+                confirmation_id=confirmation.confirmation_id,
+                operation_key=uuid4().hex,
+            ).model_dump(mode="json")
+        else:
+            body = preparation(full_erasure_api, domain)
+    
+        def erase():
+            if domain == "owner":
+                return service.execute(actor, LifecycleExecute(**body)).model_dump(mode="json")
+            response = execution(full_erasure_api, body)
+            assert response.status_code == 200, response.text
+            return response.json()
+    
+        archive = temp / "full-synthetic.dump"
+        if timing == "before":
+            receipt = erase()
+            dump_synthetic(engine, archive)
+        elif timing == "after":
+            dump_synthetic(engine, archive)
+            receipt = erase()
+        else:
+            with backup_snapshot(engine) as snapshot:
+                receipt = erase()
+                dump_synthetic(engine, archive, snapshot=snapshot)
+        root = temp / "restored-empty"
+        root.mkdir()
+        try:
+>           with restore_synthetic(engine, archive, root) as quarantine:
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+apps\server\tests\test_full_restore_9h.py:83: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+E:\python\Lib\contextlib.py:162: in __exit__
+    self.gen.throw(value)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+source = Engine(postgresql+psycopg://postgres@127.0.0.1:15434/goutou_test_e33f34bf8d41)
+archive = WindowsPath('F:/狗头军师app化/goutouapp/.cache/phase9h-final-boundaries-r1/test_real_archives_preserve_fu6/full-synthetic.dump')
+artifact_root = WindowsPath('F:/狗头军师app化/goutouapp/.cache/phase9h-final-boundaries-r1/test_real_archives_preserve_fu6/restored-empty')
+
+    @contextmanager
+    def restore_synthetic(source: Engine, archive: Path, artifact_root: Path):
+        _synthetic(source.url)
+        if not archive.is_file() or archive.is_symlink():
+            raise RecoveryError()
+        name = "goutou_restore_test_" + uuid4().hex[:12]
+        url = source.url.set(database=name)
+        admin = create_engine(
+            source.url.set(database="postgres"),
+            isolation_level="AUTOCOMMIT",
+            hide_parameters=True,
+            connect_args={"connect_timeout": 3},
+        )
+        target = None
+        created = False
+        try:
+            with admin.connect() as connection:
+                connection.execute(text(f'CREATE DATABASE "{name}"'))
+                created = True
+            _native(
+                pg_binary("pg_restore"),
+                [
+                    "--exit-on-error",
+                    "--single-transaction",
+                    "--no-owner",
+                    "--no-privileges",
+                    "--dbname",
+                    name,
+                    str(archive),
+                ],
+                url,
+            )
+            target = create_engine(url, hide_parameters=True, connect_args={"connect_timeout": 3})
+            yield QuarantinedRestore(source, target, artifact_root)
+        except Exception:
+>           raise RecoveryError() from None
+E           app.services.backup_restore.RecoveryError: synthetic_recovery_failed
+
+apps\server\app\services\backup_restore.py:514: RecoveryError
+_ test_real_archives_preserve_full_erasure_terminal_identity_and_receipts[concurrent_snapshot-relationship] _
+
+full_erasure_api = (Engine(postgresql+psycopg://postgres@127.0.0.1:15434/goutou_test_e33f34bf8d41), <starlette.testclient.TestClient obje...y', ...}, WindowsPath('F:/狗头军师app化/goutouapp/.cache/phase9h-final-boundaries-r1/test_real_archives_preserve_fu7'), ...)
+domain = 'relationship', timing = 'concurrent_snapshot'
+
+    @pytest.mark.parametrize("domain", ["person", "relationship", "owner"])
+    @pytest.mark.parametrize("timing", ["before", "after", "concurrent_snapshot"])
+    def test_real_archives_preserve_full_erasure_terminal_identity_and_receipts(
+        full_erasure_api,  # noqa: F811
+        domain,
+        timing,
+    ):
+        engine, client, a, b, _, temp, config = full_erasure_api
+        actor = actor_from_verified_identity(a[0])
+        service = LifecycleErasure(
+            lambda: Session(engine),
+            LocalFilesystemImportArtifactStore(config.chat_import_artifact_root),
+            AgentWriterRegistry(config.chat_import_artifact_root),
+        )
+        if domain == "owner":
+            target = LifecycleTarget(domain=domain, target_id=a[0])
+            confirmation = service.prepare(actor, target)
+            body = LifecycleExecute(
+                **target.model_dump(),
+                confirmation_id=confirmation.confirmation_id,
+                operation_key=uuid4().hex,
+            ).model_dump(mode="json")
+        else:
+            body = preparation(full_erasure_api, domain)
+    
+        def erase():
+            if domain == "owner":
+                return service.execute(actor, LifecycleExecute(**body)).model_dump(mode="json")
+            response = execution(full_erasure_api, body)
+            assert response.status_code == 200, response.text
+            return response.json()
+    
+        archive = temp / "full-synthetic.dump"
+        if timing == "before":
+            receipt = erase()
+            dump_synthetic(engine, archive)
+        elif timing == "after":
+            dump_synthetic(engine, archive)
+            receipt = erase()
+        else:
+            with backup_snapshot(engine) as snapshot:
+                receipt = erase()
+                dump_synthetic(engine, archive, snapshot=snapshot)
+        root = temp / "restored-empty"
+        root.mkdir()
+        try:
+>           with restore_synthetic(engine, archive, root) as quarantine:
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+apps\server\tests\test_full_restore_9h.py:83: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+E:\python\Lib\contextlib.py:162: in __exit__
+    self.gen.throw(value)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+source = Engine(postgresql+psycopg://postgres@127.0.0.1:15434/goutou_test_e33f34bf8d41)
+archive = WindowsPath('F:/狗头军师app化/goutouapp/.cache/phase9h-final-boundaries-r1/test_real_archives_preserve_fu7/full-synthetic.dump')
+artifact_root = WindowsPath('F:/狗头军师app化/goutouapp/.cache/phase9h-final-boundaries-r1/test_real_archives_preserve_fu7/restored-empty')
+
+    @contextmanager
+    def restore_synthetic(source: Engine, archive: Path, artifact_root: Path):
+        _synthetic(source.url)
+        if not archive.is_file() or archive.is_symlink():
+            raise RecoveryError()
+        name = "goutou_restore_test_" + uuid4().hex[:12]
+        url = source.url.set(database=name)
+        admin = create_engine(
+            source.url.set(database="postgres"),
+            isolation_level="AUTOCOMMIT",
+            hide_parameters=True,
+            connect_args={"connect_timeout": 3},
+        )
+        target = None
+        created = False
+        try:
+            with admin.connect() as connection:
+                connection.execute(text(f'CREATE DATABASE "{name}"'))
+                created = True
+            _native(
+                pg_binary("pg_restore"),
+                [
+                    "--exit-on-error",
+                    "--single-transaction",
+                    "--no-owner",
+                    "--no-privileges",
+                    "--dbname",
+                    name,
+                    str(archive),
+                ],
+                url,
+            )
+            target = create_engine(url, hide_parameters=True, connect_args={"connect_timeout": 3})
+            yield QuarantinedRestore(source, target, artifact_root)
+        except Exception:
+>           raise RecoveryError() from None
+E           app.services.backup_restore.RecoveryError: synthetic_recovery_failed
+
+apps\server\app\services\backup_restore.py:514: RecoveryError
+_ test_real_archives_preserve_full_erasure_terminal_identity_and_receipts[concurrent_snapshot-owner] _
+
+full_erasure_api = (Engine(postgresql+psycopg://postgres@127.0.0.1:15434/goutou_test_e33f34bf8d41), <starlette.testclient.TestClient obje...y', ...}, WindowsPath('F:/狗头军师app化/goutouapp/.cache/phase9h-final-boundaries-r1/test_real_archives_preserve_fu8'), ...)
+domain = 'owner', timing = 'concurrent_snapshot'
+
+    @pytest.mark.parametrize("domain", ["person", "relationship", "owner"])
+    @pytest.mark.parametrize("timing", ["before", "after", "concurrent_snapshot"])
+    def test_real_archives_preserve_full_erasure_terminal_identity_and_receipts(
+        full_erasure_api,  # noqa: F811
+        domain,
+        timing,
+    ):
+        engine, client, a, b, _, temp, config = full_erasure_api
+        actor = actor_from_verified_identity(a[0])
+        service = LifecycleErasure(
+            lambda: Session(engine),
+            LocalFilesystemImportArtifactStore(config.chat_import_artifact_root),
+            AgentWriterRegistry(config.chat_import_artifact_root),
+        )
+        if domain == "owner":
+            target = LifecycleTarget(domain=domain, target_id=a[0])
+            confirmation = service.prepare(actor, target)
+            body = LifecycleExecute(
+                **target.model_dump(),
+                confirmation_id=confirmation.confirmation_id,
+                operation_key=uuid4().hex,
+            ).model_dump(mode="json")
+        else:
+            body = preparation(full_erasure_api, domain)
+    
+        def erase():
+            if domain == "owner":
+                return service.execute(actor, LifecycleExecute(**body)).model_dump(mode="json")
+            response = execution(full_erasure_api, body)
+            assert response.status_code == 200, response.text
+            return response.json()
+    
+        archive = temp / "full-synthetic.dump"
+        if timing == "before":
+            receipt = erase()
+            dump_synthetic(engine, archive)
+        elif timing == "after":
+            dump_synthetic(engine, archive)
+            receipt = erase()
+        else:
+            with backup_snapshot(engine) as snapshot:
+                receipt = erase()
+                dump_synthetic(engine, archive, snapshot=snapshot)
+        root = temp / "restored-empty"
+        root.mkdir()
+        try:
+>           with restore_synthetic(engine, archive, root) as quarantine:
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+apps\server\tests\test_full_restore_9h.py:83: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+E:\python\Lib\contextlib.py:162: in __exit__
+    self.gen.throw(value)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+source = Engine(postgresql+psycopg://postgres@127.0.0.1:15434/goutou_test_e33f34bf8d41)
+archive = WindowsPath('F:/狗头军师app化/goutouapp/.cache/phase9h-final-boundaries-r1/test_real_archives_preserve_fu8/full-synthetic.dump')
+artifact_root = WindowsPath('F:/狗头军师app化/goutouapp/.cache/phase9h-final-boundaries-r1/test_real_archives_preserve_fu8/restored-empty')
+
+    @contextmanager
+    def restore_synthetic(source: Engine, archive: Path, artifact_root: Path):
+        _synthetic(source.url)
+        if not archive.is_file() or archive.is_symlink():
+            raise RecoveryError()
+        name = "goutou_restore_test_" + uuid4().hex[:12]
+        url = source.url.set(database=name)
+        admin = create_engine(
+            source.url.set(database="postgres"),
+            isolation_level="AUTOCOMMIT",
+            hide_parameters=True,
+            connect_args={"connect_timeout": 3},
+        )
+        target = None
+        created = False
+        try:
+            with admin.connect() as connection:
+                connection.execute(text(f'CREATE DATABASE "{name}"'))
+                created = True
+            _native(
+                pg_binary("pg_restore"),
+                [
+                    "--exit-on-error",
+                    "--single-transaction",
+                    "--no-owner",
+                    "--no-privileges",
+                    "--dbname",
+                    name,
+                    str(archive),
+                ],
+                url,
+            )
+            target = create_engine(url, hide_parameters=True, connect_args={"connect_timeout": 3})
+            yield QuarantinedRestore(source, target, artifact_root)
+        except Exception:
+>           raise RecoveryError() from None
+E           app.services.backup_restore.RecoveryError: synthetic_recovery_failed
+
+apps\server\app\services\backup_restore.py:514: RecoveryError
+=========================== short test summary info ===========================
+FAILED apps/server/tests/test_full_restore_9h.py::test_real_archives_preserve_full_erasure_terminal_identity_and_receipts[before-person]
+FAILED apps/server/tests/test_full_restore_9h.py::test_real_archives_preserve_full_erasure_terminal_identity_and_receipts[before-relationship]
+FAILED apps/server/tests/test_full_restore_9h.py::test_real_archives_preserve_full_erasure_terminal_identity_and_receipts[before-owner]
+FAILED apps/server/tests/test_full_restore_9h.py::test_real_archives_preserve_full_erasure_terminal_identity_and_receipts[after-person]
+FAILED apps/server/tests/test_full_restore_9h.py::test_real_archives_preserve_full_erasure_terminal_identity_and_receipts[after-relationship]
+FAILED apps/server/tests/test_full_restore_9h.py::test_real_archives_preserve_full_erasure_terminal_identity_and_receipts[after-owner]
+FAILED apps/server/tests/test_full_restore_9h.py::test_real_archives_preserve_full_erasure_terminal_identity_and_receipts[concurrent_snapshot-person]
+FAILED apps/server/tests/test_full_restore_9h.py::test_real_archives_preserve_full_erasure_terminal_identity_and_receipts[concurrent_snapshot-relationship]
+FAILED apps/server/tests/test_full_restore_9h.py::test_real_archives_preserve_full_erasure_terminal_identity_and_receipts[concurrent_snapshot-owner]
+9 failed, 33 passed in 42.60s

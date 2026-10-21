@@ -1,0 +1,84 @@
+........................................................................ [  8%]
+........................................................................ [ 16%]
+........................................................................ [ 25%]
+........................................................................ [ 33%]
+........................................................................ [ 42%]
+........................................................................ [ 50%]
+........................................................................ [ 59%]
+........................................................................ [ 67%]
+........................................................................ [ 76%]
+........................................................................ [ 84%]
+...............................................F.....F.................. [ 92%]
+............................................................             [100%]
+================================== FAILURES ===================================
+______ test_deterministic_keyless_snapshot_preserves_prior_26_operations ______
+
+    def test_deterministic_keyless_snapshot_preserves_prior_26_operations():
+        first, second = build_spec(), build_spec()
+        assert canonical(first) == canonical(second) == SNAPSHOT.read_bytes()
+        assert audit(first, json.loads(BASELINE.read_text(encoding="utf-8"))) == 43
+>       assert (
+            len(
+                [
+                    key
+                    for key in operations(first)
+                    if not key[1].startswith("/api/v1/erasures") and not key[1].endswith("/datasets")
+                ]
+            )
+            == 36
+        )
+E       AssertionError: assert 39 == 36
+E        +  where 39 = len([('get', '/health'), ('get', '/ready'), ('get', '/api/v1/status'), ('post', '/api/v1/conversations/{conversation_id}/agent-runs'), ('post', '/api/v1/conversations/{conversation_id}/agent-runs/stream'), ('post', '/api/v1/chat-imports'), ...])
+
+apps\server\tests\test_resource_contract.py:23: AssertionError
+_______ test_new_operation_requests_success_nullable_and_page_contracts _______
+
+    def test_new_operation_requests_success_nullable_and_page_contracts():
+        spec = build_spec()
+        schemas = spec["components"]["schemas"]
+        names = {"persons": "Person", "relationships": "Relationship", "conversations": "Conversation"}
+        for domain, name in names.items():
+            path = spec["paths"][f"/api/v1/{domain}"]
+            assert path["post"]["requestBody"]["content"]["application/json"]["schema"] == {
+                "$ref": f"#/components/schemas/{name}CreateRequest"
+            }
+            assert path["post"]["responses"]["201"]["content"]["application/json"]["schema"] == {
+                "$ref": f"#/components/schemas/{name}Response"
+            }
+            assert "id" in schemas[name + "CreateRequest"]["required"]
+            assert schemas[name + "CreateRequest"]["properties"]["id"]["format"] == "uuid4"
+            params = {param["name"]: param["schema"] for param in path["get"]["parameters"]}
+            assert params["limit"]["minimum"] == 1 and params["limit"]["maximum"] == 100
+            assert params["cursor"]["anyOf"][0]["maxLength"] == 512
+        assert "relationship_id" not in schemas["ConversationCreateRequest"]["required"]
+        assert schemas["ConversationCreateRequest"]["properties"]["relationship_id"]["anyOf"][1] == {
+            "type": "null"
+        }
+        assert schemas["ConversationResponse"]["properties"]["relationship_id"]["anyOf"][1] == {
+            "type": "null"
+        }
+        assert {"person_id", "relationship_type", "status"} <= set(
+            schemas["RelationshipCreateRequest"]["required"]
+        )
+        assert schemas["AgentMessagePublicResponse"]["properties"]["role"]["enum"] == [
+            "user",
+            "assistant",
+        ]
+>       assert (
+            len(
+                [
+                    key
+                    for key in NEW_OPERATIONS
+                    if not key[1].startswith("/api/v1/erasures") and not key[1].endswith("/datasets")
+                ]
+            )
+            == 10
+        )
+E       AssertionError: assert 13 == 10
+E        +  where 13 = len([('get', '/api/v1/lifecycle-erasures/receipts/{receipt_id}'), ('post', '/api/v1/lifecycle-erasures/execute'), ('get', ...sation_id}/messages'), ('get', '/api/v1/persons/{person_id}'), ('get', '/api/v1/relationships/{relationship_id}'), ...])
+
+apps\server\tests\test_resource_contract.py:87: AssertionError
+=========================== short test summary info ===========================
+FAILED apps/server/tests/test_resource_contract.py::test_deterministic_keyless_snapshot_preserves_prior_26_operations
+FAILED apps/server/tests/test_resource_contract.py::test_new_operation_requests_success_nullable_and_page_contracts
+2 failed, 850 passed in 484.95s (0:08:04)

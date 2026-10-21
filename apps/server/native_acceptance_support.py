@@ -91,7 +91,10 @@ class NativeAcceptanceWire:
         except (jwt.PyJWTError, UnicodeError, KeyError):
             proof["verified_owner"] = "invalid"
         self.requests.append(proof)
-        if method == "POST" and path == "/api/v1/erasures/execute":
+        if method == "POST" and path in {
+            "/api/v1/erasures/execute",
+            "/api/v1/lifecycle-erasures/execute",
+        }:
             original_receive = receive
             digest = sha256()
 
@@ -107,7 +110,10 @@ class NativeAcceptanceWire:
         fault = self.fault
         matches = method == "POST" and (
             (fault == "agent_drop" and path.endswith("/agent-runs"))
-            or (fault == "erasure_drop" and path == "/api/v1/erasures/execute")
+            or (
+                fault == "erasure_drop"
+                and path in {"/api/v1/erasures/execute", "/api/v1/lifecycle-erasures/execute"}
+            )
             or (
                 fault == "memory_drop"
                 and "/memory/deletions/" in path

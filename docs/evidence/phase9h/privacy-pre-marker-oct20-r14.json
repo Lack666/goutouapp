@@ -1,0 +1,7 @@
+{
+  "synthetic_only": true,
+  "read_only_scan": true,
+  "files": 740,
+  "inventory_sha256": "3e2ad5b3c625b8ef5415122f0c9c73f184e79df6991ff635ef93b9ef9df49ef5",
+  "findings": []
+}

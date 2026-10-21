@@ -1,0 +1,21 @@
+{
+  "source_fingerprint": "686453652fadfe527d1750707bef726143da398dcff45f7b4644404f7074a9fc",
+  "phase_marker": {
+    "completed_phase": 8,
+    "completed_subphase": "9G"
+  },
+  "synthetic_only": true,
+  "command": [
+    "uv",
+    "--cache-dir",
+    ".cache/uv",
+    "run",
+    "pytest",
+    "apps/server/tests/test_security_priority_9g.py",
+    "apps/server/tests/test_reliability_9g.py",
+    "-q"
+  ],
+  "exit_code": 0,
+  "log_sha256": "789afcffff865ec69d68db0f5f7b338f4ef7b0d283596279f97fcec12d011924",
+  "end_source_fingerprint": "686453652fadfe527d1750707bef726143da398dcff45f7b4644404f7074a9fc"
+}

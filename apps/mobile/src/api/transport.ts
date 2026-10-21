@@ -127,9 +127,9 @@ export class ApiTransport {
           ? 'POST'
           : null;
     const isMemory = memoryMethod !== null;
-    const erasureMethod = /^\/api\/v1\/erasures\/(prepare|execute)$/.test(path)
+    const erasureMethod = /^\/api\/v1\/(erasures|lifecycle-erasures)\/(prepare|execute)$/.test(path)
       ? 'POST'
-      : /^\/api\/v1\/erasures\/receipts\/[0-9a-f-]{36}$/i.test(path) ||
+      : /^\/api\/v1\/(erasures|lifecycle-erasures)\/receipts\/[0-9a-f-]{36}$/i.test(path) ||
           /^\/api\/v1\/relationships\/[0-9a-f-]{36}\/datasets$/i.test(path)
         ? 'GET'
         : null;

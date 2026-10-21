@@ -58,7 +58,7 @@ function ConnectedSettingsScreen() {
       <DevelopmentSessionControls />
       <BodyText muted>
         历史页可单独删除指定 Dataset / Conversation；Memory 在下方独立管理。Person、Relationship
-        和完整账户尚无自助删除入口。
+        可在资料详情中准备并确认完整范围删除。完整账户注销尚未提供。
       </BodyText>
       <ConnectedMemoryPanel connection={connection} />
     </ScreenContainer>

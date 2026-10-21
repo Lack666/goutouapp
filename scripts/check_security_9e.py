@@ -145,6 +145,12 @@ def root_gate(record, root, subphase):
 
 
 def check(root=ROOT, *, completed=False):
+    # Authorized 9H changes executable inputs. Preserve Git-pinned historical
+    # evidence and require complete fresh suites and thirteen native executions.
+    from check_security_9h import revalidate_prior
+
+    if revalidate_prior("9E", root):
+        return
     for name in REQUIRED:
         if not (root / name).is_file():
             raise RuntimeError("Missing Phase9E gate: " + name)
@@ -229,6 +235,8 @@ def check(root=ROOT, *, completed=False):
         "backup_effect",
         "ui_api_limit",
     }
+    if inventory.get("phase") == "9H":
+        expected_domains.add("owned_data")
     if set(inventory["domains"]) != expected_domains or any(
         not fields <= set(row) for row in inventory["domains"].values()
     ):

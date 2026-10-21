@@ -1,0 +1,20 @@
+{
+  "source_fingerprint": "72cee2275db90ebc456968e7bd52e5f98ff22721471217c82d9679d8b5c2dd30",
+  "phase_marker": {
+    "completed_phase": 8,
+    "completed_subphase": "9G"
+  },
+  "synthetic_only": true,
+  "command": [
+    "uv",
+    "--cache-dir",
+    ".cache/uv",
+    "run",
+    "pytest",
+    "apps/server/tests/test_upload_security.py",
+    "-q"
+  ],
+  "exit_code": 0,
+  "log_sha256": "397a13089a81cded280cf32a65e893568233126843ac9f74388fd94fe3bc92e9",
+  "end_source_fingerprint": "72cee2275db90ebc456968e7bd52e5f98ff22721471217c82d9679d8b5c2dd30"
+}

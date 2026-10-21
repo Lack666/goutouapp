@@ -1,0 +1,35 @@
+$ jest --runInBand
+PASS tests/history.test.tsx
+PASS tests/shell.test.tsx
+PASS tests/import.test.tsx
+PASS tests/chat.test.tsx
+PASS tests/controls.test.tsx
+PASS tests/agentChat.test.ts
+PASS tests/connectedMemoryUI.test.tsx
+PASS tests/settings.test.tsx
+PASS tests/integration.test.tsx
+PASS tests/relationship.test.tsx
+PASS tests/connectedImportUI.test.tsx
+PASS tests/erasureController.test.ts
+PASS tests/connectedImport.test.ts
+PASS tests/connected.test.ts
+PASS tests/connectedMemory.test.ts
+PASS tests/connectedChatUI.test.tsx
+PASS tests/sseParser.test.ts
+PASS tests/connectedHistory.test.ts
+PASS tests/lifecycleController.test.ts
+PASS tests/filePicker.test.ts
+PASS tests/fullMobileIntegration.test.ts
+PASS tests/sessionIsolation.test.ts
+PASS tests/resourceAdmission.test.ts
+PASS tests/resourceNames.test.ts
+PASS tests/erasureContract.test.ts
+PASS tests/uploadSecurity.test.ts
+PASS tests/nativeSseObserver.test.ts
+PASS tests/authPrivacy.test.ts
+
+Test Suites: 28 passed, 28 total
+Tests:       410 passed, 410 total
+Snapshots:   0 total
+Time:        10.047 s, estimated 20 s
+Ran all test suites.

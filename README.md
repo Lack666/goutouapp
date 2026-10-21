@@ -1,11 +1,15 @@
 # 狗头军师 App
 
-Phase 8A–8E 已完成工程验收：生成客户端、开发 JWT、真实资源、Agent REST/POST SSE、
-聊天导入与分域历史、Memory 控制及受保护操作。Phase 8F 已完成 Android 原生收口，
-Phase 8 为 PASS；Phase 9A 已完成，标记为 `8 / 9A`，Phase 9 整体保持 IN PROGRESS。
-9A 状态、阶段标记与独立 pre/post 验证结果见 [9A 验收报告](docs/PHASE_9A_ACCEPTANCE.md)。
-当前证据见 [Phase 8 Closeout Addendum](docs/PHASE_8_FINAL_ACCEPTANCE.md#closeout-addendum--2026-10-12)，
-后续范围见 [Phase 9 交接](docs/PHASE_9_SECURITY_RELIABILITY_HANDOFF.md)。
+Phase 0–9 已完成工程验收（9A–9H PASS），当前标记为 `9 / 9H`。
+9H 已实现 Person/Relationship 完整范围删除、私有签名命令清除 Owner 数据，
+以及有停止证明的异常 AgentRun 恢复。十三个真实 Android 场景、独立完整补充场景
+及两次独立完整 pre/post 根验证均通过。
+证据见 [9H 验收报告](docs/PHASE_9H_ACCEPTANCE.md)与
+[Phase 9 最终工程验收](docs/PHASE_9_FINAL_ACCEPTANCE.md)。
+公网生产准入仍未批准；开发 Owner 数据清除不代表生产账户注销。
+生产身份、独立灾难恢复权威、外部副本、调度和部署等限制仍保留。
+后续范围见 [Phase 9 交接](docs/PHASE_9_SECURITY_RELIABILITY_HANDOFF.md)；
+本次工作到此停止，Phase 10–12 未开始。
 
 这是将 [goutoujunshi Skill](https://github.com/shengjidaguai-china/goutoujunshi)
 改造成独立 AI Agent 与 React Native 手机 App 的 Monorepo。目标架构为

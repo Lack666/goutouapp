@@ -1,0 +1,11 @@
+{
+  "synthetic_only": true,
+  "full_source_fingerprint": "fdcde451667babd93bbcc12ca005724002b584830d0ca11bb5f2b74566ae51e7",
+  "compiled_mobile_fingerprint": "8d36e8399c198868c2d68e6114ef4d47cf59e7a8b08ec426312049e4f31cfc90",
+  "boot_completed": 1,
+  "device_to_host_ports": {
+    "8092": 8093,
+    "8022": 8024,
+    "8024": 8024
+  }
+}

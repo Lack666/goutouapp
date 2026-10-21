@@ -1,0 +1,58 @@
+[
+  {
+    "execution": {
+      "steps_file": "scripts\\native\\phase9h_relationship.json",
+      "steps": [
+        "restart",
+        "tap [\"\u6e05\u9664\u5f53\u524d\u5f00\u53d1\u4f1a\u8bdd\",\"down\"]",
+        "case 9H-RELATIONSHIP",
+        "seed EraseRelation9H",
+        "bookmark erase",
+        "login a",
+        "tap [\"\u6388\u6743\u957f\u671f\u8bb0\u5fc6\"]",
+        "tap [\"\u6062\u590d\u8bb0\u5fc6\"]",
+        "save \u4e00",
+        "history_setup [4,\"EraseRelationDataset\"]",
+        "bookmark erase",
+        "seed KeepRelation9H",
+        "history_setup [3,\"KeepRelationDataset\"]",
+        "bookmark keep",
+        "scope erase",
+        "route [\"relationship\",\"erase\"]",
+        "tap [\"\u67e5\u770b relationships EraseRelation9H\"]",
+        "tap [\"\u51c6\u5907\u5220\u9664 Relationship {relationship}\"]",
+        "assert_ui \"\u5b8c\u6574\u5220\u9664\u72b6\u6001\uff1aawaiting_confirmation\"",
+        "tap [\"\u660e\u786e\u786e\u8ba4\u5e76\u6267\u884c\u5b8c\u6574\u8303\u56f4\u5220\u9664\"]",
+        "assert_ui \"\u5b8c\u6574\u5220\u9664\u72b6\u6001\uff1acompleted\"",
+        "assert_ui \"\u5b8c\u6574\u5220\u9664\u6743\u5a01\u5237\u65b0\uff1averified\"",
+        "assert_lifecycle [\"person\",\"erase\",false]",
+        "assert_lifecycle [\"relationship\",\"erase\",true]",
+        "assert_lifecycle [\"relationship\",\"keep\",false]",
+        "assert_erased [\"dataset\",\"erase\",true,0]",
+        "assert_erased [\"dataset\",\"keep\",false,3]",
+        "evidence",
+        "assert_db [\"erasure.memories\",0]",
+        "assert_db [\"erasure.lifecycle_receipts.length\",1]",
+        "tap [\"\u540c key \u91cd\u653e\u5b8c\u6574\u8303\u56f4\u5220\u9664\"]",
+        "assert_ui \"\u5b8c\u6574\u5220\u9664\u6743\u5a01\u5237\u65b0\uff1averified\"",
+        "assert_lifecycle_replay",
+        "assert_identity",
+        "stop"
+      ],
+      "helper_sha256": "098163e036250a8f425a46d27885711a9bc304f7eb7088fa24d3d8ea084930a3",
+      "device": "emulator-5554",
+      "mobile_fingerprint": "b60dd6875436b6e53c039003e63b97202266f6500983d0889504e448b71381db",
+      "erasure_fingerprint": "44ccc2e61807dd796269032e9daca18bccb94e8e4508723f4ba892d7c03b22ec",
+      "runtime_fingerprint_9h": "65f3cf9a27913fae522d9673e3c926906e45602fed055243be46ad75a8526373"
+    }
+  },
+  {
+    "command": "restart",
+    "status": "done"
+  },
+  {
+    "command": "tap",
+    "status": "failed",
+    "control": "[\"\u6e05\u9664\u5f53\u524d\u5f00\u53d1\u4f1a\u8bdd\",\"down\"]"
+  }
+]

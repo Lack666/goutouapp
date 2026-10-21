@@ -1,0 +1,13 @@
+{
+  "synthetic_only": true,
+  "full_source_fingerprint": "dc0e1026713e5150f0a6c6eb4b5ae9b442e8264ae61c33ff92af3f02c75da20e",
+  "compiled_mobile_fingerprint": "8d36e8399c198868c2d68e6114ef4d47cf59e7a8b08ec426312049e4f31cfc90",
+  "existing_emulator_preserved": true,
+  "emulator_owned": false,
+  "boot_completed": 1,
+  "device_to_host_ports": {
+    "8092": 8093,
+    "8022": 8024,
+    "8024": 8024
+  }
+}

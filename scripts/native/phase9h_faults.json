@@ -1,0 +1,15 @@
+[
+  "restart", "tap [\"清除当前开发会话\",\"down\"]", "case 9H-FAULTS",
+  "seed LifecycleFault9H", "bookmark erase", "login a", "route [\"relationship\",\"erase\"]",
+  "tap [\"查看 relationships LifecycleFault9H\"]", "tap [\"准备删除 Relationship {relationship}\"]",
+  "expire_lifecycle", "tap [\"明确确认并执行完整范围删除\"]", "assert_ui \"完整删除状态：expired\"",
+  "tap [\"重新准备完整范围删除\"]", "fault erasure_drop", "tap [\"明确确认并执行完整范围删除\"]",
+  "assert_ui \"完整删除状态：unknown_outcome\"", "evidence", "assert_db [\"erasure.lifecycle_receipts.length\",1]",
+  "tap [\"同 key 重放完整范围删除\"]", "assert_ui \"完整删除状态：completed\"",
+  "assert_ui \"完整删除权威刷新：verified\"", "assert_lifecycle_replay",
+  "seed LifecycleBusy9H", "bookmark busy", "busy_conversation", "route [\"relationship\",\"busy\"]", "tap [\"刷新 persons\"]", "tap [\"刷新 relationships\"]",
+  "tap [\"查看 relationships LifecycleBusy9H\"]", "tap [\"准备删除 Relationship {relationship}\"]",
+  "assert_ui \"完整删除状态：target_busy\"", "tap [\"主动刷新完整删除 Busy\"]",
+  "tap [\"重新准备完整范围删除\"]", "assert_ui \"完整删除状态：target_busy\"",
+  "assert_lifecycle [\"relationship\",\"busy\",false]", "assert_identity", "stop"
+]

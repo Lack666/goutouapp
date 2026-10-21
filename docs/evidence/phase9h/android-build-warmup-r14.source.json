@@ -1,0 +1,30 @@
+{
+  "source_fingerprint": "fb9d2ed399135737748d29f5a0f9c7e2b34d5abc08bc08314a38a9028b4286bf",
+  "phase_marker": {
+    "completed_phase": 8,
+    "completed_subphase": "9G"
+  },
+  "synthetic_only": true,
+  "command": [
+    "uv",
+    "--cache-dir",
+    ".cache/uv",
+    "run",
+    "python",
+    "scripts/phase8_android_demo.py",
+    "--adb",
+    "C:/Users/VOS-User/AppData/Local/Android/Sdk/platform-tools/adb.exe",
+    "--serial",
+    "emulator-5554",
+    "--port",
+    "8024",
+    "--closeout",
+    "--steps",
+    ".cache/phase9h-build-warmup-r14.json",
+    "--report",
+    ".cache/android-build-warmup-r14.json"
+  ],
+  "exit_code": 1,
+  "log_sha256": "2294b7237dd38a5ce8f9d6af7be1d45cdce0896437e6a7c711c7da9c44c55f70",
+  "end_source_fingerprint": "fb9d2ed399135737748d29f5a0f9c7e2b34d5abc08bc08314a38a9028b4286bf"
+}

@@ -1,0 +1,72 @@
+$ playwright test --config playwright.erasure.config.ts
+[WebServer] (node:32952) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:29720) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 4 tests using 1 worker
+
+(node:27156) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  1 erasure-connected\lifecycle.spec.ts:28:7 › actual person UI explicit full erasure, cancel, memory, SQL, survivor and same-key receipt (12.2s)
+(node:30884) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  2 erasure-connected\lifecycle.spec.ts:28:7 › actual relationship UI explicit full erasure, cancel, memory, SQL, survivor and same-key receipt (2.0m)
+(node:30572) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 3 erasure-connected\web.spec.ts:57:5 › actual Dataset and Conversation UI confirmation/receipt, SQL deletion, other scopes, Memory and original-key replay (3.3s)
+  ok 4 erasure-connected\web.spec.ts:171:5 › actual committed response loss / original key replay / A-B denial / expired challenge / busy run / Demo separation (3.1s)
+
+
+  1) erasure-connected\lifecycle.spec.ts:28:7 › actual person UI explicit full erasure, cancel, memory, SQL, survivor and same-key receipt 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByText('完整删除状态：completed', { exact: true })
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByText('完整删除状态：completed', { exact: true }) with timeout 5000ms
+      - waiting for getByText('完整删除状态：completed', { exact: true })
+
+
+      77 |       await button(page, '重新准备完整范围删除').click();
+      78 |       await button(page, '明确确认并执行完整范围删除').click();
+    > 79 |       await expect(page.getByText('完整删除状态：completed', { exact: true })).toBeVisible();
+         |                                                                         ^
+      80 |       await expect(page.getByText('完整删除权威刷新：verified', { exact: true })).toBeVisible();
+      81 |       const evidence = await backend.erasureCommand('erasure_evidence');
+      82 |       expect(
+        at F:\狗头军师app化\goutouapp\apps\mobile\erasure-connected\lifecycle.spec.ts:79:73
+
+    Error Context: ..\..\.cache\phase9f-web-results\lifecycle-actual-person-UI-03ff9-rvivor-and-same-key-receipt\error-context.md
+
+  2) erasure-connected\lifecycle.spec.ts:28:7 › actual relationship UI explicit full erasure, cancel, memory, SQL, survivor and same-key receipt 
+
+    Test timeout of 120000ms exceeded.
+
+    Error: locator.click: Test timeout of 120000ms exceeded.
+    Call log:
+      - waiting for getByRole('button', { name: '查看 relationships 770ceb8b-c2de-4418-81a0-af9d10d94182', exact: true })
+
+
+      59 |       await login(page, backend.a);
+      60 |       if (domain === 'person') await button(page, `查看 persons ${label}`).click();
+    > 61 |       else await button(page, `查看 relationships ${a.relationship}`).click();
+         |                                                                     ^
+      62 |       const id = domain === 'person' ? a.person : a.relationship;
+      63 |       await button(
+      64 |         page,
+        at F:\狗头军师app化\goutouapp\apps\mobile\erasure-connected\lifecycle.spec.ts:61:69
+
+    Error Context: ..\..\.cache\phase9f-web-results\lifecycle-actual-relations-a856d-rvivor-and-same-key-receipt\error-context.md
+
+  2 failed
+    erasure-connected\lifecycle.spec.ts:28:7 › actual person UI explicit full erasure, cancel, memory, SQL, survivor and same-key receipt 
+    erasure-connected\lifecycle.spec.ts:28:7 › actual relationship UI explicit full erasure, cancel, memory, SQL, survivor and same-key receipt 
+  2 passed (2.7m)
+F:\狗头军师app化\goutouapp\apps\mobile:
+[ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL] @goutou/mobile@0.1.0 smoke:erasure: `playwright test --config playwright.erasure.config.ts`
+Exit status 1

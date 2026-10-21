@@ -1,0 +1,22 @@
+{
+    "existing_emulator_preserved":  true,
+    "emulator_owned":  false,
+    "interrupted_after_failure":  true,
+    "passed_native_scenes":  6,
+    "owned_services_stopped":  true,
+    "failed_native_scenes":  1,
+    "postgresql_select1":  1,
+    "stopped_service_pids":  [
+                                 31216,
+                                 17272,
+                                 34444,
+                                 31796,
+                                 36216,
+                                 15600,
+                                 15296,
+                                 35224,
+                                 3132
+                             ],
+    "storage_wiped":  false,
+    "synthetic_only":  true
+}

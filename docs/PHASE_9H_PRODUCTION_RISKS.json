@@ -1,0 +1,268 @@
+{
+  "phase": "9H",
+  "production_acceptable": false,
+  "open_p0_p1": [],
+  "risks": [
+    {
+      "id": "R-06",
+      "implementation_state": "Implemented local maintenance and controlled current-primary restore; production deployment absent",
+      "validation_state": "Local tested; requires production deployment validation",
+      "remaining": "Installed monitored scheduler, encrypted rotation/key custody, independent deletion authority and copy inventory",
+      "responsible_stage": "Phase9 operations/privacy; Phase12 deployment",
+      "acceptance_condition": "Real monitored scheduling, encrypted retention/rotation and restore drill before serving",
+      "controls": [
+        "9D maintenance/restore44",
+        "9E erasure39"
+      ],
+      "blocks_public_exposure": true,
+      "development_severity": "P2",
+      "blocks_public_production": true,
+      "blocks_phase9_engineering": false,
+      "local_evidence": [
+        "lifecycle_revalidation",
+        "erasure_revalidation",
+        "full_boundaries"
+      ],
+      "production_dependencies": "Installed monitored scheduler, encrypted rotation/key custody, independent deletion authority and copy inventory"
+    },
+    {
+      "id": "R-07",
+      "implementation_state": "Implemented shared-root quotas/rates/deadlines/fences; ingress/supervision absent",
+      "validation_state": "Local two-worker tested; requires production deployment validation",
+      "remaining": "TLS/header/connection/non-upload budgets, host storage/pool sizing, supervisor and monitoring",
+      "responsible_stage": "Phase9 admission verification; Phase12 hosting",
+      "acceptance_condition": "Validate actual ingress topology, bounded hostile concurrency and supervised crash cleanup",
+      "controls": [
+        "9C admission27",
+        "9G cold two-worker pressure and55P03"
+      ],
+      "blocks_public_exposure": true,
+      "development_severity": "P2",
+      "blocks_public_production": true,
+      "blocks_phase9_engineering": false,
+      "local_evidence": [
+        "admission_revalidation",
+        "focused"
+      ],
+      "production_dependencies": "TLS/header/connection/non-upload budgets, host storage/pool sizing, supervisor and monitoring"
+    },
+    {
+      "id": "R-08",
+      "implementation_state": "Implemented prompt/data role separation and import/Agent separation; future provider/RAG/imported analysis absent",
+      "validation_state": "Local Mock routing/authority tested; real classifier/injection quality untested",
+      "remaining": "Real provider semantic safety/injection eval, consent/context/tool/copy lifecycle before user data",
+      "responsible_stage": "Explicit provider/import task; Phase10 optional RAG; Phase11 eval",
+      "acceptance_condition": "Pass provider behavior and source-scope/tool authorization evaluation with RAG disabled baseline",
+      "controls": [
+        "test_security_priority_9g.py",
+        "AGENT_UNTRUSTED_INPUT.md"
+      ],
+      "blocks_public_exposure": true,
+      "development_severity": "P2",
+      "blocks_public_production": true,
+      "blocks_phase9_engineering": false,
+      "local_evidence": [
+        "focused",
+        "backend"
+      ],
+      "production_dependencies": "Real provider semantic safety/injection eval, consent/context/tool/copy lifecycle before user data"
+    },
+    {
+      "id": "R-09",
+      "implementation_state": "Local Person/Relationship/Owner Owned Data erasure and terminal old-JWT fence implemented; production account closure absent",
+      "validation_state": "Signed PostgreSQL/operator/Web and current native validation; final9H matrix is authoritative",
+      "remaining": "Production issuer/revocation/account closure and external-copy propagation; local full scoped data erasure is implemented.",
+      "responsible_stage": "Explicit production identity/privacy work; Phase12 deployment",
+      "acceptance_condition": "Production identity revocation, dependent ownership and external copy lifecycle verified before serving",
+      "controls": [
+        "test_full_erasure_9h.py",
+        "test_owner_operator_9h.py",
+        "test_full_restore_9h.py",
+        "current9H Web/native matrix"
+      ],
+      "blocks_public_exposure": true,
+      "development_severity": "P2",
+      "blocks_public_production": true,
+      "blocks_phase9_engineering": false,
+      "local_evidence": [
+        "full_boundaries",
+        "web",
+        "native:person",
+        "native:relationship"
+      ],
+      "production_dependencies": "Production issuer/revocation/account closure and external-copy propagation; local full scoped data erasure is implemented."
+    },
+    {
+      "id": "R-10",
+      "implementation_state": "Offline exact-run recovery with OS writer-stop proof and durable receipt implemented for new fenced runs",
+      "validation_state": "Real spawned Provider/answer/Memory death and live cancelled executor refusal; original keys and actual restore tested",
+      "remaining": "Legacy/missing proof stays quarantined; protected shared-root topology and production incident handling unverified. Abnormal writer fences stay process-owned until verified workload termination; production drain/recycle capacity policy is not deployed.",
+      "responsible_stage": "Separately authorized Phase9 recovery",
+      "acceptance_condition": "Prove stopped deployment-wide writers and exact committed effects; idempotent authorized terminal transition and reprepare",
+      "controls": [
+        "test_agent_recovery_9h.py",
+        "test_full_restore_9h.py",
+        "AGENT_RUN_RECOVERY.md"
+      ],
+      "blocks_public_exposure": true,
+      "development_severity": "P2",
+      "blocks_public_production": true,
+      "blocks_phase9_engineering": false,
+      "local_evidence": [
+        "full_boundaries",
+        "backend"
+      ],
+      "production_dependencies": "Legacy/missing proof stays quarantined; protected shared-root topology and production incident handling unverified. Abnormal writer fences stay process-owned until verified workload termination; production drain/recycle capacity policy is not deployed."
+    },
+    {
+      "id": "L-OUTBOX",
+      "implementation_state": "Session-only immutable attempts implemented; durable pending outbox absent",
+      "validation_state": "Current9H Web/native restart, owner switch and late-response tested; durable descriptor remains absent",
+      "remaining": "Lost Agent/Memory/erasure request descriptor cannot automatically reconcile",
+      "responsible_stage": "Explicit client recovery contract",
+      "acceptance_condition": "Encrypted owner-scoped pending descriptor plus authoritative lookup; no auto replacement key",
+      "controls": [
+        "Mobile pending/restart tests",
+        "retained9F faults/restart"
+      ],
+      "blocks_public_exposure": true,
+      "development_severity": "P2",
+      "blocks_public_production": true,
+      "blocks_phase9_engineering": false,
+      "local_evidence": [
+        "mobile",
+        "web",
+        "native:lifecycle_restart"
+      ],
+      "production_dependencies": "Lost Agent/Memory/erasure request descriptor cannot automatically reconcile"
+    },
+    {
+      "id": "L-ACCOUNT",
+      "implementation_state": "Local Person/Relationship/Owner Owned Data erasure and terminal old-JWT fence implemented; production account closure absent",
+      "validation_state": "Signed PostgreSQL/operator/Web and current native validation; final9H matrix is authoritative",
+      "remaining": "Login/refresh/revocation/account closure/dependent ownership and exports",
+      "responsible_stage": "Phase9 identity/privacy then Phase12 admission",
+      "acceptance_condition": "Least-privilege production identity and revoked credential rejection throughout erasure/recovery",
+      "controls": [
+        "AUTHENTICATION.md",
+        "test_authorization_security.py"
+      ],
+      "blocks_public_exposure": true,
+      "development_severity": "P2",
+      "blocks_public_production": true,
+      "blocks_phase9_engineering": false,
+      "local_evidence": [
+        "full_boundaries",
+        "authorization_revalidation"
+      ],
+      "production_dependencies": "Login/refresh/revocation/account closure/dependent ownership and exports"
+    },
+    {
+      "id": "L-PRIMARY-LOSS",
+      "implementation_state": "Only current-primary controlled restore implemented; total-loss recovery not implemented",
+      "validation_state": "Actual native synthetic dump/restore tested; lost authority fails closed",
+      "remaining": "Independent authoritative exact-ID deletion/control/key journal or verified WAL chain and serving barrier",
+      "responsible_stage": "Phase9 recovery/backup implementation",
+      "acceptance_condition": "Total-primary-loss drill cannot resurrect erased bodies or old operation keys and cannot serve before reconciliation",
+      "controls": [
+        "BACKUP_RESTORE_POLICY.md",
+        "test_backup_restore.py"
+      ],
+      "blocks_public_exposure": true,
+      "development_severity": "P2",
+      "blocks_public_production": true,
+      "blocks_phase9_engineering": false,
+      "local_evidence": [
+        "full_boundaries",
+        "lifecycle_revalidation"
+      ],
+      "production_dependencies": "Independent authoritative exact-ID deletion/control/key journal or verified WAL chain and serving barrier"
+    },
+    {
+      "id": "L-PUBLIC",
+      "implementation_state": "Private loopback development only; public deployment absent",
+      "validation_state": "Local processes tested; requires actual deployment verification",
+      "remaining": "HTTPS/ingress/auth/capacity/private storage/OS controls/release process",
+      "responsible_stage": "Phase12 after Phase9 closure",
+      "acceptance_condition": "Approved production checklist and real public topology negative/security/deletion recovery checks",
+      "controls": [
+        "No public service introduced",
+        "resource admission policy"
+      ],
+      "blocks_public_exposure": true,
+      "development_severity": "P2",
+      "blocks_public_production": true,
+      "blocks_phase9_engineering": false,
+      "local_evidence": [
+        "pre_marker",
+        "post_marker"
+      ],
+      "production_dependencies": "HTTPS/ingress/auth/capacity/private storage/OS controls/release process"
+    },
+    {
+      "id": "L-OBSERVABILITY",
+      "implementation_state": "Fixed logs and bounded count-only process metrics implemented; alert pipeline not implemented",
+      "validation_state": "Local redaction and finite-label tests pass; production alerting not deployed",
+      "remaining": "Durable safe Run age/backlog/cleanup/admission/error alerts and operator response",
+      "responsible_stage": "Phase11 observability; Phase12 operations",
+      "acceptance_condition": "Trigger and verify privacy-safe actionable alerts without bodies/keys/hidden reasoning",
+      "controls": [
+        "test_privacy_logging.py",
+        "test_resource_admission.py"
+      ],
+      "blocks_public_exposure": true,
+      "development_severity": "P2",
+      "blocks_public_production": true,
+      "blocks_phase9_engineering": false,
+      "local_evidence": [
+        "authorization_revalidation",
+        "admission_revalidation"
+      ],
+      "production_dependencies": "Durable safe Run age/backlog/cleanup/admission/error alerts and operator response"
+    },
+    {
+      "id": "L-EXPORT-COPIES",
+      "implementation_state": "Scoped primary deletion disclosure implemented; full export/provider/copy deletion absent",
+      "validation_state": "Local primary effects tested; provider/export/backup lifecycle only design",
+      "remaining": "Owner export API, copy inventory, provider retention and deletion propagation, receipt-retention policy",
+      "responsible_stage": "Phase9 privacy contract; explicit export/provider scope",
+      "acceptance_condition": "Verify authenticated export and complete promised copy deletion/expiry without weakening dedup fences",
+      "controls": [
+        "DATA_DELETION_CONTRACT.md",
+        "MOBILE_DATA_ERASURE.md"
+      ],
+      "blocks_public_exposure": true,
+      "development_severity": "P2",
+      "blocks_public_production": true,
+      "blocks_phase9_engineering": false,
+      "local_evidence": [
+        "full_boundaries",
+        "web"
+      ],
+      "production_dependencies": "Owner export API, copy inventory, provider retention and deletion propagation, receipt-retention policy"
+    },
+    {
+      "id": "L-WINDOWS-TEST",
+      "implementation_state": "Existing tests preserved; actual-device compiled-source guard and cold App startup added after Metro cache mismatch; host crash repair absent",
+      "validation_state": "Historical Node exit3221226505 and r14 launcher startup cause remain unconfirmed. r16 Conversation receipt-query failure reproduced a fixed-composer viewport tooling defect; actual scrollable bounds fix direction, with three additional geometry/refusal/composer regressions. All source-changing fixes require fresh final native/root evidence in9H matrix; old r14/r15/r16 results remain immutable.",
+      "remaining": "Host/runtime crash and Expo/Android startup/scroll diagnostics; reproducible stable automated environment and production-device qualification",
+      "responsible_stage": "Engineering validation environment; Phase12 CI",
+      "acceptance_condition": "Retain nonzero invocations, diagnose safe process metadata, run full independent root without hidden retries/skips",
+      "controls": [
+        "9G baseline-configured.log/exit",
+        "historical9B post-marker failure",
+        "9H-EVIDENCE-01 actual compiled-source marker and Metro-config counterexamples",
+        "9H-EVIDENCE-02 actual Chat viewport and three tap-geometry counterexamples"
+      ],
+      "blocks_public_exposure": true,
+      "development_severity": "P2",
+      "blocks_public_production": true,
+      "blocks_phase9_engineering": false,
+      "local_evidence": [
+        "pre_marker",
+        "post_marker"
+      ],
+      "production_dependencies": "Host/runtime crash diagnostics and reproducible stable automated environment"
+    }
+  ]
+}

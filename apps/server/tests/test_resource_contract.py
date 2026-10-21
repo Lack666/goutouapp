@@ -19,13 +19,22 @@ from scripts.export_openapi import (
 def test_deterministic_keyless_snapshot_preserves_prior_26_operations():
     first, second = build_spec(), build_spec()
     assert canonical(first) == canonical(second) == SNAPSHOT.read_bytes()
-    assert audit(first, json.loads(BASELINE.read_text(encoding="utf-8"))) == 40
+    assert audit(first, json.loads(BASELINE.read_text(encoding="utf-8"))) == 43
+    lifecycle = [
+        key for key in operations(first) if key[1].startswith("/api/v1/lifecycle-erasures")
+    ]
+    assert len(lifecycle) == 3
+    assert all(
+        first["paths"][path][method]["security"] == [{"BearerCredential": []}]
+        for method, path in lifecycle
+    )
     assert (
         len(
             [
                 key
                 for key in operations(first)
-                if not key[1].startswith("/api/v1/erasures") and not key[1].endswith("/datasets")
+                if not key[1].startswith(("/api/v1/erasures", "/api/v1/lifecycle-erasures"))
+                and not key[1].endswith("/datasets")
             ]
         )
         == 36
@@ -89,11 +98,25 @@ def test_new_operation_requests_success_nullable_and_page_contracts():
             [
                 key
                 for key in NEW_OPERATIONS
-                if not key[1].startswith("/api/v1/erasures") and not key[1].endswith("/datasets")
+                if not key[1].startswith(("/api/v1/erasures", "/api/v1/lifecycle-erasures"))
+                and not key[1].endswith("/datasets")
             ]
         )
         == 10
     )
     assert len([key for key in NEW_OPERATIONS if key[1].startswith("/api/v1/erasures")]) == 3
-    assert len(NEW_OPERATIONS) == 14
-    assert len({op for op in NEW_OPERATIONS if not op[1].endswith("/datasets")}) == 13
+    assert (
+        len([key for key in NEW_OPERATIONS if key[1].startswith("/api/v1/lifecycle-erasures")]) == 3
+    )
+    assert len(NEW_OPERATIONS) == 17
+    assert (
+        len(
+            {
+                op
+                for op in NEW_OPERATIONS
+                if not op[1].endswith("/datasets")
+                and not op[1].startswith("/api/v1/lifecycle-erasures")
+            }
+        )
+        == 13
+    )

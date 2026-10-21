@@ -1,6 +1,33 @@
-# Phase 9 — Security, Privacy, Reliability and Deletion handoff
+# Phase 9 security, privacy, reliability and deletion handoff
 
-## Current9G authorization and remaining work
+## Current9H authority
+
+Phase9H and whole Phase9 engineering acceptance PASS (2026-10-21), marker9/9H.
+All nine original engineering criteria pass without a production waiver. Person,
+Relationship and private signed Owner Owned Data erasure, exact-run stopped-writer
+recovery and current-primary quarantined restore are implemented and verified.
+Backend852/Mobile410/repository121/Golden83/OpenAPI43/Doctor21, all previous Web
+and security gates, thirteen fresh native scenes and the independent full-flow
+wire supplement pass. Separate original pre/post make.cmd verify processes each
+actually exit0. Authority: PHASE_9H_ACCEPTANCE/MATRIX, PHASE_9_FINAL_ACCEPTANCE and
+PHASE_9_EXIT_CRITERIA_MATRIX. Failed/aborted/superseded evidence stays immutable.
+
+Public Production Readiness remains NOT APPROVED. Local Owner data erasure is not
+production account closure. Twelve production limitations remain explicit in
+PHASE_9H_PRODUCTION_RISKS, including identity/outbox/scheduling/encrypted rotation,
+independent total-primary-loss authority, legacy writer proof, external copies,
+real-provider quality, monitoring and ingress/topology validation. Missing authority
+fails closed; no force reset, reexecution or age-only stopped proof is authorized.
+
+Stop after9H/final acceptance. Phase10–12 remain PENDING; real providers, RAG,
+real-chat analysis and public deployment are not started. A later task requires
+explicit authorization. Historical instructions below retain acceptance-time scope.
+
+## Historical phase-specific contracts
+
+### Phase 9 — Security, Privacy, Reliability and Deletion handoff
+
+## Historical9G authorization and remaining work
 
 9G PASS in its authorized audit scope after independent complete current-source
 pre/post root exits0. Backend810/Mobile396/repository99/Golden83/OpenAPI40/Doctor21
@@ -232,3 +259,14 @@ exits0. Current marker8/9B; Phase9 overall IN PROGRESS. Next work remains exactl
 the authorized-future items above, not an automatic9C/Phase10 start.
 One Windows Playwright worker native exit remains an unconfirmed P2 environment
 follow-up; unchanged3/3 recheck and full root rerun passed. Failed evidence retained.
+
+
+## Current Phase 9H
+
+Explicit9H scope implements full structured Person/Relationship and operator-only
+Owner Owned Data erasure plus safe offline AgentRun recovery. Current authority is
+PHASE_9H_ACCEPTANCE/MATRIX and ADR0043. Only after final-source independent full
+pre/post root exits0 may9H and original Phase9 engineering exit criteria pass.
+Production identities, external copies, durable outbox, monitored scheduling,
+encrypted independent-authority restore and public ingress remain separate limitations.
+Stop after this request; Phase10–12, RAG, real LLM and public deployment are not started.

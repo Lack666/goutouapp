@@ -1,0 +1,12 @@
+{"android_api": "37"}
+{"fixture": "ready", "baseURL": "http://127.0.0.1:8024", "commands": "state, tap [label,direction?], login a|b|expired, seed, evidence, stage, cleanup, back, home, stop"}
+Traceback (most recent call last):
+  File "F:\狗头军师app化\goutouapp\scripts\phase8_android_demo.py", line 1032, in <module>
+    main()
+    ~~~~^^
+  File "F:\狗头军师app化\goutouapp\scripts\phase8_android_demo.py", line 299, in main
+    observe_compiled_build()
+    ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "F:\狗头军师app化\goutouapp\scripts\phase8_android_demo.py", line 278, in observe_compiled_build
+    raise RuntimeError("Native compiled mobile source proof missing or stale")
+RuntimeError: Native compiled mobile source proof missing or stale
