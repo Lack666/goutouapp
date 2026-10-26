@@ -1,0 +1,16 @@
+{
+  "official_marker": {
+    "completed_phase": 9,
+    "completed_subphase": "9H"
+  },
+  "golden83_sha256": "38862bdf5f45d76d7517cc7b955be0f60c2b1c62d9437652e2f989f7d310fd94",
+  "evaluated_source_fingerprint": "c9f202002e6e6bde5a326158f2e37a5841362cebfce36e84aabd26fb74bcb30a",
+  "source_archive_sha256": "f8ea9565c81e1d16e6c95bc916e02528ed293f66099b616876fc8eefcb6f7eac",
+  "only_formatting_changed_after_live": [
+    "evals/agent/review.py"
+  ],
+  "synthetic_cases": 60,
+  "live_cases": 20,
+  "quality_gate": "FAIL",
+  "full_regression": "NOT RUN"
+}

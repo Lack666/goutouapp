@@ -4,11 +4,13 @@ from pydantic import ValidationError
 
 from app.llm.errors import LLMStructuredOutputError
 from app.llm.provider import SchemaT
+from app.observability import capture_schema_errors
 
 
 def validate_structured_output(content: str, schema: type[SchemaT]) -> SchemaT:
     try:
         return schema.model_validate_json(content, strict=True)
-    except ValidationError:
+    except ValidationError as exc:
+        capture_schema_errors(exc.errors(include_url=False, include_input=False))
         # ValidationError can echo private content; only expose our fixed error.
         raise LLMStructuredOutputError() from None

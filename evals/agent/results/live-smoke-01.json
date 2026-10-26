@@ -1,0 +1,89 @@
+{
+  "eval_run_id": "ac4a4cdb-d342-410e-a16a-a0ed1922a223",
+  "time": "2026-10-26T06:07:27.075142+00:00",
+  "mode": "live",
+  "git_commit": "8023df375c4328a3945374441e63eac3e841d254",
+  "source_fingerprint": "ac62066495de380fc4e297bfd045bd4caccaefeb58e4721aec32c2f5cd98d9b5",
+  "dataset_version": "agent-v1",
+  "dataset_sha256": "ac36e1e1be40528053f4e3beeb1c1dc0881e9918cc8dadf367149612778badbc",
+  "graph_version": "phase3h-observed-v1",
+  "prompt_version": "phase3-prompts-schema-v1",
+  "evaluator_version": "behavior-structural-v1",
+  "price_version": "deepseek-flash-2026-10-26-peak-cny",
+  "price_source": "https://api-docs.deepseek.com/zh-cn/quick_start/pricing/",
+  "metrics": {
+    "mode": "smoke",
+    "results": {
+      "chat": {
+        "status": "failed",
+        "error": "llm_unavailable"
+      },
+      "stream": {
+        "status": "failed",
+        "error": "llm_unavailable"
+      },
+      "structured_output": {
+        "status": "failed",
+        "error": "llm_unavailable"
+      }
+    }
+  },
+  "cases": [],
+  "traces": [
+    {
+      "kind": "provider",
+      "run_id": null,
+      "node": null,
+      "provider": "openai_compatible",
+      "model": "deepseek-flash",
+      "operation": "chat",
+      "usage": null,
+      "ttft_ms": null,
+      "status": "failed",
+      "error": "llm_unavailable",
+      "duration_ms": 61.33839999893098
+    },
+    {
+      "kind": "provider",
+      "run_id": null,
+      "node": null,
+      "provider": "openai_compatible",
+      "model": "deepseek-flash",
+      "operation": "stream",
+      "usage": null,
+      "ttft_ms": null,
+      "status": "failed",
+      "error": "llm_unavailable",
+      "duration_ms": 6.677000001218403
+    },
+    {
+      "kind": "provider",
+      "run_id": null,
+      "node": null,
+      "provider": "openai_compatible",
+      "model": "deepseek-flash",
+      "operation": "structured_output",
+      "usage": null,
+      "ttft_ms": null,
+      "status": "failed",
+      "error": "llm_unavailable",
+      "duration_ms": 6.866199997602962
+    }
+  ],
+  "failure_summary": [],
+  "model": "deepseek-flash",
+  "model_parameters": {
+    "max_tokens": 4096,
+    "thinking": "disabled",
+    "temperature": null
+  },
+  "budget": {
+    "requests": 3,
+    "reserved_tokens": 25541,
+    "reserved_cny": "0.12481",
+    "max_requests": 30,
+    "max_tokens": 500000,
+    "max_cost_cny": 5.0
+  },
+  "human_review": "PENDING; automated structure checks are not semantic quality scores"
+}

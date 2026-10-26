@@ -48,6 +48,7 @@ from app.agent.nodes import (
 )
 from app.agent.state import AgentState, initial_state
 from app.llm.errors import LLMError, LLMStructuredOutputError
+from app.observability import emit, node_scope, run_scope
 
 Node = Callable[[AgentState], dict[str, object]]
 AsyncNode = Callable[[AgentState], Awaitable[dict[str, object]]]
@@ -163,14 +164,20 @@ def _check_update(name: str, update: dict[str, object]) -> dict[str, object]:
 
 def _bind(name: str, node: Node) -> Node:
     def guarded(state: AgentState) -> dict[str, object]:
-        return _check_update(name, node(_view(state, name)))
+        with node_scope(name):
+            result = _check_update(name, node(_view(state, name)))
+            return result
 
     return guarded
 
 
 def _bind_async(name: str, node: AsyncNode) -> AsyncNode:
     async def guarded(state: AgentState) -> dict[str, object]:
-        return _check_update(name, await node(_view(state, name)))
+        with node_scope(name):
+            result = _check_update(name, await node(_view(state, name)))
+            if name == "safety_check":
+                emit("routing", route=str(result["route"]))
+            return result
 
     return guarded
 
@@ -308,6 +315,23 @@ class AgentRuntime:
         return AgentFailure(run_id=run_id, code=code, message="Agent run failed")
 
     async def stream(self, request: AgentInput) -> AsyncIterator[AgentEvent]:
+        if isinstance(request, AgentInput) and request.run_id is None:
+            request = request.model_copy(update={"run_id": uuid4()})
+        with run_scope(getattr(request, "run_id", None)):
+            status = "cancelled"
+            inner = self._stream(request)
+            try:
+                async for event in inner:
+                    if isinstance(event, CompletedEvent):
+                        status = "completed"
+                    elif isinstance(event, FailedEvent):
+                        status = "failed"
+                    yield event
+            finally:
+                await inner.aclose()
+                emit("outcome", status=status)
+
+    async def _stream(self, request: AgentInput) -> AsyncIterator[AgentEvent]:
         """Yield safe lifecycle events while executing the compiled graph once."""
         if not isinstance(request, AgentInput):
             run_id = uuid4()
@@ -389,6 +413,18 @@ class AgentRuntime:
             await graph_stream.aclose()
 
     async def run(self, request: AgentInput) -> AgentResult | AgentFailure:
+        if isinstance(request, AgentInput) and request.run_id is None:
+            request = request.model_copy(update={"run_id": uuid4()})
+        with run_scope(getattr(request, "run_id", None)):
+            status = "cancelled"
+            try:
+                result = await self._run(request)
+                status = "failed" if isinstance(result, AgentFailure) else "completed"
+                return result
+            finally:
+                emit("outcome", status=status)
+
+    async def _run(self, request: AgentInput) -> AgentResult | AgentFailure:
         if not isinstance(request, AgentInput):
             return AgentFailure(
                 run_id=uuid4(),

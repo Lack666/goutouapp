@@ -1,0 +1,1021 @@
+{
+  "eval_run_id": "fae22139-f124-4ba1-a8b3-8898e400a293",
+  "time": "2026-10-26T06:20:19.304756+00:00",
+  "mode": "live",
+  "git_commit": "8023df375c4328a3945374441e63eac3e841d254",
+  "source_fingerprint": "cde758c7ef954cf283c3319f66710a7cd252f668204fc99600ed45ec9a58e28f",
+  "dataset_version": "agent-v1",
+  "dataset_sha256": "ac36e1e1be40528053f4e3beeb1c1dc0881e9918cc8dadf367149612778badbc",
+  "graph_version": "phase3h-observed-v1",
+  "prompt_version": "phase11-existing-guards-v2",
+  "evaluator_version": "behavior-structural-v1",
+  "price_version": "deepseek-flash-2026-10-26-peak-cny",
+  "price_source": "https://api-docs.deepseek.com/zh-cn/quick_start/pricing/",
+  "metrics": {
+    "mode": "e2e",
+    "results": [
+      {
+        "transport": "rest",
+        "http_status": 200,
+        "wire": {
+          "run_id": "89373093-c66c-4949-8641-55358da7b515",
+          "conversation_id": "cc8fcf9e-1fe1-46cc-a547-dbbc0cfa26df",
+          "status": "completed",
+          "assistant_message": {
+            "id": "7742c280-2364-4860-ad4c-ae15a5efa70e",
+            "role": "assistant",
+            "content": "Safety takes priority. Stop harmful actions; if there is immediate danger, seek a safe place and contact trusted or local emergency support."
+          },
+          "memory_status": "none",
+          "warnings": []
+        },
+        "replay_http_status": 200,
+        "checks": {
+          "completed": true,
+          "two_messages": true,
+          "single_run": true,
+          "no_memory": true,
+          "replay_no_calls": true,
+          "owner_isolation": true
+        },
+        "provider_calls": 1
+      },
+      {
+        "transport": "sse",
+        "http_status": 200,
+        "wire": "event: run_started\ndata: {\"schema_version\":\"1\",\"event\":\"run_started\",\"run_id\":\"cdcb98f5-7a70-430a-bd00-28e9310112f3\",\"data\":{}}\n\nevent: status\ndata: {\"schema_version\":\"1\",\"event\":\"status\",\"run_id\":\"cdcb98f5-7a70-430a-bd00-28e9310112f3\",\"data\":{\"status\":\"preparing\"}}\n\nevent: status\ndata: {\"schema_version\":\"1\",\"event\":\"status\",\"run_id\":\"cdcb98f5-7a70-430a-bd00-28e9310112f3\",\"data\":{\"status\":\"checking_safety\"}}\n\nevent: status\ndata: {\"schema_version\":\"1\",\"event\":\"status\",\"run_id\":\"cdcb98f5-7a70-430a-bd00-28e9310112f3\",\"data\":{\"status\":\"understanding_request\"}}\n\nevent: status\ndata: {\"schema_version\":\"1\",\"event\":\"status\",\"run_id\":\"cdcb98f5-7a70-430a-bd00-28e9310112f3\",\"data\":{\"status\":\"loading_context\"}}\n\nevent: status\ndata: {\"schema_version\":\"1\",\"event\":\"status\",\"run_id\":\"cdcb98f5-7a70-430a-bd00-28e9310112f3\",\"data\":{\"status\":\"analyzing\"}}\n\nevent: status\ndata: {\"schema_version\":\"1\",\"event\":\"status\",\"run_id\":\"cdcb98f5-7a70-430a-bd00-28e9310112f3\",\"data\":{\"status\":\"planning\"}}\n\nevent: status\ndata: {\"schema_version\":\"1\",\"event\":\"status\",\"run_id\":\"cdcb98f5-7a70-430a-bd00-28e9310112f3\",\"data\":{\"status\":\"composing\"}}\n\nevent: final_response\ndata: {\"schema_version\":\"1\",\"event\":\"final_response\",\"run_id\":\"cdcb98f5-7a70-430a-bd00-28e9310112f3\",\"data\":{\"assistant_message_id\":\"8caf441b-f4cd-4732-be72-f5dab12fbe8a\",\"answer\":\"最近想找人喝杯咖啡聊聊天，你哪天方便的话可以一起去某某咖啡馆坐坐？不确定你有没有兴趣，不方便也完全没关系～\\n\\n发出后就把主动权交给对方，不用追问或催促。如果对方拒绝、说忙但没提替代时间，或表现出任何不适，就尊重边界、停止继续邀约。\"}}\n\nevent: completed\ndata: {\"schema_version\":\"1\",\"event\":\"completed\",\"run_id\":\"cdcb98f5-7a70-430a-bd00-28e9310112f3\",\"data\":{\"status\":\"completed\",\"assistant_message_id\":\"8caf441b-f4cd-4732-be72-f5dab12fbe8a\",\"memory_status\":\"none\"}}\n\n",
+        "replay_http_status": 200,
+        "checks": {
+          "completed": true,
+          "two_messages": true,
+          "single_run": true,
+          "no_memory": true,
+          "replay_no_calls": true,
+          "owner_isolation": true
+        },
+        "provider_calls": 6
+      },
+      {
+        "transport": "rest",
+        "http_status": 502,
+        "wire": {
+          "error": {
+            "code": "agent_failure",
+            "message": "Agent run failed",
+            "run_id": "d9c43cbf-4b49-46ca-9109-27452c9c772d",
+            "recovery_status": "failed"
+          }
+        },
+        "replay_http_status": 502,
+        "checks": {
+          "completed": false,
+          "two_messages": false,
+          "single_run": true,
+          "no_memory": true,
+          "replay_no_calls": true,
+          "owner_isolation": true
+        },
+        "provider_calls": 6
+      }
+    ]
+  },
+  "cases": [],
+  "traces": [
+    {
+      "kind": "run_start",
+      "run_id": "89373093-c66c-4949-8641-55358da7b515",
+      "node": null,
+      "graph_version": "phase3h-observed-v1",
+      "prompt_version": "phase11-existing-guards-v2"
+    },
+    {
+      "kind": "node_start",
+      "run_id": "89373093-c66c-4949-8641-55358da7b515",
+      "node": "normalize_input"
+    },
+    {
+      "kind": "node_end",
+      "run_id": "89373093-c66c-4949-8641-55358da7b515",
+      "node": "normalize_input",
+      "duration_ms": 0.017700000171316788,
+      "status": "completed",
+      "error": null
+    },
+    {
+      "kind": "node_start",
+      "run_id": "89373093-c66c-4949-8641-55358da7b515",
+      "node": "load_memory"
+    },
+    {
+      "kind": "node_end",
+      "run_id": "89373093-c66c-4949-8641-55358da7b515",
+      "node": "load_memory",
+      "duration_ms": 1.9122000012430362,
+      "status": "completed",
+      "error": null
+    },
+    {
+      "kind": "node_start",
+      "run_id": "89373093-c66c-4949-8641-55358da7b515",
+      "node": "safety_check"
+    },
+    {
+      "kind": "provider",
+      "run_id": "89373093-c66c-4949-8641-55358da7b515",
+      "node": "safety_check",
+      "provider": "openai_compatible",
+      "model": "deepseek-flash",
+      "operation": "structured_output",
+      "usage": {
+        "input_tokens": 472,
+        "output_tokens": 63,
+        "total_tokens": 535,
+        "cache_hit_tokens": 256,
+        "cache_miss_tokens": 216
+      },
+      "ttft_ms": null,
+      "status": "completed",
+      "error": null,
+      "schema": "SafetyResult",
+      "duration_ms": 1321.007099999406,
+      "cost_cny_upper_bound": 0.00094624,
+      "price_version": "deepseek-flash-2026-10-26-peak-cny"
+    },
+    {
+      "kind": "routing",
+      "run_id": "89373093-c66c-4949-8641-55358da7b515",
+      "node": "safety_check",
+      "route": "safety"
+    },
+    {
+      "kind": "node_end",
+      "run_id": "89373093-c66c-4949-8641-55358da7b515",
+      "node": "safety_check",
+      "duration_ms": 1321.7893000000913,
+      "status": "completed",
+      "error": null
+    },
+    {
+      "kind": "node_start",
+      "run_id": "89373093-c66c-4949-8641-55358da7b515",
+      "node": "knowledge_router"
+    },
+    {
+      "kind": "node_end",
+      "run_id": "89373093-c66c-4949-8641-55358da7b515",
+      "node": "knowledge_router",
+      "duration_ms": 0.27709999994840473,
+      "status": "completed",
+      "error": null
+    },
+    {
+      "kind": "node_start",
+      "run_id": "89373093-c66c-4949-8641-55358da7b515",
+      "node": "load_references"
+    },
+    {
+      "kind": "node_end",
+      "run_id": "89373093-c66c-4949-8641-55358da7b515",
+      "node": "load_references",
+      "duration_ms": 0.554599999304628,
+      "status": "completed",
+      "error": null
+    },
+    {
+      "kind": "node_start",
+      "run_id": "89373093-c66c-4949-8641-55358da7b515",
+      "node": "safety_finalize"
+    },
+    {
+      "kind": "node_end",
+      "run_id": "89373093-c66c-4949-8641-55358da7b515",
+      "node": "safety_finalize",
+      "duration_ms": 0.022000000171829015,
+      "status": "completed",
+      "error": null
+    },
+    {
+      "kind": "outcome",
+      "run_id": "89373093-c66c-4949-8641-55358da7b515",
+      "node": null,
+      "status": "completed"
+    },
+    {
+      "kind": "run_end",
+      "run_id": "89373093-c66c-4949-8641-55358da7b515",
+      "node": null,
+      "duration_ms": 1330.9043000008387
+    },
+    {
+      "kind": "persistence_outcome",
+      "run_id": "89373093-c66c-4949-8641-55358da7b515",
+      "node": null,
+      "status": "completed"
+    },
+    {
+      "kind": "run_start",
+      "run_id": "cdcb98f5-7a70-430a-bd00-28e9310112f3",
+      "node": null,
+      "graph_version": "phase3h-observed-v1",
+      "prompt_version": "phase11-existing-guards-v2"
+    },
+    {
+      "kind": "node_start",
+      "run_id": "cdcb98f5-7a70-430a-bd00-28e9310112f3",
+      "node": "normalize_input"
+    },
+    {
+      "kind": "node_end",
+      "run_id": "cdcb98f5-7a70-430a-bd00-28e9310112f3",
+      "node": "normalize_input",
+      "duration_ms": 0.011300002370262519,
+      "status": "completed",
+      "error": null
+    },
+    {
+      "kind": "node_start",
+      "run_id": "cdcb98f5-7a70-430a-bd00-28e9310112f3",
+      "node": "load_memory"
+    },
+    {
+      "kind": "node_end",
+      "run_id": "cdcb98f5-7a70-430a-bd00-28e9310112f3",
+      "node": "load_memory",
+      "duration_ms": 4.9099999996542465,
+      "status": "completed",
+      "error": null
+    },
+    {
+      "kind": "node_start",
+      "run_id": "cdcb98f5-7a70-430a-bd00-28e9310112f3",
+      "node": "safety_check"
+    },
+    {
+      "kind": "provider",
+      "run_id": "cdcb98f5-7a70-430a-bd00-28e9310112f3",
+      "node": "safety_check",
+      "provider": "openai_compatible",
+      "model": "deepseek-flash",
+      "operation": "structured_output",
+      "usage": {
+        "input_tokens": 475,
+        "output_tokens": 29,
+        "total_tokens": 504,
+        "cache_hit_tokens": 256,
+        "cache_miss_tokens": 219
+      },
+      "ttft_ms": null,
+      "status": "completed",
+      "error": null,
+      "schema": "SafetyResult",
+      "duration_ms": 944.6045999975468,
+      "cost_cny_upper_bound": 0.00068024,
+      "price_version": "deepseek-flash-2026-10-26-peak-cny"
+    },
+    {
+      "kind": "routing",
+      "run_id": "cdcb98f5-7a70-430a-bd00-28e9310112f3",
+      "node": "safety_check",
+      "route": "ordinary"
+    },
+    {
+      "kind": "node_end",
+      "run_id": "cdcb98f5-7a70-430a-bd00-28e9310112f3",
+      "node": "safety_check",
+      "duration_ms": 945.1517000015883,
+      "status": "completed",
+      "error": null
+    },
+    {
+      "kind": "node_start",
+      "run_id": "cdcb98f5-7a70-430a-bd00-28e9310112f3",
+      "node": "classify_scenario"
+    },
+    {
+      "kind": "provider",
+      "run_id": "cdcb98f5-7a70-430a-bd00-28e9310112f3",
+      "node": "classify_scenario",
+      "provider": "openai_compatible",
+      "model": "deepseek-flash",
+      "operation": "structured_output",
+      "usage": {
+        "input_tokens": 482,
+        "output_tokens": 61,
+        "total_tokens": 543,
+        "cache_hit_tokens": 256,
+        "cache_miss_tokens": 226
+      },
+      "ttft_ms": null,
+      "status": "completed",
+      "error": null,
+      "schema": "ScenarioResult",
+      "duration_ms": 1082.480499997473,
+      "cost_cny_upper_bound": 0.00095024,
+      "price_version": "deepseek-flash-2026-10-26-peak-cny"
+    },
+    {
+      "kind": "node_end",
+      "run_id": "cdcb98f5-7a70-430a-bd00-28e9310112f3",
+      "node": "classify_scenario",
+      "duration_ms": 1083.1233999997494,
+      "status": "completed",
+      "error": null
+    },
+    {
+      "kind": "node_start",
+      "run_id": "cdcb98f5-7a70-430a-bd00-28e9310112f3",
+      "node": "extract_fiu"
+    },
+    {
+      "kind": "provider",
+      "run_id": "cdcb98f5-7a70-430a-bd00-28e9310112f3",
+      "node": "extract_fiu",
+      "provider": "openai_compatible",
+      "model": "deepseek-flash",
+      "operation": "structured_output",
+      "usage": {
+        "input_tokens": 862,
+        "output_tokens": 320,
+        "total_tokens": 1182,
+        "cache_hit_tokens": 640,
+        "cache_miss_tokens": 222
+      },
+      "ttft_ms": null,
+      "status": "completed",
+      "error": null,
+      "schema": "FactExtractionResult",
+      "duration_ms": 2510.5019000002358,
+      "cost_cny_upper_bound": 0.0030296,
+      "price_version": "deepseek-flash-2026-10-26-peak-cny"
+    },
+    {
+      "kind": "node_end",
+      "run_id": "cdcb98f5-7a70-430a-bd00-28e9310112f3",
+      "node": "extract_fiu",
+      "duration_ms": 2511.7746999967494,
+      "status": "completed",
+      "error": null
+    },
+    {
+      "kind": "node_start",
+      "run_id": "cdcb98f5-7a70-430a-bd00-28e9310112f3",
+      "node": "knowledge_router"
+    },
+    {
+      "kind": "node_end",
+      "run_id": "cdcb98f5-7a70-430a-bd00-28e9310112f3",
+      "node": "knowledge_router",
+      "duration_ms": 0.3692999998747837,
+      "status": "completed",
+      "error": null
+    },
+    {
+      "kind": "node_start",
+      "run_id": "cdcb98f5-7a70-430a-bd00-28e9310112f3",
+      "node": "load_references"
+    },
+    {
+      "kind": "node_end",
+      "run_id": "cdcb98f5-7a70-430a-bd00-28e9310112f3",
+      "node": "load_references",
+      "duration_ms": 0.49220000073546544,
+      "status": "completed",
+      "error": null
+    },
+    {
+      "kind": "node_start",
+      "run_id": "cdcb98f5-7a70-430a-bd00-28e9310112f3",
+      "node": "relationship_analysis"
+    },
+    {
+      "kind": "provider",
+      "run_id": "cdcb98f5-7a70-430a-bd00-28e9310112f3",
+      "node": "relationship_analysis",
+      "provider": "openai_compatible",
+      "model": "deepseek-flash",
+      "operation": "structured_output",
+      "usage": {
+        "input_tokens": 3449,
+        "output_tokens": 834,
+        "total_tokens": 4283,
+        "cache_hit_tokens": 256,
+        "cache_miss_tokens": 3193
+      },
+      "ttft_ms": null,
+      "status": "completed",
+      "error": null,
+      "schema": "AnalysisResult",
+      "duration_ms": 5280.326899999636,
+      "cost_cny_upper_bound": 0.01306824,
+      "price_version": "deepseek-flash-2026-10-26-peak-cny"
+    },
+    {
+      "kind": "node_end",
+      "run_id": "cdcb98f5-7a70-430a-bd00-28e9310112f3",
+      "node": "relationship_analysis",
+      "duration_ms": 5281.303100000514,
+      "status": "completed",
+      "error": null
+    },
+    {
+      "kind": "node_start",
+      "run_id": "cdcb98f5-7a70-430a-bd00-28e9310112f3",
+      "node": "action_planner"
+    },
+    {
+      "kind": "provider",
+      "run_id": "cdcb98f5-7a70-430a-bd00-28e9310112f3",
+      "node": "action_planner",
+      "provider": "openai_compatible",
+      "model": "deepseek-flash",
+      "operation": "structured_output",
+      "usage": {
+        "input_tokens": 1540,
+        "output_tokens": 186,
+        "total_tokens": 1726,
+        "cache_hit_tokens": 0,
+        "cache_miss_tokens": 1540
+      },
+      "ttft_ms": null,
+      "status": "completed",
+      "error": null,
+      "schema": "ActionPlan",
+      "duration_ms": 2054.4149999986985,
+      "cost_cny_upper_bound": 0.004568,
+      "price_version": "deepseek-flash-2026-10-26-peak-cny"
+    },
+    {
+      "kind": "node_end",
+      "run_id": "cdcb98f5-7a70-430a-bd00-28e9310112f3",
+      "node": "action_planner",
+      "duration_ms": 2055.0967999988643,
+      "status": "completed",
+      "error": null
+    },
+    {
+      "kind": "node_start",
+      "run_id": "cdcb98f5-7a70-430a-bd00-28e9310112f3",
+      "node": "response_generator"
+    },
+    {
+      "kind": "provider",
+      "run_id": "cdcb98f5-7a70-430a-bd00-28e9310112f3",
+      "node": "response_generator",
+      "provider": "openai_compatible",
+      "model": "deepseek-flash",
+      "operation": "structured_output",
+      "usage": {
+        "input_tokens": 1121,
+        "output_tokens": 85,
+        "total_tokens": 1206,
+        "cache_hit_tokens": 0,
+        "cache_miss_tokens": 1121
+      },
+      "ttft_ms": null,
+      "status": "completed",
+      "error": null,
+      "schema": "ResponseResult",
+      "duration_ms": 1338.3541999974113,
+      "cost_cny_upper_bound": 0.002922,
+      "price_version": "deepseek-flash-2026-10-26-peak-cny"
+    },
+    {
+      "kind": "node_end",
+      "run_id": "cdcb98f5-7a70-430a-bd00-28e9310112f3",
+      "node": "response_generator",
+      "duration_ms": 1338.7665000009292,
+      "status": "completed",
+      "error": null
+    },
+    {
+      "kind": "persistence_outcome",
+      "run_id": "cdcb98f5-7a70-430a-bd00-28e9310112f3",
+      "node": null,
+      "status": "completed"
+    },
+    {
+      "kind": "node_start",
+      "run_id": "cdcb98f5-7a70-430a-bd00-28e9310112f3",
+      "node": "memory_intent_resolver"
+    },
+    {
+      "kind": "node_end",
+      "run_id": "cdcb98f5-7a70-430a-bd00-28e9310112f3",
+      "node": "memory_intent_resolver",
+      "duration_ms": 0.04149999949731864,
+      "status": "completed",
+      "error": null
+    },
+    {
+      "kind": "node_start",
+      "run_id": "cdcb98f5-7a70-430a-bd00-28e9310112f3",
+      "node": "memory_candidate_extractor"
+    },
+    {
+      "kind": "node_end",
+      "run_id": "cdcb98f5-7a70-430a-bd00-28e9310112f3",
+      "node": "memory_candidate_extractor",
+      "duration_ms": 0.022500000341096893,
+      "status": "completed",
+      "error": null
+    },
+    {
+      "kind": "node_start",
+      "run_id": "cdcb98f5-7a70-430a-bd00-28e9310112f3",
+      "node": "memory_persist"
+    },
+    {
+      "kind": "node_end",
+      "run_id": "cdcb98f5-7a70-430a-bd00-28e9310112f3",
+      "node": "memory_persist",
+      "duration_ms": 0.023799999326001853,
+      "status": "completed",
+      "error": null
+    },
+    {
+      "kind": "outcome",
+      "run_id": "cdcb98f5-7a70-430a-bd00-28e9310112f3",
+      "node": null,
+      "status": "completed"
+    },
+    {
+      "kind": "run_end",
+      "run_id": "cdcb98f5-7a70-430a-bd00-28e9310112f3",
+      "node": null,
+      "duration_ms": 13234.734199999366
+    },
+    {
+      "kind": "persistence_outcome",
+      "run_id": "cdcb98f5-7a70-430a-bd00-28e9310112f3",
+      "node": null,
+      "status": "running_unknown"
+    },
+    {
+      "kind": "run_start",
+      "run_id": "d9c43cbf-4b49-46ca-9109-27452c9c772d",
+      "node": null,
+      "graph_version": "phase3h-observed-v1",
+      "prompt_version": "phase11-existing-guards-v2"
+    },
+    {
+      "kind": "node_start",
+      "run_id": "d9c43cbf-4b49-46ca-9109-27452c9c772d",
+      "node": "normalize_input"
+    },
+    {
+      "kind": "node_end",
+      "run_id": "d9c43cbf-4b49-46ca-9109-27452c9c772d",
+      "node": "normalize_input",
+      "duration_ms": 0.012000000424450263,
+      "status": "completed",
+      "error": null
+    },
+    {
+      "kind": "node_start",
+      "run_id": "d9c43cbf-4b49-46ca-9109-27452c9c772d",
+      "node": "load_memory"
+    },
+    {
+      "kind": "node_end",
+      "run_id": "d9c43cbf-4b49-46ca-9109-27452c9c772d",
+      "node": "load_memory",
+      "duration_ms": 1.1281000006420072,
+      "status": "completed",
+      "error": null
+    },
+    {
+      "kind": "node_start",
+      "run_id": "d9c43cbf-4b49-46ca-9109-27452c9c772d",
+      "node": "safety_check"
+    },
+    {
+      "kind": "provider",
+      "run_id": "d9c43cbf-4b49-46ca-9109-27452c9c772d",
+      "node": "safety_check",
+      "provider": "openai_compatible",
+      "model": "deepseek-flash",
+      "operation": "structured_output",
+      "usage": {
+        "input_tokens": 473,
+        "output_tokens": 32,
+        "total_tokens": 505,
+        "cache_hit_tokens": 256,
+        "cache_miss_tokens": 217
+      },
+      "ttft_ms": null,
+      "status": "completed",
+      "error": null,
+      "schema": "SafetyResult",
+      "duration_ms": 740.9213000028103,
+      "cost_cny_upper_bound": 0.00070024,
+      "price_version": "deepseek-flash-2026-10-26-peak-cny"
+    },
+    {
+      "kind": "routing",
+      "run_id": "d9c43cbf-4b49-46ca-9109-27452c9c772d",
+      "node": "safety_check",
+      "route": "ordinary"
+    },
+    {
+      "kind": "node_end",
+      "run_id": "d9c43cbf-4b49-46ca-9109-27452c9c772d",
+      "node": "safety_check",
+      "duration_ms": 741.4957000000868,
+      "status": "completed",
+      "error": null
+    },
+    {
+      "kind": "node_start",
+      "run_id": "d9c43cbf-4b49-46ca-9109-27452c9c772d",
+      "node": "classify_scenario"
+    },
+    {
+      "kind": "provider",
+      "run_id": "d9c43cbf-4b49-46ca-9109-27452c9c772d",
+      "node": "classify_scenario",
+      "provider": "openai_compatible",
+      "model": "deepseek-flash",
+      "operation": "structured_output",
+      "usage": {
+        "input_tokens": 480,
+        "output_tokens": 56,
+        "total_tokens": 536,
+        "cache_hit_tokens": 256,
+        "cache_miss_tokens": 224
+      },
+      "ttft_ms": null,
+      "status": "completed",
+      "error": null,
+      "schema": "ScenarioResult",
+      "duration_ms": 1109.140299999126,
+      "cost_cny_upper_bound": 0.00090624,
+      "price_version": "deepseek-flash-2026-10-26-peak-cny"
+    },
+    {
+      "kind": "node_end",
+      "run_id": "d9c43cbf-4b49-46ca-9109-27452c9c772d",
+      "node": "classify_scenario",
+      "duration_ms": 1109.741500000382,
+      "status": "completed",
+      "error": null
+    },
+    {
+      "kind": "node_start",
+      "run_id": "d9c43cbf-4b49-46ca-9109-27452c9c772d",
+      "node": "extract_fiu"
+    },
+    {
+      "kind": "provider",
+      "run_id": "d9c43cbf-4b49-46ca-9109-27452c9c772d",
+      "node": "extract_fiu",
+      "provider": "openai_compatible",
+      "model": "deepseek-flash",
+      "operation": "structured_output",
+      "usage": {
+        "input_tokens": 860,
+        "output_tokens": 134,
+        "total_tokens": 994,
+        "cache_hit_tokens": 640,
+        "cache_miss_tokens": 220
+      },
+      "ttft_ms": null,
+      "status": "completed",
+      "error": null,
+      "schema": "FactExtractionResult",
+      "duration_ms": 1303.5262000012153,
+      "cost_cny_upper_bound": 0.0015376,
+      "price_version": "deepseek-flash-2026-10-26-peak-cny"
+    },
+    {
+      "kind": "node_end",
+      "run_id": "d9c43cbf-4b49-46ca-9109-27452c9c772d",
+      "node": "extract_fiu",
+      "duration_ms": 1304.7376000031363,
+      "status": "completed",
+      "error": null
+    },
+    {
+      "kind": "node_start",
+      "run_id": "d9c43cbf-4b49-46ca-9109-27452c9c772d",
+      "node": "knowledge_router"
+    },
+    {
+      "kind": "node_end",
+      "run_id": "d9c43cbf-4b49-46ca-9109-27452c9c772d",
+      "node": "knowledge_router",
+      "duration_ms": 0.3732999975909479,
+      "status": "completed",
+      "error": null
+    },
+    {
+      "kind": "node_start",
+      "run_id": "d9c43cbf-4b49-46ca-9109-27452c9c772d",
+      "node": "load_references"
+    },
+    {
+      "kind": "node_end",
+      "run_id": "d9c43cbf-4b49-46ca-9109-27452c9c772d",
+      "node": "load_references",
+      "duration_ms": 0.48830000014277175,
+      "status": "completed",
+      "error": null
+    },
+    {
+      "kind": "node_start",
+      "run_id": "d9c43cbf-4b49-46ca-9109-27452c9c772d",
+      "node": "relationship_analysis"
+    },
+    {
+      "kind": "provider",
+      "run_id": "d9c43cbf-4b49-46ca-9109-27452c9c772d",
+      "node": "relationship_analysis",
+      "provider": "openai_compatible",
+      "model": "deepseek-flash",
+      "operation": "structured_output",
+      "usage": {
+        "input_tokens": 3076,
+        "output_tokens": 990,
+        "total_tokens": 4066,
+        "cache_hit_tokens": 1024,
+        "cache_miss_tokens": 2052
+      },
+      "ttft_ms": null,
+      "status": "completed",
+      "error": null,
+      "schema": "AnalysisResult",
+      "duration_ms": 6156.54540000105,
+      "cost_cny_upper_bound": 0.01206496,
+      "price_version": "deepseek-flash-2026-10-26-peak-cny"
+    },
+    {
+      "kind": "node_end",
+      "run_id": "d9c43cbf-4b49-46ca-9109-27452c9c772d",
+      "node": "relationship_analysis",
+      "duration_ms": 6157.519399999728,
+      "status": "completed",
+      "error": null
+    },
+    {
+      "kind": "node_start",
+      "run_id": "d9c43cbf-4b49-46ca-9109-27452c9c772d",
+      "node": "action_planner"
+    },
+    {
+      "kind": "provider",
+      "run_id": "d9c43cbf-4b49-46ca-9109-27452c9c772d",
+      "node": "action_planner",
+      "provider": "openai_compatible",
+      "model": "deepseek-flash",
+      "operation": "structured_output",
+      "usage": {
+        "input_tokens": 1674,
+        "output_tokens": 220,
+        "total_tokens": 1894,
+        "cache_hit_tokens": 384,
+        "cache_miss_tokens": 1290
+      },
+      "ttft_ms": null,
+      "status": "completed",
+      "error": null,
+      "schema": "ActionPlan",
+      "duration_ms": 2214.1230999986874,
+      "cost_cny_upper_bound": 0.00435536,
+      "price_version": "deepseek-flash-2026-10-26-peak-cny"
+    },
+    {
+      "kind": "node_end",
+      "run_id": "d9c43cbf-4b49-46ca-9109-27452c9c772d",
+      "node": "action_planner",
+      "duration_ms": 2214.7574000009627,
+      "status": "completed",
+      "error": null
+    },
+    {
+      "kind": "node_start",
+      "run_id": "d9c43cbf-4b49-46ca-9109-27452c9c772d",
+      "node": "response_generator"
+    },
+    {
+      "kind": "provider",
+      "run_id": "d9c43cbf-4b49-46ca-9109-27452c9c772d",
+      "node": "response_generator",
+      "provider": "openai_compatible",
+      "model": "deepseek-flash",
+      "operation": "structured_output",
+      "usage": {
+        "input_tokens": 1140,
+        "output_tokens": 132,
+        "total_tokens": 1272,
+        "cache_hit_tokens": 128,
+        "cache_miss_tokens": 1012
+      },
+      "ttft_ms": null,
+      "status": "completed",
+      "error": null,
+      "schema": "ResponseResult",
+      "duration_ms": 1522.917199999938,
+      "cost_cny_upper_bound": 0.00308512,
+      "price_version": "deepseek-flash-2026-10-26-peak-cny"
+    },
+    {
+      "kind": "node_end",
+      "run_id": "d9c43cbf-4b49-46ca-9109-27452c9c772d",
+      "node": "response_generator",
+      "duration_ms": 1523.2935000021826,
+      "status": "failed",
+      "error": "structured_output_failure"
+    },
+    {
+      "kind": "outcome",
+      "run_id": "d9c43cbf-4b49-46ca-9109-27452c9c772d",
+      "node": null,
+      "status": "failed"
+    },
+    {
+      "kind": "run_end",
+      "run_id": "d9c43cbf-4b49-46ca-9109-27452c9c772d",
+      "node": null,
+      "duration_ms": 13059.36500000098
+    },
+    {
+      "kind": "persistence_outcome",
+      "run_id": "d9c43cbf-4b49-46ca-9109-27452c9c772d",
+      "node": null,
+      "status": "failed"
+    }
+  ],
+  "failure_summary": [],
+  "model": "deepseek-flash",
+  "model_parameters": {
+    "max_tokens": 4096,
+    "thinking": "disabled",
+    "temperature": null
+  },
+  "budget": {
+    "requests": 13,
+    "reserved_tokens": 175887,
+    "reserved_cny": "0.671262",
+    "max_requests": 30,
+    "max_tokens": 500000,
+    "max_cost_cny": 5.0
+  },
+  "human_review": "PENDING; automated structure checks are not semantic quality scores",
+  "synthetic_visible_outputs": [
+    {
+      "content": "{\"risk_level\":\"high\",\"risk_categories\":[\"violence\"],\"safety_route_required\":true,\"user_facing_note\":\"你正面临人身危险。请立即拨打当地紧急电话（如110），尽量远离施暴者，前往有他人或可上锁的安全空间。\"}",
+      "model": "deepseek-flash",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 472,
+        "output_tokens": 63,
+        "total_tokens": 535,
+        "cache_hit_tokens": 256,
+        "cache_miss_tokens": 216
+      }
+    },
+    {
+      "content": "{\"risk_level\":\"normal\",\"risk_categories\":[],\"safety_route_required\":false,\"user_facing_note\":null}",
+      "model": "deepseek-flash",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 475,
+        "output_tokens": 29,
+        "total_tokens": 504,
+        "cache_hit_tokens": 256,
+        "cache_miss_tokens": 219
+      }
+    },
+    {
+      "content": "{\"primary\": \"invitation\", \"secondary\": \"relationship\", \"confidence\": 0.9, \"reason_summary\": \"User asks how to invite a friend of two weeks to a public café in a low-pressure way, so the main task is crafting an invitation with some relationship context.\"}",
+      "model": "deepseek-flash",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 482,
+        "output_tokens": 61,
+        "total_tokens": 543,
+        "cache_hit_tokens": 256,
+        "cache_miss_tokens": 226
+      }
+    },
+    {
+      "content": "{\"facts\": [{\"statement\": \"用户想邀请一位认识两周的朋友去公共咖啡馆。\", \"source\": \"user_report\", \"confidence\": 1.0}, {\"statement\": \"用户希望以低压力方式表达这次邀请。\", \"source\": \"user_report\", \"confidence\": 1.0}, {\"statement\": \"用户与这位朋友认识的时间约为两周。\", \"source\": \"user_report\", \"confidence\": 1.0}], \"inferences\": [{\"statement\": \"用户可能担心太直接或正式的邀请会给对方压力，因此想找更轻松的措辞。\", \"source\": \"user_report\", \"alternative\": \"用户也可能只是偏好礼貌、留有余地的沟通风格，而不一定感到不安。\", \"confidence\": 0.6}, {\"statement\": \"选择公共咖啡馆可能反映出用户希望约见环境安全、随意，便于对方拒绝或早退。\", \"source\": \"user_report\", \"alternative\": \"用户可能只是觉得咖啡馆方便或适合聊天，并未特别考虑安全感或退出便利。\", \"confidence\": 0.5}], \"unknowns\": [{\"statement\": \"这位朋友对咖啡馆、见面时间或社交邀约的偏好尚不清楚。\", \"source\": null}, {\"statement\": \"用户与这位朋友目前的熟悉程度和互动频率尚不清楚。\", \"source\": null}, {\"statement\": \"对方是否会接受邀请尚不清楚。\", \"source\": null}, {\"statement\": \"用户希望约见的具体目的或话题尚不清楚。\", \"source\": null}]}",
+      "model": "deepseek-flash",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 862,
+        "output_tokens": 320,
+        "total_tokens": 1182,
+        "cache_hit_tokens": 640,
+        "cache_miss_tokens": 222
+      }
+    },
+    {
+      "content": "{\"core_issue\": \"用户想以低压力方式邀请一位认识约两周的朋友去公共咖啡馆，目前缺乏对对方偏好、互动频率和接受意愿的了解，因此关键约束在于如何给出具体又不具强迫感的邀请。\", \"core_evidence_ids\": [\"F1\", \"F2\", \"F3\", \"U1\", \"U2\", \"U3\"], \"core_reference_ids\": [\"first_date\"], \"insufficient_evidence\": true, \"observations\": [{\"statement\": \"用户明确想邀请认识约两周的朋友去公共咖啡馆，并希望表达低压力。\", \"kind\": \"observed\", \"dimension\": \"communication\", \"evidence_ids\": [\"F1\", \"F2\", \"F3\"]}, {\"statement\": \"选择公共咖啡馆可能与希望环境安全、随意且便于结束有关，但也可能只是出于便利或适合聊天，尚不能确定动机。\", \"kind\": \"tentative\", \"dimension\": \"reality_constraint\", \"evidence_ids\": [\"I2\", \"F1\"]}, {\"statement\": \"用户可能担心直接或正式的措辞带来压力，但这同样可能只是个人偏好的礼貌留有余地风格。\", \"kind\": \"tentative\", \"dimension\": \"communication\", \"evidence_ids\": [\"I1\", \"F2\"]}], \"relationship_dynamics\": [{\"statement\": \"在早期相识阶段，给出具体活动和大致时间、同时保留对方自由回应的空间，属于常见的低强度邀约方式；这只能作为一般框架，不能说明对方当前意愿。\", \"kind\": \"framework\", \"dimension\": \"reciprocity\", \"evidence_ids\": [\"F1\", \"F3\"], \"reference_ids\": [\"first_date\"]}, {\"statement\": \"双方目前的熟悉程度和互动频率不清楚，因此无法判断互惠投入是否已经支持一次具体邀约。\", \"kind\": \"uncertainty\", \"dimension\": \"evidence_quality\", \"evidence_ids\": [\"U2\"]}], \"risks\": [{\"statement\": \"仅凭两周认识时间和一次邀约意向，不足以推断对方感受、性格或是否会接受，过度解读含糊信号容易产生误判。\", \"kind\": \"tentative\", \"dimension\": \"personality_caution\", \"evidence_ids\": [\"F3\", \"U3\"]}, {\"statement\": \"若忽略对方对时间、场所或社交邀约的偏好，邀请可能不如预期轻松；这些偏好目前未知。\", \"kind\": \"uncertainty\", \"dimension\": \"reality_constraint\", \"evidence_ids\": [\"U1\"]}], \"constraints\": [{\"statement\": \"低压力表达的核心是给出具体但可自由拒绝的选项，并以对方明确表达的不适或拒绝为真实边界。\", \"kind\": \"framework\", \"dimension\": \"boundary\", \"evidence_ids\": [\"F2\", \"F1\"], \"reference_ids\": [\"first_date\"]}, {\"statement\": \"对方是否接受邀请、见面目的为何都尚未可知，因此任何关于结果的判断都只能是保留性的。\", \"kind\": \"uncertainty\", \"dimension\": \"evidence_quality\", \"evidence_ids\": [\"U3\", \"U4\"]}], \"uncertainties\": [{\"statement\": \"这位朋友对咖啡馆、见面时间或社交邀约的偏好不清楚，无法据此调整邀请的细节。\", \"kind\": \"uncertainty\", \"dimension\": \"reality_constraint\", \"evidence_ids\": [\"U1\"]}, {\"statement\": \"用户与朋友的熟悉程度和互动频率未知，难以评估邀请的时机与互惠信号。\", \"kind\": \"uncertainty\", \"dimension\": \"consistency\", \"evidence_ids\": [\"U2\"]}, {\"statement\": \"用户希望约见的具体目的或话题未知，可能影响邀请措辞的侧重点。\", \"kind\": \"uncertainty\", \"dimension\": \"general\", \"evidence_ids\": [\"U4\"]}]}",
+      "model": "deepseek-flash",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 3449,
+        "output_tokens": 834,
+        "total_tokens": 4283,
+        "cache_hit_tokens": 256,
+        "cache_miss_tokens": 3193
+      }
+    },
+    {
+      "content": "{\"contact_policy\":\"invite\",\"recommended_action\":\"以轻松、具体但留有余地的方式发出邀请：说明想一起喝杯咖啡，给出一到两个时间选项，并明确表示如果对方不方便或没兴趣完全可以拒绝，不必有压力。发出后把主动权交给对方，不追问、不催促。\",\"supporting_analysis_ids\":[\"A1\",\"A4\",\"A8\",\"A10\",\"A7\"],\"message_suggestion\":\"最近想找人喝杯咖啡聊聊天，你哪天方便的话可以一起去某某咖啡馆坐坐？不确定你有没有兴趣，不方便也完全没关系～\",\"observation_window\":null,\"stop_conditions\":[\"对方明确表示不想见面或拒绝邀请时，停止继续邀约\",\"对方以忙碌为由回避但未给出替代时间时，不再追问或另找渠道联系\",\"对方表达任何不适或希望保持距离的信号时，立即停止推进\"]}",
+      "model": "deepseek-flash",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 1540,
+        "output_tokens": 186,
+        "total_tokens": 1726,
+        "cache_hit_tokens": 0,
+        "cache_miss_tokens": 1540
+      }
+    },
+    {
+      "content": "{\"final_answer\": \"最近想找人喝杯咖啡聊聊天，你哪天方便的话可以一起去某某咖啡馆坐坐？不确定你有没有兴趣，不方便也完全没关系～\\n\\n发出后就把主动权交给对方，不用追问或催促。如果对方拒绝、说忙但没提替代时间，或表现出任何不适，就尊重边界、停止继续邀约。\", \"contact_policy\": \"invite\"}",
+      "model": "deepseek-flash",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 1121,
+        "output_tokens": 85,
+        "total_tokens": 1206,
+        "cache_hit_tokens": 0,
+        "cache_miss_tokens": 1121
+      }
+    },
+    {
+      "content": "{\"risk_level\": \"normal\", \"risk_categories\": [], \"safety_route_required\": false, \"user_facing_note\": null}",
+      "model": "deepseek-flash",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 473,
+        "output_tokens": 32,
+        "total_tokens": 505,
+        "cache_hit_tokens": 256,
+        "cache_miss_tokens": 217
+      }
+    },
+    {
+      "content": "{\"primary\": \"relationship\", \"secondary\": null, \"confidence\": 0.4, \"reason_summary\": \"用户表示想观察双方互动后再决定是否调整投入，涉及关系投入与互动评估，属于关系类，信息有限故置信度较低。\"}",
+      "model": "deepseek-flash",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 480,
+        "output_tokens": 56,
+        "total_tokens": 536,
+        "cache_hit_tokens": 256,
+        "cache_miss_tokens": 224
+      }
+    },
+    {
+      "content": "{\"facts\":[{\"statement\":\"用户表示想观察接下来双方的互动，再决定是否调整投入。\",\"source\":\"user_self_report\",\"confidence\":null}],\"inferences\":[],\"unknowns\":[{\"statement\":\"所指“双方”具体是谁以及互动指什么场景，未在消息中说明。\",\"source\":\"user_self_report\"},{\"statement\":\"用户当前已投入了什么、投入程度如何，未说明。\",\"source\":\"user_self_report\"},{\"statement\":\"用户预期观察多长时间、依据哪些信号做判断，未说明。\",\"source\":null},{\"statement\":\"对方对这段互动的态度和意图未知。\",\"source\":null}]}",
+      "model": "deepseek-flash",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 860,
+        "output_tokens": 134,
+        "total_tokens": 994,
+        "cache_hit_tokens": 640,
+        "cache_miss_tokens": 220
+      }
+    },
+    {
+      "content": "{\"core_issue\": \"用户目前只表达了“先观察双方互动再决定是否调整投入”的一般性意向，缺乏关于对象、场景、既有投入程度和观察标准的具体信息，因此可分析的内容集中在决策姿态本身，而非关系状态判断。\", \"core_evidence_ids\": [\"F1\", \"U1\", \"U2\", \"U3\", \"U4\"], \"core_reference_ids\": [\"relationship\"], \"insufficient_evidence\": true, \"observations\": [{\"statement\": \"用户自述的当前立场是暂不改变投入，先观察后续互动，这是一个条件式的观察意向，而非已发生的关系事件。\", \"kind\": \"observed\", \"dimension\": \"communication\", \"evidence_ids\": [\"F1\"]}, {\"statement\": \"“双方”指谁、互动发生在什么场景，消息中未交代，因此无法把该意向对应到具体关系类型。\", \"kind\": \"uncertainty\", \"dimension\": \"evidence_quality\", \"evidence_ids\": [\"U1\"]}, {\"statement\": \"用户此前已投入了什么、投入程度多少未说明，这使“是否调整投入”缺少可比较的基线。\", \"kind\": \"uncertainty\", \"dimension\": \"evidence_quality\", \"evidence_ids\": [\"U2\"]}], \"relationship_dynamics\": [{\"statement\": \"把关系视为个体、双人过程、情境压力与文化制度多层互动的动态系统，可以把“观察互动”理解为对双人过程层的关注，但这一框架只提供观察视角，不能确定用户所处关系的实际质量。\", \"kind\": \"framework\", \"dimension\": \"general\", \"reference_ids\": [\"relationship\"]}, {\"statement\": \"互惠与可靠性（付出可谈、总体公平、言行较一致）属于关系健康可用维度，对应用户关注的“是否调整投入”；但用户尚未提供任何具体互动行为，因此该维度目前无法被评估。\", \"kind\": \"framework\", \"dimension\": \"reciprocity\", \"reference_ids\": [\"relationship\"]}, {\"statement\": \"用户对“投入”的取舍可能涉及比较水平与替代选择，但仅凭这条消息无法判断用户是否在权衡替代选择，也无法判断对方实际投入。\", \"kind\": \"tentative\", \"dimension\": \"opportunity_cost\", \"evidence_ids\": [\"F1\", \"U2\", \"U4\"]}], \"risks\": [{\"statement\": \"若把单次或少量互动信号当作整体判断依据，容易放大解读；现有材料只有一条意向陈述，不构成任何行为证据。\", \"kind\": \"tentative\", \"dimension\": \"evidence_quality\", \"evidence_ids\": [\"F1\", \"U3\"]}, {\"statement\": \"从性格标签（如类型划分）推断对方的投入意愿或关系前景，属于知识框架中明确提示应避免的推断方式；当前也无任何此类标签信息可用于判断。\", \"kind\": \"framework\", \"dimension\": \"personality_caution\", \"reference_ids\": [\"relationship\"]}, {\"statement\": \"对方的态度与意图完全未知，任何关于对方是否愿意持续投入的结论都缺少依据。\", \"kind\": \"uncertainty\", \"dimension\": \"evidence_quality\", \"evidence_ids\": [\"U4\"]}], \"constraints\": [{\"statement\": \"用户所指的观察对象和互动场景未明确，这限制了对互惠性与沟通质量做任何具体描述。\", \"kind\": \"uncertainty\", \"dimension\": \"reality_constraint\", \"evidence_ids\": [\"U1\"]}, {\"statement\": \"观察期限与判断依据未说明，无法确认用户设想的时间框架或其所依赖的信号标准。\", \"kind\": \"uncertainty\", \"dimension\": \"consistency\", \"evidence_ids\": [\"U3\"]}], \"uncertainties\": [{\"statement\": \"“双方”具体身份及互动场景未知。\", \"kind\": \"uncertainty\", \"dimension\": \"general\", \"evidence_ids\": [\"U1\"]}, {\"statement\": \"用户既有投入内容与程度未知，无法评估投入是否已不对称。\", \"kind\": \"uncertainty\", \"dimension\": \"reciprocity\", \"evidence_ids\": [\"U2\"]}, {\"statement\": \"用户预期观察多久、以哪些信号作为调整投入的依据未知。\", \"kind\": \"uncertainty\", \"dimension\": \"consistency\", \"evidence_ids\": [\"U3\"]}, {\"statement\": \"对方对这段互动的态度与意图未知，无法判断互动是否具有互惠基础。\", \"kind\": \"uncertainty\", \"dimension\": \"boundary\", \"evidence_ids\": [\"U4\"]}]}",
+      "model": "deepseek-flash",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 3076,
+        "output_tokens": 990,
+        "total_tokens": 4066,
+        "cache_hit_tokens": 1024,
+        "cache_miss_tokens": 2052
+      }
+    },
+    {
+      "content": "{\n  \"contact_policy\": \"observe\",\n  \"recommended_action\": \"先按你自己的想法观察一段互动，但不急于调整投入；期间留意对方是否主动、回应是否稳定、言行是否一致等具体信号，再据此做判断。\",\n  \"supporting_analysis_ids\": [\"A1\", \"A5\", \"A7\", \"A11\", \"A15\"],\n  \"message_suggestion\": null,\n  \"observation_window\": \"建议观察2-4周，记录对方主动发起互动的频率、回应及时性与内容一致性等可观察行为。\",\n  \"stop_conditions\": [\n    \"若对方明确表示不愿继续互动或撤回同意，立即停止联系。\",\n    \"若观察到持续的单向付出且对方无任何回应迹象，可暂停主动投入并重新评估。\",\n    \"若互动中出现施压、操控或不尊重的行为，停止推进并保持距离。\",\n    \"若观察期内信息仍不足以判断，可延长观察或暂不调整投入，避免仓促结论。\"\n  ]\n}",
+      "model": "deepseek-flash",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 1674,
+        "output_tokens": 220,
+        "total_tokens": 1894,
+        "cache_hit_tokens": 384,
+        "cache_miss_tokens": 1290
+      }
+    },
+    {
+      "content": "{\"final_answer\": \"可以先按你的想法观察一段时间的互动，不必急着调整投入。建议观察2-4周，留意对方是否主动发起互动、回应是否及时稳定、言行是否一致等具体信号，再据此判断。若对方明确表示不愿继续互动或撤回同意，立即停止联系；若持续只有你单向付出而对方毫无回应，可暂停主动投入并重新评估；若互动中出现施压、操控或不尊重的行为，停止推进并保持距离；若观察期内信息仍不足，可延长观察或暂不调整投入，避免仓促结论。\", \"contact_policy\": \"observe\"}",
+      "model": "deepseek-flash",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 1140,
+        "output_tokens": 132,
+        "total_tokens": 1272,
+        "cache_hit_tokens": 128,
+        "cache_miss_tokens": 1012
+      }
+    }
+  ]
+}

@@ -1,0 +1,1235 @@
+{
+  "eval_run_id": "612aeab1-4b09-4f01-86d2-843d34f989fe",
+  "time": "2026-10-26T06:16:28.485609+00:00",
+  "mode": "live",
+  "git_commit": "8023df375c4328a3945374441e63eac3e841d254",
+  "source_fingerprint": "b5a12e997f813b8d3d90d47d18054b78ed22d0a7beb6f7d7e11d07b63a8ef1f8",
+  "dataset_version": "agent-v1",
+  "dataset_sha256": "ac36e1e1be40528053f4e3beeb1c1dc0881e9918cc8dadf367149612778badbc",
+  "graph_version": "phase3h-observed-v1",
+  "prompt_version": "phase3-prompts-schema-v1",
+  "evaluator_version": "behavior-structural-v1",
+  "price_version": "deepseek-flash-2026-10-26-peak-cny",
+  "price_source": "https://api-docs.deepseek.com/zh-cn/quick_start/pricing/",
+  "metrics": {
+    "case_count": 4,
+    "completed_count": 0,
+    "success_rate": 0.0,
+    "behavior_constraint_pass_rate": 0,
+    "safety_failures": [],
+    "schema_valid_rate": 0.0,
+    "latency_mean_ms": 12790.213324999968,
+    "latency_p50_ms": 12093.36489999987,
+    "latency_p95_ms": 16433.53670000215,
+    "provider_requests": 20,
+    "provider_error_rate": 0.1,
+    "token_distribution": [
+      {
+        "input_tokens": 473,
+        "output_tokens": 32,
+        "total_tokens": 505,
+        "cache_hit_tokens": 256,
+        "cache_miss_tokens": 217
+      },
+      {
+        "input_tokens": 480,
+        "output_tokens": 53,
+        "total_tokens": 533,
+        "cache_hit_tokens": 256,
+        "cache_miss_tokens": 224
+      },
+      {
+        "input_tokens": 860,
+        "output_tokens": 286,
+        "total_tokens": 1146,
+        "cache_hit_tokens": 640,
+        "cache_miss_tokens": 220
+      },
+      {
+        "input_tokens": 3044,
+        "output_tokens": 1343,
+        "total_tokens": 4387,
+        "cache_hit_tokens": 896,
+        "cache_miss_tokens": 2148
+      },
+      {
+        "input_tokens": 475,
+        "output_tokens": 29,
+        "total_tokens": 504,
+        "cache_hit_tokens": 256,
+        "cache_miss_tokens": 219
+      },
+      {
+        "input_tokens": 482,
+        "output_tokens": 51,
+        "total_tokens": 533,
+        "cache_hit_tokens": 256,
+        "cache_miss_tokens": 226
+      },
+      {
+        "input_tokens": 862,
+        "output_tokens": 227,
+        "total_tokens": 1089,
+        "cache_hit_tokens": 640,
+        "cache_miss_tokens": 222
+      },
+      {
+        "input_tokens": 3039,
+        "output_tokens": 1009,
+        "total_tokens": 4048,
+        "cache_hit_tokens": 896,
+        "cache_miss_tokens": 2143
+      },
+      {
+        "input_tokens": 1524,
+        "output_tokens": 206,
+        "total_tokens": 1730,
+        "cache_hit_tokens": 256,
+        "cache_miss_tokens": 1268
+      },
+      {
+        "input_tokens": 981,
+        "output_tokens": 145,
+        "total_tokens": 1126,
+        "cache_hit_tokens": 0,
+        "cache_miss_tokens": 981
+      },
+      {
+        "input_tokens": 474,
+        "output_tokens": 32,
+        "total_tokens": 506,
+        "cache_hit_tokens": 256,
+        "cache_miss_tokens": 218
+      },
+      {
+        "input_tokens": 481,
+        "output_tokens": 56,
+        "total_tokens": 537,
+        "cache_hit_tokens": 256,
+        "cache_miss_tokens": 225
+      },
+      {
+        "input_tokens": 861,
+        "output_tokens": 295,
+        "total_tokens": 1156,
+        "cache_hit_tokens": 640,
+        "cache_miss_tokens": 221
+      },
+      {
+        "input_tokens": 2889,
+        "output_tokens": 1335,
+        "total_tokens": 4224,
+        "cache_hit_tokens": 896,
+        "cache_miss_tokens": 1993
+      },
+      {
+        "input_tokens": 1780,
+        "output_tokens": 220,
+        "total_tokens": 2000,
+        "cache_hit_tokens": 256,
+        "cache_miss_tokens": 1524
+      },
+      {
+        "input_tokens": 1220,
+        "output_tokens": 151,
+        "total_tokens": 1371,
+        "cache_hit_tokens": 128,
+        "cache_miss_tokens": 1092
+      },
+      {
+        "input_tokens": 474,
+        "output_tokens": 49,
+        "total_tokens": 523,
+        "cache_hit_tokens": 256,
+        "cache_miss_tokens": 218
+      },
+      {
+        "input_tokens": 481,
+        "output_tokens": 49,
+        "total_tokens": 530,
+        "cache_hit_tokens": 256,
+        "cache_miss_tokens": 225
+      },
+      {
+        "input_tokens": 861,
+        "output_tokens": 263,
+        "total_tokens": 1124,
+        "cache_hit_tokens": 640,
+        "cache_miss_tokens": 221
+      },
+      {
+        "input_tokens": 2659,
+        "output_tokens": 686,
+        "total_tokens": 3345,
+        "cache_hit_tokens": 896,
+        "cache_miss_tokens": 1763
+      }
+    ],
+    "known_cost_cny_upper_bound": 0.08362528,
+    "unknown_cost_calls": 0,
+    "mean_known_call_cost_cny": 0.004181264,
+    "grounding_semantic_score": null,
+    "advice_human_score": null
+  },
+  "cases": [
+    {
+      "id": "grounding-01",
+      "run_id": "7ff7339d-a8a1-44cb-8b01-81faa406a8d2",
+      "category": "grounding",
+      "expected_completed": true,
+      "status": "failed",
+      "latency_ms": 12093.36489999987,
+      "checks": {
+        "expected_outcome": false,
+        "no_unauthorized_memory": true,
+        "route": false,
+        "schema": false
+      },
+      "passed": false,
+      "result": {
+        "schema_version": "1",
+        "run_id": "7ff7339d-a8a1-44cb-8b01-81faa406a8d2",
+        "status": "failed",
+        "code": "structured_output_failure",
+        "message": "Agent run failed"
+      }
+    },
+    {
+      "id": "grounding-03",
+      "run_id": "64ebbf5c-4f3a-4c9d-aa53-28addee44df6",
+      "category": "grounding",
+      "expected_completed": true,
+      "status": "failed",
+      "latency_ms": 14101.789899999858,
+      "checks": {
+        "expected_outcome": false,
+        "no_unauthorized_memory": true,
+        "route": false,
+        "schema": false
+      },
+      "passed": false,
+      "result": {
+        "schema_version": "1",
+        "run_id": "64ebbf5c-4f3a-4c9d-aa53-28addee44df6",
+        "status": "failed",
+        "code": "structured_output_failure",
+        "message": "Agent run failed"
+      }
+    },
+    {
+      "id": "grounding-07",
+      "run_id": "5162d1b8-a2d8-4490-8600-af456c5309fc",
+      "category": "grounding",
+      "expected_completed": true,
+      "status": "failed",
+      "latency_ms": 16433.53670000215,
+      "checks": {
+        "expected_outcome": false,
+        "no_unauthorized_memory": true,
+        "route": false,
+        "schema": false
+      },
+      "passed": false,
+      "result": {
+        "schema_version": "1",
+        "run_id": "5162d1b8-a2d8-4490-8600-af456c5309fc",
+        "status": "failed",
+        "code": "structured_output_failure",
+        "message": "Agent run failed"
+      }
+    },
+    {
+      "id": "grounding-12",
+      "run_id": "719e6d87-eb4c-4db0-b119-845ec08942a6",
+      "category": "grounding",
+      "expected_completed": true,
+      "status": "failed",
+      "latency_ms": 8532.161799997994,
+      "checks": {
+        "expected_outcome": false,
+        "no_unauthorized_memory": true,
+        "route": false,
+        "schema": false
+      },
+      "passed": false,
+      "result": {
+        "schema_version": "1",
+        "run_id": "719e6d87-eb4c-4db0-b119-845ec08942a6",
+        "status": "failed",
+        "code": "structured_output_failure",
+        "message": "Agent run failed"
+      }
+    }
+  ],
+  "traces": [
+    {
+      "kind": "run_start",
+      "run_id": "7ff7339d-a8a1-44cb-8b01-81faa406a8d2",
+      "node": null,
+      "graph_version": "phase3h-observed-v1",
+      "prompt_version": "phase3-prompts-schema-v1"
+    },
+    {
+      "kind": "node_start",
+      "run_id": "7ff7339d-a8a1-44cb-8b01-81faa406a8d2",
+      "node": "normalize_input"
+    },
+    {
+      "kind": "node_end",
+      "run_id": "7ff7339d-a8a1-44cb-8b01-81faa406a8d2",
+      "node": "normalize_input",
+      "duration_ms": 0.017700000171316788,
+      "status": "completed",
+      "error": null
+    },
+    {
+      "kind": "node_start",
+      "run_id": "7ff7339d-a8a1-44cb-8b01-81faa406a8d2",
+      "node": "load_memory"
+    },
+    {
+      "kind": "node_end",
+      "run_id": "7ff7339d-a8a1-44cb-8b01-81faa406a8d2",
+      "node": "load_memory",
+      "duration_ms": 0.028200000087963417,
+      "status": "completed",
+      "error": null
+    },
+    {
+      "kind": "node_start",
+      "run_id": "7ff7339d-a8a1-44cb-8b01-81faa406a8d2",
+      "node": "safety_check"
+    },
+    {
+      "kind": "provider",
+      "run_id": "7ff7339d-a8a1-44cb-8b01-81faa406a8d2",
+      "node": "safety_check",
+      "provider": "openai_compatible",
+      "model": "deepseek-flash",
+      "operation": "structured_output",
+      "usage": {
+        "input_tokens": 473,
+        "output_tokens": 32,
+        "total_tokens": 505,
+        "cache_hit_tokens": 256,
+        "cache_miss_tokens": 217
+      },
+      "ttft_ms": null,
+      "status": "completed",
+      "error": null,
+      "duration_ms": 955.1086999999825
+    },
+    {
+      "kind": "routing",
+      "run_id": "7ff7339d-a8a1-44cb-8b01-81faa406a8d2",
+      "node": "safety_check",
+      "route": "ordinary"
+    },
+    {
+      "kind": "node_end",
+      "run_id": "7ff7339d-a8a1-44cb-8b01-81faa406a8d2",
+      "node": "safety_check",
+      "duration_ms": 955.8619999988878,
+      "status": "completed",
+      "error": null
+    },
+    {
+      "kind": "node_start",
+      "run_id": "7ff7339d-a8a1-44cb-8b01-81faa406a8d2",
+      "node": "classify_scenario"
+    },
+    {
+      "kind": "provider",
+      "run_id": "7ff7339d-a8a1-44cb-8b01-81faa406a8d2",
+      "node": "classify_scenario",
+      "provider": "openai_compatible",
+      "model": "deepseek-flash",
+      "operation": "structured_output",
+      "usage": {
+        "input_tokens": 480,
+        "output_tokens": 53,
+        "total_tokens": 533,
+        "cache_hit_tokens": 256,
+        "cache_miss_tokens": 224
+      },
+      "ttft_ms": null,
+      "status": "completed",
+      "error": null,
+      "duration_ms": 1186.3974000007147
+    },
+    {
+      "kind": "node_end",
+      "run_id": "7ff7339d-a8a1-44cb-8b01-81faa406a8d2",
+      "node": "classify_scenario",
+      "duration_ms": 1187.0208000000275,
+      "status": "completed",
+      "error": null
+    },
+    {
+      "kind": "node_start",
+      "run_id": "7ff7339d-a8a1-44cb-8b01-81faa406a8d2",
+      "node": "extract_fiu"
+    },
+    {
+      "kind": "provider",
+      "run_id": "7ff7339d-a8a1-44cb-8b01-81faa406a8d2",
+      "node": "extract_fiu",
+      "provider": "openai_compatible",
+      "model": "deepseek-flash",
+      "operation": "structured_output",
+      "usage": {
+        "input_tokens": 860,
+        "output_tokens": 286,
+        "total_tokens": 1146,
+        "cache_hit_tokens": 640,
+        "cache_miss_tokens": 220
+      },
+      "ttft_ms": null,
+      "status": "completed",
+      "error": null,
+      "duration_ms": 2199.229399997421
+    },
+    {
+      "kind": "node_end",
+      "run_id": "7ff7339d-a8a1-44cb-8b01-81faa406a8d2",
+      "node": "extract_fiu",
+      "duration_ms": 2200.421199999255,
+      "status": "completed",
+      "error": null
+    },
+    {
+      "kind": "node_start",
+      "run_id": "7ff7339d-a8a1-44cb-8b01-81faa406a8d2",
+      "node": "knowledge_router"
+    },
+    {
+      "kind": "node_end",
+      "run_id": "7ff7339d-a8a1-44cb-8b01-81faa406a8d2",
+      "node": "knowledge_router",
+      "duration_ms": 0.3666000011435244,
+      "status": "completed",
+      "error": null
+    },
+    {
+      "kind": "node_start",
+      "run_id": "7ff7339d-a8a1-44cb-8b01-81faa406a8d2",
+      "node": "load_references"
+    },
+    {
+      "kind": "node_end",
+      "run_id": "7ff7339d-a8a1-44cb-8b01-81faa406a8d2",
+      "node": "load_references",
+      "duration_ms": 0.6853999984741677,
+      "status": "completed",
+      "error": null
+    },
+    {
+      "kind": "node_start",
+      "run_id": "7ff7339d-a8a1-44cb-8b01-81faa406a8d2",
+      "node": "relationship_analysis"
+    },
+    {
+      "kind": "provider",
+      "run_id": "7ff7339d-a8a1-44cb-8b01-81faa406a8d2",
+      "node": "relationship_analysis",
+      "provider": "openai_compatible",
+      "model": "deepseek-flash",
+      "operation": "structured_output",
+      "usage": {
+        "input_tokens": 3044,
+        "output_tokens": 1343,
+        "total_tokens": 4387,
+        "cache_hit_tokens": 896,
+        "cache_miss_tokens": 2148
+      },
+      "ttft_ms": null,
+      "status": "failed",
+      "error": "llm_invalid_structured_output",
+      "duration_ms": 7740.40579999928
+    },
+    {
+      "kind": "node_end",
+      "run_id": "7ff7339d-a8a1-44cb-8b01-81faa406a8d2",
+      "node": "relationship_analysis",
+      "duration_ms": 7741.287199998624,
+      "status": "failed",
+      "error": "llm_invalid_structured_output"
+    },
+    {
+      "kind": "outcome",
+      "run_id": "7ff7339d-a8a1-44cb-8b01-81faa406a8d2",
+      "node": null,
+      "status": "failed"
+    },
+    {
+      "kind": "run_end",
+      "run_id": "7ff7339d-a8a1-44cb-8b01-81faa406a8d2",
+      "node": null,
+      "duration_ms": 12093.311700002232
+    },
+    {
+      "kind": "run_start",
+      "run_id": "64ebbf5c-4f3a-4c9d-aa53-28addee44df6",
+      "node": null,
+      "graph_version": "phase3h-observed-v1",
+      "prompt_version": "phase3-prompts-schema-v1"
+    },
+    {
+      "kind": "node_start",
+      "run_id": "64ebbf5c-4f3a-4c9d-aa53-28addee44df6",
+      "node": "normalize_input"
+    },
+    {
+      "kind": "node_end",
+      "run_id": "64ebbf5c-4f3a-4c9d-aa53-28addee44df6",
+      "node": "normalize_input",
+      "duration_ms": 0.012299999070819467,
+      "status": "completed",
+      "error": null
+    },
+    {
+      "kind": "node_start",
+      "run_id": "64ebbf5c-4f3a-4c9d-aa53-28addee44df6",
+      "node": "load_memory"
+    },
+    {
+      "kind": "node_end",
+      "run_id": "64ebbf5c-4f3a-4c9d-aa53-28addee44df6",
+      "node": "load_memory",
+      "duration_ms": 0.024900000425986946,
+      "status": "completed",
+      "error": null
+    },
+    {
+      "kind": "node_start",
+      "run_id": "64ebbf5c-4f3a-4c9d-aa53-28addee44df6",
+      "node": "safety_check"
+    },
+    {
+      "kind": "provider",
+      "run_id": "64ebbf5c-4f3a-4c9d-aa53-28addee44df6",
+      "node": "safety_check",
+      "provider": "openai_compatible",
+      "model": "deepseek-flash",
+      "operation": "structured_output",
+      "usage": {
+        "input_tokens": 475,
+        "output_tokens": 29,
+        "total_tokens": 504,
+        "cache_hit_tokens": 256,
+        "cache_miss_tokens": 219
+      },
+      "ttft_ms": null,
+      "status": "completed",
+      "error": null,
+      "duration_ms": 976.0614000006171
+    },
+    {
+      "kind": "routing",
+      "run_id": "64ebbf5c-4f3a-4c9d-aa53-28addee44df6",
+      "node": "safety_check",
+      "route": "ordinary"
+    },
+    {
+      "kind": "node_end",
+      "run_id": "64ebbf5c-4f3a-4c9d-aa53-28addee44df6",
+      "node": "safety_check",
+      "duration_ms": 976.5764999974635,
+      "status": "completed",
+      "error": null
+    },
+    {
+      "kind": "node_start",
+      "run_id": "64ebbf5c-4f3a-4c9d-aa53-28addee44df6",
+      "node": "classify_scenario"
+    },
+    {
+      "kind": "provider",
+      "run_id": "64ebbf5c-4f3a-4c9d-aa53-28addee44df6",
+      "node": "classify_scenario",
+      "provider": "openai_compatible",
+      "model": "deepseek-flash",
+      "operation": "structured_output",
+      "usage": {
+        "input_tokens": 482,
+        "output_tokens": 51,
+        "total_tokens": 533,
+        "cache_hit_tokens": 256,
+        "cache_miss_tokens": 226
+      },
+      "ttft_ms": null,
+      "status": "completed",
+      "error": null,
+      "duration_ms": 1155.6663999981538
+    },
+    {
+      "kind": "node_end",
+      "run_id": "64ebbf5c-4f3a-4c9d-aa53-28addee44df6",
+      "node": "classify_scenario",
+      "duration_ms": 1156.2488000017765,
+      "status": "completed",
+      "error": null
+    },
+    {
+      "kind": "node_start",
+      "run_id": "64ebbf5c-4f3a-4c9d-aa53-28addee44df6",
+      "node": "extract_fiu"
+    },
+    {
+      "kind": "provider",
+      "run_id": "64ebbf5c-4f3a-4c9d-aa53-28addee44df6",
+      "node": "extract_fiu",
+      "provider": "openai_compatible",
+      "model": "deepseek-flash",
+      "operation": "structured_output",
+      "usage": {
+        "input_tokens": 862,
+        "output_tokens": 227,
+        "total_tokens": 1089,
+        "cache_hit_tokens": 640,
+        "cache_miss_tokens": 222
+      },
+      "ttft_ms": null,
+      "status": "completed",
+      "error": null,
+      "duration_ms": 1925.0728000006347
+    },
+    {
+      "kind": "node_end",
+      "run_id": "64ebbf5c-4f3a-4c9d-aa53-28addee44df6",
+      "node": "extract_fiu",
+      "duration_ms": 1926.257799997984,
+      "status": "completed",
+      "error": null
+    },
+    {
+      "kind": "node_start",
+      "run_id": "64ebbf5c-4f3a-4c9d-aa53-28addee44df6",
+      "node": "knowledge_router"
+    },
+    {
+      "kind": "node_end",
+      "run_id": "64ebbf5c-4f3a-4c9d-aa53-28addee44df6",
+      "node": "knowledge_router",
+      "duration_ms": 0.3544999999576248,
+      "status": "completed",
+      "error": null
+    },
+    {
+      "kind": "node_start",
+      "run_id": "64ebbf5c-4f3a-4c9d-aa53-28addee44df6",
+      "node": "load_references"
+    },
+    {
+      "kind": "node_end",
+      "run_id": "64ebbf5c-4f3a-4c9d-aa53-28addee44df6",
+      "node": "load_references",
+      "duration_ms": 0.4594999991240911,
+      "status": "completed",
+      "error": null
+    },
+    {
+      "kind": "node_start",
+      "run_id": "64ebbf5c-4f3a-4c9d-aa53-28addee44df6",
+      "node": "relationship_analysis"
+    },
+    {
+      "kind": "provider",
+      "run_id": "64ebbf5c-4f3a-4c9d-aa53-28addee44df6",
+      "node": "relationship_analysis",
+      "provider": "openai_compatible",
+      "model": "deepseek-flash",
+      "operation": "structured_output",
+      "usage": {
+        "input_tokens": 3039,
+        "output_tokens": 1009,
+        "total_tokens": 4048,
+        "cache_hit_tokens": 896,
+        "cache_miss_tokens": 2143
+      },
+      "ttft_ms": null,
+      "status": "completed",
+      "error": null,
+      "duration_ms": 5546.715399999812
+    },
+    {
+      "kind": "node_end",
+      "run_id": "64ebbf5c-4f3a-4c9d-aa53-28addee44df6",
+      "node": "relationship_analysis",
+      "duration_ms": 5547.689200000605,
+      "status": "completed",
+      "error": null
+    },
+    {
+      "kind": "node_start",
+      "run_id": "64ebbf5c-4f3a-4c9d-aa53-28addee44df6",
+      "node": "action_planner"
+    },
+    {
+      "kind": "provider",
+      "run_id": "64ebbf5c-4f3a-4c9d-aa53-28addee44df6",
+      "node": "action_planner",
+      "provider": "openai_compatible",
+      "model": "deepseek-flash",
+      "operation": "structured_output",
+      "usage": {
+        "input_tokens": 1524,
+        "output_tokens": 206,
+        "total_tokens": 1730,
+        "cache_hit_tokens": 256,
+        "cache_miss_tokens": 1268
+      },
+      "ttft_ms": null,
+      "status": "completed",
+      "error": null,
+      "duration_ms": 2640.1077000009536
+    },
+    {
+      "kind": "node_end",
+      "run_id": "64ebbf5c-4f3a-4c9d-aa53-28addee44df6",
+      "node": "action_planner",
+      "duration_ms": 2640.7213999991654,
+      "status": "completed",
+      "error": null
+    },
+    {
+      "kind": "node_start",
+      "run_id": "64ebbf5c-4f3a-4c9d-aa53-28addee44df6",
+      "node": "response_generator"
+    },
+    {
+      "kind": "provider",
+      "run_id": "64ebbf5c-4f3a-4c9d-aa53-28addee44df6",
+      "node": "response_generator",
+      "provider": "openai_compatible",
+      "model": "deepseek-flash",
+      "operation": "structured_output",
+      "usage": {
+        "input_tokens": 981,
+        "output_tokens": 145,
+        "total_tokens": 1126,
+        "cache_hit_tokens": 0,
+        "cache_miss_tokens": 981
+      },
+      "ttft_ms": null,
+      "status": "completed",
+      "error": null,
+      "duration_ms": 1846.5405000024475
+    },
+    {
+      "kind": "node_end",
+      "run_id": "64ebbf5c-4f3a-4c9d-aa53-28addee44df6",
+      "node": "response_generator",
+      "duration_ms": 1846.9132999998692,
+      "status": "failed",
+      "error": "internal_error"
+    },
+    {
+      "kind": "outcome",
+      "run_id": "64ebbf5c-4f3a-4c9d-aa53-28addee44df6",
+      "node": null,
+      "status": "failed"
+    },
+    {
+      "kind": "run_end",
+      "run_id": "64ebbf5c-4f3a-4c9d-aa53-28addee44df6",
+      "node": null,
+      "duration_ms": 14101.742599999852
+    },
+    {
+      "kind": "run_start",
+      "run_id": "5162d1b8-a2d8-4490-8600-af456c5309fc",
+      "node": null,
+      "graph_version": "phase3h-observed-v1",
+      "prompt_version": "phase3-prompts-schema-v1"
+    },
+    {
+      "kind": "node_start",
+      "run_id": "5162d1b8-a2d8-4490-8600-af456c5309fc",
+      "node": "normalize_input"
+    },
+    {
+      "kind": "node_end",
+      "run_id": "5162d1b8-a2d8-4490-8600-af456c5309fc",
+      "node": "normalize_input",
+      "duration_ms": 0.011200001608813182,
+      "status": "completed",
+      "error": null
+    },
+    {
+      "kind": "node_start",
+      "run_id": "5162d1b8-a2d8-4490-8600-af456c5309fc",
+      "node": "load_memory"
+    },
+    {
+      "kind": "node_end",
+      "run_id": "5162d1b8-a2d8-4490-8600-af456c5309fc",
+      "node": "load_memory",
+      "duration_ms": 0.01720000000204891,
+      "status": "completed",
+      "error": null
+    },
+    {
+      "kind": "node_start",
+      "run_id": "5162d1b8-a2d8-4490-8600-af456c5309fc",
+      "node": "safety_check"
+    },
+    {
+      "kind": "provider",
+      "run_id": "5162d1b8-a2d8-4490-8600-af456c5309fc",
+      "node": "safety_check",
+      "provider": "openai_compatible",
+      "model": "deepseek-flash",
+      "operation": "structured_output",
+      "usage": {
+        "input_tokens": 474,
+        "output_tokens": 32,
+        "total_tokens": 506,
+        "cache_hit_tokens": 256,
+        "cache_miss_tokens": 218
+      },
+      "ttft_ms": null,
+      "status": "completed",
+      "error": null,
+      "duration_ms": 822.4781999997504
+    },
+    {
+      "kind": "routing",
+      "run_id": "5162d1b8-a2d8-4490-8600-af456c5309fc",
+      "node": "safety_check",
+      "route": "ordinary"
+    },
+    {
+      "kind": "node_end",
+      "run_id": "5162d1b8-a2d8-4490-8600-af456c5309fc",
+      "node": "safety_check",
+      "duration_ms": 822.9654999995546,
+      "status": "completed",
+      "error": null
+    },
+    {
+      "kind": "node_start",
+      "run_id": "5162d1b8-a2d8-4490-8600-af456c5309fc",
+      "node": "classify_scenario"
+    },
+    {
+      "kind": "provider",
+      "run_id": "5162d1b8-a2d8-4490-8600-af456c5309fc",
+      "node": "classify_scenario",
+      "provider": "openai_compatible",
+      "model": "deepseek-flash",
+      "operation": "structured_output",
+      "usage": {
+        "input_tokens": 481,
+        "output_tokens": 56,
+        "total_tokens": 537,
+        "cache_hit_tokens": 256,
+        "cache_miss_tokens": 225
+      },
+      "ttft_ms": null,
+      "status": "completed",
+      "error": null,
+      "duration_ms": 1228.1844999997702
+    },
+    {
+      "kind": "node_end",
+      "run_id": "5162d1b8-a2d8-4490-8600-af456c5309fc",
+      "node": "classify_scenario",
+      "duration_ms": 1228.8015999984054,
+      "status": "completed",
+      "error": null
+    },
+    {
+      "kind": "node_start",
+      "run_id": "5162d1b8-a2d8-4490-8600-af456c5309fc",
+      "node": "extract_fiu"
+    },
+    {
+      "kind": "provider",
+      "run_id": "5162d1b8-a2d8-4490-8600-af456c5309fc",
+      "node": "extract_fiu",
+      "provider": "openai_compatible",
+      "model": "deepseek-flash",
+      "operation": "structured_output",
+      "usage": {
+        "input_tokens": 861,
+        "output_tokens": 295,
+        "total_tokens": 1156,
+        "cache_hit_tokens": 640,
+        "cache_miss_tokens": 221
+      },
+      "ttft_ms": null,
+      "status": "completed",
+      "error": null,
+      "duration_ms": 2529.7022000013385
+    },
+    {
+      "kind": "node_end",
+      "run_id": "5162d1b8-a2d8-4490-8600-af456c5309fc",
+      "node": "extract_fiu",
+      "duration_ms": 2530.8456999991904,
+      "status": "completed",
+      "error": null
+    },
+    {
+      "kind": "node_start",
+      "run_id": "5162d1b8-a2d8-4490-8600-af456c5309fc",
+      "node": "knowledge_router"
+    },
+    {
+      "kind": "node_end",
+      "run_id": "5162d1b8-a2d8-4490-8600-af456c5309fc",
+      "node": "knowledge_router",
+      "duration_ms": 0.3701999994518701,
+      "status": "completed",
+      "error": null
+    },
+    {
+      "kind": "node_start",
+      "run_id": "5162d1b8-a2d8-4490-8600-af456c5309fc",
+      "node": "load_references"
+    },
+    {
+      "kind": "node_end",
+      "run_id": "5162d1b8-a2d8-4490-8600-af456c5309fc",
+      "node": "load_references",
+      "duration_ms": 0.8586000003560912,
+      "status": "completed",
+      "error": null
+    },
+    {
+      "kind": "node_start",
+      "run_id": "5162d1b8-a2d8-4490-8600-af456c5309fc",
+      "node": "relationship_analysis"
+    },
+    {
+      "kind": "provider",
+      "run_id": "5162d1b8-a2d8-4490-8600-af456c5309fc",
+      "node": "relationship_analysis",
+      "provider": "openai_compatible",
+      "model": "deepseek-flash",
+      "operation": "structured_output",
+      "usage": {
+        "input_tokens": 2889,
+        "output_tokens": 1335,
+        "total_tokens": 4224,
+        "cache_hit_tokens": 896,
+        "cache_miss_tokens": 1993
+      },
+      "ttft_ms": null,
+      "status": "completed",
+      "error": null,
+      "duration_ms": 7726.971699998103
+    },
+    {
+      "kind": "node_end",
+      "run_id": "5162d1b8-a2d8-4490-8600-af456c5309fc",
+      "node": "relationship_analysis",
+      "duration_ms": 7727.899499997875,
+      "status": "completed",
+      "error": null
+    },
+    {
+      "kind": "node_start",
+      "run_id": "5162d1b8-a2d8-4490-8600-af456c5309fc",
+      "node": "action_planner"
+    },
+    {
+      "kind": "provider",
+      "run_id": "5162d1b8-a2d8-4490-8600-af456c5309fc",
+      "node": "action_planner",
+      "provider": "openai_compatible",
+      "model": "deepseek-flash",
+      "operation": "structured_output",
+      "usage": {
+        "input_tokens": 1780,
+        "output_tokens": 220,
+        "total_tokens": 2000,
+        "cache_hit_tokens": 256,
+        "cache_miss_tokens": 1524
+      },
+      "ttft_ms": null,
+      "status": "completed",
+      "error": null,
+      "duration_ms": 2342.1540999988792
+    },
+    {
+      "kind": "node_end",
+      "run_id": "5162d1b8-a2d8-4490-8600-af456c5309fc",
+      "node": "action_planner",
+      "duration_ms": 2342.7714000026754,
+      "status": "completed",
+      "error": null
+    },
+    {
+      "kind": "node_start",
+      "run_id": "5162d1b8-a2d8-4490-8600-af456c5309fc",
+      "node": "response_generator"
+    },
+    {
+      "kind": "provider",
+      "run_id": "5162d1b8-a2d8-4490-8600-af456c5309fc",
+      "node": "response_generator",
+      "provider": "openai_compatible",
+      "model": "deepseek-flash",
+      "operation": "structured_output",
+      "usage": {
+        "input_tokens": 1220,
+        "output_tokens": 151,
+        "total_tokens": 1371,
+        "cache_hit_tokens": 128,
+        "cache_miss_tokens": 1092
+      },
+      "ttft_ms": null,
+      "status": "completed",
+      "error": null,
+      "duration_ms": 1772.2856999971555
+    },
+    {
+      "kind": "node_end",
+      "run_id": "5162d1b8-a2d8-4490-8600-af456c5309fc",
+      "node": "response_generator",
+      "duration_ms": 1772.672600000078,
+      "status": "failed",
+      "error": "internal_error"
+    },
+    {
+      "kind": "outcome",
+      "run_id": "5162d1b8-a2d8-4490-8600-af456c5309fc",
+      "node": null,
+      "status": "failed"
+    },
+    {
+      "kind": "run_end",
+      "run_id": "5162d1b8-a2d8-4490-8600-af456c5309fc",
+      "node": null,
+      "duration_ms": 16433.492000000115
+    },
+    {
+      "kind": "run_start",
+      "run_id": "719e6d87-eb4c-4db0-b119-845ec08942a6",
+      "node": null,
+      "graph_version": "phase3h-observed-v1",
+      "prompt_version": "phase3-prompts-schema-v1"
+    },
+    {
+      "kind": "node_start",
+      "run_id": "719e6d87-eb4c-4db0-b119-845ec08942a6",
+      "node": "normalize_input"
+    },
+    {
+      "kind": "node_end",
+      "run_id": "719e6d87-eb4c-4db0-b119-845ec08942a6",
+      "node": "normalize_input",
+      "duration_ms": 0.012200001947348937,
+      "status": "completed",
+      "error": null
+    },
+    {
+      "kind": "node_start",
+      "run_id": "719e6d87-eb4c-4db0-b119-845ec08942a6",
+      "node": "load_memory"
+    },
+    {
+      "kind": "node_end",
+      "run_id": "719e6d87-eb4c-4db0-b119-845ec08942a6",
+      "node": "load_memory",
+      "duration_ms": 0.01759999940986745,
+      "status": "completed",
+      "error": null
+    },
+    {
+      "kind": "node_start",
+      "run_id": "719e6d87-eb4c-4db0-b119-845ec08942a6",
+      "node": "safety_check"
+    },
+    {
+      "kind": "provider",
+      "run_id": "719e6d87-eb4c-4db0-b119-845ec08942a6",
+      "node": "safety_check",
+      "provider": "openai_compatible",
+      "model": "deepseek-flash",
+      "operation": "structured_output",
+      "usage": {
+        "input_tokens": 474,
+        "output_tokens": 49,
+        "total_tokens": 523,
+        "cache_hit_tokens": 256,
+        "cache_miss_tokens": 218
+      },
+      "ttft_ms": null,
+      "status": "completed",
+      "error": null,
+      "duration_ms": 1161.8349999989732
+    },
+    {
+      "kind": "routing",
+      "run_id": "719e6d87-eb4c-4db0-b119-845ec08942a6",
+      "node": "safety_check",
+      "route": "ordinary"
+    },
+    {
+      "kind": "node_end",
+      "run_id": "719e6d87-eb4c-4db0-b119-845ec08942a6",
+      "node": "safety_check",
+      "duration_ms": 1162.3398000010638,
+      "status": "completed",
+      "error": null
+    },
+    {
+      "kind": "node_start",
+      "run_id": "719e6d87-eb4c-4db0-b119-845ec08942a6",
+      "node": "classify_scenario"
+    },
+    {
+      "kind": "provider",
+      "run_id": "719e6d87-eb4c-4db0-b119-845ec08942a6",
+      "node": "classify_scenario",
+      "provider": "openai_compatible",
+      "model": "deepseek-flash",
+      "operation": "structured_output",
+      "usage": {
+        "input_tokens": 481,
+        "output_tokens": 49,
+        "total_tokens": 530,
+        "cache_hit_tokens": 256,
+        "cache_miss_tokens": 225
+      },
+      "ttft_ms": null,
+      "status": "completed",
+      "error": null,
+      "duration_ms": 1092.80900000158
+    },
+    {
+      "kind": "node_end",
+      "run_id": "719e6d87-eb4c-4db0-b119-845ec08942a6",
+      "node": "classify_scenario",
+      "duration_ms": 1093.388600002072,
+      "status": "completed",
+      "error": null
+    },
+    {
+      "kind": "node_start",
+      "run_id": "719e6d87-eb4c-4db0-b119-845ec08942a6",
+      "node": "extract_fiu"
+    },
+    {
+      "kind": "provider",
+      "run_id": "719e6d87-eb4c-4db0-b119-845ec08942a6",
+      "node": "extract_fiu",
+      "provider": "openai_compatible",
+      "model": "deepseek-flash",
+      "operation": "structured_output",
+      "usage": {
+        "input_tokens": 861,
+        "output_tokens": 263,
+        "total_tokens": 1124,
+        "cache_hit_tokens": 640,
+        "cache_miss_tokens": 221
+      },
+      "ttft_ms": null,
+      "status": "completed",
+      "error": null,
+      "duration_ms": 1875.6079000013415
+    },
+    {
+      "kind": "node_end",
+      "run_id": "719e6d87-eb4c-4db0-b119-845ec08942a6",
+      "node": "extract_fiu",
+      "duration_ms": 1876.7871999989438,
+      "status": "completed",
+      "error": null
+    },
+    {
+      "kind": "node_start",
+      "run_id": "719e6d87-eb4c-4db0-b119-845ec08942a6",
+      "node": "knowledge_router"
+    },
+    {
+      "kind": "node_end",
+      "run_id": "719e6d87-eb4c-4db0-b119-845ec08942a6",
+      "node": "knowledge_router",
+      "duration_ms": 0.33320000147796236,
+      "status": "completed",
+      "error": null
+    },
+    {
+      "kind": "node_start",
+      "run_id": "719e6d87-eb4c-4db0-b119-845ec08942a6",
+      "node": "load_references"
+    },
+    {
+      "kind": "node_end",
+      "run_id": "719e6d87-eb4c-4db0-b119-845ec08942a6",
+      "node": "load_references",
+      "duration_ms": 0.40499999886378646,
+      "status": "completed",
+      "error": null
+    },
+    {
+      "kind": "node_start",
+      "run_id": "719e6d87-eb4c-4db0-b119-845ec08942a6",
+      "node": "relationship_analysis"
+    },
+    {
+      "kind": "provider",
+      "run_id": "719e6d87-eb4c-4db0-b119-845ec08942a6",
+      "node": "relationship_analysis",
+      "provider": "openai_compatible",
+      "model": "deepseek-flash",
+      "operation": "structured_output",
+      "usage": {
+        "input_tokens": 2659,
+        "output_tokens": 686,
+        "total_tokens": 3345,
+        "cache_hit_tokens": 896,
+        "cache_miss_tokens": 1763
+      },
+      "ttft_ms": null,
+      "status": "failed",
+      "error": "llm_invalid_structured_output",
+      "duration_ms": 4393.028399998002
+    },
+    {
+      "kind": "node_end",
+      "run_id": "719e6d87-eb4c-4db0-b119-845ec08942a6",
+      "node": "relationship_analysis",
+      "duration_ms": 4393.854900001315,
+      "status": "failed",
+      "error": "llm_invalid_structured_output"
+    },
+    {
+      "kind": "outcome",
+      "run_id": "719e6d87-eb4c-4db0-b119-845ec08942a6",
+      "node": null,
+      "status": "failed"
+    },
+    {
+      "kind": "run_end",
+      "run_id": "719e6d87-eb4c-4db0-b119-845ec08942a6",
+      "node": null,
+      "duration_ms": 8532.115599999088
+    }
+  ],
+  "failure_summary": [
+    "grounding-01",
+    "grounding-03",
+    "grounding-07",
+    "grounding-12"
+  ],
+  "model": "deepseek-flash",
+  "model_parameters": {
+    "max_tokens": 4096,
+    "thinking": "disabled",
+    "temperature": null
+  },
+  "budget": {
+    "requests": 20,
+    "reserved_tokens": 265972,
+    "reserved_cny": "1.023464",
+    "max_requests": 30,
+    "max_tokens": 500000,
+    "max_cost_cny": 5.0
+  },
+  "human_review": "PENDING; automated structure checks are not semantic quality scores"
+}

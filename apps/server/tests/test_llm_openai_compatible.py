@@ -349,7 +349,8 @@ def test_default_http_clients_close_after_chat_and_stream(monkeypatch: pytest.Mo
     def handler(request: httpx.Request) -> httpx.Response:
         if json.loads(request.content).get("stream"):
             frame = json.dumps({"model": "m", "choices": [{"delta": {"content": "x"}}]})
-            return httpx.Response(200, text=f"data: {frame}\n\ndata: [DONE]\n\n")
+            end = json.dumps({"model": "m", "choices": [{"delta": {}, "finish_reason": "stop"}]})
+            return httpx.Response(200, text=f"data: {frame}\n\ndata: {end}\n\ndata: [DONE]\n\n")
         return httpx.Response(200, json=wire_response())
 
     def new_client(*_args: object, **kwargs: object) -> httpx.AsyncClient:
@@ -364,7 +365,7 @@ def test_default_http_clients_close_after_chat_and_stream(monkeypatch: pytest.Mo
 
     async def run() -> None:
         await provider.chat(MESSAGES)
-        assert [chunk.content async for chunk in provider.stream(MESSAGES)] == ["x"]
+        assert [chunk.content async for chunk in provider.stream(MESSAGES)] == ["x", ""]
 
     asyncio.run(run())
     assert len(opened) == 2

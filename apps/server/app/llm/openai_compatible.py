@@ -1,7 +1,9 @@
 """Text-only OpenAI-compatible Chat Completions transport and normalization."""
 
+import json
 from collections.abc import AsyncIterator, Sequence
 from contextlib import asynccontextmanager
+from time import perf_counter
 
 import httpx
 from pydantic import BaseModel, ConfigDict, Field, SecretStr, ValidationError
@@ -18,6 +20,7 @@ from app.llm.errors import (
 from app.llm.models import ChatResult, LLMMessage, StreamChunk, Usage
 from app.llm.provider import SchemaT
 from app.llm.validation import validate_structured_output
+from app.observability import capture_response, provider_scope
 
 
 class _WireModel(BaseModel):
@@ -29,6 +32,8 @@ class _WireUsage(_WireModel):
     prompt_tokens: int | None = Field(default=None, ge=0)
     completion_tokens: int | None = Field(default=None, ge=0)
     total_tokens: int | None = Field(default=None, ge=0)
+    prompt_cache_hit_tokens: int | None = Field(default=None, ge=0)
+    prompt_cache_miss_tokens: int | None = Field(default=None, ge=0)
 
 
 class _WireMessage(_WireModel):
@@ -41,7 +46,7 @@ class _WireChoice(_WireModel):
 
 
 class _WireChat(_WireModel):
-    model: str
+    model: str = Field(min_length=1, max_length=128)
     choices: list[_WireChoice]
     usage: _WireUsage | None = None
 
@@ -56,7 +61,7 @@ class _WireStreamChoice(_WireModel):
 
 
 class _WireStream(_WireModel):
-    model: str | None = None
+    model: str | None = Field(default=None, min_length=1, max_length=128)
     choices: list[_WireStreamChoice]
     usage: _WireUsage | None = None
 
@@ -68,6 +73,8 @@ def _usage(value: _WireUsage | None) -> Usage | None:
         input_tokens=value.prompt_tokens,
         output_tokens=value.completion_tokens,
         total_tokens=value.total_tokens,
+        cache_hit_tokens=value.prompt_cache_hit_tokens,
+        cache_miss_tokens=value.prompt_cache_miss_tokens,
     )
 
 
@@ -79,6 +86,8 @@ def _normalize_chat(content: bytes) -> ChatResult:
     if not response.choices or not response.model:
         raise LLMInvalidResponseError() from None
     choice = response.choices[0]
+    if not choice.message.content.strip() or choice.finish_reason != "stop":
+        raise LLMInvalidResponseError() from None
     return ChatResult(
         content=choice.message.content,
         model=response.model,
@@ -133,6 +142,10 @@ class OpenAICompatibleProvider:
         model: str,
         timeout_seconds: float = 30.0,
         client: httpx.AsyncClient | None = None,
+        max_output_tokens: int | None = None,
+        temperature: float | None = None,
+        thinking: str | None = None,
+        budget=None,
     ) -> None:
         try:
             url = httpx.URL(base_url)
@@ -148,6 +161,9 @@ class OpenAICompatibleProvider:
             or not api_key.get_secret_value()
             or not model.strip()
             or timeout_seconds <= 0
+            or (max_output_tokens is not None and not 1 <= max_output_tokens <= 32768)
+            or (temperature is not None and not 0 <= temperature <= 2)
+            or thinking not in {None, "enabled", "disabled"}
         ):
             raise LLMConfigurationError() from None
         self._endpoint = f"{str(url).rstrip('/')}/chat/completions"
@@ -155,6 +171,10 @@ class OpenAICompatibleProvider:
         self._model = model
         self._timeout = timeout_seconds
         self._client = client
+        self._max_output_tokens = max_output_tokens
+        self._temperature = temperature
+        self._thinking = thinking
+        self._budget = budget
 
     def __repr__(self) -> str:
         return "OpenAICompatibleProvider(<redacted>)"
@@ -193,8 +213,15 @@ class OpenAICompatibleProvider:
         }
         if temperature is not None:
             payload["temperature"] = temperature
+        elif self._temperature is not None:
+            payload["temperature"] = self._temperature
+        if self._max_output_tokens is not None:
+            payload["max_tokens"] = self._max_output_tokens
+        if self._thinking is not None:
+            payload["thinking"] = {"type": self._thinking}
         if stream:
             payload["stream"] = True
+            payload["stream_options"] = {"include_usage": True}
         if structured:
             payload["response_format"] = {"type": "json_object"}
         return payload
@@ -219,6 +246,8 @@ class OpenAICompatibleProvider:
         structured: bool = False,
     ) -> ChatResult:
         payload = self._payload(messages, model, temperature, structured=structured)
+        if self._budget is not None:
+            self._budget.reserve(payload)
         try:
             async with self._client_for_request() as client:
                 response = await client.post(
@@ -232,7 +261,9 @@ class OpenAICompatibleProvider:
         except httpx.RequestError:
             raise LLMUnavailableError() from None
         self._check_status(response.status_code)
-        return _normalize_chat(response.content)
+        result = _normalize_chat(response.content)
+        capture_response(result)
+        return result
 
     async def chat(
         self,
@@ -241,7 +272,8 @@ class OpenAICompatibleProvider:
         model: str | None = None,
         temperature: float | None = None,
     ) -> ChatResult:
-        return await self._chat_request(messages, model, temperature)
+        with provider_scope(self, "chat"):
+            return await self._chat_request(messages, model, temperature)
 
     async def structured_output(
         self,
@@ -251,8 +283,21 @@ class OpenAICompatibleProvider:
         model: str | None = None,
         temperature: float | None = None,
     ) -> SchemaT:
-        result = await self._chat_request(messages, model, temperature, structured=True)
-        return validate_structured_output(result.content, schema)
+        # JSON object mode does not transmit or enforce the caller's Pydantic schema.
+        schema_instruction = "Return JSON conforming exactly to this JSON Schema: " + json.dumps(
+            schema.model_json_schema(), ensure_ascii=False
+        )
+        supplied = list(messages)
+        if supplied and supplied[0].role == "system":
+            supplied[0] = LLMMessage(
+                role="system", content=supplied[0].content + "\n" + schema_instruction
+            )
+        else:
+            supplied.insert(0, LLMMessage(role="system", content=schema_instruction))
+        with provider_scope(self, "structured_output") as record:
+            record["schema"] = schema.__name__
+            result = await self._chat_request(supplied, model, temperature, structured=True)
+            return validate_structured_output(result.content, schema)
 
     async def stream(
         self,
@@ -261,9 +306,26 @@ class OpenAICompatibleProvider:
         model: str | None = None,
         temperature: float | None = None,
     ) -> AsyncIterator[StreamChunk]:
+        with provider_scope(self, "stream") as record:
+            started = perf_counter()
+            inner = self._stream(messages, model=model, temperature=temperature)
+            try:
+                async for chunk in inner:
+                    capture_response(chunk)
+                    if chunk.content and record["ttft_ms"] is None:
+                        record["ttft_ms"] = (perf_counter() - started) * 1000
+                    yield chunk
+            finally:
+                await inner.aclose()
+
+    async def _stream(self, messages, *, model=None, temperature=None):
         payload = self._payload(messages, model, temperature, stream=True)
+        if self._budget is not None:
+            self._budget.reserve(payload)
         selected_model = model or self._model
         done = False
+        finished = False
+        has_content = False
         try:
             async with self._client_for_request() as client:
                 async with client.stream(
@@ -280,10 +342,15 @@ class OpenAICompatibleProvider:
                             break
                         chunk = _normalize_stream(event, selected_model)
                         if chunk is not None:
+                            has_content = has_content or bool(chunk.content.strip())
+                            if chunk.finish_reason is not None:
+                                if chunk.finish_reason != "stop":
+                                    raise LLMInvalidResponseError() from None
+                                finished = True
                             yield chunk
         except httpx.TimeoutException:
             raise LLMTimeoutError() from None
         except httpx.RequestError:
             raise LLMUnavailableError() from None
-        if not done:
+        if not done or not finished or not has_content:
             raise LLMInvalidResponseError() from None

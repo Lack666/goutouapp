@@ -31,6 +31,7 @@ from app.agent.events import (
 from app.core.config import get_settings
 from app.db.models import AgentRun, Message
 from app.db.repositories import records
+from app.observability import emit
 from app.services.agent_stream import (
     AgentServiceStream,
     ServiceCompleted,
@@ -362,8 +363,10 @@ class AgentService:
                     failure_code,
                 ):
                     raise RuntimeError("run missing")
+            emit("persistence_outcome", run_id=str(request.run_id), status="failed")
             return "failed"
         except Exception:
+            emit("persistence_outcome", run_id=str(request.run_id), status="running_unknown")
             return "running_unknown"
 
     def _commit_answer(
@@ -391,7 +394,9 @@ class AgentService:
                     result_warnings=list(warnings) if warnings is not None else None,
                 ):
                     raise RuntimeError("run or conversation missing")
-                return assistant.id
+                assistant_id = assistant.id
+            emit("persistence_outcome", run_id=str(request.run_id), status="completed")
+            return assistant_id
         except Exception:
             recovery = self._mark_failed(request, "persistence_failure")
             raise AgentServiceError(

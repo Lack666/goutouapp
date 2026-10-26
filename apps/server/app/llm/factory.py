@@ -22,6 +22,9 @@ def create_llm_provider(
             api_key=settings.llm_api_key,
             model=settings.llm_model or "",
             timeout_seconds=settings.llm_timeout_seconds,
+            max_output_tokens=settings.llm_max_output_tokens,
+            temperature=settings.llm_temperature,
+            thinking=settings.llm_thinking,
             client=client,
         )
     raise LLMConfigurationError() from None

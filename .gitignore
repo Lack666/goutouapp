@@ -1,4 +1,5 @@
 .env
+/api.txt
 /_phase9f_baseline/
 .env.*
 !.env.example

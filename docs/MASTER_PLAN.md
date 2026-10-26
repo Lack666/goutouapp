@@ -23,8 +23,8 @@ as implemented by a placeholder directory or a golden expectation.
 | 7 | Expo React Native MVP | PASS (7A–7D) |
 | 8 | Mobile API integration, generated client and stream consumption | PASS (8A–8F, including native closeout) |
 | 9 | Security, privacy, reliability and deletion | PASS (9A–9H and original final engineering criteria; public production NOT APPROVED) |
-| 10 | Optional hybrid RAG with pgvector | PENDING |
-| 11 | Agent eval and observability | PENDING |
+| 10 | Optional hybrid RAG with pgvector | OPTIONAL / DEFERRED (user decision 2026-10-26) |
+| 11 | Agent eval and observability | IN PROGRESS; final regression deferred |
 | 12 | CI/CD, EAS preview, release preparation | PENDING |
 
 ## Exit criteria by phase
@@ -929,3 +929,7 @@ Relationship erasure, independent deletion journal or production primary-loss
 recovery; deployed scheduler/encrypted rotation/identity/ingress remain blockers.
 See PHASE_9E_ACCEPTANCE/MATRIX, DATA_DELETION_MATRIX, ERASURE_API and ADR0040.
 Stop after9E; further Phase9 scope requires explicit instruction.
+
+## Phase 11 authorization (2026-10-26)
+
+User explicitly defers optional Phase10 RAG and authorizes Phase11 only. Phase10 requirements above remain intact and may resume if evaluation evidence supports retrieval. This prospective exception permits optional-stage deferral, never safety-gate bypass. Official marker remains9/9H. Phase11 uses focused tests, targeted signed PostgreSQL E2E and opt-in bounded live evaluation. Full root verification is deferred to final closeout. Function completion and quality acceptance are recorded separately in PHASE_11_ACCEPTANCE; neither advances the official marker. Historical0–9 evidence remains immutable. Stop before Phase12.

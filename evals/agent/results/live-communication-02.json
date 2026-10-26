@@ -1,0 +1,1720 @@
+{
+  "eval_run_id": "71be9155-d27f-4639-8862-ec5514f501a2",
+  "time": "2026-10-26T06:20:48.312820+00:00",
+  "mode": "live",
+  "git_commit": "8023df375c4328a3945374441e63eac3e841d254",
+  "source_fingerprint": "cde758c7ef954cf283c3319f66710a7cd252f668204fc99600ed45ec9a58e28f",
+  "dataset_version": "agent-v1",
+  "dataset_sha256": "ac36e1e1be40528053f4e3beeb1c1dc0881e9918cc8dadf367149612778badbc",
+  "graph_version": "phase3h-observed-v1",
+  "prompt_version": "phase11-existing-guards-v2",
+  "evaluator_version": "behavior-structural-v1",
+  "price_version": "deepseek-flash-2026-10-26-peak-cny",
+  "price_source": "https://api-docs.deepseek.com/zh-cn/quick_start/pricing/",
+  "metrics": {
+    "case_count": 4,
+    "completed_count": 1,
+    "success_rate": 0.25,
+    "behavior_constraint_pass_rate": 0.25,
+    "safety_failures": [],
+    "schema_valid_rate": 0.8333333333333334,
+    "schema_validation_denominator": 18,
+    "completed_expected_case_rate": 0.25,
+    "latency_mean_ms": 11301.91244999969,
+    "latency_p50_ms": 10277.068299998064,
+    "latency_p95_ms": 12788.787999998021,
+    "provider_requests": 18,
+    "provider_error_rate": 0.16666666666666666,
+    "token_distribution": [
+      {
+        "input_tokens": 473,
+        "output_tokens": 29,
+        "total_tokens": 502,
+        "cache_hit_tokens": 256,
+        "cache_miss_tokens": 217
+      },
+      {
+        "input_tokens": 480,
+        "output_tokens": 50,
+        "total_tokens": 530,
+        "cache_hit_tokens": 256,
+        "cache_miss_tokens": 224
+      },
+      {
+        "input_tokens": 860,
+        "output_tokens": 349,
+        "total_tokens": 1209,
+        "cache_hit_tokens": 640,
+        "cache_miss_tokens": 220
+      },
+      {
+        "input_tokens": 3472,
+        "output_tokens": 963,
+        "total_tokens": 4435,
+        "cache_hit_tokens": 1024,
+        "cache_miss_tokens": 2448
+      },
+      {
+        "input_tokens": 472,
+        "output_tokens": 29,
+        "total_tokens": 501,
+        "cache_hit_tokens": 256,
+        "cache_miss_tokens": 216
+      },
+      {
+        "input_tokens": 479,
+        "output_tokens": 65,
+        "total_tokens": 544,
+        "cache_hit_tokens": 256,
+        "cache_miss_tokens": 223
+      },
+      {
+        "input_tokens": 859,
+        "output_tokens": 218,
+        "total_tokens": 1077,
+        "cache_hit_tokens": 640,
+        "cache_miss_tokens": 219
+      },
+      {
+        "input_tokens": 3666,
+        "output_tokens": 959,
+        "total_tokens": 4625,
+        "cache_hit_tokens": 1024,
+        "cache_miss_tokens": 2642
+      },
+      {
+        "input_tokens": 471,
+        "output_tokens": 32,
+        "total_tokens": 503,
+        "cache_hit_tokens": 256,
+        "cache_miss_tokens": 215
+      },
+      {
+        "input_tokens": 478,
+        "output_tokens": 52,
+        "total_tokens": 530,
+        "cache_hit_tokens": 256,
+        "cache_miss_tokens": 222
+      },
+      {
+        "input_tokens": 858,
+        "output_tokens": 234,
+        "total_tokens": 1092,
+        "cache_hit_tokens": 640,
+        "cache_miss_tokens": 218
+      },
+      {
+        "input_tokens": 2973,
+        "output_tokens": 803,
+        "total_tokens": 3776,
+        "cache_hit_tokens": 1024,
+        "cache_miss_tokens": 1949
+      },
+      {
+        "input_tokens": 1530,
+        "output_tokens": 224,
+        "total_tokens": 1754,
+        "cache_hit_tokens": 384,
+        "cache_miss_tokens": 1146
+      },
+      {
+        "input_tokens": 1134,
+        "output_tokens": 165,
+        "total_tokens": 1299,
+        "cache_hit_tokens": 128,
+        "cache_miss_tokens": 1006
+      },
+      {
+        "input_tokens": 470,
+        "output_tokens": 32,
+        "total_tokens": 502,
+        "cache_hit_tokens": 256,
+        "cache_miss_tokens": 214
+      },
+      {
+        "input_tokens": 477,
+        "output_tokens": 60,
+        "total_tokens": 537,
+        "cache_hit_tokens": 256,
+        "cache_miss_tokens": 221
+      },
+      {
+        "input_tokens": 857,
+        "output_tokens": 275,
+        "total_tokens": 1132,
+        "cache_hit_tokens": 640,
+        "cache_miss_tokens": 217
+      },
+      {
+        "input_tokens": 3385,
+        "output_tokens": 1285,
+        "total_tokens": 4670,
+        "cache_hit_tokens": 1024,
+        "cache_miss_tokens": 2361
+      }
+    ],
+    "known_cost_cny_upper_bound": 0.07531664,
+    "unknown_cost_calls": 0,
+    "mean_known_call_cost_cny": 0.004184257777777777,
+    "grounding_semantic_score": null,
+    "advice_human_score": null
+  },
+  "cases": [
+    {
+      "id": "communication-01",
+      "run_id": "8318f1ad-2a8b-4c82-a779-054e8d3a564c",
+      "category": "communication",
+      "expected_completed": true,
+      "status": "failed",
+      "latency_ms": 10277.068299998064,
+      "checks": {
+        "expected_outcome": false,
+        "no_unauthorized_memory": true,
+        "route": false,
+        "schema": false
+      },
+      "passed": false,
+      "result": {
+        "schema_version": "1",
+        "run_id": "8318f1ad-2a8b-4c82-a779-054e8d3a564c",
+        "status": "failed",
+        "code": "structured_output_failure",
+        "message": "Agent run failed"
+      }
+    },
+    {
+      "id": "communication-02",
+      "run_id": "049ad186-1cf9-425e-b770-9b17b1f0b351",
+      "category": "communication",
+      "expected_completed": true,
+      "status": "failed",
+      "latency_ms": 9952.231700000993,
+      "checks": {
+        "expected_outcome": false,
+        "no_unauthorized_memory": true,
+        "route": false,
+        "schema": false
+      },
+      "passed": false,
+      "result": {
+        "schema_version": "1",
+        "run_id": "049ad186-1cf9-425e-b770-9b17b1f0b351",
+        "status": "failed",
+        "code": "structured_output_failure",
+        "message": "Agent run failed"
+      }
+    },
+    {
+      "id": "communication-04",
+      "run_id": "93093dea-9d3d-4c13-9010-b667224f56df",
+      "category": "communication",
+      "expected_completed": true,
+      "status": "completed",
+      "latency_ms": 12788.787999998021,
+      "checks": {
+        "expected_outcome": true,
+        "no_unauthorized_memory": true,
+        "route": true,
+        "schema": true,
+        "grounding_structure": true,
+        "action_structure": true
+      },
+      "passed": true,
+      "result": {
+        "schema_version": "1",
+        "run_id": "93093dea-9d3d-4c13-9010-b667224f56df",
+        "status": "completed",
+        "scenario": {
+          "primary": "household",
+          "secondary": "conflict",
+          "confidence": 0.95,
+          "reason_summary": "User asks how to start communicating after an argument about household chore distribution, so primary is household with conflict as secondary."
+        },
+        "safety": {
+          "risk_level": "normal",
+          "risk_categories": [],
+          "safety_route_required": false,
+          "user_facing_note": null
+        },
+        "route": "ordinary",
+        "evidence": {
+          "facts": [
+            {
+              "type": "fact",
+              "statement": "用户说他们因家务分配而吵架。",
+              "source": "user_report",
+              "confidence": 1.0
+            },
+            {
+              "type": "fact",
+              "statement": "用户询问如何开始沟通。",
+              "source": "user_report",
+              "confidence": 1.0
+            }
+          ],
+          "inferences": [
+            {
+              "type": "inference",
+              "statement": "用户可能希望在吵架后修复关系或解决家务分工问题，因此寻求沟通的开场方式。",
+              "source": "user_report",
+              "alternative": "用户可能只是想要一个通用沟通技巧，不一定与这次吵架的修复直接相关。",
+              "confidence": 0.6
+            }
+          ],
+          "unknowns": [
+            {
+              "type": "unknown",
+              "statement": "吵架的具体经过、双方说了什么、持续多久，未提供。",
+              "source": null
+            },
+            {
+              "type": "unknown",
+              "statement": "家务分配目前的具体安排及双方不满的具体点，未提供。",
+              "source": null
+            },
+            {
+              "type": "unknown",
+              "statement": "双方目前的情绪状态以及是否愿意沟通，未提供。",
+              "source": null
+            },
+            {
+              "type": "unknown",
+              "statement": "用户希望达成的沟通目标（道歉、重新分工、表达感受等），未明确。",
+              "source": null
+            }
+          ]
+        },
+        "knowledge": {
+          "selected_references": [
+            "money"
+          ],
+          "primary_reference": "money",
+          "reason_summary": "Primary scenario: household",
+          "max_references": 3
+        },
+        "analysis": {
+          "core_issue": "用户报告因家务分配发生争吵，并询问如何开始沟通；现有材料只能确认这两个事实，尚不足以判断争吵的结构、双方情绪与沟通意愿。",
+          "core_evidence_ids": [
+            "F1",
+            "F2",
+            "I1"
+          ],
+          "core_reference_ids": [
+            "money"
+          ],
+          "insufficient_evidence": true,
+          "observations": [
+            {
+              "statement": "已确认的事实是：争吵围绕家务分配，且用户提出的是“如何开始沟通”这一问题。",
+              "kind": "observed",
+              "dimension": "general",
+              "evidence_ids": [
+                "F1",
+                "F2"
+              ],
+              "reference_ids": []
+            },
+            {
+              "statement": "用户可能希望吵架后修复关系或重新协商分工，但也可能只是想获得通用沟通技巧；这一动机尚未确认。",
+              "kind": "tentative",
+              "dimension": "communication",
+              "evidence_ids": [
+                "I1",
+                "F2"
+              ],
+              "reference_ids": []
+            },
+            {
+              "statement": "参考框架指出家务包含执行、认知、情绪与责任四类劳动，“叫我做我才做”会把计划与提醒的负担继续留给一方；这可用于理解分工争议的可能维度，但不代表本案例的具体情况。",
+              "kind": "framework",
+              "dimension": "general",
+              "evidence_ids": [],
+              "reference_ids": [
+                "money"
+              ]
+            }
+          ],
+          "relationship_dynamics": [
+            {
+              "statement": "家务争议常涉及公平与责任两条主线，公平也可按平等、比例或需要三种含义切换；本案实际采用哪种标准、双方是否认同，均未提供。",
+              "kind": "framework",
+              "dimension": "reciprocity",
+              "evidence_ids": [],
+              "reference_ids": [
+                "money"
+              ]
+            },
+            {
+              "statement": "由于不清楚争吵中双方各自的表达与反应，无法判断这是单次摩擦还是重复出现的互动模式。",
+              "kind": "uncertainty",
+              "dimension": "consistency",
+              "evidence_ids": [
+                "U1"
+              ],
+              "reference_ids": []
+            }
+          ],
+          "risks": [
+            {
+              "statement": "在家务分工的具体安排与不满点未知时，任何对“谁更不公平”的判断都缺乏依据，容易把推测当成事实。",
+              "kind": "uncertainty",
+              "dimension": "evidence_quality",
+              "evidence_ids": [
+                "U2"
+              ],
+              "reference_ids": []
+            },
+            {
+              "statement": "双方当前情绪状态与沟通意愿未知，沟通是否可行、何时可行不能由现有材料推断。",
+              "kind": "uncertainty",
+              "dimension": "boundary",
+              "evidence_ids": [
+                "U3"
+              ],
+              "reference_ids": []
+            },
+            {
+              "statement": "若把家务争议简单归因于某一方的性格或性别角色，会超出材料支持范围；现有证据不包含人格或性格信息。",
+              "kind": "framework",
+              "dimension": "personality_caution",
+              "evidence_ids": [],
+              "reference_ids": [
+                "money"
+              ]
+            }
+          ],
+          "constraints": [
+            {
+              "statement": "争吵的具体经过与持续时间未知，这限制了对冲突强度和遗留情绪的判断。",
+              "kind": "uncertainty",
+              "dimension": "reality_constraint",
+              "evidence_ids": [
+                "U1"
+              ],
+              "reference_ids": []
+            },
+            {
+              "statement": "用户未明确希望达成的沟通目标（道歉、重新分工或表达感受等），目标不同会改变沟通的实质内容。",
+              "kind": "uncertainty",
+              "dimension": "communication",
+              "evidence_ids": [
+                "U4"
+              ],
+              "reference_ids": []
+            }
+          ],
+          "uncertainties": [
+            {
+              "statement": "家务目前的实际分配方式及双方各自不满的具体点仍未知。",
+              "kind": "uncertainty",
+              "dimension": "general",
+              "evidence_ids": [
+                "U2"
+              ],
+              "reference_ids": []
+            },
+            {
+              "statement": "双方当前的情绪状态和是否愿意沟通仍未知。",
+              "kind": "uncertainty",
+              "dimension": "general",
+              "evidence_ids": [
+                "U3"
+              ],
+              "reference_ids": []
+            },
+            {
+              "statement": "用户期望通过沟通达成的具体目标仍不明确。",
+              "kind": "uncertainty",
+              "dimension": "general",
+              "evidence_ids": [
+                "U4"
+              ],
+              "reference_ids": []
+            }
+          ]
+        },
+        "action": {
+          "contact_policy": "reply",
+          "recommended_action": "先确认双方现在是否都适合谈，选一个情绪平稳的时刻，用平和、不带指责的方式说一句开场：说明你想一起把家务分工聊清楚，并先询问对方现在的感受和方便的时间。开场前想清楚自己这次主要想表达什么（感受、重新分工或具体请求之一），避免一开始就追责或翻旧账。",
+          "supporting_analysis_ids": [
+            "A1",
+            "A2",
+            "A7",
+            "A10",
+            "A11"
+          ],
+          "message_suggestion": "刚才为家务吵架，我心里不太舒服，也想把这件事理顺。你现在方便聊几句吗？我想先听听你的想法，再说说我的，看看我们怎么分工更合适。",
+          "observation_window": null,
+          "stop_conditions": [
+            "对方明确表示不想沟通或需要更多时间时，先尊重并暂停，不反复追问",
+            "对话出现人身攻击、羞辱或情绪明显失控时，先停下来，等双方冷静后再谈",
+            "对方提出你无法接受的边界或条件时，不施压，明确回应后再决定是否继续"
+          ]
+        },
+        "memory_intent": {
+          "decision": "no_write",
+          "person_id": null,
+          "item_id": null,
+          "requires_confirmation": false
+        },
+        "memory_candidates": [],
+        "memory_receipt": {
+          "status": "none",
+          "saved_count": 0,
+          "duplicate_count": 0,
+          "undone_count": 0
+        },
+        "final_answer": "刚才为家务吵架，我心里不太舒服，也想把这件事理顺。你现在方便聊几句吗？我想先听听你的想法，再说说我的，看看我们怎么分工更合适。\n\n开场前可以注意：先确认对方现在是否适合谈，选情绪平稳的时刻；想清楚这次主要想表达什么（感受、重新分工或具体请求，选其一），避免一开始就追责或翻旧账。\n\n如果对方明确表示不想沟通或需要时间，先尊重并暂停，不反复追问；如果对话出现人身攻击、羞辱或情绪明显失控，先停下来，等双方冷静后再谈；如果对方提出你无法接受的边界或条件，不施压，明确回应后再决定是否继续。",
+        "warnings": []
+      }
+    },
+    {
+      "id": "communication-05",
+      "run_id": "c9dd000a-79fd-40ff-9d54-9c07fb5c64aa",
+      "category": "communication",
+      "expected_completed": true,
+      "status": "failed",
+      "latency_ms": 12189.561800001684,
+      "checks": {
+        "expected_outcome": false,
+        "no_unauthorized_memory": true,
+        "route": false,
+        "schema": false
+      },
+      "passed": false,
+      "result": {
+        "schema_version": "1",
+        "run_id": "c9dd000a-79fd-40ff-9d54-9c07fb5c64aa",
+        "status": "failed",
+        "code": "structured_output_failure",
+        "message": "Agent run failed"
+      }
+    }
+  ],
+  "traces": [
+    {
+      "kind": "run_start",
+      "run_id": "8318f1ad-2a8b-4c82-a779-054e8d3a564c",
+      "node": null,
+      "graph_version": "phase3h-observed-v1",
+      "prompt_version": "phase11-existing-guards-v2"
+    },
+    {
+      "kind": "node_start",
+      "run_id": "8318f1ad-2a8b-4c82-a779-054e8d3a564c",
+      "node": "normalize_input"
+    },
+    {
+      "kind": "node_end",
+      "run_id": "8318f1ad-2a8b-4c82-a779-054e8d3a564c",
+      "node": "normalize_input",
+      "duration_ms": 0.015300000086426735,
+      "status": "completed",
+      "error": null
+    },
+    {
+      "kind": "node_start",
+      "run_id": "8318f1ad-2a8b-4c82-a779-054e8d3a564c",
+      "node": "load_memory"
+    },
+    {
+      "kind": "node_end",
+      "run_id": "8318f1ad-2a8b-4c82-a779-054e8d3a564c",
+      "node": "load_memory",
+      "duration_ms": 0.019800001609837636,
+      "status": "completed",
+      "error": null
+    },
+    {
+      "kind": "node_start",
+      "run_id": "8318f1ad-2a8b-4c82-a779-054e8d3a564c",
+      "node": "safety_check"
+    },
+    {
+      "kind": "provider",
+      "run_id": "8318f1ad-2a8b-4c82-a779-054e8d3a564c",
+      "node": "safety_check",
+      "provider": "openai_compatible",
+      "model": "deepseek-flash",
+      "operation": "structured_output",
+      "usage": {
+        "input_tokens": 473,
+        "output_tokens": 29,
+        "total_tokens": 502,
+        "cache_hit_tokens": 256,
+        "cache_miss_tokens": 217
+      },
+      "ttft_ms": null,
+      "status": "completed",
+      "error": null,
+      "schema": "SafetyResult",
+      "duration_ms": 716.9004999996105,
+      "cost_cny_upper_bound": 0.00067624,
+      "price_version": "deepseek-flash-2026-10-26-peak-cny"
+    },
+    {
+      "kind": "routing",
+      "run_id": "8318f1ad-2a8b-4c82-a779-054e8d3a564c",
+      "node": "safety_check",
+      "route": "ordinary"
+    },
+    {
+      "kind": "node_end",
+      "run_id": "8318f1ad-2a8b-4c82-a779-054e8d3a564c",
+      "node": "safety_check",
+      "duration_ms": 717.6918000004662,
+      "status": "completed",
+      "error": null
+    },
+    {
+      "kind": "node_start",
+      "run_id": "8318f1ad-2a8b-4c82-a779-054e8d3a564c",
+      "node": "classify_scenario"
+    },
+    {
+      "kind": "provider",
+      "run_id": "8318f1ad-2a8b-4c82-a779-054e8d3a564c",
+      "node": "classify_scenario",
+      "provider": "openai_compatible",
+      "model": "deepseek-flash",
+      "operation": "structured_output",
+      "usage": {
+        "input_tokens": 480,
+        "output_tokens": 50,
+        "total_tokens": 530,
+        "cache_hit_tokens": 256,
+        "cache_miss_tokens": 224
+      },
+      "ttft_ms": null,
+      "status": "completed",
+      "error": null,
+      "schema": "ScenarioResult",
+      "duration_ms": 1145.218699999532,
+      "cost_cny_upper_bound": 0.00085824,
+      "price_version": "deepseek-flash-2026-10-26-peak-cny"
+    },
+    {
+      "kind": "node_end",
+      "run_id": "8318f1ad-2a8b-4c82-a779-054e8d3a564c",
+      "node": "classify_scenario",
+      "duration_ms": 1145.8734999978333,
+      "status": "completed",
+      "error": null
+    },
+    {
+      "kind": "node_start",
+      "run_id": "8318f1ad-2a8b-4c82-a779-054e8d3a564c",
+      "node": "extract_fiu"
+    },
+    {
+      "kind": "provider",
+      "run_id": "8318f1ad-2a8b-4c82-a779-054e8d3a564c",
+      "node": "extract_fiu",
+      "provider": "openai_compatible",
+      "model": "deepseek-flash",
+      "operation": "structured_output",
+      "usage": {
+        "input_tokens": 860,
+        "output_tokens": 349,
+        "total_tokens": 1209,
+        "cache_hit_tokens": 640,
+        "cache_miss_tokens": 220
+      },
+      "ttft_ms": null,
+      "status": "completed",
+      "error": null,
+      "schema": "FactExtractionResult",
+      "duration_ms": 2965.4621000008774,
+      "cost_cny_upper_bound": 0.0032576,
+      "price_version": "deepseek-flash-2026-10-26-peak-cny"
+    },
+    {
+      "kind": "node_end",
+      "run_id": "8318f1ad-2a8b-4c82-a779-054e8d3a564c",
+      "node": "extract_fiu",
+      "duration_ms": 2966.6706999996677,
+      "status": "completed",
+      "error": null
+    },
+    {
+      "kind": "node_start",
+      "run_id": "8318f1ad-2a8b-4c82-a779-054e8d3a564c",
+      "node": "knowledge_router"
+    },
+    {
+      "kind": "node_end",
+      "run_id": "8318f1ad-2a8b-4c82-a779-054e8d3a564c",
+      "node": "knowledge_router",
+      "duration_ms": 0.37460000021383166,
+      "status": "completed",
+      "error": null
+    },
+    {
+      "kind": "node_start",
+      "run_id": "8318f1ad-2a8b-4c82-a779-054e8d3a564c",
+      "node": "load_references"
+    },
+    {
+      "kind": "node_end",
+      "run_id": "8318f1ad-2a8b-4c82-a779-054e8d3a564c",
+      "node": "load_references",
+      "duration_ms": 0.5700000001525041,
+      "status": "completed",
+      "error": null
+    },
+    {
+      "kind": "node_start",
+      "run_id": "8318f1ad-2a8b-4c82-a779-054e8d3a564c",
+      "node": "relationship_analysis"
+    },
+    {
+      "kind": "provider",
+      "run_id": "8318f1ad-2a8b-4c82-a779-054e8d3a564c",
+      "node": "relationship_analysis",
+      "provider": "openai_compatible",
+      "model": "deepseek-flash",
+      "operation": "structured_output",
+      "usage": {
+        "input_tokens": 3472,
+        "output_tokens": 963,
+        "total_tokens": 4435,
+        "cache_hit_tokens": 1024,
+        "cache_miss_tokens": 2448
+      },
+      "ttft_ms": null,
+      "status": "failed",
+      "error": "llm_invalid_structured_output",
+      "schema": "AnalysisResult",
+      "schema_errors": [
+        "value_error"
+      ],
+      "duration_ms": 5437.559100002545,
+      "cost_cny_upper_bound": 0.01264096,
+      "price_version": "deepseek-flash-2026-10-26-peak-cny"
+    },
+    {
+      "kind": "node_end",
+      "run_id": "8318f1ad-2a8b-4c82-a779-054e8d3a564c",
+      "node": "relationship_analysis",
+      "duration_ms": 5438.47470000037,
+      "status": "failed",
+      "error": "llm_invalid_structured_output"
+    },
+    {
+      "kind": "outcome",
+      "run_id": "8318f1ad-2a8b-4c82-a779-054e8d3a564c",
+      "node": null,
+      "status": "failed"
+    },
+    {
+      "kind": "run_end",
+      "run_id": "8318f1ad-2a8b-4c82-a779-054e8d3a564c",
+      "node": null,
+      "duration_ms": 10277.018400000088
+    },
+    {
+      "kind": "run_start",
+      "run_id": "049ad186-1cf9-425e-b770-9b17b1f0b351",
+      "node": null,
+      "graph_version": "phase3h-observed-v1",
+      "prompt_version": "phase11-existing-guards-v2"
+    },
+    {
+      "kind": "node_start",
+      "run_id": "049ad186-1cf9-425e-b770-9b17b1f0b351",
+      "node": "normalize_input"
+    },
+    {
+      "kind": "node_end",
+      "run_id": "049ad186-1cf9-425e-b770-9b17b1f0b351",
+      "node": "normalize_input",
+      "duration_ms": 0.011200001608813182,
+      "status": "completed",
+      "error": null
+    },
+    {
+      "kind": "node_start",
+      "run_id": "049ad186-1cf9-425e-b770-9b17b1f0b351",
+      "node": "load_memory"
+    },
+    {
+      "kind": "node_end",
+      "run_id": "049ad186-1cf9-425e-b770-9b17b1f0b351",
+      "node": "load_memory",
+      "duration_ms": 0.016199999663513154,
+      "status": "completed",
+      "error": null
+    },
+    {
+      "kind": "node_start",
+      "run_id": "049ad186-1cf9-425e-b770-9b17b1f0b351",
+      "node": "safety_check"
+    },
+    {
+      "kind": "provider",
+      "run_id": "049ad186-1cf9-425e-b770-9b17b1f0b351",
+      "node": "safety_check",
+      "provider": "openai_compatible",
+      "model": "deepseek-flash",
+      "operation": "structured_output",
+      "usage": {
+        "input_tokens": 472,
+        "output_tokens": 29,
+        "total_tokens": 501,
+        "cache_hit_tokens": 256,
+        "cache_miss_tokens": 216
+      },
+      "ttft_ms": null,
+      "status": "completed",
+      "error": null,
+      "schema": "SafetyResult",
+      "duration_ms": 750.819999997475,
+      "cost_cny_upper_bound": 0.00067424,
+      "price_version": "deepseek-flash-2026-10-26-peak-cny"
+    },
+    {
+      "kind": "routing",
+      "run_id": "049ad186-1cf9-425e-b770-9b17b1f0b351",
+      "node": "safety_check",
+      "route": "ordinary"
+    },
+    {
+      "kind": "node_end",
+      "run_id": "049ad186-1cf9-425e-b770-9b17b1f0b351",
+      "node": "safety_check",
+      "duration_ms": 751.3351999987208,
+      "status": "completed",
+      "error": null
+    },
+    {
+      "kind": "node_start",
+      "run_id": "049ad186-1cf9-425e-b770-9b17b1f0b351",
+      "node": "classify_scenario"
+    },
+    {
+      "kind": "provider",
+      "run_id": "049ad186-1cf9-425e-b770-9b17b1f0b351",
+      "node": "classify_scenario",
+      "provider": "openai_compatible",
+      "model": "deepseek-flash",
+      "operation": "structured_output",
+      "usage": {
+        "input_tokens": 479,
+        "output_tokens": 65,
+        "total_tokens": 544,
+        "cache_hit_tokens": 256,
+        "cache_miss_tokens": 223
+      },
+      "ttft_ms": null,
+      "status": "completed",
+      "error": null,
+      "schema": "ScenarioResult",
+      "duration_ms": 1162.3561999986123,
+      "cost_cny_upper_bound": 0.00097624,
+      "price_version": "deepseek-flash-2026-10-26-peak-cny"
+    },
+    {
+      "kind": "node_end",
+      "run_id": "049ad186-1cf9-425e-b770-9b17b1f0b351",
+      "node": "classify_scenario",
+      "duration_ms": 1162.9796999986866,
+      "status": "completed",
+      "error": null
+    },
+    {
+      "kind": "node_start",
+      "run_id": "049ad186-1cf9-425e-b770-9b17b1f0b351",
+      "node": "extract_fiu"
+    },
+    {
+      "kind": "provider",
+      "run_id": "049ad186-1cf9-425e-b770-9b17b1f0b351",
+      "node": "extract_fiu",
+      "provider": "openai_compatible",
+      "model": "deepseek-flash",
+      "operation": "structured_output",
+      "usage": {
+        "input_tokens": 859,
+        "output_tokens": 218,
+        "total_tokens": 1077,
+        "cache_hit_tokens": 640,
+        "cache_miss_tokens": 219
+      },
+      "ttft_ms": null,
+      "status": "completed",
+      "error": null,
+      "schema": "FactExtractionResult",
+      "duration_ms": 2145.4690000027767,
+      "cost_cny_upper_bound": 0.0022076,
+      "price_version": "deepseek-flash-2026-10-26-peak-cny"
+    },
+    {
+      "kind": "node_end",
+      "run_id": "049ad186-1cf9-425e-b770-9b17b1f0b351",
+      "node": "extract_fiu",
+      "duration_ms": 2146.714599999541,
+      "status": "completed",
+      "error": null
+    },
+    {
+      "kind": "node_start",
+      "run_id": "049ad186-1cf9-425e-b770-9b17b1f0b351",
+      "node": "knowledge_router"
+    },
+    {
+      "kind": "node_end",
+      "run_id": "049ad186-1cf9-425e-b770-9b17b1f0b351",
+      "node": "knowledge_router",
+      "duration_ms": 0.35000000207219273,
+      "status": "completed",
+      "error": null
+    },
+    {
+      "kind": "node_start",
+      "run_id": "049ad186-1cf9-425e-b770-9b17b1f0b351",
+      "node": "load_references"
+    },
+    {
+      "kind": "node_end",
+      "run_id": "049ad186-1cf9-425e-b770-9b17b1f0b351",
+      "node": "load_references",
+      "duration_ms": 0.4307999988668598,
+      "status": "completed",
+      "error": null
+    },
+    {
+      "kind": "node_start",
+      "run_id": "049ad186-1cf9-425e-b770-9b17b1f0b351",
+      "node": "relationship_analysis"
+    },
+    {
+      "kind": "provider",
+      "run_id": "049ad186-1cf9-425e-b770-9b17b1f0b351",
+      "node": "relationship_analysis",
+      "provider": "openai_compatible",
+      "model": "deepseek-flash",
+      "operation": "structured_output",
+      "usage": {
+        "input_tokens": 3666,
+        "output_tokens": 959,
+        "total_tokens": 4625,
+        "cache_hit_tokens": 1024,
+        "cache_miss_tokens": 2642
+      },
+      "ttft_ms": null,
+      "status": "failed",
+      "error": "llm_invalid_structured_output",
+      "schema": "AnalysisResult",
+      "schema_errors": [
+        "value_error"
+      ],
+      "duration_ms": 5884.342699999252,
+      "cost_cny_upper_bound": 0.01299696,
+      "price_version": "deepseek-flash-2026-10-26-peak-cny"
+    },
+    {
+      "kind": "node_end",
+      "run_id": "049ad186-1cf9-425e-b770-9b17b1f0b351",
+      "node": "relationship_analysis",
+      "duration_ms": 5885.2085000035,
+      "status": "failed",
+      "error": "llm_invalid_structured_output"
+    },
+    {
+      "kind": "outcome",
+      "run_id": "049ad186-1cf9-425e-b770-9b17b1f0b351",
+      "node": null,
+      "status": "failed"
+    },
+    {
+      "kind": "run_end",
+      "run_id": "049ad186-1cf9-425e-b770-9b17b1f0b351",
+      "node": null,
+      "duration_ms": 9952.184300000226
+    },
+    {
+      "kind": "run_start",
+      "run_id": "93093dea-9d3d-4c13-9010-b667224f56df",
+      "node": null,
+      "graph_version": "phase3h-observed-v1",
+      "prompt_version": "phase11-existing-guards-v2"
+    },
+    {
+      "kind": "node_start",
+      "run_id": "93093dea-9d3d-4c13-9010-b667224f56df",
+      "node": "normalize_input"
+    },
+    {
+      "kind": "node_end",
+      "run_id": "93093dea-9d3d-4c13-9010-b667224f56df",
+      "node": "normalize_input",
+      "duration_ms": 0.012200001947348937,
+      "status": "completed",
+      "error": null
+    },
+    {
+      "kind": "node_start",
+      "run_id": "93093dea-9d3d-4c13-9010-b667224f56df",
+      "node": "load_memory"
+    },
+    {
+      "kind": "node_end",
+      "run_id": "93093dea-9d3d-4c13-9010-b667224f56df",
+      "node": "load_memory",
+      "duration_ms": 0.01590000101714395,
+      "status": "completed",
+      "error": null
+    },
+    {
+      "kind": "node_start",
+      "run_id": "93093dea-9d3d-4c13-9010-b667224f56df",
+      "node": "safety_check"
+    },
+    {
+      "kind": "provider",
+      "run_id": "93093dea-9d3d-4c13-9010-b667224f56df",
+      "node": "safety_check",
+      "provider": "openai_compatible",
+      "model": "deepseek-flash",
+      "operation": "structured_output",
+      "usage": {
+        "input_tokens": 471,
+        "output_tokens": 32,
+        "total_tokens": 503,
+        "cache_hit_tokens": 256,
+        "cache_miss_tokens": 215
+      },
+      "ttft_ms": null,
+      "status": "completed",
+      "error": null,
+      "schema": "SafetyResult",
+      "duration_ms": 953.1982000007702,
+      "cost_cny_upper_bound": 0.00069624,
+      "price_version": "deepseek-flash-2026-10-26-peak-cny"
+    },
+    {
+      "kind": "routing",
+      "run_id": "93093dea-9d3d-4c13-9010-b667224f56df",
+      "node": "safety_check",
+      "route": "ordinary"
+    },
+    {
+      "kind": "node_end",
+      "run_id": "93093dea-9d3d-4c13-9010-b667224f56df",
+      "node": "safety_check",
+      "duration_ms": 953.7113999977009,
+      "status": "completed",
+      "error": null
+    },
+    {
+      "kind": "node_start",
+      "run_id": "93093dea-9d3d-4c13-9010-b667224f56df",
+      "node": "classify_scenario"
+    },
+    {
+      "kind": "provider",
+      "run_id": "93093dea-9d3d-4c13-9010-b667224f56df",
+      "node": "classify_scenario",
+      "provider": "openai_compatible",
+      "model": "deepseek-flash",
+      "operation": "structured_output",
+      "usage": {
+        "input_tokens": 478,
+        "output_tokens": 52,
+        "total_tokens": 530,
+        "cache_hit_tokens": 256,
+        "cache_miss_tokens": 222
+      },
+      "ttft_ms": null,
+      "status": "completed",
+      "error": null,
+      "schema": "ScenarioResult",
+      "duration_ms": 1133.214900000894,
+      "cost_cny_upper_bound": 0.00087024,
+      "price_version": "deepseek-flash-2026-10-26-peak-cny"
+    },
+    {
+      "kind": "node_end",
+      "run_id": "93093dea-9d3d-4c13-9010-b667224f56df",
+      "node": "classify_scenario",
+      "duration_ms": 1133.8200999998662,
+      "status": "completed",
+      "error": null
+    },
+    {
+      "kind": "node_start",
+      "run_id": "93093dea-9d3d-4c13-9010-b667224f56df",
+      "node": "extract_fiu"
+    },
+    {
+      "kind": "provider",
+      "run_id": "93093dea-9d3d-4c13-9010-b667224f56df",
+      "node": "extract_fiu",
+      "provider": "openai_compatible",
+      "model": "deepseek-flash",
+      "operation": "structured_output",
+      "usage": {
+        "input_tokens": 858,
+        "output_tokens": 234,
+        "total_tokens": 1092,
+        "cache_hit_tokens": 640,
+        "cache_miss_tokens": 218
+      },
+      "ttft_ms": null,
+      "status": "completed",
+      "error": null,
+      "schema": "FactExtractionResult",
+      "duration_ms": 1788.1804000026023,
+      "cost_cny_upper_bound": 0.0023336,
+      "price_version": "deepseek-flash-2026-10-26-peak-cny"
+    },
+    {
+      "kind": "node_end",
+      "run_id": "93093dea-9d3d-4c13-9010-b667224f56df",
+      "node": "extract_fiu",
+      "duration_ms": 1789.3621000002895,
+      "status": "completed",
+      "error": null
+    },
+    {
+      "kind": "node_start",
+      "run_id": "93093dea-9d3d-4c13-9010-b667224f56df",
+      "node": "knowledge_router"
+    },
+    {
+      "kind": "node_end",
+      "run_id": "93093dea-9d3d-4c13-9010-b667224f56df",
+      "node": "knowledge_router",
+      "duration_ms": 0.3552999987732619,
+      "status": "completed",
+      "error": null
+    },
+    {
+      "kind": "node_start",
+      "run_id": "93093dea-9d3d-4c13-9010-b667224f56df",
+      "node": "load_references"
+    },
+    {
+      "kind": "node_end",
+      "run_id": "93093dea-9d3d-4c13-9010-b667224f56df",
+      "node": "load_references",
+      "duration_ms": 0.459999999293359,
+      "status": "completed",
+      "error": null
+    },
+    {
+      "kind": "node_start",
+      "run_id": "93093dea-9d3d-4c13-9010-b667224f56df",
+      "node": "relationship_analysis"
+    },
+    {
+      "kind": "provider",
+      "run_id": "93093dea-9d3d-4c13-9010-b667224f56df",
+      "node": "relationship_analysis",
+      "provider": "openai_compatible",
+      "model": "deepseek-flash",
+      "operation": "structured_output",
+      "usage": {
+        "input_tokens": 2973,
+        "output_tokens": 803,
+        "total_tokens": 3776,
+        "cache_hit_tokens": 1024,
+        "cache_miss_tokens": 1949
+      },
+      "ttft_ms": null,
+      "status": "completed",
+      "error": null,
+      "schema": "AnalysisResult",
+      "duration_ms": 4665.9564999972645,
+      "cost_cny_upper_bound": 0.01036296,
+      "price_version": "deepseek-flash-2026-10-26-peak-cny"
+    },
+    {
+      "kind": "node_end",
+      "run_id": "93093dea-9d3d-4c13-9010-b667224f56df",
+      "node": "relationship_analysis",
+      "duration_ms": 4666.944799999328,
+      "status": "completed",
+      "error": null
+    },
+    {
+      "kind": "node_start",
+      "run_id": "93093dea-9d3d-4c13-9010-b667224f56df",
+      "node": "action_planner"
+    },
+    {
+      "kind": "provider",
+      "run_id": "93093dea-9d3d-4c13-9010-b667224f56df",
+      "node": "action_planner",
+      "provider": "openai_compatible",
+      "model": "deepseek-flash",
+      "operation": "structured_output",
+      "usage": {
+        "input_tokens": 1530,
+        "output_tokens": 224,
+        "total_tokens": 1754,
+        "cache_hit_tokens": 384,
+        "cache_miss_tokens": 1146
+      },
+      "ttft_ms": null,
+      "status": "completed",
+      "error": null,
+      "schema": "ActionPlan",
+      "duration_ms": 2511.9521000015084,
+      "cost_cny_upper_bound": 0.00409936,
+      "price_version": "deepseek-flash-2026-10-26-peak-cny"
+    },
+    {
+      "kind": "node_end",
+      "run_id": "93093dea-9d3d-4c13-9010-b667224f56df",
+      "node": "action_planner",
+      "duration_ms": 2512.60430000184,
+      "status": "completed",
+      "error": null
+    },
+    {
+      "kind": "node_start",
+      "run_id": "93093dea-9d3d-4c13-9010-b667224f56df",
+      "node": "response_generator"
+    },
+    {
+      "kind": "provider",
+      "run_id": "93093dea-9d3d-4c13-9010-b667224f56df",
+      "node": "response_generator",
+      "provider": "openai_compatible",
+      "model": "deepseek-flash",
+      "operation": "structured_output",
+      "usage": {
+        "input_tokens": 1134,
+        "output_tokens": 165,
+        "total_tokens": 1299,
+        "cache_hit_tokens": 128,
+        "cache_miss_tokens": 1006
+      },
+      "ttft_ms": null,
+      "status": "completed",
+      "error": null,
+      "schema": "ResponseResult",
+      "duration_ms": 1723.0887999976403,
+      "cost_cny_upper_bound": 0.00333712,
+      "price_version": "deepseek-flash-2026-10-26-peak-cny"
+    },
+    {
+      "kind": "node_end",
+      "run_id": "93093dea-9d3d-4c13-9010-b667224f56df",
+      "node": "response_generator",
+      "duration_ms": 1723.4953000006499,
+      "status": "completed",
+      "error": null
+    },
+    {
+      "kind": "node_start",
+      "run_id": "93093dea-9d3d-4c13-9010-b667224f56df",
+      "node": "memory_intent_resolver"
+    },
+    {
+      "kind": "node_end",
+      "run_id": "93093dea-9d3d-4c13-9010-b667224f56df",
+      "node": "memory_intent_resolver",
+      "duration_ms": 0.02269999822601676,
+      "status": "completed",
+      "error": null
+    },
+    {
+      "kind": "node_start",
+      "run_id": "93093dea-9d3d-4c13-9010-b667224f56df",
+      "node": "memory_candidate_extractor"
+    },
+    {
+      "kind": "node_end",
+      "run_id": "93093dea-9d3d-4c13-9010-b667224f56df",
+      "node": "memory_candidate_extractor",
+      "duration_ms": 0.018700000509852543,
+      "status": "completed",
+      "error": null
+    },
+    {
+      "kind": "node_start",
+      "run_id": "93093dea-9d3d-4c13-9010-b667224f56df",
+      "node": "memory_persist"
+    },
+    {
+      "kind": "node_end",
+      "run_id": "93093dea-9d3d-4c13-9010-b667224f56df",
+      "node": "memory_persist",
+      "duration_ms": 0.01639999754843302,
+      "status": "completed",
+      "error": null
+    },
+    {
+      "kind": "outcome",
+      "run_id": "93093dea-9d3d-4c13-9010-b667224f56df",
+      "node": null,
+      "status": "completed"
+    },
+    {
+      "kind": "run_end",
+      "run_id": "93093dea-9d3d-4c13-9010-b667224f56df",
+      "node": null,
+      "duration_ms": 12788.732200002414
+    },
+    {
+      "kind": "run_start",
+      "run_id": "c9dd000a-79fd-40ff-9d54-9c07fb5c64aa",
+      "node": null,
+      "graph_version": "phase3h-observed-v1",
+      "prompt_version": "phase11-existing-guards-v2"
+    },
+    {
+      "kind": "node_start",
+      "run_id": "c9dd000a-79fd-40ff-9d54-9c07fb5c64aa",
+      "node": "normalize_input"
+    },
+    {
+      "kind": "node_end",
+      "run_id": "c9dd000a-79fd-40ff-9d54-9c07fb5c64aa",
+      "node": "normalize_input",
+      "duration_ms": 0.010200001270277426,
+      "status": "completed",
+      "error": null
+    },
+    {
+      "kind": "node_start",
+      "run_id": "c9dd000a-79fd-40ff-9d54-9c07fb5c64aa",
+      "node": "load_memory"
+    },
+    {
+      "kind": "node_end",
+      "run_id": "c9dd000a-79fd-40ff-9d54-9c07fb5c64aa",
+      "node": "load_memory",
+      "duration_ms": 0.015300000086426735,
+      "status": "completed",
+      "error": null
+    },
+    {
+      "kind": "node_start",
+      "run_id": "c9dd000a-79fd-40ff-9d54-9c07fb5c64aa",
+      "node": "safety_check"
+    },
+    {
+      "kind": "provider",
+      "run_id": "c9dd000a-79fd-40ff-9d54-9c07fb5c64aa",
+      "node": "safety_check",
+      "provider": "openai_compatible",
+      "model": "deepseek-flash",
+      "operation": "structured_output",
+      "usage": {
+        "input_tokens": 470,
+        "output_tokens": 32,
+        "total_tokens": 502,
+        "cache_hit_tokens": 256,
+        "cache_miss_tokens": 214
+      },
+      "ttft_ms": null,
+      "status": "completed",
+      "error": null,
+      "schema": "SafetyResult",
+      "duration_ms": 1030.0215000024764,
+      "cost_cny_upper_bound": 0.00069424,
+      "price_version": "deepseek-flash-2026-10-26-peak-cny"
+    },
+    {
+      "kind": "routing",
+      "run_id": "c9dd000a-79fd-40ff-9d54-9c07fb5c64aa",
+      "node": "safety_check",
+      "route": "ordinary"
+    },
+    {
+      "kind": "node_end",
+      "run_id": "c9dd000a-79fd-40ff-9d54-9c07fb5c64aa",
+      "node": "safety_check",
+      "duration_ms": 1030.5289999996603,
+      "status": "completed",
+      "error": null
+    },
+    {
+      "kind": "node_start",
+      "run_id": "c9dd000a-79fd-40ff-9d54-9c07fb5c64aa",
+      "node": "classify_scenario"
+    },
+    {
+      "kind": "provider",
+      "run_id": "c9dd000a-79fd-40ff-9d54-9c07fb5c64aa",
+      "node": "classify_scenario",
+      "provider": "openai_compatible",
+      "model": "deepseek-flash",
+      "operation": "structured_output",
+      "usage": {
+        "input_tokens": 477,
+        "output_tokens": 60,
+        "total_tokens": 537,
+        "cache_hit_tokens": 256,
+        "cache_miss_tokens": 221
+      },
+      "ttft_ms": null,
+      "status": "completed",
+      "error": null,
+      "schema": "ScenarioResult",
+      "duration_ms": 1186.8595000014466,
+      "cost_cny_upper_bound": 0.00093224,
+      "price_version": "deepseek-flash-2026-10-26-peak-cny"
+    },
+    {
+      "kind": "node_end",
+      "run_id": "c9dd000a-79fd-40ff-9d54-9c07fb5c64aa",
+      "node": "classify_scenario",
+      "duration_ms": 1187.4615999986418,
+      "status": "completed",
+      "error": null
+    },
+    {
+      "kind": "node_start",
+      "run_id": "c9dd000a-79fd-40ff-9d54-9c07fb5c64aa",
+      "node": "extract_fiu"
+    },
+    {
+      "kind": "provider",
+      "run_id": "c9dd000a-79fd-40ff-9d54-9c07fb5c64aa",
+      "node": "extract_fiu",
+      "provider": "openai_compatible",
+      "model": "deepseek-flash",
+      "operation": "structured_output",
+      "usage": {
+        "input_tokens": 857,
+        "output_tokens": 275,
+        "total_tokens": 1132,
+        "cache_hit_tokens": 640,
+        "cache_miss_tokens": 217
+      },
+      "ttft_ms": null,
+      "status": "completed",
+      "error": null,
+      "schema": "FactExtractionResult",
+      "duration_ms": 2145.3641000007337,
+      "cost_cny_upper_bound": 0.0026596,
+      "price_version": "deepseek-flash-2026-10-26-peak-cny"
+    },
+    {
+      "kind": "node_end",
+      "run_id": "c9dd000a-79fd-40ff-9d54-9c07fb5c64aa",
+      "node": "extract_fiu",
+      "duration_ms": 2146.6854000027524,
+      "status": "completed",
+      "error": null
+    },
+    {
+      "kind": "node_start",
+      "run_id": "c9dd000a-79fd-40ff-9d54-9c07fb5c64aa",
+      "node": "knowledge_router"
+    },
+    {
+      "kind": "node_end",
+      "run_id": "c9dd000a-79fd-40ff-9d54-9c07fb5c64aa",
+      "node": "knowledge_router",
+      "duration_ms": 0.36299999919719994,
+      "status": "completed",
+      "error": null
+    },
+    {
+      "kind": "node_start",
+      "run_id": "c9dd000a-79fd-40ff-9d54-9c07fb5c64aa",
+      "node": "load_references"
+    },
+    {
+      "kind": "node_end",
+      "run_id": "c9dd000a-79fd-40ff-9d54-9c07fb5c64aa",
+      "node": "load_references",
+      "duration_ms": 0.4842000016651582,
+      "status": "completed",
+      "error": null
+    },
+    {
+      "kind": "node_start",
+      "run_id": "c9dd000a-79fd-40ff-9d54-9c07fb5c64aa",
+      "node": "relationship_analysis"
+    },
+    {
+      "kind": "provider",
+      "run_id": "c9dd000a-79fd-40ff-9d54-9c07fb5c64aa",
+      "node": "relationship_analysis",
+      "provider": "openai_compatible",
+      "model": "deepseek-flash",
+      "operation": "structured_output",
+      "usage": {
+        "input_tokens": 3385,
+        "output_tokens": 1285,
+        "total_tokens": 4670,
+        "cache_hit_tokens": 1024,
+        "cache_miss_tokens": 2361
+      },
+      "ttft_ms": null,
+      "status": "failed",
+      "error": "llm_invalid_structured_output",
+      "schema": "AnalysisResult",
+      "schema_errors": [
+        "value_error"
+      ],
+      "duration_ms": 7817.539300001954,
+      "cost_cny_upper_bound": 0.01504296,
+      "price_version": "deepseek-flash-2026-10-26-peak-cny"
+    },
+    {
+      "kind": "node_end",
+      "run_id": "c9dd000a-79fd-40ff-9d54-9c07fb5c64aa",
+      "node": "relationship_analysis",
+      "duration_ms": 7818.467699999019,
+      "status": "failed",
+      "error": "llm_invalid_structured_output"
+    },
+    {
+      "kind": "outcome",
+      "run_id": "c9dd000a-79fd-40ff-9d54-9c07fb5c64aa",
+      "node": null,
+      "status": "failed"
+    },
+    {
+      "kind": "run_end",
+      "run_id": "c9dd000a-79fd-40ff-9d54-9c07fb5c64aa",
+      "node": null,
+      "duration_ms": 12189.496499999223
+    }
+  ],
+  "failure_summary": [
+    "communication-01",
+    "communication-02",
+    "communication-05"
+  ],
+  "model": "deepseek-flash",
+  "model_parameters": {
+    "max_tokens": 4096,
+    "thinking": "disabled",
+    "temperature": null
+  },
+  "budget": {
+    "requests": 18,
+    "reserved_tokens": 245666,
+    "reserved_cny": "0.933700",
+    "max_requests": 30,
+    "max_tokens": 500000,
+    "max_cost_cny": 5.0
+  },
+  "human_review": "PENDING; automated structure checks are not semantic quality scores",
+  "synthetic_visible_outputs": [
+    {
+      "content": "{\"risk_level\":\"normal\",\"risk_categories\":[],\"safety_route_required\":false,\"user_facing_note\":null}",
+      "model": "deepseek-flash",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 473,
+        "output_tokens": 29,
+        "total_tokens": 502,
+        "cache_hit_tokens": 256,
+        "cache_miss_tokens": 217
+      }
+    },
+    {
+      "content": "{\"primary\":\"invitation\",\"secondary\":\"reply\",\"confidence\":0.9,\"reason_summary\":\"用户询问在对方表示周六没空后，如何低压强地改约另一天，核心是发出下一次见面邀请的措辞。\"}",
+      "model": "deepseek-flash",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 480,
+        "output_tokens": 50,
+        "total_tokens": 530,
+        "cache_hit_tokens": 256,
+        "cache_miss_tokens": 224
+      }
+    },
+    {
+      "content": "{\"facts\": [{\"statement\": \"The user reports that \\\"she\\\" said she is not free on Saturday.\", \"source\": \"user_report_quote\", \"confidence\": null}, {\"statement\": \"The user is asking how to invite her out on another day in a low-pressure way.\", \"source\": \"user_self_report\", \"confidence\": null}], \"inferences\": [{\"statement\": \"The user may be interpreting her unavailability on Saturday as a possible sign of disinterest, which could make him anxious about the follow-up invitation.\", \"source\": \"current_user_message\", \"alternative\": \"The user may simply want practical wording advice and not be reading anything into her unavailability at all.\", \"confidence\": 0.3}, {\"statement\": \"Her stated lack of availability on Saturday may reflect a genuine schedule conflict rather than avoidance.\", \"source\": \"user_report_quote\", \"alternative\": \"She may be using a vague excuse to decline without stating disinterest directly.\", \"confidence\": 0.4}], \"unknowns\": [{\"statement\": \"Why she is not free on Saturday (genuine conflict, other plans, or reluctance) is unknown.\", \"source\": null}, {\"statement\": \"Whether she would accept an invitation on a different day or time is unknown.\", \"source\": null}, {\"statement\": \"Whether she offered any alternative day or expressed interest in rescheduling is unknown.\", \"source\": null}, {\"statement\": \"The nature and history of their relationship, and how long they have known each other, are unknown.\", \"source\": null}, {\"statement\": \"Her preference regarding activity type, timing, and communication style for invitations is unknown.\", \"source\": null}]}",
+      "model": "deepseek-flash",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 860,
+        "output_tokens": 349,
+        "total_tokens": 1209,
+        "cache_hit_tokens": 640,
+        "cache_miss_tokens": 220
+      }
+    },
+    {
+      "content": "{\n  \"core_issue\": \"用户想知道如何在对方表示周六没空后，以低压力方式邀请对方另一个时间。目前只有对方单次不可用的信息，不足以判断她是否愿意改期或对邀约的态度。\",\n  \"core_evidence_ids\": [\"F1\", \"F2\", \"I2\", \"U1\", \"U2\", \"U3\"],\n  \"core_reference_ids\": [\"first_date\"],\n  \"insufficient_evidence\": true,\n  \"observations\": [\n    {\n      \"statement\": \"用户报告对方说周六没空，这是目前唯一关于她时间安排的具体信息。\",\n      \"kind\": \"observed\",\n      \"dimension\": \"communication\",\n      \"evidence_ids\": [\"F1\"]\n    },\n    {\n      \"statement\": \"用户明确在询问如何低压力地改约另一天，表明他有意继续推进见面。\",\n      \"kind\": \"observed\",\n      \"dimension\": \"general\",\n      \"evidence_ids\": [\"F2\"]\n    },\n    {\n      \"statement\": \"对方周六没空可能只是真实的日程冲突，也可能是不想直接拒绝的委婉说法；现有信息无法区分两者。\",\n      \"kind\": \"tentative\",\n      \"dimension\": \"evidence_quality\",\n      \"evidence_ids\": [\"F1\", \"I2\", \"U1\"]\n    }\n  ],\n  \"relationship_dynamics\": [\n    {\n      \"statement\": \"一次“周六没空”本身不构成明确的拒绝，在没有其他负面信号时，可以视为对方暂时不可用而非终止邀约。\",\n      \"kind\": \"framework\",\n      \"dimension\": \"communication\",\n      \"evidence_ids\": [],\n      \"reference_ids\": [\"first_date\"]\n    },\n    {\n      \"statement\": \"参考材料建议在含糊回应后，可以换时间或换场景再提出一次具体邀请，但同一轮不连环追问；这一框架可用来理解低压力改约的一般思路，但不能证明对方一定会接受。\",\n      \"kind\": \"framework\",\n      \"dimension\": \"reciprocity\",\n      \"evidence_ids\": [],\n      \"reference_ids\": [\"first_date\"]\n    },\n    {\n      \"statement\": \"用户可能因对方周六没空而感到不确定或焦虑，但这只是推测，他也可能只是需要实用措辞。\",\n      \"kind\": \"tentative\",\n      \"dimension\": \"evidence_quality\",\n      \"evidence_ids\": [\"I1\", \"F2\"]\n    }\n  ],\n  \"risks\": [\n    {\n      \"statement\": \"如果对方其实是在委婉拒绝，而用户连续追问多个替代时间，可能增加对方压力或造成不适。\",\n      \"kind\": \"tentative\",\n      \"dimension\": \"boundary\",\n      \"evidence_ids\": [\"U1\", \"U3\"]\n    },\n    {\n      \"statement\": \"在没有确认对方是否愿意改期的情况下，把一次不可用当作明确兴趣信号，可能导致过度投入或误判。\",\n      \"kind\": \"tentative\",\n      \"dimension\": \"opportunity_cost\",\n      \"evidence_ids\": [\"U2\", \"U3\"]\n    }\n  ],\n  \"constraints\": [\n    {\n      \"statement\": \"目前不清楚对方是否主动提供了其他可用时间，也不清楚她是否表达过改期意愿，这限制了判断她真实态度的能力。\",\n      \"kind\": \"uncertainty\",\n      \"dimension\": \"communication\",\n      \"evidence_ids\": [\"U3\"]\n    },\n    {\n      \"statement\": \"双方关系历史、认识时长和对方对邀约方式的偏好均未知，无法据此调整建议的具体程度。\",\n      \"kind\": \"uncertainty\",\n      \"dimension\": \"evidence_quality\",\n      \"evidence_ids\": [\"U4\", \"U5\"]\n    }\n  ],\n  \"uncertainties\": [\n    {\n      \"statement\": \"对方周六没空的原因未知，可能是真实冲突、其他安排或回避，无法从现有信息推断。\",\n      \"kind\": \"uncertainty\",\n      \"dimension\": \"evidence_quality\",\n      \"evidence_ids\": [\"U1\"]\n    },\n    {\n      \"statement\": \"对方是否会接受另一个时间的邀请尚不清楚。\",\n      \"kind\": \"uncertainty\",\n      \"dimension\": \"reciprocity\",\n      \"evidence_ids\": [\"U2\"]\n    },\n    {\n      \"statement\": \"对方是否表示过愿意改期或主动提出替代时间，目前未知。\",\n      \"kind\": \"uncertainty\",\n      \"dimension\": \"communication\",\n      \"evidence_ids\": [\"U3\"]\n    }\n  ]\n}",
+      "model": "deepseek-flash",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 3472,
+        "output_tokens": 963,
+        "total_tokens": 4435,
+        "cache_hit_tokens": 1024,
+        "cache_miss_tokens": 2448
+      }
+    },
+    {
+      "content": "{\"risk_level\":\"normal\",\"risk_categories\":[],\"safety_route_required\":false,\"user_facing_note\":null}",
+      "model": "deepseek-flash",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 472,
+        "output_tokens": 29,
+        "total_tokens": 501,
+        "cache_hit_tokens": 256,
+        "cache_miss_tokens": 216
+      }
+    },
+    {
+      "content": "{\"primary\": \"flirt\", \"secondary\": \"invitation\", \"confidence\": 0.9, \"reason_summary\": \"The user asks how to express romantic interest (好感) to someone they met two weeks ago, which is a flirtation/attraction expression task that may involve inviting further contact.\"}",
+      "model": "deepseek-flash",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 479,
+        "output_tokens": 65,
+        "total_tokens": 544,
+        "cache_hit_tokens": 256,
+        "cache_miss_tokens": 223
+      }
+    },
+    {
+      "content": "{\"facts\": [{\"statement\": \"用户想对一位认识两周的人表达好感。\", \"source\": \"user_self_report\", \"confidence\": 1.0}, {\"statement\": \"用户询问如何表达好感（措辞/方式）。\", \"source\": \"user_self_report\", \"confidence\": 1.0}], \"inferences\": [{\"statement\": \"用户可能担心表达方式不当或拿捏不好分寸，因此寻求具体说法。\", \"source\": \"user_self_report\", \"alternative\": \"用户可能只是想要通用模板，并非出于不安。\", \"confidence\": 0.4}], \"unknowns\": [{\"statement\": \"对方的性别、性取向与对用户的态度未知。\", \"source\": null}, {\"statement\": \"双方认识的具体途径和互动频率未知。\", \"source\": null}, {\"statement\": \"用户期望的关系进展程度与可接受的风险未知。\", \"source\": null}, {\"statement\": \"对方是否已有伴侣或明确的情感边界未知。\", \"source\": null}]}",
+      "model": "deepseek-flash",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 859,
+        "output_tokens": 218,
+        "total_tokens": 1077,
+        "cache_hit_tokens": 640,
+        "cache_miss_tokens": 219
+      }
+    },
+    {
+      "content": "{\"core_issue\": \"用户想对认识两周的人表达好感，但素材仅支持“想表达好感”这一诉求本身；双方关系状态、对方态度与可接受风险均未知，无法据此判断表达方式是否合适或关系会如何发展。\", \"core_evidence_ids\": [\"F1\", \"F2\", \"U1\", \"U2\", \"U3\", \"U4\"], \"core_reference_ids\": [\"flirt\"], \"insufficient_evidence\": true, \"observations\": [{\"statement\": \"用户明确提出想对认识两周的人表达好感，这是本次分析的唯一明确诉求。\", \"kind\": \"observed\", \"dimension\": \"general\", \"evidence_ids\": [\"F1\", \"F2\"]}, {\"statement\": \"相识时间仅为两周，属于初识阶段，双方互动深度与互惠程度在素材中没有记录。\", \"kind\": \"observed\", \"dimension\": \"evidence_quality\", \"evidence_ids\": [\"F1\", \"U2\"]}, {\"statement\": \"用户寻求具体措辞，可能反映对分寸把握的不确定；也可能只是想要通用表达模板，两种解释都未被证实。\", \"kind\": \"tentative\", \"dimension\": \"communication\", \"evidence_ids\": [\"I1\", \"F2\"]}, {\"statement\": \"参考框架建议按信息成本与亲密度分级推进，表达好感属于轻度明确欣赏层级，但该框架是一般经验，不能证明本例应采取何种强度。\", \"kind\": \"framework\", \"dimension\": \"general\", \"reference_ids\": [\"flirt\"]}], \"relationship_dynamics\": [{\"statement\": \"互惠情况无法评估：素材未包含对方是否主动延展话题、是否回应或提供新互动机会等可观察信号。\", \"kind\": \"uncertainty\", \"dimension\": \"reciprocity\", \"evidence_ids\": [\"U1\", \"U2\"]}, {\"statement\": \"参考框架强调从趋势和现实投入判断反馈，而非单次回复；本例缺少可用的互动记录，无法做趋势判断。\", \"kind\": \"framework\", \"dimension\": \"consistency\", \"reference_ids\": [\"flirt\"]}, {\"statement\": \"对方是否已有伴侣或存在明确情感边界未知，这是影响表达好感是否合适的现实约束。\", \"kind\": \"uncertainty\", \"dimension\": \"boundary\", \"evidence_ids\": [\"U4\"]}], \"risks\": [{\"statement\": \"在缺少对方反馈信息的情况下，仅凭“认识两周”预测关系走向或对方感受，属于证据不足的推断。\", \"kind\": \"uncertainty\", \"dimension\": \"evidence_quality\", \"evidence_ids\": [\"U1\", \"U2\"]}, {\"statement\": \"参考框架提示单个表情或一次秒回不构成承诺证据；本例尚无任何此类信号可依赖，过早赋予强含义会有误读风险。\", \"kind\": \"framework\", \"dimension\": \"evidence_quality\", \"reference_ids\": [\"flirt\"]}, {\"statement\": \"用户对期望进展程度与可接受风险未说明，表达的边界与对方可能的接受度无法对齐评估。\", \"kind\": \"uncertainty\", \"dimension\": \"opportunity_cost\", \"evidence_ids\": [\"U3\"]}], \"constraints\": [{\"statement\": \"互动频率与认识途径未知，任何关于投入程度或可约性的判断都缺乏依据。\", \"kind\": \"uncertainty\", \"dimension\": \"reality_constraint\", \"evidence_ids\": [\"U2\"]}, {\"statement\": \"参考框架要求对性别、性取向和非单偶关系使用同一套“具体的人＋当下反馈”校准，不作性别预设；本例对方身份信息缺失。\", \"kind\": \"framework\", \"dimension\": \"personality_caution\", \"reference_ids\": [\"flirt\"]}], \"uncertainties\": [{\"statement\": \"对方对用户的态度完全未知，既无可观察的好感信号，也无拒绝信号。\", \"kind\": \"uncertainty\", \"dimension\": \"evidence_quality\", \"evidence_ids\": [\"U1\"]}, {\"statement\": \"用户期望的关系进展程度未知，这决定表达好感可承担的分寸。\", \"kind\": \"uncertainty\", \"dimension\": \"general\", \"evidence_ids\": [\"U3\"]}, {\"statement\": \"双方认识途径与互动频率未知，无法判断当前关系处于何种阶段。\", \"kind\": \"uncertainty\", \"dimension\": \"consistency\", \"evidence_ids\": [\"U2\"]}]}",
+      "model": "deepseek-flash",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 3666,
+        "output_tokens": 959,
+        "total_tokens": 4625,
+        "cache_hit_tokens": 1024,
+        "cache_miss_tokens": 2642
+      }
+    },
+    {
+      "content": "{\"risk_level\": \"normal\", \"risk_categories\": [], \"safety_route_required\": false, \"user_facing_note\": null}",
+      "model": "deepseek-flash",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 471,
+        "output_tokens": 32,
+        "total_tokens": 503,
+        "cache_hit_tokens": 256,
+        "cache_miss_tokens": 215
+      }
+    },
+    {
+      "content": "{\"primary\": \"household\", \"secondary\": \"conflict\", \"confidence\": 0.95, \"reason_summary\": \"User asks how to start communicating after an argument about household chore distribution, so primary is household with conflict as secondary.\"}",
+      "model": "deepseek-flash",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 478,
+        "output_tokens": 52,
+        "total_tokens": 530,
+        "cache_hit_tokens": 256,
+        "cache_miss_tokens": 222
+      }
+    },
+    {
+      "content": "{\"facts\": [{\"statement\": \"用户说他们因家务分配而吵架。\", \"source\": \"user_report\", \"confidence\": 1.0}, {\"statement\": \"用户询问如何开始沟通。\", \"source\": \"user_report\", \"confidence\": 1.0}], \"inferences\": [{\"statement\": \"用户可能希望在吵架后修复关系或解决家务分工问题，因此寻求沟通的开场方式。\", \"source\": \"user_report\", \"alternative\": \"用户可能只是想要一个通用沟通技巧，不一定与这次吵架的修复直接相关。\", \"confidence\": 0.6}], \"unknowns\": [{\"statement\": \"吵架的具体经过、双方说了什么、持续多久，未提供。\", \"source\": null}, {\"statement\": \"家务分配目前的具体安排及双方不满的具体点，未提供。\", \"source\": null}, {\"statement\": \"双方目前的情绪状态以及是否愿意沟通，未提供。\", \"source\": null}, {\"statement\": \"用户希望达成的沟通目标（道歉、重新分工、表达感受等），未明确。\", \"source\": null}]}",
+      "model": "deepseek-flash",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 858,
+        "output_tokens": 234,
+        "total_tokens": 1092,
+        "cache_hit_tokens": 640,
+        "cache_miss_tokens": 218
+      }
+    },
+    {
+      "content": "{\"core_issue\": \"用户报告因家务分配发生争吵，并询问如何开始沟通；现有材料只能确认这两个事实，尚不足以判断争吵的结构、双方情绪与沟通意愿。\", \"core_evidence_ids\": [\"F1\", \"F2\", \"I1\"], \"core_reference_ids\": [\"money\"], \"insufficient_evidence\": true, \"observations\": [{\"statement\": \"已确认的事实是：争吵围绕家务分配，且用户提出的是“如何开始沟通”这一问题。\", \"kind\": \"observed\", \"dimension\": \"general\", \"evidence_ids\": [\"F1\", \"F2\"]}, {\"statement\": \"用户可能希望吵架后修复关系或重新协商分工，但也可能只是想获得通用沟通技巧；这一动机尚未确认。\", \"kind\": \"tentative\", \"dimension\": \"communication\", \"evidence_ids\": [\"I1\", \"F2\"]}, {\"statement\": \"参考框架指出家务包含执行、认知、情绪与责任四类劳动，“叫我做我才做”会把计划与提醒的负担继续留给一方；这可用于理解分工争议的可能维度，但不代表本案例的具体情况。\", \"kind\": \"framework\", \"dimension\": \"general\", \"reference_ids\": [\"money\"]}], \"relationship_dynamics\": [{\"statement\": \"家务争议常涉及公平与责任两条主线，公平也可按平等、比例或需要三种含义切换；本案实际采用哪种标准、双方是否认同，均未提供。\", \"kind\": \"framework\", \"dimension\": \"reciprocity\", \"reference_ids\": [\"money\"]}, {\"statement\": \"由于不清楚争吵中双方各自的表达与反应，无法判断这是单次摩擦还是重复出现的互动模式。\", \"kind\": \"uncertainty\", \"dimension\": \"consistency\", \"evidence_ids\": [\"U1\"]}], \"risks\": [{\"statement\": \"在家务分工的具体安排与不满点未知时，任何对“谁更不公平”的判断都缺乏依据，容易把推测当成事实。\", \"kind\": \"uncertainty\", \"dimension\": \"evidence_quality\", \"evidence_ids\": [\"U2\"]}, {\"statement\": \"双方当前情绪状态与沟通意愿未知，沟通是否可行、何时可行不能由现有材料推断。\", \"kind\": \"uncertainty\", \"dimension\": \"boundary\", \"evidence_ids\": [\"U3\"]}, {\"statement\": \"若把家务争议简单归因于某一方的性格或性别角色，会超出材料支持范围；现有证据不包含人格或性格信息。\", \"kind\": \"framework\", \"dimension\": \"personality_caution\", \"reference_ids\": [\"money\"]}], \"constraints\": [{\"statement\": \"争吵的具体经过与持续时间未知，这限制了对冲突强度和遗留情绪的判断。\", \"kind\": \"uncertainty\", \"dimension\": \"reality_constraint\", \"evidence_ids\": [\"U1\"]}, {\"statement\": \"用户未明确希望达成的沟通目标（道歉、重新分工或表达感受等），目标不同会改变沟通的实质内容。\", \"kind\": \"uncertainty\", \"dimension\": \"communication\", \"evidence_ids\": [\"U4\"]}], \"uncertainties\": [{\"statement\": \"家务目前的实际分配方式及双方各自不满的具体点仍未知。\", \"kind\": \"uncertainty\", \"dimension\": \"general\", \"evidence_ids\": [\"U2\"]}, {\"statement\": \"双方当前的情绪状态和是否愿意沟通仍未知。\", \"kind\": \"uncertainty\", \"dimension\": \"general\", \"evidence_ids\": [\"U3\"]}, {\"statement\": \"用户期望通过沟通达成的具体目标仍不明确。\", \"kind\": \"uncertainty\", \"dimension\": \"general\", \"evidence_ids\": [\"U4\"]}]}",
+      "model": "deepseek-flash",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 2973,
+        "output_tokens": 803,
+        "total_tokens": 3776,
+        "cache_hit_tokens": 1024,
+        "cache_miss_tokens": 1949
+      }
+    },
+    {
+      "content": "{\"contact_policy\":\"reply\",\"recommended_action\":\"先确认双方现在是否都适合谈，选一个情绪平稳的时刻，用平和、不带指责的方式说一句开场：说明你想一起把家务分工聊清楚，并先询问对方现在的感受和方便的时间。开场前想清楚自己这次主要想表达什么（感受、重新分工或具体请求之一），避免一开始就追责或翻旧账。\",\"supporting_analysis_ids\":[\"A1\",\"A2\",\"A7\",\"A10\",\"A11\"],\"message_suggestion\":\"刚才为家务吵架，我心里不太舒服，也想把这件事理顺。你现在方便聊几句吗？我想先听听你的想法，再说说我的，看看我们怎么分工更合适。\",\"observation_window\":null,\"stop_conditions\":[\"对方明确表示不想沟通或需要更多时间时，先尊重并暂停，不反复追问\",\"对话出现人身攻击、羞辱或情绪明显失控时，先停下来，等双方冷静后再谈\",\"对方提出你无法接受的边界或条件时，不施压，明确回应后再决定是否继续\"]}",
+      "model": "deepseek-flash",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 1530,
+        "output_tokens": 224,
+        "total_tokens": 1754,
+        "cache_hit_tokens": 384,
+        "cache_miss_tokens": 1146
+      }
+    },
+    {
+      "content": "{\"final_answer\": \"刚才为家务吵架，我心里不太舒服，也想把这件事理顺。你现在方便聊几句吗？我想先听听你的想法，再说说我的，看看我们怎么分工更合适。\\n\\n开场前可以注意：先确认对方现在是否适合谈，选情绪平稳的时刻；想清楚这次主要想表达什么（感受、重新分工或具体请求，选其一），避免一开始就追责或翻旧账。\\n\\n如果对方明确表示不想沟通或需要时间，先尊重并暂停，不反复追问；如果对话出现人身攻击、羞辱或情绪明显失控，先停下来，等双方冷静后再谈；如果对方提出你无法接受的边界或条件，不施压，明确回应后再决定是否继续。\", \"contact_policy\": \"reply\"}",
+      "model": "deepseek-flash",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 1134,
+        "output_tokens": 165,
+        "total_tokens": 1299,
+        "cache_hit_tokens": 128,
+        "cache_miss_tokens": 1006
+      }
+    },
+    {
+      "content": "{\"risk_level\": \"normal\", \"risk_categories\": [], \"safety_route_required\": false, \"user_facing_note\": null}",
+      "model": "deepseek-flash",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 470,
+        "output_tokens": 32,
+        "total_tokens": 502,
+        "cache_hit_tokens": 256,
+        "cache_miss_tokens": 214
+      }
+    },
+    {
+      "content": "{\"primary\": \"invitation\", \"secondary\": \"reply\", \"confidence\": 0.62, \"reason_summary\": \"用户询问约会结束后如何发一句自然的感谢，涉及约会后续联系与措辞，主要与约会/邀约相关，次要涉及回复话术。\"}",
+      "model": "deepseek-flash",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 477,
+        "output_tokens": 60,
+        "total_tokens": 537,
+        "cache_hit_tokens": 256,
+        "cache_miss_tokens": 221
+      }
+    },
+    {
+      "content": "{\"facts\": [{\"statement\": \"用户说约会已经结束。\", \"source\": \"user_report\", \"confidence\": 1.0}, {\"statement\": \"用户询问约会结束后如何发一句自然的感谢。\", \"source\": \"user_report\", \"confidence\": 1.0}], \"inferences\": [{\"statement\": \"用户可能希望在约会后维持或推进与对方的联系。\", \"source\": \"user_report\", \"alternative\": \"用户可能只是出于礼貌习惯，想表达基本礼节而不涉及进一步发展关系。\", \"confidence\": 0.5}, {\"statement\": \"用户可能不确定如何在感谢信息中把握自然与热情的尺度。\", \"source\": \"user_report\", \"alternative\": \"用户可能已想好内容，只是想确认措辞是否得体。\", \"confidence\": 0.4}], \"unknowns\": [{\"statement\": \"约会对象的身份、与用户的熟悉程度及关系阶段未知。\", \"source\": null}, {\"statement\": \"约会的内容、氛围和双方互动情况未知。\", \"source\": null}, {\"statement\": \"用户希望这条信息达到的具体目的（礼貌收尾、约下一次、表达好感等）未知。\", \"source\": null}, {\"statement\": \"用户与约会对象此前的沟通风格和常用渠道未知。\", \"source\": null}]}",
+      "model": "deepseek-flash",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 857,
+        "output_tokens": 275,
+        "total_tokens": 1132,
+        "cache_hit_tokens": 640,
+        "cache_miss_tokens": 217
+      }
+    },
+    {
+      "content": "{\n  \"core_issue\": \"约会已经结束（F1），用户想发一句自然的感谢（F2），但这条信息想达到什么目的、对方是谁、约会体验如何都还没有说明，因此只能讨论可观察的措辞边界，不能判断关系走向。\",\n  \"core_evidence_ids\": [\"F1\", \"F2\", \"I1\", \"I2\", \"U3\"],\n  \"core_reference_ids\": [\"first_date\"],\n  \"insufficient_evidence\": true,\n  \"observations\": [\n    {\n      \"statement\": \"目前只有两个明确事实：约会已结束，用户想发一句自然的感谢；这两点都来自用户自述，没有第三方或对话记录佐证。\",\n      \"kind\": \"observed\",\n      \"dimension\": \"evidence_quality\",\n      \"evidence_ids\": [\"F1\", \"F2\"]\n    },\n    {\n      \"statement\": \"用户希望在约会后以一句自然的话表达感谢，这个请求本身聚焦在措辞的自然度上，而不是关系定性或对方心理。\",\n      \"kind\": \"observed\",\n      \"dimension\": \"communication\",\n      \"evidence_ids\": [\"F1\", \"F2\"]\n    },\n    {\n      \"statement\": \"用户可能想借感谢维持或推进联系，也可能只是完成基本礼节；两种解读都有一定合理性，现有材料不足以区分。\",\n      \"kind\": \"tentative\",\n      \"dimension\": \"general\",\n      \"evidence_ids\": [\"I1\", \"F2\"]\n    },\n    {\n      \"statement\": \"用户可能不确定如何把握感谢信息里自然与热情的尺度，也可能只是措辞确认；这属于 tentative 推断而非已确认的困扰。\",\n      \"kind\": \"tentative\",\n      \"dimension\": \"communication\",\n      \"evidence_ids\": [\"I2\", \"F2\"]\n    }\n  ],\n  \"relationship_dynamics\": [\n    {\n      \"statement\": \"参考框架把约会后表达真实感受、并在确实想继续时较快提出具体邀请视为常规主动档位；但这只是经验性校准，不能证明对方期待收到信息或会如何回应。\",\n      \"kind\": \"framework\",\n      \"dimension\": \"reciprocity\",\n      \"reference_ids\": [\"first_date\"]\n    },\n    {\n      \"statement\": \"双方是否处在互惠节奏中无法判断：约会中的互动、对方反馈以及此前的沟通频率都未提供，不能从“约会结束”推出对方愿意继续联系。\",\n      \"kind\": \"tentative\",\n      \"dimension\": \"reciprocity\",\n      \"evidence_ids\": [\"F1\", \"U1\", \"U2\"]\n    },\n    {\n      \"statement\": \"参考材料提示自然的感谢可以落在具体细节上，而不是泛泛客套；但用户尚未提供任何约会细节，因此无法判断哪些内容对这段关系是真实且得体的。\",\n      \"kind\": \"framework\",\n      \"dimension\": \"communication\",\n      \"reference_ids\": [\"first_date\"]\n    }\n  ],\n  \"risks\": [\n    {\n      \"statement\": \"把一条感谢信息当成关系走向的信号容易过度解读：单条信息、一次约会都不足以诊断对方感受或双方契合度。\",\n      \"kind\": \"tentative\",\n      \"dimension\": \"evidence_quality\",\n      \"evidence_ids\": [\"F1\", \"F2\", \"U2\"]\n    },\n    {\n      \"statement\": \"在目的未知的情况下，若把“自然感谢”默认成表达好感或邀约下一次，可能与用户真实意图不符；参考框架强调只表达真实感受，不虚构评价。\",\n      \"kind\": \"framework\",\n      \"dimension\": \"personality_caution\",\n      \"reference_ids\": [\"first_date\"]\n    },\n    {\n      \"statement\": \"若对方此前已有明确拒绝或不适表达，则感谢信息也应尊重该边界；当前材料未显示存在此类信号，但也不能排除。\",\n      \"kind\": \"tentative\",\n      \"dimension\": \"boundary\",\n      \"evidence_ids\": [\"U1\", \"U2\"]\n    }\n  ],\n  \"constraints\": [\n    {\n      \"statement\": \"约会对象的身份、熟悉程度与关系阶段未知，因此无法判断感谢信息的亲密程度、称呼方式或渠道是否合适。\",\n      \"kind\": \"uncertainty\",\n      \"dimension\": \"reality_constraint\",\n      \"evidence_ids\": [\"U1\"]\n    },\n    {\n      \"statement\": \"约会内容、氛围与双方互动情况未知，无法判断哪些细节适合在感谢中提及，也无法判断当晚表达是否已被对方接住。\",\n      \"kind\": \"uncertainty\",\n      \"dimension\": \"reality_constraint\",\n      \"evidence_ids\": [\"U2\"]\n    },\n    {\n      \"statement\": \"用户希望这条信息达到的目的未知，礼貌收尾、约下一次、表达好感对应的措辞边界不同，缺少这一信息时任何具体句子都只是猜测。\",\n      \"kind\": \"uncertainty\",\n      \"dimension\": \"communication\",\n      \"evidence_ids\": [\"U3\"]\n    }\n  ],\n  \"uncertainties\": [\n    {\n      \"statement\": \"双方此前常用的沟通渠道和风格未知，无法判断文字、语音或当面表达哪种更自然，也无法判断回复速度是否构成互惠信号。\",\n      \"kind\": \"uncertainty\",\n      \"dimension\": \"consistency\",\n      \"evidence_ids\": [\"U4\"]\n    },\n    {\n      \"statement\": \"对方对这次约会的实际感受与后续意愿完全未知，任何关于“对方会不会喜欢这条信息”的判断都没有依据。\",\n      \"kind\": \"uncertainty\",\n      \"dimension\": \"reciprocity\",\n      \"evidence_ids\": [\"U2\", \"U3\"]\n    },\n    {\n      \"statement\": \"用户自身是出于礼节还是想推进关系尚未确认，这一不确定性直接影响“自然”的尺度如何被理解。\",\n      \"kind\": \"uncertainty\",\n      \"dimension\": \"evidence_quality\",\n      \"evidence_ids\": [\"U3\", \"I1\"]\n    }\n  ]\n}",
+      "model": "deepseek-flash",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 3385,
+        "output_tokens": 1285,
+        "total_tokens": 4670,
+        "cache_hit_tokens": 1024,
+        "cache_miss_tokens": 2361
+      }
+    }
+  ]
+}

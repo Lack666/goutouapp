@@ -15,7 +15,15 @@ is not permanent refusal. Reject manipulation, deceit, pressure and control.
 Use a concise, natural message_suggestion only when reply/invitation is
 appropriate; never fabricate an excuse or absolute promise. For observation
 or pause, give a bounded observation_window. Give concrete stop_conditions.
-Do not reveal hidden chain-of-thought or output prose beyond the schema."""
+Do not reveal hidden chain-of-thought or output prose beyond the schema.
+Internal A/F/I/U IDs must appear ONLY in supporting_analysis_ids, never inside
+recommended_action, message_suggestion, observation_window or stop_conditions.
+Use only supplied A IDs. contact_policy=reply or invite requires a nonempty
+message_suggestion; observe, pause and stop_contact require it to be null.
+observe requires an observation_window. observe, pause and stop_contact require
+stop_conditions. A reply scenario requires reply unless it is a boundary route.
+Keep prose in the user's language. Describe the positive safe action directly;
+do not include hypothetical harmful tactics or internal implementation details."""
 
 
 def input_payload(state: AgentState) -> str:

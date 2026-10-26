@@ -27,6 +27,13 @@ class Settings(BaseSettings):
     llm_base_url: SecretStr | None = None
     llm_model: str | None = None
     llm_timeout_seconds: float = Field(default=30.0, gt=0, le=300)
+    llm_max_output_tokens: int | None = Field(default=None, ge=1, le=32768)
+    llm_temperature: float | None = Field(default=None, ge=0, le=2)
+    llm_thinking: Literal["enabled", "disabled"] | None = None
+    eval_live_opt_in: bool = False
+    eval_max_requests: int = Field(default=30, ge=1, le=1000)
+    eval_max_tokens: int = Field(default=500000, ge=1, le=10000000)
+    eval_max_cost_cny: float = Field(default=5.0, gt=0, le=100)
     auth_jwt_secret: SecretStr | None = None
     auth_jwt_issuer: str = "goutouapp"
     auth_jwt_audience: str = "goutouapp-api"

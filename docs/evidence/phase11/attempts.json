@@ -1,0 +1,347 @@
+{
+  "recorded_attempts": [
+    {
+      "artifact": "evals/agent/results/final-live-communication.json",
+      "time": "2026-10-26T06:26:07.336554+00:00",
+      "admitted_requests": 18,
+      "provider_events": 18,
+      "budget": {
+        "requests": 18,
+        "reserved_tokens": 249426,
+        "reserved_cny": "0.941220",
+        "max_requests": 30,
+        "max_tokens": 500000,
+        "max_cost_cny": 5.0
+      },
+      "known_cost_cny_peak_upper": 0.07224776,
+      "unknown_cost_calls": 0,
+      "failures": [
+        "communication-02",
+        "communication-04",
+        "communication-05"
+      ],
+      "purpose": "dataset"
+    },
+    {
+      "artifact": "evals/agent/results/final-live-e2e.json",
+      "time": "2026-10-26T06:31:17.008619+00:00",
+      "admitted_requests": 13,
+      "provider_events": 13,
+      "budget": {
+        "requests": 13,
+        "reserved_tokens": 174401,
+        "reserved_cny": "0.668290",
+        "max_requests": 30,
+        "max_tokens": 500000,
+        "max_cost_cny": 5.0
+      },
+      "known_cost_cny_peak_upper": 0.04357176,
+      "unknown_cost_calls": 0,
+      "failures": [],
+      "purpose": "e2e"
+    },
+    {
+      "artifact": "evals/agent/results/final-live-grounding.json",
+      "time": "2026-10-26T06:26:26.172669+00:00",
+      "admitted_requests": 20,
+      "provider_events": 20,
+      "budget": {
+        "requests": 20,
+        "reserved_tokens": 267308,
+        "reserved_cny": "1.026136",
+        "max_requests": 30,
+        "max_tokens": 500000,
+        "max_cost_cny": 5.0
+      },
+      "known_cost_cny_peak_upper": 0.07368024,
+      "unknown_cost_calls": 0,
+      "failures": [
+        "grounding-01",
+        "grounding-07"
+      ],
+      "purpose": "dataset"
+    },
+    {
+      "artifact": "evals/agent/results/final-live-repeat.json",
+      "time": "2026-10-26T06:31:03.463717+00:00",
+      "admitted_requests": 14,
+      "provider_events": 14,
+      "budget": {
+        "requests": 14,
+        "reserved_tokens": 184454,
+        "reserved_cny": "0.712972",
+        "max_requests": 30,
+        "max_tokens": 500000,
+        "max_cost_cny": 5.0
+      },
+      "known_cost_cny_peak_upper": 0.04464088,
+      "unknown_cost_calls": 0,
+      "failures": [],
+      "purpose": "dataset"
+    },
+    {
+      "artifact": "evals/agent/results/final-live-safety.json",
+      "time": "2026-10-26T06:25:28.136741+00:00",
+      "admitted_requests": 12,
+      "provider_events": 12,
+      "budget": {
+        "requests": 12,
+        "reserved_tokens": 123084,
+        "reserved_cny": "0.541080",
+        "max_requests": 30,
+        "max_tokens": 500000,
+        "max_cost_cny": 5.0
+      },
+      "known_cost_cny_peak_upper": 0.01186088,
+      "unknown_cost_calls": 0,
+      "failures": [],
+      "purpose": "dataset"
+    },
+    {
+      "artifact": "evals/agent/results/final-live-smoke.json",
+      "time": "2026-10-26T06:31:19.182487+00:00",
+      "admitted_requests": 3,
+      "provider_events": 3,
+      "budget": {
+        "requests": 3,
+        "reserved_tokens": 25541,
+        "reserved_cny": "0.12481",
+        "max_requests": 30,
+        "max_tokens": 500000,
+        "max_cost_cny": 5.0
+      },
+      "known_cost_cny_peak_upper": 0.000898,
+      "unknown_cost_calls": 0,
+      "failures": [],
+      "purpose": "smoke"
+    },
+    {
+      "artifact": "evals/agent/results/live-communication-01.json",
+      "time": "2026-10-26T06:16:12.507278+00:00",
+      "admitted_requests": 17,
+      "provider_events": 17,
+      "budget": {
+        "requests": 17,
+        "reserved_tokens": 232229,
+        "reserved_cny": "0.882250",
+        "max_requests": 30,
+        "max_tokens": 500000,
+        "max_cost_cny": 5.0
+      },
+      "known_cost_cny_peak_upper": 0.08139904,
+      "unknown_cost_calls": 0,
+      "failures": [
+        "communication-01",
+        "communication-02",
+        "communication-04",
+        "communication-05"
+      ],
+      "purpose": "dataset"
+    },
+    {
+      "artifact": "evals/agent/results/live-communication-02.json",
+      "time": "2026-10-26T06:20:48.312820+00:00",
+      "admitted_requests": 18,
+      "provider_events": 18,
+      "budget": {
+        "requests": 18,
+        "reserved_tokens": 245666,
+        "reserved_cny": "0.933700",
+        "max_requests": 30,
+        "max_tokens": 500000,
+        "max_cost_cny": 5.0
+      },
+      "known_cost_cny_peak_upper": 0.07531664,
+      "unknown_cost_calls": 0,
+      "failures": [
+        "communication-01",
+        "communication-02",
+        "communication-05"
+      ],
+      "purpose": "dataset"
+    },
+    {
+      "artifact": "evals/agent/results/live-diagnosis-01.json",
+      "time": "2026-10-26T06:18:33.725585+00:00",
+      "admitted_requests": 9,
+      "provider_events": 9,
+      "budget": {
+        "requests": 9,
+        "reserved_tokens": 122973,
+        "reserved_cny": "0.467130",
+        "max_requests": 30,
+        "max_tokens": 500000,
+        "max_cost_cny": 5.0
+      },
+      "known_cost_cny_peak_upper": 0.0407392,
+      "unknown_cost_calls": 0,
+      "failures": [
+        "communication-01",
+        "grounding-01"
+      ],
+      "purpose": "dataset"
+    },
+    {
+      "artifact": "evals/agent/results/live-e2e-03.json",
+      "time": "2026-10-26T06:13:33.842796+00:00",
+      "admitted_requests": 10,
+      "provider_events": 10,
+      "budget": {
+        "requests": 10,
+        "reserved_tokens": 132029,
+        "reserved_cny": "0.509818",
+        "max_requests": 30,
+        "max_tokens": 500000,
+        "max_cost_cny": 5.0
+      },
+      "known_cost_cny_peak_upper": 0.04341216,
+      "unknown_cost_calls": 0,
+      "failures": [],
+      "purpose": "e2e"
+    },
+    {
+      "artifact": "evals/agent/results/live-e2e-04.json",
+      "time": "2026-10-26T06:20:19.304756+00:00",
+      "admitted_requests": 13,
+      "provider_events": 13,
+      "budget": {
+        "requests": 13,
+        "reserved_tokens": 175887,
+        "reserved_cny": "0.671262",
+        "max_requests": 30,
+        "max_tokens": 500000,
+        "max_cost_cny": 5.0
+      },
+      "known_cost_cny_peak_upper": 0.04881408,
+      "unknown_cost_calls": 0,
+      "failures": [],
+      "purpose": "e2e"
+    },
+    {
+      "artifact": "evals/agent/results/live-grounding-01.json",
+      "time": "2026-10-26T06:16:28.485609+00:00",
+      "admitted_requests": 20,
+      "provider_events": 20,
+      "budget": {
+        "requests": 20,
+        "reserved_tokens": 265972,
+        "reserved_cny": "1.023464",
+        "max_requests": 30,
+        "max_tokens": 500000,
+        "max_cost_cny": 5.0
+      },
+      "known_cost_cny_peak_upper": 0.08362528,
+      "unknown_cost_calls": 0,
+      "failures": [
+        "grounding-01",
+        "grounding-03",
+        "grounding-07",
+        "grounding-12"
+      ],
+      "purpose": "dataset"
+    },
+    {
+      "artifact": "evals/agent/results/live-safety-01.json",
+      "time": "2026-10-26T06:15:24.856306+00:00",
+      "admitted_requests": 12,
+      "provider_events": 12,
+      "budget": {
+        "requests": 12,
+        "reserved_tokens": 123084,
+        "reserved_cny": "0.541080",
+        "max_requests": 30,
+        "max_tokens": 500000,
+        "max_cost_cny": 5.0
+      },
+      "known_cost_cny_peak_upper": 0.01167688,
+      "unknown_cost_calls": 0,
+      "failures": [],
+      "purpose": "dataset"
+    },
+    {
+      "artifact": "evals/agent/results/live-smoke-01.json",
+      "time": "2026-10-26T06:07:27.075142+00:00",
+      "admitted_requests": 3,
+      "provider_events": 3,
+      "budget": {
+        "requests": 3,
+        "reserved_tokens": 25541,
+        "reserved_cny": "0.12481",
+        "max_requests": 30,
+        "max_tokens": 500000,
+        "max_cost_cny": 5.0
+      },
+      "known_cost_cny_peak_upper": 0,
+      "unknown_cost_calls": 3,
+      "failures": [],
+      "purpose": "smoke"
+    },
+    {
+      "artifact": "evals/agent/results/live-smoke-03.json",
+      "time": "2026-10-26T06:08:31.871570+00:00",
+      "admitted_requests": 3,
+      "provider_events": 3,
+      "budget": {
+        "requests": 3,
+        "reserved_tokens": 25541,
+        "reserved_cny": "0.12481",
+        "max_requests": 30,
+        "max_tokens": 500000,
+        "max_cost_cny": 5.0
+      },
+      "known_cost_cny_peak_upper": 0.000802,
+      "unknown_cost_calls": 0,
+      "failures": [],
+      "purpose": "smoke"
+    }
+  ],
+  "recorded_request_count": 185,
+  "known_cost_cny_peak_upper": 0.6326848,
+  "unknown_recorded_cost_calls": 3,
+  "additional_unrecorded_attempts": [
+    {
+      "name": "live-smoke-02",
+      "requests_attempted": 3,
+      "outcome": "UNKNOWN",
+      "usage": null,
+      "cost_cny": null,
+      "reason": "API operations preceded save; git dubious ownership rejected metadata save. Process exit1. Never claimed PASS."
+    },
+    {
+      "name": "live-e2e-01",
+      "requests_attempted": 0,
+      "outcome": "ABORTED",
+      "reason": "PostgreSQL unavailable; interrupted while establishing disposable database."
+    },
+    {
+      "name": "live-e2e-02",
+      "requests_attempted": 0,
+      "outcome": "FAILED",
+      "reason": "Existing native PostgreSQL did not have the Compose goutou_dev role; failed before graph/provider."
+    }
+  ],
+  "development_invoice_total_cny": null,
+  "offline_development_failures": [
+    {
+      "check": "initial provider/runtime suite",
+      "result": "1 failed,49 passed",
+      "reason": "Previous client-close test fixture omitted required stop terminal frame."
+    },
+    {
+      "check": "second provider/runtime suite",
+      "result": "1 failed,59 passed",
+      "reason": "Updated terminal frame also emits empty content chunk; fixture expectation corrected."
+    },
+    {
+      "check": "database preflight",
+      "result": "environment errors",
+      "reason": "Stopped unavailable DB connections, corrected native role and workspace pytest basetemp. No failed run labeled PASS."
+    }
+  ],
+  "final_targeted_tests": {
+    "passed": 338,
+    "failed": 0,
+    "exit": 0,
+    "duration_seconds": 20.33
+  }
+}

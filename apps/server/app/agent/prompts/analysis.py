@@ -33,7 +33,17 @@ is thin, set insufficient_evidence=true and state what remains unknown.
 
 The core issue and every analysis point must be traceable to supplied IDs.
 Never invent a case fact, alter FIU, claim a source was complete when marked
-truncated, or output prose outside the required structured schema."""
+truncated, or output prose outside the required structured schema.
+
+The schema has additional source constraints: an observed point requires F IDs
+only and no reference_ids; a tentative point requires at least one F or I ID;
+an uncertainty point requires at least one U ID; a framework point requires
+at least one reference alias. If a point cannot meet its kind's constraint,
+omit it rather than inventing a source. Cite only IDs present in the payload.
+Include at least one point, and at least one reference citation overall.
+When case evidence exists, at least one point must cite it. Keep each list
+within six entries. Keep all prose in the user's language; IDs belong in
+their structured fields, not prose statements."""
 
 
 def input_payload(state: AgentState) -> str:

@@ -1,0 +1,271 @@
+{
+  "eval_run_id": "8827f26d-9e85-4a6b-abd8-71eef8d68b73",
+  "time": "2026-10-26T06:31:19.182487+00:00",
+  "mode": "live",
+  "git_commit": "8023df375c4328a3945374441e63eac3e841d254",
+  "source_fingerprint": "c9f202002e6e6bde5a326158f2e37a5841362cebfce36e84aabd26fb74bcb30a",
+  "source_fingerprint_start": "c9f202002e6e6bde5a326158f2e37a5841362cebfce36e84aabd26fb74bcb30a",
+  "source_stable": true,
+  "dataset_version": "agent-v1",
+  "dataset_sha256": "ac36e1e1be40528053f4e3beeb1c1dc0881e9918cc8dadf367149612778badbc",
+  "graph_version": "phase3h-observed-v1",
+  "prompt_version": "phase11-existing-guards-v2",
+  "evaluator_version": "behavior-structural-v1",
+  "price_version": "deepseek-flash-2026-10-26-peak-cny",
+  "price_source": "https://api-docs.deepseek.com/zh-cn/quick_start/pricing/",
+  "metrics": {
+    "mode": "smoke",
+    "results": {
+      "chat": {
+        "status": "completed",
+        "result": {
+          "content": "你好🙂",
+          "model": "deepseek-flash",
+          "finish_reason": "stop",
+          "usage": {
+            "input_tokens": 10,
+            "output_tokens": 3,
+            "total_tokens": 13,
+            "cache_hit_tokens": 0,
+            "cache_miss_tokens": 10
+          }
+        }
+      },
+      "stream": {
+        "status": "completed",
+        "chunks": [
+          {
+            "content": "",
+            "model": "deepseek-flash",
+            "finish_reason": null,
+            "usage": null
+          },
+          {
+            "content": "明白",
+            "model": "deepseek-flash",
+            "finish_reason": null,
+            "usage": null
+          },
+          {
+            "content": " 🙂",
+            "model": "deepseek-flash",
+            "finish_reason": null,
+            "usage": null
+          },
+          {
+            "content": " ",
+            "model": "deepseek-flash",
+            "finish_reason": null,
+            "usage": null
+          },
+          {
+            "content": "请",
+            "model": "deepseek-flash",
+            "finish_reason": null,
+            "usage": null
+          },
+          {
+            "content": "告诉我",
+            "model": "deepseek-flash",
+            "finish_reason": null,
+            "usage": null
+          },
+          {
+            "content": "您",
+            "model": "deepseek-flash",
+            "finish_reason": null,
+            "usage": null
+          },
+          {
+            "content": "需要",
+            "model": "deepseek-flash",
+            "finish_reason": null,
+            "usage": null
+          },
+          {
+            "content": "我",
+            "model": "deepseek-flash",
+            "finish_reason": null,
+            "usage": null
+          },
+          {
+            "content": "做什么",
+            "model": "deepseek-flash",
+            "finish_reason": null,
+            "usage": null
+          },
+          {
+            "content": "，",
+            "model": "deepseek-flash",
+            "finish_reason": null,
+            "usage": null
+          },
+          {
+            "content": "我会",
+            "model": "deepseek-flash",
+            "finish_reason": null,
+            "usage": null
+          },
+          {
+            "content": "用",
+            "model": "deepseek-flash",
+            "finish_reason": null,
+            "usage": null
+          },
+          {
+            "content": "中文",
+            "model": "deepseek-flash",
+            "finish_reason": null,
+            "usage": null
+          },
+          {
+            "content": "回复",
+            "model": "deepseek-flash",
+            "finish_reason": null,
+            "usage": null
+          },
+          {
+            "content": "。",
+            "model": "deepseek-flash",
+            "finish_reason": null,
+            "usage": null
+          },
+          {
+            "content": "",
+            "model": "deepseek-flash",
+            "finish_reason": "stop",
+            "usage": {
+              "input_tokens": 10,
+              "output_tokens": 15,
+              "total_tokens": 25,
+              "cache_hit_tokens": 0,
+              "cache_miss_tokens": 10
+            }
+          }
+        ]
+      },
+      "structured_output": {
+        "status": "completed",
+        "result": {
+          "risk_level": "normal",
+          "risk_categories": [],
+          "safety_route_required": false,
+          "user_facing_note": null
+        }
+      }
+    }
+  },
+  "cases": [],
+  "traces": [
+    {
+      "kind": "provider",
+      "time": "2026-10-26T06:31:17.569967+00:00",
+      "run_id": null,
+      "node": null,
+      "provider": "openai_compatible",
+      "model": "deepseek-flash",
+      "operation": "chat",
+      "usage": {
+        "input_tokens": 10,
+        "output_tokens": 3,
+        "total_tokens": 13,
+        "cache_hit_tokens": 0,
+        "cache_miss_tokens": 10
+      },
+      "ttft_ms": null,
+      "status": "completed",
+      "error": null,
+      "duration_ms": 594.2565000004834,
+      "cost_cny_upper_bound": 4.4e-05,
+      "price_version": "deepseek-flash-2026-10-26-peak-cny"
+    },
+    {
+      "kind": "provider",
+      "time": "2026-10-26T06:31:18.488234+00:00",
+      "run_id": null,
+      "node": null,
+      "provider": "openai_compatible",
+      "model": "deepseek-flash",
+      "operation": "stream",
+      "usage": {
+        "input_tokens": 10,
+        "output_tokens": 15,
+        "total_tokens": 25,
+        "cache_hit_tokens": 0,
+        "cache_miss_tokens": 10
+      },
+      "ttft_ms": 706.1041999986628,
+      "status": "completed",
+      "error": null,
+      "duration_ms": 918.1906999983767,
+      "cost_cny_upper_bound": 0.00014,
+      "price_version": "deepseek-flash-2026-10-26-peak-cny"
+    },
+    {
+      "kind": "provider",
+      "time": "2026-10-26T06:31:19.181547+00:00",
+      "run_id": null,
+      "node": null,
+      "provider": "openai_compatible",
+      "model": "deepseek-flash",
+      "operation": "structured_output",
+      "usage": {
+        "input_tokens": 229,
+        "output_tokens": 32,
+        "total_tokens": 261,
+        "cache_hit_tokens": 0,
+        "cache_miss_tokens": 229
+      },
+      "ttft_ms": null,
+      "status": "completed",
+      "error": null,
+      "schema": "SafetyResult",
+      "duration_ms": 692.4507000003359,
+      "cost_cny_upper_bound": 0.000714,
+      "price_version": "deepseek-flash-2026-10-26-peak-cny"
+    }
+  ],
+  "failure_summary": [],
+  "provider": "deepseek/openai_compatible",
+  "model": "deepseek-flash",
+  "model_parameters": {
+    "max_tokens": 4096,
+    "thinking": "disabled",
+    "temperature": null
+  },
+  "budget": {
+    "requests": 3,
+    "reserved_tokens": 25541,
+    "reserved_cny": "0.12481",
+    "max_requests": 30,
+    "max_tokens": 500000,
+    "max_cost_cny": 5.0
+  },
+  "human_review": "PENDING; automated structure checks are not semantic quality scores",
+  "synthetic_visible_outputs": [
+    {
+      "content": "你好🙂",
+      "model": "deepseek-flash",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 10,
+        "output_tokens": 3,
+        "total_tokens": 13,
+        "cache_hit_tokens": 0,
+        "cache_miss_tokens": 10
+      }
+    },
+    {
+      "content": "{\"risk_level\": \"normal\", \"risk_categories\": [], \"safety_route_required\": false, \"user_facing_note\": null}",
+      "model": "deepseek-flash",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 229,
+        "output_tokens": 32,
+        "total_tokens": 261,
+        "cache_hit_tokens": 0,
+        "cache_miss_tokens": 229
+      }
+    }
+  ]
+}

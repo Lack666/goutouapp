@@ -647,3 +647,25 @@ Owned Data and run recovery. Owner is terminal locally, not a production identit
 closure. Quarantined synthetic restore reconciles current primary authority before
 release. See ADR0043. Fixed RN/Expo, FastAPI/PostgreSQL and standalone LangGraph
 architecture is unchanged; no new infrastructure, dependencies or semantic nodes.
+
+## Phase11 evaluation and observability (2026-10-26)
+
+Explicit user authorization defers optional Phase10 while preserving its requirements.
+Official engineering marker remains9/9H; Phase11 function/quality acceptance and
+final regression are separate. No production or Phase12 approval is inferred.
+
+Existing LangGraph wrappers now emit bounded, content-free context-local node,
+route and outcome diagnostics. AgentService separately observes durable commit
+outcomes. Provider operations expose usage even for structured validation failures,
+stream TTFT, latency, safe error categories and versioned conservative cost estimates.
+The compatible adapter sends formal JSON Schema instructions and enforces complete
+output/stream termination without relaxing project validators. Separate analysis,
+action and response prompts now explicitly describe existing provenance/copy rules.
+
+`evals/agent` supplies60 synthetic cases, deterministic Mock evaluation, opt-in bounded
+DeepSeek evaluation, real signed FastAPI/PostgreSQL REST/SSE checks and hash-bound
+human review packets. No new transport endpoint, table, semantic graph node, imported
+analysis, RAG, dependency or Mobile change. Application diagnostics never store
+private text or hidden reasoning. Synthetic visible outputs are separate evaluation
+evidence. See AGENT_EVAL_SPEC, AGENT_OBSERVABILITY, PROVIDER_COMPATIBILITY and
+PHASE_11_ACCEPTANCE. Functional tooling does not imply the live quality gate passes.
