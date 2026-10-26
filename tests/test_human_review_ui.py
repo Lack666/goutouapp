@@ -181,3 +181,29 @@ def test_real_packet_is_not_modified_by_fixture_scoring(store):
     before = hashlib.sha256(path.read_bytes()).hexdigest()
     store.save(payload(store))
     assert hashlib.sha256(path.read_bytes()).hexdigest() == before
+
+
+def test_separate_packet_pins_evidence_and_isolates_scores_and_progress(store):
+    original = store.packet_path.read_bytes()
+    packet = ui.read_json(store.packet_path)
+    packet["sources"] = [
+        {
+            "path": f"evals/agent/results/final-live-{group}.json",
+            "sha256": hashlib.sha256(
+                (store.packet_path.parent / f"final-live-{group}.json").read_bytes()
+            ).hexdigest(),
+        }
+        for group in ("safety", "communication", "grounding")
+    ]
+    path = store.packet_path.with_name("synthetic-separate-review.json")
+    ui.atomic_write(path, ui.encoded(packet))
+    separate = ui.ReviewStore(store.root, packet_path=path)
+    assert separate.progress != store.progress and separate.report_path != store.report_path
+    assert separate.public()["completed"] == 0
+    assert "final-live-" in separate.public()["items"][0]["source"]
+    separate.save(payload(separate))
+    assert store.packet_path.read_bytes() == original and not store.progress.exists()
+    packet["sources"][0]["sha256"] = "0" * 64
+    ui.atomic_write(path, ui.encoded(packet))
+    with pytest.raises(ValueError, match="hash changed"):
+        ui.ReviewStore(store.root, packet_path=path)

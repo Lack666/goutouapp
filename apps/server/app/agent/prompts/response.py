@@ -18,7 +18,11 @@ Keep the answer in the user's language. Include message_suggestion verbatim
 when present; otherwise include recommended_action verbatim. For observe/pause,
 do not add a new outreach suggestion. Keep internal evidence/analysis IDs in
 structured fields only, never in final_answer. Describe the safe next step
-directly rather than repeating hypothetical harmful tactics."""
+directly rather than repeating hypothetical harmful tactics. Explain stop
+conditions in neutral protective language, e.g. "任一方表示不适或交流不再安全时，结束对话",
+without enumerating harmful tactics. For unsupported certainty, explain the
+evidence gap without quoting the user's categorical assertion, e.g.
+"仅凭回复间隔无法判断感情状态"."""
 
 
 def input_payload(state: AgentState) -> str:

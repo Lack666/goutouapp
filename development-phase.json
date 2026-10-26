@@ -12,7 +12,8 @@
     "status": "IN PROGRESS / QUALITY GATE FAIL / FINAL REGRESSION PENDING",
     "tooling": "IMPLEMENTED",
     "quality_acceptance": "FAIL",
-    "human_reviews": "NOT RUN (0/15)",
+    "human_reviews": "Original v2: actual human review 15/15. New v5 outputs: 0/15, PENDING",
+    "reliability_followup": "docs/PHASE_11_STRUCTURED_RELIABILITY.md",
     "formal_pass": false
   },
   "phase_12": "PENDING",

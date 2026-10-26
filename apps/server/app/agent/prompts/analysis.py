@@ -45,6 +45,28 @@ When case evidence exists, at least one point must cite it. Keep each list
 within six entries. Keep all prose in the user's language; IDs belong in
 their structured fields, not prose statements."""
 
+SYSTEM += """
+
+Construct each point SOURCE FIRST, then choose its list (risks, constraints,
+etc.). The list name does not determine kind. In particular a risk based only
+on missing information is kind='uncertainty', NOT 'tentative'. For example,
+{"statement":"对方是否愿意继续接触尚不明确", "kind":"uncertainty",
+ "dimension":"boundary", "evidence_ids":["U1"], "reference_ids":[]}
+is valid only when U1 is the supplied unknown about willingness. Putting that
+point in risks does not change its kind. A reference alias does not turn U IDs
+into F/I evidence. Never add an unrelated F/I ID to satisfy validation.
+Use tentative only when an actual supplied F/I supports the interpretation;
+use framework for a general reference claim, not a claim about this person.
+Check these source requirements on EVERY point, including risks, before
+returning JSON. Keep the analysis concise; do not fill every list artificially.
+
+For unsupported certainty, explain the evidence gap in neutral terms rather
+than quoting or repeating the user's categorical assertion. For example use
+"仅凭回复间隔无法判断感情状态". This applies to core_issue as well as points.
+Keep the actual fact and its F ID, and explain the inference's uncertainty;
+do not endorse the categorical assertion or lose the distinction between them.
+"""
+
 
 def input_payload(state: AgentState) -> str:
     """Keep user evidence and source material in separate untrusted JSON fields."""

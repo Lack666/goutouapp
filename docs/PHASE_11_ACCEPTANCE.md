@@ -1,5 +1,11 @@
 # Phase 11 — Agent Evaluation & Observability
 
+Follow-up 2026-10-26: see [structured reliability report](PHASE_11_STRUCTURED_RELIABILITY.md).
+Original human review is now15/15. New v5 original failures complete5/5, but expanded
+regression completes3/5, with another completed case failing a behavior assertion.
+Current quality remains FAIL; new review packet pending. The original results and
+the acceptance snapshot below are retained; they are not relabeled or overwritten.
+
 PHASE: Phase11 — Agent Evaluation & Observability. Date2026-10-26.
 
 STATUS: **BLOCKED on quality acceptance and real human review.** Evaluation and

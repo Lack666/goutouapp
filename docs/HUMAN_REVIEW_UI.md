@@ -1,5 +1,19 @@
 # Phase11 本地人工评审界面
 
+结构化可靠性修复后的独立评分包使用新端口和独立进度，不覆盖你已完成的旧15题：
+
+```powershell
+uv --cache-dir .cache/uv --no-managed-python run --locked python scripts/human_review_ui.py --packet evals/agent/results/reliability-fix-v5-human-review-15.json --port 8766 --open
+```
+
+新包的六项分数全部留空。10个普通案例（含扩展回归的失败）来自v5实测；
+5个安全案例沿用原v2输出，
+每题显示原始证据文件与提示版本，不将它们记为新的v5实测。新JSON的sources字段
+绑定证据路径和SHA256；加载时验证，证据变化会拒绝继续。草稿另存
+`.cache/human-review-ui-reliability-fix-v5-human-review-15/progress.json`。
+完成后只更新新评分包并生成同名前缀的`-summary.md`，旧页面8765、旧JSON及人工
+意见不受影响。人工复核不能自动宣告Phase11 PASS。
+
 该工具只读取已有评测结果，不导入 Provider、不读 api.txt、不调用 DeepSeek。
 不修改 Dataset、Agent、运行状态、模型输出、评分规则、历史自动评测或 Phase Marker。
 
@@ -60,4 +74,5 @@ node tests/human_review_ui.browser.cjs
 测试只在 `.cache` 下的临时副本写入明确标注的合成评分，从未向真实评分包代填。
 浏览器测试复用仓库已安装的 Playwright 和系统 Chrome，可用已有
 PLAYWRIGHT_CHROME_PATH 指定浏览器，不安装依赖。Ruff及格式检查通过。
-未请求模型、未运行全项目测试。正式人工评分仍等待用户实际填写。
+界面验证未请求模型、未运行全项目测试。原15题现已由用户实际完成；修复后的
+独立评分包仍需重新填写，不能将旧分数复制到新输出。

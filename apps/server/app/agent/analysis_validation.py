@@ -21,6 +21,29 @@ BOUNDARY_BYPASS_CUES = (
 )
 
 
+def has_unsupported_certainty(statement: str) -> bool:
+    """A rejected user quotation is not the Agent asserting a private motive."""
+    for sentence in re.split(r"(?<=[。！？\n])", statement):
+        attributed = re.search(r"^用户[^。！？\n]{0,100}(?:推断|等同)", sentence)
+        rejected = re.search(
+            r"(?:证据不足以支持|无法支撑|无法支持)[^。！？\n]{0,30}"
+            r"(?:结论|判断|推断)[。！？\n]?$",
+            sentence,
+        )
+        quotes = list(re.finditer(r"“[^“”\n]{1,80}”", sentence))
+        for pattern in UNSUPPORTED_CERTAINTY_CUES:
+            for match in pattern.finditer(sentence):
+                # Only the known cross-quote false positive is exempted. A full
+                # assertion inside quotes, or another assertion outside, still fails.
+                cross_quote = any(
+                    match.start() < quote.start() < match.end() <= quote.end() - 1
+                    for quote in quotes
+                )
+                if not (attributed and rejected and cross_quote):
+                    return True
+    return False
+
+
 def evidence_ids(state: AgentState) -> set[str]:
     return {
         *(f"F{index}" for index, _ in enumerate(state["facts"], 1)),
@@ -70,8 +93,8 @@ def validate_analysis(result: AnalysisResult, state: AgentState) -> None:
     ):
         raise AgentStructuredOutputError() from None
     for statement in (result.core_issue, *(point.statement for point in points)):
-        if any(
-            pattern.search(statement) for pattern in (*ACTION_CUES, *UNSUPPORTED_CERTAINTY_CUES)
+        if any(pattern.search(statement) for pattern in ACTION_CUES) or has_unsupported_certainty(
+            statement
         ):
             raise AgentStructuredOutputError() from None
         if state["route"] == Route.BOUNDARY and any(

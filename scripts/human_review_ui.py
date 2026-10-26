@@ -45,20 +45,46 @@ def atomic_write(path, data):
 
 
 class ReviewStore:
-    def __init__(self, root=ROOT, progress=None):
+    def __init__(self, root=ROOT, progress=None, packet_path=None):
         self.root = Path(root)
-        self.packet_path = self.root / "evals/agent/results/human-review-15.json"
-        self.progress = progress or self.root / ".cache/human-review-ui/progress.json"
-        self.report_path = self.packet_path.with_name("human-review-summary.md")
+        results = self.root / "evals/agent/results"
+        default_packet = results / "human-review-15.json"
+        self.packet_path = Path(packet_path) if packet_path else default_packet
+        if not self.packet_path.is_absolute():
+            self.packet_path = self.root / self.packet_path
+        if not self.packet_path.resolve().is_relative_to(results.resolve()):
+            raise ValueError("Review packets must stay in evals/agent/results")
+        original = self.packet_path.resolve() == default_packet.resolve()
+        cache = "human-review-ui" if original else f"human-review-ui-{self.packet_path.stem}"
+        self.progress = progress or self.root / ".cache" / cache / "progress.json"
+        self.report_path = self.packet_path.with_name(
+            "human-review-summary.md" if original else f"{self.packet_path.stem}-summary.md"
+        )
         self.lock = threading.Lock()
         self.packet_hash = hashlib.sha256(self.packet_path.read_bytes()).hexdigest()
         packet = read_json(self.packet_path)
         if packet["dimensions"] != ANCHORS:
             raise ValueError("评分锚点与原始规则不一致，请先检查评分包。")
         self.rows = {}
-        for group in ("safety", "communication", "grounding"):
-            run = read_json(self.packet_path.with_name(f"final-live-{group}.json"))
+        self.provenance = {}
+        sources = packet.get("sources") or [
+            {"path": f"evals/agent/results/final-live-{group}.json"}
+            for group in ("safety", "communication", "grounding")
+        ]
+        for source in sources:
+            path = self.root / source["path"]
+            if not path.resolve().is_relative_to(results.resolve()):
+                raise ValueError("Review evidence must stay in evals/agent/results")
+            if (
+                source.get("sha256")
+                and hashlib.sha256(path.read_bytes()).hexdigest() != source["sha256"]
+            ):
+                raise ValueError("Review evidence hash changed")
+            run = read_json(path)
             self.rows.update({r["id"]: r for r in run["cases"]})
+            self.provenance.update(
+                {r["id"]: f"{path.name} · {run['prompt_version']}" for r in run["cases"]}
+            )
         self.questions = {
             c["id"]: c["input"]
             for c in (
@@ -119,6 +145,7 @@ class ReviewStore:
                 {
                     "case_id": item["case_id"],
                     "question": self.questions[item["case_id"]],
+                    "source": self.provenance[item["case_id"]],
                     "status": result["status"],
                     "error_code": result.get("code"),
                     "failure_message": result.get("message"),
@@ -239,7 +266,7 @@ class ReviewStore:
             "已由人工填写 15/15 题；未使用 automated_proxy 代填。",
             f"按现有标准（均分≥4 且所有单项≥3）可接受：{acceptable}/15。",
             "此报告不更改原始运行状态、模型输出、自动评测或 Phase Marker。",
-            "原有 20 例运行完成率 75%、结构有效率 92% 仍低于质量门槛。",
+            "每题按其绑定的证据版本评分；此人工评审不自动更改 Phase11 质量门槛结论。",
             "",
             "## 六项均分",
             "",
@@ -254,6 +281,7 @@ class ReviewStore:
                     "",
                     f"## {item['case_id']}",
                     "",
+                    f"证据来源：{self.provenance[item['case_id']]}。",
                     f"运行状态：{item['result']['status']}；"
                     f"错误：{item['result'].get('code') or '无'}。",
                     f"评审人：{item['reviewer']}；时间（UTC）：{item['reviewed_at']}。",
@@ -339,9 +367,10 @@ def make_server(store, port=8765):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--port", type=int, default=8765)
+    parser.add_argument("--packet", type=Path, help="Separate hash-bound review packet")
     parser.add_argument("--open", action="store_true")
     args = parser.parse_args()
-    server = make_server(ReviewStore(), args.port)
+    server = make_server(ReviewStore(packet_path=args.packet), args.port)
     url = f"http://127.0.0.1:{server.server_port}/"
     print(f"Human review: {url}", flush=True)
     if args.open:

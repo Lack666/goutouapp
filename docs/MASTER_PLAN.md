@@ -933,3 +933,8 @@ Stop after9E; further Phase9 scope requires explicit instruction.
 ## Phase 11 authorization (2026-10-26)
 
 User explicitly defers optional Phase10 RAG and authorizes Phase11 only. Phase10 requirements above remain intact and may resume if evaluation evidence supports retrieval. This prospective exception permits optional-stage deferral, never safety-gate bypass. Official marker remains9/9H. Phase11 uses focused tests, targeted signed PostgreSQL E2E and opt-in bounded live evaluation. Full root verification is deferred to final closeout. Function completion and quality acceptance are recorded separately in PHASE_11_ACCEPTANCE; neither advances the official marker. Historical0–9 evidence remains immutable. Stop before Phase12.
+
+Reliability follow-up: original five structured-output failures complete5/5 with
+v5; expanded ordinary cases complete3/5 and retain additional quality defects.
+Quality remains FAIL; see PHASE_11_STRUCTURED_RELIABILITY for preserved attempts,
+bounded costs and the separate blank human review packet. No roadmap advance.

@@ -23,7 +23,10 @@ message_suggestion; observe, pause and stop_contact require it to be null.
 observe requires an observation_window. observe, pause and stop_contact require
 stop_conditions. A reply scenario requires reply unless it is a boundary route.
 Keep prose in the user's language. Describe the positive safe action directly;
-do not include hypothetical harmful tactics or internal implementation details."""
+do not include hypothetical harmful tactics or internal implementation details.
+Use neutral, protective language for stop_conditions too, for example
+"任一方表示不适或交流不再安全时，结束对话". Describe the exit condition without
+enumerating harmful tactics; the response must be able to repeat it safely."""
 
 
 def input_payload(state: AgentState) -> str:

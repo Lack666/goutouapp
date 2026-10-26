@@ -62,7 +62,7 @@ function render(){
  $("caseTitle").textContent=(index+1)+" / 15 · "+item.case_id;
  $("submitted").textContent=d.submitted?"已提交 · "+d.reviewer+" · "+new Date(d.reviewed_at).toLocaleString():"草稿 / 尚未提交";
  $("question").textContent=item.question;
- $("runStatus").textContent="运行状态："+item.status+(item.error_code?" · "+item.error_code:"");
+ $("runStatus").textContent="运行状态："+item.status+(item.error_code?" · "+item.error_code:"")+"\n证据来源："+item.source;
  $("answerPanel").className="panel"+(item.status==="completed"?"":" failure");
  $("answer").textContent=item.status==="completed"?item.answer:"本次运行失败，没有成功的 Agent 回答。\n记录中的失败提示："+(item.failure_message||"无")+"\n未将中间输出或自动评分内容当作回答。";
  $("caseList").replaceChildren();state.items.forEach((c,i)=>{const b=document.createElement("button");b.textContent=i+1;b.title=c.case_id+(c.draft.submitted?"（已提交）":"（未提交）");b.className=(i===index?"current ":"")+(c.draft.submitted?"done":"");b.onclick=()=>navigate(i);$("caseList").append(b)});

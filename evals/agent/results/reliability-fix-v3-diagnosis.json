@@ -1,0 +1,303 @@
+[
+  {
+    "case_id": "communication-02",
+    "run_id": "eae07f2a-47f9-4594-a80d-efc78c9bcfbe",
+    "source": "evals/agent/results/final-live-communication.json",
+    "source_sha256": "ddc97d7b2aff0c9497b0394334f51c92bfb0b6c4db1c9d49dcc7872dee23c863",
+    "node": "relationship_analysis",
+    "provider_trace": {
+      "kind": "provider",
+      "time": "2026-10-26T06:25:49.084340+00:00",
+      "run_id": "eae07f2a-47f9-4594-a80d-efc78c9bcfbe",
+      "node": "relationship_analysis",
+      "provider": "openai_compatible",
+      "model": "deepseek-flash",
+      "operation": "structured_output",
+      "usage": {
+        "input_tokens": 3749,
+        "output_tokens": 833,
+        "total_tokens": 4582,
+        "cache_hit_tokens": 1024,
+        "cache_miss_tokens": 2725
+      },
+      "ttft_ms": null,
+      "status": "failed",
+      "error": "llm_invalid_structured_output",
+      "schema": "AnalysisResult",
+      "schema_errors": [
+        "value_error"
+      ],
+      "duration_ms": 4620.706300000165,
+      "cost_cny_upper_bound": 0.01215496,
+      "price_version": "deepseek-flash-2026-10-26-peak-cny"
+    },
+    "finish_reason": "stop",
+    "usage": {
+      "input_tokens": 3749,
+      "output_tokens": 833,
+      "total_tokens": 4582,
+      "cache_hit_tokens": 1024,
+      "cache_miss_tokens": 2725
+    },
+    "max_output_tokens": 4096,
+    "visible_output_sha256": "d2025176d5cb348a14abe341988bf75e7b1f17b254462bf2352ba4e9bf527418",
+    "pydantic_errors": [
+      {
+        "type": "value_error",
+        "loc": [
+          "risks",
+          0
+        ],
+        "msg": "Value error, tentative interpretation requires case evidence",
+        "input": {
+          "statement": "在对方态度与关系性质未知时，若把表达好感当作必然会被接受的动作，可能忽略对方已有的边界或投入程度。",
+          "kind": "tentative",
+          "dimension": "boundary",
+          "evidence_ids": [
+            "U2",
+            "U4"
+          ]
+        }
+      }
+    ],
+    "guard_matches": []
+  },
+  {
+    "case_id": "communication-04",
+    "run_id": "a2a2f4cd-2c0b-4373-9107-a8c1b9c79ed3",
+    "source": "evals/agent/results/final-live-communication.json",
+    "source_sha256": "ddc97d7b2aff0c9497b0394334f51c92bfb0b6c4db1c9d49dcc7872dee23c863",
+    "node": "relationship_analysis",
+    "provider_trace": {
+      "kind": "provider",
+      "time": "2026-10-26T06:25:57.998190+00:00",
+      "run_id": "a2a2f4cd-2c0b-4373-9107-a8c1b9c79ed3",
+      "node": "relationship_analysis",
+      "provider": "openai_compatible",
+      "model": "deepseek-flash",
+      "operation": "structured_output",
+      "usage": {
+        "input_tokens": 2902,
+        "output_tokens": 708,
+        "total_tokens": 3610,
+        "cache_hit_tokens": 1024,
+        "cache_miss_tokens": 1878
+      },
+      "ttft_ms": null,
+      "status": "failed",
+      "error": "llm_invalid_structured_output",
+      "schema": "AnalysisResult",
+      "schema_errors": [
+        "value_error"
+      ],
+      "duration_ms": 4967.287799998303,
+      "cost_cny_upper_bound": 0.00946096,
+      "price_version": "deepseek-flash-2026-10-26-peak-cny"
+    },
+    "finish_reason": "stop",
+    "usage": {
+      "input_tokens": 2902,
+      "output_tokens": 708,
+      "total_tokens": 3610,
+      "cache_hit_tokens": 1024,
+      "cache_miss_tokens": 1878
+    },
+    "max_output_tokens": 4096,
+    "visible_output_sha256": "b76ccdabfaa51f4d2500b4217c56530786d5b5d3421ad921e3bdf629d84b66a8",
+    "pydantic_errors": [
+      {
+        "type": "value_error",
+        "loc": [
+          "risks",
+          0
+        ],
+        "msg": "Value error, tentative interpretation requires case evidence",
+        "input": {
+          "statement": "在双方立场与激烈程度未知的情况下，把单次争吵推断为固定的分工模式或性格问题，可能造成过度解读。",
+          "kind": "tentative",
+          "dimension": "personality_caution",
+          "evidence_ids": [
+            "U1",
+            "U3"
+          ]
+        }
+      }
+    ],
+    "guard_matches": []
+  },
+  {
+    "case_id": "communication-05",
+    "run_id": "570ee6b2-061d-4e4e-a27b-6f91cfef6113",
+    "source": "evals/agent/results/final-live-communication.json",
+    "source_sha256": "ddc97d7b2aff0c9497b0394334f51c92bfb0b6c4db1c9d49dcc7872dee23c863",
+    "node": "relationship_analysis",
+    "provider_trace": {
+      "kind": "provider",
+      "time": "2026-10-26T06:26:07.335250+00:00",
+      "run_id": "570ee6b2-061d-4e4e-a27b-6f91cfef6113",
+      "node": "relationship_analysis",
+      "provider": "openai_compatible",
+      "model": "deepseek-flash",
+      "operation": "structured_output",
+      "usage": {
+        "input_tokens": 4560,
+        "output_tokens": 944,
+        "total_tokens": 5504,
+        "cache_hit_tokens": 1024,
+        "cache_miss_tokens": 3536
+      },
+      "ttft_ms": null,
+      "status": "failed",
+      "error": "llm_invalid_structured_output",
+      "schema": "AnalysisResult",
+      "schema_errors": [
+        "value_error"
+      ],
+      "duration_ms": 4799.715899996954,
+      "cost_cny_upper_bound": 0.01466496,
+      "price_version": "deepseek-flash-2026-10-26-peak-cny"
+    },
+    "finish_reason": "stop",
+    "usage": {
+      "input_tokens": 4560,
+      "output_tokens": 944,
+      "total_tokens": 5504,
+      "cache_hit_tokens": 1024,
+      "cache_miss_tokens": 3536
+    },
+    "max_output_tokens": 4096,
+    "visible_output_sha256": "7fad3072a725846b31f7a695ac7713d5ffecc5a7714e53078cd64eba87b9738a",
+    "pydantic_errors": [
+      {
+        "type": "value_error",
+        "loc": [
+          "risks",
+          0
+        ],
+        "msg": "Value error, tentative interpretation requires case evidence",
+        "input": {
+          "statement": "在缺少约会内容、对方反馈和关系阶段信息的情况下，任何感谢措辞都难以贴合实际互动，容易让信息显得模板化或与现场氛围不符。",
+          "kind": "tentative",
+          "dimension": "evidence_quality",
+          "evidence_ids": [
+            "U1",
+            "U2"
+          ],
+          "reference_ids": [
+            "reply"
+          ]
+        }
+      }
+    ],
+    "guard_matches": []
+  },
+  {
+    "case_id": "grounding-01",
+    "run_id": "8f2a1797-007f-4d62-be85-4a97e5327b4e",
+    "source": "evals/agent/results/final-live-grounding.json",
+    "source_sha256": "844ecfd4926898f5fd9f8fff13bbbf7c7f8a7a7f104024b753ebe7dc46629117",
+    "node": "relationship_analysis",
+    "provider_trace": {
+      "kind": "provider",
+      "time": "2026-10-26T06:25:47.858972+00:00",
+      "run_id": "8f2a1797-007f-4d62-be85-4a97e5327b4e",
+      "node": "relationship_analysis",
+      "provider": "openai_compatible",
+      "model": "deepseek-flash",
+      "operation": "structured_output",
+      "usage": {
+        "input_tokens": 3130,
+        "output_tokens": 751,
+        "total_tokens": 3881,
+        "cache_hit_tokens": 1024,
+        "cache_miss_tokens": 2106
+      },
+      "ttft_ms": null,
+      "status": "completed",
+      "error": null,
+      "schema": "AnalysisResult",
+      "duration_ms": 4356.5660000022035,
+      "cost_cny_upper_bound": 0.01026096,
+      "price_version": "deepseek-flash-2026-10-26-peak-cny"
+    },
+    "finish_reason": "stop",
+    "usage": {
+      "input_tokens": 3130,
+      "output_tokens": 751,
+      "total_tokens": 3881,
+      "cache_hit_tokens": 1024,
+      "cache_miss_tokens": 2106
+    },
+    "max_output_tokens": 4096,
+    "visible_output_sha256": "f765836a6bf6cd93ad10215078bca11c0ec89ece5dae79e594dd50ce46bc92f7",
+    "pydantic_errors": [],
+    "guard_matches": [
+      {
+        "statement": "用户依据单次“两小时未回复”这一行为，推断对方“一定不爱我”，这是从一个孤立信号直接推导到对方整体感情状态，证据不足以支持该结论。",
+        "match": "对方“一定不爱"
+      }
+    ]
+  },
+  {
+    "case_id": "grounding-07",
+    "run_id": "478638b4-db4c-4cdd-a089-0c46a257f3c6",
+    "source": "evals/agent/results/final-live-grounding.json",
+    "source_sha256": "844ecfd4926898f5fd9f8fff13bbbf7c7f8a7a7f104024b753ebe7dc46629117",
+    "node": "relationship_analysis",
+    "provider_trace": {
+      "kind": "provider",
+      "time": "2026-10-26T06:26:16.253932+00:00",
+      "run_id": "478638b4-db4c-4cdd-a089-0c46a257f3c6",
+      "node": "relationship_analysis",
+      "provider": "openai_compatible",
+      "model": "deepseek-flash",
+      "operation": "structured_output",
+      "usage": {
+        "input_tokens": 3095,
+        "output_tokens": 1114,
+        "total_tokens": 4209,
+        "cache_hit_tokens": 1024,
+        "cache_miss_tokens": 2071
+      },
+      "ttft_ms": null,
+      "status": "failed",
+      "error": "llm_invalid_structured_output",
+      "schema": "AnalysisResult",
+      "schema_errors": [
+        "value_error"
+      ],
+      "duration_ms": 6157.694300000003,
+      "cost_cny_upper_bound": 0.01309496,
+      "price_version": "deepseek-flash-2026-10-26-peak-cny"
+    },
+    "finish_reason": "stop",
+    "usage": {
+      "input_tokens": 3095,
+      "output_tokens": 1114,
+      "total_tokens": 4209,
+      "cache_hit_tokens": 1024,
+      "cache_miss_tokens": 2071
+    },
+    "max_output_tokens": 4096,
+    "visible_output_sha256": "faef392ce2f9415921b5558efdaaa82a2e15dda5741d99dd37c8a0c473575b06",
+    "pydantic_errors": [
+      {
+        "type": "value_error",
+        "loc": [
+          "risks",
+          1
+        ],
+        "msg": "Value error, tentative interpretation requires case evidence",
+        "input": {
+          "statement": "缺乏今年新信息可能被用户理解为对方意愿减弱，但实际原因（如回避、环境变化、等待用户等）未知，存在误读风险。",
+          "kind": "tentative",
+          "dimension": "evidence_quality",
+          "evidence_ids": [
+            "U4"
+          ]
+        }
+      }
+    ],
+    "guard_matches": []
+  }
+]
