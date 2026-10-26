@@ -65,6 +65,11 @@ than quoting or repeating the user's categorical assertion. For example use
 "仅凭回复间隔无法判断感情状态". This applies to core_issue as well as points.
 Keep the actual fact and its F ID, and explain the inference's uncertainty;
 do not endorse the categorical assertion or lose the distinction between them.
+
+Final provenance check: NOT ALL reference_ids may be empty, even when
+insufficient_evidence=true. Include one framework point accurately summarizing
+a supplied reference with kind='framework' and that reference's alias. This is
+a general framework, never evidence of this person's feelings or motives.
 """
 
 
@@ -93,6 +98,11 @@ def input_payload(state: AgentState) -> str:
             "reference_knowledge": [
                 reference.model_dump(mode="json") for reference in state["retrieved_context"]
             ],
+            "reference_citation_requirement": {
+                "cite_at_least_one_supplied_alias": True,
+                "allowed_aliases": [r.alias for r in state["retrieved_context"]],
+                "framework_is_not_a_case_fact": True,
+            },
             "historical_memory": [
                 {
                     "type": item.type,

@@ -28,6 +28,14 @@ Use neutral, protective language for stop_conditions too, for example
 "任一方表示不适或交流不再安全时，结束对话". Describe the exit condition without
 enumerating harmful tactics; the response must be able to repeat it safely."""
 
+SYSTEM += """
+The supplied runtime route is the validated contact gate. boundary requires
+stop_contact with no message_suggestion; ordinary must not use stop_contact.
+Do not reinterpret a scheduling conflict as withdrawal of contact consent.
+For boundary, a clear protective action can be "尊重拒绝，停止继续接触，把注意力放回自己的生活。"
+Describe stopping directly, rather than listing forbidden outreach tactics.
+"""
+
 
 def input_payload(state: AgentState) -> str:
     analysis = state["analysis_result"]

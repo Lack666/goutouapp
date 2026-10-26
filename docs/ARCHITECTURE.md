@@ -669,3 +669,9 @@ analysis, RAG, dependency or Mobile change. Application diagnostics never store
 private text or hidden reasoning. Synthetic visible outputs are separate evaluation
 evidence. See AGENT_EVAL_SPEC, AGENT_OBSERVABILITY, PROVIDER_COMPATIBILITY and
 PHASE_11_ACCEPTANCE. Functional tooling does not imply the live quality gate passes.
+
+The reliability follow-up verifies schedule-only refusal semantics before routing,
+uses validated local no-contact/unconnected-import capability policies in existing
+nodes, and assembles the actual localized safety note. Formal schema, graph topology,
+Memory authorization and erasure contracts remain unchanged. Chinese negation guards
+remain incomplete; see PHASE_11_RELIABILITY_CLOSEOUT for retained live failures.

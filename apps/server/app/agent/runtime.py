@@ -102,7 +102,7 @@ NODE_READS: dict[str, frozenset[str]] = {
             "action_plan",
         }
     ),
-    "safety_finalize": frozenset({"safety", "route"}),
+    "safety_finalize": frozenset({"safety", "route", "current_message"}),
     "memory_intent_resolver": frozenset(
         {
             "current_message",

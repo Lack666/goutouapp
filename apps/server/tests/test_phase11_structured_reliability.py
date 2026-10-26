@@ -105,7 +105,20 @@ def test_frozen_provider_outputs_replay_original_graph_outcomes_without_retry(na
             )
         )
         assert result.status == case["status"]
-        assert not provider._structured  # Every supplied output consumed once, no fallback call.
+        if case["id"] == "grounding-12":
+            # The unsupported capability now has validated local Action/Response;
+            # neither of the two historical generated outputs should be consumed.
+            from app.agent.capabilities import imported_chat_reply
+
+            assert len(provider._structured) == 2
+            assert result.action.stop_conditions
+            assert result.final_answer == imported_chat_reply(questions[case["id"]])
+        elif name == "reliability-fix-v5-regression" and case["id"] == "communication-01":
+            # The corrected ordinary route cannot reuse the old boundary-only
+            # reference IDs. That stale analysis still fails provenance validation.
+            assert len(provider._structured) == 1
+        else:
+            assert not provider._structured
         original_failure = [
             t["node"]
             for t in run["traces"]
@@ -120,6 +133,12 @@ def test_frozen_provider_outputs_replay_original_graph_outcomes_without_retry(na
             # The precise false positive is fixed, but absent later provider outputs
             # must still fail, rather than fabricating a completed historical answer.
             assert replay_failure == ["action_planner"]
+        elif name == "reliability-fix-v5-regression" and case["id"] == "communication-01":
+            assert replay_failure == ["relationship_analysis"]
+        elif name == "reliability-fix-v5-regression" and case["id"] == "communication-03":
+            # The formerly rejected ActionPlan is now accepted. No frozen response
+            # exists, so it must fail at Response rather than fabricate completion.
+            assert replay_failure == ["response_generator"]
         else:
             assert replay_failure == original_failure
 

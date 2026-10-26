@@ -1,0 +1,13 @@
+........................................................................ [ 30%]
+..........................................F............................. [ 60%]
+........................................................................ [ 90%]
+.......................                                                  [100%]
+================================== FAILURES ===================================
+_________________ test_run_stream_parity_and_boundary_policy __________________
+apps\server\tests\test_agent_streaming.py:122: in test_run_stream_parity_and_boundary_policy
+    assert "ֹͣ��ϵ" in stream_result.final_answer
+E   AssertionError: assert 'ֹͣ��ϵ' in '������ȷ�ܾ��򳷻�ͬ�⣬ֹͣ�����Ӵ���רע�չ��Լ�������Է�û��������ȷ�ı���Ըʱ��������һ�߽磻��е�����Ӧ�ԣ���Ѱ���������֧�֡�'
+E    +  where '������ȷ�ܾ��򳷻�ͬ�⣬ֹͣ�����Ӵ���רע�չ��Լ�������Է�û��������ȷ�ı���Ըʱ��������һ�߽磻��е�����Ӧ�ԣ���Ѱ���������֧�֡�' = AgentResult(schema_version='1', run_id=UUID('dfd3b92b-5a4e-47f8-a190-d3b202a66f2c'), status=<AgentRunStatus.COMPLETED:...t=0, undone_count=0), final_answer='������ȷ�ܾ��򳷻�ͬ�⣬ֹͣ�����Ӵ���רע�չ��Լ�������Է�û��������ȷ�ı���Ըʱ��������һ�߽磻��е�����Ӧ�ԣ���Ѱ���������֧�֡�', warnings=[]).final_answer
+=========================== short test summary info ===========================
+FAILED apps/server/tests/test_agent_streaming.py::test_run_stream_parity_and_boundary_policy
+1 failed, 238 passed in 13.90s

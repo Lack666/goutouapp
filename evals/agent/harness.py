@@ -264,6 +264,7 @@ def save(
     budget=None,
     synthetic_outputs=None,
     source_start=None,
+    additional_dataset=None,
 ):
     if path.exists():
         raise RuntimeError("Evidence exists; choose a new output path")
@@ -310,6 +311,12 @@ def save(
         "human_review": "PENDING; automated structure checks are not semantic quality scores",
         "synthetic_visible_outputs": synthetic_outputs,
     }
+    if additional_dataset:
+        artifact["dataset_version"] += "+closeout-addenda-v1"
+        artifact["additional_dataset"] = {
+            "path": additional_dataset.relative_to(ROOT).as_posix(),
+            "sha256": hashlib.sha256(additional_dataset.read_bytes()).hexdigest(),
+        }
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(artifact, ensure_ascii=False, indent=2), encoding="utf-8")
 

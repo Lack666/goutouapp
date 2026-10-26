@@ -120,7 +120,9 @@ def test_run_stream_parity_and_boundary_policy():
     assert run_result.model_dump(exclude={"run_id"}) == stream_result.model_dump(exclude={"run_id"})
     assert stream_result.action.contact_policy == "stop_contact"
     assert "停止联系" in stream_result.final_answer
-    assert run_provider.structured_calls == stream_provider.structured_calls == 6
+    # Safety/Scenario/FIU/Analysis call the provider; the validated no-contact
+    # Action/Response policy is now local in both execution modes.
+    assert run_provider.structured_calls == stream_provider.structured_calls == 4
 
 
 def test_high_risk_stream_skips_ordinary_statuses_and_nodes():

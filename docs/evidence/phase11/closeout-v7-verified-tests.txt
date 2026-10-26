@@ -1,0 +1,13 @@
+........................................................................ [ 30%]
+..........................................F............................. [ 60%]
+........................................................................ [ 90%]
+.......................                                                  [100%]
+================================== FAILURES ===================================
+_________________ test_run_stream_parity_and_boundary_policy __________________
+apps\server\tests\test_agent_streaming.py:123: in test_run_stream_parity_and_boundary_policy
+    assert run_provider.structured_calls == stream_provider.structured_calls == 6
+E   assert 4 == 6
+E    +  where 4 = <test_agent_streaming.CountingMock object at 0x0000029BC8B23390>.structured_calls
+=========================== short test summary info ===========================
+FAILED apps/server/tests/test_agent_streaming.py::test_run_stream_parity_and_boundary_policy
+1 failed, 238 passed in 13.79s

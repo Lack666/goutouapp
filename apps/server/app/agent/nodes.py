@@ -4,6 +4,7 @@ from typing import TypedDict
 
 from app.agent.action_validation import validate_action, validate_response
 from app.agent.analysis_validation import validate_analysis
+from app.agent.capabilities import boundary_plan, imported_chat_plan
 from app.agent.contracts import (
     ActionPlan,
     AnalysisResult,
@@ -24,6 +25,7 @@ from app.agent.errors import AgentInputError, AgentStructuredOutputError
 from app.agent.knowledge import ContextBudget, ReferenceRegistry, load_references, route_knowledge
 from app.agent.prompts import action, analysis, fiu, response, safety, scenario
 from app.agent.prompts.common import context_payload
+from app.agent.safety_validation import safety_answer, verified_safety
 from app.agent.state import AgentState
 from app.llm.models import LLMMessage
 
@@ -104,6 +106,7 @@ async def safety_check(state: AgentState, dependencies: RuntimeDependencies) -> 
     )
     if not isinstance(result, SafetyResult):
         raise AgentStructuredOutputError() from None
+    result = verified_safety(result, state)
     if result.safety_route_required:
         route = Route.SAFETY
     elif BOUNDARY_CATEGORIES.intersection(result.risk_categories):
@@ -201,6 +204,14 @@ async def relationship_analysis(
 async def action_planner(state: AgentState, dependencies: RuntimeDependencies) -> ActionUpdate:
     if state["analysis_result"] is None or state["scenario"] is None:
         raise AgentStructuredOutputError() from None
+    if state["scenario"].primary == Scenario.CHAT_IMPORT:
+        result = imported_chat_plan(state)
+        validate_action(result, state)
+        return {"action_plan": result}
+    if state["route"] == Route.BOUNDARY:
+        result = boundary_plan(state)
+        validate_action(result, state)
+        return {"action_plan": result}
     result = await dependencies.llm_provider.structured_output(
         [
             LLMMessage(role="system", content=action.SYSTEM),
@@ -217,6 +228,16 @@ async def action_planner(state: AgentState, dependencies: RuntimeDependencies) -
 async def response_generator(state: AgentState, dependencies: RuntimeDependencies) -> FinalUpdate:
     if state["action_plan"] is None or state["analysis_result"] is None:
         raise AgentStructuredOutputError() from None
+    if state["route"] == Route.BOUNDARY or (
+        state["scenario"] and state["scenario"].primary == Scenario.CHAT_IMPORT
+    ):
+        plan = state["action_plan"]
+        result = ResponseResult(
+            final_answer=plan.message_suggestion or plan.recommended_action,
+            contact_policy=plan.contact_policy,
+        )
+        validate_response(result, state)
+        return {"final_answer": result.final_answer}
     result = await dependencies.llm_provider.structured_output(
         [
             LLMMessage(role="system", content=response.SYSTEM),
@@ -235,10 +256,7 @@ def safety_finalize(state: AgentState) -> SafetyFinalUpdate:
         raise RuntimeError("safety finalizer received another route")
     return {
         "scenario": ScenarioResult(primary=Scenario.SAFETY, reason_summary="Safety takes priority"),
-        "final_answer": (
-            "Safety takes priority. Stop harmful actions; if there is immediate danger, "
-            "seek a safe place and contact trusted or local emergency support."
-        ),
+        "final_answer": safety_answer(state),
     }
 
 

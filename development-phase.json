@@ -13,7 +13,8 @@
     "tooling": "IMPLEMENTED",
     "quality_acceptance": "FAIL",
     "human_reviews": "Original v2: actual human review 15/15. New v5 outputs: 0/15, PENDING",
-    "reliability_followup": "docs/PHASE_11_STRUCTURED_RELIABILITY.md",
+    "reliability_followup": "docs/PHASE_11_RELIABILITY_CLOSEOUT.md",
+    "targeted_reliability": "NOT FULLY RESOLVED; v8 4/5 business pass, communication-03 negated attributive phrase false positive remains; safety assembly v7 5/5 fixed",
     "formal_pass": false
   },
   "phase_12": "PENDING",

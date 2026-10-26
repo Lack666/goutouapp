@@ -268,7 +268,12 @@ def test_golden_analysis_subset_mock_replay_and_safety_bypass() -> None:
             assert [schema.__name__ for schema, _ in provider.calls] == ["SafetyResult"]
         else:
             assert result.analysis is not None
-            assert [schema.__name__ for schema, _ in provider.calls][-1] == "ResponseResult"
+            expected_last = (
+                "AnalysisResult"
+                if result.scenario.primary == Scenario.CHAT_IMPORT or result.route == Route.BOUNDARY
+                else "ResponseResult"
+            )
+            assert [schema.__name__ for schema, _ in provider.calls][-1] == expected_last
     assert routes == {Route.ORDINARY, Route.BOUNDARY, Route.SAFETY}
 
 

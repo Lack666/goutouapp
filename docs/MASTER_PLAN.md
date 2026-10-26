@@ -938,3 +938,7 @@ Reliability follow-up: original five structured-output failures complete5/5 with
 v5; expanded ordinary cases complete3/5 and retain additional quality defects.
 Quality remains FAIL; see PHASE_11_STRUCTURED_RELIABILITY for preserved attempts,
 bounded costs and the separate blank human review packet. No roadmap advance.
+
+Final targeted reliability round: see PHASE_11_RELIABILITY_CLOSEOUT. v8 completes
+4/5; communication-03 still has a negated-phrase business false positive. Safety
+assembly fix passed5/5 in v7. Quality remains FAIL; official marker remains9/9H.

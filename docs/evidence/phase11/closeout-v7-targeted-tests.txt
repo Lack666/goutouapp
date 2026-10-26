@@ -1,0 +1,48 @@
+......................................F...........................FF.... [ 30%]
+............F.....F.......................F............................. [ 60%]
+........................................................................ [ 90%]
+.......................                                                  [100%]
+================================== FAILURES ===================================
+_ test_frozen_v6_boundary_conflict_is_resolved_without_any_generated_contact_plan _
+apps\server\tests\test_phase11_reliability_closeout.py:307: in test_frozen_v6_boundary_conflict_is_resolved_without_any_generated_contact_plan
+    assert isinstance(result, AgentResult) and result.route == Route.BOUNDARY
+E   AssertionError: assert (False)
+E    +  where False = isinstance(AgentFailure(schema_version='1', run_id=UUID('ffbda060-50dd-4574-ade9-8459f8105f66'), status=<AgentRunStatus.FAILED: 'failed'>, code=<AgentErrorCode.STRUCTURED_OUTPUT_FAILURE: 'structured_output_failure'>, message='Agent run failed'), AgentResult)
+__________ test_golden_analysis_subset_mock_replay_and_safety_bypass __________
+apps\server\tests\test_agent_analysis.py:262: in test_golden_analysis_subset_mock_replay_and_safety_bypass
+    assert isinstance(result, AgentResult), case["id"]
+E   AssertionError: breakup_02
+E   assert False
+E    +  where False = isinstance(AgentFailure(schema_version='1', run_id=UUID('9868906d-a9d6-46b0-be37-2a3a88a20553'), status=<AgentRunStatus.FAILED: 'failed'>, code=<AgentErrorCode.STRUCTURED_OUTPUT_FAILURE: 'structured_output_failure'>, message='Agent run failed'), AgentResult)
+____________________ test_evaluator_detects_analysis_drift ____________________
+apps\server\tests\test_agent_analysis.py:283: in test_evaluator_detects_analysis_drift
+    assert isinstance(result, AgentResult)
+E   AssertionError: assert False
+E    +  where False = isinstance(AgentFailure(schema_version='1', run_id=UUID('c5962d78-e710-464b-a4d7-a2e434d35b0a'), status=<AgentRunStatus.FAILED: 'failed'>, code=<AgentErrorCode.STRUCTURED_OUTPUT_FAILURE: 'structured_output_failure'>, message='Agent run failed'), AgentResult)
+_________________ test_golden_subset_and_evaluator_mutations __________________
+apps\server\tests\test_agent_action_response.py:242: in test_golden_subset_and_evaluator_mutations
+    assert isinstance(result, AgentResult), case_id
+E   AssertionError: breakup_02
+E   assert False
+E    +  where False = isinstance(AgentFailure(schema_version='1', run_id=UUID('7db16ee8-21a9-412c-bc2a-fb75c71d1c63'), status=<AgentRunStatus.FAILED: 'failed'>, code=<AgentErrorCode.STRUCTURED_OUTPUT_FAILURE: 'structured_output_failure'>, message='Agent run failed'), AgentResult)
+________________ test_semantic_subset_replay_and_minimal_pairs ________________
+apps\server\tests\test_agent_semantic.py:220: in test_semantic_subset_replay_and_minimal_pairs
+    assert isinstance(result, AgentResult), case_id
+E   AssertionError: pair_a1
+E   assert False
+E    +  where False = isinstance(AgentFailure(schema_version='1', run_id=UUID('725fe97a-f7d2-49ea-b12f-7561c8f862c5'), status=<AgentRunStatus.FAILED: 'failed'>, code=<AgentErrorCode.STRUCTURED_OUTPUT_FAILURE: 'structured_output_failure'>, message='Agent run failed'), AgentResult)
+_________________ test_run_stream_parity_and_boundary_policy __________________
+apps\server\tests\test_agent_streaming.py:118: in test_run_stream_parity_and_boundary_policy
+    stream_result = events[-1].result
+                    ^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\pydantic\main.py:1042: in __getattr__
+    raise AttributeError(f'{type(self).__name__!r} object has no attribute {item!r}')
+E   AttributeError: 'FailedEvent' object has no attribute 'result'
+=========================== short test summary info ===========================
+FAILED apps/server/tests/test_phase11_reliability_closeout.py::test_frozen_v6_boundary_conflict_is_resolved_without_any_generated_contact_plan
+FAILED apps/server/tests/test_agent_analysis.py::test_golden_analysis_subset_mock_replay_and_safety_bypass
+FAILED apps/server/tests/test_agent_analysis.py::test_evaluator_detects_analysis_drift
+FAILED apps/server/tests/test_agent_action_response.py::test_golden_subset_and_evaluator_mutations
+FAILED apps/server/tests/test_agent_semantic.py::test_semantic_subset_replay_and_minimal_pairs
+FAILED apps/server/tests/test_agent_streaming.py::test_run_stream_parity_and_boundary_policy
+6 failed, 233 passed in 12.58s
