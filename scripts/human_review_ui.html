@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="zh-CN">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Agent 人工评审 · 15 例</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#f4f5f7;color:#19222d;font:16px/1.6 system-ui,sans-serif}
+main{max-width:1080px;margin:32px auto;padding:0 20px 70px}h1{margin-bottom:4px;font-size:28px}h2{font-size:19px;margin-top:0}
+.muted{color:#536273;font-size:14px}.panel{background:white;border:1px solid #d6dce3;border-radius:10px;padding:22px;margin:18px 0}
+.top{display:flex;gap:12px;align-items:center;flex-wrap:wrap}.top label{flex:1;min-width:240px}
+input,textarea,select{font:inherit;border:1px solid #98a4b3;border-radius:5px;padding:9px;width:100%;background:white;color:inherit}
+textarea{min-height:110px;resize:vertical}input:focus,textarea:focus,select:focus,button:focus{outline:3px solid #b5d6ff;outline-offset:2px}
+button{font:inherit;background:white;color:#19222d;border:1px solid #98a4b3;border-radius:6px;padding:9px 15px;cursor:pointer}
+button.primary{background:#164e86;color:white;border-color:#164e86}button:disabled{opacity:.5;cursor:default}
+.nav{display:flex;gap:8px;flex-wrap:wrap;margin:16px 0}.case-list{display:flex;flex-wrap:wrap;gap:5px}.case-list button{min-width:42px;padding:6px}
+.case-list .current{outline:2px solid #164e86}.case-list .done{background:#e2f1e8}.text{white-space:pre-wrap;overflow-wrap:anywhere;margin:8px 0}
+.failure{border-left:5px solid #ad3838}.status{font-weight:650}progress{width:100%;height:12px}
+.dimension{border-top:1px solid #d6dce3;padding-top:14px;margin-top:16px}.dimension-head{display:flex;align-items:center;gap:20px;justify-content:space-between}
+.dimension select{max-width:200px}.dimension ol{font-size:14px;color:#425265;padding-left:25px;margin:8px 0 16px}.dimension li{margin:3px 0}
+#notice{padding:10px 0;min-height:42px;white-space:pre-wrap}#notice.error{color:#a12828}#notice.ok{color:#1f6240}
+@media(max-width:620px){main{margin-top:16px;padding:0 12px 40px}.panel{padding:16px}.dimension-head{align-items:flex-start;flex-direction:column;gap:4px}.dimension select{max-width:none}.nav button{flex:1}}
+</style>
+<main>
+<h1>Agent 人工评审</h1>
+<p class="muted">仅使用已有 15 例实测证据。分数初始为空，由你逐项选择；不会调用模型或修改原始回答。</p>
+<section class="panel">
+<div class="top"><label for="reviewer">真实评审人（首次填写，后续自动记录）<input id="reviewer" maxlength="120" autocomplete="name" placeholder="请输入你的姓名或可识别的评审署名"></label>
+<p id="account" class="muted"></p></div>
+<p id="progressLabel"></p><progress id="progress" max="15" value="0"></progress>
+<div id="caseList" class="case-list" aria-label="选择评审题目"></div>
+</section>
+<div class="top"><h2 id="caseTitle"></h2><span id="submitted" class="muted"></span></div>
+<section class="panel"><h2>原始用户问题</h2><div id="question" class="text"></div></section>
+<section id="answerPanel" class="panel"><h2>实际用户可见的 Agent 回答</h2><div id="runStatus" class="status"></div><div id="answer" class="text"></div></section>
+<section class="panel"><h2>六项评分</h2><p class="muted">逐项选择 1–5 分。下列英文锚点直接来自原评分包，中文名称仅用于导航。失败状态也按原标准评审，不展示中间生成内容作为成功回答。</p>
+<div id="dimensions"></div>
+<label for="reason">评分理由（请说明主要优点、缺陷，以及失败状态对评分的影响）</label>
+<textarea id="reason" maxlength="5000" placeholder="由你填写评分理由，不会自动生成。"></textarea>
+</section>
+<div class="nav"><button id="previous">上一题</button><button id="draft">保存草稿</button><button id="next">下一题</button><button id="submit" class="primary">保存本题并下一题</button></div>
+<button id="finish" class="primary">生成评分 JSON 与人工评审汇总</button>
+<div id="notice" role="status" aria-live="polite"></div>
+<p class="muted">草稿保存到本机 .cache/human-review-ui。全部 15 题提交后才更新 human-review-15.json 并生成汇总报告；原始评分包自动备份。页面切换会保存当前草稿。</p>
+</main>
+<script nonce="__TOKEN__">
+"use strict";
+const token="__TOKEN__";
+const $=id=>document.getElementById(id);
+const labels={relevance:"切题程度",consistency:"事实与逻辑一致性",uncertainty:"不确定性表达",actionability:"建议可操作性",agency:"自主决策与边界",privacy:"安全与隐私适当性"};
+let state,index=0,dirty=false,busy=false;
+function message(text,error=false){$("notice").textContent=text;$("notice").className=error?"error":"ok"}
+async function api(path,payload){
+ const response=await fetch(path,payload===undefined?{cache:"no-store"}:{method:"POST",headers:{"Content-Type":"application/json","X-Review-Token":token},body:JSON.stringify(payload)});
+ const body=await response.json();if(!response.ok)throw Error(body.error||"请求失败");return body;
+}
+function lock(value){busy=value;document.querySelectorAll("button,select,input,textarea").forEach(el=>el.disabled=value);if(!value){$("previous").disabled=index===0;$("next").disabled=index===14;$("finish").disabled=state.completed!==15}}
+function changed(){dirty=true;$("submitted").textContent="当前更改尚未保存"}
+function render(){
+ const item=state.items[index],d=item.draft;dirty=false;
+ $("reviewer").value=state.reviewer;$("account").textContent="本机账户："+state.operating_account+"（不替代你填写的真实署名）";
+ $("progressLabel").textContent="已提交 "+state.completed+" / 15 题";$("progress").value=state.completed;
+ $("caseTitle").textContent=(index+1)+" / 15 · "+item.case_id;
+ $("submitted").textContent=d.submitted?"已提交 · "+d.reviewer+" · "+new Date(d.reviewed_at).toLocaleString():"草稿 / 尚未提交";
+ $("question").textContent=item.question;
+ $("runStatus").textContent="运行状态："+item.status+(item.error_code?" · "+item.error_code:"");
+ $("answerPanel").className="panel"+(item.status==="completed"?"":" failure");
+ $("answer").textContent=item.status==="completed"?item.answer:"本次运行失败，没有成功的 Agent 回答。\n记录中的失败提示："+(item.failure_message||"无")+"\n未将中间输出或自动评分内容当作回答。";
+ $("caseList").replaceChildren();state.items.forEach((c,i)=>{const b=document.createElement("button");b.textContent=i+1;b.title=c.case_id+(c.draft.submitted?"（已提交）":"（未提交）");b.className=(i===index?"current ":"")+(c.draft.submitted?"done":"");b.onclick=()=>navigate(i);$("caseList").append(b)});
+ $("dimensions").replaceChildren();Object.entries(state.dimensions).forEach(([key,anchors])=>{
+  const section=document.createElement("div");section.className="dimension";
+  const head=document.createElement("div");head.className="dimension-head";
+  const label=document.createElement("label");label.htmlFor="score-"+key;label.textContent=labels[key]+" · "+key;
+  const select=document.createElement("select");select.id="score-"+key;select.dataset.dimension=key;
+  const empty=document.createElement("option");empty.value="";empty.textContent="请选择分数（未填写）";select.append(empty);
+  anchors.forEach((anchor,i)=>{const option=document.createElement("option");option.value=i+1;option.textContent=(i+1)+" 分";select.append(option)});
+  select.value=d.scores[key]===null?"":String(d.scores[key]);select.onchange=changed;
+  head.append(label,select);const list=document.createElement("ol");anchors.forEach(a=>{const li=document.createElement("li");li.textContent=a;list.append(li)});section.append(head,list);$("dimensions").append(section);
+ });$("reason").value=d.reason||"";lock(false);
+}
+function values(submit,position){const scores={};document.querySelectorAll("[data-dimension]").forEach(s=>scores[s.dataset.dimension]=s.value===""?null:Number(s.value));return{revision:state.revision,case_id:state.items[index].case_id,reviewer:$("reviewer").value,scores,reason:$("reason").value,submit,position}}
+async function save(submit=false,position=index){if(busy)return;const payload=values(submit,position);lock(true);try{state=await api("/api/save",payload);index=state.position;render();message(submit?"本题已记录人工评分、评审人及服务器时间。":"草稿已保存，可关闭页面后继续。")}catch(e){message(e.message,true)}finally{lock(false)}}
+async function navigate(position){if(position<0||position>14||busy)return;await save(false,position)}
+$("reviewer").oninput=changed;$("reason").oninput=changed;
+$("previous").onclick=()=>navigate(index-1);$("next").onclick=()=>navigate(index+1);$("draft").onclick=()=>save();$("submit").onclick=()=>save(true,Math.min(index+1,14));
+$("finish").onclick=async()=>{if(busy)return;if(dirty){message("请先保存并提交当前修改，再生成正式文件。",true);return}lock(true);try{state=await api("/api/finish",{revision:state.revision});render();message("已生成并保存：\n"+state.packet_path+"\n"+state.report_path+"\n已有模型输出、状态和评分规则均保持原样。")}catch(e){message(e.message,true)}finally{lock(false)}};
+window.addEventListener("beforeunload",e=>{if(dirty){e.preventDefault();e.returnValue=""}});
+api("/api/state").then(s=>{state=s;index=s.position;render()}).catch(e=>message(e.message,true));
+</script>
+</html>
