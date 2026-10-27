@@ -17,8 +17,11 @@ empty; the advice must still remain low pressure and stoppable under
 `SKILL_CONTRACT.md` §7.4. This was clarified during the Phase 3G preflight.
 The validator checks that IDs exist, refusal routes stop contact and contain no
 message, scheduling conflicts do not automatically become a permanent stop,
-and message/window fields match the policy. Narrow phrase guards reject
-obvious coercion, deception, boundary bypass and unsupported certainty.
+and message/window fields match the policy. Unsupported-certainty and internal-data
+guards remain deterministic. Since the Phase11 mechanism repair, HARMFUL_CUES is a
+review trigger: all action prose fields and final responses containing a cue require
+one contextual intent review, after structural checks. There are no sentence or
+negation exemptions. See [ADR0044](adr/0044-contextual-generated-content-review.md).
 
 The response node receives bounded scenario, FIU, analysis summary and the
 validated action. Its typed `ResponseResult` has `final_answer` and a repeated
@@ -27,7 +30,8 @@ in message cases, a copyable first line for reply requests, and the approved
 recommendation in no-message cases. It rejects obvious contact drift after
 refusal/pause/observation, internal provenance IDs, secret-shaped text,
 fabricated tool claims and unsupported certainty. The safety response remains
-independent and fixed. Validation failures return `AgentFailure` with a stable
+independent, using the validated localized safety note or protective fallback.
+Validation failures return `AgentFailure` with a stable
 code and no raw provider text.
 
 `evals/phase3f_subset.json` selects 38 Golden cases across reply, invitation,
@@ -38,4 +42,6 @@ behavior cues, refusal and response consistency. Mock outputs are derived from
 Golden expectations, so replay demonstrates graph and evaluator behavior,
 **not** independent semantic accuracy. Regex and ID checks cannot prove every
 claim is grounded or detect every harmful paraphrase. Live-model validation
-was not run. Long-term memory, RAG and transport are deferred.
+was not run at Phase3F. Current focused live evidence is recorded in
+[Phase11 content safety repair](PHASE_11_CONTENT_SAFETY_REPAIR.md); the original
+Phase3F acceptance did not include long-term memory, RAG or transport.

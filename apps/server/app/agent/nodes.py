@@ -5,6 +5,7 @@ from typing import TypedDict
 from app.agent.action_validation import validate_action, validate_response
 from app.agent.analysis_validation import validate_analysis
 from app.agent.capabilities import boundary_plan, imported_chat_plan
+from app.agent.content_safety import ContentReviewRequired, review_content
 from app.agent.contracts import (
     ActionPlan,
     AnalysisResult,
@@ -221,7 +222,11 @@ async def action_planner(state: AgentState, dependencies: RuntimeDependencies) -
     )
     if not isinstance(result, ActionPlan):
         raise AgentStructuredOutputError() from None
-    validate_action(result, state)
+    try:
+        validate_action(result, state)
+    except ContentReviewRequired:
+        approval = await review_content(result, state, dependencies.llm_provider)
+        validate_action(result, state, approval=approval)
     return {"action_plan": result}
 
 
@@ -247,7 +252,11 @@ async def response_generator(state: AgentState, dependencies: RuntimeDependencie
     )
     if not isinstance(result, ResponseResult):
         raise AgentStructuredOutputError() from None
-    validate_response(result, state)
+    try:
+        validate_response(result, state)
+    except ContentReviewRequired:
+        approval = await review_content(result, state, dependencies.llm_provider)
+        validate_response(result, state, approval=approval)
     return {"final_answer": result.final_answer}
 
 

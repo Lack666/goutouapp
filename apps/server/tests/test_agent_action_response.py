@@ -23,6 +23,7 @@ from app.agent.errors import AgentErrorCode, AgentStructuredOutputError
 from app.agent.nodes import action_planner, response_generator
 from app.agent.runtime import NODE_READS, NODE_WRITES, AgentRuntime, _bind_async
 from app.llm.mock import MockLLMProvider
+from evals.agent.content_safety_eval import queue_safe_fixture_review
 from evals.phase3c_semantic import CASES, replay_outputs
 from evals.phase3e_analysis import fixture_analysis
 from evals.phase3f_action_response import (
@@ -80,6 +81,7 @@ def run_case(case):
             assertions=expected["assertions"],
         )
         provider.queue_structured(action)
+        queue_safe_fixture_review(provider, ActionPlan.model_validate(action))
         provider.queue_structured(fixture_response(action))
     result = asyncio.run(
         AgentRuntime(dependencies=RuntimeDependencies(llm_provider=provider)).run(
@@ -152,8 +154,15 @@ def test_refusal_and_scheduling_conflict_have_distinct_policies():
     ordinary = make_state(scenario="invitation")
     with pytest.raises(AgentStructuredOutputError):
         validate_action(ActionPlan.model_validate(good), ordinary)
-    validate_action(
-        ActionPlan.model_validate(fixture_action(scenario="invitation", route="ordinary")), ordinary
+    invite = ActionPlan.model_validate(fixture_action(scenario="invitation", route="ordinary"))
+    provider = MockLLMProvider()
+    provider.queue_structured(invite.model_dump())
+    queue_safe_fixture_review(provider, invite)
+    assert (
+        asyncio.run(action_planner(ordinary, RuntimeDependencies(llm_provider=provider)))[
+            "action_plan"
+        ]
+        == invite
     )
 
 

@@ -4,6 +4,7 @@ import re
 
 from app.agent.analysis_validation import UNSUPPORTED_CERTAINTY_CUES, all_points
 from app.agent.capabilities import imported_chat_reply
+from app.agent.content_safety import ContentApproval, candidate_fields, require_review
 from app.agent.contracts import ActionPlan, ResponseResult, Route, Scenario
 from app.agent.errors import AgentStructuredOutputError
 from app.agent.state import AgentState
@@ -14,6 +15,14 @@ HARMFUL_CUES = (
     re.compile(r"(?:假装|编造|捏造|谎称|冒充|装作).{0,14}(?:经历|生病|忙|家人|身份|没事)?"),
     re.compile(r"(?:冷暴力|欲擒故纵|制造嫉妒|操控|继续施压|威胁|跟踪|查手机|监控)"),
     re.compile(r"\b(?:bypass (?:refusal|block)|impersonate|stalk|manipulate)\b", re.I),
+    re.compile(
+        r"(?:欺骗|说谎|下药|强迫|胁迫|偷拍|勒索|曝光|诈骗|服从测试|煤气灯|孤立|"
+        r"制造依赖|报复|自伤|自杀|伤害|醉酒|无意识|账号|账户|定位|跟随|尾随)"
+    ),
+    re.compile(
+        r"\b(?:deceiv\w*|lie|lying|excuse|coerc\w*|blackmail|surveill\w*|gaslight\w*|"
+        r"fraud|threat\w*|drug\w*)\b", re.I
+    ),
 )
 CONTACT_CUES = (
     re.compile(
@@ -38,17 +47,9 @@ UNKNOWN_MOTIVE_CUES = (
     re.compile(r"(?:他|她|TA|对方).{0,6}(?:已经失去兴趣|已经不爱|一定喜欢|肯定喜欢|故意冷落)"),
 )
 
-# Exempt only a complete, explicitly prohibitive clause, not arbitrary negation.
-NO_FAKE_REASON = re.compile(
-    r"(^|[，,。；;：:\n“\"‘'])(?:你|您)?(?:也)?"
-    r"(?:不必|不要|不能|不应|不需要|无需|不用|不)(?:编造|捏造)(?:具体|任何)?(?:理由|借口)"
-    r"(?=$|[，,。；;！!？?\n”\"’'])"
-)
-
-
-def has_harmful_advice(text: str) -> bool:
-    checked = NO_FAKE_REASON.sub(r"\1", text)
-    return any(pattern.search(checked) for pattern in HARMFUL_CUES)
+def has_safety_cues(text: str) -> bool:
+    # A review trigger, never a semantic verdict; no sentence/negation exemptions.
+    return any(pattern.search(text) for pattern in HARMFUL_CUES)
 
 
 def analysis_ids(state: AgentState) -> set[str]:
@@ -61,7 +62,9 @@ def _reject_if_cued(texts: list[str], patterns: tuple[re.Pattern[str], ...]) -> 
         raise AgentStructuredOutputError() from None
 
 
-def validate_action(plan: ActionPlan, state: AgentState) -> None:
+def validate_action(
+    plan: ActionPlan, state: AgentState, *, approval: ContentApproval | None = None
+) -> None:
     if state["route"] not in {Route.ORDINARY, Route.BOUNDARY} or not state["analysis_result"]:
         raise AgentStructuredOutputError() from None
     if not set(plan.supporting_analysis_ids) <= analysis_ids(state) or len(
@@ -72,8 +75,6 @@ def validate_action(plan: ActionPlan, state: AgentState) -> None:
         [plan.recommended_action, plan.message_suggestion or ""],
         (*UNSUPPORTED_CERTAINTY_CUES, *INTERNAL_CUES),
     )
-    if any(has_harmful_advice(v) for v in [plan.recommended_action, plan.message_suggestion or ""]):
-        raise AgentStructuredOutputError() from None
     _reject_if_cued([plan.observation_window or "", *plan.stop_conditions], INTERNAL_CUES)
     if state["unknowns"] or state["analysis_result"].insufficient_evidence:
         _reject_if_cued(
@@ -113,16 +114,18 @@ def validate_action(plan: ActionPlan, state: AgentState) -> None:
             plan.message_suggestion or plan.recommended_action
         ):
             raise AgentStructuredOutputError() from None
+    if any(has_safety_cues(v) for v in candidate_fields(plan).values()):
+        require_review(plan, state, approval)
 
 
-def validate_response(response: ResponseResult, state: AgentState) -> None:
+def validate_response(
+    response: ResponseResult, state: AgentState, *, approval: ContentApproval | None = None
+) -> None:
     plan = state["action_plan"]
     if plan is None or response.contact_policy != plan.contact_policy:
         raise AgentStructuredOutputError() from None
     answer = response.final_answer.strip()
     _reject_if_cued([answer], (*UNSUPPORTED_CERTAINTY_CUES, *INTERNAL_CUES, *UNVERIFIED_CUES))
-    if has_harmful_advice(answer):
-        raise AgentStructuredOutputError() from None
     if state["scenario"] and state["scenario"].primary == Scenario.CHAT_IMPORT:
         if answer != (plan.message_suggestion or plan.recommended_action):
             raise AgentStructuredOutputError() from None
@@ -149,3 +152,5 @@ def validate_response(response: ResponseResult, state: AgentState) -> None:
         pattern.search(answer) for pattern in CONTACT_CUES
     ):
         raise AgentStructuredOutputError() from None
+    if has_safety_cues(answer):
+        require_review(response, state, approval)

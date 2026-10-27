@@ -675,3 +675,13 @@ uses validated local no-contact/unconnected-import capability policies in existi
 nodes, and assembles the actual localized safety note. Formal schema, graph topology,
 Memory authorization and erasure contracts remain unchanged. Chinese negation guards
 remain incomplete; see PHASE_11_RELIABILITY_CLOSEOUT for retained live failures.
+
+The 2026-10-27 bounded follow-up replaces the Action/Response harmful-word verdict
+and its sentence exemptions with contextual generated-content review (ADR0044).
+Formal Pydantic schemas and input safety routing are unchanged. Deterministic
+contact/provenance/response checks run first; a cue triggers one private JSON intent
+decision via LLMProvider.chat over the full candidate, input safety and scoped context.
+Every field must be unambiguously permissible; missing/invalid/unclear decisions and
+dependency failures close the run without regeneration. Approval is bound to the
+candidate/context digest, local to that validation. No new graph node, API, storage,
+Memory access or dependency. See PHASE_11_CONTENT_SAFETY_REPAIR for evidence and limits.

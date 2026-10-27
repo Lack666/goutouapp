@@ -10,9 +10,11 @@ def main() -> None:
     root = Path(__file__).resolve().parents[1]
     sys.path[:0] = [str(root), str(root / "apps/server")]
     from app.agent import AgentInput, AgentResult
+    from app.agent.contracts import ActionPlan
     from app.agent.dependencies import RuntimeDependencies
     from app.agent.runtime import AgentRuntime
     from app.llm.mock import MockLLMProvider
+    from evals.agent.content_safety_eval import queue_safe_fixture_review
     from evals.phase3c_semantic import replay_outputs
     from evals.phase3e_analysis import fixture_analysis
     from evals.phase3f_action_response import (
@@ -45,6 +47,7 @@ def main() -> None:
                 assertions=expected["assertions"],
             )
             provider.queue_structured(action)
+            queue_safe_fixture_review(provider, ActionPlan.model_validate(action))
             provider.queue_structured(fixture_response(action))
         result = asyncio.run(
             AgentRuntime(dependencies=RuntimeDependencies(llm_provider=provider)).run(

@@ -8,13 +8,14 @@ from uuid import uuid4
 import pytest
 
 from app.agent.analysis_validation import UNSUPPORTED_CERTAINTY_CUES, has_unsupported_certainty
-from app.agent.contracts import AgentInput, AnalysisResult
+from app.agent.contracts import ActionPlan, AgentInput, AnalysisResult, ResponseResult
 from app.agent.dependencies import RuntimeDependencies
 from app.agent.runtime import AgentRuntime
 from app.llm.errors import LLMStructuredOutputError
 from app.llm.mock import MockLLMProvider
 from app.llm.validation import validate_structured_output
 from app.observability import TRACES
+from evals.agent.content_safety_eval import queue_safe_fixture_review
 from scripts.diagnose_phase11_structured import diagnose
 
 ROOT = Path(__file__).resolve().parents[3]
@@ -93,6 +94,11 @@ def test_frozen_provider_outputs_replay_original_graph_outcomes_without_retry(na
         ):
             if trace["run_id"] == case["run_id"]:
                 provider.queue_structured(output["content"])
+                if trace.get("schema") in {"ActionPlan", "ResponseResult"}:
+                    schema = ActionPlan if trace["schema"] == "ActionPlan" else ResponseResult
+                    queue_safe_fixture_review(
+                        provider, schema.model_validate_json(output["content"])
+                    )
         run_id = uuid4()
         result = asyncio.run(
             AgentRuntime(dependencies=RuntimeDependencies(llm_provider=provider)).run(
@@ -104,7 +110,15 @@ def test_frozen_provider_outputs_replay_original_graph_outcomes_without_retry(na
                 )
             )
         )
-        assert result.status == case["status"]
+        corrected_protective_mention = (
+            name == "reliability-fix-v3-original-five" and case["id"] == "communication-04"
+        )
+        if corrected_protective_mention:
+            # The historical FAIL is immutable; contextual review now permits the
+            # protective stop condition mentioning threats in this frozen response.
+            assert case["status"] == "failed" and result.status == "completed"
+        else:
+            assert result.status == case["status"]
         if case["id"] == "grounding-12":
             # The unsupported capability now has validated local Action/Response;
             # neither of the two historical generated outputs should be consumed.
@@ -129,7 +143,9 @@ def test_frozen_provider_outputs_replay_original_graph_outcomes_without_retry(na
             for t in TRACES.snapshot()
             if t["run_id"] == str(run_id) and t["kind"] == "node_end" and t["status"] == "failed"
         ]
-        if original_failure == ["relationship_analysis"] and case["id"] == "grounding-01":
+        if corrected_protective_mention:
+            assert original_failure == ["response_generator"] and not replay_failure
+        elif original_failure == ["relationship_analysis"] and case["id"] == "grounding-01":
             # The precise false positive is fixed, but absent later provider outputs
             # must still fail, rather than fabricating a completed historical answer.
             assert replay_failure == ["action_planner"]

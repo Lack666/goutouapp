@@ -79,6 +79,8 @@ NODE_READS: dict[str, frozenset[str]] = {
     "action_planner": frozenset(
         {
             "current_message",
+            "messages",
+            "safety",
             "scenario",
             "route",
             "facts",
@@ -93,6 +95,8 @@ NODE_READS: dict[str, frozenset[str]] = {
     "response_generator": frozenset(
         {
             "current_message",
+            "messages",
+            "safety",
             "scenario",
             "route",
             "facts",

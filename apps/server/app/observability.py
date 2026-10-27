@@ -8,7 +8,7 @@ from datetime import UTC, datetime
 from time import perf_counter
 
 GRAPH_VERSION = "phase3h-observed-v1"
-PROMPT_VERSION = "phase11-semantic-closeout-v8"
+PROMPT_VERSION = "phase11-contextual-content-review-v1"
 _run: ContextVar[str | None] = ContextVar("observed_run", default=None)
 _node: ContextVar[str | None] = ContextVar("observed_node", default=None)
 _capture: ContextVar[dict | None] = ContextVar("provider_capture", default=None)

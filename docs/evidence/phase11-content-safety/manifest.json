@@ -1,0 +1,171 @@
+{
+  "time": "2026-10-27T06:30:41.557825+00:00",
+  "base_commit": "2e4098b7cd2d18fe18a5ec958e11849918540796",
+  "scope": "Phase11 bounded communication-03 mechanism repair only",
+  "status": "targeted_pass_stop",
+  "source_fingerprint": "00986bc6cdb65886fa660264872be66e9680175f5048cba0c0b214ed378b48c0",
+  "protected_paths_git_diff_exit_code": 0,
+  "protected_paths": [
+    "apps/server/app/agent/contracts.py",
+    "apps/server/app/agent/memory.py",
+    "apps/server/app/agent/memory_nodes.py",
+    "apps/server/app/agent/prompts/memory.py",
+    "apps/server/app/services",
+    "apps/server/app/api",
+    "apps/server/app/db",
+    "apps/server/app/schemas",
+    "apps/server/app/auth",
+    "apps/server/app/retention.py",
+    "apps/mobile",
+    "evals/golden_cases.jsonl",
+    "knowledge",
+    "project-phase.json",
+    "docs/SKILL_CONTRACT.md",
+    "docs/DATA_DELETION_CONTRACT.md",
+    "uv.lock",
+    "pnpm-lock.yaml"
+  ],
+  "files": [
+    {
+      "path": "evals/agent/results/content-safety-live-v1.json",
+      "sha256": "eaff29597577a77fe855c4f80a2e1c07a236c61da6c94db81bb9998190c1bfc4"
+    },
+    {
+      "path": "evals/agent/results/content-safety-live-network-v1.json",
+      "sha256": "9e5e9d81b7f52cb0b3cdfc658f56f4dbcad11c640fcaec4875996a8d4c8bc9d9"
+    },
+    {
+      "path": "evals/agent/results/closeout-v8-live.json",
+      "sha256": "3d17381133aaf544a6ad492a63219390e8819434cc2b72b51584d4e040373a9b"
+    },
+    {
+      "path": "evals/agent/content-safety-cases.v1.jsonl",
+      "sha256": "6e2da26caea07abd791f102aa54d9b95416db8609a271480980f502d80eab75b"
+    },
+    {
+      "path": "docs/evidence/phase11-content-safety/offline-tests.txt",
+      "sha256": "568db957e92e7cb671077e8768cb18d43d442eccf4eb761bcd993a89c4c7c11c"
+    },
+    {
+      "path": "docs/evidence/phase11-content-safety/offline-tests.xml",
+      "sha256": "81d59813932518fc9b625fa57b33d218777c356cc8a0206cfb3b2fb910eea7bf"
+    },
+    {
+      "path": "docs/evidence/phase11-content-safety/final-tests.txt",
+      "sha256": "a841aaa16b162d8ff0acb2dcf719688fbc2a46ae5482568098f4e93ed7f15e03"
+    },
+    {
+      "path": "docs/evidence/phase11-content-safety/final-tests.xml",
+      "sha256": "81fc1cab6c9e632d487ab8cd487da22137251de2494196678210e0ebe24dfb77"
+    },
+    {
+      "path": "docs/evidence/phase11-content-safety/safety-history-tests.txt",
+      "sha256": "b33d5c2f1bf012fc1ffdd3ed3f51c94b5dd87e81b294b1cf742f492575aca569"
+    },
+    {
+      "path": "docs/evidence/phase11-content-safety/safety-history-tests.xml",
+      "sha256": "197da20b3f635fd0b16a3f5940e95afe7708215885444263b98cc20e15474fa3"
+    },
+    {
+      "path": "docs/evidence/phase11-content-safety/ruff.txt",
+      "sha256": "a4443afdcfb6d7363adb285762515ccf7cf50473b1a05c20c1a50f6bed4d26b0"
+    },
+    {
+      "path": "docs/evidence/phase11-content-safety/source.zip",
+      "sha256": "b8f1a2876c2477ce575d81ee21ddb7a2055c3b6e70ac0c5cee2d27fe5aef9c99"
+    }
+  ],
+  "commands": [
+    {
+      "command": "uv run --frozen --no-sync pytest -q apps/server/tests/test_action_content_safety.py apps/server/tests/test_phase11_reliability_closeout.py apps/server/tests/test_agent_action_response.py apps/server/tests/test_agent_semantic.py apps/server/tests/test_phase11_structured_reliability.py apps/server/tests/test_llm_mock.py apps/server/tests/test_llm_openai_compatible.py apps/server/tests/test_agent_runtime.py apps/server/tests/test_agent_streaming.py apps/server/tests/test_phase3_e2e.py --tb=short --junitxml=docs/evidence/phase11-content-safety/offline-tests.xml",
+      "exit_code": 0,
+      "passed": 212,
+      "stage": "before_any_live_attempt"
+    },
+    {
+      "command": "uv run --frozen --no-sync pytest -q apps/server/tests/test_security_priority_9g.py -k current_and_speaker_labeled_history_stay_data --tb=short --junitxml=docs/evidence/phase11-content-safety/safety-history-tests.xml",
+      "exit_code": 0,
+      "passed": 7,
+      "deselected": 26
+    },
+    {
+      "command": "uv run --frozen --no-sync python scripts/check_action_response_replay.py",
+      "exit_code": 0,
+      "cases": 38,
+      "dataset_unchanged": true
+    },
+    {
+      "command": "uv run --frozen --no-sync python -m evals.agent.content_safety_live --live --output evals/agent/results/content-safety-live-v1.json",
+      "exit_code": 1,
+      "requests": 9,
+      "responses": 0,
+      "network": "sandbox_unavailable"
+    },
+    {
+      "command": "uv run --frozen --no-sync python -m evals.agent.content_safety_live --live --output evals/agent/results/content-safety-live-network-v1.json",
+      "exit_code": 0,
+      "requests": 14,
+      "responses": 14,
+      "network": "explicit_escalated_execution"
+    },
+    {
+      "command": "uv run --frozen --no-sync pytest -q apps/server/tests/test_action_content_safety.py apps/server/tests/test_phase11_reliability_closeout.py apps/server/tests/test_agent_action_response.py apps/server/tests/test_agent_semantic.py apps/server/tests/test_phase11_structured_reliability.py apps/server/tests/test_llm_mock.py apps/server/tests/test_llm_openai_compatible.py apps/server/tests/test_agent_runtime.py apps/server/tests/test_agent_streaming.py apps/server/tests/test_phase3_e2e.py --tb=short --junitxml=docs/evidence/phase11-content-safety/final-tests.xml",
+      "exit_code": 0,
+      "passed": 222,
+      "stage": "after_live_with_10_additional_frozen_output_accounting_tests"
+    },
+    {
+      "command": "uv run --frozen --no-sync ruff check apps/server/app/agent/content_safety.py apps/server/app/agent/action_validation.py apps/server/app/agent/nodes.py apps/server/app/agent/runtime.py apps/server/app/observability.py apps/server/tests/test_action_content_safety.py apps/server/tests/test_phase11_reliability_closeout.py apps/server/tests/test_phase11_structured_reliability.py apps/server/tests/test_agent_action_response.py apps/server/tests/test_agent_semantic.py evals/agent/content_safety_eval.py evals/agent/content_safety_live.py evals/agent/reliability_closeout.py scripts/check_action_response_replay.py",
+      "exit_code": 0
+    },
+    {
+      "command": "git diff --check",
+      "exit_code": 0
+    }
+  ],
+  "ruff_paths": [
+    "apps/server/app/agent/content_safety.py",
+    "apps/server/app/agent/action_validation.py",
+    "apps/server/app/agent/nodes.py",
+    "apps/server/app/agent/runtime.py",
+    "apps/server/app/observability.py",
+    "apps/server/tests/test_action_content_safety.py",
+    "apps/server/tests/test_phase11_reliability_closeout.py",
+    "apps/server/tests/test_phase11_structured_reliability.py",
+    "apps/server/tests/test_agent_action_response.py",
+    "apps/server/tests/test_agent_semantic.py",
+    "evals/agent/content_safety_eval.py",
+    "evals/agent/content_safety_live.py",
+    "evals/agent/reliability_closeout.py",
+    "scripts/check_action_response_replay.py"
+  ],
+  "environment": {
+    "UV_CACHE_DIR": ".cache/uv",
+    "PYTHONPATH": "apps/server;.",
+    "live": {
+      "EVAL_MAX_REQUESTS": 20,
+      "EVAL_MAX_COST_CNY": 1,
+      "EVAL_MAX_TOKENS": 300000,
+      "LLM_MODEL": "deepseek-flash",
+      "LLM_MAX_OUTPUT_TOKENS": 4096,
+      "LLM_THINKING": "disabled",
+      "LLM_TIMEOUT_SECONDS": 60
+    }
+  },
+  "accounting": {
+    "attempts": 23,
+    "responses": 14,
+    "unknown_cost_attempts": 9,
+    "known_usage_peak_upper_cny": 0.0337184,
+    "unknown_attempts_reserved_upper_cny": 0.43707,
+    "combined_upper_cny": 0.4707884,
+    "billed_cost_cny": null
+  },
+  "not_run": [
+    "full_root_verify",
+    "android_full_regression",
+    "full_postgresql_suite",
+    "general_quality_human_review"
+  ],
+  "stop_condition": "Fixed batch complete; no further paid call, patch loop or phase advance."
+}

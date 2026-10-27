@@ -36,3 +36,11 @@ Failure, generator close and task cancellation produce terminal diagnostics.
 The process can be killed before a terminal event; missing events remain unknown,
 not completed. Cross-process durable status remains the existing PostgreSQL
 AgentRun. Source/prompt fingerprints bind reproducible evaluation exports.
+
+Phase11 contextual output review adds only content-free `content_safety_review`
+allow/block events. Its LLMProvider.chat calls use the existing usage/cost/provider
+tracing and budget; they must be counted in addition to generation requests.
+Invalid decisions and transport errors have no successful review event and cannot
+be scored as correctly classified negative cases. Candidate text, field-level intent
+decisions and payload digests are not added to application diagnostics. Fixed synthetic
+evaluation exports retain visible JSON decisions separately; no reasoning is requested.

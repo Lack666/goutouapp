@@ -942,3 +942,11 @@ bounded costs and the separate blank human review packet. No roadmap advance.
 Final targeted reliability round: see PHASE_11_RELIABILITY_CLOSEOUT. v8 completes
 4/5; communication-03 still has a negated-phrase business false positive. Safety
 assembly fix passed5/5 in v7. Quality remains FAIL; official marker remains9/9H.
+
+Bounded mechanism repair (2026-10-27): see PHASE_11_CONTENT_SAFETY_REPAIR.
+HARMFUL_CUES now triggers contextual intent review after deterministic validation,
+with no sentence-level negation exemptions. Frozen v8 reproduction and34 new cases
+pass offline; one real communication-03 run, six output reviews and two high-risk
+runs pass.14 responses have usage;9 earlier unavailable attempts remain unknown-cost
+evidence. No further paid generation, patch loop or phase advance is authorized by
+this completion. Full Root Verify/Android regression and overall quality remain deferred.

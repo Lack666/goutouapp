@@ -9,8 +9,9 @@ from uuid import uuid4
 import pytest
 
 from app.agent import AgentInput, AgentResult, initial_state
-from app.agent.action_validation import has_harmful_advice, validate_action, validate_response
+from app.agent.action_validation import has_safety_cues, validate_action, validate_response
 from app.agent.capabilities import imported_chat_reply
+from app.agent.content_safety import ContentReviewRequired, review_content
 from app.agent.contracts import (
     ActionPlan,
     AnalysisResult,
@@ -34,6 +35,7 @@ from app.agent.runtime import AgentRuntime
 from app.agent.safety_validation import verified_safety
 from app.llm.mock import MockLLMProvider
 from app.observability import TRACES
+from evals.agent.content_safety_eval import oracle_review
 
 ROOT = Path(__file__).resolve().parents[3]
 RESULTS = ROOT / "evals/agent/results"
@@ -142,7 +144,13 @@ def test_schedule_exception_never_erases_history_or_high_risk():
     ],
 )
 def test_complete_prohibitive_clauses_are_not_deception_advice(text):
-    assert not has_harmful_advice(text)
+    assert has_safety_cues(text)  # Negation is reviewed, never erased by regex.
+    state, outputs = frozen("communication-03")
+    plan = ActionPlan.model_validate(outputs["ActionPlan"] | {"recommended_action": text})
+    provider = MockLLMProvider()
+    provider.queue_chat(oracle_review(plan))
+    approval = asyncio.run(review_content(plan, state, provider))
+    validate_action(plan, state, approval=approval)
 
 
 @pytest.mark.parametrize(
@@ -167,13 +175,29 @@ def test_complete_prohibitive_clauses_are_not_deception_advice(text):
     ],
 )
 def test_actual_danger_double_negation_and_quote_laundering_remain_blocked(text):
-    assert has_harmful_advice(text)
+    assert has_safety_cues(text)
+    state, outputs = frozen("communication-03")
+    plan = ActionPlan.model_validate(outputs["ActionPlan"] | {"recommended_action": text})
+    provider = MockLLMProvider()
+    provider.queue_structured(plan.model_dump())
+    provider.queue_chat(
+        oracle_review(
+            plan, field="recommended_action", intent="harmful_action", violations=["deception"]
+        )
+    )
+    with pytest.raises(AgentStructuredOutputError):
+        asyncio.run(action_planner(state, RuntimeDependencies(llm_provider=provider)))
 
 
 def test_frozen_negative_phrase_passes_but_actual_deception_plan_and_response_fail():
     state, outputs = frozen("communication-03")
     plan = ActionPlan.model_validate(outputs["ActionPlan"])
-    validate_action(plan, state)
+    with pytest.raises(ContentReviewRequired):
+        validate_action(plan, state)
+    provider = MockLLMProvider()
+    provider.queue_chat(oracle_review(plan))
+    approval = asyncio.run(review_content(plan, state, provider))
+    validate_action(plan, state, approval=approval)
     state["action_plan"] = plan
     validate_response(
         ResponseResult(final_answer=plan.message_suggestion, contact_policy="reply"), state
