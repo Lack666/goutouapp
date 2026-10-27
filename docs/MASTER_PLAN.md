@@ -950,3 +950,9 @@ pass offline; one real communication-03 run, six output reviews and two high-ris
 runs pass.14 responses have usage;9 earlier unavailable attempts remain unknown-cost
 evidence. No further paid generation, patch loop or phase advance is authorized by
 this completion. Full Root Verify/Android regression and overall quality remain deferred.
+
+Minimal supplement (2026-10-27): PHASE_11_CONTENT_SAFETY_SUPPLEMENT closes the
+frozen full-graph review integration gap: two complete paths, three real review calls,
+93 focused tests. Production code/contracts and routing unchanged. Defect repair stops;
+next work is independent Phase11 quality evaluation. No random-generation quality claim
+or official phase-marker advance is implied by this integration acceptance.

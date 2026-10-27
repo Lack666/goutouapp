@@ -1,0 +1,120 @@
+{
+  "time": "2026-10-27T09:27:35.873791+00:00",
+  "base_commit": "4a53206",
+  "scope": "minimal full-LangGraph / real-review integration supplement",
+  "claim": "真实 Agent 编排与真实复核调用的集成验证；生成节点使用冻结夹具，不评估随机生成可靠性。",
+  "source_fingerprint": "1c1ea2b74de8c96226beb382dc286d124b1b96204aa589ffc882dacc7559d1cf",
+  "production_and_contracts_unchanged": true,
+  "protected_paths": [
+    "apps/server/app",
+    "apps/mobile",
+    "evals/golden_cases.jsonl",
+    "knowledge",
+    "docs/SKILL_CONTRACT.md",
+    "docs/DATA_DELETION_CONTRACT.md",
+    "project-phase.json",
+    "uv.lock",
+    "pnpm-lock.yaml"
+  ],
+  "commands": [
+    {
+      "command": "uv run --frozen --no-sync pytest -q apps/server/tests/test_content_safety_integration.py apps/server/tests/test_action_content_safety.py --tb=short --junitxml=docs/evidence/phase11-content-safety-supplement/offline-tests.xml",
+      "exit_code": 0,
+      "passed": 90,
+      "stage": "before_live"
+    },
+    {
+      "command": "uv run --frozen --no-sync python -m evals.agent.content_safety_integration --live --output evals/agent/results/content-safety-integration-live-v1.json",
+      "exit_code": 0,
+      "requests": 3,
+      "generation_requests": 0,
+      "stage": "real_review_only"
+    },
+    {
+      "command": "uv run --frozen --no-sync pytest -q apps/server/tests/test_content_safety_integration.py apps/server/tests/test_action_content_safety.py --tb=short --junitxml=docs/evidence/phase11-content-safety-supplement/final-tests.xml",
+      "exit_code": 0,
+      "passed": 93,
+      "stage": "after_live_including_frozen_decision_replay"
+    },
+    {
+      "command": "uv run --frozen --no-sync ruff check evals/agent/content_safety_integration.py apps/server/tests/test_content_safety_integration.py",
+      "exit_code": 0
+    },
+    {
+      "command": "git diff --quiet 4a53206 -- apps/server/app apps/mobile evals/golden_cases.jsonl knowledge docs/SKILL_CONTRACT.md docs/DATA_DELETION_CONTRACT.md project-phase.json uv.lock pnpm-lock.yaml",
+      "exit_code": 0
+    }
+  ],
+  "environment": {
+    "UV_CACHE_DIR": ".cache/uv",
+    "PYTHONPATH": "apps/server;.",
+    "EVAL_MAX_REQUESTS": 3,
+    "EVAL_MAX_COST_CNY": 0.25,
+    "EVAL_MAX_TOKENS": 60000,
+    "LLM_MODEL": "deepseek-flash",
+    "LLM_THINKING": "disabled",
+    "LLM_MAX_OUTPUT_TOKENS": 2048,
+    "LLM_TIMEOUT_SECONDS": 60,
+    "network": "explicit_escalated_execution"
+  },
+  "files": [
+    {
+      "path": "evals/agent/results/content-safety-integration-live-v1.json",
+      "sha256": "0187f4e82eb38cc7671406c60d35c6fadb976fed1c82875444710060ff1edb04"
+    },
+    {
+      "path": "evals/agent/content-safety-integration-cases.v1.json",
+      "sha256": "aa9b31c851c3e0baf1992fa96ec3547136ac054972225817c9231533ddfd7e86"
+    },
+    {
+      "path": "evals/agent/content_safety_integration.py",
+      "sha256": "4e7f2f4d721ef6ad20ddd0ae98ef371b9d2c25ca0c59127e760dfa3a6e4bffae"
+    },
+    {
+      "path": "apps/server/tests/test_content_safety_integration.py",
+      "sha256": "34252ec16c1772daaada587a1efb9ab0d8b7a789706ead6d0183fdce8cb4800c"
+    },
+    {
+      "path": "evals/agent/results/closeout-v8-live.json",
+      "sha256": "3d17381133aaf544a6ad492a63219390e8819434cc2b72b51584d4e040373a9b"
+    },
+    {
+      "path": "docs/evidence/phase11-content-safety-supplement/offline-tests.txt",
+      "sha256": "ac540729ef3289714c0eeed2a83ae64f2756c05bd86cceb251ff4a1bd0a90f2c"
+    },
+    {
+      "path": "docs/evidence/phase11-content-safety-supplement/offline-tests.xml",
+      "sha256": "796a06d8aa54e3e7317e5a726c3356e5bec321c01677d392a2c8f24d71d6dade"
+    },
+    {
+      "path": "docs/evidence/phase11-content-safety-supplement/final-tests.txt",
+      "sha256": "9653e104893b28095087487e622f1c8807b0ad194c9f0f7e3f1c5f6de7093eb5"
+    },
+    {
+      "path": "docs/evidence/phase11-content-safety-supplement/final-tests.xml",
+      "sha256": "f11ba2a841e505e9ae8ad854cc1abe67882508b9d1ef23fbb66ed29f43fc4cb6"
+    },
+    {
+      "path": "docs/evidence/phase11-content-safety-supplement/ruff.txt",
+      "sha256": "a4443afdcfb6d7363adb285762515ccf7cf50473b1a05c20c1a50f6bed4d26b0"
+    }
+  ],
+  "accounting": {
+    "requests": 3,
+    "responses": 3,
+    "unknown_cost_calls": 0,
+    "known_usage_peak_upper_cny": 0.00595784,
+    "reserved_cny": "0.101268",
+    "billed_cny": null,
+    "price_source": "https://api-docs.deepseek.com/zh-cn/quick_start/pricing/",
+    "price_version": "deepseek-flash-2026-10-26-peak-cny"
+  },
+  "diagnostic_layer": "acceptance trace classifier; public AgentFailure schema and codes unchanged",
+  "not_run": [
+    "root_verify",
+    "android_history",
+    "old_phase_full_suites",
+    "fresh_random_generation_quality_batch"
+  ],
+  "handoff": "Stop this defect repair. Next: independent Phase11 quality evaluation; integration samples excluded from random-generation quality claims."
+}
