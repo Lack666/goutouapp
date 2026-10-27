@@ -1,0 +1,38 @@
+{
+  "quality_gate": "FAIL",
+  "human_review": "PENDING",
+  "reviewed": 0,
+  "metrics_source": "evals/agent/results/independent-metrics-v1.json",
+  "dataset_cost_cny_upper_bound": 0.43547912,
+  "e2e_accounting": {
+    "requests": 11,
+    "responses": 11,
+    "provider_success_rate": 1.0,
+    "pydantic_valid": 10,
+    "pydantic_denominator": 11,
+    "pydantic_rate": 0.9090909090909091,
+    "unknown_cost_calls": 0,
+    "cost_cny_upper_bound": 0.03518424,
+    "tokens": {
+      "input_tokens": 14431,
+      "output_tokens": 2421,
+      "total_tokens": 16852,
+      "cache_hit_tokens": 6656,
+      "cache_miss_tokens": 7775
+    }
+  },
+  "total_requests": 130,
+  "total_known_cost_cny_upper_bound": 0.47066336,
+  "total_hard_caps": {
+    "requests": 208,
+    "cost_cny": 11.25
+  },
+  "provider_retries": 0,
+  "billed_cost_cny": null,
+  "official_marker": {
+    "completed_phase": 9,
+    "completed_subphase": "9H"
+  },
+  "full_regression": "DEFERRED TO FINAL CLOSEOUT",
+  "semantic_safety": "PENDING; IQ-02/03 concerns retained, route 8/8 is not semantic safety PASS"
+}

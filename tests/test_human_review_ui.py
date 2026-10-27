@@ -207,3 +207,27 @@ def test_separate_packet_pins_evidence_and_isolates_scores_and_progress(store):
     ui.atomic_write(path, ui.encoded(packet))
     with pytest.raises(ValueError, match="hash changed"):
         ui.ReviewStore(store.root, packet_path=path)
+
+
+def test_separate_dataset_is_hash_bound_and_preserves_questions(store):
+    document = ui.read_json(store.packet_path)
+    dataset = store.root / "evals/agent/independent.v1.jsonl"
+    cases = [
+        {"id": i["case_id"], "input": f"Independent {i['case_id']}"} for i in document["items"]
+    ]
+    dataset.write_text("\n".join(json.dumps(c) for c in cases), encoding="utf-8")
+    document["dataset"] = {
+        "path": "evals/agent/independent.v1.jsonl",
+        "sha256": hashlib.sha256(dataset.read_bytes()).hexdigest(),
+    }
+    path = store.packet_path.with_name("independent-test-review.json")
+    ui.atomic_write(path, ui.encoded(document))
+    separate = ui.ReviewStore(store.root, packet_path=path)
+    assert separate.public()["items"][0]["question"] == cases[0]["input"]
+    dataset.write_text("changed", encoding="utf-8")
+    with pytest.raises(ValueError, match="dataset hash changed"):
+        ui.ReviewStore(store.root, packet_path=path)
+    document["dataset"] = {"path": "../../outside.jsonl"}
+    ui.atomic_write(path, ui.encoded(document))
+    with pytest.raises(ValueError, match="dataset must stay"):
+        ui.ReviewStore(store.root, packet_path=path)

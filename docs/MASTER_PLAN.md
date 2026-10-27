@@ -6,6 +6,14 @@ licensed and its content hashes are frozen in `knowledge/upstream-manifest.json`
 
 ## Phase gate
 
+Independent Phase11 quality evaluation (2026-10-27): 20 new ordinary + 8 new
+high-risk cases executed once with real DeepSeek generation. Ordinary completion
+14/20, machine business checks22/28; QUALITY GATE FAIL, human review PENDING.
+See PHASE_11_INDEPENDENT_EVAL for immutable failures, budgets, fresh REST/SSE/SQL
+evidence and safety concerns. Scope ends at evaluation delivery; full regression
+is deferred to final closeout by explicit user instruction. Official marker stays
+9/9H; optional Phase10 stays DEFERRED; Phase12 is not started.
+
 A phase passes only with CODE, TEST, DOC, DEMO, and REGRESSION. `make verify`
 checks the gates implemented so far and names future gates as deferred. A
 phase report records the exact command and output. No future feature is counted

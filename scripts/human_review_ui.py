@@ -85,13 +85,19 @@ class ReviewStore:
             self.provenance.update(
                 {r["id"]: f"{path.name} · {run['prompt_version']}" for r in run["cases"]}
             )
+        dataset = packet.get("dataset", {"path": "evals/agent/cases.v1.jsonl"})
+        dataset_path = self.root / dataset["path"]
+        if not dataset_path.resolve().is_relative_to((self.root / "evals/agent").resolve()):
+            raise ValueError("Review dataset must stay in evals/agent")
+        if (
+            dataset.get("sha256")
+            and hashlib.sha256(dataset_path.read_bytes()).hexdigest() != dataset["sha256"]
+        ):
+            raise ValueError("Review dataset hash changed")
         self.questions = {
             c["id"]: c["input"]
             for c in (
-                json.loads(line)
-                for line in (self.root / "evals/agent/cases.v1.jsonl")
-                .read_text(encoding="utf-8")
-                .splitlines()
+                json.loads(line) for line in dataset_path.read_text(encoding="utf-8").splitlines()
             )
         }
         if len(packet["items"]) != 15 or len({i["case_id"] for i in packet["items"]}) != 15:

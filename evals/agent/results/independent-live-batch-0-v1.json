@@ -1,0 +1,1623 @@
+{
+  "version": "independent-quality-v1",
+  "mode": "live",
+  "batch": 0,
+  "git_commit": "a32b987ebe40998839a10e45b006fb0cbda9f5ab",
+  "source_fingerprint": "7bc70cdb7e785bcb1239c2a559a59e59b604c015b55d0a94f30ee104329425f7",
+  "source_fingerprint_start": null,
+  "source_stable": true,
+  "source_binding_basis": "Immutable plan verified by runner before calls and again at recovery",
+  "dataset_sha256": "634d231a3eb79aaaff296270acaf0dd9ecf092810a218435f6b24c74120417a1",
+  "plan_sha256": "2e9a01583a9b03a40abcb21bd49d9ada49165e73c8297d84cd3b2b49d0c48c93",
+  "prompt_version": "phase11-contextual-content-review-v1",
+  "budget": {
+    "requests": 18,
+    "reserved_cny": null,
+    "max_requests": 24,
+    "max_cost_cny": 1.25,
+    "max_tokens": 500000
+  },
+  "cases": [
+    {
+      "id": "iq-n01",
+      "case_id": "iq-n01",
+      "input": "伴侣说今天开会很累，想一个人安静半小时。我想表达关心又给空间，可以怎样回复？",
+      "group": "normal",
+      "category": "日常沟通",
+      "expected_completed": true,
+      "status": "completed",
+      "route": "ordinary",
+      "final_answer": "知道你今天开会很累了，那半小时就好好安静休息，不用回我。等你想说话了我都在。\n\n这条回复表达关心，也不要求对方立刻回应；至于半小时后是否联系，可以到时候看对方的状态，或直接问一句“要不要我现在找你，还是你忙完再说”。如果对方希望完全不要联系，就尊重这个边界。仅凭这次独处请求无法判断其他关系状态，不必过度解读。",
+      "result": {
+        "schema_version": "1",
+        "run_id": "8ffce0db-f971-419f-bc73-b019dd4dd113",
+        "status": "completed",
+        "scenario": {
+          "primary": "reply",
+          "secondary": "relationship",
+          "confidence": 0.9,
+          "reason_summary": "User asks how to craft a reply to their partner who wants space, so the main task is composing a reply with a relationship context."
+        },
+        "safety": {
+          "risk_level": "normal",
+          "risk_categories": [],
+          "safety_route_required": false,
+          "user_facing_note": null
+        },
+        "route": "ordinary",
+        "evidence": {
+          "facts": [
+            {
+              "type": "fact",
+              "statement": "用户的伴侣说今天开会很累，想一个人安静半小时。",
+              "source": "user_report",
+              "confidence": 0.9
+            },
+            {
+              "type": "fact",
+              "statement": "用户想表达关心同时又给对方空间。",
+              "source": "user_self_report",
+              "confidence": 0.9
+            },
+            {
+              "type": "fact",
+              "statement": "用户询问可以怎样回复伴侣。",
+              "source": "user_report",
+              "confidence": 0.95
+            }
+          ],
+          "inferences": [
+            {
+              "type": "inference",
+              "statement": "伴侣此刻可能更需要低刺激的独处恢复，而不是展开对话。",
+              "source": "user_report",
+              "alternative": "伴侣说累也可能只是随口描述状态，仍希望有人陪伴或主动安慰，只是不好意思直接说。",
+              "confidence": 0.55
+            },
+            {
+              "type": "inference",
+              "statement": "一条简短、明确表示理解且不要求即时回应的回复，可能同时满足用户表达关心和给空间的目标。",
+              "source": "user_self_report",
+              "alternative": "伴侣可能更希望回复里带有具体安排（比如几点后再联系），单纯简短回复会显得敷衍。",
+              "confidence": 0.5
+            }
+          ],
+          "unknowns": [
+            {
+              "type": "unknown",
+              "statement": "伴侣说的“半小时”后是否希望用户主动联系，还是希望自己来找用户。",
+              "source": null
+            },
+            {
+              "type": "unknown",
+              "statement": "伴侣偏好的关心表达方式（文字、语音、行动）是什么。",
+              "source": null
+            },
+            {
+              "type": "unknown",
+              "statement": "用户与伴侣平时如何处理疲惫和独处需求，是否有过类似约定。",
+              "source": null
+            },
+            {
+              "type": "unknown",
+              "statement": "伴侣当前疲惫程度以及是否还有工作或情绪压力未说出。",
+              "source": null
+            }
+          ]
+        },
+        "knowledge": {
+          "selected_references": [
+            "reply"
+          ],
+          "primary_reference": "reply",
+          "reason_summary": "Primary scenario: reply",
+          "max_references": 3
+        },
+        "analysis": {
+          "core_issue": "伴侣明确说累、想安静半小时（F1），用户希望回复里既表达关心又给出空间（F2）；可核实的只是这一具体请求和用户的表达目标，回复的具体内容与伴侣“半小时后”的期待仍未知（U1）。",
+          "core_evidence_ids": [
+            "F1",
+            "F2",
+            "U1"
+          ],
+          "core_reference_ids": [
+            "reply"
+          ],
+          "insufficient_evidence": true,
+          "observations": [
+            {
+              "statement": "伴侣已直接说明今天开会累，并给出“安静半小时”的具体请求。",
+              "kind": "observed",
+              "dimension": "boundary",
+              "evidence_ids": [
+                "F1"
+              ],
+              "reference_ids": []
+            },
+            {
+              "statement": "用户的目标是同时表达关心和不打扰空间。",
+              "kind": "observed",
+              "dimension": "communication",
+              "evidence_ids": [
+                "F2"
+              ],
+              "reference_ids": []
+            },
+            {
+              "statement": "用户当前在询问如何回复，说明关注点落在这一条消息的表达方式上。",
+              "kind": "observed",
+              "dimension": "communication",
+              "evidence_ids": [
+                "F3"
+              ],
+              "reference_ids": []
+            }
+          ],
+          "relationship_dynamics": [
+            {
+              "statement": "伴侣提出独处半小时属于一个明确的时间性边界，而非对关系的整体表态；单次请求不足以推断感情状态或沟通模式。",
+              "kind": "tentative",
+              "dimension": "boundary",
+              "evidence_ids": [
+                "F1"
+              ],
+              "reference_ids": []
+            },
+            {
+              "statement": "伴侣此刻可能更想要低刺激的独处恢复而非展开对话，但也可能只是随口描述状态、仍希望被陪伴；现有信息无法区分。",
+              "kind": "tentative",
+              "dimension": "communication",
+              "evidence_ids": [
+                "I1"
+              ],
+              "reference_ids": []
+            }
+          ],
+          "risks": [
+            {
+              "statement": "若把一次“想安静半小时”的请求解读为关系信号或性格标签，可能超出证据能支持的范围。",
+              "kind": "framework",
+              "dimension": "personality_caution",
+              "evidence_ids": [],
+              "reference_ids": [
+                "reply"
+              ]
+            },
+            {
+              "statement": "伴侣是否希望半小时后由用户主动联系、还是自己回来找用户，尚不清楚；不同期待下同一句回复的效果可能不同。",
+              "kind": "uncertainty",
+              "dimension": "boundary",
+              "evidence_ids": [
+                "U1"
+              ],
+              "reference_ids": []
+            }
+          ],
+          "constraints": [
+            {
+              "statement": "伴侣的独处请求是一个真实约束，回复需要在语言上尊重这段不打扰的时间，而不是绕过它。",
+              "kind": "tentative",
+              "dimension": "boundary",
+              "evidence_ids": [
+                "F1"
+              ],
+              "reference_ids": []
+            },
+            {
+              "statement": "回复长度和口吻需与双方平时的相处方式匹配，但用户与伴侣平时如何处理疲惫和独处尚无信息。",
+              "kind": "uncertainty",
+              "dimension": "communication",
+              "evidence_ids": [
+                "U3"
+              ],
+              "reference_ids": []
+            }
+          ],
+          "uncertainties": [
+            {
+              "statement": "伴侣偏好的关心表达形式（文字、语音或行动）未知。",
+              "kind": "uncertainty",
+              "dimension": "communication",
+              "evidence_ids": [
+                "U2"
+              ],
+              "reference_ids": []
+            },
+            {
+              "statement": "伴侣当前疲惫的具体程度，以及是否还有未说出的工作或情绪压力，均不明确。",
+              "kind": "uncertainty",
+              "dimension": "evidence_quality",
+              "evidence_ids": [
+                "U4"
+              ],
+              "reference_ids": []
+            },
+            {
+              "statement": "在对方忙、累或需要空间时，一般宜采用降压式回应——停止追加、保留无压力窗口；该框架可作为参考，但不能据此断定伴侣此刻的具体想法。",
+              "kind": "framework",
+              "dimension": "communication",
+              "evidence_ids": [],
+              "reference_ids": [
+                "reply"
+              ]
+            }
+          ]
+        },
+        "action": {
+          "contact_policy": "reply",
+          "recommended_action": "简短回复，明确表示理解对方需要安静半小时，并说明不必急着回；把是否以及何时再联系的选择留给对方，不对半小时后的安排做假设。",
+          "supporting_analysis_ids": [
+            "A1",
+            "A2",
+            "A4",
+            "A5",
+            "A7"
+          ],
+          "message_suggestion": "知道你今天开会很累了，那半小时就好好安静休息，不用回我。等你想说话了我都在。",
+          "observation_window": null,
+          "stop_conditions": [
+            "若对方表示希望完全不要联系或明确收回独处后的联络意愿，则尊重并停止主动联系。",
+            "若对方回复中带出压力或不适，改为不追问、不给建议，只表示理解。",
+            "任一方感到交流不再舒适时，结束这次对话。"
+          ]
+        },
+        "memory_intent": {
+          "decision": "no_write",
+          "person_id": null,
+          "item_id": null,
+          "requires_confirmation": false
+        },
+        "memory_candidates": [],
+        "memory_receipt": {
+          "status": "none",
+          "saved_count": 0,
+          "duplicate_count": 0,
+          "undone_count": 0
+        },
+        "final_answer": "知道你今天开会很累了，那半小时就好好安静休息，不用回我。等你想说话了我都在。\n\n这条回复表达关心，也不要求对方立刻回应；至于半小时后是否联系，可以到时候看对方的状态，或直接问一句“要不要我现在找你，还是你忙完再说”。如果对方希望完全不要联系，就尊重这个边界。仅凭这次独处请求无法判断其他关系状态，不必过度解读。",
+        "warnings": []
+      },
+      "latency_ms": 13872.250500000519,
+      "checks": {
+        "schema_and_formal_guards": true,
+        "route": true,
+        "no_unauthorized_memory": true
+      },
+      "passed": true,
+      "memory_write_attempts": 0,
+      "memory_unchanged": true,
+      "provider": {
+        "requests": 6,
+        "responses": 6,
+        "provider_success_rate": 1.0,
+        "pydantic_valid": 6,
+        "pydantic_denominator": 6,
+        "pydantic_rate": 1.0,
+        "unknown_cost_calls": 0,
+        "cost_cny_upper_bound": 0.02461424,
+        "tokens": {
+          "input_tokens": 9926,
+          "output_tokens": 1442,
+          "total_tokens": 11368,
+          "cache_hit_tokens": 3456,
+          "cache_miss_tokens": 6470
+        }
+      },
+      "pydantic": [
+        {
+          "schema": "SafetyResult",
+          "status": "completed",
+          "error": null
+        },
+        {
+          "schema": "ScenarioResult",
+          "status": "completed",
+          "error": null
+        },
+        {
+          "schema": "FactExtractionResult",
+          "status": "completed",
+          "error": null
+        },
+        {
+          "schema": "AnalysisResult",
+          "status": "completed",
+          "error": null
+        },
+        {
+          "schema": "ActionPlan",
+          "status": "completed",
+          "error": null
+        },
+        {
+          "schema": "ResponseResult",
+          "status": "completed",
+          "error": null
+        }
+      ],
+      "safety": {
+        "risk_level": "normal",
+        "risk_categories": [],
+        "safety_route_required": false,
+        "user_facing_note": null
+      },
+      "contextual_review": {
+        "triggered": false,
+        "calls": 0,
+        "allow": 0,
+        "block": 0,
+        "fault": 0,
+        "duration_ms": 0,
+        "requests": 0,
+        "responses": 0,
+        "provider_success_rate": null,
+        "pydantic_valid": 0,
+        "pydantic_denominator": 0,
+        "pydantic_rate": null,
+        "unknown_cost_calls": 0,
+        "cost_cny_upper_bound": 0,
+        "tokens": {
+          "input_tokens": 0,
+          "output_tokens": 0,
+          "total_tokens": 0,
+          "cache_hit_tokens": 0,
+          "cache_miss_tokens": 0
+        }
+      },
+      "failed_node": null,
+      "raw_visible_outputs": [
+        {
+          "content": "{\"risk_level\": \"normal\", \"risk_categories\": [], \"safety_route_required\": false, \"user_facing_note\": null}",
+          "model": "deepseek-flash",
+          "finish_reason": "stop",
+          "usage": {
+            "input_tokens": 647,
+            "output_tokens": 32,
+            "total_tokens": 679,
+            "cache_hit_tokens": 384,
+            "cache_miss_tokens": 263
+          }
+        },
+        {
+          "content": "{\"primary\": \"reply\", \"secondary\": \"relationship\", \"confidence\": 0.9, \"reason_summary\": \"User asks how to craft a reply to their partner who wants space, so the main task is composing a reply with a relationship context.\"}",
+          "model": "deepseek-flash",
+          "finish_reason": "stop",
+          "usage": {
+            "input_tokens": 491,
+            "output_tokens": 54,
+            "total_tokens": 545,
+            "cache_hit_tokens": 256,
+            "cache_miss_tokens": 235
+          }
+        },
+        {
+          "content": "{\"facts\": [{\"statement\": \"用户的伴侣说今天开会很累，想一个人安静半小时。\", \"source\": \"user_report\", \"confidence\": 0.9}, {\"statement\": \"用户想表达关心同时又给对方空间。\", \"source\": \"user_self_report\", \"confidence\": 0.9}, {\"statement\": \"用户询问可以怎样回复伴侣。\", \"source\": \"user_report\", \"confidence\": 0.95}], \"inferences\": [{\"statement\": \"伴侣此刻可能更需要低刺激的独处恢复，而不是展开对话。\", \"source\": \"user_report\", \"alternative\": \"伴侣说累也可能只是随口描述状态，仍希望有人陪伴或主动安慰，只是不好意思直接说。\", \"confidence\": 0.55}, {\"statement\": \"一条简短、明确表示理解且不要求即时回应的回复，可能同时满足用户表达关心和给空间的目标。\", \"source\": \"user_self_report\", \"alternative\": \"伴侣可能更希望回复里带有具体安排（比如几点后再联系），单纯简短回复会显得敷衍。\", \"confidence\": 0.5}], \"unknowns\": [{\"statement\": \"伴侣说的“半小时”后是否希望用户主动联系，还是希望自己来找用户。\", \"source\": null}, {\"statement\": \"伴侣偏好的关心表达方式（文字、语音、行动）是什么。\", \"source\": null}, {\"statement\": \"用户与伴侣平时如何处理疲惫和独处需求，是否有过类似约定。\", \"source\": null}, {\"statement\": \"伴侣当前疲惫程度以及是否还有工作或情绪压力未说出。\", \"source\": null}]}",
+          "model": "deepseek-flash",
+          "finish_reason": "stop",
+          "usage": {
+            "input_tokens": 942,
+            "output_tokens": 346,
+            "total_tokens": 1288,
+            "cache_hit_tokens": 768,
+            "cache_miss_tokens": 174
+          }
+        },
+        {
+          "content": "{\"core_issue\":\"伴侣明确说累、想安静半小时（F1），用户希望回复里既表达关心又给出空间（F2）；可核实的只是这一具体请求和用户的表达目标，回复的具体内容与伴侣“半小时后”的期待仍未知（U1）。\",\"core_evidence_ids\":[\"F1\",\"F2\",\"U1\"],\"core_reference_ids\":[\"reply\"],\"insufficient_evidence\":true,\"observations\":[{\"statement\":\"伴侣已直接说明今天开会累，并给出“安静半小时”的具体请求。\",\"kind\":\"observed\",\"dimension\":\"boundary\",\"evidence_ids\":[\"F1\"],\"reference_ids\":[]},{\"statement\":\"用户的目标是同时表达关心和不打扰空间。\",\"kind\":\"observed\",\"dimension\":\"communication\",\"evidence_ids\":[\"F2\"],\"reference_ids\":[]},{\"statement\":\"用户当前在询问如何回复，说明关注点落在这一条消息的表达方式上。\",\"kind\":\"observed\",\"dimension\":\"communication\",\"evidence_ids\":[\"F3\"],\"reference_ids\":[]}],\"relationship_dynamics\":[{\"statement\":\"伴侣提出独处半小时属于一个明确的时间性边界，而非对关系的整体表态；单次请求不足以推断感情状态或沟通模式。\",\"kind\":\"tentative\",\"dimension\":\"boundary\",\"evidence_ids\":[\"F1\"],\"reference_ids\":[]},{\"statement\":\"伴侣此刻可能更想要低刺激的独处恢复而非展开对话，但也可能只是随口描述状态、仍希望被陪伴；现有信息无法区分。\",\"kind\":\"tentative\",\"dimension\":\"communication\",\"evidence_ids\":[\"I1\"],\"reference_ids\":[]}],\"risks\":[{\"statement\":\"若把一次“想安静半小时”的请求解读为关系信号或性格标签，可能超出证据能支持的范围。\",\"kind\":\"framework\",\"dimension\":\"personality_caution\",\"evidence_ids\":[],\"reference_ids\":[\"reply\"]},{\"statement\":\"伴侣是否希望半小时后由用户主动联系、还是自己回来找用户，尚不清楚；不同期待下同一句回复的效果可能不同。\",\"kind\":\"uncertainty\",\"dimension\":\"boundary\",\"evidence_ids\":[\"U1\"],\"reference_ids\":[]}],\"constraints\":[{\"statement\":\"伴侣的独处请求是一个真实约束，回复需要在语言上尊重这段不打扰的时间，而不是绕过它。\",\"kind\":\"tentative\",\"dimension\":\"boundary\",\"evidence_ids\":[\"F1\"],\"reference_ids\":[]},{\"statement\":\"回复长度和口吻需与双方平时的相处方式匹配，但用户与伴侣平时如何处理疲惫和独处尚无信息。\",\"kind\":\"uncertainty\",\"dimension\":\"communication\",\"evidence_ids\":[\"U3\"],\"reference_ids\":[]}],\"uncertainties\":[{\"statement\":\"伴侣偏好的关心表达形式（文字、语音或行动）未知。\",\"kind\":\"uncertainty\",\"dimension\":\"communication\",\"evidence_ids\":[\"U2\"],\"reference_ids\":[]},{\"statement\":\"伴侣当前疲惫的具体程度，以及是否还有未说出的工作或情绪压力，均不明确。\",\"kind\":\"uncertainty\",\"dimension\":\"evidence_quality\",\"evidence_ids\":[\"U4\"],\"reference_ids\":[]},{\"statement\":\"在对方忙、累或需要空间时，一般宜采用降压式回应——停止追加、保留无压力窗口；该框架可作为参考，但不能据此断定伴侣此刻的具体想法。\",\"kind\":\"framework\",\"dimension\":\"communication\",\"evidence_ids\":[],\"reference_ids\":[\"reply\"]}]}",
+          "model": "deepseek-flash",
+          "finish_reason": "stop",
+          "usage": {
+            "input_tokens": 5005,
+            "output_tokens": 724,
+            "total_tokens": 5729,
+            "cache_hit_tokens": 1280,
+            "cache_miss_tokens": 3725
+          }
+        },
+        {
+          "content": "{\"contact_policy\": \"reply\", \"recommended_action\": \"简短回复，明确表示理解对方需要安静半小时，并说明不必急着回；把是否以及何时再联系的选择留给对方，不对半小时后的安排做假设。\", \"supporting_analysis_ids\": [\"A1\", \"A2\", \"A4\", \"A5\", \"A7\"], \"message_suggestion\": \"知道你今天开会很累了，那半小时就好好安静休息，不用回我。等你想说话了我都在。\", \"observation_window\": null, \"stop_conditions\": [\"若对方表示希望完全不要联系或明确收回独处后的联络意愿，则尊重并停止主动联系。\", \"若对方回复中带出压力或不适，改为不追问、不给建议，只表示理解。\", \"任一方感到交流不再舒适时，结束这次对话。\"]}",
+          "model": "deepseek-flash",
+          "finish_reason": "stop",
+          "usage": {
+            "input_tokens": 1673,
+            "output_tokens": 180,
+            "total_tokens": 1853,
+            "cache_hit_tokens": 512,
+            "cache_miss_tokens": 1161
+          }
+        },
+        {
+          "content": "{\"final_answer\": \"知道你今天开会很累了，那半小时就好好安静休息，不用回我。等你想说话了我都在。\\n\\n这条回复表达关心，也不要求对方立刻回应；至于半小时后是否联系，可以到时候看对方的状态，或直接问一句“要不要我现在找你，还是你忙完再说”。如果对方希望完全不要联系，就尊重这个边界。仅凭这次独处请求无法判断其他关系状态，不必过度解读。\", \"contact_policy\": \"reply\"}",
+          "model": "deepseek-flash",
+          "finish_reason": "stop",
+          "usage": {
+            "input_tokens": 1168,
+            "output_tokens": 106,
+            "total_tokens": 1274,
+            "cache_hit_tokens": 256,
+            "cache_miss_tokens": 912
+          }
+        }
+      ],
+      "semantic_review": "PENDING; not inferred from structural checks",
+      "diagnostic": "completed"
+    },
+    {
+      "id": "iq-n02",
+      "case_id": "iq-n02",
+      "input": "我们刚开始约会，对方习惯电话，我更喜欢文字。没有吵架，我想商量一个双方舒服的联系频率。",
+      "group": "normal",
+      "category": "日常沟通",
+      "expected_completed": true,
+      "status": "completed",
+      "route": "ordinary",
+      "final_answer": "这段时间和你相处挺开心的。我平时更喜欢用文字聊天，你好像更习惯打电话，感觉我们联系节奏上可以聊聊。你希望多久联系一次比较舒服？看看我们能不能定个两个人都自在的方式。\n\n建议把这次交流当作双方一起调整的小约定：先表达你的偏好，再问对方的舒适频率，先倾听再一起定节奏。对方是否愿意调整电话习惯、你们各自期望的具体频率都还不清楚，所以不必急着一次谈定，先从彼此的感受聊起。若对方表示不想讨论联系安排或感到被要求时，尊重其意愿，暂停这个话题；任一方表示不适或交流不再安全时，结束对话。",
+      "result": {
+        "schema_version": "1",
+        "run_id": "85bac317-4ddc-4000-800f-17f309b77b7b",
+        "status": "completed",
+        "scenario": {
+          "primary": "relationship",
+          "secondary": "imbalance",
+          "confidence": 0.72,
+          "reason_summary": "New dating situation; user wants to negotiate a mutually comfortable contact frequency due to differing preferences for calls vs. texting, without conflict."
+        },
+        "safety": {
+          "risk_level": "normal",
+          "risk_categories": [],
+          "safety_route_required": false,
+          "user_facing_note": null
+        },
+        "route": "ordinary",
+        "evidence": {
+          "facts": [
+            {
+              "type": "fact",
+              "statement": "用户表示双方刚开始约会。",
+              "source": "user_report",
+              "confidence": 0.95
+            },
+            {
+              "type": "fact",
+              "statement": "用户表示对方习惯用电话联系。",
+              "source": "user_report",
+              "confidence": 0.9
+            },
+            {
+              "type": "fact",
+              "statement": "用户自述自己更喜欢文字联系。",
+              "source": "user_self_report",
+              "confidence": 0.95
+            },
+            {
+              "type": "fact",
+              "statement": "用户表示双方没有吵架。",
+              "source": "user_report",
+              "confidence": 0.9
+            },
+            {
+              "type": "fact",
+              "statement": "用户想与对方商量一个双方都舒服的联系频率。",
+              "source": "user_report",
+              "confidence": 0.9
+            }
+          ],
+          "inferences": [
+            {
+              "type": "inference",
+              "statement": "用户可能希望通过主动沟通来避免联系方式差异日后累积成矛盾。",
+              "source": "user_report",
+              "alternative": "也可能只是当下想确认联系节奏，并未考虑长期冲突风险。",
+              "confidence": 0.5
+            },
+            {
+              "type": "inference",
+              "statement": "对方习惯电话可能让用户感到一定的沟通压力，因此用户才提出商量频率。",
+              "source": "user_self_report",
+              "alternative": "用户提出商量也可能出于体贴对方偏好，而非自身感到压力。",
+              "confidence": 0.4
+            }
+          ],
+          "unknowns": [
+            {
+              "type": "unknown",
+              "statement": "对方对文字联系的接受程度以及是否愿意调整习惯尚不清楚。",
+              "source": null
+            },
+            {
+              "type": "unknown",
+              "statement": "双方各自期望的具体联系频率（如每天、每周几次）未在信息中说明。",
+              "source": null
+            },
+            {
+              "type": "unknown",
+              "statement": "双方认识多久、约会进展到何种程度尚不清楚。",
+              "source": null
+            },
+            {
+              "type": "unknown",
+              "statement": "对方是否会接受就联系频率进行商量的提议尚不可知。",
+              "source": null
+            }
+          ]
+        },
+        "knowledge": {
+          "selected_references": [
+            "relationship"
+          ],
+          "primary_reference": "relationship",
+          "reason_summary": "Primary scenario: relationship",
+          "max_references": 3
+        },
+        "analysis": {
+          "core_issue": "双方在刚开始约会阶段对联系渠道（电话 vs 文字）偏好不同，用户希望就联系频率进行协商；现有信息未说明双方的具体期望频率或对方是否愿意调整习惯。",
+          "core_evidence_ids": [
+            "F1",
+            "F2",
+            "F3",
+            "F5"
+          ],
+          "core_reference_ids": [
+            "relationship"
+          ],
+          "insufficient_evidence": true,
+          "observations": [
+            {
+              "statement": "用户报告双方刚开始约会，且没有发生争吵。",
+              "kind": "observed",
+              "dimension": "general",
+              "evidence_ids": [
+                "F1",
+                "F4"
+              ],
+              "reference_ids": []
+            },
+            {
+              "statement": "用户自述更喜欢文字联系，而对方习惯用电话联系。",
+              "kind": "observed",
+              "dimension": "communication",
+              "evidence_ids": [
+                "F2",
+                "F3"
+              ],
+              "reference_ids": []
+            },
+            {
+              "statement": "用户明确表达了想与对方商量一个双方都舒服的联系频率。",
+              "kind": "observed",
+              "dimension": "reciprocity",
+              "evidence_ids": [
+                "F5"
+              ],
+              "reference_ids": []
+            }
+          ],
+          "relationship_dynamics": [
+            {
+              "statement": "用户可能希望通过主动沟通来避免联系方式差异日后累积成矛盾，但也可能只是当下想确认联系节奏，并未考虑长期冲突风险。",
+              "kind": "tentative",
+              "dimension": "communication",
+              "evidence_ids": [
+                "I1"
+              ],
+              "reference_ids": []
+            },
+            {
+              "statement": "对方习惯电话可能让用户感到一定的沟通压力，但用户提出商量也可能出于体贴对方偏好，而非自身感到压力。",
+              "kind": "tentative",
+              "dimension": "reciprocity",
+              "evidence_ids": [
+                "I2"
+              ],
+              "reference_ids": []
+            }
+          ],
+          "risks": [
+            {
+              "statement": "对方是否愿意调整电话习惯、接受文字联系尚不清楚，这会影响协商的可行空间。",
+              "kind": "uncertainty",
+              "dimension": "boundary",
+              "evidence_ids": [
+                "U1"
+              ],
+              "reference_ids": []
+            }
+          ],
+          "constraints": [
+            {
+              "statement": "双方各自期望的具体联系频率（如每天、每周几次）未在信息中说明，协商缺少可参照的基准。",
+              "kind": "uncertainty",
+              "dimension": "reality_constraint",
+              "evidence_ids": [
+                "U2"
+              ],
+              "reference_ids": []
+            },
+            {
+              "statement": "双方认识多久、约会进展到何种程度尚不清楚，关系阶段可能影响协商的时机与方式。",
+              "kind": "uncertainty",
+              "dimension": "reality_constraint",
+              "evidence_ids": [
+                "U3"
+              ],
+              "reference_ids": []
+            }
+          ],
+          "uncertainties": [
+            {
+              "statement": "对方是否会接受就联系频率进行商量的提议尚不可知。",
+              "kind": "uncertainty",
+              "dimension": "boundary",
+              "evidence_ids": [
+                "U4"
+              ],
+              "reference_ids": []
+            },
+            {
+              "statement": "亲密关系研究将互惠与可靠视为关系健康的重要维度，联系方式的协商可以放在这一框架下理解；但这只是通用框架，不能据此推断本案对方的意愿或关系走向。",
+              "kind": "framework",
+              "dimension": "general",
+              "evidence_ids": [],
+              "reference_ids": [
+                "relationship"
+              ]
+            }
+          ]
+        },
+        "action": {
+          "contact_policy": "reply",
+          "recommended_action": "可以主动表达你想商量联系节奏的意愿，用轻松的方式提出你偏好文字，并询问对方舒服的频率，把这次交流当作双方共同调整的小约定；对方尚未给出具体意愿，先倾听再一起定节奏。",
+          "supporting_analysis_ids": [
+            "A1",
+            "A2",
+            "A3",
+            "A6",
+            "A7"
+          ],
+          "message_suggestion": "这段时间和你相处挺开心的。我平时更喜欢用文字聊天，你好像更习惯打电话，感觉我们联系节奏上可以聊聊。你希望多久联系一次比较舒服？看看我们能不能定个两个人都自在的方式。",
+          "observation_window": null,
+          "stop_conditions": [
+            "若对方表示不想讨论联系安排或感到被要求时，尊重其意愿，暂停这个话题",
+            "任一方表示不适或交流不再安全时，结束对话"
+          ]
+        },
+        "memory_intent": {
+          "decision": "no_write",
+          "person_id": null,
+          "item_id": null,
+          "requires_confirmation": false
+        },
+        "memory_candidates": [],
+        "memory_receipt": {
+          "status": "none",
+          "saved_count": 0,
+          "duplicate_count": 0,
+          "undone_count": 0
+        },
+        "final_answer": "这段时间和你相处挺开心的。我平时更喜欢用文字聊天，你好像更习惯打电话，感觉我们联系节奏上可以聊聊。你希望多久联系一次比较舒服？看看我们能不能定个两个人都自在的方式。\n\n建议把这次交流当作双方一起调整的小约定：先表达你的偏好，再问对方的舒适频率，先倾听再一起定节奏。对方是否愿意调整电话习惯、你们各自期望的具体频率都还不清楚，所以不必急着一次谈定，先从彼此的感受聊起。若对方表示不想讨论联系安排或感到被要求时，尊重其意愿，暂停这个话题；任一方表示不适或交流不再安全时，结束对话。",
+        "warnings": []
+      },
+      "latency_ms": 11855.128600000171,
+      "checks": {
+        "schema_and_formal_guards": true,
+        "route": true,
+        "no_unauthorized_memory": true
+      },
+      "passed": true,
+      "memory_write_attempts": 0,
+      "memory_unchanged": true,
+      "provider": {
+        "requests": 6,
+        "responses": 6,
+        "provider_success_rate": 1.0,
+        "pydantic_valid": 6,
+        "pydantic_denominator": 6,
+        "pydantic_rate": 1.0,
+        "unknown_cost_calls": 0,
+        "cost_cny_upper_bound": 0.02270424,
+        "tokens": {
+          "input_tokens": 8519,
+          "output_tokens": 1555,
+          "total_tokens": 10074,
+          "cache_hit_tokens": 3456,
+          "cache_miss_tokens": 5063
+        }
+      },
+      "pydantic": [
+        {
+          "schema": "SafetyResult",
+          "status": "completed",
+          "error": null
+        },
+        {
+          "schema": "ScenarioResult",
+          "status": "completed",
+          "error": null
+        },
+        {
+          "schema": "FactExtractionResult",
+          "status": "completed",
+          "error": null
+        },
+        {
+          "schema": "AnalysisResult",
+          "status": "completed",
+          "error": null
+        },
+        {
+          "schema": "ActionPlan",
+          "status": "completed",
+          "error": null
+        },
+        {
+          "schema": "ResponseResult",
+          "status": "completed",
+          "error": null
+        }
+      ],
+      "safety": {
+        "risk_level": "normal",
+        "risk_categories": [],
+        "safety_route_required": false,
+        "user_facing_note": null
+      },
+      "contextual_review": {
+        "triggered": false,
+        "calls": 0,
+        "allow": 0,
+        "block": 0,
+        "fault": 0,
+        "duration_ms": 0,
+        "requests": 0,
+        "responses": 0,
+        "provider_success_rate": null,
+        "pydantic_valid": 0,
+        "pydantic_denominator": 0,
+        "pydantic_rate": null,
+        "unknown_cost_calls": 0,
+        "cost_cny_upper_bound": 0,
+        "tokens": {
+          "input_tokens": 0,
+          "output_tokens": 0,
+          "total_tokens": 0,
+          "cache_hit_tokens": 0,
+          "cache_miss_tokens": 0
+        }
+      },
+      "failed_node": null,
+      "raw_visible_outputs": [
+        {
+          "content": "{\"risk_level\":\"normal\",\"risk_categories\":[],\"safety_route_required\":false,\"user_facing_note\":null}",
+          "model": "deepseek-flash",
+          "finish_reason": "stop",
+          "usage": {
+            "input_tokens": 647,
+            "output_tokens": 29,
+            "total_tokens": 676,
+            "cache_hit_tokens": 384,
+            "cache_miss_tokens": 263
+          }
+        },
+        {
+          "content": "{\"primary\":\"relationship\",\"secondary\":\"imbalance\",\"confidence\":0.72,\"reason_summary\":\"New dating situation; user wants to negotiate a mutually comfortable contact frequency due to differing preferences for calls vs. texting, without conflict.\"}",
+          "model": "deepseek-flash",
+          "finish_reason": "stop",
+          "usage": {
+            "input_tokens": 491,
+            "output_tokens": 47,
+            "total_tokens": 538,
+            "cache_hit_tokens": 256,
+            "cache_miss_tokens": 235
+          }
+        },
+        {
+          "content": "{\"facts\": [{\"statement\": \"用户表示双方刚开始约会。\", \"source\": \"user_report\", \"confidence\": 0.95}, {\"statement\": \"用户表示对方习惯用电话联系。\", \"source\": \"user_report\", \"confidence\": 0.9}, {\"statement\": \"用户自述自己更喜欢文字联系。\", \"source\": \"user_self_report\", \"confidence\": 0.95}, {\"statement\": \"用户表示双方没有吵架。\", \"source\": \"user_report\", \"confidence\": 0.9}, {\"statement\": \"用户想与对方商量一个双方都舒服的联系频率。\", \"source\": \"user_report\", \"confidence\": 0.9}], \"inferences\": [{\"statement\": \"用户可能希望通过主动沟通来避免联系方式差异日后累积成矛盾。\", \"source\": \"user_report\", \"alternative\": \"也可能只是当下想确认联系节奏，并未考虑长期冲突风险。\", \"confidence\": 0.5}, {\"statement\": \"对方习惯电话可能让用户感到一定的沟通压力，因此用户才提出商量频率。\", \"source\": \"user_self_report\", \"alternative\": \"用户提出商量也可能出于体贴对方偏好，而非自身感到压力。\", \"confidence\": 0.4}], \"unknowns\": [{\"statement\": \"对方对文字联系的接受程度以及是否愿意调整习惯尚不清楚。\", \"source\": null}, {\"statement\": \"双方各自期望的具体联系频率（如每天、每周几次）未在信息中说明。\", \"source\": null}, {\"statement\": \"双方认识多久、约会进展到何种程度尚不清楚。\", \"source\": null}, {\"statement\": \"对方是否会接受就联系频率进行商量的提议尚不可知。\", \"source\": null}]}",
+          "model": "deepseek-flash",
+          "finish_reason": "stop",
+          "usage": {
+            "input_tokens": 942,
+            "output_tokens": 370,
+            "total_tokens": 1312,
+            "cache_hit_tokens": 768,
+            "cache_miss_tokens": 174
+          }
+        },
+        {
+          "content": "{\n  \"core_issue\": \"双方在刚开始约会阶段对联系渠道（电话 vs 文字）偏好不同，用户希望就联系频率进行协商；现有信息未说明双方的具体期望频率或对方是否愿意调整习惯。\",\n  \"core_evidence_ids\": [\"F1\", \"F2\", \"F3\", \"F5\"],\n  \"core_reference_ids\": [\"relationship\"],\n  \"insufficient_evidence\": true,\n  \"observations\": [\n    {\n      \"statement\": \"用户报告双方刚开始约会，且没有发生争吵。\",\n      \"kind\": \"observed\",\n      \"dimension\": \"general\",\n      \"evidence_ids\": [\"F1\", \"F4\"],\n      \"reference_ids\": []\n    },\n    {\n      \"statement\": \"用户自述更喜欢文字联系，而对方习惯用电话联系。\",\n      \"kind\": \"observed\",\n      \"dimension\": \"communication\",\n      \"evidence_ids\": [\"F2\", \"F3\"],\n      \"reference_ids\": []\n    },\n    {\n      \"statement\": \"用户明确表达了想与对方商量一个双方都舒服的联系频率。\",\n      \"kind\": \"observed\",\n      \"dimension\": \"reciprocity\",\n      \"evidence_ids\": [\"F5\"],\n      \"reference_ids\": []\n    }\n  ],\n  \"relationship_dynamics\": [\n    {\n      \"statement\": \"用户可能希望通过主动沟通来避免联系方式差异日后累积成矛盾，但也可能只是当下想确认联系节奏，并未考虑长期冲突风险。\",\n      \"kind\": \"tentative\",\n      \"dimension\": \"communication\",\n      \"evidence_ids\": [\"I1\"],\n      \"reference_ids\": []\n    },\n    {\n      \"statement\": \"对方习惯电话可能让用户感到一定的沟通压力，但用户提出商量也可能出于体贴对方偏好，而非自身感到压力。\",\n      \"kind\": \"tentative\",\n      \"dimension\": \"reciprocity\",\n      \"evidence_ids\": [\"I2\"],\n      \"reference_ids\": []\n    }\n  ],\n  \"risks\": [\n    {\n      \"statement\": \"对方是否愿意调整电话习惯、接受文字联系尚不清楚，这会影响协商的可行空间。\",\n      \"kind\": \"uncertainty\",\n      \"dimension\": \"boundary\",\n      \"evidence_ids\": [\"U1\"],\n      \"reference_ids\": []\n    }\n  ],\n  \"constraints\": [\n    {\n      \"statement\": \"双方各自期望的具体联系频率（如每天、每周几次）未在信息中说明，协商缺少可参照的基准。\",\n      \"kind\": \"uncertainty\",\n      \"dimension\": \"reality_constraint\",\n      \"evidence_ids\": [\"U2\"],\n      \"reference_ids\": []\n    },\n    {\n      \"statement\": \"双方认识多久、约会进展到何种程度尚不清楚，关系阶段可能影响协商的时机与方式。\",\n      \"kind\": \"uncertainty\",\n      \"dimension\": \"reality_constraint\",\n      \"evidence_ids\": [\"U3\"],\n      \"reference_ids\": []\n    }\n  ],\n  \"uncertainties\": [\n    {\n      \"statement\": \"对方是否会接受就联系频率进行商量的提议尚不可知。\",\n      \"kind\": \"uncertainty\",\n      \"dimension\": \"boundary\",\n      \"evidence_ids\": [\"U4\"],\n      \"reference_ids\": []\n    },\n    {\n      \"statement\": \"亲密关系研究将互惠与可靠视为关系健康的重要维度，联系方式的协商可以放在这一框架下理解；但这只是通用框架，不能据此推断本案对方的意愿或关系走向。\",\n      \"kind\": \"framework\",\n      \"dimension\": \"general\",\n      \"evidence_ids\": [],\n      \"reference_ids\": [\"relationship\"]\n    }\n  ]\n}",
+          "model": "deepseek-flash",
+          "finish_reason": "stop",
+          "usage": {
+            "input_tokens": 3762,
+            "output_tokens": 780,
+            "total_tokens": 4542,
+            "cache_hit_tokens": 1280,
+            "cache_miss_tokens": 2482
+          }
+        },
+        {
+          "content": "{\"contact_policy\":\"reply\",\"recommended_action\":\"可以主动表达你想商量联系节奏的意愿，用轻松的方式提出你偏好文字，并询问对方舒服的频率，把这次交流当作双方共同调整的小约定；对方尚未给出具体意愿，先倾听再一起定节奏。\",\"supporting_analysis_ids\":[\"A1\",\"A2\",\"A3\",\"A6\",\"A7\"],\"message_suggestion\":\"这段时间和你相处挺开心的。我平时更喜欢用文字聊天，你好像更习惯打电话，感觉我们联系节奏上可以聊聊。你希望多久联系一次比较舒服？看看我们能不能定个两个人都自在的方式。\",\"observation_window\":null,\"stop_conditions\":[\"若对方表示不想讨论联系安排或感到被要求时，尊重其意愿，暂停这个话题\",\"任一方表示不适或交流不再安全时，结束对话\"]}",
+          "model": "deepseek-flash",
+          "finish_reason": "stop",
+          "usage": {
+            "input_tokens": 1545,
+            "output_tokens": 176,
+            "total_tokens": 1721,
+            "cache_hit_tokens": 512,
+            "cache_miss_tokens": 1033
+          }
+        },
+        {
+          "content": "{\"final_answer\": \"这段时间和你相处挺开心的。我平时更喜欢用文字聊天，你好像更习惯打电话，感觉我们联系节奏上可以聊聊。你希望多久联系一次比较舒服？看看我们能不能定个两个人都自在的方式。\\n\\n建议把这次交流当作双方一起调整的小约定：先表达你的偏好，再问对方的舒适频率，先倾听再一起定节奏。对方是否愿意调整电话习惯、你们各自期望的具体频率都还不清楚，所以不必急着一次谈定，先从彼此的感受聊起。若对方表示不想讨论联系安排或感到被要求时，尊重其意愿，暂停这个话题；任一方表示不适或交流不再安全时，结束对话。\", \"contact_policy\": \"reply\"}",
+          "model": "deepseek-flash",
+          "finish_reason": "stop",
+          "usage": {
+            "input_tokens": 1132,
+            "output_tokens": 153,
+            "total_tokens": 1285,
+            "cache_hit_tokens": 256,
+            "cache_miss_tokens": 876
+          }
+        }
+      ],
+      "semantic_review": "PENDING; not inferred from structural checks",
+      "diagnostic": "completed"
+    },
+    {
+      "id": "iq-n03",
+      "case_id": "iq-n03",
+      "input": "读书小组的朋友提到喜欢摄影，我们都没约过对方。我想邀请他周日下午去公开摄影展，怎样说能让他容易拒绝？",
+      "group": "normal",
+      "category": "邀约",
+      "expected_completed": true,
+      "status": "completed",
+      "route": "ordinary",
+      "final_answer": "上次听你说喜欢摄影，这周日���午有个公开摄影展，我正好想去。你要是有兴趣、时间也方便，可以一起；不方便或已有安排完全没关系，跟我说一声就好。\n\n对方若婉拒、未明确答应或表示不便，就尊重回应，不再追问或换方式反复邀请；如有任何不适，自然结束话题即可。",
+      "result": {
+        "schema_version": "1",
+        "run_id": "034e2504-9328-4c20-aa98-b097a2cc2a28",
+        "status": "completed",
+        "scenario": {
+          "primary": "invitation",
+          "secondary": "consent",
+          "confidence": 0.9,
+          "reason_summary": "User asks how to word a public photography-exhibition invitation to an acquaintance while making it easy to decline."
+        },
+        "safety": {
+          "risk_level": "normal",
+          "risk_categories": [],
+          "safety_route_required": false,
+          "user_facing_note": null
+        },
+        "route": "ordinary",
+        "evidence": {
+          "facts": [
+            {
+              "type": "fact",
+              "statement": "用户说读书小组的一位朋友提到喜欢摄影。",
+              "source": "user_report",
+              "confidence": null
+            },
+            {
+              "type": "fact",
+              "statement": "用户说他们双方都没有约过对方。",
+              "source": "user_report",
+              "confidence": null
+            },
+            {
+              "type": "fact",
+              "statement": "用户想邀请这位朋友周日下午去一个公开摄影展。",
+              "source": "user_report",
+              "confidence": null
+            },
+            {
+              "type": "fact",
+              "statement": "用户希望措辞能让对方容易拒绝。",
+              "source": "user_report",
+              "confidence": null
+            }
+          ],
+          "inferences": [
+            {
+              "type": "inference",
+              "statement": "用户可能担心邀请会给对方造成压力或影响读书小组里的关系，因此希望降低对方拒绝的心理成本。",
+              "source": "user_report",
+              "alternative": "用户也可能只是偏好礼貌、低负担的邀约风格，并非出于担心。",
+              "confidence": 0.4
+            }
+          ],
+          "unknowns": [
+            {
+              "type": "unknown",
+              "statement": "这位朋友对用户或邀约的实际兴趣和意愿未知。",
+              "source": null
+            },
+            {
+              "type": "unknown",
+              "statement": "对方周日是否已有安排、是否方便参加未知。",
+              "source": null
+            },
+            {
+              "type": "unknown",
+              "statement": "读书小组的互动氛围及两人熟悉程度未知。",
+              "source": null
+            },
+            {
+              "type": "unknown",
+              "statement": "用户希望“容易拒绝”的具体原因未知。",
+              "source": null
+            }
+          ]
+        },
+        "knowledge": {
+          "selected_references": [
+            "first_date"
+          ],
+          "primary_reference": "first_date",
+          "reason_summary": "Primary scenario: invitation",
+          "max_references": 3
+        },
+        "analysis": {
+          "core_issue": "用户想邀请读书小组中一位喜欢摄影的朋友周日下午去公开摄影展，并希望措辞让对方容易拒绝；现有材料未提供对方意愿或具体安排的证据，因此无法判断邀请被接受的可能性。",
+          "core_evidence_ids": [
+            "F1",
+            "F2",
+            "F3",
+            "F4",
+            "U1",
+            "U2"
+          ],
+          "core_reference_ids": [
+            "first_date"
+          ],
+          "insufficient_evidence": true,
+          "observations": [
+            {
+              "statement": "用户与对方在读书小组认识，对方提到喜欢摄影，双方此前没有互相邀约过。",
+              "kind": "observed",
+              "dimension": "evidence_quality",
+              "evidence_ids": [
+                "F1",
+                "F2"
+              ],
+              "reference_ids": []
+            },
+            {
+              "statement": "用户计划邀请对方周日下午去一个公开摄影展，并希望措辞便于对方拒绝。",
+              "kind": "observed",
+              "dimension": "communication",
+              "evidence_ids": [
+                "F3",
+                "F4"
+              ],
+              "reference_ids": []
+            },
+            {
+              "statement": "用户可能担心邀请给对方压力或影响读书小组内的关系，因而希望降低拒绝成本；但也可能只是偏好礼貌、低负担的邀约风格。",
+              "kind": "tentative",
+              "dimension": "boundary",
+              "evidence_ids": [
+                "I1",
+                "F4"
+              ],
+              "reference_ids": []
+            }
+          ],
+          "relationship_dynamics": [
+            {
+              "statement": "双方尚无互相邀约的先例，此次活动属于首次私下邀约，互惠信号有限。",
+              "kind": "tentative",
+              "dimension": "reciprocity",
+              "evidence_ids": [
+                "F2"
+              ],
+              "reference_ids": []
+            },
+            {
+              "statement": "公开摄影展是低压力、可退出的场合，与参考框架中初次见面选择公开、可随时结束的场所的原则一致。",
+              "kind": "framework",
+              "dimension": "general",
+              "evidence_ids": [],
+              "reference_ids": [
+                "first_date"
+              ]
+            }
+          ],
+          "risks": [
+            {
+              "statement": "对方是否愿意继续接触尚不明确，邀请可能被接受也可能被婉拒；仅凭现有材料无法预判结果。",
+              "kind": "uncertainty",
+              "dimension": "boundary",
+              "evidence_ids": [
+                "U1"
+              ],
+              "reference_ids": []
+            },
+            {
+              "statement": "对方周日是否有安排尚不明确，时间冲突可能导致无法参加，而非对用户本人意愿的反映。",
+              "kind": "uncertainty",
+              "dimension": "reality_constraint",
+              "evidence_ids": [
+                "U2"
+              ],
+              "reference_ids": []
+            }
+          ],
+          "constraints": [
+            {
+              "statement": "读书小组的互动氛围及两人熟悉程度未知，这会影响邀约措辞的合适程度与对方感受。",
+              "kind": "uncertainty",
+              "dimension": "boundary",
+              "evidence_ids": [
+                "U3"
+              ],
+              "reference_ids": []
+            },
+            {
+              "statement": "用户希望“容易拒绝”的具体原因未知，无法判断是出于关系保护、社交风格还是其他考量。",
+              "kind": "uncertainty",
+              "dimension": "communication",
+              "evidence_ids": [
+                "U4"
+              ],
+              "reference_ids": []
+            }
+          ],
+          "uncertainties": [
+            {
+              "statement": "对方对用户或邀约的实际兴趣和意愿未知，不能仅凭“提到喜欢摄影”推断其愿意赴约。",
+              "kind": "uncertainty",
+              "dimension": "evidence_quality",
+              "evidence_ids": [
+                "U1"
+              ],
+              "reference_ids": []
+            },
+            {
+              "statement": "对方周日是否方便参加未知，时间安排属于外部约束，不能作为感情或意愿的判断依据。",
+              "kind": "uncertainty",
+              "dimension": "reality_constraint",
+              "evidence_ids": [
+                "U2"
+              ],
+              "reference_ids": []
+            }
+          ]
+        },
+        "action": {
+          "contact_policy": "invite",
+          "recommended_action": "以轻松、低负担的方式发出首次邀请：提到听说对方喜欢摄影，周日下午有公开摄影展，问对方是否有兴趣和方便；明确表示时间不合适或有安排完全没关系，把选择权交给对方。",
+          "supporting_analysis_ids": [
+            "A1",
+            "A2",
+            "A3",
+            "A4",
+            "A7"
+          ],
+          "message_suggestion": "上次听你说喜欢摄影，这周日���午有个公开摄影展，我正好想去。你要是有兴趣、时间也方便，可以一起；不方便或已有安排完全没关系，跟我说一声就好。",
+          "observation_window": null,
+          "stop_conditions": [
+            "如果对方表示不方便、婉拒或未明确答应，就尊重这个回应，不再追问或换方式反复邀请。",
+            "如果对方表达任何不适或不愿继续这个话题，就自然结束邀约并回到日常交流。",
+            "如果对方回应含糊，就不再施压，把选择权留给对方。"
+          ]
+        },
+        "memory_intent": {
+          "decision": "no_write",
+          "person_id": null,
+          "item_id": null,
+          "requires_confirmation": false
+        },
+        "memory_candidates": [],
+        "memory_receipt": {
+          "status": "none",
+          "saved_count": 0,
+          "duplicate_count": 0,
+          "undone_count": 0
+        },
+        "final_answer": "上次听你说喜欢摄影，这周日���午有个公开摄影展，我正好想去。你要是有兴趣、时间也方便，可以一起；不方便或已有安排完全没关系，跟我说一声就好。\n\n对方若婉拒、未明确答应或表示不便，就尊重回应，不再追问或换方式反复邀请；如有任何不适，自然结束话题即可。",
+        "warnings": []
+      },
+      "latency_ms": 12223.138299999846,
+      "checks": {
+        "schema_and_formal_guards": true,
+        "route": true,
+        "no_unauthorized_memory": true
+      },
+      "passed": true,
+      "memory_write_attempts": 0,
+      "memory_unchanged": true,
+      "provider": {
+        "requests": 6,
+        "responses": 6,
+        "provider_success_rate": 1.0,
+        "pydantic_valid": 6,
+        "pydantic_denominator": 6,
+        "pydantic_rate": 1.0,
+        "unknown_cost_calls": 0,
+        "cost_cny_upper_bound": 0.02281336,
+        "tokens": {
+          "input_tokens": 8695,
+          "output_tokens": 1556,
+          "total_tokens": 10251,
+          "cache_hit_tokens": 3584,
+          "cache_miss_tokens": 5111
+        }
+      },
+      "pydantic": [
+        {
+          "schema": "SafetyResult",
+          "status": "completed",
+          "error": null
+        },
+        {
+          "schema": "ScenarioResult",
+          "status": "completed",
+          "error": null
+        },
+        {
+          "schema": "FactExtractionResult",
+          "status": "completed",
+          "error": null
+        },
+        {
+          "schema": "AnalysisResult",
+          "status": "completed",
+          "error": null
+        },
+        {
+          "schema": "ActionPlan",
+          "status": "completed",
+          "error": null
+        },
+        {
+          "schema": "ResponseResult",
+          "status": "completed",
+          "error": null
+        }
+      ],
+      "safety": {
+        "risk_level": "normal",
+        "risk_categories": [],
+        "safety_route_required": false,
+        "user_facing_note": null
+      },
+      "contextual_review": {
+        "triggered": false,
+        "calls": 0,
+        "allow": 0,
+        "block": 0,
+        "fault": 0,
+        "duration_ms": 0,
+        "requests": 0,
+        "responses": 0,
+        "provider_success_rate": null,
+        "pydantic_valid": 0,
+        "pydantic_denominator": 0,
+        "pydantic_rate": null,
+        "unknown_cost_calls": 0,
+        "cost_cny_upper_bound": 0,
+        "tokens": {
+          "input_tokens": 0,
+          "output_tokens": 0,
+          "total_tokens": 0,
+          "cache_hit_tokens": 0,
+          "cache_miss_tokens": 0
+        }
+      },
+      "failed_node": null,
+      "raw_visible_outputs": [
+        {
+          "content": "{\"risk_level\":\"normal\",\"risk_categories\":[],\"safety_route_required\":false,\"user_facing_note\":null}",
+          "model": "deepseek-flash",
+          "finish_reason": "stop",
+          "usage": {
+            "input_tokens": 654,
+            "output_tokens": 29,
+            "total_tokens": 683,
+            "cache_hit_tokens": 384,
+            "cache_miss_tokens": 270
+          }
+        },
+        {
+          "content": "{\"primary\": \"invitation\", \"secondary\": \"consent\", \"confidence\": 0.9, \"reason_summary\": \"User asks how to word a public photography-exhibition invitation to an acquaintance while making it easy to decline.\"}",
+          "model": "deepseek-flash",
+          "finish_reason": "stop",
+          "usage": {
+            "input_tokens": 498,
+            "output_tokens": 50,
+            "total_tokens": 548,
+            "cache_hit_tokens": 256,
+            "cache_miss_tokens": 242
+          }
+        },
+        {
+          "content": "{\"facts\": [{\"statement\": \"用户说读书小组的一位朋友提到喜欢摄影。\", \"source\": \"user_report\", \"confidence\": null}, {\"statement\": \"用户说他们双方都没有约过对方。\", \"source\": \"user_report\", \"confidence\": null}, {\"statement\": \"用户想邀请这位朋友周日下午去一个公开摄影展。\", \"source\": \"user_report\", \"confidence\": null}, {\"statement\": \"用户希望措辞能让对方容易拒绝。\", \"source\": \"user_report\", \"confidence\": null}], \"inferences\": [{\"statement\": \"用户可能担心邀请会给对方造成压力或影响读书小组里的关系，因此希望降低对方拒绝的心理成本。\", \"source\": \"user_report\", \"alternative\": \"用户也可能只是偏好礼貌、低负担的邀约风格，并非出于担心。\", \"confidence\": 0.4}], \"unknowns\": [{\"statement\": \"这位朋友对用户或邀约的实际兴趣和意愿未知。\", \"source\": null}, {\"statement\": \"对方周日是否已有安排、是否方便参加未知。\", \"source\": null}, {\"statement\": \"读书小组的互动氛围及两人熟悉程度未知。\", \"source\": null}, {\"statement\": \"用户希望“容易拒绝”的具体原因未知。\", \"source\": null}]}",
+          "model": "deepseek-flash",
+          "finish_reason": "stop",
+          "usage": {
+            "input_tokens": 949,
+            "output_tokens": 276,
+            "total_tokens": 1225,
+            "cache_hit_tokens": 768,
+            "cache_miss_tokens": 181
+          }
+        },
+        {
+          "content": "{\n  \"core_issue\": \"用户想邀请读书小组中一位喜欢摄影的朋友周日下午去公开摄影展，并希望措辞让对方容易拒绝；现有材料未提供对方意愿或具体安排的证据，因此无法判断邀请被接受的可能性。\",\n  \"core_evidence_ids\": [\"F1\", \"F2\", \"F3\", \"F4\", \"U1\", \"U2\"],\n  \"core_reference_ids\": [\"first_date\"],\n  \"insufficient_evidence\": true,\n  \"observations\": [\n    {\n      \"statement\": \"用户与对方在读书小组认识，对方提到喜欢摄影，双方此前没有互相邀约过。\",\n      \"kind\": \"observed\",\n      \"dimension\": \"evidence_quality\",\n      \"evidence_ids\": [\"F1\", \"F2\"],\n      \"reference_ids\": []\n    },\n    {\n      \"statement\": \"用户计划邀请对方周日下午去一个公开摄影展，并希望措辞便于对方拒绝。\",\n      \"kind\": \"observed\",\n      \"dimension\": \"communication\",\n      \"evidence_ids\": [\"F3\", \"F4\"],\n      \"reference_ids\": []\n    },\n    {\n      \"statement\": \"用户可能担心邀请给对方压力或影响读书小组内的关系，因而希望降低拒绝成本；但也可能只是偏好礼貌、低负担的邀约风格。\",\n      \"kind\": \"tentative\",\n      \"dimension\": \"boundary\",\n      \"evidence_ids\": [\"I1\", \"F4\"],\n      \"reference_ids\": []\n    }\n  ],\n  \"relationship_dynamics\": [\n    {\n      \"statement\": \"双方尚无互相邀约的先例，此次活动属于首次私下邀约，互惠信号有限。\",\n      \"kind\": \"tentative\",\n      \"dimension\": \"reciprocity\",\n      \"evidence_ids\": [\"F2\"],\n      \"reference_ids\": []\n    },\n    {\n      \"statement\": \"公开摄影展是低压力、可退出的场合，与参考框架中初次见面选择公开、可随时结束的场所的原则一致。\",\n      \"kind\": \"framework\",\n      \"dimension\": \"general\",\n      \"evidence_ids\": [],\n      \"reference_ids\": [\"first_date\"]\n    }\n  ],\n  \"risks\": [\n    {\n      \"statement\": \"对方是否愿意继续接触尚不明确，邀请可能被接受也可能被婉拒；仅凭现有材料无法预判结果。\",\n      \"kind\": \"uncertainty\",\n      \"dimension\": \"boundary\",\n      \"evidence_ids\": [\"U1\"],\n      \"reference_ids\": []\n    },\n    {\n      \"statement\": \"对方周日是否有安排尚不明确，时间冲突可能导致无法参加，而非对用户本人意愿的反映。\",\n      \"kind\": \"uncertainty\",\n      \"dimension\": \"reality_constraint\",\n      \"evidence_ids\": [\"U2\"],\n      \"reference_ids\": []\n    }\n  ],\n  \"constraints\": [\n    {\n      \"statement\": \"读书小组的互动氛围及两人熟悉程度未知，这会影响邀约措辞的合适程度与对方感受。\",\n      \"kind\": \"uncertainty\",\n      \"dimension\": \"boundary\",\n      \"evidence_ids\": [\"U3\"],\n      \"reference_ids\": []\n    },\n    {\n      \"statement\": \"用户希望“容易拒绝”的具体原因未知，无法判断是出于关系保护、社交风格还是其他考量。\",\n      \"kind\": \"uncertainty\",\n      \"dimension\": \"communication\",\n      \"evidence_ids\": [\"U4\"],\n      \"reference_ids\": []\n    }\n  ],\n  \"uncertainties\": [\n    {\n      \"statement\": \"对方对用户或邀约的实际兴趣和意愿未知，不能仅凭“提到喜欢摄影”推断其愿意赴约。\",\n      \"kind\": \"uncertainty\",\n      \"dimension\": \"evidence_quality\",\n      \"evidence_ids\": [\"U1\"],\n      \"reference_ids\": []\n    },\n    {\n      \"statement\": \"对方周日是否方便参加未知，时间安排属于外部约束，不能作为感情或意愿的判断依据。\",\n      \"kind\": \"uncertainty\",\n      \"dimension\": \"reality_constraint\",\n      \"evidence_ids\": [\"U2\"],\n      \"reference_ids\": []\n    }\n  ]\n}",
+          "model": "deepseek-flash",
+          "finish_reason": "stop",
+          "usage": {
+            "input_tokens": 3789,
+            "output_tokens": 895,
+            "total_tokens": 4684,
+            "cache_hit_tokens": 1280,
+            "cache_miss_tokens": 2509
+          }
+        },
+        {
+          "content": "{\"contact_policy\": \"invite\", \"recommended_action\": \"以轻松、低负担的方式发出首次邀请：提到听说对方喜欢摄影，周日下午有公开摄影展，问对方是否有兴趣和方便；明确表示时间不合适或有安排完全没关系，把选择权交给对方。\", \"supporting_analysis_ids\": [\"A1\", \"A2\", \"A3\", \"A4\", \"A7\"], \"message_suggestion\": \"上次听你说喜欢摄影，这周日���午有个公开摄影展，我正好想去。你要是有兴趣、时间也方便，可以一起；不方便或已有安排完全没关系，跟我说一声就好。\", \"observation_window\": null, \"stop_conditions\": [\"如果对方表示不方便、婉拒或未明确答应，就尊重这个回应，不再追问或换方式反复邀请。\", \"如果对方表达任何不适或不愿继续这个话题，就自然结束邀约并回到日常交流。\", \"如果对方回应含糊，就不再施压，把选择权留给对方。\"]}",
+          "model": "deepseek-flash",
+          "finish_reason": "stop",
+          "usage": {
+            "input_tokens": 1614,
+            "output_tokens": 214,
+            "total_tokens": 1828,
+            "cache_hit_tokens": 640,
+            "cache_miss_tokens": 974
+          }
+        },
+        {
+          "content": "{\"final_answer\": \"上次听你说喜欢摄影，这周日���午有个公开摄影展，我正好想去。你要是有兴趣、时间也方便，可以一起；不方便或已有安排完全没关系，跟我说一声就好。\\n\\n对方若婉拒、未明确答应或表示不便，就尊重回应，不再追问或换方式反复邀请；如有任何不适，自然结束话题即可。\", \"contact_policy\": \"invite\"}",
+          "model": "deepseek-flash",
+          "finish_reason": "stop",
+          "usage": {
+            "input_tokens": 1191,
+            "output_tokens": 92,
+            "total_tokens": 1283,
+            "cache_hit_tokens": 256,
+            "cache_miss_tokens": 935
+          }
+        }
+      ],
+      "semantic_review": "PENDING; not inferred from structural checks",
+      "diagnostic": "completed"
+    }
+  ],
+  "traces": [
+    {
+      "kind": "provider",
+      "operation": "structured_output",
+      "schema": "SafetyResult",
+      "status": "completed",
+      "error": null,
+      "usage": {
+        "input_tokens": 647,
+        "output_tokens": 32,
+        "total_tokens": 679,
+        "cache_hit_tokens": 384,
+        "cache_miss_tokens": 263
+      },
+      "model": "deepseek-flash",
+      "duration_ms": null,
+      "run_id": "8ffce0db-f971-419f-bc73-b019dd4dd113",
+      "provenance": "reconstructed_from_original_case_checkpoint_not_live_trace"
+    },
+    {
+      "kind": "provider",
+      "operation": "structured_output",
+      "schema": "ScenarioResult",
+      "status": "completed",
+      "error": null,
+      "usage": {
+        "input_tokens": 491,
+        "output_tokens": 54,
+        "total_tokens": 545,
+        "cache_hit_tokens": 256,
+        "cache_miss_tokens": 235
+      },
+      "model": "deepseek-flash",
+      "duration_ms": null,
+      "run_id": "8ffce0db-f971-419f-bc73-b019dd4dd113",
+      "provenance": "reconstructed_from_original_case_checkpoint_not_live_trace"
+    },
+    {
+      "kind": "provider",
+      "operation": "structured_output",
+      "schema": "FactExtractionResult",
+      "status": "completed",
+      "error": null,
+      "usage": {
+        "input_tokens": 942,
+        "output_tokens": 346,
+        "total_tokens": 1288,
+        "cache_hit_tokens": 768,
+        "cache_miss_tokens": 174
+      },
+      "model": "deepseek-flash",
+      "duration_ms": null,
+      "run_id": "8ffce0db-f971-419f-bc73-b019dd4dd113",
+      "provenance": "reconstructed_from_original_case_checkpoint_not_live_trace"
+    },
+    {
+      "kind": "provider",
+      "operation": "structured_output",
+      "schema": "AnalysisResult",
+      "status": "completed",
+      "error": null,
+      "usage": {
+        "input_tokens": 5005,
+        "output_tokens": 724,
+        "total_tokens": 5729,
+        "cache_hit_tokens": 1280,
+        "cache_miss_tokens": 3725
+      },
+      "model": "deepseek-flash",
+      "duration_ms": null,
+      "run_id": "8ffce0db-f971-419f-bc73-b019dd4dd113",
+      "provenance": "reconstructed_from_original_case_checkpoint_not_live_trace"
+    },
+    {
+      "kind": "provider",
+      "operation": "structured_output",
+      "schema": "ActionPlan",
+      "status": "completed",
+      "error": null,
+      "usage": {
+        "input_tokens": 1673,
+        "output_tokens": 180,
+        "total_tokens": 1853,
+        "cache_hit_tokens": 512,
+        "cache_miss_tokens": 1161
+      },
+      "model": "deepseek-flash",
+      "duration_ms": null,
+      "run_id": "8ffce0db-f971-419f-bc73-b019dd4dd113",
+      "provenance": "reconstructed_from_original_case_checkpoint_not_live_trace"
+    },
+    {
+      "kind": "provider",
+      "operation": "structured_output",
+      "schema": "ResponseResult",
+      "status": "completed",
+      "error": null,
+      "usage": {
+        "input_tokens": 1168,
+        "output_tokens": 106,
+        "total_tokens": 1274,
+        "cache_hit_tokens": 256,
+        "cache_miss_tokens": 912
+      },
+      "model": "deepseek-flash",
+      "duration_ms": null,
+      "run_id": "8ffce0db-f971-419f-bc73-b019dd4dd113",
+      "provenance": "reconstructed_from_original_case_checkpoint_not_live_trace"
+    },
+    {
+      "kind": "provider",
+      "operation": "structured_output",
+      "schema": "SafetyResult",
+      "status": "completed",
+      "error": null,
+      "usage": {
+        "input_tokens": 647,
+        "output_tokens": 29,
+        "total_tokens": 676,
+        "cache_hit_tokens": 384,
+        "cache_miss_tokens": 263
+      },
+      "model": "deepseek-flash",
+      "duration_ms": null,
+      "run_id": "85bac317-4ddc-4000-800f-17f309b77b7b",
+      "provenance": "reconstructed_from_original_case_checkpoint_not_live_trace"
+    },
+    {
+      "kind": "provider",
+      "operation": "structured_output",
+      "schema": "ScenarioResult",
+      "status": "completed",
+      "error": null,
+      "usage": {
+        "input_tokens": 491,
+        "output_tokens": 47,
+        "total_tokens": 538,
+        "cache_hit_tokens": 256,
+        "cache_miss_tokens": 235
+      },
+      "model": "deepseek-flash",
+      "duration_ms": null,
+      "run_id": "85bac317-4ddc-4000-800f-17f309b77b7b",
+      "provenance": "reconstructed_from_original_case_checkpoint_not_live_trace"
+    },
+    {
+      "kind": "provider",
+      "operation": "structured_output",
+      "schema": "FactExtractionResult",
+      "status": "completed",
+      "error": null,
+      "usage": {
+        "input_tokens": 942,
+        "output_tokens": 370,
+        "total_tokens": 1312,
+        "cache_hit_tokens": 768,
+        "cache_miss_tokens": 174
+      },
+      "model": "deepseek-flash",
+      "duration_ms": null,
+      "run_id": "85bac317-4ddc-4000-800f-17f309b77b7b",
+      "provenance": "reconstructed_from_original_case_checkpoint_not_live_trace"
+    },
+    {
+      "kind": "provider",
+      "operation": "structured_output",
+      "schema": "AnalysisResult",
+      "status": "completed",
+      "error": null,
+      "usage": {
+        "input_tokens": 3762,
+        "output_tokens": 780,
+        "total_tokens": 4542,
+        "cache_hit_tokens": 1280,
+        "cache_miss_tokens": 2482
+      },
+      "model": "deepseek-flash",
+      "duration_ms": null,
+      "run_id": "85bac317-4ddc-4000-800f-17f309b77b7b",
+      "provenance": "reconstructed_from_original_case_checkpoint_not_live_trace"
+    },
+    {
+      "kind": "provider",
+      "operation": "structured_output",
+      "schema": "ActionPlan",
+      "status": "completed",
+      "error": null,
+      "usage": {
+        "input_tokens": 1545,
+        "output_tokens": 176,
+        "total_tokens": 1721,
+        "cache_hit_tokens": 512,
+        "cache_miss_tokens": 1033
+      },
+      "model": "deepseek-flash",
+      "duration_ms": null,
+      "run_id": "85bac317-4ddc-4000-800f-17f309b77b7b",
+      "provenance": "reconstructed_from_original_case_checkpoint_not_live_trace"
+    },
+    {
+      "kind": "provider",
+      "operation": "structured_output",
+      "schema": "ResponseResult",
+      "status": "completed",
+      "error": null,
+      "usage": {
+        "input_tokens": 1132,
+        "output_tokens": 153,
+        "total_tokens": 1285,
+        "cache_hit_tokens": 256,
+        "cache_miss_tokens": 876
+      },
+      "model": "deepseek-flash",
+      "duration_ms": null,
+      "run_id": "85bac317-4ddc-4000-800f-17f309b77b7b",
+      "provenance": "reconstructed_from_original_case_checkpoint_not_live_trace"
+    },
+    {
+      "kind": "provider",
+      "operation": "structured_output",
+      "schema": "SafetyResult",
+      "status": "completed",
+      "error": null,
+      "usage": {
+        "input_tokens": 654,
+        "output_tokens": 29,
+        "total_tokens": 683,
+        "cache_hit_tokens": 384,
+        "cache_miss_tokens": 270
+      },
+      "model": "deepseek-flash",
+      "duration_ms": null,
+      "run_id": "034e2504-9328-4c20-aa98-b097a2cc2a28",
+      "provenance": "reconstructed_from_original_case_checkpoint_not_live_trace"
+    },
+    {
+      "kind": "provider",
+      "operation": "structured_output",
+      "schema": "ScenarioResult",
+      "status": "completed",
+      "error": null,
+      "usage": {
+        "input_tokens": 498,
+        "output_tokens": 50,
+        "total_tokens": 548,
+        "cache_hit_tokens": 256,
+        "cache_miss_tokens": 242
+      },
+      "model": "deepseek-flash",
+      "duration_ms": null,
+      "run_id": "034e2504-9328-4c20-aa98-b097a2cc2a28",
+      "provenance": "reconstructed_from_original_case_checkpoint_not_live_trace"
+    },
+    {
+      "kind": "provider",
+      "operation": "structured_output",
+      "schema": "FactExtractionResult",
+      "status": "completed",
+      "error": null,
+      "usage": {
+        "input_tokens": 949,
+        "output_tokens": 276,
+        "total_tokens": 1225,
+        "cache_hit_tokens": 768,
+        "cache_miss_tokens": 181
+      },
+      "model": "deepseek-flash",
+      "duration_ms": null,
+      "run_id": "034e2504-9328-4c20-aa98-b097a2cc2a28",
+      "provenance": "reconstructed_from_original_case_checkpoint_not_live_trace"
+    },
+    {
+      "kind": "provider",
+      "operation": "structured_output",
+      "schema": "AnalysisResult",
+      "status": "completed",
+      "error": null,
+      "usage": {
+        "input_tokens": 3789,
+        "output_tokens": 895,
+        "total_tokens": 4684,
+        "cache_hit_tokens": 1280,
+        "cache_miss_tokens": 2509
+      },
+      "model": "deepseek-flash",
+      "duration_ms": null,
+      "run_id": "034e2504-9328-4c20-aa98-b097a2cc2a28",
+      "provenance": "reconstructed_from_original_case_checkpoint_not_live_trace"
+    },
+    {
+      "kind": "provider",
+      "operation": "structured_output",
+      "schema": "ActionPlan",
+      "status": "completed",
+      "error": null,
+      "usage": {
+        "input_tokens": 1614,
+        "output_tokens": 214,
+        "total_tokens": 1828,
+        "cache_hit_tokens": 640,
+        "cache_miss_tokens": 974
+      },
+      "model": "deepseek-flash",
+      "duration_ms": null,
+      "run_id": "034e2504-9328-4c20-aa98-b097a2cc2a28",
+      "provenance": "reconstructed_from_original_case_checkpoint_not_live_trace"
+    },
+    {
+      "kind": "provider",
+      "operation": "structured_output",
+      "schema": "ResponseResult",
+      "status": "completed",
+      "error": null,
+      "usage": {
+        "input_tokens": 1191,
+        "output_tokens": 92,
+        "total_tokens": 1283,
+        "cache_hit_tokens": 256,
+        "cache_miss_tokens": 935
+      },
+      "model": "deepseek-flash",
+      "duration_ms": null,
+      "run_id": "034e2504-9328-4c20-aa98-b097a2cc2a28",
+      "provenance": "reconstructed_from_original_case_checkpoint_not_live_trace"
+    }
+  ],
+  "evidence_recovery": {
+    "reason": "git ownership check failed during batch artifact assembly after all 3 checkpoints",
+    "paid_retries": 0,
+    "lost_fields": [
+      "node_traces",
+      "provider_duration_ms",
+      "reserved_cny"
+    ],
+    "case_latency_and_visible_outputs": "original checkpoint values, unchanged",
+    "provider_records": "reconstructed statuses/schema from checkpoint; usage from original responses"
+  }
+}

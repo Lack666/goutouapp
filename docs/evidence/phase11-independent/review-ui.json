@@ -1,0 +1,16 @@
+[
+  {
+    "port": 8766,
+    "items": 15,
+    "submitted": 0,
+    "first_case": "iq-n01",
+    "six_dimensions": 6
+  },
+  {
+    "port": 8767,
+    "items": 15,
+    "submitted": 0,
+    "first_case": "iq-n16",
+    "six_dimensions": 6
+  }
+]

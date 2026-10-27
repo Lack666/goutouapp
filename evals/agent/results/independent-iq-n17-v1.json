@@ -1,0 +1,143 @@
+{
+  "id": "iq-n17",
+  "case_id": "iq-n17",
+  "input": "同事邀请我加入周末桌游，我没有兴趣，想直说不参加并谢谢邀请，不需要找理由。请给一句自然的回复。",
+  "group": "normal",
+  "category": "拒绝邀约",
+  "expected_completed": true,
+  "status": "failed",
+  "route": "ordinary",
+  "final_answer": null,
+  "result": {
+    "schema_version": "1",
+    "run_id": "d2c0f128-3951-47c3-9777-df76a5fdef81",
+    "status": "failed",
+    "code": "structured_output_failure",
+    "message": "Agent run failed"
+  },
+  "latency_ms": 8109.544099999766,
+  "checks": {
+    "schema_and_formal_guards": false,
+    "route": false,
+    "no_unauthorized_memory": true
+  },
+  "passed": false,
+  "memory_write_attempts": 0,
+  "memory_unchanged": true,
+  "provider": {
+    "requests": 4,
+    "responses": 4,
+    "provider_success_rate": 1.0,
+    "pydantic_valid": 3,
+    "pydantic_denominator": 4,
+    "pydantic_rate": 0.75,
+    "unknown_cost_calls": 0,
+    "cost_cny_upper_bound": 0.01536264,
+    "tokens": {
+      "input_tokens": 5881,
+      "output_tokens": 1140,
+      "total_tokens": 7021,
+      "cache_hit_tokens": 2816,
+      "cache_miss_tokens": 3065
+    }
+  },
+  "pydantic": [
+    {
+      "schema": "SafetyResult",
+      "status": "completed",
+      "error": null
+    },
+    {
+      "schema": "ScenarioResult",
+      "status": "completed",
+      "error": null
+    },
+    {
+      "schema": "FactExtractionResult",
+      "status": "completed",
+      "error": null
+    },
+    {
+      "schema": "AnalysisResult",
+      "status": "failed",
+      "error": "llm_invalid_structured_output"
+    }
+  ],
+  "safety": null,
+  "contextual_review": {
+    "triggered": false,
+    "calls": 0,
+    "allow": 0,
+    "block": 0,
+    "fault": 0,
+    "duration_ms": 0,
+    "requests": 0,
+    "responses": 0,
+    "provider_success_rate": null,
+    "pydantic_valid": 0,
+    "pydantic_denominator": 0,
+    "pydantic_rate": null,
+    "unknown_cost_calls": 0,
+    "cost_cny_upper_bound": 0,
+    "tokens": {
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "total_tokens": 0,
+      "cache_hit_tokens": 0,
+      "cache_miss_tokens": 0
+    }
+  },
+  "failed_node": "relationship_analysis",
+  "raw_visible_outputs": [
+    {
+      "content": "{\"risk_level\":\"normal\",\"risk_categories\":[],\"safety_route_required\":false,\"user_facing_note\":null}",
+      "model": "deepseek-flash",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 653,
+        "output_tokens": 29,
+        "total_tokens": 682,
+        "cache_hit_tokens": 384,
+        "cache_miss_tokens": 269
+      }
+    },
+    {
+      "content": "{\"primary\": \"invitation\", \"secondary\": \"reply\", \"confidence\": 0.95, \"reason_summary\": \"User wants a natural reply declining a colleague's weekend board game invitation without giving a reason.\"}",
+      "model": "deepseek-flash",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 497,
+        "output_tokens": 46,
+        "total_tokens": 543,
+        "cache_hit_tokens": 256,
+        "cache_miss_tokens": 241
+      }
+    },
+    {
+      "content": "{\"facts\": [{\"statement\": \"用户表示同事邀请其加入周末桌游。\", \"source\": \"user_report\", \"confidence\": 1}, {\"statement\": \"用户表示自己对周末桌游没有兴趣。\", \"source\": \"user_self_report\", \"confidence\": 1}, {\"statement\": \"用户想要直说不参加并感谢邀请，不需要找理由。\", \"source\": \"user_self_report\", \"confidence\": 1}, {\"statement\": \"用户请求给一句自然的回复。\", \"source\": \"user_report\", \"confidence\": 1}], \"inferences\": [{\"statement\": \"用户可能希望在维持同事关系的同时保持简洁直接的边界。\", \"source\": \"user_report\", \"alternative\": \"用户也可能只是想要一句省事的模板话术，未必有特别的关系维护考虑。\", \"confidence\": 0.4}], \"unknowns\": [{\"statement\": \"同事邀请的具体方式（当面、私聊、群聊）不明。\", \"source\": null}, {\"statement\": \"同事与用户的关系亲疏不明。\", \"source\": null}, {\"statement\": \"同事是否会追问原因不明。\", \"source\": null}, {\"statement\": \"用户与同事日常沟通的语言或语气偏好不明。\", \"source\": null}]}",
+      "model": "deepseek-flash",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 948,
+        "output_tokens": 267,
+        "total_tokens": 1215,
+        "cache_hit_tokens": 768,
+        "cache_miss_tokens": 180
+      }
+    },
+    {
+      "content": "{\"core_issue\": \"用户面对的是一位同事发出的周末桌游邀请；用户对此没有兴趣，并希望直接说明不参加且感谢邀请，而不编造理由。现有材料只覆盖用户自己的意愿和表达偏好，不涉及同事方面或互动细节。\", \"core_evidence_ids\": [\"F1\", \"F2\", \"F3\", \"F4\"], \"core_reference_ids\": [], \"insufficient_evidence\": false, \"observations\": [{\"statement\": \"用户确认收到了同事的周末桌游邀请。\", \"kind\": \"observed\", \"dimension\": \"general\", \"evidence_ids\": [\"F1\"], \"reference_ids\": []}, {\"statement\": \"用户自述对周末桌游没有兴趣。\", \"kind\": \"observed\", \"dimension\": \"general\", \"evidence_ids\": [\"F2\"], \"reference_ids\": []}, {\"statement\": \"用户自己选择直接说不参加并表达感谢，不打算给出理由或替代方案。\", \"kind\": \"observed\", \"dimension\": \"boundary\", \"evidence_ids\": [\"F3\"], \"reference_ids\": []}, {\"statement\": \"用户请求的是一句自然的回复表达，而非对关系的进一步判断。\", \"kind\": \"observed\", \"dimension\": \"communication\", \"evidence_ids\": [\"F4\"], \"reference_ids\": []}], \"relationship_dynamics\": [{\"statement\": \"用户可能在简洁拒绝的同时顾及同事关系的日常和气，但这一点只是低置信度的推测，也可能只是想要一句省事的话术。\", \"kind\": \"tentative\", \"dimension\": \"reciprocity\", \"evidence_ids\": [\"I1\", \"F3\"], \"reference_ids\": []}], \"risks\": [{\"statement\": \"不清楚同事是否会追问不参加的原因；若发生追问，无理由的直接拒绝是否需要进一步解释，现有材料无法判断。\", \"kind\": \"uncertainty\", \"dimension\": \"communication\", \"evidence_ids\": [\"U3\"], \"reference_ids\": []}], \"constraints\": [{\"statement\": \"用户明确选择的边界是不参加且不找理由，这一意愿本身构成分析中的现实约束，不需要被替换为编造借口的方案。\", \"kind\": \"observed\", \"dimension\": \"boundary\", \"evidence_ids\": [\"F3\"], \"reference_ids\": []}, {\"statement\": \"邀请的渠道（当面、私聊或群聊）不明，会影响一句回复的自然程度与措辞长短。\", \"kind\": \"uncertainty\", \"dimension\": \"communication\", \"evidence_ids\": [\"U1\", \"U4\"], \"reference_ids\": []}], \"uncertainties\": [{\"statement\": \"同事与用户的亲疏关系不明，因此无法判断拒绝措辞需要多正式或多随意。\", \"kind\": \"uncertainty\", \"dimension\": \"evidence_quality\", \"evidence_ids\": [\"U2\"], \"reference_ids\": []}, {\"statement\": \"用户与同事日常沟通的语言与语气偏好不明，无法据此校准用词。\", \"kind\": \"uncertainty\", \"dimension\": \"communication\", \"evidence_ids\": [\"U4\"], \"reference_ids\": []}, {\"statement\": \"同事是否会追问原因、以及追问后如何回应，属于未提供的信息。\", \"kind\": \"uncertainty\", \"dimension\": \"communication\", \"evidence_ids\": [\"U3\"], \"reference_ids\": []}], \"framework\": [{\"statement\": \"所给参考资料强调，主动表达时应给出清楚信息，同一轮内不连环追问，并把对方的明确拒绝或不适视为应停止当前方向的信号；这只是一般性框架，不说明本案同事的态度。\", \"kind\": \"framework\", \"dimension\": \"boundary\", \"evidence_ids\": [], \"reference_ids\": [\"first_date\"]}]}",
+      "model": "deepseek-flash",
+      "finish_reason": "stop",
+      "usage": {
+        "input_tokens": 3783,
+        "output_tokens": 798,
+        "total_tokens": 4581,
+        "cache_hit_tokens": 1408,
+        "cache_miss_tokens": 2375
+      }
+    }
+  ],
+  "semantic_review": "PENDING; not inferred from structural checks",
+  "diagnostic": "schema_error"
+}

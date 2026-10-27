@@ -1,0 +1,228 @@
+Traceback (most recent call last):
+  File "F:\��ͷ��ʦapp��\goutouapp\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 149, in __init__
+    self._dbapi_connection = engine.raw_connection()
+                             ~~~~~~~~~~~~~~~~~~~~~^^
+  File "F:\��ͷ��ʦapp��\goutouapp\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 3284, in raw_connection
+    return self.pool.connect()
+           ~~~~~~~~~~~~~~~~~^^
+  File "F:\��ͷ��ʦapp��\goutouapp\.venv\Lib\site-packages\sqlalchemy\pool\base.py", line 445, in connect
+    return _ConnectionFairy._checkout(self)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "F:\��ͷ��ʦapp��\goutouapp\.venv\Lib\site-packages\sqlalchemy\pool\base.py", line 1287, in _checkout
+    fairy = _ConnectionRecord.checkout(pool)
+  File "F:\��ͷ��ʦapp��\goutouapp\.venv\Lib\site-packages\sqlalchemy\pool\base.py", line 709, in checkout
+    rec = pool._do_get()
+  File "F:\��ͷ��ʦapp��\goutouapp\.venv\Lib\site-packages\sqlalchemy\pool\impl.py", line 176, in _do_get
+    with util.safe_reraise():
+         ~~~~~~~~~~~~~~~~~^^
+  File "F:\��ͷ��ʦapp��\goutouapp\.venv\Lib\site-packages\sqlalchemy\util\langhelpers.py", line 166, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "F:\��ͷ��ʦapp��\goutouapp\.venv\Lib\site-packages\sqlalchemy\pool\impl.py", line 174, in _do_get
+    return self._create_connection()
+           ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "F:\��ͷ��ʦapp��\goutouapp\.venv\Lib\site-packages\sqlalchemy\pool\base.py", line 386, in _create_connection
+    return _ConnectionRecord(self)
+  File "F:\��ͷ��ʦapp��\goutouapp\.venv\Lib\site-packages\sqlalchemy\pool\base.py", line 671, in __init__
+    self.__connect()
+    ~~~~~~~~~~~~~~^^
+  File "F:\��ͷ��ʦapp��\goutouapp\.venv\Lib\site-packages\sqlalchemy\pool\base.py", line 895, in __connect
+    with util.safe_reraise():
+         ~~~~~~~~~~~~~~~~~^^
+  File "F:\��ͷ��ʦapp��\goutouapp\.venv\Lib\site-packages\sqlalchemy\util\langhelpers.py", line 166, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "F:\��ͷ��ʦapp��\goutouapp\.venv\Lib\site-packages\sqlalchemy\pool\base.py", line 891, in __connect
+    self.dbapi_connection = connection = pool._invoke_creator(self)
+                                         ~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "F:\��ͷ��ʦapp��\goutouapp\.venv\Lib\site-packages\sqlalchemy\engine\create.py", line 645, in connect
+    return dialect.connect(*cargs_tup, **cparams)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\��ͷ��ʦapp��\goutouapp\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 857, in connect
+    return self.loaded_dbapi.connect(*cargs, **cparams)  # type: ignore[no-any-return]  # NOQA: E501
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "F:\��ͷ��ʦapp��\goutouapp\.venv\Lib\site-packages\psycopg\connection.py", line 126, in connect
+    raise last_ex.with_traceback(None)
+psycopg.errors.ConnectionTimeout: connection timeout expired
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "F:\��ͷ��ʦapp��\goutouapp\apps\server\memory_control_demo.py", line 39, in disposable_database
+    with admin.connect() as db:
+         ~~~~~~~~~~~~~^^
+  File "F:\��ͷ��ʦapp��\goutouapp\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 3260, in connect
+    return self._connection_cls(self)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "F:\��ͷ��ʦapp��\goutouapp\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 151, in __init__
+    Connection._handle_dbapi_exception_noconnection(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        err, dialect, engine
+        ^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "F:\��ͷ��ʦapp��\goutouapp\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 2417, in _handle_dbapi_exception_noconnection
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "F:\��ͷ��ʦapp��\goutouapp\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 149, in __init__
+    self._dbapi_connection = engine.raw_connection()
+                             ~~~~~~~~~~~~~~~~~~~~~^^
+  File "F:\��ͷ��ʦapp��\goutouapp\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 3284, in raw_connection
+    return self.pool.connect()
+           ~~~~~~~~~~~~~~~~~^^
+  File "F:\��ͷ��ʦapp��\goutouapp\.venv\Lib\site-packages\sqlalchemy\pool\base.py", line 445, in connect
+    return _ConnectionFairy._checkout(self)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "F:\��ͷ��ʦapp��\goutouapp\.venv\Lib\site-packages\sqlalchemy\pool\base.py", line 1287, in _checkout
+    fairy = _ConnectionRecord.checkout(pool)
+  File "F:\��ͷ��ʦapp��\goutouapp\.venv\Lib\site-packages\sqlalchemy\pool\base.py", line 709, in checkout
+    rec = pool._do_get()
+  File "F:\��ͷ��ʦapp��\goutouapp\.venv\Lib\site-packages\sqlalchemy\pool\impl.py", line 176, in _do_get
+    with util.safe_reraise():
+         ~~~~~~~~~~~~~~~~~^^
+  File "F:\��ͷ��ʦapp��\goutouapp\.venv\Lib\site-packages\sqlalchemy\util\langhelpers.py", line 166, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "F:\��ͷ��ʦapp��\goutouapp\.venv\Lib\site-packages\sqlalchemy\pool\impl.py", line 174, in _do_get
+    return self._create_connection()
+           ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "F:\��ͷ��ʦapp��\goutouapp\.venv\Lib\site-packages\sqlalchemy\pool\base.py", line 386, in _create_connection
+    return _ConnectionRecord(self)
+  File "F:\��ͷ��ʦapp��\goutouapp\.venv\Lib\site-packages\sqlalchemy\pool\base.py", line 671, in __init__
+    self.__connect()
+    ~~~~~~~~~~~~~~^^
+  File "F:\��ͷ��ʦapp��\goutouapp\.venv\Lib\site-packages\sqlalchemy\pool\base.py", line 895, in __connect
+    with util.safe_reraise():
+         ~~~~~~~~~~~~~~~~~^^
+  File "F:\��ͷ��ʦapp��\goutouapp\.venv\Lib\site-packages\sqlalchemy\util\langhelpers.py", line 166, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "F:\��ͷ��ʦapp��\goutouapp\.venv\Lib\site-packages\sqlalchemy\pool\base.py", line 891, in __connect
+    self.dbapi_connection = connection = pool._invoke_creator(self)
+                                         ~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "F:\��ͷ��ʦapp��\goutouapp\.venv\Lib\site-packages\sqlalchemy\engine\create.py", line 645, in connect
+    return dialect.connect(*cargs_tup, **cparams)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\��ͷ��ʦapp��\goutouapp\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 857, in connect
+    return self.loaded_dbapi.connect(*cargs, **cparams)  # type: ignore[no-any-return]  # NOQA: E501
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "F:\��ͷ��ʦapp��\goutouapp\.venv\Lib\site-packages\psycopg\connection.py", line 126, in connect
+    raise last_ex.with_traceback(None)
+sqlalchemy.exc.OperationalError: (psycopg.errors.ConnectionTimeout) connection timeout expired
+(Background on this error at: https://sqlalche.me/e/21/e3q8)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "F:\��ͷ��ʦapp��\goutouapp\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 149, in __init__
+    self._dbapi_connection = engine.raw_connection()
+                             ~~~~~~~~~~~~~~~~~~~~~^^
+  File "F:\��ͷ��ʦapp��\goutouapp\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 3284, in raw_connection
+    return self.pool.connect()
+           ~~~~~~~~~~~~~~~~~^^
+  File "F:\��ͷ��ʦapp��\goutouapp\.venv\Lib\site-packages\sqlalchemy\pool\base.py", line 445, in connect
+    return _ConnectionFairy._checkout(self)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "F:\��ͷ��ʦapp��\goutouapp\.venv\Lib\site-packages\sqlalchemy\pool\base.py", line 1287, in _checkout
+    fairy = _ConnectionRecord.checkout(pool)
+  File "F:\��ͷ��ʦapp��\goutouapp\.venv\Lib\site-packages\sqlalchemy\pool\base.py", line 709, in checkout
+    rec = pool._do_get()
+  File "F:\��ͷ��ʦapp��\goutouapp\.venv\Lib\site-packages\sqlalchemy\pool\impl.py", line 176, in _do_get
+    with util.safe_reraise():
+         ~~~~~~~~~~~~~~~~~^^
+  File "F:\��ͷ��ʦapp��\goutouapp\.venv\Lib\site-packages\sqlalchemy\util\langhelpers.py", line 166, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "F:\��ͷ��ʦapp��\goutouapp\.venv\Lib\site-packages\sqlalchemy\pool\impl.py", line 174, in _do_get
+    return self._create_connection()
+           ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "F:\��ͷ��ʦapp��\goutouapp\.venv\Lib\site-packages\sqlalchemy\pool\base.py", line 386, in _create_connection
+    return _ConnectionRecord(self)
+  File "F:\��ͷ��ʦapp��\goutouapp\.venv\Lib\site-packages\sqlalchemy\pool\base.py", line 671, in __init__
+    self.__connect()
+    ~~~~~~~~~~~~~~^^
+  File "F:\��ͷ��ʦapp��\goutouapp\.venv\Lib\site-packages\sqlalchemy\pool\base.py", line 895, in __connect
+    with util.safe_reraise():
+         ~~~~~~~~~~~~~~~~~^^
+  File "F:\��ͷ��ʦapp��\goutouapp\.venv\Lib\site-packages\sqlalchemy\util\langhelpers.py", line 166, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "F:\��ͷ��ʦapp��\goutouapp\.venv\Lib\site-packages\sqlalchemy\pool\base.py", line 891, in __connect
+    self.dbapi_connection = connection = pool._invoke_creator(self)
+                                         ~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "F:\��ͷ��ʦapp��\goutouapp\.venv\Lib\site-packages\sqlalchemy\engine\create.py", line 645, in connect
+    return dialect.connect(*cargs_tup, **cparams)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\��ͷ��ʦapp��\goutouapp\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 857, in connect
+    return self.loaded_dbapi.connect(*cargs, **cparams)  # type: ignore[no-any-return]  # NOQA: E501
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "F:\��ͷ��ʦapp��\goutouapp\.venv\Lib\site-packages\psycopg\connection.py", line 126, in connect
+    raise last_ex.with_traceback(None)
+psycopg.errors.ConnectionTimeout: connection timeout expired
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+    import os,sys; from app.core.config import Settings; from sqlalchemy.engine import make_url; s=Settings(); os.environ['TEST_DATABASE_URL']=make_url(s.database_url.get_secret_value()).set(database='goutou_independent_test').render_as_string(hide_password=False); from evals.agent.live_checks import main; sys.argv=['live_checks','e2e','--output','evals/agent/results/independent-live-e2e-v1.json']; main()
+                                                                                                                                                                                                                                                                                                                                                                                                                  ~~~~^^
+  File "F:\��ͷ��ʦapp��\goutouapp\evals\agent\live_checks.py", line 161, in main
+    payload = asyncio.run(smoke(provider)) if args.mode == "smoke" else e2e(provider)
+                                                                        ~~~^^^^^^^^^^
+  File "F:\��ͷ��ʦapp��\goutouapp\evals\agent\live_checks.py", line 69, in e2e
+    with disposable_database() as engine:
+         ~~~~~~~~~~~~~~~~~~~^^
+  File "E:\python\Lib\contextlib.py", line 141, in __enter__
+    return next(self.gen)
+  File "F:\��ͷ��ʦapp��\goutouapp\apps\server\memory_control_demo.py", line 49, in disposable_database
+    with admin.connect() as db:
+         ~~~~~~~~~~~~~^^
+  File "F:\��ͷ��ʦapp��\goutouapp\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 3260, in connect
+    return self._connection_cls(self)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "F:\��ͷ��ʦapp��\goutouapp\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 151, in __init__
+    Connection._handle_dbapi_exception_noconnection(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        err, dialect, engine
+        ^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "F:\��ͷ��ʦapp��\goutouapp\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 2417, in _handle_dbapi_exception_noconnection
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "F:\��ͷ��ʦapp��\goutouapp\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 149, in __init__
+    self._dbapi_connection = engine.raw_connection()
+                             ~~~~~~~~~~~~~~~~~~~~~^^
+  File "F:\��ͷ��ʦapp��\goutouapp\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 3284, in raw_connection
+    return self.pool.connect()
+           ~~~~~~~~~~~~~~~~~^^
+  File "F:\��ͷ��ʦapp��\goutouapp\.venv\Lib\site-packages\sqlalchemy\pool\base.py", line 445, in connect
+    return _ConnectionFairy._checkout(self)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "F:\��ͷ��ʦapp��\goutouapp\.venv\Lib\site-packages\sqlalchemy\pool\base.py", line 1287, in _checkout
+    fairy = _ConnectionRecord.checkout(pool)
+  File "F:\��ͷ��ʦapp��\goutouapp\.venv\Lib\site-packages\sqlalchemy\pool\base.py", line 709, in checkout
+    rec = pool._do_get()
+  File "F:\��ͷ��ʦapp��\goutouapp\.venv\Lib\site-packages\sqlalchemy\pool\impl.py", line 176, in _do_get
+    with util.safe_reraise():
+         ~~~~~~~~~~~~~~~~~^^
+  File "F:\��ͷ��ʦapp��\goutouapp\.venv\Lib\site-packages\sqlalchemy\util\langhelpers.py", line 166, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "F:\��ͷ��ʦapp��\goutouapp\.venv\Lib\site-packages\sqlalchemy\pool\impl.py", line 174, in _do_get
+    return self._create_connection()
+           ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "F:\��ͷ��ʦapp��\goutouapp\.venv\Lib\site-packages\sqlalchemy\pool\base.py", line 386, in _create_connection
+    return _ConnectionRecord(self)
+  File "F:\��ͷ��ʦapp��\goutouapp\.venv\Lib\site-packages\sqlalchemy\pool\base.py", line 671, in __init__
+    self.__connect()
+    ~~~~~~~~~~~~~~^^
+  File "F:\��ͷ��ʦapp��\goutouapp\.venv\Lib\site-packages\sqlalchemy\pool\base.py", line 895, in __connect
+    with util.safe_reraise():
+         ~~~~~~~~~~~~~~~~~^^
+  File "F:\��ͷ��ʦapp��\goutouapp\.venv\Lib\site-packages\sqlalchemy\util\langhelpers.py", line 166, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "F:\��ͷ��ʦapp��\goutouapp\.venv\Lib\site-packages\sqlalchemy\pool\base.py", line 891, in __connect
+    self.dbapi_connection = connection = pool._invoke_creator(self)
+                                         ~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "F:\��ͷ��ʦapp��\goutouapp\.venv\Lib\site-packages\sqlalchemy\engine\create.py", line 645, in connect
+    return dialect.connect(*cargs_tup, **cparams)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\��ͷ��ʦapp��\goutouapp\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 857, in connect
+    return self.loaded_dbapi.connect(*cargs, **cparams)  # type: ignore[no-any-return]  # NOQA: E501
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "F:\��ͷ��ʦapp��\goutouapp\.venv\Lib\site-packages\psycopg\connection.py", line 126, in connect
+    raise last_ex.with_traceback(None)
+sqlalchemy.exc.OperationalError: (psycopg.errors.ConnectionTimeout) connection timeout expired
+(Background on this error at: https://sqlalche.me/e/21/e3q8)

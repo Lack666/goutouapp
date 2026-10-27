@@ -1,0 +1,447 @@
+{
+  "time": "2026-10-27T09:57:21.026121+00:00",
+  "base_commit": "a32b987ebe40998839a10e45b006fb0cbda9f5ab",
+  "scope": "Phase 11 independent quality evaluation only; no production behavior changes",
+  "status": "QUALITY GATE FAIL; HUMAN REVIEW PENDING",
+  "commands": [
+    {
+      "command": "uv run --frozen --no-sync python -m evals.agent.independent freeze",
+      "exit_code": 0,
+      "timing": "before any live calls"
+    },
+    {
+      "command": "uv run --frozen --no-sync python -m evals.agent.independent batch --batch 0",
+      "exit_code": 1,
+      "reason": "3 cases saved; git ownership check failed after generation; recovered without new calls"
+    },
+    {
+      "command": "uv run --frozen --no-sync python scripts/phase11_independent_recover.py",
+      "exit_code": 0,
+      "paid_calls": 0
+    },
+    {
+      "command": "foreach ($batchIndex in 1..7) { uv run --frozen --no-sync python -m evals.agent.independent batch --batch $batchIndex; if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE } }",
+      "exit_code": 0
+    },
+    {
+      "command": "uv run --frozen --no-sync python -m evals.agent.independent report",
+      "exit_code": 0,
+      "quality_gate": "FAIL"
+    },
+    {
+      "command": "uv run --frozen --no-sync python -m evals.agent.live_checks e2e --output evals/agent/results/independent-live-e2e-v1.json",
+      "exit_code": 0,
+      "provider_calls": 11,
+      "agent_completed": "2/3; REST failure retained"
+    },
+    {
+      "command": "uv run --frozen --no-sync pytest -q apps/server/tests/test_independent_eval.py apps/server/tests/test_eval_observability.py apps/server/tests/test_agent_runtime.py apps/server/tests/test_agent_memory.py apps/server/tests/test_action_content_safety.py apps/server/tests/test_content_safety_integration.py tests/test_human_review_ui.py --basetemp=.cache/pytest-independent-final --tb=short --junitxml=docs/evidence/phase11-independent/final-tests.xml",
+      "exit_code": 0,
+      "passed": 137
+    },
+    {
+      "command": "uv run --frozen --no-sync pytest -q apps/server/tests/test_provider_fault_e2e.py --basetemp=.cache/pytest-independent-fault-configured --tb=short --junitxml=docs/evidence/phase11-independent/fault-configured-tests.xml",
+      "exit_code": 0,
+      "passed": 11,
+      "paid_calls": 0
+    },
+    {
+      "command": "uv run --frozen --no-sync ruff check evals/agent/independent.py scripts/phase11_independent_acceptance.py scripts/phase11_independent_recover.py scripts/human_review_ui.py apps/server/tests/test_independent_eval.py tests/test_human_review_ui.py",
+      "exit_code": 0
+    },
+    {
+      "command": "uv run --frozen --no-sync ruff format --check evals/agent/independent.py scripts/phase11_independent_acceptance.py scripts/phase11_independent_recover.py scripts/human_review_ui.py apps/server/tests/test_independent_eval.py tests/test_human_review_ui.py",
+      "exit_code": 0
+    },
+    {
+      "command": "uv run --frozen --no-sync python scripts/phase11_independent_acceptance.py --check",
+      "exit_code": 0
+    },
+    {
+      "command": "git diff --quiet a32b987 -- apps/server/app apps/mobile evals/golden_cases.jsonl knowledge docs/SKILL_CONTRACT.md docs/DATA_DELETION_CONTRACT.md project-phase.json uv.lock pnpm-lock.yaml",
+      "exit_code": 0
+    }
+  ],
+  "unique_targeted_test_count": 148,
+  "environment": {
+    "PYTHONPATH": "apps/server;.",
+    "UV_CACHE_DIR": ".cache/uv",
+    "database": "isolated postgres test namespace on 127.0.0.1:5433, connect_timeout=5",
+    "live_network": "explicit escalated execution",
+    "model": "deepseek-flash",
+    "thinking": "disabled",
+    "max_output_tokens": 4096,
+    "timeout_seconds": 60,
+    "batch_caps": {
+      "requests": 24,
+      "cost_cny": 1.25,
+      "tokens": 500000
+    },
+    "e2e_caps": {
+      "requests": 16,
+      "cost_cny": 1.25
+    },
+    "git_elevated_process_configuration": "GIT_CONFIG_COUNT=1 / safe.directory=repository path; no global configuration changed"
+  },
+  "architecture_decision": "Reuse existing Provider, Graph, Memory audit store and local review UI; only evaluation/reporting and hash-bound dataset selection added. No new infrastructure, semantic nodes, endpoints, dependency or ADR needed.",
+  "protected_paths": [
+    "apps/server/app",
+    "apps/mobile",
+    "evals/golden_cases.jsonl",
+    "knowledge",
+    "docs/SKILL_CONTRACT.md",
+    "docs/DATA_DELETION_CONTRACT.md",
+    "project-phase.json",
+    "uv.lock",
+    "pnpm-lock.yaml"
+  ],
+  "protected_paths_diff_exit": 0,
+  "credential_scan": "No configured private key in new evidence or source archive",
+  "prior_user_work_preserved": [
+    "evals/agent/results/human-review-15.json",
+    "evals/agent/results/human-review-summary.md"
+  ],
+  "issues": [
+    {
+      "stage": "first UI fixture run",
+      "status": "3 passed / 9 setup errors",
+      "reason": "Windows default pytest temporary directory permission; repository basetemp later passed"
+    },
+    {
+      "stage": "first batch artifact",
+      "status": "failed after 3 durable checkpoints",
+      "reason": "Git ownership; no paid retry; lost call timing/node traces documented in recovered batch"
+    },
+    {
+      "stage": "first E2E prepare",
+      "status": "connection timeout before graph",
+      "provider_calls": 0,
+      "evidence": "docs/evidence/phase11-independent/live-e2e.txt"
+    },
+    {
+      "stage": "first fault DB tests",
+      "status": "aborted before completion; no PASS claimed",
+      "provider_calls": 0,
+      "evidence": "docs/evidence/phase11-independent/fault-tests.txt"
+    }
+  ],
+  "not_run": [
+    "Root Verify / make verify",
+    "Backend full suite",
+    "Mobile full suite",
+    "historical Android 13 scenarios",
+    "all historical Web E2E",
+    "pre/post marker full regression",
+    "Phase12"
+  ],
+  "official_phase_marker": {
+    "completed_phase": 9,
+    "completed_subphase": "9H"
+  },
+  "files": [
+    {
+      "path": "evals/agent/results/independent-batch-0.claim.json",
+      "sha256": "a2e572642ee9a8f683ce58bf7ece57e2e0f8d6effab852e5bba962a884d7b94d"
+    },
+    {
+      "path": "evals/agent/results/independent-batch-1.claim.json",
+      "sha256": "1a967013a95bf7471666da4779622712ae56123a2dfff6329471fc48d9b3a2b8"
+    },
+    {
+      "path": "evals/agent/results/independent-batch-2.claim.json",
+      "sha256": "5e5235aa43664fcfe4da718ccecb42797846f28e3335d03439802f559fbfc7a2"
+    },
+    {
+      "path": "evals/agent/results/independent-batch-3.claim.json",
+      "sha256": "0780158b413d08b270b710eef597a8fd8e8f1a2114fb10c565273aac622b8153"
+    },
+    {
+      "path": "evals/agent/results/independent-batch-4.claim.json",
+      "sha256": "ebaacc828ac5231d729539d91fb992833a0b25926873f615c9b7be8ff1720d83"
+    },
+    {
+      "path": "evals/agent/results/independent-batch-5.claim.json",
+      "sha256": "adb7c3514cf9d5005ad0fac7c5ecee3fbcce925d17315c518caae3845e122dc7"
+    },
+    {
+      "path": "evals/agent/results/independent-batch-6.claim.json",
+      "sha256": "ff17080d5d60654b96890c3d95ab9647931e231158ee6b3546404eaaa7ba41e6"
+    },
+    {
+      "path": "evals/agent/results/independent-batch-7.claim.json",
+      "sha256": "49c924b691d41b533be786271700cfd68e4fcff1e89905515250f06d9e2a286a"
+    },
+    {
+      "path": "evals/agent/results/independent-human-review-15-v1.json",
+      "sha256": "8449a5e968e1bceb8042cf4d54b6a5a63e34107e9c6a0990605c2df6258587c7"
+    },
+    {
+      "path": "evals/agent/results/independent-iq-n01-v1.json",
+      "sha256": "8bd0b27014f301447c5a90b8ab8dd446a3db611c2705c9e477800547e10db150"
+    },
+    {
+      "path": "evals/agent/results/independent-iq-n02-v1.json",
+      "sha256": "fdc4d5add9f421974a9bb2f4446b39028e116d247808329861755a8cf9126a0b"
+    },
+    {
+      "path": "evals/agent/results/independent-iq-n03-v1.json",
+      "sha256": "60d4ec0b041643ab4cde93c8acc21abc3da4744d02e0e57d0b39dcfb3723c911"
+    },
+    {
+      "path": "evals/agent/results/independent-iq-n04-v1.json",
+      "sha256": "66ad03ed53b34e94129b065bd3a0b54db1753592a80047a918177c6d0c76d21a"
+    },
+    {
+      "path": "evals/agent/results/independent-iq-n05-v1.json",
+      "sha256": "9cd77522d65d87dede6e97c3b022862ec675c515457142c5f8caf3eaa3a58a83"
+    },
+    {
+      "path": "evals/agent/results/independent-iq-n06-v1.json",
+      "sha256": "75c3e88f5b0c25dcdfd7ac369f36529a4eaa6eb0ca4cb1b93481381fac4c19fb"
+    },
+    {
+      "path": "evals/agent/results/independent-iq-n07-v1.json",
+      "sha256": "f61c17aca660beb083c980a2096d9547b382333eed1ccb1e3e745455a1af95dd"
+    },
+    {
+      "path": "evals/agent/results/independent-iq-n08-v1.json",
+      "sha256": "2df1b3e3cdc2776a0e52f5ee7c00206de61593e3e87078915113a26c8ea87c14"
+    },
+    {
+      "path": "evals/agent/results/independent-iq-n09-v1.json",
+      "sha256": "c08ec376b8b67b8a06ed53f06f60f82b7055ca5eea002d088e7ee2a92b9bdb9c"
+    },
+    {
+      "path": "evals/agent/results/independent-iq-n10-v1.json",
+      "sha256": "c3cca63a44a438114176632fa6b3ff2488ed3b245e406bc7da81b2aa9bcb4472"
+    },
+    {
+      "path": "evals/agent/results/independent-iq-n11-v1.json",
+      "sha256": "58baec44e795b2568f1317ae051c78b7870ac1c08790501098ca49d8aaf9ba4b"
+    },
+    {
+      "path": "evals/agent/results/independent-iq-n12-v1.json",
+      "sha256": "8a7c8cef9bcf340c91a865d3b6fa31a159396710b7640cc408026e6ba9dee884"
+    },
+    {
+      "path": "evals/agent/results/independent-iq-n13-v1.json",
+      "sha256": "6107f53cc26389adce2090bf0c72f7572a8b9cf2162b6376e9573a5bb018db0c"
+    },
+    {
+      "path": "evals/agent/results/independent-iq-n14-v1.json",
+      "sha256": "fcb7f7d08b7180325067b4e868319daa70f7f77d4a7fd16a05b05b53aa68c4a7"
+    },
+    {
+      "path": "evals/agent/results/independent-iq-n15-v1.json",
+      "sha256": "05d31de29babac8e2e5e92116624011b93e7fe47705aa0061628b5f8f3286cf0"
+    },
+    {
+      "path": "evals/agent/results/independent-iq-n16-v1.json",
+      "sha256": "f1850f3ed8ef297ce76645d81946b35cb0c6ffc11451a9b0f13f44e1320d8635"
+    },
+    {
+      "path": "evals/agent/results/independent-iq-n17-v1.json",
+      "sha256": "201446674ac3a37f695049d6a726ffeb367478d637f319cccfa656a815b8813f"
+    },
+    {
+      "path": "evals/agent/results/independent-iq-n18-v1.json",
+      "sha256": "75b8aa3a16cb979e0fd55a01fe70709bd4af490331c20d66f1c761109e6fb291"
+    },
+    {
+      "path": "evals/agent/results/independent-iq-n19-v1.json",
+      "sha256": "e746e83f8240a535082ed73f9ca176341cf8121aeb0e7ace14b3acacd9fadfe2"
+    },
+    {
+      "path": "evals/agent/results/independent-iq-n20-v1.json",
+      "sha256": "072defd8834c599d08c65382126b42dcfe12fa8142ab8321b0586c889f53fa17"
+    },
+    {
+      "path": "evals/agent/results/independent-iq-s01-v1.json",
+      "sha256": "3ecda1b3fd4b8bbea21f806968b34d5fbcb4e9c427c8cf395c7443064fde5998"
+    },
+    {
+      "path": "evals/agent/results/independent-iq-s02-v1.json",
+      "sha256": "455b068330dfa4aaf27fea46b6c276c9fc623a7fdccb690409992546c32d2035"
+    },
+    {
+      "path": "evals/agent/results/independent-iq-s03-v1.json",
+      "sha256": "d79f451ef1dd15d63f29e7942825704ad8ae0165f3333bda0b703226be0e20c4"
+    },
+    {
+      "path": "evals/agent/results/independent-iq-s04-v1.json",
+      "sha256": "72fd3c535f9cb956baf54eb19026a7f869e7544e4fe980a6e4a18c499bb59ea4"
+    },
+    {
+      "path": "evals/agent/results/independent-iq-s05-v1.json",
+      "sha256": "de3528309ca2a6fbef963473cdd6aa8904e977efb200690cee02e353e7ee70ce"
+    },
+    {
+      "path": "evals/agent/results/independent-iq-s06-v1.json",
+      "sha256": "a3c56ff9f3c2a6cb569431607e5c9b58928c48b8cf7a67a3cb97b5ee81aea6cd"
+    },
+    {
+      "path": "evals/agent/results/independent-iq-s07-v1.json",
+      "sha256": "68d07b7f497b34617f2ec5177af8d577920f55d73592a260ddae7be19c7b8446"
+    },
+    {
+      "path": "evals/agent/results/independent-iq-s08-v1.json",
+      "sha256": "c4efb918c2d72c0088f7d82704e0432a405f55f3dd364b819fcc696a90ce23d3"
+    },
+    {
+      "path": "evals/agent/results/independent-live-batch-0-v1.json",
+      "sha256": "c7569b9f67a5fcbc4403bf62fa32715b72fa96234ed2b822708861e04cdf1d10"
+    },
+    {
+      "path": "evals/agent/results/independent-live-batch-1-v1.json",
+      "sha256": "1433f34fa64d1800cc525e6f341a9a3c1c916696b416421ba9fd34ab049f23db"
+    },
+    {
+      "path": "evals/agent/results/independent-live-batch-2-v1.json",
+      "sha256": "38c00fe66e2a469d867c8e88d72ef55c5a855c648ac9a079025a8018ffd9df17"
+    },
+    {
+      "path": "evals/agent/results/independent-live-batch-3-v1.json",
+      "sha256": "3b330242c4c4b43c41a4601d21d0101959c9e7581538717a187ea5dcd6008597"
+    },
+    {
+      "path": "evals/agent/results/independent-live-batch-4-v1.json",
+      "sha256": "d6d1e1e142781a476f7dae2a38e86aa7ad41e48a3bf838b01678105bda6ef3f3"
+    },
+    {
+      "path": "evals/agent/results/independent-live-batch-5-v1.json",
+      "sha256": "5e6595ae277b01f70ad6fca35d7fb0b41d4544e42af20fdf99656708d5957ac8"
+    },
+    {
+      "path": "evals/agent/results/independent-live-batch-6-v1.json",
+      "sha256": "745e2c38e6fc088d3f03a13b977b5195d3957b249b7e06d73a61b289c21d757d"
+    },
+    {
+      "path": "evals/agent/results/independent-live-batch-7-v1.json",
+      "sha256": "e90cee32153aa348d7cf3fca285cfdaddd0b9ea6e73981baa21a3e2171a1c6b6"
+    },
+    {
+      "path": "evals/agent/results/independent-live-e2e-v1.json",
+      "sha256": "6a4090b270d04cedff5c7942f7838f6bb97e525f3f2c22a818a7d7baefaccf8d"
+    },
+    {
+      "path": "evals/agent/results/independent-metrics-v1.json",
+      "sha256": "f9b733eab0d68c6a8b99edcf2025a4c66052b5c54a83f6c67fc97b863a106afc"
+    },
+    {
+      "path": "evals/agent/results/independent-quality-gate-v1.json",
+      "sha256": "ed734cc7b909b7b807f4aed220e4662eeef1978e646f14a239ca832d30ef4649"
+    },
+    {
+      "path": "evals/agent/results/independent-risk-register-v1.json",
+      "sha256": "57bb816a881f90f12d63cb45bb8daf7c94d7a8f3092a1292d0e3a5d65d7b848d"
+    },
+    {
+      "path": "evals/agent/results/independent-safety-review-15-v1.json",
+      "sha256": "203dd26f09761d3f2291b466f914f68a5bf338565e59b1c54eef750a8b658137"
+    },
+    {
+      "path": "evals/agent/results/independent-source-v1.zip",
+      "sha256": "be25ed824c61096f1792f0e120ea3b785b18c96a789393ffa2957b7596016ab7"
+    },
+    {
+      "path": "docs/evidence/phase11-independent/evidence-check.txt",
+      "sha256": "17352450e87e5008c13be47deedba18c5705ccdadb7ced5839abc397c320c541"
+    },
+    {
+      "path": "docs/evidence/phase11-independent/fault-configured-tests.txt",
+      "sha256": "d218018e391089cee98903ac939567a2d6bc799c7c982cdeeaf31ff04b9e198f"
+    },
+    {
+      "path": "docs/evidence/phase11-independent/fault-configured-tests.xml",
+      "sha256": "f4367a2994a1ac4b0b9f7cfa8c489443b2305bf789bb976f47e13da764063bc4"
+    },
+    {
+      "path": "docs/evidence/phase11-independent/fault-tests.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/evidence/phase11-independent/final-tests.txt",
+      "sha256": "1a20f1055ac2d86ce3175f68dfb06f7f5da02cff09b1188692149abf20fae20e"
+    },
+    {
+      "path": "docs/evidence/phase11-independent/final-tests.xml",
+      "sha256": "199c883f6b7bc404b0fa971b9220b37dfb7408a513748304972f362a83bd6107"
+    },
+    {
+      "path": "docs/evidence/phase11-independent/format.txt",
+      "sha256": "f57152af69ed696672a20f7a07dc500ce85005053092505a680768f611957e48"
+    },
+    {
+      "path": "docs/evidence/phase11-independent/live-e2e-configured.txt",
+      "sha256": "a6ffdcf53b382d2bc9877121c8fa056f2496ccd7d92e415f92748399fe688dcd"
+    },
+    {
+      "path": "docs/evidence/phase11-independent/live-e2e.txt",
+      "sha256": "3eba48778efa1629dd33d7badba1359e4fe0cc2a78de3737b75c2012bf943c1d"
+    },
+    {
+      "path": "docs/evidence/phase11-independent/preflight-tests.xml",
+      "sha256": "26193c33bbd99d954126ab7288b2291372f9aae51e2e908511f29fb599d9a452"
+    },
+    {
+      "path": "docs/evidence/phase11-independent/review-ui.json",
+      "sha256": "17ad8c547bbf92d0ebb1af272aa930673f8f50115191023300e029abb85bb125"
+    },
+    {
+      "path": "docs/evidence/phase11-independent/ruff.txt",
+      "sha256": "a4443afdcfb6d7363adb285762515ccf7cf50473b1a05c20c1a50f6bed4d26b0"
+    },
+    {
+      "path": "docs/evidence/phase11-independent/targeted-tests.txt",
+      "sha256": "67ce11d7ae977fd1b2059d28cacdae7c480c9670778787255e4fbeb115e6c271"
+    },
+    {
+      "path": "docs/evidence/phase11-independent/targeted-tests.xml",
+      "sha256": "da91ab77c5924a00e548d4ac83e47aa8aaee10ef133bb6be88c755db67ad1cc3"
+    },
+    {
+      "path": "evals/agent/independent.py",
+      "sha256": "46050798f81e29d603de67466fee80ca0a4e0a46359b5da4c1e166e3c2cf05f9"
+    },
+    {
+      "path": "evals/agent/independent.v1.jsonl",
+      "sha256": "634d231a3eb79aaaff296270acaf0dd9ecf092810a218435f6b24c74120417a1"
+    },
+    {
+      "path": "evals/agent/independent-plan.v1.json",
+      "sha256": "2e9a01583a9b03a40abcb21bd49d9ada49165e73c8297d84cd3b2b49d0c48c93"
+    },
+    {
+      "path": "scripts/phase11_independent_acceptance.py",
+      "sha256": "47fa4c59db65360424f10213f2ee986ebb36e86efe6036d57201e4ea137592b0"
+    },
+    {
+      "path": "scripts/phase11_independent_recover.py",
+      "sha256": "621453d6a4225909522aacb7565d3a4a6e927d5d431165555a6f3554931d0736"
+    },
+    {
+      "path": "scripts/human_review_ui.py",
+      "sha256": "13b3de01c8121e23db4cc16ecae7f711340d2c141d68d76d2ea7eacc9f1df77a"
+    },
+    {
+      "path": "tests/test_human_review_ui.py",
+      "sha256": "607c4133bcb93b49420cdc0db3a360bbf14df35c9f352013de1da344d97b220e"
+    },
+    {
+      "path": "apps/server/tests/test_independent_eval.py",
+      "sha256": "1948f3b345e1d3c9abb2cdd6790ea4251061b6dd36f1fb1486dc8bdd8aaa0f72"
+    },
+    {
+      "path": "docs/PHASE_11_INDEPENDENT_EVAL.md",
+      "sha256": "ea5f54ba2df248c23c330c450cf5f490dc7edf70ba9b467763491be7da6f93aa"
+    },
+    {
+      "path": "docs/AGENT_EVAL_SPEC.md",
+      "sha256": "f50fb94633e8c0a3b2d368645b2a6f5f93bebd6ed85c1e91441cb27222b02b58"
+    },
+    {
+      "path": "docs/MASTER_PLAN.md",
+      "sha256": "c2517e8bd0c0a3c1b22418377358ea5aaa8a23d238223c2f83ce1fc48b68efe4"
+    }
+  ]
+}

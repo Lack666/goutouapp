@@ -1,5 +1,14 @@
 # Agent evaluation v1
 
+2026-10-27 independent follow-up: `independent.v1.jsonl` and
+`independent-plan.v1.json` freeze 20 new ordinary + 8 new high-risk cases before
+paid execution. This acceptance uses the user's stricter ordinary completion
+target >=95% and business target >=85%; the historical v1 >=85% completion
+criterion below does not override it. Separate Provider responses, Pydantic
+validity, ordinary completion and safety semantics. See PHASE_11_INDEPENDENT_EVAL.
+New hash-bound primary/safety review packets preserve human-rubric-v1; historical
+scores are not copied. Machine gates FAIL and new human review remains PENDING.
+
 `evals/agent/cases.v1.jsonl` contains60 anonymous synthetic cases: communication12,
 grounding12, safety12, privacy/injection8, Memory8, fault/boundary8. Authoring source
 is build_dataset.py. Each case specifies ID/input/category/risk/expected and
