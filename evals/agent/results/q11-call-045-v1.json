@@ -1,0 +1,20 @@
+{
+  "serial": 45,
+  "case_id": "q11-cafe-e2e",
+  "status": "response",
+  "visible_response": {
+    "content": "{\"facts\": [{\"statement\": \"用户想邀请一位认识两周的朋友去公共咖啡馆。\", \"source\": \"user_report\", \"confidence\": 1.0}, {\"statement\": \"用户希望以低压力方式表达邀请。\", \"source\": \"user_report\", \"confidence\": 1.0}], \"inferences\": [{\"statement\": \"用户可能担心直接邀请会让对方感到有压力或难以拒绝。\", \"source\": \"user_report\", \"alternative\": \"用户只是习惯礼貌、委婉的沟通风格，并不特别担心对方反应。\", \"confidence\": 0.4}], \"unknowns\": [{\"statement\": \"这位朋友与用户的具体关系性质（普通朋友、同事、暧昧对象等）未知。\", \"source\": null}, {\"statement\": \"对方对咖啡馆或外出见面的偏好与可用时间未知。\", \"source\": null}, {\"statement\": \"用户希望邀请的具体时间、频率和形式未知。\", \"source\": null}]}",
+    "model": "deepseek-flash",
+    "finish_reason": "stop",
+    "usage": {
+      "input_tokens": 933,
+      "output_tokens": 205,
+      "total_tokens": 1138,
+      "cache_hit_tokens": 768,
+      "cache_miss_tokens": 165
+    }
+  },
+  "duration_ms": 1162.69740000007,
+  "request_reserved": true,
+  "time": "2026-10-28T05:42:30.696542+00:00"
+}

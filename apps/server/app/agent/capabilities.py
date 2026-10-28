@@ -50,12 +50,14 @@ def boundary_plan(state: AgentState) -> ActionPlan:
     return ActionPlan(
         contact_policy="stop_contact",
         recommended_action=(
-            "尊重明确拒绝或撤回同意，停止联系。请优先照顾自己的情绪与日常生活，"
-            "寻求可靠支持。未经明确主动改变意愿，保持这一边界。"
+            "尊重明确拒绝或撤回同意，停止联系。今天先把想说的话写在私密草稿里，"
+            "不要发送；离开聊天界面，安排吃饭、休息或散步。情绪难受时找可信的人陪伴，"
+            "先照顾自己，不用今天就决定以后。对方没有主动明确改变意愿时，保持停止接触。"
             if chinese
-            else "Respect refusal or withdrawn consent. Stop pursuit and focus on your own life. "
-            "Keep this boundary without a free, explicit change of wishes; "
-            "seek trusted support if this is difficult."
+            else "Respect refusal or withdrawn consent. Stop pursuit. Today, write your feelings "
+            "in a private draft without sending it, close the chat, and make time for a meal, "
+            "rest or a walk. Ask someone you trust for company if this feels difficult. "
+            "Keep the no-pursuit boundary without a free, explicit change of wishes."
         ),
         supporting_analysis_ids=["A1"],
         stop_conditions=[

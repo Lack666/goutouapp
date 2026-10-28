@@ -23,3 +23,7 @@ evals/agent/results/independent-human-review-15-v1-summary.md -text
 evals/agent/results/independent-safety-review-15-v1-summary.md -text
 evals/agent/results/phase11-quality-closeout-v1.json -text whitespace=cr-at-eol
 docs/evidence/phase11-quality-closeout/** -text whitespace=-blank-at-eol,-blank-at-eof,-space-before-tab,cr-at-eol
+# Phase11Q source plans and immutable synthetic execution evidence retain bytes.
+evals/agent/q11-*.json* -text whitespace=cr-at-eol
+evals/agent/results/q11-* -text whitespace=cr-at-eol
+docs/evidence/phase11q/** -text whitespace=cr-at-eol

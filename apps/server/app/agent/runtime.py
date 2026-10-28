@@ -46,6 +46,7 @@ from app.agent.nodes import (
     safety_check,
     safety_finalize,
 )
+from app.agent.safety_validation import validate_safety_answer
 from app.agent.state import AgentState, initial_state
 from app.llm.errors import LLMError, LLMStructuredOutputError
 from app.observability import emit, node_scope, run_scope
@@ -284,6 +285,8 @@ class AgentRuntime:
     def _result(output: AgentState, run_id) -> AgentResult:
         if output["run_id"] != run_id:
             raise RuntimeError("graph changed run identity")
+        if output["route"] == Route.SAFETY:
+            validate_safety_answer(output["final_answer"], output)
         output["run_status"] = AgentRunStatus.COMPLETED
         return AgentResult(
             run_id=run_id,

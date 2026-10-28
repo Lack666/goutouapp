@@ -18,7 +18,9 @@ or pause, give a bounded observation_window. Give concrete stop_conditions.
 Do not reveal hidden chain-of-thought or output prose beyond the schema.
 Internal A/F/I/U IDs must appear ONLY in supporting_analysis_ids, never inside
 recommended_action, message_suggestion, observation_window or stop_conditions.
-Use only supplied A IDs. contact_policy=reply or invite requires a nonempty
+Choose one to five DISTINCT supplied A IDs in supporting_analysis_ids, never
+all analysis IDs by default. IDs are exact keys, not explanations; select only
+points that actually support this next step. contact_policy=reply or invite requires a nonempty
 message_suggestion; observe, pause and stop_contact require it to be null.
 observe requires an observation_window. observe, pause and stop_contact require
 stop_conditions. A reply scenario requires reply unless it is a boundary route.
@@ -34,6 +36,10 @@ stop_contact with no message_suggestion; ordinary must not use stop_contact.
 Do not reinterpret a scheduling conflict as withdrawal of contact consent.
 For boundary, a clear protective action can be "尊重拒绝，停止继续接触，把注意力放回自己的生活。"
 Describe stopping directly, rather than listing forbidden outreach tactics.
+Keep one feasible action, a bounded observation window where needed, and at
+most two useful feedback/stop conditions. Do not invent personal shared events,
+habits or places for a message. A suggestion of a possible activity must be
+framed as a future option, not something the user has already done.
 """
 
 
@@ -64,6 +70,13 @@ def input_payload(state: AgentState) -> str:
                 ],
             },
             "selected_reference_aliases": state["selected_references"][:3],
+            "supporting_analysis_id_contract": {
+                "min_items": 1,
+                "max_items": 5,
+                "unique": True,
+                "allowed_ids": [f"A{index}" for index, _ in enumerate(points, 1)],
+                "only_actual_support": True,
+            },
             "profiles_if_available": {
                 "user": (
                     {

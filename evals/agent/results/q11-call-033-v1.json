@@ -1,0 +1,20 @@
+{
+  "serial": 33,
+  "case_id": "q11-iq-n17",
+  "status": "response",
+  "visible_response": {
+    "content": "{\"final_answer\":\"谢谢邀请！这次桌游我就不参加啦，祝你们玩得开心。\\n\\n这句可以直接发给对方：感谢了邀请，也明确说这次不参加，没有编理由。对方若追问原因，你不必补充解释；对方表示理解或不再追问时，话题自然结束即可。\",\"contact_policy\":\"reply\"}",
+    "model": "deepseek-flash",
+    "finish_reason": "stop",
+    "usage": {
+      "input_tokens": 1201,
+      "output_tokens": 73,
+      "total_tokens": 1274,
+      "cache_hit_tokens": 384,
+      "cache_miss_tokens": 817
+    }
+  },
+  "duration_ms": 864.0550000000076,
+  "request_reserved": true,
+  "time": "2026-10-28T05:42:17.850112+00:00"
+}

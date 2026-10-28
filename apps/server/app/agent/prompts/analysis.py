@@ -2,6 +2,7 @@
 
 import json
 
+from app.agent.contracts import AnalysisPoint, AnalysisResult
 from app.agent.state import AgentState
 
 SYSTEM = """Produce only a structured AnalysisResult for the relationship situation.
@@ -70,6 +71,13 @@ Final provenance check: NOT ALL reference_ids may be empty, even when
 insufficient_evidence=true. Include one framework point accurately summarizing
 a supplied reference with kind='framework' and that reference's alias. This is
 a general framework, never evidence of this person's feelings or motives.
+Place that point inside one of the five existing point lists (for example
+relationship_dynamics), not a new top-level framework or knowledge_notes list.
+The kind of a point is not a top-level key. The supplied output_contract lists
+the only allowed keys and the source IDs permitted for each kind. An observed
+statement must not mix an F ID with a U ID: express the known F statement and
+the unresolved U question as separate sourced points instead of disguising
+unknown information as an observation. Never relabel a U ID as an F ID.
 """
 
 
@@ -102,6 +110,23 @@ def input_payload(state: AgentState) -> str:
                 "cite_at_least_one_supplied_alias": True,
                 "allowed_aliases": [r.alias for r in state["retrieved_context"]],
                 "framework_is_not_a_case_fact": True,
+            },
+            "output_contract": {
+                "allowed_top_level_keys": list(AnalysisResult.model_fields),
+                "allowed_point_keys": list(AnalysisPoint.model_fields),
+                "additional_keys_forbidden": True,
+                "source_ids_by_kind": {
+                    "observed": {
+                        "evidence_ids_only": [
+                            f"F{index}" for index, _ in enumerate(state["facts"], 1)
+                        ],
+                        "reference_ids": [],
+                    },
+                    "tentative": "Requires a supplied F or I ID supporting the interpretation",
+                    "uncertainty": "Requires a supplied U ID; does not establish a fact",
+                    "framework": "Requires a supplied reference alias; not a personal fact",
+                },
+                "framework_placement": "Use an existing point list, never a new top-level key",
             },
             "historical_memory": [
                 {

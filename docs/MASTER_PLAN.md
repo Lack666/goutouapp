@@ -6,6 +6,21 @@ licensed and its content hashes are frozen in `knowledge/upstream-manifest.json`
 
 ## Phase gate
 
+Phase11Q authorized recovery (2026-10-28): **PARTIAL FIX / REMAINING BLOCKERS**.
+The bounded first live batch completed13/16 (ordinary8/11), business12/16,
+Provider71/71 and schema66/67. Five high-risk outputs passed controlled protection;
+n07/n20 still fail ordinary contact guards, n10 misses its frozen route oracle,
+and a new case fails Scenario enum validation. See
+[11Q remediation report](PHASE_11Q_REMEDIATION_REPORT.md). No paid retry or
+result-driven repair followed this batch. Core P1 remains blocked; Phase11 quality
+stays FAIL, human review for the new outputs is pending. Full regression and
+official9/9H marker rules are unchanged. Stop after this report and commit.
+
+The 11Q authorization supersedes the earlier planning-only scope for this bounded
+Agent repair, not for Imported Chat Analysis or original Phase12. Both remain
+unstarted; Phase10 stays DEFERRED. Further remediation requires a separate finite
+scope; independent quality reassessment follows only after core blockers close.
+
 Latest closeout (2026-10-28): human review COMPLETE / USER_ATTESTED, with30
 records covering28 unique cases (22 completed answers and6 retained failures).
 Primary human acceptance2/15; unique acceptance8/28. Phase11 QUALITY FAIL /

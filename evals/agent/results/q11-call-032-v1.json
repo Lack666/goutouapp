@@ -1,0 +1,20 @@
+{
+  "serial": 32,
+  "case_id": "q11-iq-n17",
+  "status": "response",
+  "visible_response": {
+    "content": "{\"fields\":[{\"field\":\"message_suggestion\",\"intent\":\"safe_action\",\"violations\":[]},{\"field\":\"recommended_action\",\"intent\":\"safe_action\",\"violations\":[]},{\"field\":\"stop_conditions.0\",\"intent\":\"safe_action\",\"violations\":[]},{\"field\":\"stop_conditions.1\",\"intent\":\"safe_action\",\"violations\":[]}]}",
+    "model": "deepseek-flash",
+    "finish_reason": "stop",
+    "usage": {
+      "input_tokens": 1159,
+      "output_tokens": 77,
+      "total_tokens": 1236,
+      "cache_hit_tokens": 384,
+      "cache_miss_tokens": 775
+    }
+  },
+  "duration_ms": 1114.286500000162,
+  "request_reserved": true,
+  "time": "2026-10-28T05:42:16.984410+00:00"
+}

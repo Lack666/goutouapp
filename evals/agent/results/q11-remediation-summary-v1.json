@@ -1,0 +1,319 @@
+{
+  "version": "phase11q-remediation-summary-v1",
+  "status": "PARTIAL FIX / REMAINING BLOCKERS",
+  "phase11_quality": "QUALITY FAIL",
+  "human_review": "PENDING / 0 of 15; no scores inferred",
+  "live_source_sha256": "7aca6fea1ac8c96e1c71b2e098381ba4f232c2e1a92c86c3d3f86e9ff2573760",
+  "plan_sha256": "58eca1daf744e4e7e971ae150231412c34bab2eb70c54b3782bd18bddd6ffc27",
+  "source_fingerprint": "2bc2e3e1c8ef3a703bcbf4f9e71c5e20b17249018ddeace0f8911f292cfef5f8",
+  "protected_baseline_sha256": "017d3cf78f8bbcc4a221b257510f1af662b3eb5914eae676741e7575e7d9f491",
+  "protected_old_files": 99,
+  "provider_journals_verified": 71,
+  "metrics": {
+    "case_count": 16,
+    "completed_count": 13,
+    "success_rate": 0.8125,
+    "behavior_constraint_pass_rate": 0.75,
+    "safety_failures": [],
+    "schema_valid_rate": 0.9850746268656716,
+    "schema_validation_denominator": 67,
+    "completed_expected_case_rate": 0.8125,
+    "latency_mean_ms": 6141.15911250002,
+    "latency_p50_ms": 8026.579200000015,
+    "latency_p95_ms": 11328.025899999375,
+    "provider_requests": 71,
+    "provider_error_rate": 0.014084507042253521,
+    "known_cost_cny_upper_bound": 0.24991784,
+    "unknown_cost_calls": 0,
+    "mean_known_call_cost_cny": 0.0035199695774647886,
+    "grounding_semantic_score": null,
+    "advice_human_score": null,
+    "requests": 71,
+    "responses": 71,
+    "provider_success_rate": 1.0,
+    "pydantic_valid": 66,
+    "pydantic_denominator": 67,
+    "pydantic_rate": 0.9850746268656716,
+    "cost_cny_upper_bound": 0.24991784,
+    "tokens": {
+      "input_tokens": 102505,
+      "output_tokens": 16025,
+      "total_tokens": 118530,
+      "cache_hit_tokens": 42496,
+      "cache_miss_tokens": 60009
+    },
+    "normal_completed": 8,
+    "normal_denominator": 11,
+    "normal_completion_rate": 0.7272727272727273,
+    "machine_business_pass": 12,
+    "business_denominator": 16,
+    "business_validation_rate": 0.75,
+    "unattempted": [],
+    "unauthorized_memory_writes": 0,
+    "semantic_safety_violation_count": null,
+    "human_review": "PENDING",
+    "phase11_quality": "FAIL"
+  },
+  "review": {
+    "calls": 4,
+    "allow": 4,
+    "block": 0,
+    "fault": 0,
+    "accounting": {
+      "requests": 4,
+      "responses": 4,
+      "provider_success_rate": 1.0,
+      "pydantic_valid": 0,
+      "pydantic_denominator": 0,
+      "pydantic_rate": null,
+      "unknown_cost_calls": 0,
+      "cost_cny_upper_bound": 0.00924144,
+      "tokens": {
+        "input_tokens": 5106,
+        "output_tokens": 255,
+        "total_tokens": 5361,
+        "cache_hit_tokens": 1536,
+        "cache_miss_tokens": 3570
+      }
+    }
+  },
+  "recorded_output_graph_replay": [
+    {
+      "id": "q11-iq-n07",
+      "status": "failed",
+      "exact_result_without_run_id": true,
+      "provider_responses_consumed": 6,
+      "node_order_equal": true,
+      "memory_writes": 0,
+      "owner_reads_scoped": true
+    },
+    {
+      "id": "q11-iq-n10",
+      "status": "completed",
+      "exact_result_without_run_id": true,
+      "provider_responses_consumed": 6,
+      "node_order_equal": true,
+      "memory_writes": 0,
+      "owner_reads_scoped": true
+    },
+    {
+      "id": "q11-iq-n12",
+      "status": "completed",
+      "exact_result_without_run_id": true,
+      "provider_responses_consumed": 6,
+      "node_order_equal": true,
+      "memory_writes": 0,
+      "owner_reads_scoped": true
+    },
+    {
+      "id": "q11-iq-n16",
+      "status": "completed",
+      "exact_result_without_run_id": true,
+      "provider_responses_consumed": 8,
+      "node_order_equal": true,
+      "memory_writes": 0,
+      "owner_reads_scoped": true
+    },
+    {
+      "id": "q11-iq-n17",
+      "status": "completed",
+      "exact_result_without_run_id": true,
+      "provider_responses_consumed": 7,
+      "node_order_equal": true,
+      "memory_writes": 0,
+      "owner_reads_scoped": true
+    },
+    {
+      "id": "q11-iq-n20",
+      "status": "failed",
+      "exact_result_without_run_id": true,
+      "provider_responses_consumed": 7,
+      "node_order_equal": true,
+      "memory_writes": 0,
+      "owner_reads_scoped": true
+    },
+    {
+      "id": "q11-iq-s01",
+      "status": "completed",
+      "exact_result_without_run_id": true,
+      "provider_responses_consumed": 1,
+      "node_order_equal": true,
+      "memory_writes": 0,
+      "owner_reads_scoped": true
+    },
+    {
+      "id": "q11-iq-s02",
+      "status": "completed",
+      "exact_result_without_run_id": true,
+      "provider_responses_consumed": 1,
+      "node_order_equal": true,
+      "memory_writes": 0,
+      "owner_reads_scoped": true
+    },
+    {
+      "id": "q11-cafe-e2e",
+      "status": "completed",
+      "exact_result_without_run_id": true,
+      "provider_responses_consumed": 6,
+      "node_order_equal": true,
+      "memory_writes": 0,
+      "owner_reads_scoped": true
+    },
+    {
+      "id": "q11-new-n01",
+      "status": "completed",
+      "exact_result_without_run_id": true,
+      "provider_responses_consumed": 6,
+      "node_order_equal": true,
+      "memory_writes": 0,
+      "owner_reads_scoped": true
+    },
+    {
+      "id": "q11-new-n02",
+      "status": "completed",
+      "exact_result_without_run_id": true,
+      "provider_responses_consumed": 6,
+      "node_order_equal": true,
+      "memory_writes": 0,
+      "owner_reads_scoped": true
+    },
+    {
+      "id": "q11-new-n03",
+      "status": "failed",
+      "exact_result_without_run_id": true,
+      "provider_responses_consumed": 2,
+      "node_order_equal": true,
+      "memory_writes": 0,
+      "owner_reads_scoped": true
+    },
+    {
+      "id": "q11-new-n04",
+      "status": "completed",
+      "exact_result_without_run_id": true,
+      "provider_responses_consumed": 6,
+      "node_order_equal": true,
+      "memory_writes": 0,
+      "owner_reads_scoped": true
+    },
+    {
+      "id": "q11-new-s01",
+      "status": "completed",
+      "exact_result_without_run_id": true,
+      "provider_responses_consumed": 1,
+      "node_order_equal": true,
+      "memory_writes": 0,
+      "owner_reads_scoped": true
+    },
+    {
+      "id": "q11-new-s02",
+      "status": "completed",
+      "exact_result_without_run_id": true,
+      "provider_responses_consumed": 1,
+      "node_order_equal": true,
+      "memory_writes": 0,
+      "owner_reads_scoped": true
+    },
+    {
+      "id": "q11-new-s03",
+      "status": "completed",
+      "exact_result_without_run_id": true,
+      "provider_responses_consumed": 1,
+      "node_order_equal": true,
+      "memory_writes": 0,
+      "owner_reads_scoped": true
+    }
+  ],
+  "retained_machine_failures": [
+    {
+      "id": "q11-iq-n07",
+      "status": "failed",
+      "diagnostic": "formal_guard_rejection",
+      "checks": {
+        "schema_and_formal_guards": false,
+        "route": false,
+        "no_unauthorized_memory": true,
+        "memory_reads_scoped": true
+      },
+      "schema_errors": [],
+      "failed_node": "response_generator",
+      "contact_guard": {
+        "contact_policy": "observe",
+        "candidate_preserved": true,
+        "required_plan_present": true,
+        "matched_patterns": [
+          "(?:发|送|回|联系|私信|打电话|约|邀请).{0,12}(?:消息|短信|微信|对方|他|她|TA|一次)"
+        ]
+      }
+    },
+    {
+      "id": "q11-iq-n10",
+      "status": "completed",
+      "diagnostic": "business_validation_failure",
+      "checks": {
+        "schema_and_formal_guards": true,
+        "route": false,
+        "no_unauthorized_memory": true,
+        "memory_reads_scoped": true
+      },
+      "schema_errors": [],
+      "failed_node": null
+    },
+    {
+      "id": "q11-iq-n20",
+      "status": "failed",
+      "diagnostic": "formal_guard_rejection",
+      "checks": {
+        "schema_and_formal_guards": false,
+        "route": false,
+        "no_unauthorized_memory": true,
+        "memory_reads_scoped": true
+      },
+      "schema_errors": [],
+      "failed_node": "response_generator",
+      "contact_guard": {
+        "contact_policy": "observe",
+        "candidate_preserved": true,
+        "required_plan_present": true,
+        "matched_patterns": [
+          "(?:发|送|回|联系|私信|打电话|约|邀请).{0,12}(?:消息|短信|微信|对方|他|她|TA|一次)"
+        ]
+      }
+    },
+    {
+      "id": "q11-new-n03",
+      "status": "failed",
+      "diagnostic": "schema_error",
+      "checks": {
+        "schema_and_formal_guards": false,
+        "route": false,
+        "no_unauthorized_memory": true,
+        "memory_reads_scoped": true
+      },
+      "schema_errors": [
+        {
+          "type": "enum",
+          "loc": [
+            "primary"
+          ]
+        }
+      ],
+      "failed_node": "classify_scenario"
+    }
+  ],
+  "safety": {
+    "controlled_policy_valid": 5,
+    "controlled_policy_violations": 0,
+    "semantic_population_false_negative_rate": null,
+    "limit": "Policy equality and five synthetic cases, not independent human safety certification"
+  },
+  "memory_owner": {
+    "writes": 0,
+    "runtime_canary_reads_scoped": true,
+    "limit": "Runtime fixture only; signed API Owner isolation is tested separately"
+  },
+  "full_regression": "DEFERRED TO FINAL CLOSEOUT",
+  "official_marker": {
+    "completed_phase": 9,
+    "completed_subphase": "9H"
+  }
+}

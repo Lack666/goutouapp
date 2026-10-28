@@ -1,0 +1,20 @@
+{
+  "serial": 28,
+  "case_id": "q11-iq-n17",
+  "status": "response",
+  "visible_response": {
+    "content": "{\"primary\": \"invitation\", \"secondary\": \"reply\", \"confidence\": 0.95, \"reason_summary\": \"User asks for a natural one-line reply to decline a colleague's weekend board-game invitation honestly without excuses.\"}",
+    "model": "deepseek-flash",
+    "finish_reason": "stop",
+    "usage": {
+      "input_tokens": 497,
+      "output_tokens": 49,
+      "total_tokens": 546,
+      "cache_hit_tokens": 256,
+      "cache_miss_tokens": 241
+    }
+  },
+  "duration_ms": 804.69389999962,
+  "request_reserved": true,
+  "time": "2026-10-28T05:42:09.969155+00:00"
+}

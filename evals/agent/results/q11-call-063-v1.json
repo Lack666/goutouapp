@@ -1,0 +1,20 @@
+{
+  "serial": 63,
+  "case_id": "q11-new-n04",
+  "status": "response",
+  "visible_response": {
+    "content": "{\"risk_level\": \"normal\", \"risk_categories\": [], \"safety_route_required\": false, \"user_facing_note\": null}",
+    "model": "deepseek-flash",
+    "finish_reason": "stop",
+    "usage": {
+      "input_tokens": 733,
+      "output_tokens": 32,
+      "total_tokens": 765,
+      "cache_hit_tokens": 512,
+      "cache_miss_tokens": 221
+    }
+  },
+  "duration_ms": 591.7282000000341,
+  "request_reserved": true,
+  "time": "2026-10-28T05:42:55.209891+00:00"
+}

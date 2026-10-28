@@ -1,0 +1,20 @@
+{
+  "serial": 20,
+  "case_id": "q11-iq-n16",
+  "status": "response",
+  "visible_response": {
+    "content": "{\"primary\": \"consent\", \"secondary\": \"relationship\", \"confidence\": 0.8, \"reason_summary\": \"用户在学习识别不健康沟通并明确不想操纵他人，询问如何对‘被爱就须放弃所有朋友’这类要求表达个人界限，核心是界限设定与同意/尊重议题。\"}",
+    "model": "deepseek-flash",
+    "finish_reason": "stop",
+    "usage": {
+      "input_tokens": 495,
+      "output_tokens": 68,
+      "total_tokens": 563,
+      "cache_hit_tokens": 256,
+      "cache_miss_tokens": 239
+    }
+  },
+  "duration_ms": 695.727899999838,
+  "request_reserved": true,
+  "time": "2026-10-28T05:41:58.494413+00:00"
+}

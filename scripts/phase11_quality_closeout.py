@@ -97,7 +97,8 @@ def inspect_packet(path, rows):
 
 
 def build():
-    rows, failures, metrics, e2e, _ = audit()
+    # This remains the immutable old quality conclusion, never a current-runtime certification.
+    rows, failures, metrics, e2e, _ = audit(require_current_source=False)
     by_id = {r["id"]: r for r in rows}
     all_items, packs = [], []
     for name in PACKETS:

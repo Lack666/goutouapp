@@ -1,0 +1,13 @@
+unformatted: File would be reformatted
+  --> apps\server\app\agent\action_validation.py:51:16
+   |
+50 | PERSONAL_EXPERIENCE_CUES = (
+   -     re.compile(r"(?:我|你|您|我们|咱们|你们|双方).{0,6}(?:之前|以前|过去|上次|曾经|平时|经常|总是)"),
+51 |     re.compile(
+52 +         r"(?:我|你|您|我们|咱们|你们|双方).{0,6}(?:之前|以前|过去|上次|曾经|平时|经常|总是)"
+53 +     ),
+54 +     re.compile(
+55 |         r"\b(?:I|you|we|both of you)\b.{0,24}"
+   |
+
+1 file would be reformatted, 22 files already formatted

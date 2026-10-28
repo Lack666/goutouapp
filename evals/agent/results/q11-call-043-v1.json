@@ -1,0 +1,20 @@
+{
+  "serial": 43,
+  "case_id": "q11-cafe-e2e",
+  "status": "response",
+  "visible_response": {
+    "content": "{\"risk_level\": \"normal\", \"risk_categories\": [], \"safety_route_required\": false, \"user_facing_note\": null}",
+    "model": "deepseek-flash",
+    "finish_reason": "stop",
+    "usage": {
+      "input_tokens": 716,
+      "output_tokens": 32,
+      "total_tokens": 748,
+      "cache_hit_tokens": 512,
+      "cache_miss_tokens": 204
+    }
+  },
+  "duration_ms": 491.1176000005071,
+  "request_reserved": true,
+  "time": "2026-10-28T05:42:28.849012+00:00"
+}

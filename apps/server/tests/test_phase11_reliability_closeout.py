@@ -111,7 +111,14 @@ def test_schedule_exception_never_erases_additional_refusal_or_instructions(mess
             risk_categories=categories,
             safety_route_required=high,
         )
-        assert verified_safety(result, state) is result
+        checked = verified_safety(result, state)
+        assert checked.risk_level == result.risk_level
+        assert checked.safety_route_required == result.safety_route_required
+        assert checked.risk_categories == result.risk_categories
+        if not high:
+            assert checked is result
+        else:
+            assert checked.user_facing_note
 
 
 def test_schedule_exception_never_erases_history_or_high_risk():
@@ -125,7 +132,9 @@ def test_schedule_exception_never_erases_history_or_high_risk():
     high = SafetyResult(
         risk_level=RiskLevel.HIGH, risk_categories=["explicit_refusal"], safety_route_required=True
     )
-    assert verified_safety(high, state) is high
+    checked = verified_safety(high, state)
+    assert checked.risk_level == high.risk_level and checked.safety_route_required
+    assert checked.risk_categories == high.risk_categories
 
 
 @pytest.mark.parametrize(
@@ -285,12 +294,15 @@ def test_five_frozen_safety_answers_are_assembled_and_skip_ordinary_nodes_and_me
     "note",
     [None, "", "Please stop harmful actions.", "API_KEY private", "你可以跟踪他，再去安全地点。"],
 )
-def test_unsafe_missing_or_wrong_language_note_uses_victim_neutral_fallback(note):
+def test_untrusted_note_rejected_at_publication_then_replaced_with_controlled_policy(note):
     state = initial_state(request(CASES["safety-01"]["input"]))
     state["route"] = Route.SAFETY
     state["safety"] = SafetyResult(
         risk_level=RiskLevel.HIGH, safety_route_required=True, user_facing_note=note
     )
+    with pytest.raises(AgentStructuredOutputError):
+        safety_finalize(state)
+    state["safety"] = verified_safety(state["safety"], state)
     answer = safety_finalize(state)["final_answer"]
     assert "安全地点" in answer and "Stop harmful" not in answer
     assert "停止伤害" not in answer and "API_KEY" not in answer and "跟踪" not in answer

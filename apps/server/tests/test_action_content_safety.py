@@ -398,7 +398,15 @@ def test_real_frozen_graph_outputs_replay_without_generation(case_id):
         )
     )
     assert isinstance(result, AgentResult) and result.route.value == case["expected_route"]
-    assert result.final_answer == row["result"]["final_answer"]
+    if result.route.value == "safety":
+        from app.agent.safety_validation import protective_safety_answer
+
+        # The frozen note is evidence, not an approved final answer under the new policy.
+        assert result.final_answer == protective_safety_answer(result.safety, case["input"])
+        assert result.final_answer == result.safety.user_facing_note
+        assert result.final_answer != row["result"]["final_answer"]
+    else:
+        assert result.final_answer == row["result"]["final_answer"]
     assert not provider._chats and not provider._structured
 
 

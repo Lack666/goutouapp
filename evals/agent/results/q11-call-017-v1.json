@@ -1,0 +1,20 @@
+{
+  "serial": 17,
+  "case_id": "q11-iq-n12",
+  "status": "response",
+  "visible_response": {
+    "content": "{\"contact_policy\": \"reply\", \"recommended_action\": \"在适当时机把话题从人格标签转向对方实际的态度与行为：可以说明你不太想用类型标签来判断人，更想了解对方对承诺和关系期待的看法，同时观察对方之后是否言行一致。\", \"supporting_analysis_ids\": [\"A3\", \"A4\", \"A6\", \"A8\", \"A9\"], \"message_suggestion\": \"我不太想用 MBTI 标签去判断一个人，更在意实际相处。方便的时候想听听你对承诺和关系期待的看法。\", \"observation_window\": \"接下来四到六周内，留意对方在约定的时间与承诺上的实际表现是否一致\", \"stop_conditions\": [\"对方表示不愿讨论关系期待或感到不适时，尊重其意愿并结束该话题\", \"任一方感到交流不再安全或不被尊重时，结束对话\"]}",
+    "model": "deepseek-flash",
+    "finish_reason": "stop",
+    "usage": {
+      "input_tokens": 1829,
+      "output_tokens": 189,
+      "total_tokens": 2018,
+      "cache_hit_tokens": 640,
+      "cache_miss_tokens": 1189
+    }
+  },
+  "duration_ms": 1487.5531999996383,
+  "request_reserved": true,
+  "time": "2026-10-28T05:41:56.224889+00:00"
+}

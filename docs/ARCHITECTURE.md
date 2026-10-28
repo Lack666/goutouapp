@@ -709,3 +709,26 @@ introduces report persistence. Android would expose scope confirmation, report
 and authorized source evidence. No RAG, vector storage, new infrastructure or
 Provider bypass is planned. Exact bounds, stage acceptance and original Phase12
 handoff are in the proposal; implementation awaits separate authorization.
+
+## Phase11Q bounded core recovery (2026-10-28)
+
+The authorized repair keeps the LangGraph topology, node state scopes, formal
+Pydantic contracts and Memory/Owner/deletion authority unchanged. Once classified
+high-risk, model-authored notes cannot become public advice: protective_v1 selects
+controlled bilingual safety paragraphs without interpolating model/user content.
+The public SafetyResult note is normalized before routing, and final REST/SSE
+publication validates both note and answer against that policy.
+
+Ordinary response composition copies an already validated Plan literal only when
+needed, retains the whole model candidate, then applies the original validators
+and contextual content review. It never drops fields/clauses, relaxes length or
+provenance, or retries generation. Explicit schema projections align analysis
+source kinds/top-level keys and Action's bounded supporting-ID set. Personal-history
+claims trigger scoped review; this remains a trigger-based semantic check, not a
+general entailment proof. Application diagnostics contain policy/composition metadata
+only. No API, database, new provider or imported-message context is introduced.
+
+The finite real batch remains PARTIAL: ordinary contact-guard false positives,
+a frozen route mismatch and a Scenario enum failure are retained. See
+[11Q report](PHASE_11Q_REMEDIATION_REPORT.md). This implementation is not Phase11
+quality certification or final regression approval.

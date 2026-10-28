@@ -1,0 +1,20 @@
+{
+  "serial": 31,
+  "case_id": "q11-iq-n17",
+  "status": "response",
+  "visible_response": {
+    "content": "{\"contact_policy\":\"reply\",\"recommended_action\":\"根据用户希望直接、不找理由表达不参加的意愿，回复一句简短自然的话，感谢邀请并说明这次不参加，不追加编造的理由。\",\"supporting_analysis_ids\":[\"A1\",\"A2\",\"A3\",\"A4\"],\"message_suggestion\":\"谢谢邀请！这次桌游我就不参加啦，祝你们玩得开心。\",\"observation_window\":null,\"stop_conditions\":[\"对方表示理解或不再追问时，话题自然结束。\",\"任一方表示不适或交流不再安全时，结束对话。\"]}",
+    "model": "deepseek-flash",
+    "finish_reason": "stop",
+    "usage": {
+      "input_tokens": 1797,
+      "output_tokens": 124,
+      "total_tokens": 1921,
+      "cache_hit_tokens": 640,
+      "cache_miss_tokens": 1157
+    }
+  },
+  "duration_ms": 1073.1131000002279,
+  "request_reserved": true,
+  "time": "2026-10-28T05:42:15.869318+00:00"
+}

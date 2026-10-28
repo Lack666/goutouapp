@@ -21,7 +21,8 @@ HARMFUL_CUES = (
     ),
     re.compile(
         r"\b(?:deceiv\w*|lie|lying|excuse|coerc\w*|blackmail|surveill\w*|gaslight\w*|"
-        r"fraud|threat\w*|drug\w*)\b", re.I
+        r"fraud|threat\w*|drug\w*)\b",
+        re.I,
     ),
 )
 CONTACT_CUES = (
@@ -46,10 +47,30 @@ UNVERIFIED_CUES = (
 UNKNOWN_MOTIVE_CUES = (
     re.compile(r"(?:他|她|TA|对方).{0,6}(?:已经失去兴趣|已经不爱|一定喜欢|肯定喜欢|故意冷落)"),
 )
+PERSONAL_EXPERIENCE_CUES = (
+    re.compile(
+        r"(?:我|你|您|我们|咱们|你们|双方).{0,6}(?:之前|以前|过去|上次|曾经|平时|经常|总是)"
+    ),
+    re.compile(
+        r"\b(?:I|you|we|both of you)\b.{0,24}"
+        r"\b(?:used to|usually|often|always|last time|previously)\b",
+        re.I,
+    ),
+)
+
+
+def _validate_text_encoding(texts: list[str]) -> None:
+    if any(
+        char == "\ufffd" or (ord(char) < 32 and char not in "\n\r\t")
+        for text in texts
+        for char in text
+    ):
+        raise AgentStructuredOutputError() from None
+
 
 def has_safety_cues(text: str) -> bool:
     # A review trigger, never a semantic verdict; no sentence/negation exemptions.
-    return any(pattern.search(text) for pattern in HARMFUL_CUES)
+    return any(pattern.search(text) for pattern in (*HARMFUL_CUES, *PERSONAL_EXPERIENCE_CUES))
 
 
 def analysis_ids(state: AgentState) -> set[str]:
@@ -65,6 +86,7 @@ def _reject_if_cued(texts: list[str], patterns: tuple[re.Pattern[str], ...]) -> 
 def validate_action(
     plan: ActionPlan, state: AgentState, *, approval: ContentApproval | None = None
 ) -> None:
+    _validate_text_encoding(list(candidate_fields(plan).values()))
     if state["route"] not in {Route.ORDINARY, Route.BOUNDARY} or not state["analysis_result"]:
         raise AgentStructuredOutputError() from None
     if not set(plan.supporting_analysis_ids) <= analysis_ids(state) or len(
@@ -121,6 +143,7 @@ def validate_action(
 def validate_response(
     response: ResponseResult, state: AgentState, *, approval: ContentApproval | None = None
 ) -> None:
+    _validate_text_encoding([response.final_answer])
     plan = state["action_plan"]
     if plan is None or response.contact_policy != plan.contact_policy:
         raise AgentStructuredOutputError() from None

@@ -1,5 +1,12 @@
 # Agent evaluation v1
 
+2026-10-28 Phase11Q: [targeted remediation](PHASE_11Q_REMEDIATION_REPORT.md) is
+PARTIAL FIX / REMAINING BLOCKERS. The separately frozen16-case q11 batch retains
+all first outcomes and is not a replacement independent evaluation. Human review
+of these new outputs is PENDING; the earlier completed human reviews below keep
+their original version binding. Phase11 quality remains FAIL. No old thresholds,
+dataset, output or score is changed by the targeted recovery.
+
 2026-10-28 closeout: independent primary and supplement human reviews are COMPLETE
 / USER_ATTESTED. Primary2/15 and unique8/28 acceptable; QUALITY FAIL / BLOCKED.
 See [quality closeout](PHASE_11_QUALITY_CLOSEOUT.md) for verified review fields,

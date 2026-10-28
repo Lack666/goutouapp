@@ -22,8 +22,15 @@ from evals.agent.independent import (
 from evals.agent.review import packet, validate_reviews
 
 
-def audit():
-    plan = check_frozen()
+def audit(*, require_current_source=True):
+    # Remediation changes current code deliberately. Archive mode certifies only the old run.
+    plan = (
+        check_frozen() if require_current_source else json.loads(PLAN.read_text(encoding="utf-8"))
+    )
+    assert sha(DATASET) == plan["dataset_sha256"]
+    # Historical schema replay cannot silently use a weakened or changed public contract.
+    contract_path = "apps/server/app/agent/contracts.py"
+    assert sha(ROOT / contract_path) == plan["files"][contract_path]
     with zipfile.ZipFile(RESULTS / "independent-source-v1.zip") as archive:
         import hashlib
 
@@ -215,9 +222,13 @@ def generate():
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--check", action="store_true")
+    parser.add_argument("--archive-only", action="store_true")
     args = parser.parse_args()
+    if args.archive_only and not args.check:
+        parser.error("--archive-only is a read-only historical check, not report generation")
     if args.check:
-        audit()
-        print("Independent evidence, schema replay, hashes, budgets and E2E: valid")
+        audit(require_current_source=not args.archive_only)
+        mode = "archived historical run" if args.archive_only else "current frozen source"
+        print(f"Independent evidence, schema replay, hashes, budgets and E2E: valid ({mode})")
     else:
         generate()

@@ -1,0 +1,20 @@
+{
+  "serial": 27,
+  "case_id": "q11-iq-n17",
+  "status": "response",
+  "visible_response": {
+    "content": "{\"risk_level\": \"normal\", \"risk_categories\": [], \"safety_route_required\": false, \"user_facing_note\": null}",
+    "model": "deepseek-flash",
+    "finish_reason": "stop",
+    "usage": {
+      "input_tokens": 731,
+      "output_tokens": 32,
+      "total_tokens": 763,
+      "cache_hit_tokens": 512,
+      "cache_miss_tokens": 219
+    }
+  },
+  "duration_ms": 607.0291000005454,
+  "request_reserved": true,
+  "time": "2026-10-28T05:42:09.162341+00:00"
+}

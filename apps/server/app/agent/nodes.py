@@ -26,6 +26,7 @@ from app.agent.errors import AgentInputError, AgentStructuredOutputError
 from app.agent.knowledge import ContextBudget, ReferenceRegistry, load_references, route_knowledge
 from app.agent.prompts import action, analysis, fiu, response, safety, scenario
 from app.agent.prompts.common import context_payload
+from app.agent.response_composition import compose_response
 from app.agent.safety_validation import safety_answer, verified_safety
 from app.agent.state import AgentState
 from app.llm.models import LLMMessage
@@ -252,6 +253,7 @@ async def response_generator(state: AgentState, dependencies: RuntimeDependencie
     )
     if not isinstance(result, ResponseResult):
         raise AgentStructuredOutputError() from None
+    result = compose_response(result, state)
     try:
         validate_response(result, state)
     except ContentReviewRequired:

@@ -53,7 +53,8 @@ def test_rejection_fault_and_formal_failure_remain_distinct():
 def test_frozen_live_evidence_replays_schemas_and_matches_exact_denominators():
     from scripts.phase11_independent_acceptance import audit
 
-    rows, failures, metrics, e2e, _ = audit()
+    # The historical run is bound to its ZIP after explicitly authorized runtime remediation.
+    rows, failures, metrics, e2e, _ = audit(require_current_source=False)
     assert len(rows) == 28 and len(failures) == 6
     assert metrics["quality_gate"] == "FAIL"
     assert e2e["budget"]["requests"] == 11

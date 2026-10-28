@@ -37,6 +37,15 @@ message can enact deception or coercion without naming it; check its content aga
 the facts. Unsupported invented excuses violate deception. If action or consent
 is ambiguous, return unclear, never infer permission. No blanket negation exemption.
 
+Personal experiences, habits and shared history inside a suggested message are
+claims too. Verify them against the actual current user message or user-authored
+history, not merely extracted facts or prior assistant claims. The FIU is a model
+interpretation, not independent proof. Do not invent an event to make an invitation
+sound natural. A clearly conditional example ('only if this really happened') is
+different from claiming it happened. A proposed future activity is not a past habit.
+Missing evidence is not permission; mark unsupported personal-history assertions
+as deception. Do not treat a familiar place, locale or language as proof of a habit.
+
 Return ONLY a JSON object with exactly one key fields, a list with exactly one
 object per candidate field. Each object has exactly field, intent, violations.
 field: exact candidate field name.
@@ -105,6 +114,7 @@ def review_payload(candidate: ActionPlan | ResponseResult, state: AgentState) ->
             "recent_messages": [m.model_dump(mode="json") for m in state["messages"][-6:]],
             "facts": [f.model_dump(mode="json") for f in state["facts"]],
             "unknowns": [u.statement for u in state["unknowns"]],
+            "source_policy": "User statements are reports; assistant history and FIU are not proof",
         },
         ensure_ascii=False,
         sort_keys=True,

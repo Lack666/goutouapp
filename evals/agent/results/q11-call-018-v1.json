@@ -1,0 +1,20 @@
+{
+  "serial": 18,
+  "case_id": "q11-iq-n12",
+  "status": "response",
+  "visible_response": {
+    "content": "{\"final_answer\": \"我不太想用 MBTI 标签去判断一个人，更在意实际相处。方便的时候想听听你对承诺和关系期待的看法。\\n\\n仅凭 ENFP 标签和两次准时，无法预测对方未来是否忠诚——这类判断缺少证据，需要看他之后在守约和承诺上的实际表现。可以留意接下来四到六周内他言行是否一致；若对方不愿谈这个话题或感到不适，尊重其意愿，不再追问；任一方觉得交流不再安全或不被尊重时，结束对话。\", \"contact_policy\": \"reply\"}",
+    "model": "deepseek-flash",
+    "finish_reason": "stop",
+    "usage": {
+      "input_tokens": 1241,
+      "output_tokens": 122,
+      "total_tokens": 1363,
+      "cache_hit_tokens": 384,
+      "cache_miss_tokens": 857
+    }
+  },
+  "duration_ms": 938.474600000518,
+  "request_reserved": true,
+  "time": "2026-10-28T05:41:57.165185+00:00"
+}

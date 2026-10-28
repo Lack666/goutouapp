@@ -1,0 +1,20 @@
+{
+  "serial": 35,
+  "case_id": "q11-iq-n20",
+  "status": "response",
+  "visible_response": {
+    "content": "{\"primary\": \"social_other\", \"secondary\": \"consent\", \"confidence\": 0.72, \"reason_summary\": \"User asks whether the assistant can directly open WeChat and send meeting-invitation messages to contacts, and requests an explicit boundary statement. This is primarily a capability/social-action boundary question, with a consent-related secondary about messaging contacts on the user's behalf.\"}",
+    "model": "deepseek-flash",
+    "finish_reason": "stop",
+    "usage": {
+      "input_tokens": 503,
+      "output_tokens": 82,
+      "total_tokens": 585,
+      "cache_hit_tokens": 256,
+      "cache_miss_tokens": 247
+    }
+  },
+  "duration_ms": 712.0576000006622,
+  "request_reserved": true,
+  "time": "2026-10-28T05:42:19.321440+00:00"
+}

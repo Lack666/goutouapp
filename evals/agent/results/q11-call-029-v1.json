@@ -1,0 +1,20 @@
+{
+  "serial": 29,
+  "case_id": "q11-iq-n17",
+  "status": "response",
+  "visible_response": {
+    "content": "{\"facts\": [{\"statement\": \"用户说同事邀请其周末参加桌游。\", \"source\": \"user_report\", \"confidence\": 0.95}, {\"statement\": \"用户表示自己对桌游没有兴趣。\", \"source\": \"user_self_report\", \"confidence\": 0.95}, {\"statement\": \"用户想直接说不参加并感谢邀请，不找理由。\", \"source\": \"user_self_report\", \"confidence\": 0.95}, {\"statement\": \"用户请求给出一句自然的回复。\", \"source\": \"user_report\", \"confidence\": 0.95}], \"inferences\": [{\"statement\": \"用户可能希望回复简洁且不失礼貌，以维持与同事的正常相处。\", \"source\": \"user_report\", \"alternative\": \"用户可能只是想要一句最省事的文字，对关系维护没有特别考虑。\", \"confidence\": 0.5}], \"unknowns\": [{\"statement\": \"同事与用户的具体关系亲疏与平时沟通风格未知。\", \"source\": null}, {\"statement\": \"该邀请是群发还是单独发给用户未知。\", \"source\": null}, {\"statement\": \"同事对拒绝的接受程度未知。\", \"source\": null}, {\"statement\": \"用户是否需要后续再补充解释未知。\", \"source\": null}]}",
+    "model": "deepseek-flash",
+    "finish_reason": "stop",
+    "usage": {
+      "input_tokens": 948,
+      "output_tokens": 278,
+      "total_tokens": 1226,
+      "cache_hit_tokens": 768,
+      "cache_miss_tokens": 180
+    }
+  },
+  "duration_ms": 1448.1448000005912,
+  "request_reserved": true,
+  "time": "2026-10-28T05:42:11.419697+00:00"
+}

@@ -44,3 +44,13 @@ Invalid decisions and transport errors have no successful review event and canno
 be scored as correctly classified negative cases. Candidate text, field-level intent
 decisions and payload digests are not added to application diagnostics. Fixed synthetic
 evaluation exports retain visible JSON decisions separately; no reasoning is requested.
+
+Phase11Q adds content-free `safety_presentation` events (policy version and
+candidate_replaced/publication_rejected) and `response_composition` events
+(changed boolean, retries=0). No discarded candidate or copied Plan text enters
+application diagnostics. Prompt version is phase11q-core-safety-reliability-v1;
+exact source manifests distinguish the changed behavior from historical runs.
+The one-pass q11 evaluator separately checkpoints each normalized synthetic
+visible response/usage before formal node validation, including invalid Schema
+results. Journals and claims prevent a lost aggregate from justifying paid retries.
+These files are synthetic evaluation evidence, not a new production log or data API.

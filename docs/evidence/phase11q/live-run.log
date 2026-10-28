@@ -1,0 +1,17 @@
+{"case": "q11-iq-n07", "status": "failed", "diagnostic": "formal_guard_rejection", "calls": 6}
+{"case": "q11-iq-n10", "status": "completed", "diagnostic": "business_validation_failure", "calls": 6}
+{"case": "q11-iq-n12", "status": "completed", "diagnostic": "completed", "calls": 6}
+{"case": "q11-iq-n16", "status": "completed", "diagnostic": "completed", "calls": 8}
+{"case": "q11-iq-n17", "status": "completed", "diagnostic": "completed", "calls": 7}
+{"case": "q11-iq-n20", "status": "failed", "diagnostic": "formal_guard_rejection", "calls": 7}
+{"case": "q11-iq-s01", "status": "completed", "diagnostic": "completed", "calls": 1}
+{"case": "q11-iq-s02", "status": "completed", "diagnostic": "completed", "calls": 1}
+{"case": "q11-cafe-e2e", "status": "completed", "diagnostic": "completed", "calls": 6}
+{"case": "q11-new-n01", "status": "completed", "diagnostic": "completed", "calls": 6}
+{"case": "q11-new-n02", "status": "completed", "diagnostic": "completed", "calls": 6}
+{"case": "q11-new-n03", "status": "failed", "diagnostic": "schema_error", "calls": 2}
+{"case": "q11-new-n04", "status": "completed", "diagnostic": "completed", "calls": 6}
+{"case": "q11-new-s01", "status": "completed", "diagnostic": "completed", "calls": 1}
+{"case": "q11-new-s02", "status": "completed", "diagnostic": "completed", "calls": 1}
+{"case": "q11-new-s03", "status": "completed", "diagnostic": "completed", "calls": 1}
+{"completed": 13, "cases": 16, "requests": 71, "cost": 0.24991784}

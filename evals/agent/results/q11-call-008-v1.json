@@ -1,0 +1,20 @@
+{
+  "serial": 8,
+  "case_id": "q11-iq-n10",
+  "status": "response",
+  "visible_response": {
+    "content": "{\"primary\": \"relationship\", \"secondary\": \"consent\", \"confidence\": 0.82, \"reason_summary\": \"对方已明确划清界限为普通同学关系，用户接受并询问同班自然相处的实际问题，故以关系为主，边界尊重为辅。\"}",
+    "model": "deepseek-flash",
+    "finish_reason": "stop",
+    "usage": {
+      "input_tokens": 495,
+      "output_tokens": 58,
+      "total_tokens": 553,
+      "cache_hit_tokens": 256,
+      "cache_miss_tokens": 239
+    }
+  },
+  "duration_ms": 752.1503999996639,
+  "request_reserved": true,
+  "time": "2026-10-28T05:41:40.068386+00:00"
+}

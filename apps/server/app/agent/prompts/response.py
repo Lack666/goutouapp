@@ -24,6 +24,16 @@ without enumerating harmful tactics. For unsupported certainty, explain the
 evidence gap without quoting the user's categorical assertion, e.g.
 "仅凭回复间隔无法判断感情状态"."""
 
+SYSTEM += """
+exact_required_text is the already validated plan's literal user-facing step.
+Use it unchanged, then add only explanation needed for this request. Keep a
+simple reply to a short answer; do not restate every analysis point or append
+generic warnings without a relevant risk. Preserve the plan's useful observation
+window and feedback/stop condition for ongoing decisions. Do not claim a shared
+habit, place, past event or feeling unless supplied evidence supports it. Mark
+an optional future example as hypothetical, never as the user's actual history.
+"""
+
 
 def input_payload(state: AgentState) -> str:
     analysis = state["analysis_result"]
@@ -32,6 +42,9 @@ def input_payload(state: AgentState) -> str:
         {
             "scenario": state["scenario"].primary if state["scenario"] else None,
             "route": state["route"],
+            "exact_required_text": (
+                plan.message_suggestion or plan.recommended_action if plan else None
+            ),
             "user_request_data": state["current_message"][:1500],
             "fiu_data": {
                 "facts": [item.statement[:200] for item in state["facts"][:4]],

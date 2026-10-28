@@ -1,0 +1,20 @@
+{
+  "serial": 14,
+  "case_id": "q11-iq-n12",
+  "status": "response",
+  "visible_response": {
+    "content": "{\"primary\": \"personality\", \"secondary\": \"relationship\", \"confidence\": 0.72, \"reason_summary\": \"The user asks whether an MBTI label (ENFP) and punctuality can predict future loyalty, explicitly wanting to avoid judging by personality type; this is about using personality labels rather than a concrete relationship event.\"}",
+    "model": "deepseek-flash",
+    "finish_reason": "stop",
+    "usage": {
+      "input_tokens": 496,
+      "output_tokens": 70,
+      "total_tokens": 566,
+      "cache_hit_tokens": 256,
+      "cache_miss_tokens": 240
+    }
+  },
+  "duration_ms": 576.4205000004949,
+  "request_reserved": true,
+  "time": "2026-10-28T05:41:49.503552+00:00"
+}

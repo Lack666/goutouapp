@@ -8,10 +8,12 @@ import pytest
 
 from app.agent import AgentFailure, AgentInput, AgentResult, initial_state
 from app.agent.contracts import (
+    ActionPlan,
     AnalysisResult,
     Fact,
     Inference,
     LoadedReference,
+    ResponseResult,
     RiskLevel,
     Route,
     SafetyResult,
@@ -25,6 +27,7 @@ from app.agent.nodes import relationship_analysis
 from app.agent.runtime import NODE_READS, NODE_WRITES, AgentRuntime, _bind_async
 from app.llm.errors import LLMStructuredOutputError, LLMTimeoutError
 from app.llm.mock import MockLLMProvider
+from evals.agent.content_safety_eval import queue_safe_fixture_review
 from evals.phase3c_semantic import CASES, replay_outputs
 from evals.phase3e_analysis import (
     SELECTED,
@@ -114,7 +117,10 @@ def run_case(case: dict):
             assertions=case["expected"]["assertions"],
         )
         provider.queue_structured(action)
-        provider.queue_structured(fixture_response(action))
+        queue_safe_fixture_review(provider, ActionPlan.model_validate(action))
+        response = fixture_response(action)
+        provider.queue_structured(response)
+        queue_safe_fixture_review(provider, ResponseResult.model_validate(response))
     result = asyncio.run(
         AgentRuntime(dependencies=RuntimeDependencies(llm_provider=provider)).run(
             request(case["input"])
