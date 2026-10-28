@@ -38,11 +38,27 @@ BLOCKED_CONTENT = re.compile(
     r"我明确同意|长期关系档案|\b\d{15}(?:\d{2}[0-9Xx])?\b)",
     re.I,
 )
-SAVE_REQUEST = re.compile(
-    r"(?:存入|保存|记住|记到|写入).{0,12}(?:长期|档案|记忆)|(?:长期|档案|记忆).{0,12}(?:存入|保存|记住|写入)"
+# A closed command envelope is an authorization surface, not a language classifier.
+# Other wording remains a discussion; the signed controls provide confirmation.
+MEMORY_TARGET = r"(?:精简)?(?:长期)?(?:关系)?(?:档案|记忆)"
+SAVE_ENVELOPES = (
+    re.compile(rf"我(?:明确)?同意(?:保存|存入|建立){MEMORY_TARGET}[：:]([^。！？\n]+)[。]?"),
+    re.compile(
+        rf"(?:关于对象[^：:。！？\n]{{1,20}}[：:])?([^。！？\n]+)[。，,]"
+        rf"我(?:明确)?同意(?:把这项稳定信息)?(?:存入|保存){MEMORY_TARGET}[。]?"
+    ),
+    re.compile(
+        rf"我(?:明确)?同意(?:保存|存入|建立){MEMORY_TARGET}[。]"
+        r"(?:请)?记住[：:]([^。！？\n]+)[。]?"
+    ),
 )
-EXPLICIT_CONSENT = re.compile(r"(?:我明确同意|我已同意|我同意|明确同意)")
-NEGATED_CONSENT = re.compile(r"(?:没有同意|未同意|不同意|不允许|拒绝保存)")
+EXISTING_CONSENT_SAVE = re.compile(
+    rf"(?:请)?记住[：:]?([^。！？\n]+)[，,](?:存入|写入|保存){MEMORY_TARGET}[。]?"
+)
+AMBIGUOUS_SAVE = re.compile(
+    r"[“”‘’\"'「」『』？?]|解释|讨论|引用|例句|示例|假设|假如|如果|是否|"
+    r"不要|不必|不准|别再|不得|不同意|没有同意|未同意|拒绝|不允许|不保存|不记住"
+)
 
 
 def content_key(content: str, relationship_id: UUID | None = None) -> str:
@@ -52,11 +68,16 @@ def content_key(content: str, relationship_id: UUID | None = None) -> str:
 
 
 def explicit_save_consent(message: str) -> bool:
-    return bool(EXPLICIT_CONSENT.search(message)) and not NEGATED_CONSENT.search(message)
+    return not AMBIGUOUS_SAVE.search(message) and any(
+        pattern.fullmatch(message.strip()) for pattern in SAVE_ENVELOPES
+    )
 
 
 def asks_to_save(message: str) -> bool:
-    return bool(SAVE_REQUEST.search(message)) and not NEGATED_CONSENT.search(message)
+    return explicit_save_consent(message) or (
+        not AMBIGUOUS_SAVE.search(message)
+        and bool(EXISTING_CONSENT_SAVE.fullmatch(message.strip()))
+    )
 
 
 def prohibited_request(message: str) -> bool:
@@ -342,10 +363,7 @@ class MemoryService:
         explicit_consent: bool,
     ) -> MemoryReceipt:
         control = self.control(user_id)
-        if explicit_consent:
-            self.grant_consent(user_id, confirmed=True)
-            control = self.control(user_id)
-        if not control.consent_enabled:
+        if not control.consent_enabled and not explicit_consent:
             return MemoryReceipt(status=MemoryWriteStatus.SKIPPED_NO_CONSENT)
         if control.paused:
             return MemoryReceipt(status=MemoryWriteStatus.SKIPPED_PAUSED)
@@ -361,6 +379,9 @@ class MemoryService:
             for item in candidates
         ):
             return MemoryReceipt(status=MemoryWriteStatus.REJECTED_VALIDATION)
+        if explicit_consent:
+            # A foreign scope or invalid model candidate cannot mutate control.
+            self.grant_consent(user_id, confirmed=True)
         saved = duplicates = 0
         now = as_utc(self._clock())
         for item in candidates:

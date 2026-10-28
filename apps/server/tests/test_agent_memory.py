@@ -7,18 +7,21 @@ from uuid import uuid4
 
 from app.agent import AgentInput, AgentResult, initial_state
 from app.agent.contracts import (
+    ActionPlan,
     Fact,
     MemoryCandidate,
     MemoryDecision,
     MemoryIntent,
     MemoryRecord,
     MemoryWriteStatus,
+    ResponseResult,
 )
 from app.agent.dependencies import RuntimeDependencies
 from app.agent.memory import InMemoryMemoryStore, MemoryService, validate_candidate
 from app.agent.memory_nodes import memory_candidate_extractor
 from app.agent.runtime import NODE_READS, NODE_WRITES, AgentRuntime
 from app.llm.mock import MockLLMProvider
+from evals.agent.content_safety_eval import queue_safe_fixture_review
 from evals.phase3c_semantic import CASES, replay_outputs
 from evals.phase3e_analysis import fixture_analysis
 from evals.phase3f_action_response import fixture_action, fixture_response
@@ -72,7 +75,10 @@ def queue_ordinary(provider, scenario="relationship", alias="relationship"):
     provider.queue_structured(fixture_analysis(alias=alias, fiu=fiu))
     action = fixture_action(scenario=scenario, route="ordinary")
     provider.queue_structured(action)
-    provider.queue_structured(fixture_response(action))
+    queue_safe_fixture_review(provider, ActionPlan.model_validate(action))
+    response = fixture_response(action)
+    provider.queue_structured(response)
+    queue_safe_fixture_review(provider, ResponseResult.model_validate(response))
 
 
 def test_golden_memory_cases_are_real_writes_and_minimal_pair_d():
@@ -354,7 +360,10 @@ def test_store_failure_after_response_is_nonblocking_and_secret_free():
     provider.queue_structured(fixture_analysis(alias="memory", fiu=outputs[2]))
     action = fixture_action(scenario="memory", route="ordinary")
     provider.queue_structured(action)
-    provider.queue_structured(fixture_response(action))
+    queue_safe_fixture_review(provider, ActionPlan.model_validate(action))
+    response = fixture_response(action)
+    provider.queue_structured(response)
+    queue_safe_fixture_review(provider, ResponseResult.model_validate(response))
     provider.queue_structured({"candidates": [candidate(person).model_dump(mode="json")]})
     result = asyncio.run(
         AgentRuntime(

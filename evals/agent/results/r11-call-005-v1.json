@@ -1,0 +1,20 @@
+{
+  "serial": 5,
+  "case_id": "r11-n07",
+  "status": "response",
+  "visible_response": {
+    "content": "{\"contact_policy\": \"observe\", \"recommended_action\": \"把这次点赞当作普通社交信号，暂不据此判断恋爱意图；先在日常互动中留意对方是否主动发起交流、回应是否持续，再决定是否进一步了解。\", \"supporting_analysis_ids\": [\"A1\", \"A3\", \"A6\", \"A7\"], \"message_suggestion\": null, \"observation_window\": \"接下来两到三周内，留意双方在日常场合的互动是否自然延续\", \"stop_conditions\": [\"对方表现出回避或明确不感兴趣时，停止进一步试探\", \"自己感到反复猜测带来焦虑时，暂停解读，把注意力放回自身生活\"]}",
+    "model": "deepseek-flash",
+    "finish_reason": "stop",
+    "usage": {
+      "input_tokens": 1694,
+      "output_tokens": 143,
+      "total_tokens": 1837,
+      "cache_hit_tokens": 0,
+      "cache_miss_tokens": 1694
+    }
+  },
+  "duration_ms": 1550.3076000004512,
+  "request_reserved": true,
+  "time": "2026-10-28T07:12:49.231924+00:00"
+}

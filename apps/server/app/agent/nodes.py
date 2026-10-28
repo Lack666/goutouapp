@@ -5,6 +5,7 @@ from typing import TypedDict
 from app.agent.action_validation import validate_action, validate_response
 from app.agent.analysis_validation import validate_analysis
 from app.agent.capabilities import boundary_plan, imported_chat_plan
+from app.agent.contact_scope import REFUSAL_CATEGORIES, scope_from_safety
 from app.agent.content_safety import ContentReviewRequired, review_content
 from app.agent.contracts import (
     ActionPlan,
@@ -31,7 +32,7 @@ from app.agent.safety_validation import safety_answer, verified_safety
 from app.agent.state import AgentState
 from app.llm.models import LLMMessage
 
-BOUNDARY_CATEGORIES = frozenset({"explicit_refusal", "consent_withdrawal"})
+BOUNDARY_CATEGORIES = REFUSAL_CATEGORIES
 FACT_SOURCES = frozenset(
     {
         "user_report",
@@ -111,7 +112,10 @@ async def safety_check(state: AgentState, dependencies: RuntimeDependencies) -> 
     result = verified_safety(result, state)
     if result.safety_route_required:
         route = Route.SAFETY
-    elif BOUNDARY_CATEGORIES.intersection(result.risk_categories):
+    elif (
+        BOUNDARY_CATEGORIES.intersection(result.risk_categories)
+        or scope_from_safety(result) == "unknown"
+    ):
         route = Route.BOUNDARY
     else:
         route = Route.ORDINARY
@@ -199,7 +203,11 @@ async def relationship_analysis(
     )
     if not isinstance(result, AnalysisResult):
         raise AgentStructuredOutputError() from None
-    validate_analysis(result, state)
+    try:
+        validate_analysis(result, state)
+    except ContentReviewRequired:
+        approval = await review_content(result, state, dependencies.llm_provider)
+        validate_analysis(result, state, approval=approval)
     return {"analysis_result": result}
 
 

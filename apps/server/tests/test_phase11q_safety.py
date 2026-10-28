@@ -9,7 +9,7 @@ from uuid import uuid4
 import pytest
 
 from app.agent import AgentInput, AgentResult, initial_state
-from app.agent.contracts import RiskLevel, Route, SafetyResult, Scenario
+from app.agent.contracts import ActionPlan, ResponseResult, RiskLevel, Route, SafetyResult, Scenario
 from app.agent.dependencies import RuntimeDependencies
 from app.agent.errors import AgentStructuredOutputError
 from app.agent.events import CompletedEvent, FinalResponseEvent
@@ -20,6 +20,7 @@ from app.agent.runtime import AgentRuntime
 from app.agent.safety_validation import validate_safety_answer, verified_safety
 from app.llm.mock import MockLLMProvider
 from app.observability import TRACES
+from evals.agent.content_safety_eval import queue_safe_fixture_review
 from evals.agent.content_safety_integration import scoped_memory
 from evals.phase3f_action_response import fixture_action, fixture_response
 
@@ -204,7 +205,10 @@ def test_low_risk_full_graph_keeps_ordinary_invitation_and_communication(scenari
     action = fixture_action(scenario=scenario, route="ordinary")
     action["stop_conditions"] = ["对方拒绝或没有回应时停止邀请。"]
     provider.queue_structured(action)
-    provider.queue_structured(fixture_response(action))
+    queue_safe_fixture_review(provider, ActionPlan.model_validate(action))
+    answer = fixture_response(action)
+    provider.queue_structured(answer)
+    queue_safe_fixture_review(provider, ResponseResult.model_validate(answer))
     result = asyncio.run(
         AgentRuntime(dependencies=RuntimeDependencies(llm_provider=provider)).run(req)
     )

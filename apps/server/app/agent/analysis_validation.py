@@ -2,6 +2,7 @@
 
 import re
 
+from app.agent.content_safety import ContentApproval, require_review
 from app.agent.contracts import AnalysisPoint, AnalysisResult, Route
 from app.agent.errors import AgentStructuredOutputError
 from app.agent.state import AgentState
@@ -22,26 +23,8 @@ BOUNDARY_BYPASS_CUES = (
 
 
 def has_unsupported_certainty(statement: str) -> bool:
-    """A rejected user quotation is not the Agent asserting a private motive."""
-    for sentence in re.split(r"(?<=[。！？\n])", statement):
-        attributed = re.search(r"^用户[^。！？\n]{0,100}(?:推断|等同)", sentence)
-        rejected = re.search(
-            r"(?:证据不足以支持|无法支撑|无法支持)[^。！？\n]{0,30}"
-            r"(?:结论|判断|推断)[。！？\n]?$",
-            sentence,
-        )
-        quotes = list(re.finditer(r"“[^“”\n]{1,80}”", sentence))
-        for pattern in UNSUPPORTED_CERTAINTY_CUES:
-            for match in pattern.finditer(sentence):
-                # Only the known cross-quote false positive is exempted. A full
-                # assertion inside quotes, or another assertion outside, still fails.
-                cross_quote = any(
-                    match.start() < quote.start() < match.end() <= quote.end() - 1
-                    for quote in quotes
-                )
-                if not (attributed and rejected and cross_quote):
-                    return True
-    return False
+    """Lexical review trigger only; quoted/negated assertions are not exempted."""
+    return any(pattern.search(statement) for pattern in UNSUPPORTED_CERTAINTY_CUES)
 
 
 def evidence_ids(state: AgentState) -> set[str]:
@@ -62,7 +45,9 @@ def all_points(result: AnalysisResult) -> list[AnalysisPoint]:
     ]
 
 
-def validate_analysis(result: AnalysisResult, state: AgentState) -> None:
+def validate_analysis(
+    result: AnalysisResult, state: AgentState, *, approval: ContentApproval | None = None
+) -> None:
     """Validate IDs and roles; semantic entailment remains a separate eval."""
     valid_evidence = evidence_ids(state)
     valid_references = {reference.alias for reference in state["retrieved_context"]}
@@ -92,12 +77,11 @@ def validate_analysis(result: AnalysisResult, state: AgentState) -> None:
         point.dimension == "boundary" for point in points
     ):
         raise AgentStructuredOutputError() from None
-    for statement in (result.core_issue, *(point.statement for point in points)):
-        if any(pattern.search(statement) for pattern in ACTION_CUES) or has_unsupported_certainty(
-            statement
-        ):
-            raise AgentStructuredOutputError() from None
-        if state["route"] == Route.BOUNDARY and any(
-            pattern.search(statement) for pattern in BOUNDARY_BYPASS_CUES
-        ):
-            raise AgentStructuredOutputError() from None
+    # Lexical cues select review, not a semantic verdict or a quotation whitelist.
+    patterns = (*ACTION_CUES, *UNSUPPORTED_CERTAINTY_CUES, *BOUNDARY_BYPASS_CUES)
+    if any(
+        pattern.search(statement)
+        for statement in (result.core_issue, *(point.statement for point in points))
+        for pattern in patterns
+    ):
+        require_review(result, state, approval)

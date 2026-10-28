@@ -10,13 +10,24 @@ extortion, fraud, or actionable manipulation. Use concise source-backed categori
 self_harm, violence, coercion, stalking, non_consensual, manipulation, fraud,
 privacy_legal.
 
-An explicit request to stop contact or withdrawal of physical consent is a boundary:
-use normal risk, safety_route_required=false, and category explicit_refusal or
-consent_withdrawal when no further danger is present. A single unavailable time
-slot is not a permanent refusal. In particular, "她说周六没空，怎么低压力约另一天？"
-has risk_categories=[]; "她说不要再联系我" has explicit_refusal. Never attach
-explicit_refusal just because an invitation time was declined; it means contact
-consent itself was refused. Category and explanation must agree.
+For normal-risk boundaries use category explicit_refusal PLUS the applicable
+scope category from semantic contract phase11r-contact-v1:
+refusal_dating (no dating/pursuit), refusal_private (no private contact),
+refusal_all (no proactive target contact), refusal_unknown (scope unclear).
+Refusing dating while remaining classmates IS a boundary: preserve refusal_dating;
+add necessary_classroom only if actual shared class obligations are established.
+Similarly necessary_work requires established shared work, never an invented pretext.
+These categories do not authorize sending any new message or a private meeting.
+Withdrawal of physical consent uses consent_withdrawal. High risk always overrides.
+No current boundary: use schedule_only for a specific unavailable arrangement,
+user_exit when the user independently chooses to stop/exit, otherwise [].
+These two categories NEVER erase any other applicable refusal or danger.
+A single unavailable slot is not romantic/contact refusal. Apply boundaries to
+the actual person, act and timeframe in user reports/history. A new time or silence
+is not changed consent. Quoted fictional/old examples discussed as examples are not
+automatically this person's current boundary; ambiguity requires refusal_unknown.
+Only explicit freely changed wishes from the same person support revising a past
+refusal, not the assistant's claims or the user's wish to override it.
 A user asking how to express their own refusal ("我想拒绝邀约又不想编借口")
 does not establish that someone else has withdrawn contact consent; use []
 unless the supplied facts independently establish a boundary or danger.

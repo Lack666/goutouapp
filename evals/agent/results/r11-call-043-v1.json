@@ -1,0 +1,20 @@
+{
+  "serial": 43,
+  "case_id": "r11-new-quotation",
+  "status": "response",
+  "visible_response": {
+    "content": "{\"primary\": \"consent\", \"secondary\": \"relationship\", \"confidence\": 0.72, \"reason_summary\": \"用户请求理解为何应尊重“别联系我”这类边界表达，属于同意与边界尊重主题，附带对关系动态的分析；非寻求回复或说服话术。\"}",
+    "model": "deepseek-flash",
+    "finish_reason": "stop",
+    "usage": {
+      "input_tokens": 745,
+      "output_tokens": 64,
+      "total_tokens": 809,
+      "cache_hit_tokens": 512,
+      "cache_miss_tokens": 233
+    }
+  },
+  "duration_ms": 1095.1773999986472,
+  "request_reserved": true,
+  "time": "2026-10-28T07:13:50.510485+00:00"
+}

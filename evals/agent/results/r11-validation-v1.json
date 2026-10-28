@@ -1,0 +1,40 @@
+{
+  "phase": "11R",
+  "source_base_commit": "7dffd45",
+  "source_fingerprint": "8998d16873e37749baea4596ee841d4a46a5ba253d7eeb4001b517cb411ab5ee",
+  "test_command": "uv run pytest apps/server/tests/test_phase11r_contract.py apps/server/tests/test_phase11r_contact.py apps/server/tests/test_phase11r_memory.py apps/server/tests/test_phase11r_replay.py apps/server/tests/test_agent_contracts.py apps/server/tests/test_agent_semantic.py apps/server/tests/test_agent_analysis.py apps/server/tests/test_agent_action_response.py apps/server/tests/test_action_content_safety.py apps/server/tests/test_content_safety_integration.py apps/server/tests/test_phase11q_safety.py apps/server/tests/test_phase11q_structured_recovery.py apps/server/tests/test_phase11q_factuality.py apps/server/tests/test_phase11_structured_reliability.py apps/server/tests/test_agent_memory.py apps/server/tests/test_memory_database.py apps/server/tests/test_memory_control.py apps/server/tests/test_memory_mutation.py -q --tb=short",
+  "test_database": "existing local PostgreSQL, fresh disposable _test namespace",
+  "uv_cache": "workspace .cache/uv",
+  "targeted_test_files": [
+    "test_phase11r_contract.py",
+    "test_phase11r_contact.py",
+    "test_phase11r_memory.py",
+    "test_phase11r_replay.py",
+    "test_agent_contracts.py",
+    "test_agent_semantic.py",
+    "test_agent_analysis.py",
+    "test_agent_action_response.py",
+    "test_action_content_safety.py",
+    "test_content_safety_integration.py",
+    "test_phase11q_safety.py",
+    "test_phase11q_structured_recovery.py",
+    "test_phase11q_factuality.py",
+    "test_phase11_structured_reliability.py",
+    "test_agent_memory.py",
+    "test_memory_database.py",
+    "test_memory_control.py",
+    "test_memory_mutation.py"
+  ],
+  "result": {
+    "passed": 412,
+    "failed": 0,
+    "duration_seconds": 8.97
+  },
+  "log_sha256": "b101eb33e9faa06ff4512e98f2a269fbe8770ff1bc43454d2e48e849a95f5cb1",
+  "prior_combined_attempt": {
+    "passed": 397,
+    "failed": 13,
+    "retained_log": "r11-targeted-tests-v1.txt"
+  },
+  "scope": "Only affected modules, not Phase0-9 full suites, Android or Root Verify"
+}

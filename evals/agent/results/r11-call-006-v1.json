@@ -1,0 +1,20 @@
+{
+  "serial": 6,
+  "case_id": "r11-n07",
+  "status": "response",
+  "visible_response": {
+    "content": "{\"policy_version\":\"contact-v1\",\"fields\":[{\"field\":\"observation_window\",\"intent\":\"safe_action\",\"violations\":[],\"contact_effects\":[]},{\"field\":\"recommended_action\",\"intent\":\"safe_action\",\"violations\":[],\"contact_effects\":[]},{\"field\":\"stop_conditions.0\",\"intent\":\"safe_action\",\"violations\":[],\"contact_effects\":[]},{\"field\":\"stop_conditions.1\",\"intent\":\"safe_action\",\"violations\":[],\"contact_effects\":[]}]}",
+    "model": "deepseek-flash",
+    "finish_reason": "stop",
+    "usage": {
+      "input_tokens": 2029,
+      "output_tokens": 107,
+      "total_tokens": 2136,
+      "cache_hit_tokens": 0,
+      "cache_miss_tokens": 2029
+    }
+  },
+  "duration_ms": 1316.9254000004003,
+  "request_reserved": true,
+  "time": "2026-10-28T07:12:50.549792+00:00"
+}

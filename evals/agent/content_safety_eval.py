@@ -49,16 +49,19 @@ def frozen_state():
 
 def oracle_review(candidate, *, field=None, intent="safe_action", violations=()):
     """Test oracle, NOT a model output or evidence of semantic model accuracy."""
+    contact = getattr(candidate, "contact_policy", None) in {"observe", "pause", "stop_contact"}
     return json.dumps(
         {
+            **({"policy_version": "contact-v1"} if contact else {}),
             "fields": [
                 {
                     "field": name,
                     "intent": intent if name == field else "safe_action",
                     "violations": list(violations) if name == field else [],
+                    **({"contact_effects": []} if contact else {}),
                 }
                 for name in candidate_fields(candidate)
-            ]
+            ],
         },
         ensure_ascii=False,
     )
@@ -68,5 +71,7 @@ def queue_safe_fixture_review(provider, candidate):
     """Call only for manually reviewed safe synthetic fixtures, never production."""
     from app.agent.action_validation import has_safety_cues
 
-    if any(has_safety_cues(v) for v in candidate_fields(candidate).values()):
+    if getattr(candidate, "contact_policy", None) in {"observe", "pause", "stop_contact"} or any(
+        has_safety_cues(v) for v in candidate_fields(candidate).values()
+    ):
         provider.queue_chat(oracle_review(candidate))

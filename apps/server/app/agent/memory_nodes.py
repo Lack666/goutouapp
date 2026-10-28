@@ -86,37 +86,52 @@ def resolve_memory_intent(
             "memory_intent": MemoryIntent(),
             "warnings": [*warnings, "Long-term memory was unavailable"],
         }
-    if "撤回" in message and ("删除全部" in message or "全部长期" in message):
+    if state["relationship_id"] is not None and person_id is None:
+        return {"memory_intent": MemoryIntent(), "warnings": warnings}
+    command = message.strip().removesuffix("。").strip()
+    if re.fullmatch(r"我撤回同意并要求删除全部长期关系档案", command):
         intent = MemoryIntent(
             decision=MemoryDecision.REVOKE_AND_DELETE_ALL, requires_confirmation=True
         )
-    elif "撤回" in message and "同意" in message:
+    elif re.fullmatch(r"我撤回(?:长期记忆)?同意(?:[，,]但暂时保留已有档案供我查看)?", command):
         intent = MemoryIntent(decision=MemoryDecision.REVOKE_KEEP)
-    elif "撤销" in message and "记忆" in message:
+    elif re.fullmatch(r"(?:请)?撤销(?:最近(?:一次)?|刚才的)?(?:长期)?记忆(?:更新)?", command):
         intent = MemoryIntent(
             decision=MemoryDecision.UNDO,
             requires_confirmation=state["guarded_undo_required"],
         )
-    elif "恢复" in message and "记忆" in message:
+    elif re.fullmatch(
+        r"(?:请)?恢复(?:长期)?记忆|我之前暂停了长期记忆[，,]现在明确同意恢复"
+        r"(?:[；;]请先告诉我恢复后会怎样用)?",
+        command,
+    ):
         intent = MemoryIntent(decision=MemoryDecision.RESUME)
-    elif "暂停" in message and "记忆" in message:
+    elif re.fullmatch(r"(?:请)?暂停(?:长期)?记忆(?:[，,]先继续聊当前的问题)?", command):
         intent = MemoryIntent(decision=MemoryDecision.PAUSE)
-    elif ("删除" in message or "清空" in message) and (
-        "全部" in message or "所有" in message or "清空" in message
+    elif re.fullmatch(
+        r"(?:我要|请)?(?:删除|清空)(?:全部|所有)(?:长期)?(?:关系)?(?:档案|记忆)"
+        r"(?:[，,]请先确认范围再执行)?",
+        command,
     ):
         intent = MemoryIntent(decision=MemoryDecision.DELETE_ALL, requires_confirmation=True)
-    elif "删除" in message and "编号" in message:
-        match = re.search(r"编号\s*([\w-]+)", message)
+    elif match := re.fullmatch(
+        r"(?:请)?(?:只)?删除(?:对象\w+档案中)?编号\s*([\w-]+)"
+        r"(?:\s*的‘[^’]+’这一条长期记忆[，,]其他记录保留)?",
+        command,
+    ):
         intent = MemoryIntent(
             decision=MemoryDecision.DELETE_ITEM,
             person_id=person_id,
             item_id=match.group(1) if match else None,
         )
-    elif "删除" in message and "对象" in message:
+    elif re.fullmatch(
+        r"(?:请)?只删除对象\w+的档案[，,]保留对象\w+[；;]请先让我确认对象代号",
+        command,
+    ):
         intent = MemoryIntent(
             decision=MemoryDecision.DELETE_PERSON, person_id=person_id, requires_confirmation=True
         )
-    elif "查看" in message and ("记忆" in message or "档案" in message):
+    elif re.fullmatch(r"查看我的长期记忆(?:[，,].*)?", command):
         intent = MemoryIntent(decision=MemoryDecision.INSPECT)
     elif (
         not prohibited_request(message)
@@ -187,13 +202,15 @@ async def memory_candidate_extractor(
 def persist_memory(state: AgentState, dependencies: RuntimeDependencies) -> PersistUpdate:
     service = dependencies.memory_service
     receipt = state["memory_receipt"]
-    intent = state["memory_intent"]
     warnings = state["warnings"]
-    if service is None:
+    if service is None or not state["memory_enabled"] or state["route"].value == "safety":
         return {"memory_receipt": receipt, "warnings": warnings}
+    # Re-resolve from the same current user command; a stale/model-produced intent
+    # cannot grant permission or turn quoted discussion into a control mutation.
+    intent = resolve_memory_intent(state, dependencies)["memory_intent"]
     try:
         if (
-            state["memory_enabled"]
+            intent.decision == MemoryDecision.ALLOW_CANDIDATE
             and asks_to_save(state["current_message"])
             and not prohibited_request(state["current_message"])
             and explicit_save_consent(state["current_message"])

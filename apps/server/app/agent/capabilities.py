@@ -2,6 +2,7 @@
 
 import re
 
+from app.agent.contact_scope import scope_from_safety
 from app.agent.contracts import ActionPlan, Route
 from app.agent.state import AgentState
 
@@ -47,6 +48,36 @@ def imported_chat_plan(state: AgentState) -> ActionPlan:
 
 def boundary_plan(state: AgentState) -> ActionPlan:
     chinese = bool(re.search(r"[\u3400-\u9fff]", state["current_message"]))
+    scope = scope_from_safety(state["safety"])
+    categories = set(state["safety"].risk_categories) if state["safety"] else set()
+    practical = scope in {"dating", "private"} and bool(
+        categories & {"necessary_classroom", "necessary_work"}
+    )
+    if practical:
+        text = (
+            "尊重对方的拒绝，停止约会邀约、私人追求和额外示好，不另发确认消息。"
+            "同班上课或工作中不可避免的互动，只围绕确有必要的课程、作业或工作事务，"
+            "简短、礼貌，在公共或正式场合按正常流程处理即可；不制造单独相处机会，"
+            "不借事务重启追求。若对方回避或不适，停止非必要互动，保持适当距离。"
+            if chinese
+            else "Respect the refusal. Stop dating invitations, private pursuit "
+            "and extra attention; "
+            "do not send an additional acknowledgement. In unavoidable shared classes or work, "
+            "keep interactions brief, polite and limited to necessary coursework or work in "
+            "public or official settings. Do not create private meetings or use practical "
+            "matters to restart pursuit. Respect avoidance or discomfort and stop "
+            "optional interaction."
+        )
+        return ActionPlan(
+            contact_policy="stop_contact",
+            recommended_action=text,
+            supporting_analysis_ids=["A1"],
+            stop_conditions=[
+                "出现回避或不适时停止非必要互动。"
+                if chinese
+                else "Stop optional interaction at avoidance or discomfort."
+            ],
+        )
     return ActionPlan(
         contact_policy="stop_contact",
         recommended_action=(
@@ -54,10 +85,12 @@ def boundary_plan(state: AgentState) -> ActionPlan:
             "不要发送；离开聊天界面，安排吃饭、休息或散步。情绪难受时找可信的人陪伴，"
             "先照顾自己，不用今天就决定以后。对方没有主动明确改变意愿时，保持停止接触。"
             if chinese
-            else "Respect refusal or withdrawn consent. Stop pursuit. Today, write your feelings "
+            else "Respect refusal or withdrawn consent. Stop pursuit and all proactive target "
+            "contact, including messages through other people or channels. Today, "
+            "write your feelings "
             "in a private draft without sending it, close the chat, and make time for a meal, "
             "rest or a walk. Ask someone you trust for company if this feels difficult. "
-            "Keep the no-pursuit boundary without a free, explicit change of wishes."
+            "Maintain this no-contact boundary without a free, explicit change of wishes."
         ),
         supporting_analysis_ids=["A1"],
         stop_conditions=[

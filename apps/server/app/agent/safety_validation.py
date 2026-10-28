@@ -2,34 +2,24 @@
 
 import re
 
+from app.agent.contact_scope import HIGH_RISK_CATEGORIES
 from app.agent.contracts import SafetyResult
 from app.agent.errors import AgentStructuredOutputError
 from app.agent.state import AgentState
 from app.observability import emit
 
-# A closed scheduling-only utterance cannot establish withdrawal of contact consent.
-# Anything additional, previous context, or any other risk retains the model's gate.
-SCHEDULE_ONLY = re.compile(
-    r"(?:她|他|对方|TA)说(?:周[一二三四五六日天]|星期[一二三四五六日天]|今天|明天|今晚)"
-    r"(?:没空|不方便|没时间)[，,。；; ]*(?:怎么|如何)(?:低压力|礼貌地?|合适地?)?"
-    r"(?:约另一天|改约|改期)[？?]?"
-)
-
 
 def verified_safety(result: SafetyResult, state: AgentState) -> SafetyResult:
+    if not result.safety_route_required and HIGH_RISK_CATEGORIES.intersection(
+        result.risk_categories
+    ):
+        # Contradictory live classifications cannot silently choose ordinary advice.
+        raise AgentStructuredOutputError() from None
     if result.safety_route_required:
         note = protective_safety_answer(result, state["current_message"])
         if result.user_facing_note != note:
             emit("safety_presentation", decision="candidate_replaced", policy="protective_v1")
         return result.model_copy(update={"user_facing_note": note})
-    if (
-        not result.safety_route_required
-        and result.risk_categories == ["explicit_refusal"]
-        and not state["messages"]
-        and SCHEDULE_ONLY.fullmatch(state["current_message"])
-    ):
-        emit("safety_semantics", decision="schedule_only", removed_category="explicit_refusal")
-        return result.model_copy(update={"risk_categories": []})
     return result
 
 

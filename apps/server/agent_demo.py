@@ -6,11 +6,12 @@ import sys
 from uuid import uuid4
 
 from app.agent import AgentInput
-from app.agent.contracts import AgentResult
+from app.agent.contracts import ActionPlan, AgentResult, ResponseResult
 from app.agent.dependencies import RuntimeDependencies
 from app.agent.memory import InMemoryMemoryStore, MemoryService
 from app.agent.runtime import AgentRuntime
 from app.llm.mock import MockLLMProvider
+from evals.agent.content_safety_eval import queue_safe_fixture_review
 
 
 class CaptureMock(MockLLMProvider):
@@ -68,12 +69,13 @@ def queue_run(provider: CaptureMock, *, first: bool, person_id) -> None:
         "stop_conditions": ["出现明确拒绝时停止推进。"],
     }
     provider.queue_structured(action)
-    provider.queue_structured(
-        {
-            "contact_policy": "observe",
-            "final_answer": action["recommended_action"] + "旧信息可能变化，请结合现在的情况判断。",
-        }
-    )
+    queue_safe_fixture_review(provider, ActionPlan.model_validate(action))
+    response = {
+        "contact_policy": "observe",
+        "final_answer": action["recommended_action"] + "旧信息可能变化，请结合现在的情况判断。",
+    }
+    provider.queue_structured(response)
+    queue_safe_fixture_review(provider, ResponseResult.model_validate(response))
     if first:
         provider.queue_structured(
             {

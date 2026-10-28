@@ -11,7 +11,7 @@ from pydantic import ValidationError
 
 from app.agent.action_validation import has_safety_cues, validate_action, validate_response
 from app.agent.analysis_validation import validate_analysis
-from app.agent.content_safety import ContentReviewRequired, review_content
+from app.agent.content_safety import ContentReviewRequired, requires_contact_review, review_content
 from app.agent.contracts import (
     ActionPlan,
     AgentInput,
@@ -64,17 +64,32 @@ def test_frozen_response_omission_composes_plan_without_discarding_model_candida
     raw = ResponseResult.model_validate(outputs["ResponseResult"])
     with pytest.raises(AgentStructuredOutputError):
         validate_response(raw, state)
-    validate_action(state["action_plan"], state)
+    try:
+        validate_action(state["action_plan"], state)
+    except ContentReviewRequired:
+        # New private review oracle for this known-safe archived candidate,
+        # not a changed frozen output or proof of live reviewer accuracy.
+        reviewer = MockLLMProvider()
+        reviewer.queue_chat(oracle_review(state["action_plan"]))
+        approval = asyncio.run(review_content(state["action_plan"], state, reviewer))
+        validate_action(state["action_plan"], state, approval=approval)
     provider = MockLLMProvider()
     provider.queue_structured(outputs["ResponseResult"])
+    composed = compose_response(raw, state)
+    if requires_contact_review(composed, state) or has_safety_cues(composed.final_answer):
+        provider.queue_chat(oracle_review(composed))
     with run_scope(state["run_id"]), node_scope("response_generator"):
         update = asyncio.run(response_generator(state, RuntimeDependencies(llm_provider=provider)))
     approved = state["action_plan"].message_suggestion or state["action_plan"].recommended_action
     assert update["final_answer"] == f"{approved}\n\n{raw.final_answer}"
-    validate_response(
-        ResponseResult(final_answer=update["final_answer"], contact_policy=raw.contact_policy),
-        state,
-    )
+    final = ResponseResult(final_answer=update["final_answer"], contact_policy=raw.contact_policy)
+    if requires_contact_review(final, state) or has_safety_cues(final.final_answer):
+        reviewer = MockLLMProvider()
+        reviewer.queue_chat(oracle_review(final))
+        approval = asyncio.run(review_content(final, state, reviewer))
+        validate_response(final, state, approval=approval)
+    else:
+        validate_response(final, state)
     assert not provider._structured and not provider._chats
     events = [
         e

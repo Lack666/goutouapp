@@ -1,0 +1,20 @@
+{
+  "serial": 18,
+  "case_id": "r11-n10",
+  "status": "response",
+  "visible_response": {
+    "content": "{\"primary\": \"relationship\", \"secondary\": \"reply\", \"confidence\": 0.72, \"reason_summary\": \"用户说明对方只想做普通同学、自己接受不再追求，并询问后续同班相处方式；属于关系边界与关系调整话题，主要归为 relationship。\"}",
+    "model": "deepseek-flash",
+    "finish_reason": "stop",
+    "usage": {
+      "input_tokens": 738,
+      "output_tokens": 61,
+      "total_tokens": 799,
+      "cache_hit_tokens": 512,
+      "cache_miss_tokens": 226
+    }
+  },
+  "duration_ms": 1053.184099999271,
+  "request_reserved": true,
+  "time": "2026-10-28T07:13:06.170480+00:00"
+}

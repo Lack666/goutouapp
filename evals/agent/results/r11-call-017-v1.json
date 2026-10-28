@@ -1,0 +1,20 @@
+{
+  "serial": 17,
+  "case_id": "r11-n10",
+  "status": "response",
+  "visible_response": {
+    "content": "{\"risk_level\":\"normal\",\"risk_categories\":[\"explicit_refusal\",\"refusal_dating\",\"necessary_classroom\"],\"safety_route_required\":false,\"user_facing_note\":null}",
+    "model": "deepseek-flash",
+    "finish_reason": "stop",
+    "usage": {
+      "input_tokens": 876,
+      "output_tokens": 43,
+      "total_tokens": 919,
+      "cache_hit_tokens": 640,
+      "cache_miss_tokens": 236
+    }
+  },
+  "duration_ms": 904.7179000008327,
+  "request_reserved": true,
+  "time": "2026-10-28T07:13:05.115210+00:00"
+}

@@ -6,6 +6,17 @@ licensed and its content hashes are frozen in `knowledge/upstream-manifest.json`
 
 ## Phase gate
 
+Phase11R authorized semantic repair (2026-10-28): **TARGETED PASS**. The versioned
+scope contract preserves refused dating while permitting only controlled necessary
+class/work guidance; contact-effect checks replace lexical verdicts. Two actual
+Memory P0 control-mutation paths were reproduced and repaired with signed SQL canaries.
+Affected tests412 PASS; one fixed DeepSeek batch8/8, Provider47/47, schema41/41;
+no retry or result-driven repair. See [11R report](PHASE_11R_SEMANTIC_REPAIR_REPORT.md).
+This supersedes the earlier request for separate finite remediation authorization;
+it does not relabel old failures, independent quality, full regression or formal9/9H.
+Phase11 remains QUALITY FAIL pending independent/human reassessment; Phase10 DEFERRED,
+ICA and original Phase12 unstarted. Stop after the Phase11R report and commit.
+
 Phase11Q authorized recovery (2026-10-28): **PARTIAL FIX / REMAINING BLOCKERS**.
 The bounded first live batch completed13/16 (ordinary8/11), business12/16,
 Provider71/71 and schema66/67. Five high-risk outputs passed controlled protection;

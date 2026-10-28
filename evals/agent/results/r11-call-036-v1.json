@@ -1,0 +1,20 @@
+{
+  "serial": 36,
+  "case_id": "r11-new-reply",
+  "status": "response",
+  "visible_response": {
+    "content": "{\"primary\": \"reply\", \"secondary\": \"relationship\", \"confidence\": 0.82, \"reason_summary\": \"User wants help crafting a short, natural reply expressing understanding of her tiredness, without inviting or planning, so the main task is drafting a reply with a mild relationship context.\"}",
+    "model": "deepseek-flash",
+    "finish_reason": "stop",
+    "usage": {
+      "input_tokens": 737,
+      "output_tokens": 62,
+      "total_tokens": 799,
+      "cache_hit_tokens": 512,
+      "cache_miss_tokens": 225
+    }
+  },
+  "duration_ms": 1125.985299999229,
+  "request_reserved": true,
+  "time": "2026-10-28T07:13:39.987210+00:00"
+}

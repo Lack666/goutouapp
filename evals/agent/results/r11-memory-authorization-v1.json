@@ -1,0 +1,110 @@
+{
+  "phase": "11R",
+  "source_commit": "7dffd45",
+  "baseline_source_sha256": {
+    "apps/server/app/agent/memory.py": "e2ee5f217780f19b1f8e2b6e246f8f40d37e6c7be82e38d97b885b2e3d8c46fe",
+    "apps/server/app/agent/memory_nodes.py": "b205d330549666e79799c71909e1adbe0df9d96389d1b3d976a8e686b8fd98bd"
+  },
+  "database": "disposable PostgreSQL _test namespace",
+  "baseline_canaries": [
+    {
+      "synthetic_request": "请解释暂停记忆的含义，不要实际执行。",
+      "decision": "pause",
+      "receipt": "control_updated",
+      "control_before": {
+        "consent_enabled": true,
+        "paused": false
+      },
+      "control_after": {
+        "consent_enabled": true,
+        "paused": true
+      },
+      "unauthorized_control_mutation": true,
+      "persistent_records": 0
+    },
+    {
+      "synthetic_request": "请解释“我明确同意保存长期记忆”这句话，不要保存。",
+      "decision": "allow_candidate",
+      "receipt": "rejected_validation",
+      "control_before": {
+        "consent_enabled": false,
+        "paused": false
+      },
+      "control_after": {
+        "consent_enabled": true,
+        "paused": false
+      },
+      "unauthorized_control_mutation": true,
+      "persistent_records": 0
+    }
+  ],
+  "classification": "P0 actual unauthorized Memory control mutation reproduced; no private production data touched",
+  "postrepair_canaries": [
+    {
+      "synthetic_request": "请解释暂停记忆的含义，不要实际执行。",
+      "decision": "no_write",
+      "receipt": "none",
+      "control_before": {
+        "consent_enabled": true,
+        "paused": false
+      },
+      "control_after": {
+        "consent_enabled": true,
+        "paused": false
+      },
+      "unauthorized_control_mutation": false,
+      "persistent_records": 0
+    },
+    {
+      "synthetic_request": "请解释“我明确同意保存长期记忆”这句话，不要保存。",
+      "decision": "no_write",
+      "receipt": "none",
+      "control_before": {
+        "consent_enabled": false,
+        "paused": false
+      },
+      "control_after": {
+        "consent_enabled": false,
+        "paused": false
+      },
+      "unauthorized_control_mutation": false,
+      "persistent_records": 0
+    }
+  ],
+  "tested_at": "2026-10-28T07:01:52.475716+00:00",
+  "repair_source_sha256": {
+    "apps/server/app/agent/memory.py": "1b9f59c6f3b2250c963d8fd0aa3c2f6aa897b418c442ca6a1289ed057721cd18",
+    "apps/server/app/agent/memory_nodes.py": "651cd7c9633bbeb514fd6364f1a10a2a6a0c0bd4bf66e8487bb074a9c88b7cda",
+    "apps/server/tests/test_phase11r_memory.py": "0e96a2754cecbeac6ad63277224449d87441b37c2704da8a1dd1609cdd6e6903"
+  },
+  "validation": {
+    "command": "uv run --no-sync pytest apps/server/tests/test_phase11r_memory.py apps/server/tests/test_agent_memory.py apps/server/tests/test_memory_database.py apps/server/tests/test_memory_control.py apps/server/tests/test_memory_mutation.py -q",
+    "passed": 59,
+    "failed": 0,
+    "new_tests": 26,
+    "duration_seconds": 4.63,
+    "database_kind": "real disposable PostgreSQL, each test session freshly migrated; no development DB data changed",
+    "signed_http_canaries": "two original unauthorized-control requests now complete with zero Memory SQL changes; unauthenticated 401 and foreign Owner 404; existing signed control and deletion challenge tests pass",
+    "scope": "only affected Memory/authorization tests; no historical whole-suite, Android or Root Verify",
+    "provider": "MockLLM only; zero paid provider calls"
+  },
+  "compatibility": {
+    "formal_schema_changed": false,
+    "commands": "closed full-utterance first-person save envelope and direct control command grammar; arbitrary discussion, quotation, negation or ambiguous requests never mutate",
+    "fallback": "existing signed Memory controls/confirmation endpoints remain the trusted path for unsupported wording; no model-generated authorization",
+    "old_golden_oracles_changed": false,
+    "source_snapshot": "hashes bind memory changes; full final-source snapshot recorded by parent"
+  },
+  "final_mock_compatibility_validation": {
+    "tested_at": "2026-10-28T07:09:49.117693+00:00",
+    "passed": 59,
+    "failed": 0,
+    "duration_seconds": 4.63,
+    "reason": "new contextual review calls require explicit handwritten safe fixture reviews; actual Memory assertions and historical expected remain unchanged",
+    "helper_source_sha256": {
+      "apps/server/agent_demo.py": "5289a8b9b2955c3ccc5952842e74691ece77a2de0f73223619418c63ec9ce9f7",
+      "evals/phase3g_memory.py": "9063a74c773f5beb11da68e975fa4efdbddafaf4ba4ab2ba09a5b1fe81f969d9",
+      "apps/server/tests/test_agent_memory.py": "cf82c2a79c626b016477654c39fe0cbe3bc0b36ffdc1c2cf0e2674822a10e022"
+    }
+  }
+}

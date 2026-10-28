@@ -4,11 +4,12 @@ import asyncio
 from uuid import uuid4
 
 from app.agent import AgentInput, AgentResult
-from app.agent.contracts import MemoryDecision, MemoryWriteStatus
+from app.agent.contracts import ActionPlan, MemoryDecision, MemoryWriteStatus, ResponseResult
 from app.agent.dependencies import RuntimeDependencies
 from app.agent.memory import InMemoryMemoryStore, MemoryService
 from app.agent.runtime import AgentRuntime
 from app.llm.mock import MockLLMProvider
+from evals.agent.content_safety_eval import queue_safe_fixture_review
 from evals.phase3c_semantic import CASES, replay_outputs
 from evals.phase3e_analysis import fixture_analysis
 from evals.phase3f_action_response import fixture_action, fixture_response
@@ -72,7 +73,10 @@ def run_memory_case(case_id: str) -> tuple[AgentResult, MemoryService, object, o
             assertions=expected["assertions"],
         )
         provider.queue_structured(action)
-        provider.queue_structured(fixture_response(action))
+        queue_safe_fixture_review(provider, ActionPlan.model_validate(action))
+        response = fixture_response(action)
+        provider.queue_structured(response)
+        queue_safe_fixture_review(provider, ResponseResult.model_validate(response))
         if expected["memory_writes"]:
             phrase = "我们已确认关系" if case_id == "pair_d1" else "我们已经确认关系"
             provider.queue_structured(

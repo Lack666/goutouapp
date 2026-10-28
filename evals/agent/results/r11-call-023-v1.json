@@ -1,0 +1,20 @@
+{
+  "serial": 23,
+  "case_id": "r11-new-schedule",
+  "status": "response",
+  "visible_response": {
+    "content": "{\"facts\": [{\"statement\": \"她说这周六有安排，主动提出周日午后可以见面。\", \"source\": \"user_report_quote\", \"confidence\": null}, {\"statement\": \"用户报告没有其他拒绝的表示。\", \"source\": \"user_report\", \"confidence\": null}, {\"statement\": \"用户希望确认一次具体的见面安排。\", \"source\": \"user_report\", \"confidence\": null}], \"inferences\": [{\"statement\": \"她主动提出周日午后可见面，可能对见面有意向。\", \"source\": \"user_report_quote\", \"alternative\": \"她可能只是礼貌性地提供替代时间，实际意愿不确定。\", \"confidence\": 0.5}, {\"statement\": \"用户可能需要一个明确的具体时间与地点方案来推进确认。\", \"source\": \"user_report\", \"alternative\": \"用户可能更希望对方先给出具体安排。\", \"confidence\": 0.4}], \"unknowns\": [{\"statement\": \"“周日午后”具体指几点到几点，尚未明确。\", \"source\": null}, {\"statement\": \"见面的地点与活动内容尚未确定。\", \"source\": null}, {\"statement\": \"她对这次见面意愿的强烈程度未知。\", \"source\": null}, {\"statement\": \"周六安排的性质与是否可能调整未知。\", \"source\": null}]}",
+    "model": "deepseek-flash",
+    "finish_reason": "stop",
+    "usage": {
+      "input_tokens": 943,
+      "output_tokens": 281,
+      "total_tokens": 1224,
+      "cache_hit_tokens": 768,
+      "cache_miss_tokens": 175
+    }
+  },
+  "duration_ms": 1797.071999999389,
+  "request_reserved": true,
+  "time": "2026-10-28T07:13:16.573364+00:00"
+}

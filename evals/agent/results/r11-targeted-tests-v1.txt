@@ -1,0 +1,123 @@
+........................................................................ [ 17%]
+.........FF............................................................. [ 35%]
+........................................................................ [ 52%]
+........................................................................ [ 70%]
+......................................F................................F [ 87%]
+.F.F.............F......FFF........F........F....F                       [100%]
+================================== FAILURES ===================================
+_ test_baseline_p0_requests_are_safe_through_signed_agent_http[\u8bf7\u89e3\u91ca\u6682\u505c\u8bb0\u5fc6\u7684\u542b\u4e49\uff0c\u4e0d\u8981\u5b9e\u9645\u6267\u884c\u3002-True] _
+apps\server\tests\test_phase11r_memory.py:226: in test_baseline_p0_requests_are_safe_through_signed_agent_http
+    assert response.status_code == 200
+E   assert 502 == 200
+E    +  where 502 = <Response [502 Bad Gateway]>.status_code
+_ test_baseline_p0_requests_are_safe_through_signed_agent_http[\u8bf7\u89e3\u91ca\u201c\u6211\u660e\u786e\u540c\u610f\u4fdd\u5b58\u957f\u671f\u8bb0\u5fc6\u201d\u8fd9\u53e5\u8bdd\uff0c\u4e0d\u8981\u4fdd\u5b58\u3002-False] _
+apps\server\tests\test_phase11r_memory.py:226: in test_baseline_p0_requests_are_safe_through_signed_agent_http
+    assert response.status_code == 200
+E   assert 502 == 200
+E    +  where 502 = <Response [502 Bad Gateway]>.status_code
+_ test_frozen_response_omission_composes_plan_without_discarding_model_candidate[iq-n07] _
+apps\server\tests\test_phase11q_structured_recovery.py:67: in test_frozen_response_omission_composes_plan_without_discarding_model_candidate
+    validate_action(state["action_plan"], state)
+apps\server\app\agent\action_validation.py:162: in validate_action
+    require_review(plan, state, approval)
+apps\server\app\agent\content_safety.py:256: in require_review
+    raise ContentReviewRequired() from None
+E   app.agent.content_safety.ContentReviewRequired: Agent run failed
+_ test_frozen_provider_outputs_replay_original_graph_outcomes_without_retry[final-live-grounding] _
+apps\server\tests\test_phase11_structured_reliability.py:151: in test_frozen_provider_outputs_replay_original_graph_outcomes_without_retry
+    assert replay_failure == ["action_planner"]
+E   AssertionError: assert ['relationship_analysis'] == ['action_planner']
+E     
+E     At index 0 diff: 'relationship_analysis' != 'action_planner'
+E     Use -v to get more diff
+_ test_frozen_provider_outputs_replay_original_graph_outcomes_without_retry[reliability-fix-v4-original-five] _
+apps\server\tests\test_phase11_structured_reliability.py:151: in test_frozen_provider_outputs_replay_original_graph_outcomes_without_retry
+    assert replay_failure == ["action_planner"]
+E   AssertionError: assert ['relationship_analysis'] == ['action_planner']
+E     
+E     At index 0 diff: 'relationship_analysis' != 'action_planner'
+E     Use -v to get more diff
+_ test_frozen_provider_outputs_replay_original_graph_outcomes_without_retry[reliability-fix-v5-regression] _
+apps\server\tests\test_phase11_structured_reliability.py:121: in test_frozen_provider_outputs_replay_original_graph_outcomes_without_retry
+    assert result.status == case["status"]
+E   AssertionError: assert <AgentRunStat...: 'completed'> == 'failed'
+E     
+E     - failed
+E     + completed
+_________ test_golden_memory_cases_are_real_writes_and_minimal_pair_d _________
+apps\server\tests\test_agent_memory.py:81: in test_golden_memory_cases_are_real_writes_and_minimal_pair_d
+    result, service, user, _ = run_memory_case(case_id)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^
+evals\phase3g_memory.py:105: in run_memory_case
+    raise AssertionError(f"{case_id}: runtime failure")
+E   AssertionError: pair_d1: runtime failure
+____ test_two_conversations_load_historical_context_without_fiu_promotion _____
+apps\server\tests\test_agent_memory.py:286: in test_two_conversations_load_historical_context_without_fiu_promotion
+    assert isinstance(result, AgentResult)
+E   AssertionError: assert False
+E    +  where False = isinstance(AgentFailure(schema_version='1', run_id=UUID('4da01e6e-a92a-4c27-8821-fa7d7a6f25e3'), status=<AgentRunStatus.FAILED: 'failed'>, code=<AgentErrorCode.STRUCTURED_OUTPUT_FAILURE: 'structured_output_failure'>, message='Agent run failed'), AgentResult)
+_____________ test_memory_injection_remains_historical_user_data ______________
+apps\server\tests\test_agent_memory.py:332: in test_memory_injection_remains_historical_user_data
+    assert isinstance(result, AgentResult)
+E   AssertionError: assert False
+E    +  where False = isinstance(AgentFailure(schema_version='1', run_id=UUID('b11ffba0-2d16-4643-9a83-cac1eaa1144f'), status=<AgentRunStatus.FAILED: 'failed'>, code=<AgentErrorCode.STRUCTURED_OUTPUT_FAILURE: 'structured_output_failure'>, message='Agent run failed'), AgentResult)
+______ test_store_failure_after_response_is_nonblocking_and_secret_free _______
+apps\server\tests\test_agent_memory.py:372: in test_store_failure_after_response_is_nonblocking_and_secret_free
+    assert isinstance(result, AgentResult)
+E   AssertionError: assert False
+E    +  where False = isinstance(AgentFailure(schema_version='1', run_id=UUID('96cab39b-ea50-4fbc-8bad-d8c9179a89b2'), status=<AgentRunStatus.FAILED: 'failed'>, code=<AgentErrorCode.STRUCTURED_OUTPUT_FAILURE: 'structured_output_failure'>, message='Agent run failed'), AgentResult)
+_____________ test_signed_api_controls_agent_runtime_and_inspect ______________
+apps\server\tests\test_memory_control.py:325: in test_signed_api_controls_agent_runtime_and_inspect
+    assert run(True)[0].memory_status != "saved"
+           ^^^^^^^^^
+apps\server\tests\test_memory_control.py:312: in run
+    result = asyncio.run(
+E:\python\Lib\asyncio\runners.py:205: in run
+    return runner.run(main)
+           ^^^^^^^^^^^^^^^^
+E:\python\Lib\asyncio\runners.py:128: in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E:\python\Lib\asyncio\base_events.py:720: in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+apps\server\app\services\agent_service.py:467: in execute
+    raise AgentServiceError(code, run_id=request.run_id, recovery_status=recovery)
+E   app.services.agent_service.AgentServiceError: runtime_failure
+___________ test_person_and_all_delete_preserve_domains_and_consent ___________
+apps\server\tests\test_memory_mutation.py:265: in test_person_and_all_delete_preserve_domains_and_consent
+    asyncio.run(
+E:\python\Lib\asyncio\runners.py:205: in run
+    return runner.run(main)
+           ^^^^^^^^^^^^^^^^
+E:\python\Lib\asyncio\runners.py:128: in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E:\python\Lib\asyncio\base_events.py:720: in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+apps\server\memory_control_demo.py:78: in run_agent
+    result = await AgentService(lambda: Session(engine), runtime).execute(
+apps\server\app\services\agent_service.py:467: in execute
+    raise AgentServiceError(code, run_id=request.run_id, recovery_status=recovery)
+E   app.services.agent_service.AgentServiceError: runtime_failure
+_________________ test_agent_http_cannot_bypass_guarded_undo __________________
+apps\server\tests\test_memory_mutation.py:569: in test_agent_http_cannot_bypass_guarded_undo
+    assert response.status_code == 200
+E   assert 502 == 200
+E    +  where 502 = <Response [502 Bad Gateway]>.status_code
+=========================== short test summary info ===========================
+FAILED apps/server/tests/test_phase11r_memory.py::test_baseline_p0_requests_are_safe_through_signed_agent_http[\u8bf7\u89e3\u91ca\u6682\u505c\u8bb0\u5fc6\u7684\u542b\u4e49\uff0c\u4e0d\u8981\u5b9e\u9645\u6267\u884c\u3002-True]
+FAILED apps/server/tests/test_phase11r_memory.py::test_baseline_p0_requests_are_safe_through_signed_agent_http[\u8bf7\u89e3\u91ca\u201c\u6211\u660e\u786e\u540c\u610f\u4fdd\u5b58\u957f\u671f\u8bb0\u5fc6\u201d\u8fd9\u53e5\u8bdd\uff0c\u4e0d\u8981\u4fdd\u5b58\u3002-False]
+FAILED apps/server/tests/test_phase11q_structured_recovery.py::test_frozen_response_omission_composes_plan_without_discarding_model_candidate[iq-n07]
+FAILED apps/server/tests/test_phase11_structured_reliability.py::test_frozen_provider_outputs_replay_original_graph_outcomes_without_retry[final-live-grounding]
+FAILED apps/server/tests/test_phase11_structured_reliability.py::test_frozen_provider_outputs_replay_original_graph_outcomes_without_retry[reliability-fix-v4-original-five]
+FAILED apps/server/tests/test_phase11_structured_reliability.py::test_frozen_provider_outputs_replay_original_graph_outcomes_without_retry[reliability-fix-v5-regression]
+FAILED apps/server/tests/test_agent_memory.py::test_golden_memory_cases_are_real_writes_and_minimal_pair_d
+FAILED apps/server/tests/test_agent_memory.py::test_two_conversations_load_historical_context_without_fiu_promotion
+FAILED apps/server/tests/test_agent_memory.py::test_memory_injection_remains_historical_user_data
+FAILED apps/server/tests/test_agent_memory.py::test_store_failure_after_response_is_nonblocking_and_secret_free
+FAILED apps/server/tests/test_memory_control.py::test_signed_api_controls_agent_runtime_and_inspect
+FAILED apps/server/tests/test_memory_mutation.py::test_person_and_all_delete_preserve_domains_and_consent
+FAILED apps/server/tests/test_memory_mutation.py::test_agent_http_cannot_bypass_guarded_undo
+13 failed, 397 passed in 8.23s

@@ -8,12 +8,14 @@ import pytest
 
 from app.agent import AgentFailure, AgentInput, AgentResult, initial_state
 from app.agent.action_validation import validate_action, validate_response
+from app.agent.capabilities import boundary_plan
 from app.agent.contracts import (
     ActionPlan,
     AnalysisResult,
     Fact,
     ResponseResult,
     Route,
+    SafetyResult,
     Scenario,
     ScenarioResult,
     Unknown,
@@ -50,6 +52,15 @@ def make_state(scenario="reply", route="ordinary"):
     )
     state["scenario"] = ScenarioResult(primary=Scenario(scenario), reason_summary="Test")
     state["route"] = Route(route)
+    state["safety"] = SafetyResult.model_validate_json(
+        json.dumps(
+            {
+                "risk_level": "normal",
+                "safety_route_required": False,
+                "risk_categories": ["explicit_refusal"] if route == "boundary" else [],
+            }
+        )
+    )
     state["facts"] = [Fact(statement="User reports a message", source="user_report")]
     state["selected_references"] = ["reply"]
     state["analysis_result"] = AnalysisResult.model_validate(
@@ -82,7 +93,9 @@ def run_case(case):
         )
         provider.queue_structured(action)
         queue_safe_fixture_review(provider, ActionPlan.model_validate(action))
-        provider.queue_structured(fixture_response(action))
+        answer = fixture_response(action)
+        provider.queue_structured(answer)
+        queue_safe_fixture_review(provider, ResponseResult.model_validate(answer))
     result = asyncio.run(
         AgentRuntime(dependencies=RuntimeDependencies(llm_provider=provider)).run(
             AgentInput(user_id=uuid4(), conversation_id=uuid4(), message=case["input"])
@@ -142,7 +155,7 @@ def test_action_validation_rejects_unsupported_or_manipulative_output(change):
 
 def test_refusal_and_scheduling_conflict_have_distinct_policies():
     boundary = make_state(scenario="consent", route="boundary")
-    good = fixture_action(scenario="consent", route="boundary")
+    good = boundary_plan(boundary).model_dump()
     validate_action(ActionPlan.model_validate(good), boundary)
     for change in (
         {"contact_policy": "invite", "message_suggestion": "再约一次"},

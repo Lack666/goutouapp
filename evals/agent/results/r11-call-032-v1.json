@@ -1,0 +1,20 @@
+{
+  "serial": 32,
+  "case_id": "r11-new-exit",
+  "status": "response",
+  "visible_response": {
+    "content": "{\"policy_version\":\"contact-v1\",\"fields\":[{\"field\":\"recommended_action\",\"intent\":\"safe_action\",\"violations\":[],\"contact_effects\":[{\"recipient\":\"relationship_target\",\"purpose\":\"private\",\"mode\":\"discussion\"}]},{\"field\":\"stop_conditions.0\",\"intent\":\"safe_action\",\"violations\":[],\"contact_effects\":[{\"recipient\":\"trusted_support\",\"purpose\":\"protective\",\"mode\":\"discussion\"}]},{\"field\":\"stop_conditions.1\",\"intent\":\"safe_action\",\"violations\":[],\"contact_effects\":[{\"recipient\":\"other\",\"purpose\":\"protective\",\"mode\":\"discussion\"}]}]}",
+    "model": "deepseek-flash",
+    "finish_reason": "stop",
+    "usage": {
+      "input_tokens": 2099,
+      "output_tokens": 137,
+      "total_tokens": 2236,
+      "cache_hit_tokens": 896,
+      "cache_miss_tokens": 1203
+    }
+  },
+  "duration_ms": 1092.727900000682,
+  "request_reserved": true,
+  "time": "2026-10-28T07:13:35.468075+00:00"
+}

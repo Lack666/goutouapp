@@ -1,0 +1,20 @@
+{
+  "serial": 28,
+  "case_id": "r11-new-exit",
+  "status": "response",
+  "visible_response": {
+    "content": "{\"primary\": \"relationship\", \"secondary\": null, \"confidence\": 0.6, \"reason_summary\": \"User is deciding to end a private contact and asking how to refocus energy on life, an ambiguous relationship-closure question rather than an immediate reply or safety issue.\"}",
+    "model": "deepseek-flash",
+    "finish_reason": "stop",
+    "usage": {
+      "input_tokens": 740,
+      "output_tokens": 59,
+      "total_tokens": 799,
+      "cache_hit_tokens": 512,
+      "cache_miss_tokens": 228
+    }
+  },
+  "duration_ms": 965.3348000010737,
+  "request_reserved": true,
+  "time": "2026-10-28T07:13:26.628917+00:00"
+}

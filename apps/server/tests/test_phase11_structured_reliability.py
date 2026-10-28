@@ -7,7 +7,13 @@ from uuid import uuid4
 
 import pytest
 
-from app.agent.analysis_validation import UNSUPPORTED_CERTAINTY_CUES, has_unsupported_certainty
+from app.agent.analysis_validation import (
+    ACTION_CUES,
+    BOUNDARY_BYPASS_CUES,
+    UNSUPPORTED_CERTAINTY_CUES,
+    has_unsupported_certainty,
+)
+from app.agent.content_safety import candidate_fields
 from app.agent.contracts import ActionPlan, AgentInput, AnalysisResult, ResponseResult
 from app.agent.dependencies import RuntimeDependencies
 from app.agent.runtime import AgentRuntime
@@ -15,7 +21,7 @@ from app.llm.errors import LLMStructuredOutputError
 from app.llm.mock import MockLLMProvider
 from app.llm.validation import validate_structured_output
 from app.observability import TRACES
-from evals.agent.content_safety_eval import queue_safe_fixture_review
+from evals.agent.content_safety_eval import oracle_review, queue_safe_fixture_review
 from scripts.diagnose_phase11_structured import diagnose
 
 ROOT = Path(__file__).resolve().parents[3]
@@ -77,7 +83,7 @@ def test_historical_invalid_outputs_are_still_rejected(group):
         "reliability-fix-v5-regression",
     ],
 )
-def test_frozen_provider_outputs_replay_original_graph_outcomes_without_retry(name):
+def test_archived_outputs_replay_current_pipeline_with_explicit_review_fixtures(name):
     run = json.loads((ROOT / f"evals/agent/results/{name}.json").read_text("utf-8"))
     questions = {
         c["id"]: c["input"]
@@ -94,6 +100,24 @@ def test_frozen_provider_outputs_replay_original_graph_outcomes_without_retry(na
         ):
             if trace["run_id"] == case["run_id"]:
                 provider.queue_structured(output["content"])
+                if trace.get("schema") == "AnalysisResult":
+                    try:
+                        candidate = AnalysisResult.model_validate_json(output["content"])
+                    except ValueError:
+                        continue
+                    if any(
+                        pattern.search(text)
+                        for text in candidate_fields(candidate).values()
+                        for pattern in (
+                            *ACTION_CUES,
+                            *BOUNDARY_BYPASS_CUES,
+                            *UNSUPPORTED_CERTAINTY_CUES,
+                        )
+                    ):
+                        # The two matching archived analyses reject user certainty.
+                        # This explicit current-protocol wiring oracle changes no
+                        # archived provider output and proves no model accuracy.
+                        provider.queue_chat(oracle_review(candidate))
                 if trace.get("schema") in {"ActionPlan", "ResponseResult"}:
                     schema = ActionPlan if trace["schema"] == "ActionPlan" else ResponseResult
                     queue_safe_fixture_review(
@@ -113,10 +137,21 @@ def test_frozen_provider_outputs_replay_original_graph_outcomes_without_retry(na
         corrected_protective_mention = (
             name == "reliability-fix-v3-original-five" and case["id"] == "communication-04"
         )
+        retained_unresolved_refusal = (
+            name == "reliability-fix-v5-regression" and case["id"] == "communication-01"
+        )
         if corrected_protective_mention:
             # The historical FAIL is immutable; contextual review now permits the
             # protective stop condition mentioning threats in this frozen response.
             assert case["status"] == "failed" and result.status == "completed"
+        elif retained_unresolved_refusal:
+            # The old scheduling-only regex exception is gone. Replaying the
+            # archived explicit_refusal retains boundary, with a locally owned
+            # stop template. This is a current-pipeline result, not an archive
+            # status/oracle change and not evidence the old classifier was right.
+            assert case["status"] == "failed" and result.status == "completed"
+            assert result.route.value == "boundary"
+            assert "explicit_refusal" in result.safety.risk_categories
         else:
             assert result.status == case["status"]
         if case["id"] == "grounding-12":
@@ -127,9 +162,9 @@ def test_frozen_provider_outputs_replay_original_graph_outcomes_without_retry(na
             assert len(provider._structured) == 2
             assert result.action.stop_conditions
             assert result.final_answer == imported_chat_reply(questions[case["id"]])
-        elif name == "reliability-fix-v5-regression" and case["id"] == "communication-01":
-            # The corrected ordinary route cannot reuse the old boundary-only
-            # reference IDs. That stale analysis still fails provenance validation.
+        elif retained_unresolved_refusal:
+            # Current boundary uses the archived boundary analysis and owned
+            # template; the historical model ActionPlan remains unconsumed.
             assert len(provider._structured) == 1
         else:
             assert not provider._structured
@@ -149,8 +184,8 @@ def test_frozen_provider_outputs_replay_original_graph_outcomes_without_retry(na
             # The precise false positive is fixed, but absent later provider outputs
             # must still fail, rather than fabricating a completed historical answer.
             assert replay_failure == ["action_planner"]
-        elif name == "reliability-fix-v5-regression" and case["id"] == "communication-01":
-            assert replay_failure == ["relationship_analysis"]
+        elif retained_unresolved_refusal:
+            assert original_failure == ["action_planner"] and not replay_failure
         elif name == "reliability-fix-v5-regression" and case["id"] == "communication-03":
             # The formerly rejected ActionPlan is now accepted. No frozen response
             # exists, so it must fail at Response rather than fabricate completion.
@@ -176,15 +211,15 @@ def test_frozen_provider_outputs_replay_original_graph_outcomes_without_retry(na
         "用户推断对方“一定不爱你”，无法支持该结论；其实这个结论正确。",
     ],
 )
-def test_actual_certainty_and_ambiguous_quotation_still_fail_closed(statement):
+def test_certainty_cues_select_review_for_assertions_and_quoted_discussion(statement):
     assert has_unsupported_certainty(statement)
 
 
-def test_only_attributed_rejected_cross_quote_is_exempted():
+def test_rejected_cross_quotes_are_review_triggers_without_sentence_exemptions():
     original = next(f for f in diagnose() if f["case_id"] == "grounding-01")
     statement = original["guard_matches"][0]["statement"]
-    assert not has_unsupported_certainty(statement)
-    assert not has_unsupported_certainty(
+    assert has_unsupported_certainty(statement)
+    assert has_unsupported_certainty(
         "用户将对方两小时未回消息与“一定不爱我”直接等同；"
         "现有材料只能确认回复间隔与用户的疑问，无法支撑关于对方感情状态的任何确定结论。"
     )

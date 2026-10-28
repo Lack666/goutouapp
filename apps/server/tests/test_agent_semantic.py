@@ -6,9 +6,17 @@ from pathlib import Path
 from uuid import uuid4
 
 from app.agent import AgentFailure, AgentInput, AgentResult, initial_state
+from app.agent.analysis_validation import (
+    ACTION_CUES,
+    BOUNDARY_BYPASS_CUES,
+    UNSUPPORTED_CERTAINTY_CUES,
+)
+from app.agent.content_safety import candidate_fields
 from app.agent.contracts import (
     ActionPlan,
+    AnalysisResult,
     Fact,
+    ResponseResult,
     RiskLevel,
     Route,
     SafetyResult,
@@ -22,7 +30,7 @@ from app.agent.nodes import classify_scenario, extract_fiu, safety_check
 from app.agent.runtime import NODE_WRITES, AgentRuntime
 from app.llm.errors import LLMTimeoutError
 from app.llm.mock import MockLLMProvider
-from evals.agent.content_safety_eval import queue_safe_fixture_review
+from evals.agent.content_safety_eval import oracle_review, queue_safe_fixture_review
 from evals.phase3c_semantic import CASES, SELECTED, evaluate, replay_outputs
 from evals.phase3e_analysis import fixture_analysis
 from evals.phase3f_action_response import fixture_action, fixture_response
@@ -56,11 +64,24 @@ def run_with_outputs(message: str, outputs: list[dict]):
         alias = route_knowledge(
             safety=safety, route=route, scenario=scenario, current_message=message
         ).selected_references[0]
-        provider.queue_structured(fixture_analysis(alias=alias, fiu=outputs[2], route=route.value))
+        analysis = fixture_analysis(alias=alias, fiu=outputs[2], route=route.value)
+        provider.queue_structured(analysis)
+        analysis_candidate = AnalysisResult.model_validate(analysis)
+        patterns = (*ACTION_CUES, *UNSUPPORTED_CERTAINTY_CUES, *BOUNDARY_BYPASS_CUES)
+        if any(
+            pattern.search(text)
+            for text in candidate_fields(analysis_candidate).values()
+            for pattern in patterns
+        ):
+            # Explicit synthetic oracle: the fixture reports user claims; this
+            # exercises review wiring, not real-model semantic accuracy.
+            provider.queue_chat(oracle_review(analysis_candidate))
         action = fixture_action(scenario=scenario.primary.value, route=route.value)
         provider.queue_structured(action)
         queue_safe_fixture_review(provider, ActionPlan.model_validate(action))
-        provider.queue_structured(fixture_response(action))
+        answer = fixture_response(action)
+        provider.queue_structured(answer)
+        queue_safe_fixture_review(provider, ResponseResult.model_validate(answer))
     result = asyncio.run(
         AgentRuntime(dependencies=RuntimeDependencies(llm_provider=provider)).run(
             input_for(message)

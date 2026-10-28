@@ -64,6 +64,11 @@ NODE_READS: dict[str, frozenset[str]] = {
     "load_references": frozenset({"selected_references"}),
     "relationship_analysis": frozenset(
         {
+            "user_id",
+            "conversation_id",
+            "relationship_id",
+            "run_id",
+            "messages",
             "current_message",
             "scenario",
             "safety",
@@ -79,6 +84,10 @@ NODE_READS: dict[str, frozenset[str]] = {
     ),
     "action_planner": frozenset(
         {
+            "user_id",
+            "conversation_id",
+            "relationship_id",
+            "run_id",
             "current_message",
             "messages",
             "safety",
@@ -95,6 +104,10 @@ NODE_READS: dict[str, frozenset[str]] = {
     ),
     "response_generator": frozenset(
         {
+            "user_id",
+            "conversation_id",
+            "relationship_id",
+            "run_id",
             "current_message",
             "messages",
             "safety",
@@ -125,6 +138,9 @@ NODE_READS: dict[str, frozenset[str]] = {
     ),
     "memory_persist": frozenset(
         {
+            "route",
+            "guarded_undo_required",
+            "memory_control",
             "user_id",
             "relationship_id",
             "run_id",

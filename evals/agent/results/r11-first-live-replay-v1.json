@@ -1,0 +1,104 @@
+{
+  "version": "phase11r-first-live-replay-v1",
+  "source_sha256": "a19b24844b7822f681ccc251216bf4eaaad849ebab69ed4129315f77cc4f545b",
+  "paid_calls": 0,
+  "review_decisions": "exact recorded first-live decisions; no oracle substitution",
+  "cases": [
+    {
+      "id": "r11-n07",
+      "supported": true,
+      "checks": {
+        "status_same": true,
+        "route_same": true,
+        "answer_same": true,
+        "all_saved_responses_consumed": true,
+        "zero_memory_side_effects": true
+      },
+      "passed": true
+    },
+    {
+      "id": "r11-n20",
+      "supported": true,
+      "checks": {
+        "status_same": true,
+        "route_same": true,
+        "answer_same": true,
+        "all_saved_responses_consumed": true,
+        "zero_memory_side_effects": true
+      },
+      "passed": true
+    },
+    {
+      "id": "r11-n10",
+      "supported": true,
+      "checks": {
+        "status_same": true,
+        "route_same": true,
+        "answer_same": true,
+        "all_saved_responses_consumed": true,
+        "zero_memory_side_effects": true
+      },
+      "passed": true
+    },
+    {
+      "id": "r11-new-schedule",
+      "supported": true,
+      "checks": {
+        "status_same": true,
+        "route_same": true,
+        "answer_same": true,
+        "all_saved_responses_consumed": true,
+        "zero_memory_side_effects": true
+      },
+      "passed": true
+    },
+    {
+      "id": "r11-new-exit",
+      "supported": true,
+      "checks": {
+        "status_same": true,
+        "route_same": true,
+        "answer_same": true,
+        "all_saved_responses_consumed": true,
+        "zero_memory_side_effects": true
+      },
+      "passed": true
+    },
+    {
+      "id": "r11-new-reply",
+      "supported": true,
+      "checks": {
+        "status_same": true,
+        "route_same": true,
+        "answer_same": true,
+        "all_saved_responses_consumed": true,
+        "zero_memory_side_effects": true
+      },
+      "passed": true
+    },
+    {
+      "id": "r11-new-safety",
+      "supported": true,
+      "checks": {
+        "status_same": true,
+        "route_same": true,
+        "answer_same": true,
+        "all_saved_responses_consumed": true,
+        "zero_memory_side_effects": true
+      },
+      "passed": true
+    },
+    {
+      "id": "r11-new-quotation",
+      "supported": true,
+      "checks": {
+        "status_same": true,
+        "route_same": true,
+        "answer_same": true,
+        "all_saved_responses_consumed": true,
+        "zero_memory_side_effects": true
+      },
+      "passed": true
+    }
+  ]
+}
