@@ -6,6 +6,27 @@ licensed and its content hashes are frozen in `knowledge/upstream-manifest.json`
 
 ## Phase gate
 
+Latest closeout (2026-10-28): human review COMPLETE / USER_ATTESTED, with30
+records covering28 unique cases (22 completed answers and6 retained failures).
+Primary human acceptance2/15; unique acceptance8/28. Phase11 QUALITY FAIL /
+BLOCKED on safety and core completion; no joint FUNCTION COMPLETE designation.
+See [quality closeout](PHASE_11_QUALITY_CLOSEOUT.md) for immutable scoring,
+proxy differences, metrics and prioritized issues. Full regression remains
+pending; official marker remains9/9H, Phase10 DEFERRED, original Phase12 PENDING.
+
+Explicit authorization (2026-10-28) covers this closeout and a committed product
+plan only. [Imported Chat Analysis](IMPORTED_CHAT_ANALYSIS_PLAN.md) proposes a
+milestone between Phase11 and original Phase12, without renumbering those phases:
+bounded11Q safety/core unblock, then ICA-A scope/context, ICA-B Agent/report and
+deletion, ICA-C Android, ICA-D unified final regression. Each implementation
+stage needs separate authorization. No new product code, CI/CD or EAS is started.
+Targeted checks during those stages do not replace the final full regression or
+authorize a formal marker change. Existing CODE/TEST/DOC/DEMO/REGRESSION rules
+remain in force for formal engineering acceptance.
+
+Historical independent execution snapshot follows; its PENDING review state is
+superseded by the closeout above, without rewriting the frozen run results.
+
 Independent Phase11 quality evaluation (2026-10-27): 20 new ordinary + 8 new
 high-risk cases executed once with real DeepSeek generation. Ordinary completion
 14/20, machine business checks22/28; QUALITY GATE FAIL, human review PENDING.
@@ -32,7 +53,7 @@ as implemented by a placeholder directory or a golden expectation.
 | 8 | Mobile API integration, generated client and stream consumption | PASS (8A–8F, including native closeout) |
 | 9 | Security, privacy, reliability and deletion | PASS (9A–9H and original final engineering criteria; public production NOT APPROVED) |
 | 10 | Optional hybrid RAG with pgvector | OPTIONAL / DEFERRED (user decision 2026-10-26) |
-| 11 | Agent eval and observability | IN PROGRESS; final regression deferred |
+| 11 | Agent eval and observability | QUALITY FAIL / BLOCKED; human review complete; final regression pending |
 | 12 | CI/CD, EAS preview, release preparation | PENDING |
 
 ## Exit criteria by phase

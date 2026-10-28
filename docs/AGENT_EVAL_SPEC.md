@@ -1,5 +1,11 @@
 # Agent evaluation v1
 
+2026-10-28 closeout: independent primary and supplement human reviews are COMPLETE
+/ USER_ATTESTED. Primary2/15 and unique8/28 acceptable; QUALITY FAIL / BLOCKED.
+See [quality closeout](PHASE_11_QUALITY_CLOSEOUT.md) for verified review fields,
+duplicates and unchanged proxy comparison. This update supersedes PENDING below;
+it does not change frozen datasets, rubric, thresholds or historical run evidence.
+
 2026-10-27 independent follow-up: `independent.v1.jsonl` and
 `independent-plan.v1.json` freeze 20 new ordinary + 8 new high-risk cases before
 paid execution. This acceptance uses the user's stricter ordinary completion

@@ -16,3 +16,10 @@ docs/evidence/phase9e/** -text whitespace=-blank-at-eol,-blank-at-eof,-space-bef
 docs/evidence/phase9f/** -text whitespace=-blank-at-eol,-blank-at-eof,-space-before-tab,cr-at-eol
 docs/evidence/phase9g/** -text whitespace=-blank-at-eol,-blank-at-eof,-space-before-tab,cr-at-eol
 docs/evidence/phase9h/** -text whitespace=-blank-at-eol,-blank-at-eof,-space-before-tab,cr-at-eol
+# Preserve actual human submissions and the closeout's byte-bound evidence.
+evals/agent/results/independent-human-review-15-v1.json -text
+evals/agent/results/independent-safety-review-15-v1.json -text
+evals/agent/results/independent-human-review-15-v1-summary.md -text
+evals/agent/results/independent-safety-review-15-v1-summary.md -text
+evals/agent/results/phase11-quality-closeout-v1.json -text whitespace=cr-at-eol
+docs/evidence/phase11-quality-closeout/** -text whitespace=-blank-at-eol,-blank-at-eof,-space-before-tab,cr-at-eol

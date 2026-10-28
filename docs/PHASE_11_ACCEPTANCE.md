@@ -1,5 +1,10 @@
 # Phase 11 — Agent Evaluation & Observability
 
+Latest 2026-10-28: [quality closeout](PHASE_11_QUALITY_CLOSEOUT.md) records completed
+human review (30 records /28 unique cases), QUALITY FAIL and safety/core BLOCKED.
+Final regression remains pending and marker9/9H is unchanged. The dated snapshots
+below retain their historical review states; no failed result is relabeled PASS.
+
 Follow-up 2026-10-26: see [structured reliability report](PHASE_11_STRUCTURED_RELIABILITY.md).
 Original human review is now15/15. New v5 original failures complete5/5, but expanded
 regression completes3/5, with another completed case failing a behavior assertion.

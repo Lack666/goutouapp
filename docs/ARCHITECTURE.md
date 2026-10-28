@@ -685,3 +685,27 @@ Every field must be unambiguously permissible; missing/invalid/unclear decisions
 dependency failures close the run without regeneration. Approval is bound to the
 candidate/context digest, local to that validation. No new graph node, API, storage,
 Memory access or dependency. See PHASE_11_CONTENT_SAFETY_REPAIR for evidence and limits.
+
+## Proposed Imported Chat Analysis milestone (2026-10-28; not implemented)
+
+Phase11 human review is complete but quality remains FAIL/BLOCKED; see
+[quality closeout](PHASE_11_QUALITY_CLOSEOUT.md). The official marker remains9/9H.
+[Imported Chat Analysis plan](IMPORTED_CHAT_ANALYSIS_PLAN.md) defines prospective
+contracts and gates only. It neither connects current imported messages to Agent
+nor changes current deletion or Memory behavior.
+
+The proposal reuses canonical ChatImportJob Datasets, RelationshipMessage,
+signed owner-scoped resource discovery, AgentRun fences, LangGraph and LLMProvider.
+A narrow coordinating service would verify a five-minute explicitly authorized
+scope and build typed, bounded ImportedChatContext outside transport and runtime.
+Imported text remains untrusted data, never system instructions or Memory consent.
+All selected messages receive safety assessment before ordinary analysis; Memory
+is explicitly off. Owner checks, message/span provenance and typed report validation
+must hold before the report is completed or returned.
+
+Dataset/Person/Relationship/Owner erasure, report TTL, replay, writer races and
+quarantined restore must cover the derived report domain in the same stage that
+introduces report persistence. Android would expose scope confirmation, report
+and authorized source evidence. No RAG, vector storage, new infrastructure or
+Provider bypass is planned. Exact bounds, stage acceptance and original Phase12
+handoff are in the proposal; implementation awaits separate authorization.
