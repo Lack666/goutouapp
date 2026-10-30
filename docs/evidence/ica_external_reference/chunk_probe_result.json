@@ -1,0 +1,110 @@
+{
+  "kind": "synthetic_structural_probe_v1",
+  "provider_calls": 0,
+  "cases": [
+    {
+      "days": 3,
+      "messages": 900,
+      "policies": {
+        "fixed_200": {
+          "chunks": 5,
+          "unique_core_messages": 900,
+          "context_appearances": 900,
+          "overlap_appearances": 0,
+          "pair_colocation": 8,
+          "pair_total": 12,
+          "wire_bytes_one_pass": 75364,
+          "largest_core_text_bytes": 4554
+        },
+        "time_15min": {
+          "chunks": 27,
+          "unique_core_messages": 900,
+          "context_appearances": 900,
+          "overlap_appearances": 0,
+          "pair_colocation": 3,
+          "pair_total": 12,
+          "wire_bytes_one_pass": 75364,
+          "largest_core_text_bytes": 1043
+        },
+        "session_pack_200": {
+          "chunks": 6,
+          "unique_core_messages": 900,
+          "context_appearances": 900,
+          "overlap_appearances": 0,
+          "pair_colocation": 6,
+          "pair_total": 12,
+          "wire_bytes_one_pass": 75364,
+          "largest_core_text_bytes": 3408
+        },
+        "session_pack_halo20": {
+          "chunks": 6,
+          "unique_core_messages": 900,
+          "context_appearances": 1100,
+          "overlap_appearances": 200,
+          "pair_colocation": 11,
+          "pair_total": 12,
+          "wire_bytes_one_pass": 92239,
+          "largest_core_text_bytes": 3408
+        }
+      },
+      "oracle_followup_pairs": 12,
+      "candidate_appearances_with_halo": 17,
+      "unique_events_by_anchor_ids": 12,
+      "illustrative_calls_upper_3K_plus_8": 26,
+      "illustrative_reserved_tokens_at_128KiB_per_call": 3620864
+    },
+    {
+      "days": 7,
+      "messages": 2100,
+      "policies": {
+        "fixed_200": {
+          "chunks": 11,
+          "unique_core_messages": 2100,
+          "context_appearances": 2100,
+          "overlap_appearances": 0,
+          "pair_colocation": 20,
+          "pair_total": 28,
+          "wire_bytes_one_pass": 175876,
+          "largest_core_text_bytes": 4559
+        },
+        "time_15min": {
+          "chunks": 63,
+          "unique_core_messages": 2100,
+          "context_appearances": 2100,
+          "overlap_appearances": 0,
+          "pair_colocation": 7,
+          "pair_total": 28,
+          "wire_bytes_one_pass": 175876,
+          "largest_core_text_bytes": 1043
+        },
+        "session_pack_200": {
+          "chunks": 14,
+          "unique_core_messages": 2100,
+          "context_appearances": 2100,
+          "overlap_appearances": 0,
+          "pair_colocation": 14,
+          "pair_total": 28,
+          "wire_bytes_one_pass": 175876,
+          "largest_core_text_bytes": 3409
+        },
+        "session_pack_halo20": {
+          "chunks": 14,
+          "unique_core_messages": 2100,
+          "context_appearances": 2620,
+          "overlap_appearances": 520,
+          "pair_colocation": 27,
+          "pair_total": 28,
+          "wire_bytes_one_pass": 219767,
+          "largest_core_text_bytes": 3409
+        }
+      },
+      "oracle_followup_pairs": 28,
+      "candidate_appearances_with_halo": 41,
+      "unique_events_by_anchor_ids": 28,
+      "illustrative_calls_upper_3K_plus_8": 50,
+      "illustrative_reserved_tokens_at_128KiB_per_call": 6963200
+    }
+  ],
+  "source_hash_normalization": "utf8-universal-newlines",
+  "source_sha256": "0d9857c6df0b8b9f49f2c740e8d4fb85c87379d11f2fa7c80d0b2acf67059845"
+}
