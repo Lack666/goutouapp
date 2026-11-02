@@ -8,6 +8,7 @@ from app.db.models.import_jobs import (
     ChatImportSpeaker,
     RelationshipMessage,
 )
+from app.db.models.imported_analysis import ImportedAnalysisGrant
 from app.db.models.lifecycle import LifecycleConfirmation, LifecycleReceipt, RunRecoveryReceipt
 from app.db.models.records import (
     AgentRun,
@@ -24,6 +25,7 @@ from app.db.models.records import (
 )
 
 __all__ = [
+    "ImportedAnalysisGrant",
     "LifecycleConfirmation",
     "LifecycleReceipt",
     "RunRecoveryReceipt",

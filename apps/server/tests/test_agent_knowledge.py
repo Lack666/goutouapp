@@ -11,7 +11,9 @@ import pytest
 
 from app.agent import AgentFailure, AgentInput, AgentResult, initial_state
 from app.agent.contracts import (
+    ActionPlan,
     KnowledgeRouteResult,
+    ResponseResult,
     RiskLevel,
     Route,
     SafetyResult,
@@ -28,6 +30,7 @@ from app.agent.knowledge import (
 )
 from app.agent.runtime import NODE_READS, NODE_WRITES, AgentRuntime, _bind
 from app.llm.mock import MockLLMProvider
+from evals.agent.content_safety_eval import queue_safe_fixture_review
 from evals.phase3d_routing import evaluate_all, evaluate_route
 from evals.phase3e_analysis import fixture_analysis
 from evals.phase3f_action_response import fixture_action, fixture_response
@@ -58,6 +61,11 @@ def scripted_provider(scenario: str, *, high: bool = False, boundary: bool = Fal
         action = fixture_action(scenario=scenario, route="boundary" if boundary else "ordinary")
         provider.queue_structured(action)
         provider.queue_structured(fixture_response(action))
+        if not boundary and scenario != "chat_import":
+            queue_safe_fixture_review(provider, ActionPlan.model_validate(action))
+            queue_safe_fixture_review(
+                provider, ResponseResult.model_validate(fixture_response(action))
+            )
     return provider
 
 

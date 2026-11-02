@@ -1,0 +1,81 @@
+{
+  "count": 10000,
+  "pages": 21,
+  "page_limit": 500,
+  "python_peak_bytes": 3431046,
+  "explain": [
+    {
+      "Plan": {
+        "Node Type": "Limit",
+        "Parallel Aware": false,
+        "Async Capable": false,
+        "Startup Cost": 0.28,
+        "Total Cost": 8.3,
+        "Plan Rows": 1,
+        "Plan Width": 24,
+        "Actual Startup Time": 0.057,
+        "Actual Total Time": 0.197,
+        "Actual Rows": 500,
+        "Actual Loops": 1,
+        "Shared Hit Blocks": 32,
+        "Shared Read Blocks": 0,
+        "Shared Dirtied Blocks": 0,
+        "Shared Written Blocks": 0,
+        "Local Hit Blocks": 0,
+        "Local Read Blocks": 0,
+        "Local Dirtied Blocks": 0,
+        "Local Written Blocks": 0,
+        "Temp Read Blocks": 0,
+        "Temp Written Blocks": 0,
+        "Plans": [
+          {
+            "Node Type": "Index Only Scan",
+            "Parent Relationship": "Outer",
+            "Parallel Aware": false,
+            "Async Capable": false,
+            "Scan Direction": "Forward",
+            "Index Name": "ix_ica_dataset_keyset",
+            "Relation Name": "relationship_messages",
+            "Alias": "relationship_messages",
+            "Startup Cost": 0.28,
+            "Total Cost": 8.3,
+            "Plan Rows": 1,
+            "Plan Width": 24,
+            "Actual Startup Time": 0.057,
+            "Actual Total Time": 0.179,
+            "Actual Rows": 500,
+            "Actual Loops": 1,
+            "Index Cond": "((owner_user_id = '21b159ab-3efc-4ebb-bc12-eb7ac0f3f5ad'::uuid) AND (import_job_id = 'd5998159-b29e-4cd3-ae18-a73841ab99d1'::uuid) AND (timestamp_utc >= '2026-10-26 16:00:00+00'::timestamp with time zone) AND (timestamp_utc < '2026-11-02 08:33:44.78667+00'::timestamp with time zone))",
+            "Rows Removed by Index Recheck": 0,
+            "Heap Fetches": 500,
+            "Shared Hit Blocks": 32,
+            "Shared Read Blocks": 0,
+            "Shared Dirtied Blocks": 0,
+            "Shared Written Blocks": 0,
+            "Local Hit Blocks": 0,
+            "Local Read Blocks": 0,
+            "Local Dirtied Blocks": 0,
+            "Local Written Blocks": 0,
+            "Temp Read Blocks": 0,
+            "Temp Written Blocks": 0
+          }
+        ]
+      },
+      "Planning": {
+        "Shared Hit Blocks": 16,
+        "Shared Read Blocks": 0,
+        "Shared Dirtied Blocks": 0,
+        "Shared Written Blocks": 0,
+        "Local Hit Blocks": 0,
+        "Local Read Blocks": 0,
+        "Local Dirtied Blocks": 0,
+        "Local Written Blocks": 0,
+        "Temp Read Blocks": 0,
+        "Temp Written Blocks": 0
+      },
+      "Planning Time": 0.293,
+      "Triggers": [],
+      "Execution Time": 0.213
+    }
+  ]
+}

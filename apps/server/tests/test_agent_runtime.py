@@ -64,6 +64,11 @@ def scripted_provider(*, high: bool = False, scenario: str = "relationship") -> 
         action = fixture_action(scenario=scenario, route="ordinary")
         provider.queue_structured(action)
         provider.queue_structured(fixture_response(action))
+        from app.agent.contracts import ActionPlan, ResponseResult
+        from evals.agent.content_safety_eval import queue_safe_fixture_review
+
+        queue_safe_fixture_review(provider, ActionPlan.model_validate(action))
+        queue_safe_fixture_review(provider, ResponseResult.model_validate(fixture_response(action)))
     return provider
 
 
@@ -253,6 +258,11 @@ async def test_run_isolation_and_compile_reuse() -> None:
     action = fixture_action(scenario="online", route="ordinary")
     provider.queue_structured(action)
     provider.queue_structured(fixture_response(action))
+    from app.agent.contracts import ActionPlan, ResponseResult
+    from evals.agent.content_safety_eval import queue_safe_fixture_review
+
+    queue_safe_fixture_review(provider, ActionPlan.model_validate(action))
+    queue_safe_fixture_review(provider, ResponseResult.model_validate(fixture_response(action)))
     agent = runtime(provider)
     compiled = agent.graph
     third = await agent.run(request("third"))

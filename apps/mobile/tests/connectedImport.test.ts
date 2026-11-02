@@ -107,6 +107,20 @@ it('file cache reading failure occurs before HTTP and does not create unknown up
   expect(controller.snapshot().upload).toBe('failed');
   expect(requests).toHaveLength(0);
 });
+
+it('explicit JSONL selection is carried through multipart without automatic analysis', async () => {
+  const { controller, requests } = await setup();
+  controller.format('chatlab_jsonl_v0_0_2');
+  await controller.select(async () => file('anonymous.jsonl'));
+  expect(requests).toHaveLength(0);
+  await controller.upload();
+  const request = requests.find((r) => r.method === 'POST')!;
+  const form = (await request.formData()) as unknown as {
+    get(key: string): FormDataEntryValue | null;
+  };
+  expect(form.get('source_format')).toBe('chatlab_jsonl_v0_0_2');
+  expect(requests.every((r) => !r.url.includes('imported-analysis'))).toBe(true);
+});
 it('upload response loss retains selection and never retries or creates a second job automatically', async () => {
   const { controller, requests } = await setup(async (r) => {
     if (r.url.endsWith('/chat-imports')) throw new TypeError('private source must not surface');

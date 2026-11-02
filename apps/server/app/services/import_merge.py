@@ -13,8 +13,9 @@ from sqlalchemy import select, text, tuple_
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm import Session
 
-from app.chat_import import ChatImportSource, ImportOptions, WeChatMarkdownParser
+from app.chat_import import ChatImportSource, ImportOptions
 from app.chat_import.contracts import ChatParseResult, ImportedMessage
+from app.chat_import.parsers import parser_for
 from app.db.models import ChatImportJob, ChatImportSpeaker, RelationshipMessage
 from app.db.repositories import records
 from app.services.agent_service import AuthenticatedActor
@@ -85,7 +86,8 @@ class RelationshipMessagePage:
 
 _STAGE_COLUMNS = (
     "source_index, message_fingerprint, raw_speaker_label, content, content_type, "
-    "timestamp_utc, original_timestamp, source_timezone, source_line_start, source_line_end"
+    "timestamp_utc, original_timestamp, source_timezone, source_line_start, source_line_end, "
+    "external_message_id, external_reply_id, external_message_type"
 )
 
 
@@ -214,7 +216,9 @@ class ImportMergeService:
                         "original_timestamp varchar(19) NOT NULL, "
                         "source_timezone varchar(100) NOT NULL, "
                         "source_line_start integer NOT NULL, "
-                        "source_line_end integer NOT NULL) ON COMMIT DROP"
+                        "source_line_end integer NOT NULL, external_message_id varchar(1024), "
+                        "external_reply_id varchar(1024), "
+                        "external_message_type integer) ON COMMIT DROP"
                     )
                 )
                 batch: list[dict[str, object]] = []
@@ -227,7 +231,8 @@ class ImportMergeService:
                                 ":source_index, :message_fingerprint, :raw_speaker_label, "
                                 ":content, :content_type, :timestamp_utc, "
                                 ":original_timestamp, :source_timezone, "
-                                ":source_line_start, :source_line_end)"
+                                ":source_line_start, :source_line_end, :external_message_id, "
+                                ":external_reply_id, :external_message_type)"
                             ),
                             batch,
                         )
@@ -246,14 +251,21 @@ class ImportMergeService:
                             "source_timezone": message.source_timezone,
                             "source_line_start": message.provenance.line_start,
                             "source_line_end": message.provenance.line_end,
+                            "external_message_id": message.external_message_id,
+                            "external_reply_id": message.external_reply_id,
+                            "external_message_type": message.external_message_type,
                         }
                     )
                     if len(batch) >= 500:
                         flush_batch()
 
-                result = WeChatMarkdownParser().parse(
+                result = parser_for(job.source_format).parse(
                     source,
-                    ImportOptions(source_timezone=job.source_timezone, include_messages=False),
+                    ImportOptions(
+                        source_timezone=job.source_timezone,
+                        source_format=job.source_format,
+                        include_messages=False,
+                    ),
                     on_message=stage_message,
                 )
                 flush_batch()
@@ -294,12 +306,14 @@ class ImportMergeService:
                         "id, created_at, updated_at, owner_user_id, relationship_id, "
                         "import_job_id, source_index, message_fingerprint, raw_speaker_label, "
                         "sender_kind, person_id, content, content_type, timestamp_utc, "
-                        "original_timestamp, source_timezone, source_line_start, source_line_end) "
+                        "original_timestamp, source_timezone, source_line_start, source_line_end, "
+                        "external_message_id, external_reply_id, external_message_type) "
                         f"SELECT gen_random_uuid(), now(), now(), :owner, :relationship, :job, "
                         "st.source_index, st.message_fingerprint, st.raw_speaker_label, "
                         "sp.binding_kind, sp.person_id, st.content, st.content_type, "
                         "st.timestamp_utc, st.original_timestamp, st.source_timezone, "
-                        "st.source_line_start, st.source_line_end "
+                        "st.source_line_start, st.source_line_end, st.external_message_id, "
+                        "st.external_reply_id, st.external_message_type "
                         f"FROM {stage} st JOIN chat_import_speakers sp "
                         "ON sp.job_id = :job AND sp.raw_speaker_label = st.raw_speaker_label "
                         "WHERE sp.binding_kind <> 'ignore' ORDER BY st.source_index"

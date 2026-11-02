@@ -15,6 +15,7 @@ from app.db.models import (
     ChatImportSpeaker,
     Conversation,
     ErasureConfirmation,
+    ImportedAnalysisGrant,
     LifecycleConfirmation,
     LifecycleReceipt,
     MemoryConfirmationRow,
@@ -37,6 +38,7 @@ from app.schemas.lifecycle import (
 from app.services.agent_service import AuthenticatedActor
 from app.services.agent_writer import WriterProofUnavailable
 from app.services.erasure import ErasureError, _canonical, _fingerprint
+from app.services.imported_analysis import invalidate_datasets
 
 
 class LifecycleErasure:
@@ -164,6 +166,7 @@ class LifecycleErasure:
             AgentRun: AgentRun.conversation_id.in_(conversations),
             Message: Message.conversation_id.in_(conversations),
             ChatImportJob: ChatImportJob.id.in_(jobs),
+            ImportedAnalysisGrant: ImportedAnalysisGrant.dataset_id.in_(jobs),
             RelationshipMessage: RelationshipMessage.import_job_id.in_(jobs),
             ChatImportSpeaker: ChatImportSpeaker.job_id.in_(jobs),
             ChatImportArtifact: ChatImportArtifact.id.in_(artifacts),
@@ -277,6 +280,7 @@ class LifecycleErasure:
                             raise ArtifactStoreError()
                         partial.unlink(missing_ok=True)
                 db.execute(delete(UploadReservation).where(scope[UploadReservation]))
+            invalidate_datasets(db, select(ChatImportJob.id).where(scope[ChatImportJob]))
             for model in (Message, RelationshipMessage, ChatImportSpeaker, MemoryRecordRow):
                 db.execute(delete(model).where(scope[model]))
             db.execute(

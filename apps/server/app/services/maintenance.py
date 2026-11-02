@@ -81,6 +81,9 @@ class MaintenanceService:
                 result.error = "maintenance_busy"
                 return result
             self.admission.snapshot()  # Recover only OS-proven dead workers.
+            from app.services.imported_analysis import ImportedAnalysisService
+
+            ImportedAnalysisService(self.admission.database.session, clock=self.clock).cleanup()
             retention = MemoryRetentionService(
                 self.admission.database.session,
                 policy=RetentionPolicy.from_settings(self.admission.settings),

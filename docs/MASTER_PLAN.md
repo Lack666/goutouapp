@@ -6,6 +6,21 @@ licensed and its content hashes are frozen in `knowledge/upstream-manifest.json`
 
 ## Phase gate
 
+2026-11-02 explicit authorization: **ICA-A / ica-long-range-v3** adopts
+ICA_EXTERNAL_REFERENCE_REVIEW.md for import compatibility, local calendar scope,
+chunk/coverage and trusted authorization foundations only. Versioned contract:
+ICA_A_V3_CONTRACT.md. This supersedes v2 sizing only; historical plans/results
+remain intact. No ICA-B/C/D, Phase12, paid Provider or general Agent optimization.
+Phase11 QUALITY FAIL, Phase11R Memory P0 repairs, original human scores/failures,
+Phase10 DEFERRED, Phase12 PENDING and official completed_phase=9 /
+completed_subphase=9H remain unchanged. Acceptance: ICA_A_V3_ACCEPTANCE.md;
+targeted checks only, explicitly excluding root verify and historical Android suites.
+
+2026-11-02 ICA-A completion authorization continues that same milestone: signed
+PostgreSQL scope/confirmation/evidence, lifecycle and JSONL Mobile compatibility.
+Completion evidence is recorded separately in ICA_A_V3_COMPLETION_ACCEPTANCE.md;
+the earlier PARTIAL report remains immutable. No formal marker or quality regrade.
+
 Phase11R authorized semantic repair (2026-10-28): **TARGETED PASS**. The versioned
 scope contract preserves refused dating while permitting only controlled necessary
 class/work guidance; contact-effect checks replace lexical verdicts. Two actual

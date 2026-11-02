@@ -1,0 +1,30 @@
+{
+  "base_head": "1f4e000eb4647240b65bd1ce5701058ce109186a",
+  "state": "uncommitted partial implementation",
+  "files": {
+    ".gitignore": "ca12af3aeba9409799a4ad5f53dc5075782f9dbcacda7fd2ba0a0f19a1cab791",
+    "apps/mobile/src/api/importAdapter.ts": "4d2582ddc227abc8eed7ec8351d118d03585eb81e727c71158a25b49f98a5498",
+    "apps/server/app/api/v1/chat_imports.py": "410c7964735693821a2314724e9666b1e0d95e39caeb4a8bc1e8f1af79c6cf0c",
+    "apps/server/app/chat_import/contracts.py": "23ab4ab986dd7b8f7537b0a36bf996a5d8ab2f2956f157b03e6ab4b6c066cbc4",
+    "apps/server/app/db/models/import_jobs.py": "0a0310608cbdf07fa9900e2630a3c7cad30227ad2cfd309b817462a0cc7f0d35",
+    "apps/server/app/services/import_merge.py": "907efa4e6870eeb17e2ddbdedb24d324dcaa2713c4a8186a8d34dc207fadfe34",
+    "apps/server/app/services/import_workflow.py": "3bb2d3969bc2639738fbbab7d42494bc628f18ebc7202cc066f77d719f3d2a5a",
+    "apps/server/tests/test_agent_knowledge.py": "d2a0aac0703c287cd0192c706ef3dae35cd6197e2dec71149f744c9ffd043134",
+    "docs/MASTER_PLAN.md": "2deabd1d22a174fba9cd18557905456b8c79179d1b1af43cc036be8a386f0a94",
+    "apps/server/alembic/versions/20261102_01_chatlab_provenance.py": "1a325aebf78f7012d86a7b078c96e5b548f373ac50714b240f07678b85b8f5e8",
+    "apps/server/app/chat_import/analysis_scope.py": "92fd2d8040635a4f5343ad80407e92a5d526c0e085ba5a16d4b0aa3a23394741",
+    "apps/server/app/chat_import/chatlab_jsonl.py": "6cf4c7428a34846aa90bf76490025c7d8d5e679f48f4c2c22038e7446c635690",
+    "apps/server/app/chat_import/parsers.py": "63e455da86180de9bbb74589c371ffea8b1e57cde2f726b4ce03cbbb4d5bafa8",
+    "apps/server/app/services/imported_scope.py": "0371f7ba2aadf6c018c41cec5c413c1d389cfc1c15948c84f5aec0f6e1a1ef97",
+    "apps/server/ica_scope_demo.py": "ca4180a90e2e01f580d03f66c48e97549ec6b367fb58039b4ec46c922f1b5df1",
+    "apps/server/tests/test_ica_foundation.py": "989bd0f24b3ea74be2fa2af01dbf092b9efabad422f61a61a8852b414ff96268",
+    "docs/ICA_A_V3_CONTRACT.md": "58b1f5f551a79a25be4964be35f08eb4c1634192ef573e71f38219128b43aac2",
+    "docs/evidence/ica-a-v3/preview-3d.json": "c2a97cb934acd404fdcb4c6b4d568049d1a6b6e47f527b37c3af1e301fc136f1",
+    "docs/evidence/ica-a-v3/preview-7d.json": "1c9275bbfad13aaf54114d2df0028e6a57e7f32a76ec351438ae854267f9efd0",
+    "docs/evidence/ica-a-v3/synthetic-invalid-version.jsonl": "eaf7638a60103631df66dddcc701bbccecc4c53b386a8dd32680bba055577cac",
+    "docs/evidence/ica-a-v3/synthetic-weflow-valid.jsonl": "215ae57a51ab52a8cd12e56ecaf9e5113d29a8503a68a14d8dcc438888453484"
+  },
+  "provider_calls": 0,
+  "completed_phase": 9,
+  "completed_subphase": "9H"
+}

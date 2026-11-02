@@ -81,7 +81,7 @@ it('Connected source has real picker and explicit upload, without fabricated ana
   expect(value.resources.load).not.toHaveBeenCalled(); // Preserve existing owned selections.
   expect(screen.queryByText('本地演示 · Demo')).toBeNull();
   await act(async () => {
-    fireEvent.press(screen.getByRole('button', { name: '选择微信 Markdown 文件' }));
+    fireEvent.press(screen.getByRole('button', { name: '选择聊天导出文件' }));
   });
   expect(requests).toHaveLength(0);
   expect(screen.queryByText('聊天记录已成功导入，可在历史记录中查看。')).toBeNull();

@@ -25,6 +25,7 @@ from app.db.repositories import records
 from app.schemas.erasure import ErasureChallenge, ErasureExecute, ErasureResult, ErasureTarget
 from app.services.agent_service import AuthenticatedActor
 from app.services.agent_writer import AgentWriterRegistry, WriterProofUnavailable
+from app.services.imported_analysis import invalidate_datasets
 
 
 class ErasureError(Exception):
@@ -267,6 +268,8 @@ class ErasureService:
                         ChatImportSpeaker.owner_user_id == actor.user_id,
                     )
                 )
+            if body.domain == "dataset":
+                invalidate_datasets(db, [target.id])
             target.deleted_at = now
             target.updated_at = now
             challenge.consumed_at = now

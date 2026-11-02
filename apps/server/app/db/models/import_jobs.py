@@ -148,6 +148,7 @@ class RelationshipMessage(RecordMixin, Base):
 
     __tablename__ = "relationship_messages"
     __table_args__ = (
+        Index("ix_ica_dataset_keyset", "owner_user_id", "import_job_id", "timestamp_utc", "id"),
         ForeignKeyConstraint(
             ["owner_user_id", "import_job_id", "relationship_id"],
             [
@@ -192,3 +193,6 @@ class RelationshipMessage(RecordMixin, Base):
     source_timezone: Mapped[str] = mapped_column(String(100), nullable=False)
     source_line_start: Mapped[int] = mapped_column(nullable=False)
     source_line_end: Mapped[int] = mapped_column(nullable=False)
+    external_message_id: Mapped[str | None] = mapped_column(String(1024), nullable=True)
+    external_reply_id: Mapped[str | None] = mapped_column(String(1024), nullable=True)
+    external_message_type: Mapped[int | None] = mapped_column(nullable=True)

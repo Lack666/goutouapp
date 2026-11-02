@@ -1,0 +1,5 @@
+{"_type": "header", "chatlab": {"version": "0.0.2", "exportedAt": 1793577600, "generator": "WeFlow"}, "meta": {"name": "Synthetic", "platform": "wechat", "type": "private"}}
+{"_type": "member", "platformId": "sender-a", "accountName": "Same nickname"}
+{"_type": "member", "platformId": "sender-b", "accountName": "Same nickname"}
+{"_type": "message", "sender": "sender-a", "accountName": "Same nickname", "timestamp": 1793577600, "type": 0, "content": "好😀", "platformMessageId": "a"}
+{"_type": "message", "sender": "sender-b", "accountName": "Same nickname", "timestamp": 1793577601, "type": 0, "content": "好😀", "platformMessageId": "b", "replyToMessageId": "a"}

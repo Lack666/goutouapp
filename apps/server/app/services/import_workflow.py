@@ -15,13 +15,14 @@ from sqlalchemy import select, text
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm import Session
 
-from app.chat_import import ChatImportSource, ImportOptions, WeChatMarkdownParser
+from app.chat_import import ChatImportSource, ImportOptions
 from app.chat_import.artifacts import (
     CHUNK_BYTES,
     ArtifactStat,
     ArtifactStoreError,
     ImportArtifactStore,
 )
+from app.chat_import.parsers import parser_for
 from app.core.logging import LOGGER_NAME
 from app.db.models import ChatImportArtifact, ChatImportJob, UploadReservation
 from app.db.repositories import records
@@ -108,7 +109,7 @@ class ImportWorkflowService:
                     raise ImportWorkflowError(ImportWorkflowErrorCode.PARSE_FAILED)
 
             with self._store.open(artifact.key) as stream:
-                parsed = WeChatMarkdownParser().parse(
+                parsed = parser_for(source_format).parse(
                     ChatImportSource(_chunks(stream)),
                     ImportOptions(
                         source_timezone=source_timezone,

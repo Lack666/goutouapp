@@ -1,0 +1,19 @@
+{
+  "date": "2026-11-02",
+  "culture": "zh-CN",
+  "locale": "C",
+  "encoding": "UTF8",
+  "source_binaries": ".cache/pg16/pgsql",
+  "ascii_installation_success": true,
+  "data_only_path_change_failed_previously": true,
+  "port": 15435,
+  "host": "127.0.0.1",
+  "production_touched": false,
+  "database_isolation": "unique disposable _test_<uuid>; roundtrip and post-drop lookup passed",
+  "root_verify_executed": false,
+  "provider_calls": 0,
+  "official_marker": {
+    "completed_phase": 9,
+    "completed_subphase": "9H"
+  }
+}

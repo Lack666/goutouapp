@@ -1,5 +1,15 @@
 # Architecture direction
 
+ICA-A v3 adds a transport-independent ImportedAnalysisService and temporary
+ImportedAnalysisGrant metadata/coverage ledger. Signed prepare computes a canonical
+Dataset snapshot; confirm consumes an opaque short-lived challenge with an owner
+operation key in one transaction. Owner then Dataset locks match deletion ordering.
+Evidence aliases are grant-bound and re-read current sources; no Memory or Provider
+is injected. Dataset/full-scope erasure clears payloads; TTL cleanup runs in existing
+maintenance. Quarantined restore invalidates all restored grants and copies current
+operation fences before release, rejecting missing post-archive Dataset authority.
+No Agent execution/report endpoint exists. See ICA_A_V3_COMPLETION_ACCEPTANCE.md.
+
 Current9H: independent LifecycleErasure and AgentRunRecovery services use structured
 owner/target barriers, durable minimal receipts and OS writer-stop proof. See the
 Current Phase9H section below and ADR0043. Earlier phase sections are historical

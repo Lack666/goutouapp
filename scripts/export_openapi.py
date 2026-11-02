@@ -25,6 +25,11 @@ NEW_OPERATIONS = {
     )
 } | {("get", "/api/v1/conversations/{conversation_id}/messages")}
 NEW_OPERATIONS |= {
+    ("post", "/api/v1/imported-analysis/prepare"),
+    ("post", "/api/v1/imported-analysis/confirm"),
+    ("get", "/api/v1/imported-analysis/grants/{grant_id}"),
+    ("post", "/api/v1/imported-analysis/grants/{grant_id}/revoke"),
+    ("post", "/api/v1/imported-analysis/grants/{grant_id}/evidence/{alias}"),
     ("post", "/api/v1/lifecycle-erasures/prepare"),
     ("post", "/api/v1/lifecycle-erasures/execute"),
     ("get", "/api/v1/lifecycle-erasures/receipts/{receipt_id}"),
@@ -128,7 +133,7 @@ def audit(spec, baseline):
     expected_additions = {f"{method.upper()} {path}" for method, path in NEW_OPERATIONS}
     if set(actual["operations"]) - set(baseline["operations"]) != expected_additions:
         raise RuntimeError("Unexpected resource operation inventory")
-    if len(baseline["operations"]) != 26 or len(actual["operations"]) != 43:
+    if len(baseline["operations"]) != 26 or len(actual["operations"]) != 48:
         raise RuntimeError(
             "Expected 26 preserved, ten resource, six erasure and one Dataset discovery operation"
         )

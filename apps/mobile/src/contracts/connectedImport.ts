@@ -64,6 +64,7 @@ export interface ConnectedImportView {
   readonly upload: UploadState;
   readonly file: ImportFileSummary | null;
   readonly timezone: string;
+  readonly sourceFormat: 'wechat_markdown_v1' | 'chatlab_jsonl_v0_0_2';
   readonly scopeId: string | null;
   readonly scope: 'idle' | 'loading' | 'ready' | 'error';
   readonly job: ServerImportJobView | null;

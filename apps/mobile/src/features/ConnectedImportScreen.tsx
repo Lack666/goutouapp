@@ -76,8 +76,8 @@ export function ConnectedImportScreen({ connection }: { connection: Connection }
       />
       <DevelopmentSessionControls />
       <BodyText muted>
-        仅支持微信 Markdown v1。不会读取微信数据库或自动同步。导入不会运行 AI
-        分析或自动写入长期记忆。
+        支持微信 Markdown v1 和 ChatLab JSONL v0.0.2（含 Weport
+        导出）。不会读取微信数据库或自动同步。导入不会运行 AI 分析或自动写入长期记忆。
       </BodyText>
       <SectionCard title={steps[view.step]}>
         <BodyText live>文件状态：{states[view.upload]}</BodyText>
@@ -92,6 +92,17 @@ export function ConnectedImportScreen({ connection }: { connection: Connection }
         )}
         {view.step === 'source' && (
           <>
+            <BodyText>导入格式：{view.sourceFormat}</BodyText>
+            <PrimaryButton
+              label="微信 Markdown v1"
+              disabled={busy || !!view.job}
+              onPress={() => controller.format('wechat_markdown_v1')}
+            />
+            <PrimaryButton
+              label="ChatLab JSONL v0.0.2（Weport）"
+              disabled={busy || !!view.job}
+              onPress={() => controller.format('chatlab_jsonl_v0_0_2')}
+            />
             <BodyText>源时区（IANA）：这是文件中原始聊天时间的时区，请明确核对。</BodyText>
             <TextInput
               accessibilityLabel="源时区 IANA"
@@ -107,7 +118,7 @@ export function ConnectedImportScreen({ connection }: { connection: Connection }
               onChangeText={(value) => controller.timezone(value)}
             />
             <PrimaryButton
-              label={view.file ? '重新选择文件' : '选择微信 Markdown 文件'}
+              label={view.file ? '重新选择文件' : '选择聊天导出文件'}
               disabled={
                 busy ||
                 !!view.job ||

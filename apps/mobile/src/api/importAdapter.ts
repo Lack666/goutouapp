@@ -26,7 +26,10 @@ export function importJobView(
   dto: components['schemas']['ImportJobResponse'],
 ): ServerImportJobView {
   check(['awaiting_binding', 'ready', 'importing', 'imported', 'cancelled'].includes(dto.status));
-  check(dto.source_format === 'wechat_markdown_v1' && typeof dto.source_timezone === 'string');
+  check(
+    ['wechat_markdown_v1', 'chatlab_jsonl_v0_0_2'].includes(dto.source_format) &&
+      typeof dto.source_timezone === 'string',
+  );
   check(Array.isArray(dto.speakers) && dto.speakers.length === dto.speaker_count);
   check(new Set(dto.speakers.map((s) => s.raw_speaker_label)).size === dto.speakers.length);
   return {

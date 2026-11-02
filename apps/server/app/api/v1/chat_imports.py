@@ -9,8 +9,8 @@ from sqlalchemy.orm import Session
 from starlette.concurrency import run_in_threadpool
 
 from app.api.dependencies import get_authenticated_actor, get_db
-from app.chat_import import FORMAT_WECHAT_MARKDOWN_V1
 from app.chat_import.artifacts import CHUNK_BYTES, ArtifactStoreError, UploadTooLarge
+from app.chat_import.parsers import SUPPORTED_FORMATS
 from app.schemas.chat_import import (
     FinalizeRequest,
     ImportJobResponse,
@@ -62,7 +62,7 @@ async def upload_chat_import(
 ) -> ImportJobResponse:
     if not source_timezone.strip() or len(source_timezone) > 100:
         raise ImportWorkflowError(ImportWorkflowErrorCode.INVALID_UPLOAD)
-    if source_format is not None and source_format != FORMAT_WECHAT_MARKDOWN_V1:
+    if source_format is not None and source_format not in SUPPORTED_FORMATS:
         raise ImportWorkflowError(ImportWorkflowErrorCode.UNSUPPORTED_FORMAT)
     store = request.app.state.import_artifact_store
     try:

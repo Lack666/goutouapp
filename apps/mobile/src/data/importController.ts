@@ -14,7 +14,7 @@ import type { DevelopmentSession } from '../session/developmentSession';
 
 export { LOCAL_IMPORT_BYTE_LIMIT } from '../contracts/connectedImport';
 export function validateImportFile(file: SelectedImportFile) {
-  if (!/\.(md|markdown)$/i.test(file.name)) throw new ApiError('unsupported_file');
+  if (!/\.(md|markdown|jsonl)$/i.test(file.name)) throw new ApiError('unsupported_file');
   if (!Number.isSafeInteger(file.size) || file.size <= 0) throw new ApiError('file_unreadable');
   if (file.size > LOCAL_IMPORT_BYTE_LIMIT) throw new ApiError('file_too_large');
 }
@@ -36,6 +36,7 @@ function emptyView(scopeId: string | null = null): ConnectedImportView {
     upload: 'idle',
     file: null,
     timezone: 'Asia/Shanghai',
+    sourceFormat: 'wechat_markdown_v1',
     scopeId,
     scope: 'idle',
     job: null,
@@ -75,6 +76,9 @@ export class ImportController {
     });
   }
   snapshot = () => this.view;
+  format(value: ConnectedImportView['sourceFormat']) {
+    if (!this.view.job && this.view.upload !== 'uploading') this.patch({ sourceFormat: value });
+  }
   subscribe = (fn: () => void) => {
     this.listeners.add(fn);
     return () => {
@@ -211,6 +215,7 @@ export class ImportController {
     this.request = request;
     const file = this.file;
     const timezone = this.view.timezone;
+    const sourceFormat = this.view.sourceFormat;
     let sent = false;
     this.patch({ upload: 'uploading', error: null });
     try {
@@ -220,13 +225,13 @@ export class ImportController {
       const form = new FormData();
       form.append('file', binary, file.name);
       form.append('source_timezone', timezone);
-      form.append('source_format', 'wechat_markdown_v1');
+      form.append('source_format', sourceFormat);
       // OpenAPI binary is generated as string; serializer replaces only that representation
       // with the binary form. No URI, JSON/base64 or hand-written boundary is transmitted.
       const body: components['schemas']['Body_upload_chat_import_api_v1_chat_imports_post'] = {
         file: '',
         source_timezone: timezone,
-        source_format: 'wechat_markdown_v1',
+        source_format: sourceFormat,
       };
       sent = true;
       const { data } = await this.transport.client.POST('/api/v1/chat-imports', {

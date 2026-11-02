@@ -43,7 +43,7 @@ export async function pickImportFile(): Promise<SelectedImportFile | null> {
         )
       )
         throw new Error();
-      file = new File(Paths.cache, `chat-import-${randomUUID()}.md`);
+      file = new File(Paths.cache, `chat-import-${randomUUID()}.bin`);
       ownedCopy = file;
       await source.copy(file);
       if (!file.exists || file.size !== size) throw new Error();

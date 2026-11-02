@@ -18,6 +18,7 @@ from app.services.erasure import ErasureError
 from app.services.import_jobs import ImportJobError, ImportJobErrorCode
 from app.services.import_merge import ImportMergeError, ImportMergeErrorCode
 from app.services.import_workflow import ImportWorkflowError, ImportWorkflowErrorCode
+from app.services.imported_analysis import AnalysisError
 from app.services.memory_control import MemoryControlError, MemoryControlErrorCode
 from app.services.memory_mutation import MemoryMutationError, MemoryMutationErrorCode
 from app.services.resources import ResourceError, ResourceErrorCode
@@ -45,6 +46,14 @@ def error_response(
 
 
 def register_error_handlers(app: FastAPI) -> None:
+    @app.exception_handler(AnalysisError)
+    async def analysis_error(_request: Request, exc: AnalysisError) -> JSONResponse:
+        return error_response(
+            404 if exc.code == "scope_unavailable" else 409,
+            exc.code,
+            "Analysis scope unavailable or requires new preparation",
+        )
+
     @app.exception_handler(ErasureError)
     async def erasure_error(_request: Request, exc: ErasureError) -> JSONResponse:
         if exc.code == "invalid_credential":

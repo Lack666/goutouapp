@@ -47,6 +47,7 @@ export class ApiTransport {
     private readonly importTimeoutMs = 120_000,
     private readonly memoryEnabled = false,
     private readonly erasureEnabled = false,
+    private readonly importedAnalysisEnabled = false,
   ) {
     this.baseURL = validateBaseURL(baseURL, localDevelopment);
     this.client = createApiClient({
@@ -134,6 +135,16 @@ export class ApiTransport {
         ? 'GET'
         : null;
     const isErasure = erasureMethod !== null;
+    const analysisMethod =
+      /^\/api\/v1\/imported-analysis\/(prepare|confirm)$/.test(path) ||
+      /^\/api\/v1\/imported-analysis\/grants\/[0-9a-f-]{36}\/(revoke|evidence\/[A-Za-z0-9-]+)$/i.test(
+        path,
+      )
+        ? 'POST'
+        : /^\/api\/v1\/imported-analysis\/grants\/[0-9a-f-]{36}$/i.test(path)
+          ? 'GET'
+          : null;
+    const isAnalysis = analysisMethod !== null;
     if (
       !(
         /^\/api\/v1\/(persons|relationships|conversations)(\/[0-9a-f-]{36})?$/i.test(path) &&
@@ -146,7 +157,8 @@ export class ApiTransport {
       ) &&
       !(this.importEnabled && isImport && request.method === importMethod) &&
       !(this.memoryEnabled && isMemory && request.method === memoryMethod) &&
-      !(this.erasureEnabled && isErasure && request.method === erasureMethod)
+      !(this.erasureEnabled && isErasure && request.method === erasureMethod) &&
+      !(this.importedAnalysisEnabled && isAnalysis && request.method === analysisMethod)
     )
       throw new ApiError('validation');
     const epoch = this.session.epoch();
@@ -168,7 +180,7 @@ export class ApiTransport {
     try {
       const token = this.session.credential();
       if (epoch !== this.session.epoch()) throw new ApiError('cancelled');
-      if ((isAgent || isImport || isMemory || isErasure) && !token)
+      if ((isAgent || isImport || isMemory || isErasure || isAnalysis) && !token)
         throw new ApiError('unauthorized');
       if (controller.signal.aborted) throw new ApiError('cancelled');
       const headers = new Headers(request.headers);

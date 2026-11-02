@@ -22,6 +22,7 @@ from app.db.models import (
     Conversation,
     ErasureConfirmation,
     ErasureReceipt,
+    ImportedAnalysisGrant,
     LifecycleConfirmation,
     LifecycleReceipt,
     MemoryConfirmationRow,
@@ -152,6 +153,22 @@ class QuarantinedRestore:
                 owners = set(db.scalars(select(User.id)))
                 if not owners <= set(current.scalars(select(User.id))):
                     raise RecoveryError()
+                # Restored preparation authority is never executable/readable. Preserve
+                # current operation fences, including grants issued after the archive.
+                db.execute(
+                    update(ImportedAnalysisGrant).values(
+                        status="restore_invalid", payload={}, token_hash=""
+                    )
+                )
+                for grant in current.execute(select(ImportedAnalysisGrant.__table__)).mappings():
+                    if grant["owner_user_id"] not in owners:
+                        continue
+                    if db.get(ChatImportJob, grant["dataset_id"]) is None:
+                        raise RecoveryError()
+                    values = dict(grant)
+                    values.update(status="restore_invalid", payload={}, token_hash="")
+                    db.merge(ImportedAnalysisGrant(**values))
+                db.flush()
                 # A frozen SQL snapshot cannot stop a live executor or Provider.
                 # Unacknowledged writers require the separate OS-proof recovery path.
                 if current.scalar(

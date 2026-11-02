@@ -95,6 +95,9 @@ class ImportedMessage:
     provenance: SourceLocation
     normalization: tuple[str, ...]
     fingerprint: str
+    external_message_id: str | None = None
+    external_reply_id: str | None = None
+    external_message_type: int | None = None
 
 
 @dataclass(frozen=True)
