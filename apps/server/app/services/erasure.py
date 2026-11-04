@@ -17,6 +17,7 @@ from app.db.models import (
     Conversation,
     ErasureConfirmation,
     ErasureReceipt,
+    ImportedAnalysisRun,
     Message,
     RelationshipMessage,
     User,
@@ -156,6 +157,16 @@ class ErasureService:
                 digest.update(_canonical(tuple(run)))
                 run_count += 1
         else:
+            if db.scalar(
+                select(ImportedAnalysisRun.id)
+                .where(
+                    ImportedAnalysisRun.dataset_id == row.id,
+                    ImportedAnalysisRun.owner_user_id == row.owner_user_id,
+                    ImportedAnalysisRun.writer_active.is_(True),
+                )
+                .limit(1)
+            ):
+                raise ErasureError("target_busy")
             query = (
                 select(
                     RelationshipMessage.id,
@@ -170,6 +181,17 @@ class ErasureService:
                 .order_by(RelationshipMessage.id)
             )
             run_count = 0
+            for run in db.execute(
+                select(ImportedAnalysisRun.__table__)
+                .where(
+                    ImportedAnalysisRun.dataset_id == row.id,
+                    ImportedAnalysisRun.owner_user_id == row.owner_user_id,
+                )
+                .order_by(ImportedAnalysisRun.id)
+                .execution_options(yield_per=500)
+            ):
+                digest.update(_canonical(tuple(run)))
+                run_count += 1
         count = 0
         for message in db.execute(query.execution_options(yield_per=500)):
             digest.update(_canonical(tuple(message)))

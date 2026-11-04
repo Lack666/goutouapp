@@ -1,0 +1,20 @@
+{
+  "date": "2026-11-04",
+  "base_head": "d3025d1",
+  "scope": "ICA-B0/B1 anonymous synthetic and Mock engineering only",
+  "backend": {"passed": 255, "failed": 0, "skipped": 0, "seconds": 124.48, "new_tests": 40, "log": "backend-final.txt"},
+  "mobile": {"passed": 82, "suites": 5, "failed": 0, "log": "mobile-tests.txt"},
+  "typescript": {"command": "pnpm --filter @goutou/mobile typecheck", "exit_code": 0},
+  "openapi": {"operations": 52, "preserved_phase7d_operations": 26, "deterministic_check": "pass"},
+  "generated_client": {"passed": 3, "failed": 0, "command": "pnpm api:check"},
+  "ruff": {"changed_python_files": 19, "check": "pass", "format_check": "pass"},
+  "prettier": {"changed_mobile_files": 2, "check": "pass"},
+  "git_diff_check": "pass",
+  "database": {"engine": "PostgreSQL 16.15", "signed_http": "FastAPI TestClient/ASGI with actual JWT verification", "storage": "actual isolated PostgreSQL databases", "migration_roundtrip": "pass", "native_restore": "pass"},
+  "external_provider_calls": 0,
+  "case_inventory": {"total": 48, "development": 16, "holdout": 32, "validation": "structure/hash/identity/Unicode spans only", "blind_custody": "pending", "model_quality_grade": "not run"},
+  "independent_readonly_audit": "no substantiated core privacy or budget blocker found; limitations retained in acceptance",
+  "not_run": ["real Provider", "ICA-BQ quality evaluation", "full Root Verify", "Phase0-9 historical full suite", "Android historical full suite", "month/quarter/year capacity"],
+  "formal_marker": "9/9H unchanged",
+  "historical_quality": "Phase11 QUALITY FAIL and SAFETY-ROLE-P1 unchanged"
+}

@@ -28,6 +28,7 @@ class Settings(BaseSettings):
     llm_model: str | None = None
     llm_timeout_seconds: float = Field(default=30.0, gt=0, le=300)
     llm_max_output_tokens: int | None = Field(default=None, ge=1, le=32768)
+    ica_mock_execution_enabled: bool = False
     llm_temperature: float | None = Field(default=None, ge=0, le=2)
     llm_thinking: Literal["enabled", "disabled"] | None = None
     eval_live_opt_in: bool = False

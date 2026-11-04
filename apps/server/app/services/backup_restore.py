@@ -23,6 +23,7 @@ from app.db.models import (
     ErasureConfirmation,
     ErasureReceipt,
     ImportedAnalysisGrant,
+    ImportedAnalysisRun,
     LifecycleConfirmation,
     LifecycleReceipt,
     MemoryConfirmationRow,
@@ -153,6 +154,16 @@ class QuarantinedRestore:
                 owners = set(db.scalars(select(User.id)))
                 if not owners <= set(current.scalars(select(User.id))):
                     raise RecoveryError()
+                if current.scalar(
+                    select(ImportedAnalysisRun.id)
+                    .where(
+                        ImportedAnalysisRun.owner_user_id.in_(owners),
+                        ImportedAnalysisRun.writer_active.is_(True),
+                    )
+                    .limit(1)
+                ):
+                    # Revocation clears publication authority, not proof of settlement.
+                    raise RecoveryError()
                 # Restored preparation authority is never executable/readable. Preserve
                 # current operation fences, including grants issued after the archive.
                 db.execute(
@@ -168,6 +179,55 @@ class QuarantinedRestore:
                     values = dict(grant)
                     values.update(status="restore_invalid", payload={}, token_hash="")
                     db.merge(ImportedAnalysisGrant(**values))
+                db.flush()
+                current_analysis = {
+                    row["id"]: dict(row)
+                    for row in current.execute(
+                        select(ImportedAnalysisRun.__table__).where(
+                            ImportedAnalysisRun.owner_user_id.in_(owners)
+                        )
+                    ).mappings()
+                }
+                for restored in db.execute(select(ImportedAnalysisRun.__table__)).mappings():
+                    live = current_analysis.get(restored["id"])
+                    if live is None or any(
+                        restored[field] != live[field]
+                        for field in (
+                            "owner_user_id",
+                            "grant_id",
+                            "dataset_id",
+                            "person_id",
+                            "relationship_id",
+                            "binding_hash",
+                        )
+                    ):
+                        raise RecoveryError()
+                    if restored["operation_key"] is not None and (
+                        restored["operation_key"] != live["operation_key"]
+                        or restored["confirmation_hash"] != live["confirmation_hash"]
+                    ):
+                        raise RecoveryError()
+                for live in current_analysis.values():
+                    grant = db.get(ImportedAnalysisGrant, live["grant_id"])
+                    if grant is None or any(
+                        getattr(grant, field) != live[field]
+                        for field in ("owner_user_id", "dataset_id", "person_id", "relationship_id")
+                    ):
+                        raise RecoveryError()
+                    values = dict(live)
+                    values.update(
+                        status="restore_invalid",
+                        token_hash="",
+                        execution_binding={},
+                        report=None,
+                        ledger=[],
+                        receipts=[],
+                        writer_token=None,
+                        writer_active=False,
+                        error_code="restore_invalid",
+                    )
+                    # Keep current keys and numeric accounting, never restored prose.
+                    db.merge(ImportedAnalysisRun(**values))
                 db.flush()
                 # A frozen SQL snapshot cannot stop a live executor or Provider.
                 # Unacknowledged writers require the separate OS-proof recovery path.

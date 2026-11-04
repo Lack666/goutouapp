@@ -1,0 +1,319 @@
+{
+  "run_id": "9eafa1d0-5f28-4bd3-acee-b467f0732957",
+  "grant_id": "b4940ad7-7345-414a-bd14-f74887cbf5b0",
+  "status": "completed",
+  "expires_at": "2026-11-05T04:04:44.304194Z",
+  "binding_hash": "0ca730226c4227e7c18bb28512784d16c04cb6516b0f6b9303228bdd293b3c86",
+  "execution": {
+    "model": "mock",
+    "tariff": "keyless-mock-zero-v1",
+    "version": "ica-b1-mock-v1",
+    "cost_cap": 0,
+    "currency": null,
+    "provider": "mock",
+    "token_cap": 2175202,
+    "expires_at": "2026-11-05T04:04:44.304194+00:00",
+    "request_cap": 23,
+    "grant_binding": "950f077a4fcbb6167612a091544e0958a20c039b280306f91bfc211e8c37d5a7",
+    "memory_access": false,
+    "runtime_digest": "bcacfc06e6234835ae1ca7ee8803424ff05722e0434ad43fe55034eb33559bc2",
+    "max_input_bytes": 131072,
+    "output_token_reserve": 8192,
+    "external_provider_calls": 0
+  },
+  "mock_calls": 12,
+  "reserved_tokens": 912729,
+  "ledger": [
+    {
+      "id": "8d797964653f4016a9f3e0bc19f156dc",
+      "stage": "safety",
+      "status": "succeeded",
+      "chunk_id": "f3710fe3a2b8520c74bf4a19c24c141df3ef573323cdbada05a552716c043645",
+      "input_bytes": 71406,
+      "reserved_tokens": 83694
+    },
+    {
+      "id": "5f36d055609e4ea19623554fc468c5ae",
+      "stage": "safety",
+      "status": "succeeded",
+      "chunk_id": "523f729e067d26036e6dd76aba8d6d023e47cf5b726fd7e55db71f73bfa8a3b3",
+      "input_bytes": 74785,
+      "reserved_tokens": 87073
+    },
+    {
+      "id": "708d1dfdb16146ed8afeb5ae3b14772f",
+      "stage": "safety",
+      "status": "succeeded",
+      "chunk_id": "93650abc2c3cd160e3ec248259cae210ff41ca8edda623f2fa908c61850d451c",
+      "input_bytes": 74785,
+      "reserved_tokens": 87073
+    },
+    {
+      "id": "222afb575c104ca9b308f5878f156ad5",
+      "stage": "safety",
+      "status": "succeeded",
+      "chunk_id": "8834439bdb23f2ad1711f5efffb6ed3fbb298ac65f6f3fa9e4356863d0b03d66",
+      "input_bytes": 74785,
+      "reserved_tokens": 87073
+    },
+    {
+      "id": "fa1cbe63e8a64ae0a7fcfaf4119d46ed",
+      "stage": "safety",
+      "status": "succeeded",
+      "chunk_id": "e91abe9706aa3e0a3a7a90d87ad79db0554b8db6c77303af9e2b620360b9750d",
+      "input_bytes": 53005,
+      "reserved_tokens": 65293
+    },
+    {
+      "id": "d7e0ef4621e947ff8dc9092136f15a7c",
+      "stage": "interaction",
+      "status": "succeeded",
+      "chunk_id": "f3710fe3a2b8520c74bf4a19c24c141df3ef573323cdbada05a552716c043645",
+      "input_bytes": 72065,
+      "reserved_tokens": 84353
+    },
+    {
+      "id": "2a5a56f49ad34be1879c5f08b3fc887b",
+      "stage": "interaction",
+      "status": "succeeded",
+      "chunk_id": "523f729e067d26036e6dd76aba8d6d023e47cf5b726fd7e55db71f73bfa8a3b3",
+      "input_bytes": 75444,
+      "reserved_tokens": 87732
+    },
+    {
+      "id": "ca7b8a5c142a4893b4decc42b2ba8fd5",
+      "stage": "interaction",
+      "status": "succeeded",
+      "chunk_id": "93650abc2c3cd160e3ec248259cae210ff41ca8edda623f2fa908c61850d451c",
+      "input_bytes": 75444,
+      "reserved_tokens": 87732
+    },
+    {
+      "id": "19efe6c538374ed78cfd07b602a0ee26",
+      "stage": "interaction",
+      "status": "succeeded",
+      "chunk_id": "8834439bdb23f2ad1711f5efffb6ed3fbb298ac65f6f3fa9e4356863d0b03d66",
+      "input_bytes": 75444,
+      "reserved_tokens": 87732
+    },
+    {
+      "id": "a648030986214836b5b695362694bb5d",
+      "stage": "interaction",
+      "status": "succeeded",
+      "chunk_id": "e91abe9706aa3e0a3a7a90d87ad79db0554b8db6c77303af9e2b620360b9750d",
+      "input_bytes": 53664,
+      "reserved_tokens": 65952
+    },
+    {
+      "id": "1d7e546185f84ffcaef38ffc870a96d8",
+      "stage": "synthesis",
+      "status": "succeeded",
+      "chunk_id": null,
+      "input_bytes": 32819,
+      "reserved_tokens": 45107
+    },
+    {
+      "id": "4ea5c0398657496eaa9df98c2340af1a",
+      "stage": "content_review",
+      "status": "succeeded",
+      "chunk_id": null,
+      "input_bytes": 31627,
+      "reserved_tokens": 43915
+    }
+  ],
+  "receipts": [
+    {
+      "stage": "safety",
+      "status": "completed",
+      "chunk_id": "f3710fe3a2b8520c74bf4a19c24c141df3ef573323cdbada05a552716c043645"
+    },
+    {
+      "stage": "safety",
+      "status": "completed",
+      "chunk_id": "523f729e067d26036e6dd76aba8d6d023e47cf5b726fd7e55db71f73bfa8a3b3"
+    },
+    {
+      "stage": "safety",
+      "status": "completed",
+      "chunk_id": "93650abc2c3cd160e3ec248259cae210ff41ca8edda623f2fa908c61850d451c"
+    },
+    {
+      "stage": "safety",
+      "status": "completed",
+      "chunk_id": "8834439bdb23f2ad1711f5efffb6ed3fbb298ac65f6f3fa9e4356863d0b03d66"
+    },
+    {
+      "stage": "safety",
+      "status": "completed",
+      "chunk_id": "e91abe9706aa3e0a3a7a90d87ad79db0554b8db6c77303af9e2b620360b9750d"
+    },
+    {
+      "stage": "interaction",
+      "status": "completed",
+      "chunk_id": "f3710fe3a2b8520c74bf4a19c24c141df3ef573323cdbada05a552716c043645"
+    },
+    {
+      "stage": "interaction",
+      "status": "completed",
+      "chunk_id": "523f729e067d26036e6dd76aba8d6d023e47cf5b726fd7e55db71f73bfa8a3b3"
+    },
+    {
+      "stage": "interaction",
+      "status": "completed",
+      "chunk_id": "93650abc2c3cd160e3ec248259cae210ff41ca8edda623f2fa908c61850d451c"
+    },
+    {
+      "stage": "interaction",
+      "status": "completed",
+      "chunk_id": "8834439bdb23f2ad1711f5efffb6ed3fbb298ac65f6f3fa9e4356863d0b03d66"
+    },
+    {
+      "stage": "interaction",
+      "status": "completed",
+      "chunk_id": "e91abe9706aa3e0a3a7a90d87ad79db0554b8db6c77303af9e2b620360b9750d"
+    },
+    {
+      "stage": "counterevidence",
+      "status": "not_applicable",
+      "chunk_id": "f3710fe3a2b8520c74bf4a19c24c141df3ef573323cdbada05a552716c043645"
+    },
+    {
+      "stage": "counterevidence",
+      "status": "not_applicable",
+      "chunk_id": "523f729e067d26036e6dd76aba8d6d023e47cf5b726fd7e55db71f73bfa8a3b3"
+    },
+    {
+      "stage": "counterevidence",
+      "status": "not_applicable",
+      "chunk_id": "93650abc2c3cd160e3ec248259cae210ff41ca8edda623f2fa908c61850d451c"
+    },
+    {
+      "stage": "counterevidence",
+      "status": "not_applicable",
+      "chunk_id": "8834439bdb23f2ad1711f5efffb6ed3fbb298ac65f6f3fa9e4356863d0b03d66"
+    },
+    {
+      "stage": "counterevidence",
+      "status": "not_applicable",
+      "chunk_id": "e91abe9706aa3e0a3a7a90d87ad79db0554b8db6c77303af9e2b620360b9750d"
+    },
+    {
+      "stage": "synthesis",
+      "status": "completed",
+      "chunk_id": null
+    },
+    {
+      "stage": "content_review",
+      "status": "completed",
+      "chunk_id": null
+    }
+  ],
+  "report": {
+    "version": "ica-report-v1",
+    "outcome": "insufficient_evidence",
+    "findings": [],
+    "coverage": [
+      {
+        "window_index": 0,
+        "start_utc": "2026-11-01T16:00:00+00:00",
+        "end_utc": "2026-11-04T04:04:44.190284+00:00",
+        "timezone": "Asia/Shanghai",
+        "scope_digest": "f456c1284129db55c9b09cce510f36918d1a9690e23469356839a062ab55906d",
+        "snapshot_digest": "cc7d4745b8a1d28565f6966937095986b563bc8d9b683c5954e2b83dda3ee611",
+        "message_count": 900,
+        "text_count": 900,
+        "body_bytes": 6300,
+        "core_count": 900,
+        "self_count": 450,
+        "person_count": 450,
+        "active_local_days": 1
+      }
+    ],
+    "safety_roles": [],
+    "limitations": [
+      "仅覆盖用户已导入且授权的文本；未导出、非文本和线下互动可能改变判断。",
+      "引用与覆盖验证不等于解释正确；Mock仅验证接线，未验证模型洞察质量。",
+      "推测不证明对方内心；应结合反例和双方自述核实。"
+    ],
+    "sources": [],
+    "knowledge_refs": [
+      "references/knowledge/17-中国法律安全与危机转介.md",
+      "references/practical/ChatLab聊天记录分析适配.md",
+      "references/knowledge/07-沟通冲突与修复.md"
+    ],
+    "source": {
+      "grant_id": "b4940ad7-7345-414a-bd14-f74887cbf5b0",
+      "owner_id": "70864bee-2781-471b-b51c-b3e102ae68ce",
+      "dataset_id": "e7cc781a-70b3-4496-8904-ff2238b36681",
+      "person_id": "94124161-5cb7-4031-b718-3695ab3f12ea",
+      "relationship_id": "77f6e53f-6dff-4aec-a318-bc4e1169570e",
+      "binding_hash": "950f077a4fcbb6167612a091544e0958a20c039b280306f91bfc211e8c37d5a7",
+      "aliases": {},
+      "preview": {
+        "chunks": 5,
+        "windows": [
+          {
+            "end": "2026-11-04T04:04:44.190284+00:00",
+            "last": "2026-11-01T16:14:59+00:00",
+            "daily": {
+              "2026-11-02": {
+                "self": 450,
+                "person": 450,
+                "system": 0
+              },
+              "2026-11-03": {
+                "self": 0,
+                "person": 0,
+                "system": 0
+              },
+              "2026-11-04": {
+                "self": 0,
+                "person": 0,
+                "system": 0
+              }
+            },
+            "first": "2026-11-01T16:00:00+00:00",
+            "media": 0,
+            "start": "2026-11-01T16:00:00+00:00",
+            "chunks": 5,
+            "system": 0,
+            "nontext": 0,
+            "version": "ica-long-range-v3",
+            "messages": 900,
+            "speakers": {
+              "self": 450,
+              "person": 450
+            },
+            "body_bytes": 6300,
+            "local_days": {
+              "2026-11-02": 900
+            },
+            "export_gaps": "unknown; unexported messages cannot be inferred absent",
+            "model_stages": "pending",
+            "scope_digest": "f456c1284129db55c9b09cce510f36918d1a9690e23469356839a062ab55906d",
+            "parser_errors": 0,
+            "provider_calls": 0,
+            "analyzable_text": 900,
+            "parser_warnings": 0,
+            "snapshot_digest": "cc7d4745b8a1d28565f6966937095986b563bc8d9b683c5954e2b83dda3ee611",
+            "planned_requests": 23,
+            "export_completeness": "unknown",
+            "skipped_source_items": "not reconstructible from canonical import; see parser issues",
+            "core_coverage_complete": true,
+            "ignored_source_messages": 0
+          }
+        ],
+        "cost_cap": null,
+        "messages": 900,
+        "token_cap": 2175202,
+        "body_bytes": 6300,
+        "price_status": "unquoted; execution prohibited until priced",
+        "memory_access": false,
+        "provider_calls": 0,
+        "planned_requests": 23
+      }
+    }
+  },
+  "error_code": null,
+  "external_provider_calls": 0
+}

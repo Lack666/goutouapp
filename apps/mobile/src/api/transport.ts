@@ -48,6 +48,7 @@ export class ApiTransport {
     private readonly memoryEnabled = false,
     private readonly erasureEnabled = false,
     private readonly importedAnalysisEnabled = false,
+    private readonly importedExecutionEnabled = false,
   ) {
     this.baseURL = validateBaseURL(baseURL, localDevelopment);
     this.client = createApiClient({
@@ -145,6 +146,13 @@ export class ApiTransport {
           ? 'GET'
           : null;
     const isAnalysis = analysisMethod !== null;
+    const executionMethod =
+      /^\/api\/v1\/imported-analysis\/execution-(prepare|confirm)$/.test(path) ||
+      /^\/api\/v1\/imported-analysis\/runs\/[0-9a-f-]{36}\/execute$/i.test(path)
+        ? 'POST'
+        : /^\/api\/v1\/imported-analysis\/runs\/[0-9a-f-]{36}$/i.test(path)
+          ? 'GET'
+          : null;
     if (
       !(
         /^\/api\/v1\/(persons|relationships|conversations)(\/[0-9a-f-]{36})?$/i.test(path) &&
@@ -158,7 +166,8 @@ export class ApiTransport {
       !(this.importEnabled && isImport && request.method === importMethod) &&
       !(this.memoryEnabled && isMemory && request.method === memoryMethod) &&
       !(this.erasureEnabled && isErasure && request.method === erasureMethod) &&
-      !(this.importedAnalysisEnabled && isAnalysis && request.method === analysisMethod)
+      !(this.importedAnalysisEnabled && isAnalysis && request.method === analysisMethod) &&
+      !(this.importedExecutionEnabled && executionMethod && request.method === executionMethod)
     )
       throw new ApiError('validation');
     const epoch = this.session.epoch();

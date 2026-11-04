@@ -1,5 +1,5 @@
 // Generated from docs/contracts/openapi.json. DO NOT EDIT.
-// Input SHA256: 3423a8e12459524ea781c2b4d9f97f95b358e14d436f64ad87caf72bc551652a
+// Input SHA256: 0ba580fb92fc5ca60a8906003f80c9ce1df368f540b1fea88d454f6c214839de
 import createClient, { type ClientOptions } from 'openapi-fetch';
 export type UUID = `${string}-${string}-${string}-${string}-${string}`;
 export interface paths {
@@ -276,6 +276,40 @@ export interface paths {
     patch?: never;
     trace?: never;
   };
+  '/api/v1/imported-analysis/execution-confirm': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    /** Confirm Execution */
+    post: operations['confirm_execution_api_v1_imported_analysis_execution_confirm_post'];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/api/v1/imported-analysis/execution-prepare': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    /** Prepare Execution */
+    post: operations['prepare_execution_api_v1_imported_analysis_execution_prepare_post'];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
   '/api/v1/imported-analysis/grants/{grant_id}': {
     parameters: {
       query?: never;
@@ -338,6 +372,40 @@ export interface paths {
     put?: never;
     /** Prepare */
     post: operations['prepare_api_v1_imported_analysis_prepare_post'];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/api/v1/imported-analysis/runs/{run_id}': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /** Inspect Execution */
+    get: operations['inspect_execution_api_v1_imported_analysis_runs__run_id__get'];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/api/v1/imported-analysis/runs/{run_id}/execute': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    /** Execute */
+    post: operations['execute_api_v1_imported_analysis_runs__run_id__execute_post'];
     delete?: never;
     options?: never;
     head?: never;
@@ -1246,6 +1314,16 @@ export interface components {
     ErrorResponse: {
       error: components['schemas']['ErrorDetail'];
     };
+    /** EvidenceAlias */
+    EvidenceAlias: {
+      /**
+       * Message Id
+       * Format: uuid
+       */
+      message_id: UUID;
+      /** Window */
+      window: number;
+    };
     /** EvidenceRequest */
     EvidenceRequest: {
       /** End */
@@ -1296,10 +1374,135 @@ export interface components {
       /** Operation Key */
       operation_key: string;
     };
+    /**
+     * ExecutionConfirm
+     * @description preparation_id identifies an execution preparation, never a source grant.
+     */
+    ExecutionConfirm: {
+      /** Binding Hash */
+      binding_hash: string;
+      /** Challenge */
+      challenge: string;
+      /**
+       * Confirmed
+       * @constant
+       */
+      confirmed: true;
+      /** Operation Key */
+      operation_key: string;
+      /**
+       * Preparation Id
+       * Format: uuid
+       */
+      preparation_id: UUID;
+    };
+    /** ExecutionPreparation */
+    ExecutionPreparation: {
+      /** Binding Hash */
+      binding_hash: string;
+      /** Challenge */
+      challenge: string;
+      /** Execution */
+      execution: {
+        [key: string]: unknown;
+      };
+      /**
+       * Expires At
+       * Format: date-time
+       */
+      expires_at: string;
+      /**
+       * External Provider Calls
+       * @default 0
+       * @constant
+       */
+      external_provider_calls: 0;
+      /**
+       * Preparation Id
+       * Format: uuid
+       */
+      preparation_id: UUID;
+    };
+    /** ExecutionPrepare */
+    ExecutionPrepare: {
+      /**
+       * Grant Id
+       * Format: uuid
+       */
+      grant_id: UUID;
+    };
+    /** ExecutionView */
+    ExecutionView: {
+      /** Binding Hash */
+      binding_hash: string;
+      /** Error Code */
+      error_code: string | null;
+      /** Execution */
+      execution: {
+        [key: string]: unknown;
+      };
+      /**
+       * Expires At
+       * Format: date-time
+       */
+      expires_at: string;
+      /**
+       * External Provider Calls
+       * @default 0
+       * @constant
+       */
+      external_provider_calls: 0;
+      /**
+       * Grant Id
+       * Format: uuid
+       */
+      grant_id: UUID;
+      /** Ledger */
+      ledger: {
+        [key: string]: unknown;
+      }[];
+      /** Mock Calls */
+      mock_calls: number;
+      /** Receipts */
+      receipts: {
+        [key: string]: unknown;
+      }[];
+      report: components['schemas']['StoredAnalysisReport'] | null;
+      /** Reserved Tokens */
+      reserved_tokens: number;
+      /**
+       * Run Id
+       * Format: uuid
+       */
+      run_id: UUID;
+      /** Status */
+      status: string;
+    };
     /** FinalizeRequest */
     FinalizeRequest: {
       /** Expected Revision */
       expected_revision: number;
+    };
+    /** Finding */
+    Finding: {
+      /** Alternative Explanations */
+      alternative_explanations: string[];
+      /** Candidate Ids */
+      candidate_ids: string[];
+      /** Counterevidence */
+      counterevidence: components['schemas']['ObservedFact'][];
+      /** Facts */
+      facts: components['schemas']['ObservedFact'][];
+      /** Hypothesis */
+      hypothesis: string;
+      /**
+       * Kind
+       * @enum {string}
+       */
+      kind: 'emotional_mismatch' | 'recurring_conflict' | 'temporal_change';
+      repair: components['schemas']['RepairAction'];
+      /** Unknowns */
+      unknowns: string[];
     };
     /** HealthResponse */
     HealthResponse: {
@@ -1461,6 +1664,22 @@ export interface components {
       system_message_count: number;
       /** Transcript Fingerprint */
       transcript_fingerprint: string;
+    };
+    /** ImportedEvidenceRef */
+    ImportedEvidenceRef: {
+      /** End */
+      end: number;
+      /** Evidence Id */
+      evidence_id: string;
+      /** Quote */
+      quote: string;
+      /**
+       * Speaker
+       * @enum {string}
+       */
+      speaker: 'self' | 'person' | 'system';
+      /** Start */
+      start: number;
     };
     /** LifecycleChallenge */
     LifecycleChallenge: {
@@ -1756,6 +1975,13 @@ export interface components {
        */
       target_id: UUID;
     };
+    /** ObservedFact */
+    ObservedFact: {
+      /** Evidence */
+      evidence: components['schemas']['ImportedEvidenceRef'][];
+      /** Statement */
+      statement: string;
+    };
     /** PersonCreateRequest */
     PersonCreateRequest: {
       /** Display Name */
@@ -1907,6 +2133,114 @@ export interface components {
        */
       updated_at: string;
     };
+    /** RepairAction */
+    RepairAction: {
+      /** Action */
+      action: string;
+      /** Observe */
+      observe: string;
+      /** Stop When */
+      stop_when: string;
+    };
+    /** ReportAuthority */
+    ReportAuthority: {
+      /** Aliases */
+      aliases: {
+        [key: string]: components['schemas']['EvidenceAlias'];
+      };
+      /** Binding Hash */
+      binding_hash: string;
+      /**
+       * Dataset Id
+       * Format: uuid
+       */
+      dataset_id: UUID;
+      /**
+       * Grant Id
+       * Format: uuid
+       */
+      grant_id: UUID;
+      /**
+       * Owner Id
+       * Format: uuid
+       */
+      owner_id: UUID;
+      /**
+       * Person Id
+       * Format: uuid
+       */
+      person_id: UUID;
+      /** Preview */
+      preview: {
+        [key: string]: unknown;
+      };
+      /**
+       * Relationship Id
+       * Format: uuid
+       */
+      relationship_id: UUID;
+    };
+    /** RoleRisk */
+    RoleRisk: {
+      /**
+       * Actor
+       * @enum {string}
+       */
+      actor: 'self' | 'person' | 'unknown';
+      /**
+       * Category
+       * @enum {string}
+       */
+      category:
+        | 'self_harm'
+        | 'violence'
+        | 'coercion'
+        | 'stalking'
+        | 'refusal'
+        | 'fraud'
+        | 'uncertain';
+      /** Evidence */
+      evidence: components['schemas']['ImportedEvidenceRef'][];
+      /**
+       * Source
+       * @enum {string}
+       */
+      source: 'question' | 'chat';
+      /**
+       * Temporality
+       * @enum {string}
+       */
+      temporality: 'current' | 'historical' | 'quoted_or_denied' | 'unknown';
+      /**
+       * User Role
+       * @enum {string}
+       */
+      user_role: 'at_risk' | 'causing_harm' | 'unclear';
+    };
+    /** SourceBinding */
+    SourceBinding: {
+      /**
+       * Dataset Id
+       * Format: uuid
+       */
+      dataset_id: UUID;
+      /** Evidence Id */
+      evidence_id: string;
+      /**
+       * Message Id
+       * Format: uuid
+       */
+      message_id: UUID;
+      /** Scope Digest */
+      scope_digest: string;
+      /**
+       * Speaker
+       * @enum {string}
+       */
+      speaker: 'self' | 'person' | 'system';
+      /** Timestamp */
+      timestamp: string;
+    };
     /**
      * SpeakerBinding
      * @enum {string}
@@ -1949,6 +2283,33 @@ export interface components {
        */
       status: 'running';
     };
+    /** StoredAnalysisReport */
+    StoredAnalysisReport: {
+      /** Coverage */
+      coverage: components['schemas']['WindowCoverage'][];
+      /** Findings */
+      findings: components['schemas']['Finding'][];
+      /** Knowledge Refs */
+      knowledge_refs: string[];
+      /** Limitations */
+      limitations: string[];
+      /**
+       * Outcome
+       * @enum {string}
+       */
+      outcome: 'findings' | 'insufficient_evidence' | 'safety_blocked';
+      /** Safety Roles */
+      safety_roles: components['schemas']['RoleRisk'][];
+      source: components['schemas']['ReportAuthority'];
+      /** Sources */
+      sources: components['schemas']['SourceBinding'][];
+      /**
+       * Version
+       * @default ica-report-v1
+       * @constant
+       */
+      version: 'ica-report-v1';
+    };
     /** UndoPreview */
     UndoPreview: {
       /** Available */
@@ -1975,6 +2336,35 @@ export interface components {
       expected_operation_id: UUID;
       /** Operation Key */
       operation_key: string;
+    };
+    /** WindowCoverage */
+    WindowCoverage: {
+      /** Active Local Days */
+      active_local_days: number;
+      /** Body Bytes */
+      body_bytes: number;
+      /** Core Count */
+      core_count: number;
+      /** End Utc */
+      end_utc: string;
+      /** Message Count */
+      message_count: number;
+      /** Person Count */
+      person_count: number;
+      /** Scope Digest */
+      scope_digest: string;
+      /** Self Count */
+      self_count: number;
+      /** Snapshot Digest */
+      snapshot_digest: string;
+      /** Start Utc */
+      start_utc: string;
+      /** Text Count */
+      text_count: number;
+      /** Timezone */
+      timezone: string;
+      /** Window Index */
+      window_index: number;
     };
   };
   responses: never;
@@ -3618,6 +4008,198 @@ export interface operations {
       };
     };
   };
+  confirm_execution_api_v1_imported_analysis_execution_confirm_post: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        'application/json': components['schemas']['ExecutionConfirm'];
+      };
+    };
+    responses: {
+      /** @description Successful Response */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ExecutionView'];
+        };
+      };
+      /** @description Invalid request */
+      400: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponse'];
+        };
+      };
+      /** @description Authentication required */
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponse'];
+        };
+      };
+      /** @description Resource not found */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponse'];
+        };
+      };
+      /** @description Active run or idempotency conflict */
+      409: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponse'];
+        };
+      };
+      /** @description Validation error */
+      422: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponse'];
+        };
+      };
+      /** @description Internal server error */
+      500: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponse'];
+        };
+      };
+      /** @description Agent execution failed */
+      502: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponse'];
+        };
+      };
+      /** @description Dependency unavailable */
+      503: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponse'];
+        };
+      };
+    };
+  };
+  prepare_execution_api_v1_imported_analysis_execution_prepare_post: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        'application/json': components['schemas']['ExecutionPrepare'];
+      };
+    };
+    responses: {
+      /** @description Successful Response */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ExecutionPreparation'];
+        };
+      };
+      /** @description Invalid request */
+      400: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponse'];
+        };
+      };
+      /** @description Authentication required */
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponse'];
+        };
+      };
+      /** @description Resource not found */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponse'];
+        };
+      };
+      /** @description Active run or idempotency conflict */
+      409: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponse'];
+        };
+      };
+      /** @description Validation error */
+      422: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponse'];
+        };
+      };
+      /** @description Internal server error */
+      500: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponse'];
+        };
+      };
+      /** @description Agent execution failed */
+      502: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponse'];
+        };
+      };
+      /** @description Dependency unavailable */
+      503: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponse'];
+        };
+      };
+    };
+  };
   inspect_api_v1_imported_analysis_grants__grant_id__get: {
     parameters: {
       query?: never;
@@ -3925,6 +4507,194 @@ export interface operations {
         };
         content: {
           'application/json': components['schemas']['AnalysisPreparation'];
+        };
+      };
+      /** @description Invalid request */
+      400: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponse'];
+        };
+      };
+      /** @description Authentication required */
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponse'];
+        };
+      };
+      /** @description Resource not found */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponse'];
+        };
+      };
+      /** @description Active run or idempotency conflict */
+      409: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponse'];
+        };
+      };
+      /** @description Validation error */
+      422: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponse'];
+        };
+      };
+      /** @description Internal server error */
+      500: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponse'];
+        };
+      };
+      /** @description Agent execution failed */
+      502: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponse'];
+        };
+      };
+      /** @description Dependency unavailable */
+      503: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponse'];
+        };
+      };
+    };
+  };
+  inspect_execution_api_v1_imported_analysis_runs__run_id__get: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        run_id: UUID;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Successful Response */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ExecutionView'];
+        };
+      };
+      /** @description Invalid request */
+      400: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponse'];
+        };
+      };
+      /** @description Authentication required */
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponse'];
+        };
+      };
+      /** @description Resource not found */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponse'];
+        };
+      };
+      /** @description Active run or idempotency conflict */
+      409: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponse'];
+        };
+      };
+      /** @description Validation error */
+      422: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponse'];
+        };
+      };
+      /** @description Internal server error */
+      500: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponse'];
+        };
+      };
+      /** @description Agent execution failed */
+      502: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponse'];
+        };
+      };
+      /** @description Dependency unavailable */
+      503: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ErrorResponse'];
+        };
+      };
+    };
+  };
+  execute_api_v1_imported_analysis_runs__run_id__execute_post: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        run_id: UUID;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Successful Response */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': components['schemas']['ExecutionView'];
         };
       };
       /** @description Invalid request */
@@ -6663,6 +7433,18 @@ export const operationInventory = [
     bearer: true,
   },
   {
+    method: 'post',
+    path: '/api/v1/imported-analysis/execution-confirm',
+    operationId: 'confirm_execution_api_v1_imported_analysis_execution_confirm_post',
+    bearer: true,
+  },
+  {
+    method: 'post',
+    path: '/api/v1/imported-analysis/execution-prepare',
+    operationId: 'prepare_execution_api_v1_imported_analysis_execution_prepare_post',
+    bearer: true,
+  },
+  {
     method: 'get',
     path: '/api/v1/imported-analysis/grants/{grant_id}',
     operationId: 'inspect_api_v1_imported_analysis_grants__grant_id__get',
@@ -6684,6 +7466,18 @@ export const operationInventory = [
     method: 'post',
     path: '/api/v1/imported-analysis/prepare',
     operationId: 'prepare_api_v1_imported_analysis_prepare_post',
+    bearer: true,
+  },
+  {
+    method: 'get',
+    path: '/api/v1/imported-analysis/runs/{run_id}',
+    operationId: 'inspect_execution_api_v1_imported_analysis_runs__run_id__get',
+    bearer: true,
+  },
+  {
+    method: 'post',
+    path: '/api/v1/imported-analysis/runs/{run_id}/execute',
+    operationId: 'execute_api_v1_imported_analysis_runs__run_id__execute_post',
     bearer: true,
   },
   {

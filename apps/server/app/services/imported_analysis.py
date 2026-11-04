@@ -20,7 +20,13 @@ from app.chat_import.analysis_scope import (
     preview,
     validate_evidence,
 )
-from app.db.models import ChatImportJob, ImportedAnalysisGrant, RelationshipMessage, User
+from app.db.models import (
+    ChatImportJob,
+    ImportedAnalysisGrant,
+    ImportedAnalysisRun,
+    RelationshipMessage,
+    User,
+)
 from app.db.repositories import records
 from app.schemas.imported_analysis import AnalysisGrantView, AnalysisPreparation, EvidenceView
 from app.services.agent_service import AuthenticatedActor
@@ -39,12 +45,36 @@ def digest(value):
     ).hexdigest()
 
 
-def invalidate_datasets(db, dataset_ids, *, status="deleted"):
+def clear_runs(db, grant_ids, *, status):
+    db.execute(
+        update(ImportedAnalysisRun)
+        .where(ImportedAnalysisRun.grant_id.in_(grant_ids))
+        .values(
+            status=status,
+            report=None,
+            ledger=[],
+            receipts=[],
+            execution_binding={},
+            token_hash="",
+            writer_token=None,
+        )
+    )
+
+
+def clear_grants(db, grant_ids, *, status):
+    clear_runs(db, grant_ids, status=status)
     db.execute(
         update(ImportedAnalysisGrant)
-        .where(ImportedAnalysisGrant.dataset_id.in_(dataset_ids))
+        .where(ImportedAnalysisGrant.id.in_(grant_ids))
         .values(status=status, payload={}, token_hash="")
     )
+
+
+def invalidate_datasets(db, dataset_ids, *, status="deleted"):
+    grant_ids = select(ImportedAnalysisGrant.id).where(
+        ImportedAnalysisGrant.dataset_id.in_(dataset_ids)
+    )
+    clear_grants(db, grant_ids, status=status)
 
 
 class ImportedAnalysisService:
@@ -340,7 +370,8 @@ class ImportedAnalysisService:
     def revoke(self, actor, grant_id):
         with self.transaction(actor) as db:
             row = self.owned(db, actor, grant_id)
-            row.status, row.payload, row.token_hash = "revoked", {}, ""
+            clear_grants(db, [row.id], status="revoked")
+            db.refresh(row)
             return self.view(row)
 
     def evidence(self, actor, grant_id, alias, start, end, quote):
@@ -389,12 +420,9 @@ class ImportedAnalysisService:
         for owner in owners:
             with self.sessions() as db, db.begin():
                 db.scalar(select(User).where(User.id == owner).with_for_update(key_share=True))
-                db.execute(
-                    update(ImportedAnalysisGrant)
-                    .where(
-                        ImportedAnalysisGrant.owner_user_id == owner,
-                        ImportedAnalysisGrant.expires_at <= self.clock(),
-                        ImportedAnalysisGrant.status.in_(["prepared", "confirmed"]),
-                    )
-                    .values(status="expired", payload={}, token_hash="")
+                expired = select(ImportedAnalysisGrant.id).where(
+                    ImportedAnalysisGrant.owner_user_id == owner,
+                    ImportedAnalysisGrant.expires_at <= self.clock(),
+                    ImportedAnalysisGrant.status.in_(["prepared", "confirmed"]),
                 )
+                clear_grants(db, expired, status="expired")

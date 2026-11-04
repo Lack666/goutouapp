@@ -1064,6 +1064,28 @@
         "title": "ErrorResponse",
         "type": "object"
       },
+      "EvidenceAlias": {
+        "additionalProperties": false,
+        "properties": {
+          "message_id": {
+            "format": "uuid",
+            "title": "Message Id",
+            "type": "string"
+          },
+          "window": {
+            "maximum": 1.0,
+            "minimum": 0.0,
+            "title": "Window",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "message_id",
+          "window"
+        ],
+        "title": "EvidenceAlias",
+        "type": "object"
+      },
       "EvidenceRequest": {
         "additionalProperties": false,
         "properties": {
@@ -1192,6 +1214,208 @@
         "title": "ExecuteDeleteRequest",
         "type": "object"
       },
+      "ExecutionConfirm": {
+        "additionalProperties": false,
+        "description": "preparation_id identifies an execution preparation, never a source grant.",
+        "properties": {
+          "binding_hash": {
+            "maxLength": 64,
+            "minLength": 64,
+            "title": "Binding Hash",
+            "type": "string"
+          },
+          "challenge": {
+            "maxLength": 128,
+            "minLength": 32,
+            "title": "Challenge",
+            "type": "string"
+          },
+          "confirmed": {
+            "const": true,
+            "title": "Confirmed",
+            "type": "boolean"
+          },
+          "operation_key": {
+            "pattern": "^[A-Za-z0-9_.:-]{1,128}$",
+            "title": "Operation Key",
+            "type": "string"
+          },
+          "preparation_id": {
+            "format": "uuid",
+            "title": "Preparation Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "preparation_id",
+          "challenge",
+          "binding_hash",
+          "operation_key",
+          "confirmed"
+        ],
+        "title": "ExecutionConfirm",
+        "type": "object"
+      },
+      "ExecutionPreparation": {
+        "additionalProperties": false,
+        "properties": {
+          "binding_hash": {
+            "title": "Binding Hash",
+            "type": "string"
+          },
+          "challenge": {
+            "title": "Challenge",
+            "type": "string"
+          },
+          "execution": {
+            "additionalProperties": true,
+            "title": "Execution",
+            "type": "object"
+          },
+          "expires_at": {
+            "format": "date-time",
+            "title": "Expires At",
+            "type": "string"
+          },
+          "external_provider_calls": {
+            "const": 0,
+            "default": 0,
+            "title": "External Provider Calls",
+            "type": "integer"
+          },
+          "preparation_id": {
+            "format": "uuid",
+            "title": "Preparation Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "preparation_id",
+          "challenge",
+          "binding_hash",
+          "expires_at",
+          "execution"
+        ],
+        "title": "ExecutionPreparation",
+        "type": "object"
+      },
+      "ExecutionPrepare": {
+        "additionalProperties": false,
+        "properties": {
+          "grant_id": {
+            "format": "uuid",
+            "title": "Grant Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "grant_id"
+        ],
+        "title": "ExecutionPrepare",
+        "type": "object"
+      },
+      "ExecutionView": {
+        "additionalProperties": false,
+        "properties": {
+          "binding_hash": {
+            "title": "Binding Hash",
+            "type": "string"
+          },
+          "error_code": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Error Code"
+          },
+          "execution": {
+            "additionalProperties": true,
+            "title": "Execution",
+            "type": "object"
+          },
+          "expires_at": {
+            "format": "date-time",
+            "title": "Expires At",
+            "type": "string"
+          },
+          "external_provider_calls": {
+            "const": 0,
+            "default": 0,
+            "title": "External Provider Calls",
+            "type": "integer"
+          },
+          "grant_id": {
+            "format": "uuid",
+            "title": "Grant Id",
+            "type": "string"
+          },
+          "ledger": {
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "title": "Ledger",
+            "type": "array"
+          },
+          "mock_calls": {
+            "minimum": 0.0,
+            "title": "Mock Calls",
+            "type": "integer"
+          },
+          "receipts": {
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "title": "Receipts",
+            "type": "array"
+          },
+          "report": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/StoredAnalysisReport"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "reserved_tokens": {
+            "minimum": 0.0,
+            "title": "Reserved Tokens",
+            "type": "integer"
+          },
+          "run_id": {
+            "format": "uuid",
+            "title": "Run Id",
+            "type": "string"
+          },
+          "status": {
+            "title": "Status",
+            "type": "string"
+          }
+        },
+        "required": [
+          "run_id",
+          "grant_id",
+          "status",
+          "expires_at",
+          "binding_hash",
+          "execution",
+          "mock_calls",
+          "reserved_tokens",
+          "ledger",
+          "receipts",
+          "report",
+          "error_code"
+        ],
+        "title": "ExecutionView",
+        "type": "object"
+      },
       "FinalizeRequest": {
         "properties": {
           "expected_revision": {
@@ -1204,6 +1428,89 @@
           "expected_revision"
         ],
         "title": "FinalizeRequest",
+        "type": "object"
+      },
+      "Finding": {
+        "additionalProperties": false,
+        "properties": {
+          "alternative_explanations": {
+            "items": {
+              "maxLength": 320,
+              "minLength": 1,
+              "type": "string"
+            },
+            "maxItems": 3,
+            "minItems": 1,
+            "title": "Alternative Explanations",
+            "type": "array"
+          },
+          "candidate_ids": {
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 8,
+            "minItems": 1,
+            "title": "Candidate Ids",
+            "type": "array"
+          },
+          "counterevidence": {
+            "items": {
+              "$ref": "#/components/schemas/ObservedFact"
+            },
+            "maxItems": 8,
+            "title": "Counterevidence",
+            "type": "array"
+          },
+          "facts": {
+            "items": {
+              "$ref": "#/components/schemas/ObservedFact"
+            },
+            "maxItems": 4,
+            "minItems": 1,
+            "title": "Facts",
+            "type": "array"
+          },
+          "hypothesis": {
+            "maxLength": 320,
+            "minLength": 1,
+            "title": "Hypothesis",
+            "type": "string"
+          },
+          "kind": {
+            "enum": [
+              "emotional_mismatch",
+              "recurring_conflict",
+              "temporal_change"
+            ],
+            "title": "Kind",
+            "type": "string"
+          },
+          "repair": {
+            "$ref": "#/components/schemas/RepairAction"
+          },
+          "unknowns": {
+            "items": {
+              "maxLength": 320,
+              "minLength": 1,
+              "type": "string"
+            },
+            "maxItems": 3,
+            "minItems": 1,
+            "title": "Unknowns",
+            "type": "array"
+          }
+        },
+        "required": [
+          "kind",
+          "facts",
+          "hypothesis",
+          "unknowns",
+          "alternative_explanations",
+          "repair",
+          "candidate_ids",
+          "counterevidence"
+        ],
+        "title": "Finding",
         "type": "object"
       },
       "HealthResponse": {
@@ -1582,6 +1889,50 @@
           "imported_at"
         ],
         "title": "ImportReceiptResponse",
+        "type": "object"
+      },
+      "ImportedEvidenceRef": {
+        "additionalProperties": false,
+        "properties": {
+          "end": {
+            "exclusiveMinimum": 0.0,
+            "title": "End",
+            "type": "integer"
+          },
+          "evidence_id": {
+            "pattern": "^w[01]-m\\d{5}$",
+            "title": "Evidence Id",
+            "type": "string"
+          },
+          "quote": {
+            "maxLength": 160,
+            "minLength": 1,
+            "title": "Quote",
+            "type": "string"
+          },
+          "speaker": {
+            "enum": [
+              "self",
+              "person",
+              "system"
+            ],
+            "title": "Speaker",
+            "type": "string"
+          },
+          "start": {
+            "minimum": 0.0,
+            "title": "Start",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "evidence_id",
+          "speaker",
+          "start",
+          "end",
+          "quote"
+        ],
+        "title": "ImportedEvidenceRef",
         "type": "object"
       },
       "LifecycleChallenge": {
@@ -2162,6 +2513,32 @@
         "title": "MobileLifecycleTarget",
         "type": "object"
       },
+      "ObservedFact": {
+        "additionalProperties": false,
+        "properties": {
+          "evidence": {
+            "items": {
+              "$ref": "#/components/schemas/ImportedEvidenceRef"
+            },
+            "maxItems": 8,
+            "minItems": 1,
+            "title": "Evidence",
+            "type": "array"
+          },
+          "statement": {
+            "maxLength": 320,
+            "minLength": 1,
+            "title": "Statement",
+            "type": "string"
+          }
+        },
+        "required": [
+          "statement",
+          "evidence"
+        ],
+        "title": "ObservedFact",
+        "type": "object"
+      },
       "PersonCreateRequest": {
         "additionalProperties": false,
         "properties": {
@@ -2498,6 +2875,212 @@
         "title": "RelationshipResponse",
         "type": "object"
       },
+      "RepairAction": {
+        "additionalProperties": false,
+        "properties": {
+          "action": {
+            "maxLength": 320,
+            "minLength": 1,
+            "title": "Action",
+            "type": "string"
+          },
+          "observe": {
+            "maxLength": 320,
+            "minLength": 1,
+            "title": "Observe",
+            "type": "string"
+          },
+          "stop_when": {
+            "maxLength": 320,
+            "minLength": 1,
+            "title": "Stop When",
+            "type": "string"
+          }
+        },
+        "required": [
+          "action",
+          "observe",
+          "stop_when"
+        ],
+        "title": "RepairAction",
+        "type": "object"
+      },
+      "ReportAuthority": {
+        "additionalProperties": false,
+        "properties": {
+          "aliases": {
+            "additionalProperties": {
+              "$ref": "#/components/schemas/EvidenceAlias"
+            },
+            "title": "Aliases",
+            "type": "object"
+          },
+          "binding_hash": {
+            "title": "Binding Hash",
+            "type": "string"
+          },
+          "dataset_id": {
+            "format": "uuid",
+            "title": "Dataset Id",
+            "type": "string"
+          },
+          "grant_id": {
+            "format": "uuid",
+            "title": "Grant Id",
+            "type": "string"
+          },
+          "owner_id": {
+            "format": "uuid",
+            "title": "Owner Id",
+            "type": "string"
+          },
+          "person_id": {
+            "format": "uuid",
+            "title": "Person Id",
+            "type": "string"
+          },
+          "preview": {
+            "additionalProperties": true,
+            "title": "Preview",
+            "type": "object"
+          },
+          "relationship_id": {
+            "format": "uuid",
+            "title": "Relationship Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "grant_id",
+          "owner_id",
+          "dataset_id",
+          "person_id",
+          "relationship_id",
+          "binding_hash",
+          "aliases",
+          "preview"
+        ],
+        "title": "ReportAuthority",
+        "type": "object"
+      },
+      "RoleRisk": {
+        "additionalProperties": false,
+        "properties": {
+          "actor": {
+            "enum": [
+              "self",
+              "person",
+              "unknown"
+            ],
+            "title": "Actor",
+            "type": "string"
+          },
+          "category": {
+            "enum": [
+              "self_harm",
+              "violence",
+              "coercion",
+              "stalking",
+              "refusal",
+              "fraud",
+              "uncertain"
+            ],
+            "title": "Category",
+            "type": "string"
+          },
+          "evidence": {
+            "items": {
+              "$ref": "#/components/schemas/ImportedEvidenceRef"
+            },
+            "maxItems": 4,
+            "title": "Evidence",
+            "type": "array"
+          },
+          "source": {
+            "enum": [
+              "question",
+              "chat"
+            ],
+            "title": "Source",
+            "type": "string"
+          },
+          "temporality": {
+            "enum": [
+              "current",
+              "historical",
+              "quoted_or_denied",
+              "unknown"
+            ],
+            "title": "Temporality",
+            "type": "string"
+          },
+          "user_role": {
+            "enum": [
+              "at_risk",
+              "causing_harm",
+              "unclear"
+            ],
+            "title": "User Role",
+            "type": "string"
+          }
+        },
+        "required": [
+          "actor",
+          "user_role",
+          "temporality",
+          "category",
+          "source",
+          "evidence"
+        ],
+        "title": "RoleRisk",
+        "type": "object"
+      },
+      "SourceBinding": {
+        "additionalProperties": false,
+        "properties": {
+          "dataset_id": {
+            "format": "uuid",
+            "title": "Dataset Id",
+            "type": "string"
+          },
+          "evidence_id": {
+            "title": "Evidence Id",
+            "type": "string"
+          },
+          "message_id": {
+            "format": "uuid",
+            "title": "Message Id",
+            "type": "string"
+          },
+          "scope_digest": {
+            "title": "Scope Digest",
+            "type": "string"
+          },
+          "speaker": {
+            "enum": [
+              "self",
+              "person",
+              "system"
+            ],
+            "title": "Speaker",
+            "type": "string"
+          },
+          "timestamp": {
+            "title": "Timestamp",
+            "type": "string"
+          }
+        },
+        "required": [
+          "evidence_id",
+          "message_id",
+          "dataset_id",
+          "speaker",
+          "timestamp",
+          "scope_digest"
+        ],
+        "title": "SourceBinding",
+        "type": "object"
+      },
       "SpeakerBinding": {
         "enum": [
           "unbound",
@@ -2606,6 +3189,94 @@
         "title": "StatusResponse",
         "type": "object"
       },
+      "StoredAnalysisReport": {
+        "additionalProperties": false,
+        "properties": {
+          "coverage": {
+            "items": {
+              "$ref": "#/components/schemas/WindowCoverage"
+            },
+            "maxItems": 2,
+            "minItems": 1,
+            "title": "Coverage",
+            "type": "array"
+          },
+          "findings": {
+            "items": {
+              "$ref": "#/components/schemas/Finding"
+            },
+            "maxItems": 3,
+            "title": "Findings",
+            "type": "array"
+          },
+          "knowledge_refs": {
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 3,
+            "minItems": 1,
+            "title": "Knowledge Refs",
+            "type": "array"
+          },
+          "limitations": {
+            "items": {
+              "maxLength": 320,
+              "minLength": 1,
+              "type": "string"
+            },
+            "maxItems": 6,
+            "minItems": 1,
+            "title": "Limitations",
+            "type": "array"
+          },
+          "outcome": {
+            "enum": [
+              "findings",
+              "insufficient_evidence",
+              "safety_blocked"
+            ],
+            "title": "Outcome",
+            "type": "string"
+          },
+          "safety_roles": {
+            "items": {
+              "$ref": "#/components/schemas/RoleRisk"
+            },
+            "maxItems": 256,
+            "title": "Safety Roles",
+            "type": "array"
+          },
+          "source": {
+            "$ref": "#/components/schemas/ReportAuthority"
+          },
+          "sources": {
+            "items": {
+              "$ref": "#/components/schemas/SourceBinding"
+            },
+            "maxItems": 512,
+            "title": "Sources",
+            "type": "array"
+          },
+          "version": {
+            "const": "ica-report-v1",
+            "default": "ica-report-v1",
+            "title": "Version",
+            "type": "string"
+          }
+        },
+        "required": [
+          "outcome",
+          "findings",
+          "coverage",
+          "safety_roles",
+          "limitations",
+          "sources",
+          "knowledge_refs",
+          "source"
+        ],
+        "title": "StoredAnalysisReport",
+        "type": "object"
+      },
       "UndoPreview": {
         "additionalProperties": false,
         "properties": {
@@ -2709,6 +3380,89 @@
           "operation_key"
         ],
         "title": "UndoRequest",
+        "type": "object"
+      },
+      "WindowCoverage": {
+        "additionalProperties": false,
+        "properties": {
+          "active_local_days": {
+            "minimum": 0.0,
+            "title": "Active Local Days",
+            "type": "integer"
+          },
+          "body_bytes": {
+            "minimum": 0.0,
+            "title": "Body Bytes",
+            "type": "integer"
+          },
+          "core_count": {
+            "minimum": 0.0,
+            "title": "Core Count",
+            "type": "integer"
+          },
+          "end_utc": {
+            "title": "End Utc",
+            "type": "string"
+          },
+          "message_count": {
+            "minimum": 0.0,
+            "title": "Message Count",
+            "type": "integer"
+          },
+          "person_count": {
+            "minimum": 0.0,
+            "title": "Person Count",
+            "type": "integer"
+          },
+          "scope_digest": {
+            "title": "Scope Digest",
+            "type": "string"
+          },
+          "self_count": {
+            "minimum": 0.0,
+            "title": "Self Count",
+            "type": "integer"
+          },
+          "snapshot_digest": {
+            "title": "Snapshot Digest",
+            "type": "string"
+          },
+          "start_utc": {
+            "title": "Start Utc",
+            "type": "string"
+          },
+          "text_count": {
+            "minimum": 0.0,
+            "title": "Text Count",
+            "type": "integer"
+          },
+          "timezone": {
+            "title": "Timezone",
+            "type": "string"
+          },
+          "window_index": {
+            "maximum": 1.0,
+            "minimum": 0.0,
+            "title": "Window Index",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "window_index",
+          "start_utc",
+          "end_utc",
+          "timezone",
+          "scope_digest",
+          "snapshot_digest",
+          "message_count",
+          "text_count",
+          "body_bytes",
+          "core_count",
+          "self_count",
+          "person_count",
+          "active_local_days"
+        ],
+        "title": "WindowCoverage",
         "type": "object"
       }
     },
@@ -4822,6 +5576,238 @@
         ]
       }
     },
+    "/api/v1/imported-analysis/execution-confirm": {
+      "post": {
+        "operationId": "confirm_execution_api_v1_imported_analysis_execution_confirm_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ExecutionConfirm"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExecutionView"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Invalid request"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Authentication required"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Resource not found"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Active run or idempotency conflict"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Validation error"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Internal server error"
+          },
+          "502": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Agent execution failed"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Dependency unavailable"
+          }
+        },
+        "security": [
+          {
+            "BearerCredential": []
+          }
+        ],
+        "summary": "Confirm Execution",
+        "tags": [
+          "imported-analysis"
+        ]
+      }
+    },
+    "/api/v1/imported-analysis/execution-prepare": {
+      "post": {
+        "operationId": "prepare_execution_api_v1_imported_analysis_execution_prepare_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ExecutionPrepare"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExecutionPreparation"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Invalid request"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Authentication required"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Resource not found"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Active run or idempotency conflict"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Validation error"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Internal server error"
+          },
+          "502": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Agent execution failed"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Dependency unavailable"
+          }
+        },
+        "security": [
+          {
+            "BearerCredential": []
+          }
+        ],
+        "summary": "Prepare Execution",
+        "tags": [
+          "imported-analysis"
+        ]
+      }
+    },
     "/api/v1/imported-analysis/grants/{grant_id}": {
       "get": {
         "operationId": "inspect_api_v1_imported_analysis_grants__grant_id__get",
@@ -5306,6 +6292,242 @@
           }
         ],
         "summary": "Prepare",
+        "tags": [
+          "imported-analysis"
+        ]
+      }
+    },
+    "/api/v1/imported-analysis/runs/{run_id}": {
+      "get": {
+        "operationId": "inspect_execution_api_v1_imported_analysis_runs__run_id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "run_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Run Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExecutionView"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Invalid request"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Authentication required"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Resource not found"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Active run or idempotency conflict"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Validation error"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Internal server error"
+          },
+          "502": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Agent execution failed"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Dependency unavailable"
+          }
+        },
+        "security": [
+          {
+            "BearerCredential": []
+          }
+        ],
+        "summary": "Inspect Execution",
+        "tags": [
+          "imported-analysis"
+        ]
+      }
+    },
+    "/api/v1/imported-analysis/runs/{run_id}/execute": {
+      "post": {
+        "operationId": "execute_api_v1_imported_analysis_runs__run_id__execute_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "run_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Run Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExecutionView"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Invalid request"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Authentication required"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Resource not found"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Active run or idempotency conflict"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Validation error"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Internal server error"
+          },
+          "502": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Agent execution failed"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Dependency unavailable"
+          }
+        },
+        "security": [
+          {
+            "BearerCredential": []
+          }
+        ],
+        "summary": "Execute",
         "tags": [
           "imported-analysis"
         ]

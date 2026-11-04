@@ -1,6 +1,15 @@
 # Architecture direction
 
-ICA-A v3 adds a transport-independent ImportedAnalysisService and temporary
+ICA-B1 adds a separate opt-in Mock-only execution preparation/confirmation and
+ImportedAnalysisRun. The standalone LangGraph completes all safety chunks before
+ordinary extraction, checks counterevidence across every core when candidates exist,
+then synthesizes and independently reviews a bounded typed report. Per-call short SQL
+transactions reauthorize current sources and reserve budget. No Memory, raw transcript
+copy or ordinary Conversation projection is introduced. Active writers block deletion
+and restore; revocation fences publication; restored execution authority is invalidated.
+See ICA_B0_CONTRACT.md and ICA_B1_ACCEPTANCE.md for scope and actual evidence.
+
+ICA-A v3 foundation adds a transport-independent ImportedAnalysisService and temporary
 ImportedAnalysisGrant metadata/coverage ledger. Signed prepare computes a canonical
 Dataset snapshot; confirm consumes an opaque short-lived challenge with an owner
 operation key in one transaction. Owner then Dataset locks match deletion ordering.
@@ -8,7 +17,7 @@ Evidence aliases are grant-bound and re-read current sources; no Memory or Provi
 is injected. Dataset/full-scope erasure clears payloads; TTL cleanup runs in existing
 maintenance. Quarantined restore invalidates all restored grants and copies current
 operation fences before release, rejecting missing post-archive Dataset authority.
-No Agent execution/report endpoint exists. See ICA_A_V3_COMPLETION_ACCEPTANCE.md.
+At ICA-A acceptance no execution/report endpoint existed. See ICA_A_V3_COMPLETION_ACCEPTANCE.md.
 
 Current9H: independent LifecycleErasure and AgentRunRecovery services use structured
 owner/target barriers, durable minimal receipts and OS writer-stop proof. See the

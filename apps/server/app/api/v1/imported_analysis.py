@@ -1,4 +1,4 @@
-"""Signed preparation/confirmation/evidence only. No Agent or execute endpoint."""
+"""Signed source authority and separately confirmed opt-in Mock execution."""
 
 from typing import Annotated
 from uuid import UUID
@@ -14,8 +14,15 @@ from app.schemas.imported_analysis import (
     EvidenceRequest,
     EvidenceView,
 )
+from app.schemas.imported_execution import (
+    ExecutionConfirm,
+    ExecutionPreparation,
+    ExecutionPrepare,
+    ExecutionView,
+)
 from app.services.agent_service import AuthenticatedActor
 from app.services.imported_analysis import ImportedAnalysisService
+from app.services.imported_execution import ImportedExecutionService
 
 router = APIRouter(prefix="/imported-analysis", tags=["imported-analysis"])
 Actor = Annotated[AuthenticatedActor, Depends(get_authenticated_actor)]
@@ -57,3 +64,34 @@ def evidence(
     body: EvidenceRequest,
 ):
     return service.evidence(actor, grant_id, alias, body.start, body.end, body.quote)
+
+
+def execution_service(request: Request):
+    return ImportedExecutionService(
+        request.app.state.database.session,
+        enabled=request.app.state.settings.ica_mock_execution_enabled,
+        provider_factory=getattr(request.app.state, "ica_mock_provider_factory", None),
+    )
+
+
+ExecutionService = Annotated[ImportedExecutionService, Depends(execution_service)]
+
+
+@router.post("/execution-prepare", response_model=ExecutionPreparation)
+def prepare_execution(body: ExecutionPrepare, actor: Actor, service: ExecutionService):
+    return service.prepare_execution(actor, body)
+
+
+@router.post("/execution-confirm", response_model=ExecutionView)
+def confirm_execution(body: ExecutionConfirm, actor: Actor, service: ExecutionService):
+    return service.confirm_execution(actor, body)
+
+
+@router.post("/runs/{run_id}/execute", response_model=ExecutionView)
+async def execute(run_id: UUID, actor: Actor, service: ExecutionService):
+    return await service.execute(actor, run_id)
+
+
+@router.get("/runs/{run_id}", response_model=ExecutionView)
+def inspect_execution(run_id: UUID, actor: Actor, service: ExecutionService):
+    return service.inspect_execution(actor, run_id)

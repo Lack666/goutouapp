@@ -6,6 +6,26 @@ licensed and its content hashes are frozen in `knowledge/upstream-manifest.json`
 
 ## Phase gate
 
+2026-11-04 continuation of the user's roadmap authorization: implement ICA-B0 and
+ICA-B1 anonymous/Mock engineering only. Contract: [ICA-B0](ICA_B0_CONTRACT.md).
+Independent execution consent, full-scope safety, structured interactions,
+counterevidence, report validation and derived-data lifecycle are in scope.
+No paid Provider batch, ICA-BQ quality regrade, Android report, monthly/yearly
+extension or Phase12 is started. Targeted checks are recorded separately from the
+final ICA-D full regression; marker9/9H and historical quality results remain.
+
+2026-11-04 targeted acceptance: [ICA-B1 engineering acceptance](ICA_B1_ACCEPTANCE.md)
+records B0 contract/case freezing and B1 signed PostgreSQL/Mock execution engineering
+PASS: backend255, related Mobile82, generated-client3. This is not ICA-BQ model
+quality acceptance or real-user readiness. External Provider calls0; stop here.
+
+2026-11-03 planning review: [ICA longitudinal roadmap v4](ICA_LONGITUDINAL_ROADMAP_V4.md)
+proposes Skill-grounded relationship insights and separately verified month/quarter/year
+capacity. This is a planning proposal, not implementation or paid-evaluation authorization.
+It recognizes the completed ICA-A evidence and preserves v1/v2/v3 contracts. Suggested
+ICA-B/C submilestones, ICA-D and original Phase12 gates require separate acceptance;
+Phase11 QUALITY FAIL, Phase10 DEFERRED, Phase12 PENDING and marker9/9H are unchanged.
+
 2026-11-02 explicit authorization: **ICA-A / ica-long-range-v3** adopts
 ICA_EXTERNAL_REFERENCE_REVIEW.md for import compatibility, local calendar scope,
 chunk/coverage and trusted authorization foundations only. Versioned contract:

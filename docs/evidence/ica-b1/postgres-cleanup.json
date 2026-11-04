@@ -1,0 +1,19 @@
+{
+  "date": "2026-11-04",
+  "engine": "PostgreSQL 16.15, compiled by Visual C++ build 1944, 64-bit",
+  "endpoint": "127.0.0.1:15435",
+  "instance": "existing isolated ASCII-path pg16/data from ICA-A",
+  "admin_database": "postgres",
+  "connection_check": "pass",
+  "migration_and_rollback": "test_migration_roundtrip_and_database_isolation passed in backend-final.txt",
+  "database_query": "SELECT datname FROM pg_database WHERE datname LIKE 'ica_test_%' ORDER BY datname;",
+  "remaining_test_databases": 0,
+  "connection_query": "SELECT count(*) AS active_test_connections FROM pg_stat_activity WHERE datname LIKE 'ica_test_%';",
+  "active_test_connections": 0,
+  "cleanup_mode": "fixtures drop only their own randomly named databases; no manual unknown database deletion",
+  "initial_stop_attempt": "restricted-token Operation not permitted; no state changed",
+  "authorized_stop": {"mode": "pg_ctl stop -m fast -w on exact isolated data path", "exit_code": 0, "output": "waiting for server to shut down.... done; server stopped"},
+  "post_stop_status": "pg_ctl: no server running",
+  "production_database_changes": 0,
+  "role_or_account_changes": 0
+}

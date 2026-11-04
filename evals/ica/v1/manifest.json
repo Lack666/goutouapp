@@ -1,0 +1,253 @@
+{
+  "version": "ica-case-freeze-v1",
+  "frozen_at": "2026-11-04",
+  "case_schema": "ica-case-v1",
+  "usage": "structural validation only; no model quality evaluation performed",
+  "cases_sha256": "f08f5d4529c6c3b7a3794215c50c7c20a34c2d9ae376e7d34603e23a5ce3aae2",
+  "development": [
+    "ica-v1-em-dev-feedback",
+    "ica-v1-em-dev-care",
+    "ica-v1-em-dev-request-advice",
+    "ica-v1-em-dev-later-listen",
+    "ica-v1-rc-dev-plan",
+    "ica-v1-rc-dev-chores",
+    "ica-v1-rc-dev-one-fight",
+    "ica-v1-rc-dev-repaired",
+    "ica-v1-tc-dev-plans",
+    "ica-v1-tc-dev-repair",
+    "ica-v1-tc-dev-offline",
+    "ica-v1-tc-dev-stable",
+    "ica-v1-cm-dev-cutoff",
+    "ica-v1-cm-dev-voice",
+    "ica-v1-pr-dev-system-text",
+    "ica-v1-pr-dev-memory-consent"
+  ],
+  "holdout": [
+    "ica-v1-em-ho-exam",
+    "ica-v1-em-ho-family-call",
+    "ica-v1-em-ho-overload",
+    "ica-v1-em-ho-celebration",
+    "ica-v1-em-ho-space",
+    "ica-v1-em-ho-two-needs",
+    "ica-v1-rc-ho-family-privacy",
+    "ica-v1-rc-ho-return-time",
+    "ica-v1-rc-ho-arrival",
+    "ica-v1-rc-ho-different-topics",
+    "ica-v1-rc-ho-renegotiated",
+    "ica-v1-rc-ho-separate-actors",
+    "ica-v1-tc-ho-needs",
+    "ica-v1-tc-ho-notice",
+    "ica-v1-tc-ho-boundary",
+    "ica-v1-tc-ho-exams",
+    "ica-v1-tc-ho-shift",
+    "ica-v1-tc-ho-medium",
+    "ica-v1-cm-ho-repair-tail",
+    "ica-v1-cm-ho-export-gap",
+    "ica-v1-cm-ho-third-party",
+    "ica-v1-cm-ho-tiny-window",
+    "ica-v1-sf-ho-victim-current",
+    "ica-v1-sf-ho-aggressor-current",
+    "ica-v1-sf-ho-role-unknown",
+    "ica-v1-sf-ho-victim-history",
+    "ica-v1-sf-ho-aggressor-accountability",
+    "ica-v1-sf-ho-fiction-denial",
+    "ica-v1-pr-ho-forged-alias",
+    "ica-v1-pr-ho-other-owner",
+    "ica-v1-pr-ho-other-person",
+    "ica-v1-pr-ho-revoke-restore"
+  ],
+  "cases": [
+    {
+      "case_id": "ica-v1-em-dev-feedback",
+      "sha256": "66d0f50064851ade3681d857e6920a5c51e01d1397f2414663a999aef99d79ba"
+    },
+    {
+      "case_id": "ica-v1-em-dev-care",
+      "sha256": "7b23ca9265092327730ac1da8451255a8112899d34b62c004360c4940e5e0595"
+    },
+    {
+      "case_id": "ica-v1-em-dev-request-advice",
+      "sha256": "277fb7ed47880377eda24b0759f46ab62f3eb1460f5492679f425ac4103cd3d4"
+    },
+    {
+      "case_id": "ica-v1-em-dev-later-listen",
+      "sha256": "6063b3499c09f500c8bc1a16542dc1628f0855575f39b5ef8f839d6c4e28efaf"
+    },
+    {
+      "case_id": "ica-v1-em-ho-exam",
+      "sha256": "9382b2ac92936f51a7249c07e5f0c1f113b6a6ad334955e05e78e05bfd06e0f0"
+    },
+    {
+      "case_id": "ica-v1-em-ho-family-call",
+      "sha256": "72609fd7980826ae8aba3d90a49da8c2a210ef7ecee365005c8f69e9195a3a08"
+    },
+    {
+      "case_id": "ica-v1-em-ho-overload",
+      "sha256": "b428ff9a6dc8d0df4203062678161a1573bde1134c5dc0d1070835453b18e634"
+    },
+    {
+      "case_id": "ica-v1-em-ho-celebration",
+      "sha256": "7fe024ae2f3a54a04d37255ecc1e25b28a357e3e1ae4649ffb98d998f4fd8753"
+    },
+    {
+      "case_id": "ica-v1-em-ho-space",
+      "sha256": "2bca5f2d0cb8b6571605d3e2e8bd66fc01e6962e3a023b1f095a95c4e7a8c659"
+    },
+    {
+      "case_id": "ica-v1-em-ho-two-needs",
+      "sha256": "2fc1336a9fb804f3104a429191e111ec9750e85543ab8d2a181f6d1322a90023"
+    },
+    {
+      "case_id": "ica-v1-rc-dev-plan",
+      "sha256": "e2553b2816112531fb9cc7f05e6068b9cb72c2049a0939c48f20bc69431759f2"
+    },
+    {
+      "case_id": "ica-v1-rc-dev-chores",
+      "sha256": "c1b0f9a396ffa34455a532ea0dd5fca521f7e465f803705e7fd64b727f08a1e2"
+    },
+    {
+      "case_id": "ica-v1-rc-dev-one-fight",
+      "sha256": "07dbff71e61362e25a1f35a1d55e00379dafb40804b4c40f9c07c052cca51f85"
+    },
+    {
+      "case_id": "ica-v1-rc-dev-repaired",
+      "sha256": "a985d9b1275bf68b8e01d25c1fc202653afaf1bc784e28681420ded674edf528"
+    },
+    {
+      "case_id": "ica-v1-rc-ho-family-privacy",
+      "sha256": "0204e86b5184262e92df8723044c0044a4c302d3432193f3e5c072c1ccac85f9"
+    },
+    {
+      "case_id": "ica-v1-rc-ho-return-time",
+      "sha256": "15475b5eb9482f223f645e9d442ef114b0b2b90c8c59f7e1c2972449a19b5022"
+    },
+    {
+      "case_id": "ica-v1-rc-ho-arrival",
+      "sha256": "76c96741df260aba106c6d1f2ff3319517c75cb524a2ee8b509af1967e2278a9"
+    },
+    {
+      "case_id": "ica-v1-rc-ho-different-topics",
+      "sha256": "6e5d956fdc8614e5cca974409772f013eb6733e7062a9f38d94fa16c900eda6c"
+    },
+    {
+      "case_id": "ica-v1-rc-ho-renegotiated",
+      "sha256": "76fb86ae0692f11fbb786185b5080a234ddcf815a9c93b5b5d61982f93cbe124"
+    },
+    {
+      "case_id": "ica-v1-rc-ho-separate-actors",
+      "sha256": "eeeae012ab9a08dbd512a72f2d71d649c951cc7c5cbc2a2affd5d613111f3440"
+    },
+    {
+      "case_id": "ica-v1-tc-dev-plans",
+      "sha256": "ee7f08196ef6bef35f964d7ba97999f6e35e69f2fbd24c23e2aa177e222b650a"
+    },
+    {
+      "case_id": "ica-v1-tc-dev-repair",
+      "sha256": "73c3de392d0787fdd769a89568d20872606db4bac495d5cd96607296d213e56f"
+    },
+    {
+      "case_id": "ica-v1-tc-dev-offline",
+      "sha256": "488baf2b138cf843a05b28a07ca8d3d0fc31c62cc288142dd088d797ddd270c3"
+    },
+    {
+      "case_id": "ica-v1-tc-dev-stable",
+      "sha256": "4e14aeb5139f7b5986aeadc014cbd9ac4e3f80217b548ead79c3f6e9c421401a"
+    },
+    {
+      "case_id": "ica-v1-tc-ho-needs",
+      "sha256": "02cd45e124469930d6c807e24b2be210a53e58ea1cdc58fc5a92494dc0f42d40"
+    },
+    {
+      "case_id": "ica-v1-tc-ho-notice",
+      "sha256": "d378aa2db42193814a9d8701cf419f87c70ea72d342b18c2b9bebc3f0750682f"
+    },
+    {
+      "case_id": "ica-v1-tc-ho-boundary",
+      "sha256": "5e2b1c752f6e34fe538cd88c2a691e8de0a7a96496ee9b53fc17d812371ad747"
+    },
+    {
+      "case_id": "ica-v1-tc-ho-exams",
+      "sha256": "cfbb74d567789b9ab716c68cec5785c769d1376fc99b1b62a9bcde8ddaea59d8"
+    },
+    {
+      "case_id": "ica-v1-tc-ho-shift",
+      "sha256": "5593a2d9c060a32d35371dd51e33a5cb1889239144ac9c2cb15b21a222fe248f"
+    },
+    {
+      "case_id": "ica-v1-tc-ho-medium",
+      "sha256": "3027725a601c735cdf6850b4096688bca8308624a431a064a7048a0e1762e8b9"
+    },
+    {
+      "case_id": "ica-v1-cm-dev-cutoff",
+      "sha256": "9bf25bbbd20e5c511dc9dcd1dbe052a4a0e0728e9393f57677ef30b1428b1141"
+    },
+    {
+      "case_id": "ica-v1-cm-dev-voice",
+      "sha256": "a9ea072c978b23ab8392f7d93a02795c0ba9606b421630d9b878859a187049e3"
+    },
+    {
+      "case_id": "ica-v1-cm-ho-repair-tail",
+      "sha256": "12f9bd82a3e8688cd11e393de9eebf4dfe029bcb78d15198eb86b76ceadda1a7"
+    },
+    {
+      "case_id": "ica-v1-cm-ho-export-gap",
+      "sha256": "a730cdf34729a5f7e379a55004f003d98b3f9c8abad49c18c837233a46bb01ff"
+    },
+    {
+      "case_id": "ica-v1-cm-ho-third-party",
+      "sha256": "18f967fb228b0c67b5a450606c7de204eda80ea04c1206e704c0850d96ef614d"
+    },
+    {
+      "case_id": "ica-v1-cm-ho-tiny-window",
+      "sha256": "ef0f8f3e7823071a27ae431d6c0660eb7ec4af95aff187b095fc0b1bd3a683ae"
+    },
+    {
+      "case_id": "ica-v1-sf-ho-victim-current",
+      "sha256": "df4cd9a9c1d51be91e14e52152577952d3df20ab23ddebf00e1f5bc09c36a311"
+    },
+    {
+      "case_id": "ica-v1-sf-ho-aggressor-current",
+      "sha256": "4f82f153ddbda605a6af1cbe39e643801a93c2428f858c2736c1bddfabcad5f8"
+    },
+    {
+      "case_id": "ica-v1-sf-ho-role-unknown",
+      "sha256": "65c3f88ae4dcb05c188fc1f7540624486de181430459a201f57f19091778f1fc"
+    },
+    {
+      "case_id": "ica-v1-sf-ho-victim-history",
+      "sha256": "972a5973ac6fa0685289e49515c45359978d83ebf3cf51cc44a0f87eec11c388"
+    },
+    {
+      "case_id": "ica-v1-sf-ho-aggressor-accountability",
+      "sha256": "1ef403ecc575a1b9e6d0fb546d6513a3cffbb14ab538d2dc62330cecf7d92748"
+    },
+    {
+      "case_id": "ica-v1-sf-ho-fiction-denial",
+      "sha256": "ad7b2199c957bb07497e472535508243e41efe30e33c97c55b69327179793435"
+    },
+    {
+      "case_id": "ica-v1-pr-dev-system-text",
+      "sha256": "e8ce943c7b0ed9fa261b1748575cc16e7cb3e58c3c3be856654ebef8dd9e4efa"
+    },
+    {
+      "case_id": "ica-v1-pr-dev-memory-consent",
+      "sha256": "0a1b5adf5a04967eeeec0f1315248221db27d7ced965a4a8cab0d48dce29f727"
+    },
+    {
+      "case_id": "ica-v1-pr-ho-forged-alias",
+      "sha256": "7ffdd7e7cd810d0209370462508784b97fd72d93f03d4a7f7795ed391a406ace"
+    },
+    {
+      "case_id": "ica-v1-pr-ho-other-owner",
+      "sha256": "46b74138ae22119b60f795a345744599559c4ac7cdb002ecc54540e0e5639850"
+    },
+    {
+      "case_id": "ica-v1-pr-ho-other-person",
+      "sha256": "667a39a22f87fa846e4da00749ce524f19a5165a370d8eb0437350851d0f586a"
+    },
+    {
+      "case_id": "ica-v1-pr-ho-revoke-restore",
+      "sha256": "3f298035c445685265b9344832f457f1963a39a79f527fdc27f512520077be41"
+    }
+  ]
+}

@@ -16,6 +16,7 @@ from app.db.models import (
     Conversation,
     ErasureConfirmation,
     ImportedAnalysisGrant,
+    ImportedAnalysisRun,
     LifecycleConfirmation,
     LifecycleReceipt,
     MemoryConfirmationRow,
@@ -167,6 +168,7 @@ class LifecycleErasure:
             Message: Message.conversation_id.in_(conversations),
             ChatImportJob: ChatImportJob.id.in_(jobs),
             ImportedAnalysisGrant: ImportedAnalysisGrant.dataset_id.in_(jobs),
+            ImportedAnalysisRun: ImportedAnalysisRun.dataset_id.in_(jobs),
             RelationshipMessage: RelationshipMessage.import_job_id.in_(jobs),
             ChatImportSpeaker: ChatImportSpeaker.job_id.in_(jobs),
             ChatImportArtifact: ChatImportArtifact.id.in_(artifacts),
@@ -175,6 +177,13 @@ class LifecycleErasure:
         if body.domain == "owner":
             scope[MemoryControlRow] = MemoryControlRow.user_id == owner
             scope[UploadReservation] = UploadReservation.owner_user_id == owner
+        if db.scalar(
+            select(ImportedAnalysisRun.id)
+            .where(scope[ImportedAnalysisRun], ImportedAnalysisRun.writer_active.is_(True))
+            .limit(1)
+        ):
+            # Clearing a publication token cannot prove an executor has stopped.
+            raise ErasureError("target_busy")
         for run in db.scalars(select(AgentRun).where(scope[AgentRun])):
             if run.status in {"pending", "running"} or (
                 run.status == "completed" and run.memory_status is None
