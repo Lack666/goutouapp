@@ -151,6 +151,7 @@ def test_safe_support_is_kept_without_publishing_any_freeform_note_in_stream():
             "risk_level": "high",
             "safety_route_required": True,
             "risk_categories": ["violence"],
+            "user_role": "at_risk",
             "user_facing_note": "请朋友陪你去安全的地方，不必和伴侣见面。",
         }
     )
@@ -164,7 +165,8 @@ def test_safe_support_is_kept_without_publishing_any_freeform_note_in_stream():
     completed = next(event for event in events if isinstance(event, CompletedEvent))
     assert final.answer == completed.result.final_answer == completed.result.safety.user_facing_note
     assert "可信赖的人" in final.answer and "不必与对方单独对质" in final.answer
-    assert "如果你正打算" in final.answer  # Conditional, never accusing the victim of causing harm.
+    assert "放下可能伤人的物品" not in final.answer
+    assert completed.result.safety.user_role == "at_risk"
 
 
 @pytest.mark.parametrize(

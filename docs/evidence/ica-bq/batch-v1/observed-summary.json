@@ -1,0 +1,35 @@
+{
+  "requests": 147,
+  "requests_with_usage": 147,
+  "requests_with_cache_usage": 147,
+  "usage_totals": {
+    "input_tokens": 764840,
+    "output_tokens": 26937,
+    "total_tokens": 791777,
+    "cache_hit_tokens": 317440,
+    "cache_miss_tokens": 447400
+  },
+  "peak_cache_weighted_cost_estimate_cny": "1.12299360",
+  "billing_note": "Conservative peak-price estimate from observed usage, not a settled invoice; no unknown calls.",
+  "returned_models": {
+    "deepseek-flash": 147
+  },
+  "latency_ms": {
+    "mean": 1662.49,
+    "p50": 939.59,
+    "p95": 4046.65
+  },
+  "results": {
+    "failed": 64
+  },
+  "errors": {
+    "invalid_model_output": 6,
+    "invalid_evidence": 48,
+    "content_review_rejected": 9,
+    "model_statistics": 1
+  },
+  "source_fingerprint_matches_frozen_plan": true,
+  "backend_tests": 428,
+  "mobile_tests": 116,
+  "real_user_readiness": false
+}

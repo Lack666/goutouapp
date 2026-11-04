@@ -1,0 +1,23 @@
+{
+  "date": "2026-11-04",
+  "backend_passed": 428,
+  "backend_seconds": 128.01,
+  "fixed_output_replay_passed": 3,
+  "mobile_passed": 116,
+  "mobile_suites": 5,
+  "typescript_exit": 0,
+  "openapi_operations": 52,
+  "preserved_phase7d_operations": 26,
+  "generated_client_passed": 3,
+  "ruff_and_format_python_files": 12,
+  "formal_marker": "9/9H unchanged",
+  "source_fingerprint_match": true,
+  "no_credentials_or_hidden_reasoning_in_evidence": true,
+  "postgres_remaining_test_databases": 0,
+  "postgres_remaining_test_connections": 0,
+  "postgres_stopped": true,
+  "external_provider_calls": 147,
+  "no_retry": true,
+  "quality": "FAIL / PARTIAL",
+  "human_reviews": 0
+}

@@ -6,6 +6,22 @@ licensed and its content hashes are frozen in `knowledge/upstream-manifest.json`
 
 ## Phase gate
 
+2026-11-04 next-stage authorization: ICA-BQ synthetic quality evaluation and the
+bounded SAFETY-ROLE-P1 correction. User explicitly authorizes DeepSeek with a
+single aggregate CNY20 cap and no automatic retries. Freeze sources, cases,
+tariff, comparison definition and human rubric before sends. Preserve original
+human evidence, Phase11 QUALITY FAIL, Phase10 DEFERRED, Phase12 PENDING and9/9H.
+No private user data, live product execution or next phase is authorized here.
+Protocol: [ICA-BQ](ICA_BQ_EVAL_CONTRACT.md). Quality requires independent human
+review; offline checks or the new safety templates cannot establish it alone.
+
+2026-11-04 ICA-BQ first-batch result: **QUALITY FAIL / PARTIAL**, recorded in
+[ICA_BQ_ACCEPTANCE](ICA_BQ_ACCEPTANCE.md). Six known safety-role regressions classify
+correctly; both32-case ICA arms fail publication (ordinary completion0/22 each).
+147 actual calls, no retries/unknown calls, peak usage estimate CNY1.12299360;
+prepaid reservation CNY12.109270 stays within the authorized20. Backend428 plus
+three fixed-output replays and Mobile116 pass; no human quality regrade or next stage.
+
 2026-11-04 continuation of the user's roadmap authorization: implement ICA-B0 and
 ICA-B1 anonymous/Mock engineering only. Contract: [ICA-B0](ICA_B0_CONTRACT.md).
 Independent execution consent, full-scope safety, structured interactions,

@@ -1,0 +1,19 @@
+{
+  "external_provider_calls": 147,
+  "reserved_cny": "12.109270",
+  "reserved_tokens": 4248299,
+  "stopped": false,
+  "unknown_calls": 0,
+  "no_retries": true,
+  "tariff": {
+    "version": "deepseek-flash-2026-11-04-peak-cny",
+    "source": "https://api-docs.deepseek.com/zh-cn/quick_start/pricing/",
+    "checked_at": "2026-11-04",
+    "model": "deepseek-flash",
+    "documented_version": "DeepSeek-V4.1-Flash-1017",
+    "currency": "CNY",
+    "hit_per_million": "0.04",
+    "miss_per_million": "2",
+    "output_per_million": "8"
+  }
+}

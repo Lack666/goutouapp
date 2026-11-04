@@ -1,5 +1,12 @@
 # Architecture direction
 
+ICA-BQ adds a strict safety user_role (default unclear) and role-specific controlled
+protective_role_v2 text, retaining exact publication validation. Separate synthetic
+evaluation tooling freezes cases/sources, uses one durable claim and prepaid wire
+budget, records visible outputs/usage and creates masked human review packets.
+Production imported execution remains Mock-only. The first real batch fails quality;
+see ICA_BQ_EVAL_CONTRACT.md and ICA_BQ_ACCEPTANCE.md. No release/marker advance.
+
 ICA-B1 adds a separate opt-in Mock-only execution preparation/confirmation and
 ImportedAnalysisRun. The standalone LangGraph completes all safety chunks before
 ordinary extraction, checks counterevidence across every core when candidates exist,

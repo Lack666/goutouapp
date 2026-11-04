@@ -1,0 +1,12 @@
+$ jest --runInBand "--" "tests/icaTransport.test.ts" "tests/agentChat.test.ts" "tests/connectedChatUI.test.tsx" "tests/connectedImport.test.ts" "tests/connectedHistory.test.ts"
+PASS tests/agentChat.test.ts
+PASS tests/connectedChatUI.test.tsx
+PASS tests/icaTransport.test.ts
+PASS tests/connectedImport.test.ts
+PASS tests/connectedHistory.test.ts
+
+Test Suites: 5 passed, 5 total
+Tests:       116 passed, 116 total
+Snapshots:   0 total
+Time:        2.665 s
+Ran all test suites matching /tests\\icaTransport.test.ts|tests\\agentChat.test.ts|tests\\connectedChatUI.test.tsx|tests\\connectedImport.test.ts|tests\\connectedHistory.test.ts/i.

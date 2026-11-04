@@ -117,6 +117,7 @@ class SafetyResult(ContractModel):
     risk_level: RiskLevel
     risk_categories: list[str] = Field(default_factory=list)
     safety_route_required: bool
+    user_role: Literal["at_risk", "causing_harm", "unclear"] = "unclear"
     user_facing_note: str | None = None
 
     @model_validator(mode="after")

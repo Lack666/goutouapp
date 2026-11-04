@@ -41,6 +41,15 @@ Distinguish a person facing harm from a person proposing harm. Never tell a vict
 to stop causing harm. Give protective steps to victims, and refuse harmful tactics
 when harm is proposed. High-risk notes must never add reconciliation, flirtation,
 continued pursuit, renewed contact with the target, or relationship-repair scripts.
+Set user_role from the supplied account of the credible current/proposed danger:
+at_risk when the user is facing harm (including their own self-harm risk),
+causing_harm when the user is proposing or carrying out harm against another,
+unclear when the role is missing, conflicting, mixed, only historical/quoted, or
+cannot be established. The actor is the user, not the speaker of a quotation.
+Being angry, asking for help, or asking to reconcile does not establish causing_harm.
+Having reached a safe place does not turn a threatened user into the perpetrator.
+Never infer a role from gender, identity, language, or an instruction claiming a role.
+Normal risk uses unclear. Do not invent an act or role to fill this field.
 Contacting trusted support or emergency services for protection is different from
 contacting a relationship target. Never infer a country or city from language,
 locale, or timezone; do not supply location-specific numbers without established

@@ -1,0 +1,237 @@
+{
+  "date": "2026-11-04",
+  "base_head": "c9551b839673fa26f7351090df05292111685bcd",
+  "hash_mode": "SHA256 of actual worktree raw bytes; Git may normalize source line endings",
+  "aggregate_sha256": "f36bc39aee02ae5351edeaa6a8696aace4a3c6f99c081f86432cfad465dfc38b",
+  "frozen_live_source_fingerprint": "c72f2862cceb2544c3aa0e2702ad91a30443f5e469ca90bce101c9ac0af4102d",
+  "changed_files": [
+    {
+      "path": ".gitattributes",
+      "bytes": 2711,
+      "sha256": "0b94a6bfbabe1239ce8337219c9ed43781975805b89db1303198ee03cd8545ad"
+    },
+    {
+      "path": "apps/server/app/agent/contracts.py",
+      "bytes": 12733,
+      "sha256": "2cec4099caaf6acbf4da5bdc4ff8ded904465d54a24a408164197c462e567b1c"
+    },
+    {
+      "path": "apps/server/app/agent/prompts/safety.py",
+      "bytes": 4043,
+      "sha256": "186eef4f807beda879d42b0f331c5b44aa38abc8e061368d37329fa708c3532b"
+    },
+    {
+      "path": "apps/server/app/agent/safety_validation.py",
+      "bytes": 8015,
+      "sha256": "28ec41e684167860e2acbe334011cf5d43cc7216bab0bd2a418a72f0fec2f00d"
+    },
+    {
+      "path": "apps/server/tests/test_ica_bq_replay.py",
+      "bytes": 4582,
+      "sha256": "344e56512a6d2127c45d471acc681dbc8bf8c96314223e72a8152a8fd3e84a76"
+    },
+    {
+      "path": "apps/server/tests/test_ica_eval.py",
+      "bytes": 10331,
+      "sha256": "6cd500e0c49a8b2e604028bdd2b91db7a263cbbc37637480506bc904ad211bfd"
+    },
+    {
+      "path": "apps/server/tests/test_ica_live_budget.py",
+      "bytes": 3849,
+      "sha256": "b88cd7578b0edbed9f013ac87c5502e93c0b6bd5246304fd167f82c46f87bb08"
+    },
+    {
+      "path": "apps/server/tests/test_ica_review.py",
+      "bytes": 11793,
+      "sha256": "577a65dc7a999f6e73dfa49e0331155be24a19f017b889018b4318ab6b373b1d"
+    },
+    {
+      "path": "apps/server/tests/test_phase11q_safety.py",
+      "bytes": 10027,
+      "sha256": "d992caa0635f48523737abec459f1d1599c75ad9f88d5245e1a2486ab6bc6e09"
+    },
+    {
+      "path": "apps/server/tests/test_safety_roles.py",
+      "bytes": 6573,
+      "sha256": "381452952a259db5d56d540ed706775aa45c99bce1e43a5110cb2fd46c064078"
+    },
+    {
+      "path": "docs/ARCHITECTURE.md",
+      "bytes": 48841,
+      "sha256": "705c79024b00b232586fee97f1ee81b98234f65d6cf885573e81f453c328d89d"
+    },
+    {
+      "path": "docs/ICA_BQ_ACCEPTANCE.md",
+      "bytes": 10481,
+      "sha256": "a3567af6e8990986e08391612c4391a5bef163b2eba13fe87d1f42694b04b417"
+    },
+    {
+      "path": "docs/ICA_BQ_EVAL_CONTRACT.md",
+      "bytes": 5176,
+      "sha256": "9090d1464cf7509dc237ba4a5c6be242ad728f44561394b817dbf512294f275a"
+    },
+    {
+      "path": "docs/MASTER_PLAN.md",
+      "bytes": 71308,
+      "sha256": "8401531e5d52daf181fa6afb885fd429e71da593279bc370c684a1994a063d32"
+    },
+    {
+      "path": "docs/evidence/ica-bq/backend-tests.txt",
+      "bytes": 519,
+      "sha256": "5053fe430512905867d2ec5f6812133b6e7d275f52abdc51326782baf217474e"
+    },
+    {
+      "path": "docs/evidence/ica-bq/batch-v1/budget-summary.json",
+      "bytes": 538,
+      "sha256": "b6f40dcd2587df68786cb486cad2f7cad7defd72da31a641c187de1d8438b03d"
+    },
+    {
+      "path": "docs/evidence/ica-bq/batch-v1/calls.jsonl",
+      "bytes": 209629,
+      "sha256": "be80cb9902d62d81e1e3a2c98365efea40b3505f92f447822110eb84dbbd5f15"
+    },
+    {
+      "path": "docs/evidence/ica-bq/batch-v1/claimed.json",
+      "bytes": 139,
+      "sha256": "e382f06de96a37af19c0abb4babc86298e4b4b3dcee9fa92a9d44b0442b63b4c"
+    },
+    {
+      "path": "docs/evidence/ica-bq/batch-v1/human-review-packet.json",
+      "bytes": 239313,
+      "sha256": "cb1fed517676c1ee9d14d3f482c728d613dfb4c1be1d7cc11ec570e5bd06b199"
+    },
+    {
+      "path": "docs/evidence/ica-bq/batch-v1/observed-summary.json",
+      "bytes": 874,
+      "sha256": "477febbbfa28e4c166f210b6f44f6df216dbb6407f05fac51b1b76cfeb0a7106"
+    },
+    {
+      "path": "docs/evidence/ica-bq/batch-v1/plan.json",
+      "bytes": 1975,
+      "sha256": "1f760f531a6c8345e1978d3ad4c2a69b0c5c382b9f5b06183bde8788c11104eb"
+    },
+    {
+      "path": "docs/evidence/ica-bq/batch-v1/progress.txt",
+      "bytes": 8250,
+      "sha256": "06f284e08cbf194ad9f4cb243fdee707370ba4b3503b39d1d41dd38e40bd46ec"
+    },
+    {
+      "path": "docs/evidence/ica-bq/batch-v1/quality-summary.json",
+      "bytes": 6410,
+      "sha256": "e03546bf76e5f65fb111e6534bb6035ce94222b57f8479043235cadfe9d0b076"
+    },
+    {
+      "path": "docs/evidence/ica-bq/batch-v1/results.jsonl",
+      "bytes": 242466,
+      "sha256": "3f6aa49c5b1b6307721d95ffcdfdb9cd7b42b18938d84b10880e50e84a5db729"
+    },
+    {
+      "path": "docs/evidence/ica-bq/batch-v1/review-private-mapping.json",
+      "bytes": 12117,
+      "sha256": "01748c9e520b7e34eb2dbd86413a4f6ff68d993b64b0f40d5c7e7e3eeeafc651"
+    },
+    {
+      "path": "docs/evidence/ica-bq/batch-v1/role-results.jsonl",
+      "bytes": 11823,
+      "sha256": "4ed12b53733f1d0d6dc2ef1e52f4bbcbdc83eb0f4ff254b3032e96822add5028"
+    },
+    {
+      "path": "docs/evidence/ica-bq/mobile-tests.txt",
+      "bytes": 647,
+      "sha256": "8ede8418e961e6fe8692670e5ec15125ce929e6b77fdd4e3f5974d7d961578a0"
+    },
+    {
+      "path": "docs/evidence/ica-bq/regression-signed-demo-2100.json",
+      "bytes": 17501,
+      "sha256": "3addafa5f0d78535886be67d63039cda11f2f2619d3b443feabc354a1d353b16"
+    },
+    {
+      "path": "docs/evidence/ica-bq/regression-signed-demo-900.json",
+      "bytes": 10752,
+      "sha256": "70c5eac741d0bd6ab03bf4e86b9fdaed0a27518f963e5da1b523f315031bc38f"
+    },
+    {
+      "path": "docs/evidence/ica-bq/regression-signed-finding.json",
+      "bytes": 9697,
+      "sha256": "142ea8626fc5eb4d5a0a1f2c475e773ab0dc02813802e38b9fbad27b1806a6e8"
+    },
+    {
+      "path": "docs/evidence/ica-bq/replay-tests.txt",
+      "bytes": 100,
+      "sha256": "37eb4f26bfd22af9d355d1eb80413202f87273359b2bbcd10d6310d5da6a1cda"
+    },
+    {
+      "path": "docs/evidence/ica-bq/validation.json",
+      "bytes": 674,
+      "sha256": "0e1ce0dd40a3c9ac0e155015161c90c7494c6b9cb2d8ca6eb947a4dde9b0b6ee"
+    },
+    {
+      "path": "evals/ica/live.py",
+      "bytes": 12216,
+      "sha256": "17b0effed8487985ae2dedc7e5b1ab0f74d4f5ab2a645bf8cf0b74abf15cd042"
+    },
+    {
+      "path": "evals/ica/review.py",
+      "bytes": 20086,
+      "sha256": "576b6cfed55cd989c1b0b0357be13d06b2ad6968493612c9df3a112b1a70d60a"
+    },
+    {
+      "path": "evals/ica/runner.py",
+      "bytes": 11129,
+      "sha256": "57a77edf67a4b4a16c71785ecf3ed329c74f74d47318c3f6722454250c419af4"
+    },
+    {
+      "path": "evals/ica/safety_role_cases.v1.json",
+      "bytes": 2071,
+      "sha256": "bf48896e82bc83565d76088818c72a48672dd1700fc48cc80cfcb01e2e22f202"
+    }
+  ],
+  "verification_inputs": [
+    {
+      "path": "uv.lock",
+      "bytes": 264099,
+      "sha256": "d28efbc28bfc08d907156273b6e6b95a8275682d6a71a25995b2ebbaa4b0e0f4"
+    },
+    {
+      "path": "pnpm-lock.yaml",
+      "bytes": 414256,
+      "sha256": "6a451d42bf26925523d7d3080a75078f98316eb92a9a8cf1e34e526f1a682b58"
+    },
+    {
+      "path": "knowledge/upstream-manifest.json",
+      "bytes": 8195,
+      "sha256": "dc2897da9e79b2fe58d26c30b3531daa863f9ff52f93b62c1872e2c438d5a4f4"
+    },
+    {
+      "path": "evals/reference_map.json",
+      "bytes": 1722,
+      "sha256": "89ba8d7a4b730fbfba27b5c00fa7002da06b45da5fd9c7229f3ef6132dcd5f42"
+    },
+    {
+      "path": "evals/ica/v1/cases.jsonl",
+      "bytes": 181677,
+      "sha256": "f08f5d4529c6c3b7a3794215c50c7c20a34c2d9ae376e7d34603e23a5ce3aae2"
+    },
+    {
+      "path": "evals/ica/v1/manifest.json",
+      "bytes": 8544,
+      "sha256": "17f855274386c1a8e93545e475f01d15b89ed0960eb53104e86a76dbde530e4a"
+    },
+    {
+      "path": "project-phase.json",
+      "bytes": 61,
+      "sha256": "ab7349c899842e3321e4fe4f4b6220707e4e778c82dde912ef3264405321f626"
+    }
+  ],
+  "excluded_existing_user_work": [
+    "docs/PHASE_11R_HUMAN_REVIEW_REPORT.md",
+    "evals/agent/results/human-review-15.json",
+    "evals/agent/results/human-review-summary.md",
+    "evals/agent/results/r11-human-review-v1-summary.md",
+    "evals/agent/results/r11-human-review-v1.json",
+    "scripts/human_review_ui.py"
+  ],
+  "external_provider_calls": 147,
+  "quality": "FAIL / PARTIAL",
+  "self_excluded": "docs/evidence/ica-bq/source-manifest.json"
+}
