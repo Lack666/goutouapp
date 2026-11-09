@@ -1,0 +1,264 @@
+{
+  "version": "ica-bq-v2-acceptance-manifest-v1",
+  "date": "2026-11-09",
+  "base_head": "b0999fcf3cbe80a5d0d5d919ca8c48a1bf80f100",
+  "commit_locator": "Commit containing this manifest; own bytes excluded.",
+  "batch_plan_sha256": "4b892761e50eafa92c0481f5d2dcacd9132822790f4ea64c6eb597e60062e4ee",
+  "source_fingerprint": "717d6effdafd59b90cfc67d04718d684024834292830add2865a0375d006e76d",
+  "model": "deepseek-flash",
+  "external_provider_calls": 233,
+  "automatic_retries": 0,
+  "reserved_cny": "19.935784",
+  "observed_peak_usage_estimate_cny": "1.87753784",
+  "quality_status": "FAIL / PARTIAL",
+  "human_review": "PENDING; scores not supplied",
+  "offline_backend_tests": 309,
+  "codegen_tests": 3,
+  "fresh_postgresql_tests": false,
+  "preserved_historical_blob_count": 50,
+  "historical_blobs_equal_HEAD": true,
+  "protected_user_paths_excluded": [
+    "evals/agent/results/human-review-15.json",
+    "scripts/human_review_ui.py",
+    "docs/PHASE_11R_HUMAN_REVIEW_REPORT.md",
+    "evals/agent/results/human-review-summary.md",
+    "evals/agent/results/r11-human-review-v1-summary.md",
+    "evals/agent/results/r11-human-review-v1.json"
+  ],
+  "executed_backend_files": [
+    "apps/server/tests/test_ica_cases.py",
+    "apps/server/tests/test_ica_cases_v2.py",
+    "apps/server/tests/test_ica_eval.py",
+    "apps/server/tests/test_ica_eval_v2.py",
+    "apps/server/tests/test_ica_review.py",
+    "apps/server/tests/test_ica_review_v2.py",
+    "apps/server/tests/test_ica_live_budget.py",
+    "apps/server/tests/test_ica_live_v2.py",
+    "apps/server/tests/test_ica_bq_replay.py",
+    "apps/server/tests/test_ica_quote.py",
+    "apps/server/tests/test_ica_quote_runtime.py",
+    "apps/server/tests/test_ica_quote_replay.py",
+    "apps/server/tests/test_ica_runtime.py",
+    "apps/server/tests/test_ica_foundation.py",
+    "apps/server/tests/test_agent_runtime.py",
+    "apps/server/tests/test_agent_knowledge.py",
+    "apps/server/tests/test_safety_roles.py"
+  ],
+  "files": [
+    {
+      "path": ".gitattributes",
+      "sha256": "26b725686fb563c0d967b71369bcb2ac72c4a7e584c0fec91a62d4205f74e961",
+      "bytes": 3118
+    },
+    {
+      "path": "apps/server/tests/test_ica_cases_v2.py",
+      "sha256": "9df7f56570112a4a4fe45499f1335620c4b11afb4e4eb14d736ae68f1c26c492",
+      "bytes": 13076
+    },
+    {
+      "path": "apps/server/tests/test_ica_eval_v2.py",
+      "sha256": "d9433dc0d7f83700e6c779c89dfce3c0dd4ce3e4b3807004230bb648b3d50652",
+      "bytes": 4850
+    },
+    {
+      "path": "apps/server/tests/test_ica_live_v2.py",
+      "sha256": "ddda8c74902746c27214c724967cbc6734012e859c58d6b92ad289d0df2fb893",
+      "bytes": 18023
+    },
+    {
+      "path": "apps/server/tests/test_ica_review_v2.py",
+      "sha256": "f4dcd24ad855d122521be3f18526b3232a00556f64206e4ab0fdf275d908f8cd",
+      "bytes": 11433
+    },
+    {
+      "path": "docs/ARCHITECTURE.md",
+      "sha256": "2b7378ef5a77bf45b382651d984b0698e48c29b3453be95a01e91d6189c0905c",
+      "bytes": 49827
+    },
+    {
+      "path": "docs/ICA_BQ_V2_ACCEPTANCE.md",
+      "sha256": "8ac359cb33da90fa7aeb9c60ef81bd6ad18622e2a424871762aa1f95c09bc470",
+      "bytes": 10253
+    },
+    {
+      "path": "docs/ICA_BQ_V2_EVAL_CONTRACT.md",
+      "sha256": "9f7bdbd5c03bd619f9756af8a9b3ebae781744d4681af39dd3acf30062a0d870",
+      "bytes": 5698
+    },
+    {
+      "path": "docs/ICA_BQ_V2_HUMAN_REVIEW.md",
+      "sha256": "9750d3bdfa5eaa465994b8fafa15c814dc62e2026e13088bbc155302d8902760",
+      "bytes": 7401
+    },
+    {
+      "path": "docs/MASTER_PLAN.md",
+      "sha256": "d7f185c144e62590ff2a8a3cf0a8a86825fd1a5b8b6f2a6ade0c3c5b8bfbb5e5",
+      "bytes": 73928
+    },
+    {
+      "path": "docs/evidence/ica-bq-v2/api-client.txt",
+      "sha256": "cf6d3f7f4a593b89fad99a8c22a42707a7243e18d5983e8ee2322bf117c7fdd9",
+      "bytes": 515
+    },
+    {
+      "path": "docs/evidence/ica-bq-v2/author-format.txt",
+      "sha256": "7688ae71c60af2e4266827abb3678cc2145655f587daf33dfa649dbac2c619c3",
+      "bytes": 26
+    },
+    {
+      "path": "docs/evidence/ica-bq-v2/author-ruff.txt",
+      "sha256": "a4443afdcfb6d7363adb285762515ccf7cf50473b1a05c20c1a50f6bed4d26b0",
+      "bytes": 20
+    },
+    {
+      "path": "docs/evidence/ica-bq-v2/backend-tests.txt",
+      "sha256": "df939f0aa4db96d37b2852e05e2c56614de4744fe8dffe02627dc37cb7f6b295",
+      "bytes": 426
+    },
+    {
+      "path": "docs/evidence/ica-bq-v2/batch-v2/authorization.json",
+      "sha256": "fd9869c865b4534c6b2a4fd900e60bc523e55d76b466bd67d0907dc829add5d9",
+      "bytes": 447
+    },
+    {
+      "path": "docs/evidence/ica-bq-v2/batch-v2/budget-summary.json",
+      "sha256": "2e12816d709a77cee98880de06260a8bbb0bd0ababa7a5783416992631f78cb0",
+      "bytes": 671
+    },
+    {
+      "path": "docs/evidence/ica-bq-v2/batch-v2/calls.jsonl",
+      "sha256": "b4fbb01d13db055bf91cd246a6308e66c8cb970e5bee58a283c03e42a6d2d8f9",
+      "bytes": 370830
+    },
+    {
+      "path": "docs/evidence/ica-bq-v2/batch-v2/claimed.json",
+      "sha256": "c4b8c29f92fc34758a0c694ff5270288f3965c8f57b1e72225e2339de76600e6",
+      "bytes": 224
+    },
+    {
+      "path": "docs/evidence/ica-bq-v2/batch-v2/console.txt",
+      "sha256": "2a590ad8f9176449555983a235696a1e6277701c4a1cde188bc03023269b071e",
+      "bytes": 7107
+    },
+    {
+      "path": "docs/evidence/ica-bq-v2/batch-v2/plan.json",
+      "sha256": "4b892761e50eafa92c0481f5d2dcacd9132822790f4ea64c6eb597e60062e4ee",
+      "bytes": 11642
+    },
+    {
+      "path": "docs/evidence/ica-bq-v2/batch-v2/results.jsonl",
+      "sha256": "707efd78af0c7da2d1162cc2240e1ca4622a2b17c03a45c5b210d6487ec27e2b",
+      "bytes": 515328
+    },
+    {
+      "path": "docs/evidence/ica-bq-v2/commands.ps1",
+      "sha256": "f701a72952b8afb90db2b78be3bc506aab6e246b3d1f564ff04f027afa7d5115",
+      "bytes": 3740
+    },
+    {
+      "path": "docs/evidence/ica-bq-v2/cutoff-diagnostic.json",
+      "sha256": "882e1a19083671bded5e810e391af06db63c02dd7c1699bddf00b7b13ff67304",
+      "bytes": 401
+    },
+    {
+      "path": "docs/evidence/ica-bq-v2/execution-audit.json",
+      "sha256": "eb8ea4b5f627181eba6a6b9ba0018b4a7205ea9d7e85e36ea60f16ec590e67e8",
+      "bytes": 1914
+    },
+    {
+      "path": "docs/evidence/ica-bq-v2/format.txt",
+      "sha256": "3fa62c94b1301255f0c64c429c668a4fabc4cb9d3848edb2790b607266d16092",
+      "bytes": 27
+    },
+    {
+      "path": "docs/evidence/ica-bq-v2/human-export.txt",
+      "sha256": "339d16f53819a9c9770970f0c16646cf624f4c50e01cef78d4fe25a0212d79b4",
+      "bytes": 864
+    },
+    {
+      "path": "docs/evidence/ica-bq-v2/human-review-pending.json",
+      "sha256": "0318ce96a9c042b73ca529f9f8dc7256967e7c3160c9254b00c9ac690b998741",
+      "bytes": 6519
+    },
+    {
+      "path": "docs/evidence/ica-bq-v2/human-review/private/adjudication-oracles.json",
+      "sha256": "ae66a1179aab4ab5b5f0e21069f8b7093093b4987f4b3c138f7116da725e4682",
+      "bytes": 160915
+    },
+    {
+      "path": "docs/evidence/ica-bq-v2/human-review/private/mapping.json",
+      "sha256": "a22695890de644706d0e6c5d22c5aebbac10ed872570af64447fdbc913f52dbb",
+      "bytes": 11235
+    },
+    {
+      "path": "docs/evidence/ica-bq-v2/human-review/reviewer/README.md",
+      "sha256": "b2b9b0b492518fd20a4e600f1472b7bca464f9b9e36aa6eb8ff52b99a16de470",
+      "bytes": 1026
+    },
+    {
+      "path": "docs/evidence/ica-bq-v2/human-review/reviewer/packet.json",
+      "sha256": "9514dd9814d4a9a8b6a795ab0c20bfd9442a79ef4af4defbfb7fc8ed96e54929",
+      "bytes": 409609
+    },
+    {
+      "path": "docs/evidence/ica-bq-v2/human-review/reviewer/reports.md",
+      "sha256": "68c409acdf238180bfee25e2928bf818f22c601e5a014c470488cbd66c29ac5e",
+      "bytes": 264359
+    },
+    {
+      "path": "docs/evidence/ica-bq-v2/human-summary.txt",
+      "sha256": "5554ffdcde4858603a75fb654b0addbf6528ebcde1d36dc1dce17b4ea4779bd3",
+      "bytes": 772
+    },
+    {
+      "path": "docs/evidence/ica-bq-v2/openapi.txt",
+      "sha256": "74a448f03de86875d0b72c03165bfec13f76033efbb3e2f3b2538ba50e422e74",
+      "bytes": 81
+    },
+    {
+      "path": "docs/evidence/ica-bq-v2/ruff.txt",
+      "sha256": "a4443afdcfb6d7363adb285762515ccf7cf50473b1a05c20c1a50f6bed4d26b0",
+      "bytes": 20
+    },
+    {
+      "path": "evals/ica/live.py",
+      "sha256": "4e7026a93ef293a9381105bf3c0a1733d5a6cb2064c7363205e9374c96c304b0",
+      "bytes": 12518
+    },
+    {
+      "path": "evals/ica/live_v2.py",
+      "sha256": "fd4df0ff294649c794768600916f7b0f00654968535a17d6a339f4378fc592c2",
+      "bytes": 12928
+    },
+    {
+      "path": "evals/ica/review.py",
+      "sha256": "d259fa86506193acbe28780066d3f195ef8932aafc805f4a4fdd99997afe19a4",
+      "bytes": 33382
+    },
+    {
+      "path": "evals/ica/runner.py",
+      "sha256": "a5c95173f9299f6dc1b5c0f753e7c568256e933089c15d23f32c17f9127a78e0",
+      "bytes": 11918
+    },
+    {
+      "path": "evals/ica/v2/AUTHORING_PROVENANCE.md",
+      "sha256": "80e61e73045ccfe3b7b163ec2dde81ff01900b7bc09247ce94876a5b26e0f320",
+      "bytes": 9235
+    },
+    {
+      "path": "evals/ica/v2/author_cases.py",
+      "sha256": "ea99a868b4e9b04c3d775d438eb60a4aa13e549e3924c106b3537a94256ad620",
+      "bytes": 51029
+    },
+    {
+      "path": "evals/ica/v2/cases.jsonl",
+      "sha256": "15e1d48fff423456f6144bcf64cf639c13b6303af5ff4959129f955fc3b7a379",
+      "bytes": 757746
+    },
+    {
+      "path": "evals/ica/v2/manifest.json",
+      "sha256": "3198d33120e33383e09bef30972fbeb69f8b362477450dbba478e9f16bab2ba6",
+      "bytes": 15770
+    }
+  ]
+}

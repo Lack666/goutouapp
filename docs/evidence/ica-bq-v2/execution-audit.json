@@ -1,0 +1,76 @@
+{
+  "version": "ica-bq-v2-execution-audit-v1",
+  "batch_plan_sha256": "4b892761e50eafa92c0481f5d2dcacd9132822790f4ea64c6eb597e60062e4ee",
+  "frozen_sources_unchanged": true,
+  "actual_calls": 233,
+  "unknown_calls": 0,
+  "duplicate_stage_chunk_attempts": 0,
+  "automatic_retries_observed": 0,
+  "reserved_cny": "19.935784",
+  "reserved_tokens": 7104788,
+  "usage": {
+    "input_tokens": 1308255,
+    "output_tokens": 48184,
+    "total_tokens": 1356439,
+    "cache_hit_tokens": 573696,
+    "cache_miss_tokens": 734559
+  },
+  "cache_usage_complete": true,
+  "observed_peak_cache_weighted_estimate_cny": "1.87753784",
+  "cost_is_invoice": false,
+  "returned_models": {
+    "deepseek-flash": 233
+  },
+  "requests_latency_ms": {
+    "p50": 1142.63,
+    "p95": 5226.56
+  },
+  "status_counts": {
+    "completed": 28,
+    "failed": 34,
+    "not_run": 2
+  },
+  "errors": {
+    "content_review_rejected": 10,
+    "model_statistics": 13,
+    "invalid_evidence": 2,
+    "invalid_model_output": 5,
+    "unverified_fact": 1,
+    "nontext_finding": 1,
+    "incomparable_windows": 2,
+    "batch_stopped": 2
+  },
+  "ordinary": {
+    "event": {
+      "statuses": {
+        "completed": 10,
+        "failed": 12
+      },
+      "completion": {
+        "numerator": 10,
+        "denominator": 22,
+        "pending": 0,
+        "value": 0.45454545454545453
+      },
+      "quality_status": "FAIL"
+    },
+    "baseline": {
+      "statuses": {
+        "completed": 9,
+        "failed": 13
+      },
+      "completion": {
+        "numerator": 9,
+        "denominator": 22,
+        "pending": 0,
+        "value": 0.4090909090909091
+      },
+      "quality_status": "FAIL"
+    }
+  },
+  "canonical_reference_occurrences_verified": 102,
+  "real_database_authority_tested_here": false,
+  "human_score_entries": 0,
+  "human_review_items_bound_and_unmodified": 64,
+  "verification_operator": "root automated audit; not independent human review"
+}

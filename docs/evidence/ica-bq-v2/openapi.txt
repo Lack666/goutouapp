@@ -1,0 +1,1 @@
+PASS: deterministic OpenAPI, 52 operations, all 26 Phase 7D contracts preserved

@@ -64,8 +64,9 @@ RUNTIME_ERROR_CODES = frozenset(
 )
 
 
-def source_fingerprint() -> str:
+def source_fingerprint(*, case_set="v1") -> str:
     """Bind actual executable/knowledge/case bytes, not only a Git HEAD label."""
+    dataset, manifest_path = case_paths(case_set)
     paths = {
         ROOT / "apps/server/app/agent/imported_analysis.py",
         ROOT / "apps/server/app/agent/imported_contracts.py",
@@ -75,8 +76,8 @@ def source_fingerprint() -> str:
         ROOT / "knowledge/goutoujunshi/SKILL.md",
         ROOT / "evals/reference_map.json",
         ROOT / "uv.lock",
-        DATASET,
-        MANIFEST,
+        dataset,
+        manifest_path,
         *Path(__file__).parent.glob("*.py"),
         *(ROOT / "knowledge/goutoujunshi/references").rglob("*.md"),
     }
@@ -89,12 +90,20 @@ def source_fingerprint() -> str:
     return digest.hexdigest()
 
 
-def load_cases(split: str) -> list[dict]:
+def case_paths(case_set):
+    if case_set not in {"v1", "v2"}:
+        raise ValueError("Unsupported case set")
+    directory = Path(__file__).with_name(case_set)
+    return directory / "cases.jsonl", directory / "manifest.json"
+
+
+def load_cases(split: str, *, case_set="v1") -> list[dict]:
     """Read the existing byte-frozen inventory without regenerating or changing it."""
     if split not in {"development", "holdout"}:
         raise ValueError("Select development or holdout")
-    raw = DATASET.read_bytes()
-    manifest = json.loads(MANIFEST.read_text(encoding="utf-8"))
+    dataset, manifest_path = case_paths(case_set)
+    raw = dataset.read_bytes()
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
     if hashlib.sha256(raw).hexdigest() != manifest["cases_sha256"]:
         raise ValueError("Frozen case file changed")
     rows = [json.loads(line) for line in raw.decode("utf-8").splitlines()]
@@ -193,13 +202,15 @@ async def evaluate_case(
     after_call=None,
     *,
     evidence_protocol="span-v1",
+    case_set="v1",
 ) -> dict:
     """One attempt; preserve failures and call metadata, never infer semantic quality."""
-    fingerprint = source_fingerprint()
+    fingerprint = source_fingerprint(case_set=case_set)
     calls, started = [], {}
     row = {
         "case_id": case["case_id"],
         "evidence_protocol": evidence_protocol,
+        "case_set": case_set,
         "arm": arm,
         "arm_descriptor": ARM_DESCRIPTORS.get(arm),
         "baseline_definition": BASELINE_VERSION if arm == "baseline" else None,
@@ -263,13 +274,16 @@ async def evaluate_case(
         if arm not in ARM_DESCRIPTORS:
             row["error_code"] = "invalid_arm"
             return row
+        if case_set == "v2" and evidence_protocol != "quote-v2":
+            row["error_code"] = "invalid_evidence_protocol"
+            return row
         contexts = case_to_contexts(case)
         row["scope_digests"] = [context.scope.digest for context in contexts]
         row["snapshot_digests"] = [context.snapshot_digest for context in contexts]
         result = await ImportedAnalysisRuntime(
             _ArmProvider(provider, arm), evidence_protocol=evidence_protocol
         ).run(contexts, case["question"], model, before, after)
-        if source_fingerprint() != fingerprint:
+        if source_fingerprint(case_set=case_set) != fingerprint:
             row["error_code"] = "evaluation_source_changed"
             return row
         row["status"] = "completed"

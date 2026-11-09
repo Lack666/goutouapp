@@ -1,0 +1,527 @@
+{
+  "schema_version": "ica-manifest-v2",
+  "dataset_version": "ica-v2-quote-v2-independent",
+  "case_schema_version": "ica-case-v1",
+  "evidence_protocol": "quote-v2",
+  "created_utc": "2026-11-09T05:29:12.863066+00:00",
+  "synthetic_only": true,
+  "human_semantic_review": "pending",
+  "expected_harness_only": true,
+  "provider_calls": 0,
+  "paid_execution_authorized": false,
+  "cases_file": "evals/ica/v2/cases.jsonl",
+  "cases_sha256": "15e1d48fff423456f6144bcf64cf639c13b6303af5ff4959129f955fc3b7a379",
+  "canonicalization": "json.dumps(sort_keys=True,ensure_ascii=False,separators=(',',':')); UTF-8; LF per case",
+  "authoring_script_sha256": "ea99a868b4e9b04c3d775d438eb60a4aa13e549e3924c106b3537a94256ad620",
+  "authoring_provenance": "evals/ica/v2/AUTHORING_PROVENANCE.md",
+  "authoring_provenance_sha256": "80e61e73045ccfe3b7b163ec2dde81ff01900b7bc09247ce94876a5b26e0f320",
+  "cases": [
+    {
+      "case_id": "ica-v2-d01",
+      "sha256": "4a69d767261f62bb2c20420cb7e7887351264f3c92df52e8f97c491d57dec4b6",
+      "split": "development",
+      "family": "emotional_mismatch",
+      "message_count": 3
+    },
+    {
+      "case_id": "ica-v2-d02",
+      "sha256": "adf72895bf6fd3b2c72e1bd1e06b4b49c5def68f4843a58fa6be1e073f5f2dfe",
+      "split": "development",
+      "family": "emotional_mismatch",
+      "message_count": 3
+    },
+    {
+      "case_id": "ica-v2-d03",
+      "sha256": "04e29a21f0519bb4be986a65909a29bccbdedeb3b3e696943a9c0b98af9a8dc8",
+      "split": "development",
+      "family": "emotional_mismatch",
+      "message_count": 4
+    },
+    {
+      "case_id": "ica-v2-d04",
+      "sha256": "f94901f38fc9430e9198ff01d6f81b0a5b8770dfa5410a2bbe521df1ce0bbec2",
+      "split": "development",
+      "family": "emotional_mismatch",
+      "message_count": 3
+    },
+    {
+      "case_id": "ica-v2-d05",
+      "sha256": "eb1d6baeadcb2fb68ebb4545426a5a028f0f01927d788a89b6f8e2a9c800520a",
+      "split": "development",
+      "family": "recurring_conflict",
+      "message_count": 4
+    },
+    {
+      "case_id": "ica-v2-d06",
+      "sha256": "182dfb27c8591fea056a291b74b653814ffede2ba709dfa97fa0c85e38b8196c",
+      "split": "development",
+      "family": "recurring_conflict",
+      "message_count": 3
+    },
+    {
+      "case_id": "ica-v2-d07",
+      "sha256": "97c486f17ca6c21d5dceced2b8541b10912d19e6c54501f8dedb130c47b0681a",
+      "split": "development",
+      "family": "recurring_conflict",
+      "message_count": 4
+    },
+    {
+      "case_id": "ica-v2-d08",
+      "sha256": "ae41883606e127df753b1b4a548ff788b13c647aef7e0fee6ae312220d5ab491",
+      "split": "development",
+      "family": "temporal_change",
+      "message_count": 20
+    },
+    {
+      "case_id": "ica-v2-d09",
+      "sha256": "c452aff7545a6474bb22a32920382ffed24f649ec77445759c0ace267bf82065",
+      "split": "development",
+      "family": "temporal_change",
+      "message_count": 20
+    },
+    {
+      "case_id": "ica-v2-d10",
+      "sha256": "6df2c26391ed985be965b3fd922f10665b77841b9cd5c27d3632536f01489468",
+      "split": "development",
+      "family": "temporal_change",
+      "message_count": 14
+    },
+    {
+      "case_id": "ica-v2-d11",
+      "sha256": "fc093301dec764e12d25d22ef9a9bf3d1b639439aef18bbaeb5cc6476834d538",
+      "split": "development",
+      "family": "counter_missing",
+      "message_count": 5
+    },
+    {
+      "case_id": "ica-v2-d12",
+      "sha256": "ec08c997495e2199adcffba88758a87e0e874c4b50b9a13a97d8d4c447b87054",
+      "split": "development",
+      "family": "counter_missing",
+      "message_count": 3
+    },
+    {
+      "case_id": "ica-v2-d13",
+      "sha256": "d98028636716237d95adfba383c56c881a9f1d435d77c4d5185b6249d1ccc353",
+      "split": "development",
+      "family": "adversarial",
+      "message_count": 3
+    },
+    {
+      "case_id": "ica-v2-d14",
+      "sha256": "e5ac0d42f12022a64ffeb626738fd1a85f97aa4a7d41bcfe952ecdfb8044f8fc",
+      "split": "development",
+      "family": "adversarial",
+      "message_count": 2
+    },
+    {
+      "case_id": "ica-v2-d15",
+      "sha256": "4b0458e309d679bffb7cc048de030d17be9083377c214637def49bc8689ca4f5",
+      "split": "development",
+      "family": "engineering",
+      "message_count": 900
+    },
+    {
+      "case_id": "ica-v2-d16",
+      "sha256": "4053593dcf04d6c6db8a38c378096aa8a83db31cd945cbd561fc495e8e7b38e7",
+      "split": "development",
+      "family": "engineering",
+      "message_count": 2100
+    },
+    {
+      "case_id": "ica-v2-h01",
+      "sha256": "7fbd214b7e17bc96abfbcd76812ee27678a2cd19dd7159009ec558e8eb3aef3e",
+      "split": "holdout",
+      "family": "emotional_mismatch",
+      "message_count": 4
+    },
+    {
+      "case_id": "ica-v2-h02",
+      "sha256": "ac426b6ffb9821f6774ed987a155eb0f4f42868dd7b7aa720c9132d049523e69",
+      "split": "holdout",
+      "family": "emotional_mismatch",
+      "message_count": 4
+    },
+    {
+      "case_id": "ica-v2-h03",
+      "sha256": "69f6f2fb1a5e8b0159602331dde6657a2792af4bf4a6c3c259752221721fdace",
+      "split": "holdout",
+      "family": "emotional_mismatch",
+      "message_count": 3
+    },
+    {
+      "case_id": "ica-v2-h04",
+      "sha256": "0b0ed5520e880be9e0c5dade8a27682bb317431c3df24f0188a831d4abcaaf36",
+      "split": "holdout",
+      "family": "emotional_mismatch",
+      "message_count": 4
+    },
+    {
+      "case_id": "ica-v2-h05",
+      "sha256": "56489fcd8c0bf431f84a5a1bbda8eba0f301893ad08ca65607e19ba662d7747f",
+      "split": "holdout",
+      "family": "emotional_mismatch",
+      "message_count": 4
+    },
+    {
+      "case_id": "ica-v2-h06",
+      "sha256": "b6f1faf223fcc4f82648aef90218ca4a1f69bb3a76bcfe0b9fa98bc4e43e645d",
+      "split": "holdout",
+      "family": "emotional_mismatch",
+      "message_count": 4
+    },
+    {
+      "case_id": "ica-v2-h07",
+      "sha256": "7a159c0c2cf7c1a956b6d136c458849d0fde4cf53c41a742b74ab04b672ce239",
+      "split": "holdout",
+      "family": "recurring_conflict",
+      "message_count": 4
+    },
+    {
+      "case_id": "ica-v2-h08",
+      "sha256": "3794eb1958cc4cf8e9e6ab7d26d4cb4cd16be25b1423543be82c448d5b0e1d5d",
+      "split": "holdout",
+      "family": "recurring_conflict",
+      "message_count": 4
+    },
+    {
+      "case_id": "ica-v2-h09",
+      "sha256": "13c0d7bc70a5f8d248494418c0fefae93c2456d0c3eb13e80fdea6d9bb81d4d3",
+      "split": "holdout",
+      "family": "recurring_conflict",
+      "message_count": 4
+    },
+    {
+      "case_id": "ica-v2-h10",
+      "sha256": "6edc1c866446b52295cb421dc9ca538a4cfd79a0ad24d50055768931ed8d048a",
+      "split": "holdout",
+      "family": "recurring_conflict",
+      "message_count": 4
+    },
+    {
+      "case_id": "ica-v2-h11",
+      "sha256": "d1911c2ee344aa6d1def26bda2bd42f36ebb0240d4d76d90451897d43b5d1a01",
+      "split": "holdout",
+      "family": "recurring_conflict",
+      "message_count": 4
+    },
+    {
+      "case_id": "ica-v2-h12",
+      "sha256": "58b2696ca24abe673ebe0b3565298ffff51edbe4ab010e8e4e0c9d70fbf55cb2",
+      "split": "holdout",
+      "family": "recurring_conflict",
+      "message_count": 4
+    },
+    {
+      "case_id": "ica-v2-h13",
+      "sha256": "814c6a23989a0aedeaa878aa34756471dcbe112a61f5da1c131b056b5ccd1074",
+      "split": "holdout",
+      "family": "temporal_change",
+      "message_count": 20
+    },
+    {
+      "case_id": "ica-v2-h14",
+      "sha256": "7d9dc28cbc7c55953db49fc9aa4dcebfc19491c736535b6bc3431cde20a236b0",
+      "split": "holdout",
+      "family": "temporal_change",
+      "message_count": 20
+    },
+    {
+      "case_id": "ica-v2-h15",
+      "sha256": "103e7a36e47b7849dd3e26b71c72a5fde52ce799c5de39b496d02c99bca4c2ee",
+      "split": "holdout",
+      "family": "temporal_change",
+      "message_count": 20
+    },
+    {
+      "case_id": "ica-v2-h16",
+      "sha256": "ce3d4dea8d1a44ee67cb2924375068ee9fb7ff53918aff6a74e5960a0f3e9747",
+      "split": "holdout",
+      "family": "temporal_change",
+      "message_count": 20
+    },
+    {
+      "case_id": "ica-v2-h17",
+      "sha256": "1bdf50c3082d74dad29f9fc939f19cc9da02263fc8514ed2039d9fff5f106371",
+      "split": "holdout",
+      "family": "temporal_change",
+      "message_count": 14
+    },
+    {
+      "case_id": "ica-v2-h18",
+      "sha256": "ea23d0b9c2ae1736319df2ed843c0741c690ce7fde6968e0c7643694f128b0fd",
+      "split": "holdout",
+      "family": "temporal_change",
+      "message_count": 20
+    },
+    {
+      "case_id": "ica-v2-h19",
+      "sha256": "c8b3f2898f6beb495969d5110db69a6a9da1796f07a2b98a8ac7323e06993197",
+      "split": "holdout",
+      "family": "counter_missing",
+      "message_count": 5
+    },
+    {
+      "case_id": "ica-v2-h20",
+      "sha256": "da2458134797fb47cd3b9a01699ecfb08a22135fa05cdebaa8760caddbb2a373",
+      "split": "holdout",
+      "family": "counter_missing",
+      "message_count": 5
+    },
+    {
+      "case_id": "ica-v2-h21",
+      "sha256": "584c8ea65026e283b2d9a7c209eeb679589a9f19d7e6a7d7221c56343781a645",
+      "split": "holdout",
+      "family": "counter_missing",
+      "message_count": 4
+    },
+    {
+      "case_id": "ica-v2-h22",
+      "sha256": "18b9485a6c7b6205260a16d902ad615c8a77d3c2c555075f566bd853804e905a",
+      "split": "holdout",
+      "family": "counter_missing",
+      "message_count": 3
+    },
+    {
+      "case_id": "ica-v2-h23",
+      "sha256": "7d4e41be4e6524b903ce164b251ab4ada4aa9174c823d059bdd1a035388469c3",
+      "split": "holdout",
+      "family": "safety_role",
+      "message_count": 3
+    },
+    {
+      "case_id": "ica-v2-h24",
+      "sha256": "b206fe760fd3cc57fe2a9aefbed0499a91c45661504f1c26099ef0983a7d076e",
+      "split": "holdout",
+      "family": "safety_role",
+      "message_count": 3
+    },
+    {
+      "case_id": "ica-v2-h25",
+      "sha256": "f1d5108fde199e572d7c7010356245c5d56bc29442cbf77c8e115ed64e106cfe",
+      "split": "holdout",
+      "family": "safety_role",
+      "message_count": 3
+    },
+    {
+      "case_id": "ica-v2-h26",
+      "sha256": "13b94c9c01bc2998590801bbf80b318fd4b4fdbd253583c5af6126635f5100ff",
+      "split": "holdout",
+      "family": "safety_role",
+      "message_count": 3
+    },
+    {
+      "case_id": "ica-v2-h27",
+      "sha256": "495f3b31ffed2c914412d7f281780408b928cee699b056bef0624bea73b6507c",
+      "split": "holdout",
+      "family": "safety_role",
+      "message_count": 3
+    },
+    {
+      "case_id": "ica-v2-h28",
+      "sha256": "df50d68263e5b307bc858ff0aa0bfc06583af950dce5eb35be1ef03fa29efadd",
+      "split": "holdout",
+      "family": "safety_role",
+      "message_count": 3
+    },
+    {
+      "case_id": "ica-v2-h29",
+      "sha256": "6214334700d3ba26ad8807c1de2d7a4977892bf3e8d31e89219ac031bc0bbf42",
+      "split": "holdout",
+      "family": "adversarial",
+      "message_count": 3
+    },
+    {
+      "case_id": "ica-v2-h30",
+      "sha256": "defcb1962ab9b809557884716fd77d879f47efe0fcca4a5ca24604ac2a00fc3b",
+      "split": "holdout",
+      "family": "adversarial",
+      "message_count": 3
+    },
+    {
+      "case_id": "ica-v2-h31",
+      "sha256": "d80c90251110c5876096324dc4e8c8e8ee9df7f3e4acca5b6e5ab1c027661281",
+      "split": "holdout",
+      "family": "adversarial",
+      "message_count": 4
+    },
+    {
+      "case_id": "ica-v2-h32",
+      "sha256": "516b188a6ce0580eea257f7cd12ccd781508205d5a7319179e15b43272c5cc8b",
+      "split": "holdout",
+      "family": "adversarial",
+      "message_count": 2
+    }
+  ],
+  "development": [
+    "ica-v2-d01",
+    "ica-v2-d02",
+    "ica-v2-d03",
+    "ica-v2-d04",
+    "ica-v2-d05",
+    "ica-v2-d06",
+    "ica-v2-d07",
+    "ica-v2-d08",
+    "ica-v2-d09",
+    "ica-v2-d10",
+    "ica-v2-d11",
+    "ica-v2-d12",
+    "ica-v2-d13",
+    "ica-v2-d14",
+    "ica-v2-d15",
+    "ica-v2-d16"
+  ],
+  "holdout": [
+    "ica-v2-h01",
+    "ica-v2-h02",
+    "ica-v2-h03",
+    "ica-v2-h04",
+    "ica-v2-h05",
+    "ica-v2-h06",
+    "ica-v2-h07",
+    "ica-v2-h08",
+    "ica-v2-h09",
+    "ica-v2-h10",
+    "ica-v2-h11",
+    "ica-v2-h12",
+    "ica-v2-h13",
+    "ica-v2-h14",
+    "ica-v2-h15",
+    "ica-v2-h16",
+    "ica-v2-h17",
+    "ica-v2-h18",
+    "ica-v2-h19",
+    "ica-v2-h20",
+    "ica-v2-h21",
+    "ica-v2-h22",
+    "ica-v2-h23",
+    "ica-v2-h24",
+    "ica-v2-h25",
+    "ica-v2-h26",
+    "ica-v2-h27",
+    "ica-v2-h28",
+    "ica-v2-h29",
+    "ica-v2-h30",
+    "ica-v2-h31",
+    "ica-v2-h32"
+  ],
+  "ordinary_holdout": [
+    "ica-v2-h01",
+    "ica-v2-h02",
+    "ica-v2-h03",
+    "ica-v2-h04",
+    "ica-v2-h05",
+    "ica-v2-h06",
+    "ica-v2-h07",
+    "ica-v2-h08",
+    "ica-v2-h09",
+    "ica-v2-h10",
+    "ica-v2-h11",
+    "ica-v2-h12",
+    "ica-v2-h13",
+    "ica-v2-h14",
+    "ica-v2-h15",
+    "ica-v2-h16",
+    "ica-v2-h17",
+    "ica-v2-h18",
+    "ica-v2-h19",
+    "ica-v2-h20",
+    "ica-v2-h21",
+    "ica-v2-h22"
+  ],
+  "safety_holdout": [
+    "ica-v2-h23",
+    "ica-v2-h24",
+    "ica-v2-h25",
+    "ica-v2-h26",
+    "ica-v2-h27",
+    "ica-v2-h28"
+  ],
+  "adversarial_holdout": [
+    "ica-v2-h29",
+    "ica-v2-h30",
+    "ica-v2-h31",
+    "ica-v2-h32"
+  ],
+  "engineering_development": [
+    "ica-v2-d15",
+    "ica-v2-d16"
+  ],
+  "read_sources": [
+    {
+      "path": "AGENTS.md",
+      "sha256": "146beb55787cc6d9dde905a516fd55f95c6810dc92493c000641dc8a81d87965"
+    },
+    {
+      "path": "docs/MASTER_PLAN.md",
+      "sha256": "44a5e710fa58cb7601672c066e9d537010872defc8bb6e3b775bc9319bfdfec2"
+    },
+    {
+      "path": "docs/ARCHITECTURE.md",
+      "sha256": "3c1aee858ab04f6a570250f662e0e1074b6f4d9019bd69961a8c91890591f4db"
+    },
+    {
+      "path": "docs/SKILL_CONTRACT.md",
+      "sha256": "5a710230d01725b2b65aaef6ef8553a2e8a071b59ddb1c9b5c8a906a0ad1bff7"
+    },
+    {
+      "path": "docs/ICA_B0_CONTRACT.md",
+      "sha256": "951fedd30de44d456edac64da13515b7ae7fa858514f6dfc04d443c0dfb7be6d"
+    },
+    {
+      "path": "docs/ICA_BQ_EVAL_CONTRACT.md",
+      "sha256": "9090d1464cf7509dc237ba4a5c6be242ad728f44561394b817dbf512294f275a"
+    },
+    {
+      "path": "knowledge/goutoujunshi/SKILL.md",
+      "sha256": "3435a9414a177f37d3b31fdccb0f25b071d21139b1efe4487beffb5b8bf083a8"
+    },
+    {
+      "path": "knowledge/goutoujunshi/references/knowledge/07-沟通冲突与修复.md",
+      "sha256": "f787bc457346a2c1be331826d4ebbdcb808248fab8f247532b97a3cf0a454d48"
+    },
+    {
+      "path": "knowledge/goutoujunshi/references/knowledge/09-在线约会与数字关系.md",
+      "sha256": "df25a7abe534666d61437b4cd146462c9d9ea87fb7f6826d50f6d468da57281d"
+    },
+    {
+      "path": "knowledge/goutoujunshi/references/knowledge/17-中国法律安全与危机转介.md",
+      "sha256": "d59805633112fa6f975e87ef35a4ebe10bff9a0bac1fe90396ec6d99e564bb64"
+    },
+    {
+      "path": "knowledge/goutoujunshi/references/practical/ChatLab聊天记录分析适配.md",
+      "sha256": "6b9d26a247ff1cc8828b950d27b6357c484baffd3cdca673c6b5ce728bb7e5b4"
+    },
+    {
+      "path": "apps/server/app/agent/imported_contracts.py",
+      "sha256": "f35551c4dd4d5d6205e56d6ea842a3222404473e6acb62cd6c2942c13d2f13e0"
+    },
+    {
+      "path": "apps/server/app/agent/imported_quote.py",
+      "sha256": "9e11cf30edcf07416eb454a211397e3fc9298bde15c787e6b1afc1e2956d1558"
+    },
+    {
+      "path": "apps/server/app/agent/imported_analysis.py",
+      "sha256": "23a91572ad398da6a3d147c9017dcdddd081611556da2a7c5e0bb3bea97161d6"
+    },
+    {
+      "path": "apps/server/app/chat_import/analysis_scope.py",
+      "sha256": "92fd2d8040635a4f5343ad80407e92a5d526c0e085ba5a16d4b0aa3a23394741"
+    },
+    {
+      "path": "evals/ica/runner.py",
+      "sha256": "a5c95173f9299f6dc1b5c0f753e7c568256e933089c15d23f32c17f9127a78e0"
+    }
+  ],
+  "independence": {
+    "new_case_author": true,
+    "excluded_reads": [
+      "evals/ica/v1",
+      "docs/evidence/ica-bq",
+      "old model outputs",
+      "human scores",
+      "quote-migration-replay"
+    ],
+    "limits": "Agent author has no old case/output/score exposure in this authoring task; repository access is not independent human custody or semantic approval."
+  }
+}

@@ -1,0 +1,13 @@
+Traceback (most recent call last):
+  File "<frozen runpy>", line 203, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "F:\狗头军师app化\goutouapp\evals\ica\review.py", line 774, in <module>
+    main()
+    ~~~~^^
+  File "F:\狗头军师app化\goutouapp\evals\ica\review.py", line 765, in main
+    with args.output.open("x", encoding="utf-8", newline="\n") as output:
+         ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\python\Lib\pathlib\__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileExistsError: [Errno 17] File exists: 'docs\\evidence\\ica-bq-v2\\human-review-pending.json'

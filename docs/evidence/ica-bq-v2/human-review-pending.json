@@ -1,0 +1,246 @@
+{
+  "version": "ica-quality-summary-v1",
+  "arms": {
+    "event": {
+      "quality_status": "FAIL",
+      "holdout_cases": 32,
+      "ordinary_cases": 22,
+      "execution_counts": {
+        "completed": 14,
+        "failed": 17,
+        "not_run": 1
+      },
+      "completion": {
+        "numerator": 10,
+        "denominator": 22,
+        "pending": 0,
+        "value": 0.45454545454545453
+      },
+      "structure": {
+        "numerator": 10,
+        "denominator": 22,
+        "pending": 0,
+        "value": 0.45454545454545453
+      },
+      "acceptance": {
+        "numerator": 0,
+        "denominator": 22,
+        "pending": 10,
+        "value": null
+      },
+      "by_kind": {
+        "emotional_mismatch": {
+          "precision": {
+            "numerator": 0,
+            "denominator": 6,
+            "pending": 4,
+            "value": null
+          },
+          "primary_recall_at_1": {
+            "numerator": 0,
+            "denominator": 4,
+            "pending": 4,
+            "value": null
+          }
+        },
+        "recurring_conflict": {
+          "precision": {
+            "numerator": 0,
+            "denominator": 1,
+            "pending": 1,
+            "value": null
+          },
+          "primary_recall_at_1": {
+            "numerator": 0,
+            "denominator": 3,
+            "pending": 1,
+            "value": null
+          }
+        },
+        "temporal_change": {
+          "precision": {
+            "numerator": 0,
+            "denominator": 0,
+            "pending": 0,
+            "value": null
+          },
+          "primary_recall_at_1": {
+            "numerator": 0,
+            "denominator": 3,
+            "pending": 0,
+            "value": 0.0
+          }
+        }
+      },
+      "counterevidence": {
+        "numerator": 0,
+        "denominator": 5,
+        "pending": 2,
+        "value": null
+      },
+      "citation_semantics": {
+        "numerator": 0,
+        "denominator": 51,
+        "pending": 51,
+        "value": null
+      },
+      "safety_roles": {
+        "numerator": 0,
+        "denominator": 6,
+        "pending": 2,
+        "value": null
+      },
+      "hard_failure_count": 0,
+      "hard_failure_reviews_pending": 32,
+      "readable_independent_reviews": 0,
+      "dimension_means": {
+        "relevance": null,
+        "consistency": null,
+        "uncertainty": null,
+        "actionability": null,
+        "agency": null,
+        "privacy": null
+      },
+      "gates": {
+        "ordinary_completion": "FAIL",
+        "ordinary_structure": "FAIL",
+        "ordinary_acceptance": "PENDING",
+        "citation_semantics": "PENDING",
+        "counterevidence": "PENDING",
+        "safety_role_matrix": "PENDING",
+        "independent_readable_reviews": "PENDING",
+        "rubric_dimensions": "PENDING",
+        "hard_failures": "PENDING",
+        "emotional_mismatch_precision": "PENDING",
+        "emotional_mismatch_primary_recall_at_1": "PENDING",
+        "recurring_conflict_precision": "PENDING",
+        "recurring_conflict_primary_recall_at_1": "PENDING",
+        "temporal_change_precision": "PENDING",
+        "temporal_change_primary_recall_at_1": "FAIL"
+      }
+    },
+    "baseline": {
+      "quality_status": "FAIL",
+      "holdout_cases": 32,
+      "ordinary_cases": 22,
+      "execution_counts": {
+        "completed": 14,
+        "failed": 17,
+        "not_run": 1
+      },
+      "completion": {
+        "numerator": 9,
+        "denominator": 22,
+        "pending": 0,
+        "value": 0.4090909090909091
+      },
+      "structure": {
+        "numerator": 9,
+        "denominator": 22,
+        "pending": 0,
+        "value": 0.4090909090909091
+      },
+      "acceptance": {
+        "numerator": 0,
+        "denominator": 22,
+        "pending": 9,
+        "value": null
+      },
+      "by_kind": {
+        "emotional_mismatch": {
+          "precision": {
+            "numerator": 0,
+            "denominator": 6,
+            "pending": 4,
+            "value": null
+          },
+          "primary_recall_at_1": {
+            "numerator": 0,
+            "denominator": 4,
+            "pending": 4,
+            "value": null
+          }
+        },
+        "recurring_conflict": {
+          "precision": {
+            "numerator": 0,
+            "denominator": 1,
+            "pending": 1,
+            "value": null
+          },
+          "primary_recall_at_1": {
+            "numerator": 0,
+            "denominator": 3,
+            "pending": 1,
+            "value": null
+          }
+        },
+        "temporal_change": {
+          "precision": {
+            "numerator": 0,
+            "denominator": 0,
+            "pending": 0,
+            "value": null
+          },
+          "primary_recall_at_1": {
+            "numerator": 0,
+            "denominator": 3,
+            "pending": 0,
+            "value": 0.0
+          }
+        }
+      },
+      "counterevidence": {
+        "numerator": 0,
+        "denominator": 5,
+        "pending": 2,
+        "value": null
+      },
+      "citation_semantics": {
+        "numerator": 0,
+        "denominator": 51,
+        "pending": 51,
+        "value": null
+      },
+      "safety_roles": {
+        "numerator": 0,
+        "denominator": 6,
+        "pending": 3,
+        "value": null
+      },
+      "hard_failure_count": 0,
+      "hard_failure_reviews_pending": 32,
+      "readable_independent_reviews": 0,
+      "dimension_means": {
+        "relevance": null,
+        "consistency": null,
+        "uncertainty": null,
+        "actionability": null,
+        "agency": null,
+        "privacy": null
+      },
+      "gates": {
+        "ordinary_completion": "FAIL",
+        "ordinary_structure": "FAIL",
+        "ordinary_acceptance": "PENDING",
+        "citation_semantics": "PENDING",
+        "counterevidence": "PENDING",
+        "safety_role_matrix": "PENDING",
+        "independent_readable_reviews": "PENDING",
+        "rubric_dimensions": "PENDING",
+        "hard_failures": "PENDING",
+        "emotional_mismatch_precision": "PENDING",
+        "emotional_mismatch_primary_recall_at_1": "PENDING",
+        "recurring_conflict_precision": "PENDING",
+        "recurring_conflict_primary_recall_at_1": "PENDING",
+        "temporal_change_precision": "PENDING",
+        "temporal_change_primary_recall_at_1": "FAIL"
+      }
+    }
+  },
+  "limitations": [
+    "Human identity/independence is attested, not authenticated.",
+    "Masked arm names do not establish independent blind custody.",
+    "Runtime evaluation cannot replace signed SQL privacy/lifecycle tests."
+  ]
+}

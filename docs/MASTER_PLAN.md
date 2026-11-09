@@ -6,6 +6,28 @@ licensed and its content hashes are frozen in `knowledge/upstream-manifest.json`
 
 ## Phase gate
 
+2026-11-09 next-step authorization: **ICA-BQ-V2 preparation**. Freeze new
+independently authored synthetic cases, quote-v2 wire schemas, a current-price
+one-batch plan and readable human-review materials. No production Agent behavior,
+ICA-C/longitudinal expansion or marker changes. A fresh paid budget approval must
+bind the concrete plan before sending; the consumed v1 CNY20 approval is not reused.
+Notify the user when real outputs require human review; do not fill their scores.
+Protocol: [ICA-BQ-V2](ICA_BQ_V2_EVAL_CONTRACT.md). Quality remains FAIL / PARTIAL.
+
+2026-11-09 explicit budget reply authorizes exactly the frozen v2 plan SHA256
+`4b892761e50eafa92c0481f5d2dcacd9132822790f4ea64c6eb597e60062e4ee`:
+DeepSeek, aggregate CNY20, no automatic retries. Freeze all executable sources
+before the first send. One claimed batch only; failed/not_run cases remain in
+denominators. Actual independent human review is required after readable output.
+
+2026-11-09 ICA-BQ-V2 result: **QUALITY FAIL / PARTIAL**, human review pending.
+One approved batch:233 real calls, no retries/unknowns, prepaid CNY19.935784;
+peak/cache usage estimate CNY1.87753784 (not an invoice). Ordinary completion
+event10/22, baseline9/22;28 published reports across64 runs,34 failures,2 not_run.
+Targeted offline309 and client-codegen3 pass; no production behavior change or
+fresh PG/Mobile full regression. Human source/report packet is ready; scores remain
+null. See [ICA_BQ_V2_ACCEPTANCE](ICA_BQ_V2_ACCEPTANCE.md). Stop; no extra paid batch.
+
 2026-11-09 continuation: **ICA-BQ-R1 offline evidence protocol repair** only.
 Versioned contract: [ICA-BQ-R1](ICA_BQ_R1_CONTRACT.md). Introduce an explicit
 quote-v2 model wire protocol while preserving canonical Unicode spans, strict

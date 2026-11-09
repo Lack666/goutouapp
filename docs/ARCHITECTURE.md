@@ -1,5 +1,12 @@
 # Architecture direction
 
+ICA-BQ-V2 adds a separate plan-bound quote-v2 synthetic evaluation CLI, independent
+case set and readable masked human review export. It binds every actual send to
+frozen code/schema/tariff and a fresh budget approval, with durable prepaid admission
+and exclusive claim. First batch remains QUALITY FAIL / PARTIAL; published source
+validity is not semantic quality. No production Agent, DB authority or Mobile changes.
+See ICA_BQ_V2_EVAL_CONTRACT.md and ICA_BQ_V2_ACCEPTANCE.md.
+
 ICA-BQ-R1 uses quote-v2 only on the model wire: alias/speaker/exact unique quote
 resolve inside the current authorized chunk before canonical span validation and
 successful receipts. Stored/HTTP Unicode spans remain unchanged. Explicit span-v1

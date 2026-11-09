@@ -1,0 +1,11 @@
+{
+  "version": "ica-bq-budget-approval-v2",
+  "confirmed": true,
+  "approval_reference": "2026-11-09 explicit user reply: authorize this batch at most CNY20; no automatic retries",
+  "plan_sha256": "4b892761e50eafa92c0481f5d2dcacd9132822790f4ea64c6eb597e60062e4ee",
+  "model": "deepseek-flash",
+  "max_cost_cny": "20",
+  "no_retries": true,
+  "approved_at": "2026-11-09T05:38:31.386122+00:00",
+  "expires_at": "2026-11-10T05:38:31.386122+00:00"
+}

@@ -1,0 +1,14 @@
+$ pnpm --filter @goutou/api-codegen check
+$ node generate-api.mjs --check && node --test generate-api.test.mjs
+PASS: deterministic generated client (52 operations)
+✔ same authoritative input generates byte-identical client twice (514.149ms)
+✔ input drift fails the same check without modifying the authority file (176.8319ms)
+✔ manual generated output changes fail check (0.1799ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1110.946

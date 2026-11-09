@@ -1,0 +1,575 @@
+{
+  "version": "ica-bq-batch-v2",
+  "case_set": "v2",
+  "evidence_protocol": "quote-v2",
+  "source_fingerprint": "717d6effdafd59b90cfc67d04718d684024834292830add2865a0375d006e76d",
+  "wire_schema_sha256": {
+    "safety": "dac479e5cf04d354cfc043d1a215edb949b4cdefc7244beef63badbb9b24573d",
+    "interaction": "1a232a8b945d2e3918e7b9b29b47ceba1a80c98c875a758936b1ee4768df5f80",
+    "counterevidence": "7f9e3cf27cbf256e286692ef16d51fbdc2e2c4e905a0930523ea55f79bda3ae9",
+    "synthesis": "7a3be5cf3a418282292f0929c0f38d04d06c6b60ba8dd0a7b8a0662d030125a7",
+    "content_review": "72da2cc533bfd2243610fb3b10f833d24519fccbf6bb1c55f8130e4806298f54"
+  },
+  "cases_sha256": "15e1d48fff423456f6144bcf64cf639c13b6303af5ff4959129f955fc3b7a379",
+  "manifest_sha256": "3198d33120e33383e09bef30972fbeb69f8b362477450dbba478e9f16bab2ba6",
+  "provider_base_url": "https://api.deepseek.com",
+  "model": "deepseek-flash",
+  "thinking": "disabled",
+  "temperature": 0,
+  "tariff": {
+    "version": "deepseek-flash-2026-11-09-peak-cny",
+    "source": "https://api-docs.deepseek.com/zh-cn/quick_start/pricing/",
+    "checked_at": "2026-11-09",
+    "model": "deepseek-flash",
+    "documented_version": "DeepSeek-V4.1-Flash-1017",
+    "currency": "CNY",
+    "hit_per_million": "0.04",
+    "miss_per_million": "2",
+    "output_per_million": "8"
+  },
+  "case_ids": [
+    "ica-v2-h01",
+    "ica-v2-h02",
+    "ica-v2-h03",
+    "ica-v2-h04",
+    "ica-v2-h05",
+    "ica-v2-h06",
+    "ica-v2-h07",
+    "ica-v2-h08",
+    "ica-v2-h09",
+    "ica-v2-h10",
+    "ica-v2-h11",
+    "ica-v2-h12",
+    "ica-v2-h13",
+    "ica-v2-h14",
+    "ica-v2-h15",
+    "ica-v2-h16",
+    "ica-v2-h17",
+    "ica-v2-h18",
+    "ica-v2-h19",
+    "ica-v2-h20",
+    "ica-v2-h21",
+    "ica-v2-h22",
+    "ica-v2-h23",
+    "ica-v2-h24",
+    "ica-v2-h25",
+    "ica-v2-h26",
+    "ica-v2-h27",
+    "ica-v2-h28",
+    "ica-v2-h29",
+    "ica-v2-h30",
+    "ica-v2-h31",
+    "ica-v2-h32"
+  ],
+  "arms": [
+    "event",
+    "baseline"
+  ],
+  "execution_order": [
+    {
+      "case_id": "ica-v2-h01",
+      "arm": "event"
+    },
+    {
+      "case_id": "ica-v2-h01",
+      "arm": "baseline"
+    },
+    {
+      "case_id": "ica-v2-h02",
+      "arm": "baseline"
+    },
+    {
+      "case_id": "ica-v2-h02",
+      "arm": "event"
+    },
+    {
+      "case_id": "ica-v2-h03",
+      "arm": "event"
+    },
+    {
+      "case_id": "ica-v2-h03",
+      "arm": "baseline"
+    },
+    {
+      "case_id": "ica-v2-h04",
+      "arm": "baseline"
+    },
+    {
+      "case_id": "ica-v2-h04",
+      "arm": "event"
+    },
+    {
+      "case_id": "ica-v2-h05",
+      "arm": "event"
+    },
+    {
+      "case_id": "ica-v2-h05",
+      "arm": "baseline"
+    },
+    {
+      "case_id": "ica-v2-h06",
+      "arm": "baseline"
+    },
+    {
+      "case_id": "ica-v2-h06",
+      "arm": "event"
+    },
+    {
+      "case_id": "ica-v2-h07",
+      "arm": "event"
+    },
+    {
+      "case_id": "ica-v2-h07",
+      "arm": "baseline"
+    },
+    {
+      "case_id": "ica-v2-h08",
+      "arm": "baseline"
+    },
+    {
+      "case_id": "ica-v2-h08",
+      "arm": "event"
+    },
+    {
+      "case_id": "ica-v2-h09",
+      "arm": "event"
+    },
+    {
+      "case_id": "ica-v2-h09",
+      "arm": "baseline"
+    },
+    {
+      "case_id": "ica-v2-h10",
+      "arm": "baseline"
+    },
+    {
+      "case_id": "ica-v2-h10",
+      "arm": "event"
+    },
+    {
+      "case_id": "ica-v2-h11",
+      "arm": "event"
+    },
+    {
+      "case_id": "ica-v2-h11",
+      "arm": "baseline"
+    },
+    {
+      "case_id": "ica-v2-h12",
+      "arm": "baseline"
+    },
+    {
+      "case_id": "ica-v2-h12",
+      "arm": "event"
+    },
+    {
+      "case_id": "ica-v2-h13",
+      "arm": "event"
+    },
+    {
+      "case_id": "ica-v2-h13",
+      "arm": "baseline"
+    },
+    {
+      "case_id": "ica-v2-h14",
+      "arm": "baseline"
+    },
+    {
+      "case_id": "ica-v2-h14",
+      "arm": "event"
+    },
+    {
+      "case_id": "ica-v2-h15",
+      "arm": "event"
+    },
+    {
+      "case_id": "ica-v2-h15",
+      "arm": "baseline"
+    },
+    {
+      "case_id": "ica-v2-h16",
+      "arm": "baseline"
+    },
+    {
+      "case_id": "ica-v2-h16",
+      "arm": "event"
+    },
+    {
+      "case_id": "ica-v2-h17",
+      "arm": "event"
+    },
+    {
+      "case_id": "ica-v2-h17",
+      "arm": "baseline"
+    },
+    {
+      "case_id": "ica-v2-h18",
+      "arm": "baseline"
+    },
+    {
+      "case_id": "ica-v2-h18",
+      "arm": "event"
+    },
+    {
+      "case_id": "ica-v2-h19",
+      "arm": "event"
+    },
+    {
+      "case_id": "ica-v2-h19",
+      "arm": "baseline"
+    },
+    {
+      "case_id": "ica-v2-h20",
+      "arm": "baseline"
+    },
+    {
+      "case_id": "ica-v2-h20",
+      "arm": "event"
+    },
+    {
+      "case_id": "ica-v2-h21",
+      "arm": "event"
+    },
+    {
+      "case_id": "ica-v2-h21",
+      "arm": "baseline"
+    },
+    {
+      "case_id": "ica-v2-h22",
+      "arm": "baseline"
+    },
+    {
+      "case_id": "ica-v2-h22",
+      "arm": "event"
+    },
+    {
+      "case_id": "ica-v2-h23",
+      "arm": "event"
+    },
+    {
+      "case_id": "ica-v2-h23",
+      "arm": "baseline"
+    },
+    {
+      "case_id": "ica-v2-h24",
+      "arm": "baseline"
+    },
+    {
+      "case_id": "ica-v2-h24",
+      "arm": "event"
+    },
+    {
+      "case_id": "ica-v2-h25",
+      "arm": "event"
+    },
+    {
+      "case_id": "ica-v2-h25",
+      "arm": "baseline"
+    },
+    {
+      "case_id": "ica-v2-h26",
+      "arm": "baseline"
+    },
+    {
+      "case_id": "ica-v2-h26",
+      "arm": "event"
+    },
+    {
+      "case_id": "ica-v2-h27",
+      "arm": "event"
+    },
+    {
+      "case_id": "ica-v2-h27",
+      "arm": "baseline"
+    },
+    {
+      "case_id": "ica-v2-h28",
+      "arm": "baseline"
+    },
+    {
+      "case_id": "ica-v2-h28",
+      "arm": "event"
+    },
+    {
+      "case_id": "ica-v2-h29",
+      "arm": "event"
+    },
+    {
+      "case_id": "ica-v2-h29",
+      "arm": "baseline"
+    },
+    {
+      "case_id": "ica-v2-h30",
+      "arm": "baseline"
+    },
+    {
+      "case_id": "ica-v2-h30",
+      "arm": "event"
+    },
+    {
+      "case_id": "ica-v2-h31",
+      "arm": "event"
+    },
+    {
+      "case_id": "ica-v2-h31",
+      "arm": "baseline"
+    },
+    {
+      "case_id": "ica-v2-h32",
+      "arm": "baseline"
+    },
+    {
+      "case_id": "ica-v2-h32",
+      "arm": "event"
+    }
+  ],
+  "scopes": [
+    {
+      "case_id": "ica-v2-h01",
+      "messages": 4,
+      "K": 1,
+      "graph_requests_upper": 5,
+      "scope_requests_upper": 11
+    },
+    {
+      "case_id": "ica-v2-h02",
+      "messages": 4,
+      "K": 1,
+      "graph_requests_upper": 5,
+      "scope_requests_upper": 11
+    },
+    {
+      "case_id": "ica-v2-h03",
+      "messages": 3,
+      "K": 1,
+      "graph_requests_upper": 5,
+      "scope_requests_upper": 11
+    },
+    {
+      "case_id": "ica-v2-h04",
+      "messages": 4,
+      "K": 1,
+      "graph_requests_upper": 5,
+      "scope_requests_upper": 11
+    },
+    {
+      "case_id": "ica-v2-h05",
+      "messages": 4,
+      "K": 1,
+      "graph_requests_upper": 5,
+      "scope_requests_upper": 11
+    },
+    {
+      "case_id": "ica-v2-h06",
+      "messages": 4,
+      "K": 1,
+      "graph_requests_upper": 5,
+      "scope_requests_upper": 11
+    },
+    {
+      "case_id": "ica-v2-h07",
+      "messages": 4,
+      "K": 1,
+      "graph_requests_upper": 5,
+      "scope_requests_upper": 11
+    },
+    {
+      "case_id": "ica-v2-h08",
+      "messages": 4,
+      "K": 1,
+      "graph_requests_upper": 5,
+      "scope_requests_upper": 11
+    },
+    {
+      "case_id": "ica-v2-h09",
+      "messages": 4,
+      "K": 1,
+      "graph_requests_upper": 5,
+      "scope_requests_upper": 11
+    },
+    {
+      "case_id": "ica-v2-h10",
+      "messages": 4,
+      "K": 1,
+      "graph_requests_upper": 5,
+      "scope_requests_upper": 11
+    },
+    {
+      "case_id": "ica-v2-h11",
+      "messages": 4,
+      "K": 1,
+      "graph_requests_upper": 5,
+      "scope_requests_upper": 11
+    },
+    {
+      "case_id": "ica-v2-h12",
+      "messages": 4,
+      "K": 1,
+      "graph_requests_upper": 5,
+      "scope_requests_upper": 11
+    },
+    {
+      "case_id": "ica-v2-h13",
+      "messages": 20,
+      "K": 2,
+      "graph_requests_upper": 8,
+      "scope_requests_upper": 14
+    },
+    {
+      "case_id": "ica-v2-h14",
+      "messages": 20,
+      "K": 2,
+      "graph_requests_upper": 8,
+      "scope_requests_upper": 14
+    },
+    {
+      "case_id": "ica-v2-h15",
+      "messages": 20,
+      "K": 2,
+      "graph_requests_upper": 8,
+      "scope_requests_upper": 14
+    },
+    {
+      "case_id": "ica-v2-h16",
+      "messages": 20,
+      "K": 2,
+      "graph_requests_upper": 8,
+      "scope_requests_upper": 14
+    },
+    {
+      "case_id": "ica-v2-h17",
+      "messages": 14,
+      "K": 2,
+      "graph_requests_upper": 8,
+      "scope_requests_upper": 14
+    },
+    {
+      "case_id": "ica-v2-h18",
+      "messages": 20,
+      "K": 2,
+      "graph_requests_upper": 8,
+      "scope_requests_upper": 14
+    },
+    {
+      "case_id": "ica-v2-h19",
+      "messages": 5,
+      "K": 1,
+      "graph_requests_upper": 5,
+      "scope_requests_upper": 11
+    },
+    {
+      "case_id": "ica-v2-h20",
+      "messages": 5,
+      "K": 1,
+      "graph_requests_upper": 5,
+      "scope_requests_upper": 11
+    },
+    {
+      "case_id": "ica-v2-h21",
+      "messages": 4,
+      "K": 1,
+      "graph_requests_upper": 5,
+      "scope_requests_upper": 11
+    },
+    {
+      "case_id": "ica-v2-h22",
+      "messages": 3,
+      "K": 1,
+      "graph_requests_upper": 5,
+      "scope_requests_upper": 11
+    },
+    {
+      "case_id": "ica-v2-h23",
+      "messages": 3,
+      "K": 1,
+      "graph_requests_upper": 5,
+      "scope_requests_upper": 11
+    },
+    {
+      "case_id": "ica-v2-h24",
+      "messages": 3,
+      "K": 1,
+      "graph_requests_upper": 5,
+      "scope_requests_upper": 11
+    },
+    {
+      "case_id": "ica-v2-h25",
+      "messages": 3,
+      "K": 1,
+      "graph_requests_upper": 5,
+      "scope_requests_upper": 11
+    },
+    {
+      "case_id": "ica-v2-h26",
+      "messages": 3,
+      "K": 1,
+      "graph_requests_upper": 5,
+      "scope_requests_upper": 11
+    },
+    {
+      "case_id": "ica-v2-h27",
+      "messages": 3,
+      "K": 1,
+      "graph_requests_upper": 5,
+      "scope_requests_upper": 11
+    },
+    {
+      "case_id": "ica-v2-h28",
+      "messages": 3,
+      "K": 1,
+      "graph_requests_upper": 5,
+      "scope_requests_upper": 11
+    },
+    {
+      "case_id": "ica-v2-h29",
+      "messages": 3,
+      "K": 1,
+      "graph_requests_upper": 5,
+      "scope_requests_upper": 11
+    },
+    {
+      "case_id": "ica-v2-h30",
+      "messages": 3,
+      "K": 1,
+      "graph_requests_upper": 5,
+      "scope_requests_upper": 11
+    },
+    {
+      "case_id": "ica-v2-h31",
+      "messages": 4,
+      "K": 1,
+      "graph_requests_upper": 5,
+      "scope_requests_upper": 11
+    },
+    {
+      "case_id": "ica-v2-h32",
+      "messages": 2,
+      "K": 1,
+      "graph_requests_upper": 5,
+      "scope_requests_upper": 11
+    }
+  ],
+  "max_requests": 400,
+  "max_reserved_tokens": 10000000,
+  "max_cost_cny": "20",
+  "max_output_tokens": 4096,
+  "max_input_bytes": 131072,
+  "graph_requests_upper": 356,
+  "scope_requests_upper": 740,
+  "worst_envelope_reserved_tokens": 49577984,
+  "worst_envelope_cost_cny": "107.905024",
+  "complete_envelope_within_budget": false,
+  "full_completion_guaranteed": false,
+  "no_retries": true,
+  "synthetic_only": true,
+  "new_budget_approval_required": true,
+  "human_quality": "pending independent human review",
+  "stop_conditions": [
+    "budget admission failure",
+    "unknown response or missing usage",
+    "source/schema drift",
+    "usage above reservation",
+    "safety oracle route mismatch",
+    "manual stop"
+  ]
+}

@@ -35,3 +35,6 @@ evals/ica/safety_role_cases.v1.json -text whitespace=cr-at-eol
 docs/evidence/ica-bq/** -text whitespace=-blank-at-eol,-blank-at-eof,-space-before-tab,cr-at-eol
 # R1 offline diagnostics and signed snapshots are independent immutable evidence.
 docs/evidence/ica-bq-r1/** -text whitespace=-blank-at-eol,-blank-at-eof,-space-before-tab,cr-at-eol
+# Independent v2 cases/provenance and evaluation preparation retain frozen bytes.
+evals/ica/v2/** -text whitespace=cr-at-eol
+docs/evidence/ica-bq-v2/** -text whitespace=-blank-at-eol,-blank-at-eof,-space-before-tab,cr-at-eol

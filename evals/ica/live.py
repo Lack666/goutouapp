@@ -72,6 +72,7 @@ class BatchBudget:
         if self.path.exists():
             raise ValueError("Existing call ledger: automatic replay forbidden")
         self.plan, self.context = plan, {}
+        self.tariff = plan.get("tariff", PRICE)
         self.calls, self.tokens, self.reserved, self.exhausted = [], 0, Decimal(0), False
 
     def reserve(self, payload):
@@ -83,7 +84,10 @@ class BatchBudget:
         # The actual adapter payload already contains the full inline JSON Schema.
         size = len(json.dumps(payload, ensure_ascii=False).encode())
         inputs = size + 4096
-        upper = Decimal(inputs * 2 + output * 8) / 1_000_000
+        upper = (
+            inputs * Decimal(self.tariff["miss_per_million"])
+            + output * Decimal(self.tariff["output_per_million"])
+        ) / 1_000_000
         if (
             self.exhausted
             or len(self.calls) >= self.plan["max_requests"]
@@ -118,7 +122,11 @@ class BatchBudget:
         ):
             # Peak, cache-miss estimate remains an upper bound when cache detail is absent.
             actual = str(
-                Decimal(usage["input_tokens"] * 2 + usage["output_tokens"] * 8) / 1_000_000
+                (
+                    usage["input_tokens"] * Decimal(self.tariff["miss_per_million"])
+                    + usage["output_tokens"] * Decimal(self.tariff["output_per_million"])
+                )
+                / 1_000_000
             )
         event = {
             "call_id": call["call_id"],

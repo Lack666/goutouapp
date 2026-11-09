@@ -1,0 +1,12 @@
+{
+  "stage": "synthesis",
+  "serialized_input_bytes": 22059,
+  "request_reservation_cny": "0.085078",
+  "existing_reservation_cny": "19.935784",
+  "would_reserve_cny": "20.020862",
+  "exceeds_money_cap": true,
+  "exceeds_input_cap": false,
+  "external_provider_calls": 0,
+  "diagnostic_only": true,
+  "batch_plan_sha256": "4b892761e50eafa92c0481f5d2dcacd9132822790f4ea64c6eb597e60062e4ee"
+}
