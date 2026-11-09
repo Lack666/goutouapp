@@ -1,5 +1,12 @@
 # Architecture direction
 
+ICA-BQ-R1 uses quote-v2 only on the model wire: alias/speaker/exact unique quote
+resolve inside the current authorized chunk before canonical span validation and
+successful receipts. Stored/HTTP Unicode spans remain unchanged. Explicit span-v1
+supports historical rejection replays; no automatic fallback. The resolver and
+protocol bind execution fingerprints and actual schema admission. Offline migration
+of disclosed outputs cannot establish new model quality. See ICA_BQ_R1_CONTRACT.md.
+
 ICA-BQ adds a strict safety user_role (default unclear) and role-specific controlled
 protective_role_v2 text, retaining exact publication validation. Separate synthetic
 evaluation tooling freezes cases/sources, uses one durable claim and prepaid wire

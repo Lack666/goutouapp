@@ -1,0 +1,11 @@
+$ jest --runInBand "--" "tests/connectedImport.test.ts" "tests/filePicker.test.ts" "tests/connectedImportUI.test.tsx" "tests/sessionIsolation.test.ts" "tests/transport.test.ts"
+PASS tests/connectedImportUI.test.tsx
+PASS tests/connectedImport.test.ts
+PASS tests/sessionIsolation.test.ts
+PASS tests/filePicker.test.ts
+
+Test Suites: 4 passed, 4 total
+Tests:       67 passed, 67 total
+Snapshots:   0 total
+Time:        2.715 s
+Ran all test suites matching /tests\\connectedImport.test.ts|tests\\filePicker.test.ts|tests\\connectedImportUI.test.tsx|tests\\sessionIsolation.test.ts|tests\\transport.test.ts/i.

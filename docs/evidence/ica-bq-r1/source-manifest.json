@@ -1,0 +1,239 @@
+{
+  "version": "ica-bq-r1-closeout-v1",
+  "date": "2026-11-09",
+  "base_head": "79ff9d7dfe767858fff69afb497718f9704a7b2d",
+  "git_commit_locator": "Commit containing this manifest; manifest excludes its own bytes.",
+  "runtime_digest": "bf76eb4bd39d1b9aaaab5700eae2eddf4e142bf8f67e4f3432cabfd16ad998d7",
+  "evaluation_source_fingerprint": "a1d3fd01d59bcb2f8d06779ec7a2334d98687d3641b63fc540d119d1f0bb4a77",
+  "external_provider_calls": 0,
+  "cost_cny": "0",
+  "backend_unique_tests": 506,
+  "mobile_unique_tests": 110,
+  "codegen_unique_tests": 3,
+  "engineering_status": "PASS",
+  "quality_status": "FAIL / PARTIAL; human review pending",
+  "preserved_historical_artifact_count": 29,
+  "preserved_historical_blobs_equal_HEAD": true,
+  "protected_user_paths_excluded": [
+    "evals/agent/results/human-review-15.json",
+    "scripts/human_review_ui.py",
+    "docs/PHASE_11R_HUMAN_REVIEW_REPORT.md",
+    "evals/agent/results/human-review-summary.md",
+    "evals/agent/results/r11-human-review-v1-summary.md",
+    "evals/agent/results/r11-human-review-v1.json"
+  ],
+  "executed_backend_files": [
+    "apps/server/tests/test_chat_import.py",
+    "apps/server/tests/test_import_jobs.py",
+    "apps/server/tests/test_import_api.py",
+    "apps/server/tests/test_import_merge.py",
+    "apps/server/tests/test_dataset_discovery.py",
+    "apps/server/tests/test_ica_foundation.py",
+    "apps/server/tests/test_ica_signed.py",
+    "apps/server/tests/test_ica_runtime.py",
+    "apps/server/tests/test_ica_execution.py",
+    "apps/server/tests/test_ica_execution_lifecycle.py",
+    "apps/server/tests/test_ica_cases.py",
+    "apps/server/tests/test_ica_eval.py",
+    "apps/server/tests/test_ica_review.py",
+    "apps/server/tests/test_ica_live_budget.py",
+    "apps/server/tests/test_ica_bq_replay.py",
+    "apps/server/tests/test_ica_quote.py",
+    "apps/server/tests/test_ica_quote_runtime.py",
+    "apps/server/tests/test_ica_quote_replay.py",
+    "apps/server/tests/test_agent_runtime.py",
+    "apps/server/tests/test_agent_knowledge.py",
+    "apps/server/tests/test_agent_rest.py",
+    "apps/server/tests/test_agent_rest_contract.py",
+    "apps/server/tests/test_memory_control.py",
+    "apps/server/tests/test_phase11r_memory.py",
+    "apps/server/tests/test_phase11r_contract.py",
+    "apps/server/tests/test_phase11r_contact.py",
+    "apps/server/tests/test_safety_roles.py",
+    "apps/server/tests/test_phase11q_safety.py",
+    "apps/server/tests/test_action_content_safety.py",
+    "apps/server/tests/test_content_safety_integration.py"
+  ],
+  "files": [
+    {
+      "path": ".gitattributes",
+      "sha256": "4616dd6edbc5b8bdf324468eb12187808014b6a2fc137cecfc93f147913e9f15",
+      "bytes": 2893
+    },
+    {
+      "path": "apps/mobile/tests/connected.test.ts",
+      "sha256": "807e90a2a7e84aa4f894a91c0aadd5cccd61f04731eee43f4f537e97545ae657",
+      "bytes": 20035
+    },
+    {
+      "path": "apps/server/app/agent/imported_analysis.py",
+      "sha256": "23a91572ad398da6a3d147c9017dcdddd081611556da2a7c5e0bb3bea97161d6",
+      "bytes": 28043
+    },
+    {
+      "path": "apps/server/app/agent/imported_quote.py",
+      "sha256": "9e11cf30edcf07416eb454a211397e3fc9298bde15c787e6b1afc1e2956d1558",
+      "bytes": 4871
+    },
+    {
+      "path": "apps/server/app/services/imported_execution.py",
+      "sha256": "da0994f342aaa4af5cb0293a36f9e48ed261486793920d75cb36805145061c9f",
+      "bytes": 14804
+    },
+    {
+      "path": "apps/server/tests/test_ica_execution.py",
+      "sha256": "c791fe733f61a28e83626564b707ddf8f1f526d9ed3ee2606290edd447d5a3c9",
+      "bytes": 16560
+    },
+    {
+      "path": "apps/server/tests/test_ica_quote.py",
+      "sha256": "d9df4fc4d7db59d5f834eb9105099c668e107a83121031b556fab5d93eb5f8c0",
+      "bytes": 9260
+    },
+    {
+      "path": "apps/server/tests/test_ica_quote_replay.py",
+      "sha256": "edd5ad9aaee31919f587cf0da04e2f0a1a06356968085c4d73d3ffa4e59a83d2",
+      "bytes": 6443
+    },
+    {
+      "path": "apps/server/tests/test_ica_quote_runtime.py",
+      "sha256": "87afb1bb900c63d5b11130a092fa7d178a2c4681629d6a83782197ad2d82db2a",
+      "bytes": 13471
+    },
+    {
+      "path": "apps/server/tests/test_ica_runtime.py",
+      "sha256": "1760ebf34f416453b7bb46a65d0d6227a0060c25b1370d24f324d262a6db6440",
+      "bytes": 9741
+    },
+    {
+      "path": "docs/ARCHITECTURE.md",
+      "sha256": "3c1aee858ab04f6a570250f662e0e1074b6f4d9019bd69961a8c91890591f4db",
+      "bytes": 49340
+    },
+    {
+      "path": "docs/ICA_BQ_R1_ACCEPTANCE.md",
+      "sha256": "cd03b50e62a469eee7bdfd4deb2efd67be472dd38ba54c8743be3e067bdc2563",
+      "bytes": 8837
+    },
+    {
+      "path": "docs/ICA_BQ_R1_CONTRACT.md",
+      "sha256": "c2e9623377a4c1a34d1a141649e988a3d220dc810287e31a10623faf909a2975",
+      "bytes": 4041
+    },
+    {
+      "path": "docs/MASTER_PLAN.md",
+      "sha256": "626af986eb0404c9dc95c00c6feefe83c657b90fd41dc3761be4f6f6fc59fcfb",
+      "bytes": 72385
+    },
+    {
+      "path": "docs/evidence/ica-bq-r1/api-client.txt",
+      "sha256": "4c2ed0d9a5e8d3587818e8702a5a1fb3f141cef873b9f601ec2df453ca0fbf13",
+      "bytes": 516
+    },
+    {
+      "path": "docs/evidence/ica-bq-r1/backend-tests.txt",
+      "sha256": "7b2b94d864ecc9ebb68e71c8d12dfc23790588c182eb40944ae111a8924efe3b",
+      "bytes": 670
+    },
+    {
+      "path": "docs/evidence/ica-bq-r1/codegen-tests.txt",
+      "sha256": "6715baec8984171f0f18f84719faffe3a4848454fab008a5a60a2f2a4596803b",
+      "bytes": 350
+    },
+    {
+      "path": "docs/evidence/ica-bq-r1/commands.ps1",
+      "sha256": "b63b9b0001ff1ec3aea0265daa3ceec44077b594c326ab327147276f72366f17",
+      "bytes": 4990
+    },
+    {
+      "path": "docs/evidence/ica-bq-r1/focused-tests.txt",
+      "sha256": "048a6debf5b6f0b6bf505c436e0685da99b0f48d2b15b023116bfc86aa28e525",
+      "bytes": 102
+    },
+    {
+      "path": "docs/evidence/ica-bq-r1/format.txt",
+      "sha256": "a69837e5076ef12241581591171de529fd26d5157fc32761175f83b0501cd41d",
+      "bytes": 28
+    },
+    {
+      "path": "docs/evidence/ica-bq-r1/mobile-format.txt",
+      "sha256": "f20510a9da4717c51c4cffee6d0dd88d6c9a723d0a83711d01216f5b48961283",
+      "bytes": 68
+    },
+    {
+      "path": "docs/evidence/ica-bq-r1/mobile-tests.txt",
+      "sha256": "90c9af703e20e065d114dd86e42fc251fd26dc045585d3131a9d052b5c2489bb",
+      "bytes": 615
+    },
+    {
+      "path": "docs/evidence/ica-bq-r1/mobile-typecheck.txt",
+      "sha256": "5a3973f79ed9becd5f23c4feff467513814de7ea381d75a4d2e339aa8b8edca9",
+      "bytes": 16
+    },
+    {
+      "path": "docs/evidence/ica-bq-r1/openapi.txt",
+      "sha256": "74a448f03de86875d0b72c03165bfec13f76033efbb3e2f3b2538ba50e422e74",
+      "bytes": 81
+    },
+    {
+      "path": "docs/evidence/ica-bq-r1/postgres-cleanup.txt",
+      "sha256": "fb73fdcbe71e7ed8b929d09eb5b80daeaafbdb40862153b71c66988276afe26f",
+      "bytes": 324
+    },
+    {
+      "path": "docs/evidence/ica-bq-r1/postgres-stop.txt",
+      "sha256": "3589d2bd01f8295cc7c9ec3f5e07625fcd347ccb6f33f2d80edafe5f5217c1fb",
+      "bytes": 58
+    },
+    {
+      "path": "docs/evidence/ica-bq-r1/quote-migration-replay.json",
+      "sha256": "39e0efae46bdfdb58f5acb5b44dfce1f6dd521ef4685c0e5d29b6053eef3716d",
+      "bytes": 251037
+    },
+    {
+      "path": "docs/evidence/ica-bq-r1/ruff.txt",
+      "sha256": "a4443afdcfb6d7363adb285762515ccf7cf50473b1a05c20c1a50f6bed4d26b0",
+      "bytes": 20
+    },
+    {
+      "path": "docs/evidence/ica-bq-r1/signed-demo-2100.json",
+      "sha256": "241cef70097341fa0742b8b2911f84f677fb52a9656a4e894a7b6e6ae17d1d53",
+      "bytes": 17542
+    },
+    {
+      "path": "docs/evidence/ica-bq-r1/signed-demo-900.json",
+      "sha256": "6afe2fc5967fb47f8d49f41e9de039d817eb7ef3a7e792e29cf0f1f2aee362c4",
+      "bytes": 10793
+    },
+    {
+      "path": "docs/evidence/ica-bq-r1/signed-finding.json",
+      "sha256": "3ab988c5cda51ff686bcad68daa45e00f665b70f848d06cf2eb773430887c3cc",
+      "bytes": 9738
+    },
+    {
+      "path": "docs/evidence/ica-bq-r1/sql-10k.json",
+      "sha256": "7da740c46192f76b6b0b65815c592810913ea53dcfb50d7d67fe43f3ae17039f",
+      "bytes": 4060
+    },
+    {
+      "path": "docs/evidence/ica-bq-r1/transport-initial-failure.txt",
+      "sha256": "f4b8a7f846960967209c9f7466403d7f9fc0b7341cccf627e48aee03b3b829de",
+      "bytes": 5971
+    },
+    {
+      "path": "docs/evidence/ica-bq-r1/transport-tests.txt",
+      "sha256": "fdbfacd6793a0fba5d7a2ebf2a667bae8fae6124847054afa889a735f8695fc2",
+      "bytes": 3384
+    },
+    {
+      "path": "evals/ica/quote_replay.py",
+      "sha256": "98190eca99e5b2179e2b5afbc477af390665f63d351114e513c54637a232dca1",
+      "bytes": 11484
+    },
+    {
+      "path": "evals/ica/runner.py",
+      "sha256": "255215940e35d0da9f970253161c47d7dcc9e5979097f3499307c29948edd1c9",
+      "bytes": 11312
+    }
+  ]
+}

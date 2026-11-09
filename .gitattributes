@@ -33,3 +33,5 @@ evals/ica/v1/manifest.json -text whitespace=cr-at-eol
 docs/evidence/ica-b1/** -text whitespace=-blank-at-eol,-blank-at-eof,-space-before-tab,cr-at-eol
 evals/ica/safety_role_cases.v1.json -text whitespace=cr-at-eol
 docs/evidence/ica-bq/** -text whitespace=-blank-at-eol,-blank-at-eof,-space-before-tab,cr-at-eol
+# R1 offline diagnostics and signed snapshots are independent immutable evidence.
+docs/evidence/ica-bq-r1/** -text whitespace=-blank-at-eol,-blank-at-eof,-space-before-tab,cr-at-eol

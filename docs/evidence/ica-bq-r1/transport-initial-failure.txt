@@ -1,0 +1,75 @@
+$ jest --runInBand "--" "tests/connected.test.ts"
+FAIL tests/connected.test.ts
+  generated client and safe transport
+    × preserves original operations, dataset discovery and adds three signed lifecycle operations (2 ms)
+    √ maps nullable and absent profile data without inventing facts (1 ms)
+    √ blocks synthetic resource ID demo-a before HTTP (16 ms)
+    √ blocks synthetic resource ID demo-b before HTTP (1 ms)
+    √ blocks synthetic resource ID nickname before HTTP (1 ms)
+    √ blocks synthetic resource ID  before HTTP (1 ms)
+    √ requires UUID v4 for creation (5 ms)
+    √ injects Bearer only from current session, never unauthenticated (1 ms)
+    √ normalizes HTTP 401 without raw body or credential (2 ms)
+    √ normalizes HTTP 404 without raw body or credential
+    √ normalizes HTTP 409 without raw body or credential (1 ms)
+    √ normalizes HTTP 422 without raw body or credential (1 ms)
+    √ normalizes HTTP 503 without raw body or credential
+    √ cancels an in-flight request (1 ms)
+    √ times out an in-flight request (14 ms)
+    √ normalizes offline failure
+    √ rejects insecure deployment configuration http://localhost:8000
+    √ rejects insecure deployment configuration https://user:pass@localhost:8000
+    √ rejects insecure deployment configuration https://localhost:8000?token=private (1 ms)
+    √ blocks Agent/SSE/import/memory operations at transport
+  development sessions and credential lifecycle
+    √ starts Demo/no token without business requests (1 ms)
+    √ accepts user input only after the server probe and hides it from snapshots
+    √ handles empty input
+    √ rejects expired input without pretending to authenticate (1 ms)
+    √ rejects malformed input
+    √ defers signature validity to server and clears on 401
+    √ distinguishes network unavailable from invalid credential
+    √ writes and clears volatile storage; a new Web session has no credential
+    √ native storage delegates read/write/delete with device-only keychain
+    √ restores native credential with a fresh server probe (1 ms)
+    √ expires while idle and clears every resource on foreground expiry
+    √ clears all domain lists, cursors, selections and pending attempts on logout (2 ms)
+    √ mode switch cancels scope and preserves Demo isolation (1 ms)
+    √ ignores delayed A response after B identity switch (1 ms)
+  owned resources, opaque pages and stable create attempts
+    √ retry response loss uses identical UUID/payload for persons (4 ms)
+    √ retry response loss uses identical UUID/payload for relationships (2 ms)
+    √ retry response loss uses identical UUID/payload for conversations (1 ms)
+    √ never inserts synthetic success after unavailable create (1 ms)
+    √ changed input explicitly reserves a new creation UUID (1 ms)
+    √ guards duplicate More and deduplicates IDs without parsing cursor or timestamps (1 ms)
+    √ foreign/missing detail has empty state and safe recovery (1 ms)
+    √ rapid detail switching cannot apply the previous scope (1 ms)
+    √ logout while create in-flight prevents delayed persisted result from entering UI (1 ms)
+
+  ● generated client and safe transport › preserves original operations, dataset discovery and adds three signed lifecycle operations
+
+    expect(received).toHaveLength(expected)
+
+    Expected length: 43
+    Received length: 52
+    Received array:  [{"bearer": true, "method": "post", "operationId": "upload_chat_import_api_v1_chat_imports_post", "path": "/api/v1/chat-imports"}, {"bearer": true, "method": "get", "operationId": "inspect_chat_import_api_v1_chat_imports__job_id__get", "path": "/api/v1/chat-imports/{job_id}"}, {"bearer": true, "method": "post", "operationId": "cancel_chat_import_api_v1_chat_imports__job_id__cancel_post", "path": "/api/v1/chat-imports/{job_id}/cancel"}, {"bearer": true, "method": "post", "operationId": "finalize_chat_import_api_v1_chat_imports__job_id__finalize_post", "path": "/api/v1/chat-imports/{job_id}/finalize"}, {"bearer": true, "method": "post", "operationId": "mark_chat_import_ready_api_v1_chat_imports__job_id__ready_post", "path": "/api/v1/chat-imports/{job_id}/ready"}, {"bearer": true, "method": "put", "operationId": "bind_relationship_api_v1_chat_imports__job_id__relationship_put", "path": "/api/v1/chat-imports/{job_id}/relationship"}, {"bearer": true, "method": "put", "operationId": "bind_speaker_api_v1_chat_imports__job_id__speakers_put", "path": "/api/v1/chat-imports/{job_id}/speakers"}, {"bearer": true, "method": "get", "operationId": "list_conversations_api_v1_conversations_get", "path": "/api/v1/conversations"}, {"bearer": true, "method": "post", "operationId": "create_conversation_api_v1_conversations_post", "path": "/api/v1/conversations"}, {"bearer": true, "method": "get", "operationId": "get_conversation_api_v1_conversations__conversation_id__get", "path": "/api/v1/conversations/{conversation_id}"}, …]
+
+      67 | describe('generated client and safe transport', () => {
+      68 |   it('preserves original operations, dataset discovery and adds three signed lifecycle operations', () => {
+    > 69 |     expect(operationInventory).toHaveLength(43);
+         |                                ^
+      70 |     const discovery = operationInventory.filter((op) => op.path.endsWith('/datasets'));
+      71 |     expect(discovery).toHaveLength(1);
+      72 |     expect(discovery[0]).toMatchObject({ method: 'get', bearer: true });
+
+      at Object.toHaveLength (tests/connected.test.ts:69:32)
+
+Test Suites: 1 failed, 1 total
+Tests:       1 failed, 42 passed, 43 total
+Snapshots:   0 total
+Time:        1.256 s
+Ran all test suites matching /tests\\connected.test.ts/i.
+F:\狗头军师app化\goutouapp\apps\mobile:
+[ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL] @goutou/mobile@0.1.0 test: `jest --runInBand "--" "tests/connected.test.ts"`
+Exit status 1

@@ -78,7 +78,7 @@ def authorized(client, who, count=10, days=7):
 
 @pytest.mark.parametrize("count,days,k", [(900, 3, 5), (2100, 7, 11)])
 def test_signed_complete_coverage_and_memory_unchanged(
-    execution_api, database_engine, count, days, k
+    execution_api, database_engine, count, days, k, tmp_path
 ):
     app, client, a, b = execution_api
     from test_memory_control import _save
@@ -110,6 +110,7 @@ def test_signed_complete_coverage_and_memory_unchanged(
     assert result["status"] == "completed", result
     assert result["mock_calls"] == 2 * k + 2
     assert result["external_provider_calls"] == 0
+    assert result["execution"]["evidence_protocol"] == "quote-v2"
     report = result["report"]
     assert report["outcome"] == "insufficient_evidence" and report["findings"] == []
     assert sum(w["message_count"] for w in report["coverage"]) == count
@@ -131,12 +132,8 @@ def test_signed_complete_coverage_and_memory_unchanged(
             for cls in (MemoryControlRow, MemoryRecordRow)
         ]
         assert after == before
-    from pathlib import Path
-
-    evidence = Path("docs/evidence/ica-b1")
-    evidence.mkdir(parents=True, exist_ok=True)
     # Anonymous outputs only. Never save a credential or challenge.
-    (evidence / f"signed-demo-{count}.json").write_text(
+    (tmp_path / f"signed-demo-{count}.json").write_text(
         json.dumps(result, ensure_ascii=False, indent=2), encoding="utf-8"
     )
     revoke = client.post(BASE + f"/grants/{grant['grant_id']}/revoke", headers=headers(a[0]))
@@ -213,6 +210,34 @@ def test_expired_execution_challenge_and_source_change_reject(execution_api, dat
         client.get(BASE + f"/runs/{pending['preparation_id']}", headers=headers(a[0])).status_code
         == 409
     )
+
+
+def test_quote_resolver_code_and_protocol_are_bound_to_current_execution(
+    execution_api, database_engine, monkeypatch
+):
+    from pathlib import Path
+
+    from app.services.imported_execution import runtime_fingerprint
+
+    _, client, a, _ = execution_api
+    _, _, _, run = authorized(client, a)
+    before = runtime_fingerprint()
+    read_bytes = Path.read_bytes
+
+    def changed_resolver(path):
+        original = read_bytes(path)
+        return original + b"\n# changed resolver" if path.name == "imported_quote.py" else original
+
+    with monkeypatch.context() as patch:
+        patch.setattr(Path, "read_bytes", changed_resolver)
+        assert runtime_fingerprint() != before
+        response = client.get(BASE + f"/runs/{run['run_id']}", headers=headers(a[0]))
+        assert response.status_code == 409 and "runtime_changed" in response.text
+    with Session(database_engine) as db, db.begin():
+        row = db.get(ImportedAnalysisRun, UUID(run["run_id"]))
+        row.execution_binding = {**row.execution_binding, "evidence_protocol": "span-v1"}
+    response = client.get(BASE + f"/runs/{run['run_id']}", headers=headers(a[0]))
+    assert response.status_code == 409 and "runtime_changed" in response.text
 
 
 def test_non_mock_disabled_empty_queue_and_budget_fail_closed(execution_api, database_engine):
@@ -292,10 +317,8 @@ def test_concurrent_execution_and_revoke_before_output(execution_api, database_e
 
 
 def test_signed_finding_references_current_source_and_review_rejects(
-    execution_api, database_engine
+    execution_api, database_engine, tmp_path
 ):
-    from pathlib import Path
-
     from test_ica_runtime import finding_provider
 
     app, client, a, _ = execution_api
@@ -315,7 +338,7 @@ def test_signed_finding_references_current_source_and_review_rejects(
     actor = actor_from_verified_identity(a[0])
     with service.transaction(actor) as db:
         ctx = service.current(db, actor, db.get(ImportedAnalysisGrant, UUID(grant["grant_id"])))[0]
-    app.state.ica_mock_provider_factory = lambda: finding_provider(ctx)
+    app.state.ica_mock_provider_factory = lambda: finding_provider(ctx, quote_only=True)
     result = client.post(BASE + f"/runs/{run['run_id']}/execute", headers=headers(a[0])).json()
     assert result["status"] == "completed" and result["mock_calls"] == 5, result
     assert result["report"]["outcome"] == "findings"
@@ -329,7 +352,7 @@ def test_signed_finding_references_current_source_and_review_rejects(
         )
         assert response.status_code == 200 and response.json()["quote"] == ref["quote"]
         assert response.json()["message_id"] == aliases[ref["evidence_id"]]["message_id"]
-    Path("docs/evidence/ica-b1/signed-finding.json").write_text(
+    (tmp_path / "signed-finding.json").write_text(
         json.dumps(result, ensure_ascii=False, indent=2), encoding="utf-8"
     )
     pending = client.post(
@@ -340,6 +363,7 @@ def test_signed_finding_references_current_source_and_review_rejects(
     ).json()
     app.state.ica_mock_provider_factory = lambda: finding_provider(
         ctx,
+        quote_only=True,
         review={
             **REVIEW,
             "approved": False,

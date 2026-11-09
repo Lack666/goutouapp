@@ -1,0 +1,526 @@
+{
+  "run_id": "09c42133-70a9-4b97-a933-0088e39de6de",
+  "grant_id": "79b9f6b8-23d4-43ba-add2-6e8cca3d4997",
+  "status": "completed",
+  "expires_at": "2026-11-10T05:11:52.176531Z",
+  "binding_hash": "3ce27738e7d5bc92a926540f052b60005a60fbcfe5b70d385c9a9d808f1b2a8c",
+  "execution": {
+    "model": "mock",
+    "tariff": "keyless-mock-zero-v1",
+    "version": "ica-bq-r1-mock-v2",
+    "cost_cap": 0,
+    "currency": null,
+    "provider": "mock",
+    "token_cap": 4804174,
+    "expires_at": "2026-11-10T05:11:52.176531+00:00",
+    "request_cap": 41,
+    "grant_binding": "bcf77c49fbcc785b7f82718dd289b5f79dbdf45f671d42670b074cfaf65e8627",
+    "memory_access": false,
+    "runtime_digest": "bf76eb4bd39d1b9aaaab5700eae2eddf4e142bf8f67e4f3432cabfd16ad998d7",
+    "max_input_bytes": 131072,
+    "evidence_protocol": "quote-v2",
+    "output_token_reserve": 8192,
+    "external_provider_calls": 0
+  },
+  "mock_calls": 24,
+  "reserved_tokens": 1963875,
+  "ledger": [
+    {
+      "id": "371fe3f018934c6e8bfb2ea7d742478f",
+      "stage": "safety",
+      "status": "succeeded",
+      "chunk_id": "b95bd064f80d00e61c9b603b9dc16b9f89f59d87ba1e46994cf774aa865ab434",
+      "input_bytes": 71548,
+      "reserved_tokens": 83836
+    },
+    {
+      "id": "a64178bd719c40df946c6a5e92c4c3e8",
+      "stage": "safety",
+      "status": "succeeded",
+      "chunk_id": "0732457abde42df9a387383a73e9da4cab79c48550c6b628d58c491f1b3b6ca2",
+      "input_bytes": 74927,
+      "reserved_tokens": 87215
+    },
+    {
+      "id": "2db23d401e2248b987fd660bf4f77a94",
+      "stage": "safety",
+      "status": "succeeded",
+      "chunk_id": "3ac255f5700fb0f7bf685e5b7582ea279faae3ce323d63f10fc7f1e0af331184",
+      "input_bytes": 74927,
+      "reserved_tokens": 87215
+    },
+    {
+      "id": "cb112b72d3fc47d6aacb1d6c995c47ae",
+      "stage": "safety",
+      "status": "succeeded",
+      "chunk_id": "d85e89c124d86381af6e81d3b0d2f5c7fd7d81a1a0a3bb541301145d8f5cbd64",
+      "input_bytes": 74927,
+      "reserved_tokens": 87215
+    },
+    {
+      "id": "263f813a2edf4dc68dbd64362652ec5d",
+      "stage": "safety",
+      "status": "succeeded",
+      "chunk_id": "9abfa419bd793883cdcf25f3d3ee20e35e9430873d3affa7cf8104d1c1d48e3a",
+      "input_bytes": 74927,
+      "reserved_tokens": 87215
+    },
+    {
+      "id": "f34403c7ed884902a91afd6eeffffcf3",
+      "stage": "safety",
+      "status": "succeeded",
+      "chunk_id": "bb7d6ca1f683a2206dc23e019849c545a637a76290d81ca1aba528c2e534bb73",
+      "input_bytes": 74927,
+      "reserved_tokens": 87215
+    },
+    {
+      "id": "3d222b0fa80040b5913ce52ab910e861",
+      "stage": "safety",
+      "status": "succeeded",
+      "chunk_id": "3deb77fcf4835b6687b69524e4067ce7fdff0c9c21f8b230101b9045df998d45",
+      "input_bytes": 74927,
+      "reserved_tokens": 87215
+    },
+    {
+      "id": "29e8b49299104cd5a5e2b31cd48381e0",
+      "stage": "safety",
+      "status": "succeeded",
+      "chunk_id": "774a7568f0844b7215ccc789a42dbd6913ff2686635582ff072618aa220d490d",
+      "input_bytes": 74927,
+      "reserved_tokens": 87215
+    },
+    {
+      "id": "e2f7ee6a25c24917b0d78c160b2d8044",
+      "stage": "safety",
+      "status": "succeeded",
+      "chunk_id": "97dacaa22fdd40a8c064093103f97ea924448a7f26c9b6109e17779d5d0183c7",
+      "input_bytes": 74927,
+      "reserved_tokens": 87215
+    },
+    {
+      "id": "108753145efa4369b0382ddeebcf91ae",
+      "stage": "safety",
+      "status": "succeeded",
+      "chunk_id": "ae066cebfe1c2919374010e4ccf4d2eb3d09719c5da2afd7e9ead73c35be2df5",
+      "input_bytes": 74927,
+      "reserved_tokens": 87215
+    },
+    {
+      "id": "bf0a281fe23b4380a14d0ef3d68a92f9",
+      "stage": "safety",
+      "status": "succeeded",
+      "chunk_id": "18e61dacdb88861b91d567e6142a7a0fc4ca84450ce0ac7c98923b9cf773c073",
+      "input_bytes": 53147,
+      "reserved_tokens": 65435
+    },
+    {
+      "id": "6384d0a6b4994731a5dbf5ce6b4c7615",
+      "stage": "interaction",
+      "status": "succeeded",
+      "chunk_id": "b95bd064f80d00e61c9b603b9dc16b9f89f59d87ba1e46994cf774aa865ab434",
+      "input_bytes": 72096,
+      "reserved_tokens": 84384
+    },
+    {
+      "id": "3e7fbd6ab2994cfba512812d3723e627",
+      "stage": "interaction",
+      "status": "succeeded",
+      "chunk_id": "0732457abde42df9a387383a73e9da4cab79c48550c6b628d58c491f1b3b6ca2",
+      "input_bytes": 75475,
+      "reserved_tokens": 87763
+    },
+    {
+      "id": "a65c0c319ff049a28912ba02095ccf3d",
+      "stage": "interaction",
+      "status": "succeeded",
+      "chunk_id": "3ac255f5700fb0f7bf685e5b7582ea279faae3ce323d63f10fc7f1e0af331184",
+      "input_bytes": 75475,
+      "reserved_tokens": 87763
+    },
+    {
+      "id": "4ad4c4ccf4824f96b9082cf249d65c01",
+      "stage": "interaction",
+      "status": "succeeded",
+      "chunk_id": "d85e89c124d86381af6e81d3b0d2f5c7fd7d81a1a0a3bb541301145d8f5cbd64",
+      "input_bytes": 75475,
+      "reserved_tokens": 87763
+    },
+    {
+      "id": "5ac9bb41c08342cc90cd8e139842b5a5",
+      "stage": "interaction",
+      "status": "succeeded",
+      "chunk_id": "9abfa419bd793883cdcf25f3d3ee20e35e9430873d3affa7cf8104d1c1d48e3a",
+      "input_bytes": 75475,
+      "reserved_tokens": 87763
+    },
+    {
+      "id": "10d3b6adb9b840e989377046bac54633",
+      "stage": "interaction",
+      "status": "succeeded",
+      "chunk_id": "bb7d6ca1f683a2206dc23e019849c545a637a76290d81ca1aba528c2e534bb73",
+      "input_bytes": 75475,
+      "reserved_tokens": 87763
+    },
+    {
+      "id": "eb75d95442fb46dc96f9827573d98345",
+      "stage": "interaction",
+      "status": "succeeded",
+      "chunk_id": "3deb77fcf4835b6687b69524e4067ce7fdff0c9c21f8b230101b9045df998d45",
+      "input_bytes": 75475,
+      "reserved_tokens": 87763
+    },
+    {
+      "id": "75702eea23744f0a86355e4fa8931959",
+      "stage": "interaction",
+      "status": "succeeded",
+      "chunk_id": "774a7568f0844b7215ccc789a42dbd6913ff2686635582ff072618aa220d490d",
+      "input_bytes": 75475,
+      "reserved_tokens": 87763
+    },
+    {
+      "id": "76da1c2c97ff48b2891c34cf3fe4c30a",
+      "stage": "interaction",
+      "status": "succeeded",
+      "chunk_id": "97dacaa22fdd40a8c064093103f97ea924448a7f26c9b6109e17779d5d0183c7",
+      "input_bytes": 75475,
+      "reserved_tokens": 87763
+    },
+    {
+      "id": "5125de4c1e2e45c5b4c42894cff2286e",
+      "stage": "interaction",
+      "status": "succeeded",
+      "chunk_id": "ae066cebfe1c2919374010e4ccf4d2eb3d09719c5da2afd7e9ead73c35be2df5",
+      "input_bytes": 75475,
+      "reserved_tokens": 87763
+    },
+    {
+      "id": "15065342c5614c139b2272ca0d8c2851",
+      "stage": "interaction",
+      "status": "succeeded",
+      "chunk_id": "18e61dacdb88861b91d567e6142a7a0fc4ca84450ce0ac7c98923b9cf773c073",
+      "input_bytes": 53695,
+      "reserved_tokens": 65983
+    },
+    {
+      "id": "e13b19fef6e649fa95c2719ecb2b0351",
+      "stage": "synthesis",
+      "status": "succeeded",
+      "chunk_id": null,
+      "input_bytes": 32854,
+      "reserved_tokens": 45142
+    },
+    {
+      "id": "343c993411ca4362bca24b6b741bf998",
+      "stage": "content_review",
+      "status": "succeeded",
+      "chunk_id": null,
+      "input_bytes": 32005,
+      "reserved_tokens": 44293
+    }
+  ],
+  "receipts": [
+    {
+      "stage": "safety",
+      "status": "completed",
+      "chunk_id": "b95bd064f80d00e61c9b603b9dc16b9f89f59d87ba1e46994cf774aa865ab434"
+    },
+    {
+      "stage": "safety",
+      "status": "completed",
+      "chunk_id": "0732457abde42df9a387383a73e9da4cab79c48550c6b628d58c491f1b3b6ca2"
+    },
+    {
+      "stage": "safety",
+      "status": "completed",
+      "chunk_id": "3ac255f5700fb0f7bf685e5b7582ea279faae3ce323d63f10fc7f1e0af331184"
+    },
+    {
+      "stage": "safety",
+      "status": "completed",
+      "chunk_id": "d85e89c124d86381af6e81d3b0d2f5c7fd7d81a1a0a3bb541301145d8f5cbd64"
+    },
+    {
+      "stage": "safety",
+      "status": "completed",
+      "chunk_id": "9abfa419bd793883cdcf25f3d3ee20e35e9430873d3affa7cf8104d1c1d48e3a"
+    },
+    {
+      "stage": "safety",
+      "status": "completed",
+      "chunk_id": "bb7d6ca1f683a2206dc23e019849c545a637a76290d81ca1aba528c2e534bb73"
+    },
+    {
+      "stage": "safety",
+      "status": "completed",
+      "chunk_id": "3deb77fcf4835b6687b69524e4067ce7fdff0c9c21f8b230101b9045df998d45"
+    },
+    {
+      "stage": "safety",
+      "status": "completed",
+      "chunk_id": "774a7568f0844b7215ccc789a42dbd6913ff2686635582ff072618aa220d490d"
+    },
+    {
+      "stage": "safety",
+      "status": "completed",
+      "chunk_id": "97dacaa22fdd40a8c064093103f97ea924448a7f26c9b6109e17779d5d0183c7"
+    },
+    {
+      "stage": "safety",
+      "status": "completed",
+      "chunk_id": "ae066cebfe1c2919374010e4ccf4d2eb3d09719c5da2afd7e9ead73c35be2df5"
+    },
+    {
+      "stage": "safety",
+      "status": "completed",
+      "chunk_id": "18e61dacdb88861b91d567e6142a7a0fc4ca84450ce0ac7c98923b9cf773c073"
+    },
+    {
+      "stage": "interaction",
+      "status": "completed",
+      "chunk_id": "b95bd064f80d00e61c9b603b9dc16b9f89f59d87ba1e46994cf774aa865ab434"
+    },
+    {
+      "stage": "interaction",
+      "status": "completed",
+      "chunk_id": "0732457abde42df9a387383a73e9da4cab79c48550c6b628d58c491f1b3b6ca2"
+    },
+    {
+      "stage": "interaction",
+      "status": "completed",
+      "chunk_id": "3ac255f5700fb0f7bf685e5b7582ea279faae3ce323d63f10fc7f1e0af331184"
+    },
+    {
+      "stage": "interaction",
+      "status": "completed",
+      "chunk_id": "d85e89c124d86381af6e81d3b0d2f5c7fd7d81a1a0a3bb541301145d8f5cbd64"
+    },
+    {
+      "stage": "interaction",
+      "status": "completed",
+      "chunk_id": "9abfa419bd793883cdcf25f3d3ee20e35e9430873d3affa7cf8104d1c1d48e3a"
+    },
+    {
+      "stage": "interaction",
+      "status": "completed",
+      "chunk_id": "bb7d6ca1f683a2206dc23e019849c545a637a76290d81ca1aba528c2e534bb73"
+    },
+    {
+      "stage": "interaction",
+      "status": "completed",
+      "chunk_id": "3deb77fcf4835b6687b69524e4067ce7fdff0c9c21f8b230101b9045df998d45"
+    },
+    {
+      "stage": "interaction",
+      "status": "completed",
+      "chunk_id": "774a7568f0844b7215ccc789a42dbd6913ff2686635582ff072618aa220d490d"
+    },
+    {
+      "stage": "interaction",
+      "status": "completed",
+      "chunk_id": "97dacaa22fdd40a8c064093103f97ea924448a7f26c9b6109e17779d5d0183c7"
+    },
+    {
+      "stage": "interaction",
+      "status": "completed",
+      "chunk_id": "ae066cebfe1c2919374010e4ccf4d2eb3d09719c5da2afd7e9ead73c35be2df5"
+    },
+    {
+      "stage": "interaction",
+      "status": "completed",
+      "chunk_id": "18e61dacdb88861b91d567e6142a7a0fc4ca84450ce0ac7c98923b9cf773c073"
+    },
+    {
+      "stage": "counterevidence",
+      "status": "not_applicable",
+      "chunk_id": "b95bd064f80d00e61c9b603b9dc16b9f89f59d87ba1e46994cf774aa865ab434"
+    },
+    {
+      "stage": "counterevidence",
+      "status": "not_applicable",
+      "chunk_id": "0732457abde42df9a387383a73e9da4cab79c48550c6b628d58c491f1b3b6ca2"
+    },
+    {
+      "stage": "counterevidence",
+      "status": "not_applicable",
+      "chunk_id": "3ac255f5700fb0f7bf685e5b7582ea279faae3ce323d63f10fc7f1e0af331184"
+    },
+    {
+      "stage": "counterevidence",
+      "status": "not_applicable",
+      "chunk_id": "d85e89c124d86381af6e81d3b0d2f5c7fd7d81a1a0a3bb541301145d8f5cbd64"
+    },
+    {
+      "stage": "counterevidence",
+      "status": "not_applicable",
+      "chunk_id": "9abfa419bd793883cdcf25f3d3ee20e35e9430873d3affa7cf8104d1c1d48e3a"
+    },
+    {
+      "stage": "counterevidence",
+      "status": "not_applicable",
+      "chunk_id": "bb7d6ca1f683a2206dc23e019849c545a637a76290d81ca1aba528c2e534bb73"
+    },
+    {
+      "stage": "counterevidence",
+      "status": "not_applicable",
+      "chunk_id": "3deb77fcf4835b6687b69524e4067ce7fdff0c9c21f8b230101b9045df998d45"
+    },
+    {
+      "stage": "counterevidence",
+      "status": "not_applicable",
+      "chunk_id": "774a7568f0844b7215ccc789a42dbd6913ff2686635582ff072618aa220d490d"
+    },
+    {
+      "stage": "counterevidence",
+      "status": "not_applicable",
+      "chunk_id": "97dacaa22fdd40a8c064093103f97ea924448a7f26c9b6109e17779d5d0183c7"
+    },
+    {
+      "stage": "counterevidence",
+      "status": "not_applicable",
+      "chunk_id": "ae066cebfe1c2919374010e4ccf4d2eb3d09719c5da2afd7e9ead73c35be2df5"
+    },
+    {
+      "stage": "counterevidence",
+      "status": "not_applicable",
+      "chunk_id": "18e61dacdb88861b91d567e6142a7a0fc4ca84450ce0ac7c98923b9cf773c073"
+    },
+    {
+      "stage": "synthesis",
+      "status": "completed",
+      "chunk_id": null
+    },
+    {
+      "stage": "content_review",
+      "status": "completed",
+      "chunk_id": null
+    }
+  ],
+  "report": {
+    "version": "ica-report-v1",
+    "outcome": "insufficient_evidence",
+    "findings": [],
+    "coverage": [
+      {
+        "window_index": 0,
+        "start_utc": "2026-11-02T16:00:00+00:00",
+        "end_utc": "2026-11-09T05:11:51.934135+00:00",
+        "timezone": "Asia/Shanghai",
+        "scope_digest": "5cc5efafc4a18c01cf2438aeeafa601d6e4341a60fc6589b68aa74df8d076f4b",
+        "snapshot_digest": "720b0f689d43726c188e33b49878e72eae9da3696396d5e8f7e15d54a3dbf086",
+        "message_count": 2100,
+        "text_count": 2100,
+        "body_bytes": 14700,
+        "core_count": 2100,
+        "self_count": 1050,
+        "person_count": 1050,
+        "active_local_days": 1
+      }
+    ],
+    "safety_roles": [],
+    "limitations": [
+      "仅覆盖用户已导入且授权的文本；未导出、非文本和线下互动可能改变判断。",
+      "引用与覆盖验证不等于解释正确；Mock仅验证接线，未验证模型洞察质量。",
+      "推测不证明对方内心；应结合反例和双方自述核实。"
+    ],
+    "sources": [],
+    "knowledge_refs": [
+      "references/knowledge/17-中国法律安全与危机转介.md",
+      "references/practical/ChatLab聊天记录分析适配.md",
+      "references/knowledge/07-沟通冲突与修复.md"
+    ],
+    "source": {
+      "grant_id": "79b9f6b8-23d4-43ba-add2-6e8cca3d4997",
+      "owner_id": "d63e102f-35f2-4108-bea6-65dda3fedf00",
+      "dataset_id": "b90fb711-14ec-44bc-8850-1561f88f84fb",
+      "person_id": "30abb264-f0e4-435f-a35a-0f53edd8962b",
+      "relationship_id": "b0938dee-8248-4c3a-97eb-d85ac8ba5fa7",
+      "binding_hash": "bcf77c49fbcc785b7f82718dd289b5f79dbdf45f671d42670b074cfaf65e8627",
+      "aliases": {},
+      "preview": {
+        "chunks": 11,
+        "windows": [
+          {
+            "end": "2026-11-09T05:11:51.934135+00:00",
+            "last": "2026-11-02T16:34:59+00:00",
+            "daily": {
+              "2026-11-03": {
+                "self": 1050,
+                "person": 1050,
+                "system": 0
+              },
+              "2026-11-04": {
+                "self": 0,
+                "person": 0,
+                "system": 0
+              },
+              "2026-11-05": {
+                "self": 0,
+                "person": 0,
+                "system": 0
+              },
+              "2026-11-06": {
+                "self": 0,
+                "person": 0,
+                "system": 0
+              },
+              "2026-11-07": {
+                "self": 0,
+                "person": 0,
+                "system": 0
+              },
+              "2026-11-08": {
+                "self": 0,
+                "person": 0,
+                "system": 0
+              },
+              "2026-11-09": {
+                "self": 0,
+                "person": 0,
+                "system": 0
+              }
+            },
+            "first": "2026-11-02T16:00:00+00:00",
+            "media": 0,
+            "start": "2026-11-02T16:00:00+00:00",
+            "chunks": 11,
+            "system": 0,
+            "nontext": 0,
+            "version": "ica-long-range-v3",
+            "messages": 2100,
+            "speakers": {
+              "self": 1050,
+              "person": 1050
+            },
+            "body_bytes": 14700,
+            "local_days": {
+              "2026-11-03": 2100
+            },
+            "export_gaps": "unknown; unexported messages cannot be inferred absent",
+            "model_stages": "pending",
+            "scope_digest": "5cc5efafc4a18c01cf2438aeeafa601d6e4341a60fc6589b68aa74df8d076f4b",
+            "parser_errors": 0,
+            "provider_calls": 0,
+            "analyzable_text": 2100,
+            "parser_warnings": 0,
+            "snapshot_digest": "720b0f689d43726c188e33b49878e72eae9da3696396d5e8f7e15d54a3dbf086",
+            "planned_requests": 41,
+            "export_completeness": "unknown",
+            "skipped_source_items": "not reconstructible from canonical import; see parser issues",
+            "core_coverage_complete": true,
+            "ignored_source_messages": 0
+          }
+        ],
+        "cost_cap": null,
+        "messages": 2100,
+        "token_cap": 4804174,
+        "body_bytes": 14700,
+        "price_status": "unquoted; execution prohibited until priced",
+        "memory_access": false,
+        "provider_calls": 0,
+        "planned_requests": 41
+      }
+    }
+  },
+  "error_code": null,
+  "external_provider_calls": 0
+}

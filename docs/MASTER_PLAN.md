@@ -6,6 +6,22 @@ licensed and its content hashes are frozen in `knowledge/upstream-manifest.json`
 
 ## Phase gate
 
+2026-11-09 continuation: **ICA-BQ-R1 offline evidence protocol repair** only.
+Versioned contract: [ICA-BQ-R1](ICA_BQ_R1_CONTRACT.md). Introduce an explicit
+quote-v2 model wire protocol while preserving canonical Unicode spans, strict
+authorization, counterevidence and Content Review. Replay disclosed batch-v1
+outputs as development diagnostics only; preserve their original bytes and FAIL.
+No further paid batch is authorized by this continuation. External Provider calls
+must remain0; independent quality and human review remain pending. No ICA-C,
+longitudinal expansion, Phase12 or marker9/9H changes.
+
+2026-11-09 ICA-BQ-R1 result: **ENGINEERING PASS**, documented in
+[ICA_BQ_R1_ACCEPTANCE](ICA_BQ_R1_ACCEPTANCE.md). Backend506 and Mobile110 targeted
+tests pass, with signed PostgreSQL Unicode evidence and lifecycle regression.
+Old-output migration keeps48 incomplete/16 rejected, all reports null; this is
+development diagnosis only. External Provider calls0, no new paid batch.
+ICA-BQ QUALITY FAIL / PARTIAL and independent human review pending remain.
+
 2026-11-04 next-stage authorization: ICA-BQ synthetic quality evaluation and the
 bounded SAFETY-ROLE-P1 correction. User explicitly authorizes DeepSeek with a
 single aggregate CNY20 cap and no automatic retries. Freeze sources, cases,

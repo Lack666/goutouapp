@@ -22,6 +22,7 @@ from app.agent.imported_contracts import (
     SourceBinding,
     WindowCoverage,
 )
+from app.agent.imported_quote import STAGE_SCHEMAS, exact_span, quote_payload, resolve_output
 from app.agent.knowledge import ReferenceRegistry, load_references
 from app.chat_import.analysis_scope import (
     ImportedChatContext,
@@ -63,12 +64,23 @@ requires an alternative explanation, an unknown and a reversible action with a s
 No hidden reasoning: return only the bounded schema for this stage.
 """
 
+QUOTE_PROTOCOL = "quote-v2"
+SPAN_PROTOCOL = "span-v1"
+QUOTE_SYSTEM = SYSTEM.replace(
+    "Use only supplied local evidence aliases, exact Python Unicode code-point "
+    "[start,end) and quotes.",
+    "Use only supplied local evidence aliases, the source speaker and a unique exact quote "
+    "from that message. Never output start/end offsets. The server computes Unicode positions. "
+    "Repeated quotes within the same message are ambiguous; choose a unique exact excerpt.",
+)
+
 STAGES = {
     "safety": (
         "Inspect EVERY core message, halo and question for risk. Assign actor roles without "
         "guessing. State user_role and temporality explicitly. Historical quotations and "
         "denied fictional events do not prove current danger. Ambiguous attribution or "
-        "conflicting risks must be uncertain, not normal."
+        "conflicting risks must be uncertain, not normal. A normal decision requires risks=[]; "
+        "boundary, danger and uncertain require at least one supported risk."
     ),
     "interaction": (
         "Extract at most three candidates from core interactions. Halo supplies context, never "
@@ -90,15 +102,23 @@ STAGES = {
         "Independently review the proposed report against the actual supplied source excerpts "
         "and counterevidence. Reject unsupported semantics, invented statistics, "
         "wrong attribution, "
-        "omitted repair, unsafe advice or uncertainty. Schema-valid quotations alone do not prove "
+        "omitted repair, unsafe advice or unresolved grounding/safety uncertainty. Explicitly "
+        "qualified hypotheses with alternatives are permitted when grounded. All four approval "
+        "checks must be true and reason_codes=[] to approve; any reason requires rejection. "
+        "Schema-valid quotations alone do not prove "
         "the explanation. Do not rubber-stamp an earlier model."
     ),
 }
 
 
-def stage_messages(stage, question, knowledge, payload):
+def stage_messages(stage, question, knowledge, payload, *, evidence_protocol=QUOTE_PROTOCOL):
+    if evidence_protocol not in {QUOTE_PROTOCOL, SPAN_PROTOCOL}:
+        raise ValueError("Unsupported evidence protocol")
+    system = QUOTE_SYSTEM if evidence_protocol == QUOTE_PROTOCOL else SYSTEM
+    if evidence_protocol == QUOTE_PROTOCOL:
+        payload = quote_payload(payload)
     return (
-        LLMMessage(role="system", content=SYSTEM + "\n" + STAGES[stage]),
+        LLMMessage(role="system", content=system + "\n" + STAGES[stage]),
         LLMMessage(
             role="user",
             content=json.dumps(
@@ -127,7 +147,9 @@ def serialized_request_bytes(messages, schema, model):
     )
 
 
-def validate_static_inputs(contexts, question, *, limit=128 * 1024):
+def validate_static_inputs(
+    contexts, question, *, limit=128 * 1024, evidence_protocol=QUOTE_PROTOCOL
+):
     """Reject known oversized payloads before issuing execution consent or any call."""
     knowledge = [
         r.model_dump(mode="json")
@@ -155,7 +177,11 @@ def validate_static_inputs(contexts, question, *, limit=128 * 1024):
                 ],
             }
             for stage, schema in (("safety", ChunkSafety), ("interaction", ChunkInteractions)):
-                request = stage_messages(stage, question, knowledge, payload)
+                if evidence_protocol == QUOTE_PROTOCOL:
+                    schema = STAGE_SCHEMAS[stage]
+                request = stage_messages(
+                    stage, question, knowledge, payload, evidence_protocol=evidence_protocol
+                )
                 if serialized_request_bytes(request, schema, "mock") > limit:
                     raise ImportedAnalysisError("input_budget_exceeded")
 
@@ -165,9 +191,18 @@ def _key(value: BaseModel) -> str:
 
 
 class ImportedAnalysisRuntime:
-    def __init__(self, provider: LLMProvider, registry: ReferenceRegistry | None = None):
+    def __init__(
+        self,
+        provider: LLMProvider,
+        registry: ReferenceRegistry | None = None,
+        *,
+        evidence_protocol=QUOTE_PROTOCOL,
+    ):
+        if evidence_protocol not in {QUOTE_PROTOCOL, SPAN_PROTOCOL}:
+            raise ValueError("Unsupported evidence protocol")
         self.provider = provider
         self.registry = registry or ReferenceRegistry()
+        self.evidence_protocol = evidence_protocol
 
     async def run(
         self,
@@ -294,16 +329,46 @@ class ImportedAnalysisRuntime:
             if any(ch.isdigit() for ch in fact.statement) or "%" in fact.statement:
                 raise ImportedAnalysisError("model_statistics")
 
-        async def call(stage, chunk, schema, payload, validate):
+        def resolve_quote(ref, allowed):
+            if ref.evidence_id not in aliases:
+                raise ImportedAnalysisError("invalid_evidence")
+            _, message = aliases[ref.evidence_id]
+            if allowed is not None and message.id not in allowed:
+                raise ImportedAnalysisError("invalid_evidence")
+            if ref.speaker != message.speaker:
+                raise ImportedAnalysisError("invalid_attribution")
+            try:
+                start, end = exact_span(message.content, ref.quote)
+            except ValueError:
+                raise ImportedAnalysisError("invalid_evidence") from None
+            canonical = ImportedEvidenceRef(
+                evidence_id=ref.evidence_id,
+                speaker=ref.speaker,
+                start=start,
+                end=end,
+                quote=ref.quote,
+            )
+            check_ref(canonical, allowed)
+            return canonical
+
+        async def call(stage, chunk, schema, payload, validate, allowed=None):
             nonlocal calls
-            messages = stage_messages(stage, question, knowledge, payload)
-            call_id = await before_call(stage, chunk, messages, schema)
+            wire_schema = (
+                STAGE_SCHEMAS[stage] if self.evidence_protocol == QUOTE_PROTOCOL else schema
+            )
+            messages = stage_messages(
+                stage, question, knowledge, payload, evidence_protocol=self.evidence_protocol
+            )
+            call_id = await before_call(stage, chunk, messages, wire_schema)
             calls += 1
             try:
                 result = await self.provider.structured_output(
-                    messages, schema, model=model, temperature=0
+                    messages, wire_schema, model=model, temperature=0
                 )
                 # A custom provider must obey the same strict contract as the Mock.
+                result = wire_schema.model_validate_json(result.model_dump_json(), strict=True)
+                if self.evidence_protocol == QUOTE_PROTOCOL:
+                    result = resolve_output(stage, result, lambda ref: resolve_quote(ref, allowed))
                 result = schema.model_validate_json(result.model_dump_json(), strict=True)
                 validate(result)
             except Exception as exc:
@@ -334,7 +399,9 @@ class ImportedAnalysisRuntime:
                         for ref in risk.evidence:
                             check_ref(ref, allowed)
 
-                result = await call("safety", chunk.id, ChunkSafety, chunk_data(chunk), validate)
+                result = await call(
+                    "safety", chunk.id, ChunkSafety, chunk_data(chunk), validate, allowed
+                )
                 risks.extend(result.risks)
             # No single later safe chunk may overwrite a risky role in another chunk.
             return {"risks": list({_key(r): r for r in risks}.values())}
@@ -353,7 +420,7 @@ class ImportedAnalysisRuntime:
                             raise ImportedAnalysisError("halo_only_candidate")
 
                 result = await call(
-                    "interaction", chunk.id, ChunkInteractions, chunk_data(chunk), validate
+                    "interaction", chunk.id, ChunkInteractions, chunk_data(chunk), validate, allowed
                 )
                 for index, candidate in enumerate(result.candidates):
                     candidates[f"{chunk.id}:{index}"] = candidate
@@ -389,6 +456,7 @@ class ImportedAnalysisRuntime:
                         "candidates": {k: v.model_dump(mode="json") for k, v in candidates.items()},
                     },
                     validate,
+                    allowed,
                 )
                 for item in result.checks:
                     counters[item.candidate_id].append(item)

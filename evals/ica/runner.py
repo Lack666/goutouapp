@@ -69,6 +69,7 @@ def source_fingerprint() -> str:
     paths = {
         ROOT / "apps/server/app/agent/imported_analysis.py",
         ROOT / "apps/server/app/agent/imported_contracts.py",
+        ROOT / "apps/server/app/agent/imported_quote.py",
         ROOT / "apps/server/app/chat_import/analysis_scope.py",
         ROOT / "knowledge/upstream-manifest.json",
         ROOT / "knowledge/goutoujunshi/SKILL.md",
@@ -190,12 +191,15 @@ async def evaluate_case(
     arm: str = "event",
     before_call=None,
     after_call=None,
+    *,
+    evidence_protocol="span-v1",
 ) -> dict:
     """One attempt; preserve failures and call metadata, never infer semantic quality."""
     fingerprint = source_fingerprint()
     calls, started = [], {}
     row = {
         "case_id": case["case_id"],
+        "evidence_protocol": evidence_protocol,
         "arm": arm,
         "arm_descriptor": ARM_DESCRIPTORS.get(arm),
         "baseline_definition": BASELINE_VERSION if arm == "baseline" else None,
@@ -262,9 +266,9 @@ async def evaluate_case(
         contexts = case_to_contexts(case)
         row["scope_digests"] = [context.scope.digest for context in contexts]
         row["snapshot_digests"] = [context.snapshot_digest for context in contexts]
-        result = await ImportedAnalysisRuntime(_ArmProvider(provider, arm)).run(
-            contexts, case["question"], model, before, after
-        )
+        result = await ImportedAnalysisRuntime(
+            _ArmProvider(provider, arm), evidence_protocol=evidence_protocol
+        ).run(contexts, case["question"], model, before, after)
         if source_fingerprint() != fingerprint:
             row["error_code"] = "evaluation_source_changed"
             return row

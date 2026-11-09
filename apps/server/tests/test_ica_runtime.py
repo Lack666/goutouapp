@@ -83,8 +83,14 @@ def finding_provider(
     finding=None,
     review=None,
     checks_override=None,
+    quote_only=False,
 ):
     provider = MockLLMProvider()
+    if quote_only:
+        from app.agent.imported_quote import quote_payload
+
+        original_queue = provider.queue_structured
+        provider.queue_structured = lambda value: original_queue(quote_payload(value))
     item = candidate(ctx)
     key = ctx.chunks[0].id + ":0"
     for _ in ctx.chunks:
@@ -130,7 +136,7 @@ def run(ctx, provider, contexts=None):
         pass
 
     result = asyncio.run(
-        ImportedAnalysisRuntime(provider).run(
+        ImportedAnalysisRuntime(provider, evidence_protocol="span-v1").run(
             contexts or (ctx,), "匿名合成复盘", "mock", before, after
         )
     )

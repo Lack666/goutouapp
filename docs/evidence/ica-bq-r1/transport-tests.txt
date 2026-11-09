@@ -1,0 +1,54 @@
+$ jest --runInBand "--" "tests/connected.test.ts"
+PASS tests/connected.test.ts
+  generated client and safe transport
+    √ preserves original operations and inventories signed lifecycle and imported analysis (7 ms)
+    √ maps nullable and absent profile data without inventing facts
+    √ blocks synthetic resource ID demo-a before HTTP (12 ms)
+    √ blocks synthetic resource ID demo-b before HTTP (1 ms)
+    √ blocks synthetic resource ID nickname before HTTP (1 ms)
+    √ blocks synthetic resource ID  before HTTP
+    √ requires UUID v4 for creation (11 ms)
+    √ injects Bearer only from current session, never unauthenticated (1 ms)
+    √ normalizes HTTP 401 without raw body or credential (1 ms)
+    √ normalizes HTTP 404 without raw body or credential
+    √ normalizes HTTP 409 without raw body or credential
+    √ normalizes HTTP 422 without raw body or credential (1 ms)
+    √ normalizes HTTP 503 without raw body or credential
+    √ cancels an in-flight request
+    √ times out an in-flight request (16 ms)
+    √ normalizes offline failure (1 ms)
+    √ rejects insecure deployment configuration http://localhost:8000 (1 ms)
+    √ rejects insecure deployment configuration https://user:pass@localhost:8000
+    √ rejects insecure deployment configuration https://localhost:8000?token=private (1 ms)
+    √ blocks Agent/SSE/import/memory operations at transport
+  development sessions and credential lifecycle
+    √ starts Demo/no token without business requests
+    √ accepts user input only after the server probe and hides it from snapshots (1 ms)
+    √ handles empty input
+    √ rejects expired input without pretending to authenticate (1 ms)
+    √ rejects malformed input
+    √ defers signature validity to server and clears on 401
+    √ distinguishes network unavailable from invalid credential (1 ms)
+    √ writes and clears volatile storage; a new Web session has no credential
+    √ native storage delegates read/write/delete with device-only keychain (1 ms)
+    √ restores native credential with a fresh server probe (1 ms)
+    √ expires while idle and clears every resource on foreground expiry
+    √ clears all domain lists, cursors, selections and pending attempts on logout (2 ms)
+    √ mode switch cancels scope and preserves Demo isolation (1 ms)
+    √ ignores delayed A response after B identity switch (1 ms)
+  owned resources, opaque pages and stable create attempts
+    √ retry response loss uses identical UUID/payload for persons (4 ms)
+    √ retry response loss uses identical UUID/payload for relationships (3 ms)
+    √ retry response loss uses identical UUID/payload for conversations (2 ms)
+    √ never inserts synthetic success after unavailable create (1 ms)
+    √ changed input explicitly reserves a new creation UUID
+    √ guards duplicate More and deduplicates IDs without parsing cursor or timestamps (2 ms)
+    √ foreign/missing detail has empty state and safe recovery
+    √ rapid detail switching cannot apply the previous scope (2 ms)
+    √ logout while create in-flight prevents delayed persisted result from entering UI
+
+Test Suites: 1 passed, 1 total
+Tests:       43 passed, 43 total
+Snapshots:   0 total
+Time:        1.225 s, estimated 2 s
+Ran all test suites matching /tests\\connected.test.ts/i.

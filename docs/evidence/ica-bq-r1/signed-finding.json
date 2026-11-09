@@ -1,0 +1,291 @@
+{
+  "run_id": "bc2c02df-f86a-4686-960b-273d290f4c54",
+  "grant_id": "e2098fb3-bf8b-4ab6-9d57-af2f1770339d",
+  "status": "completed",
+  "expires_at": "2026-11-10T05:12:01.931288Z",
+  "binding_hash": "abae1cbc2ee38b36caa5a0b61cadd2fc8f7557f64ab80c5eb66d89237f59b31d",
+  "execution": {
+    "model": "mock",
+    "tariff": "keyless-mock-zero-v1",
+    "version": "ica-bq-r1-mock-v2",
+    "cost_cap": 0,
+    "currency": null,
+    "provider": "mock",
+    "token_cap": 274252,
+    "expires_at": "2026-11-10T05:12:01.931288+00:00",
+    "request_cap": 11,
+    "grant_binding": "4f3dbd39fc1112f05cecfdcaf461a25ed36afee6f7750a65fc79b4a5d0d93bf7",
+    "memory_access": false,
+    "runtime_digest": "bf76eb4bd39d1b9aaaab5700eae2eddf4e142bf8f67e4f3432cabfd16ad998d7",
+    "max_input_bytes": 131072,
+    "evidence_protocol": "quote-v2",
+    "output_token_reserve": 8192,
+    "external_provider_calls": 0
+  },
+  "mock_calls": 5,
+  "reserved_tokens": 226509,
+  "ledger": [
+    {
+      "id": "a90af462989d4ce48c6883c8905a1b20",
+      "stage": "safety",
+      "status": "succeeded",
+      "chunk_id": "2f7261bf3167a29f589b88bea0d9391a62564bebe0c8302be0cdcbd463be32e6",
+      "input_bytes": 31778,
+      "reserved_tokens": 44066
+    },
+    {
+      "id": "13869c97ca1444f5ae068e301a8ba1d0",
+      "stage": "interaction",
+      "status": "succeeded",
+      "chunk_id": "2f7261bf3167a29f589b88bea0d9391a62564bebe0c8302be0cdcbd463be32e6",
+      "input_bytes": 32326,
+      "reserved_tokens": 44614
+    },
+    {
+      "id": "bf7f528d5312457c96410465c43266d8",
+      "stage": "counterevidence",
+      "status": "succeeded",
+      "chunk_id": "2f7261bf3167a29f589b88bea0d9391a62564bebe0c8302be0cdcbd463be32e6",
+      "input_bytes": 32639,
+      "reserved_tokens": 44927
+    },
+    {
+      "id": "6f705d77f2734e33b799750848ccb9a7",
+      "stage": "synthesis",
+      "status": "succeeded",
+      "chunk_id": null,
+      "input_bytes": 34180,
+      "reserved_tokens": 46468
+    },
+    {
+      "id": "9b3e8595764545fe8b3a9d98f7b62e6a",
+      "stage": "content_review",
+      "status": "succeeded",
+      "chunk_id": null,
+      "input_bytes": 34146,
+      "reserved_tokens": 46434
+    }
+  ],
+  "receipts": [
+    {
+      "stage": "safety",
+      "status": "completed",
+      "chunk_id": "2f7261bf3167a29f589b88bea0d9391a62564bebe0c8302be0cdcbd463be32e6"
+    },
+    {
+      "stage": "interaction",
+      "status": "completed",
+      "chunk_id": "2f7261bf3167a29f589b88bea0d9391a62564bebe0c8302be0cdcbd463be32e6"
+    },
+    {
+      "stage": "counterevidence",
+      "status": "completed",
+      "chunk_id": "2f7261bf3167a29f589b88bea0d9391a62564bebe0c8302be0cdcbd463be32e6"
+    },
+    {
+      "stage": "synthesis",
+      "status": "completed",
+      "chunk_id": null
+    },
+    {
+      "stage": "content_review",
+      "status": "completed",
+      "chunk_id": null
+    }
+  ],
+  "report": {
+    "version": "ica-report-v1",
+    "outcome": "findings",
+    "findings": [
+      {
+        "kind": "emotional_mismatch",
+        "facts": [
+          {
+            "statement": "对方表达难过后，用户给出安排建议。",
+            "evidence": [
+              {
+                "evidence_id": "w0-m00001",
+                "speaker": "person",
+                "start": 0,
+                "end": 5,
+                "quote": "我很难过😀"
+              },
+              {
+                "evidence_id": "w0-m00002",
+                "speaker": "self",
+                "start": 0,
+                "end": 7,
+                "quote": "你应该早点安排"
+              }
+            ]
+          }
+        ],
+        "hypothesis": "可能先需要被倾听，回应方式尚未对上。",
+        "unknowns": [
+          "不知道之后是否有线下安慰。"
+        ],
+        "alternative_explanations": [
+          "用户可能通过解决问题表达关心。"
+        ],
+        "repair": {
+          "action": "询问对方更需要倾听还是建议。",
+          "observe": "看对方是否愿意说明需求。",
+          "stop_when": "对方不愿继续时暂停。"
+        },
+        "candidate_ids": [
+          "2f7261bf3167a29f589b88bea0d9391a62564bebe0c8302be0cdcbd463be32e6:0"
+        ],
+        "counterevidence": []
+      }
+    ],
+    "coverage": [
+      {
+        "window_index": 0,
+        "start_utc": "2026-11-02T16:00:00+00:00",
+        "end_utc": "2026-11-09T05:12:01.910678+00:00",
+        "timezone": "Asia/Shanghai",
+        "scope_digest": "522eed2b3dbb7f89749bbb329b800374ff6f8d0f8f96736f87ee2d2fe6a5372a",
+        "snapshot_digest": "33526398e1a9c73fa11e7b3fd7f1c4a224505a6210311ca7bdf7b70960fd8585",
+        "message_count": 2,
+        "text_count": 2,
+        "body_bytes": 37,
+        "core_count": 2,
+        "self_count": 1,
+        "person_count": 1,
+        "active_local_days": 1
+      }
+    ],
+    "safety_roles": [],
+    "limitations": [
+      "仅覆盖用户已导入且授权的文本；未导出、非文本和线下互动可能改变判断。",
+      "引用与覆盖验证不等于解释正确；Mock仅验证接线，未验证模型洞察质量。",
+      "推测不证明对方内心；应结合反例和双方自述核实。"
+    ],
+    "sources": [
+      {
+        "evidence_id": "w0-m00001",
+        "message_id": "e95a7e26-7b15-4676-b2d6-196868f911f3",
+        "dataset_id": "6e22e669-b6d7-4186-a8ba-763e569882c9",
+        "speaker": "person",
+        "timestamp": "2026-11-02T16:00:00+00:00",
+        "scope_digest": "522eed2b3dbb7f89749bbb329b800374ff6f8d0f8f96736f87ee2d2fe6a5372a"
+      },
+      {
+        "evidence_id": "w0-m00002",
+        "message_id": "17b9f7bc-0b83-4cfe-a11f-7f0d9ebc8836",
+        "dataset_id": "6e22e669-b6d7-4186-a8ba-763e569882c9",
+        "speaker": "self",
+        "timestamp": "2026-11-02T16:00:01+00:00",
+        "scope_digest": "522eed2b3dbb7f89749bbb329b800374ff6f8d0f8f96736f87ee2d2fe6a5372a"
+      }
+    ],
+    "knowledge_refs": [
+      "references/knowledge/17-中国法律安全与危机转介.md",
+      "references/practical/ChatLab聊天记录分析适配.md",
+      "references/knowledge/07-沟通冲突与修复.md"
+    ],
+    "source": {
+      "grant_id": "e2098fb3-bf8b-4ab6-9d57-af2f1770339d",
+      "owner_id": "b33e6d53-328a-4edc-860e-281f5c93a9c1",
+      "dataset_id": "6e22e669-b6d7-4186-a8ba-763e569882c9",
+      "person_id": "389de468-2ad0-4a0f-ab0d-daf9d8ad122d",
+      "relationship_id": "e83cff37-6e45-4a00-a3b3-c4f12fdaba16",
+      "binding_hash": "4f3dbd39fc1112f05cecfdcaf461a25ed36afee6f7750a65fc79b4a5d0d93bf7",
+      "aliases": {
+        "w0-m00001": {
+          "message_id": "e95a7e26-7b15-4676-b2d6-196868f911f3",
+          "window": 0
+        },
+        "w0-m00002": {
+          "message_id": "17b9f7bc-0b83-4cfe-a11f-7f0d9ebc8836",
+          "window": 0
+        }
+      },
+      "preview": {
+        "chunks": 1,
+        "windows": [
+          {
+            "end": "2026-11-09T05:12:01.910678+00:00",
+            "last": "2026-11-02T16:00:01+00:00",
+            "daily": {
+              "2026-11-03": {
+                "self": 1,
+                "person": 1,
+                "system": 0
+              },
+              "2026-11-04": {
+                "self": 0,
+                "person": 0,
+                "system": 0
+              },
+              "2026-11-05": {
+                "self": 0,
+                "person": 0,
+                "system": 0
+              },
+              "2026-11-06": {
+                "self": 0,
+                "person": 0,
+                "system": 0
+              },
+              "2026-11-07": {
+                "self": 0,
+                "person": 0,
+                "system": 0
+              },
+              "2026-11-08": {
+                "self": 0,
+                "person": 0,
+                "system": 0
+              },
+              "2026-11-09": {
+                "self": 0,
+                "person": 0,
+                "system": 0
+              }
+            },
+            "first": "2026-11-02T16:00:00+00:00",
+            "media": 0,
+            "start": "2026-11-02T16:00:00+00:00",
+            "chunks": 1,
+            "system": 0,
+            "nontext": 0,
+            "version": "ica-long-range-v3",
+            "messages": 2,
+            "speakers": {
+              "self": 1,
+              "person": 1
+            },
+            "body_bytes": 37,
+            "local_days": {
+              "2026-11-03": 2
+            },
+            "export_gaps": "unknown; unexported messages cannot be inferred absent",
+            "model_stages": "pending",
+            "scope_digest": "522eed2b3dbb7f89749bbb329b800374ff6f8d0f8f96736f87ee2d2fe6a5372a",
+            "parser_errors": 0,
+            "provider_calls": 0,
+            "analyzable_text": 2,
+            "parser_warnings": 0,
+            "snapshot_digest": "33526398e1a9c73fa11e7b3fd7f1c4a224505a6210311ca7bdf7b70960fd8585",
+            "planned_requests": 11,
+            "export_completeness": "unknown",
+            "skipped_source_items": "not reconstructible from canonical import; see parser issues",
+            "core_coverage_complete": true,
+            "ignored_source_messages": 0
+          }
+        ],
+        "cost_cap": null,
+        "messages": 2,
+        "token_cap": 274252,
+        "body_bytes": 37,
+        "price_status": "unquoted; execution prohibited until priced",
+        "memory_access": false,
+        "provider_calls": 0,
+        "planned_requests": 11
+      }
+    }
+  },
+  "error_code": null,
+  "external_provider_calls": 0
+}

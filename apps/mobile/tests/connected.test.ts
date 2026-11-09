@@ -65,8 +65,8 @@ afterEach(() => {
 });
 
 describe('generated client and safe transport', () => {
-  it('preserves original operations, dataset discovery and adds three signed lifecycle operations', () => {
-    expect(operationInventory).toHaveLength(43);
+  it('preserves original operations and inventories signed lifecycle and imported analysis', () => {
+    expect(operationInventory).toHaveLength(52);
     const discovery = operationInventory.filter((op) => op.path.endsWith('/datasets'));
     expect(discovery).toHaveLength(1);
     expect(discovery[0]).toMatchObject({ method: 'get', bearer: true });
@@ -75,6 +75,7 @@ describe('generated client and safe transport', () => {
         (op) =>
           !op.path.startsWith('/api/v1/erasures') &&
           !op.path.startsWith('/api/v1/lifecycle-erasures') &&
+          !op.path.startsWith('/api/v1/imported-analysis') &&
           !op.path.endsWith('/datasets'),
       ),
     ).toHaveLength(36);
@@ -86,6 +87,25 @@ describe('generated client and safe transport', () => {
     const erasures = operationInventory.filter((op) => op.path.startsWith('/api/v1/erasures'));
     expect(erasures).toHaveLength(3);
     expect(erasures.every((op) => op.bearer)).toBe(true);
+    const analysis = operationInventory.filter((op) =>
+      op.path.startsWith('/api/v1/imported-analysis'),
+    );
+    expect(analysis).toHaveLength(9);
+    expect(analysis.map((op) => [op.method, op.path, op.bearer])).toEqual(
+      expect.arrayContaining(
+        [
+          ['post', 'prepare'],
+          ['post', 'confirm'],
+          ['get', 'grants/{grant_id}'],
+          ['post', 'grants/{grant_id}/revoke'],
+          ['post', 'grants/{grant_id}/evidence/{alias}'],
+          ['post', 'execution-prepare'],
+          ['post', 'execution-confirm'],
+          ['post', 'runs/{run_id}/execute'],
+          ['get', 'runs/{run_id}'],
+        ].map(([method, path]) => [method, `/api/v1/imported-analysis/${path}`, true]),
+      ),
+    );
     expect(
       operationInventory.filter((op) => op.path === '/api/v1/persons').every((op) => op.bearer),
     ).toBe(true);

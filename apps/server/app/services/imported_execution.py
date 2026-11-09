@@ -19,7 +19,8 @@ from app.schemas.imported_execution import (
 )
 from app.services.imported_analysis import AnalysisError, ImportedAnalysisService, digest
 
-EXECUTION_VERSION = "ica-b1-mock-v1"
+EXECUTION_VERSION = "ica-bq-r1-mock-v2"
+EVIDENCE_PROTOCOL = "quote-v2"
 MAX_INPUT_BYTES = 128 * 1024
 OUTPUT_RESERVE = 8192
 
@@ -32,6 +33,7 @@ def runtime_fingerprint():
             for path in (
                 "apps/server/app/agent/imported_analysis.py",
                 "apps/server/app/agent/imported_contracts.py",
+                "apps/server/app/agent/imported_quote.py",
                 "apps/server/app/services/imported_execution.py",
                 "knowledge/upstream-manifest.json",
                 "evals/reference_map.json",
@@ -74,6 +76,8 @@ class ImportedExecutionService(ImportedAnalysisService):
             raise AnalysisError("source_changed")
         if row.execution_binding.get("runtime_digest") != runtime_fingerprint():
             raise AnalysisError("runtime_changed")
+        if row.execution_binding.get("evidence_protocol") != EVIDENCE_PROTOCOL:
+            raise AnalysisError("runtime_changed")
         return grant, contexts
 
     @staticmethod
@@ -107,11 +111,16 @@ class ImportedExecutionService(ImportedAnalysisService):
             if not any(c.messages for c in contexts):
                 raise AnalysisError("empty_scope")
             try:
-                validate_static_inputs(contexts, grant.payload["request"]["question"])
+                validate_static_inputs(
+                    contexts,
+                    grant.payload["request"]["question"],
+                    evidence_protocol=EVIDENCE_PROTOCOL,
+                )
             except ImportedAnalysisError:
                 raise AnalysisError("scope_or_budget_rejected") from None
             execution = {
                 "version": EXECUTION_VERSION,
+                "evidence_protocol": EVIDENCE_PROTOCOL,
                 "runtime_digest": runtime_fingerprint(),
                 "grant_binding": grant.binding_hash,
                 "model": "mock",
@@ -264,9 +273,9 @@ class ImportedExecutionService(ImportedAnalysisService):
                     ]
 
         try:
-            result = await ImportedAnalysisRuntime(provider).run(
-                contexts, question, "mock", before_call, after_call
-            )
+            result = await ImportedAnalysisRuntime(
+                provider, evidence_protocol=EVIDENCE_PROTOCOL
+            ).run(contexts, question, "mock", before_call, after_call)
             report = result.report.model_dump(mode="json")
             if len(json.dumps(report, ensure_ascii=False).encode()) > 32 * 1024:
                 raise AnalysisError("report_budget_exceeded")
